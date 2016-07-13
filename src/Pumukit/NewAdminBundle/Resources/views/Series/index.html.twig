@@ -16,7 +16,7 @@
         {% include 'PumukitNewAdminBundle:Series:list.html.twig' %}
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-xs-4">
           <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
@@ -24,13 +24,13 @@
             <option value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
           </select>
         </div>
-        <div class="col-md-10 text-right">
+        <div class="col-xs-8 text-right">
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
-	      <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
+          <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
           {% endif %}
           {# TODO check route with filter /editar.php/serials/create/filter/filter #}
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-	      <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+          <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
           {% endif %}
         </div>
       </div>
@@ -42,7 +42,7 @@
       {% endif %}
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <div id="preview_series" class="well">
       {% if(app.session.has('admin/series/id')) %}
         {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}

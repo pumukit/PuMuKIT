@@ -12,20 +12,20 @@
         {% include 'PumukitNewAdminBundle:Seriestype:list.html.twig' %}
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-xs-4">
           <select id="options_seriestypes" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('seriestype', $(this), 'seriestypes')">
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
           </select>
         </div>
-        <div class="col-md-10 text-right">
+        <div class="col-xs-8 text-right">
           <a title="{% trans %}Create new series type{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_seriestype_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <div id="preview_seriestype" class="well">
       {% if(app.session.has('admin/seriestype/id')) %}
         {{ render(url('pumukitnewadmin_seriestype_show', {'id': app.session.get('admin/seriestype/id')})) }}

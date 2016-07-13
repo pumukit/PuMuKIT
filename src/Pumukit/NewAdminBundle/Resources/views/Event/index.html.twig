@@ -12,21 +12,21 @@
         {% include 'PumukitNewAdminBundle:Event:list.html.twig' %}
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-xs-4">
           <select id="options_events" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('event', $(this), 'events')">
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
           </select>
         </div>
-        <div class="col-md-10 text-right">
+        <div class="col-xs-8 text-right">
           {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
           <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <div id="preview_event" class="well">
       {% if(app.session.has('admin/event/id')) %}
         {{ render_hinclude(url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')})) }}

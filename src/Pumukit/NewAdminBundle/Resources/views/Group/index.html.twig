@@ -12,20 +12,20 @@
         {% include 'PumukitNewAdminBundle:Group:list.html.twig' %}
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-xs-4">
           <select id="options_groups" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('group', $(this), 'groups');">
             <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="delete_selected_groups">{% trans %}Delete selected{% endtrans %}</option>
           </select>
         </div>
-        <div class="col-md-10 text-right">
+        <div class="col-xs-8 text-right">
           <a href="{{ path('pumukitnewadmin_group_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     {% include 'PumukitNewAdminBundle:Group:filters.html.twig' %}
   </div>
   {% else %}
