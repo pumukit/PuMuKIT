@@ -61,7 +61,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     }
 
     /**
-    * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"filter": false})
+    * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide": true})
     * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
     */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
