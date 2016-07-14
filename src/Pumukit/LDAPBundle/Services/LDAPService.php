@@ -158,6 +158,35 @@ class LDAPService
         return $name;
     }
 
+
+    /**
+     * Get all the LDAP info from the user email
+     *
+     * @public
+     * @pararm string $email
+     * @return array|false
+     */
+    public function getInfoFromEmail($email)
+    {
+        $info = false;
+
+        $linkIdentifier = ldap_connect( $this->server );
+        ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
+        if ($linkIdentifier) {
+            $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+            $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
+            if ($searchResult){
+                $info = ldap_get_entries($linkIdentifier, $searchResult);
+                if (($info)&&(count($info) != 0)){
+                }
+            }
+            ldap_close($linkIdentifier);
+        }
+
+        return $info;
+    }
+
+
     /**
      * Get list of users
      *

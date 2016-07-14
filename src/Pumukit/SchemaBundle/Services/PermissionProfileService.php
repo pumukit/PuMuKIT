@@ -216,4 +216,15 @@ class PermissionProfileService
     {
         return $this->repo->findOneByDefault(true);
     }
+
+
+    /**
+     * Get by name
+     *
+     * @return PermissionProfile
+     */
+    public function getByName($name)
+    {
+        return $this->repo->findOneBy(array('name' => $name));
+    }
 }
