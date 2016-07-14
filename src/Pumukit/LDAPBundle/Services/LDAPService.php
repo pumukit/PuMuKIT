@@ -73,9 +73,9 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
                 if ($searchResult){
-                    $info = ldap_get_entries($linkIdentifier, $searchResult);          
+                    $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&($info["count"] != 0)){
                         $dn = $info[0]["dn"];
                         $ret = @ldap_bind($linkIdentifier, $dn, $pass);
@@ -92,7 +92,7 @@ class LDAPService
     }
 
     /**
-     * Obtiene el nombre completo de usuario del 
+     * Obtiene el nombre completo de usuario del
      * servidor ldap.
      *
      * @access public
@@ -100,18 +100,18 @@ class LDAPService
      * @param string $user nombre del usuario
      */
     public function getName($user)
-    {   
+    {
         $name = false;
         try {
-            $linkIdentifier = ldap_connect( $this->server ); 
+            $linkIdentifier = ldap_connect( $this->server );
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
-                        $name = $info[0]["cn"][0];          
+                        $name = $info[0]["cn"][0];
                     }
                 }
                 ldap_close($linkIdentifier);
@@ -125,7 +125,7 @@ class LDAPService
     }
 
     /**
-     * Obtiene el correo electronico de usuario del 
+     * Obtiene el correo electronico de usuario del
      * servidor ldap.
      *
      * @public
@@ -134,18 +134,18 @@ class LDAPService
      * @param string $user nombre del usuario
      */
     public function getMail($user)
-    {   
+    {
         $name = false;
         try {
-            $linkIdentifier = ldap_connect( $this->server ); 
+            $linkIdentifier = ldap_connect( $this->server );
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
-                      $name = $info[0]["mail"][0];          
+                      $name = $info[0]["mail"][0];
                     }
                 }
                 ldap_close($linkIdentifier);
@@ -175,14 +175,15 @@ class LDAPService
      */
     public function getListUsers($cn='', $mail='')
     {
+        $limit = 40;
         $out = array();
         try {
-            $linkIdentifier = ldap_connect( $this->server ); 
+            $linkIdentifier = ldap_connect( $this->server );
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result=ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
                 $filter = $this->getFilter($cn, $mail);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, $filter);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, $filter, array(), 0, $limit);
                 if ($searchResult){
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)){
