@@ -395,6 +395,7 @@ class FactoryService
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty("subseries", $src->getProperty("subseries"));
         $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
+        $new->setProperty("owners", $src->getProperty("owners"));
 
         $new->setProperty("clonedfrom", $src->getId());
 
