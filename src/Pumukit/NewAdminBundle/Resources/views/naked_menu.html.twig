@@ -14,8 +14,10 @@
 {% endspaceless %}{% endset %}
 
 {% set route_name = app.request.get('_route') %}
-{% set series_active = route_name == 'pumukitnewadmin_series_index' %}
-{% set playlist_active = route_name == 'pumukitnewadmin_playlist_index' %}
+{% set series_routes = ['pumukitnewadmin_series_index', 'pumukitnewadmin_mms_index'] %}
+{% set playlist_routes = ['pumukitnewadmin_playlist_index', 'pumukitnewadmin_playlistmms_index'] %}
+{% set series_active = route_name in series_routes %}
+{% set playlist_active = route_name in playlist_routes %}
 
 <div class="col-md-10">
   <ul class="nav nav-tabs title-tabs">
