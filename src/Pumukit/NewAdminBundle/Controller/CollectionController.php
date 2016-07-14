@@ -81,6 +81,7 @@ class CollectionController extends Controller implements NewAdminController
         $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit);
+        $pagerfanta->setNormalizeOutOfRangePages(true);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
