@@ -1,218 +1,47 @@
 <div id="tv_admin_container" class="well">
   {% if not template %}
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
-              id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
-              data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
-        {% trans %}Sync in this series{% endtrans %}
-      </button>
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
+                id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
+                data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
+          {% trans %}Sync in this series{% endtrans %}
+        </button>
+      </div>
     </div>
-  </div>
   {% endif %}
   {% for parent in parent_tags if parent.getDisplay() %}
-  <div class="panel panel-default">
-    <div class="panel-heading">{{ parent.title }}</div>
-    <div class="panel-body" id="tag{{ parent.id }}_mms">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ parent.title }}</div>
+      <div class="panel-body" id="tag{{ parent.id }}_mms">
+        <div style="overflow:hidden;height: 270px">
+          {# Available tags #}
+          <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
+            {% if (0 != parent.getChildren()|length) %}
+              {% include 'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+            {% endif %}
+          </div>
 
+          <div style="float: left; padding: 150px 5px 0px">
+            <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
+            <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+          </div>
 
-      <div style="overflow:hidden;height: 270px">
-        {# Available tags #}
-        <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
-          {% if (0 != parent.getChildren()|length) %}
-            {% include 'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
-          {% endif %}
-        </div>
-
-        <div style="float: left; padding: 150px 5px 0px">
-          <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
-          <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
-        </div>
-
-        {# Added tags#}
-        <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
-          <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
-            {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
-              <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
-                 onclick="javascript:return select_tree_tag(this);"
-                 ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
-                {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
-              </a>
-            {% endfor %}
+          {# Added tags#}
+          <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
+            <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
+              {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+                <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
+                   onclick="javascript:return select_tree_tag(this);"
+                   ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
+                  {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
+                </a>
+              {% endfor %}
+            </div>
           </div>
         </div>
-     </div>
-
-
+      </div>
     </div>
-  </div>
   {% endfor %}
-
-
-
-<div style="height:41px"></div>
-{#
-<div id="tv_admin_container" style="padding: 4px 20px 20px">
-<fieldset id="tv_fieldset_none" class="" style="position:relative">
-
-
-<div style="text-align: right; padding: 5px 20px">
-  <input type="checkbox" checked="checked" onchange="toggle_show_all();"/> {% trans %}Show all tags{% endtrans %}
-</div>
-
-<div style="float: right; padding: 5px 20px" id="tag_update_link_{{ mm.getSeries().getId() }}">
-   <a href="#" onclick="if (window.confirm('{% trans %}Are you sure you want to copy these tags to this series?{% endtrans %}')) { $('tag_update_link_{{ mm.getSeries().getId() }}').innerHTML = '{% trans %}loading{% endtrans %}...'; new Ajax.Updater('tag_update_link_{{ mm.getSeries().getId() }}', '/editar.php/mms/serialtag/mm_id/14574/serial_id/782', {asynchronous:true, evalScripts:true}); }; return false;">{% trans %}Copy these tags to this series{% endtrans %}</a>
-</div>
-
-<dl style="margin: 0px">
-
-   {% for parent in parent_tags if parent.getDisplay() %}
-     <div class="form-row">
-     <dt>{{ parent.getTitle() }}:</dt>
-     <dd>
-       <div id="tag{{ parent.id }}_mms">
-         <div style="overflow:hidden;height: 270px">
-           <div style="width:40%; max-width:400px; float: left; height: 260px" class="tag" id="all_tag_{{ parent.id }}">
-             {% if (0 != parent.getChildren()|length) %}
-             <ul class="tag_tree" >
-               {% include 'PumukitAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
-             </ul>
-             {% endif %}
-           </div>
-
-       <div style="float: left; padding: 150px 5px 0px">
-         <a href="#" onclick="if ( $$('.clicked_tag_left')[0] != undefined ) { $$('.clicked_tag_left')[0].ondblclick() } return false;">&#8592;</a>
-         <a href="#" onclick="if ( $$('.clicked_tag_right')[0] != undefined ) { $$('.clicked_tag_right')[0].ondblclick() } return false;">&#8594;</a>
-       </div>
-
-       <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left;" class="tag" id="select_tag_{{ parent.id }}">
-         <ul class="tag_tree" id="select_ul_tag_cod_{{ parent.cod }}" >
-           {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
-             <li class="element" id="select_li_{{ embedded_tag.id }}" >
-           <span class="icon">&nbsp;</span>
-           <span onclick="$$('.clicked_tag_left').invoke('removeClassName', 'clicked_tag_left'); this.addClassName('clicked_tag_left');" ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');" >
-             {{ embedded_tag.getCod() }} - {{ embedded_tag.getTitle() }}
-           </span>
-             </li>
-           {% endfor %}
-         </ul>
-       </div>
-
-     </div>
-       </div>
-     </dd>
-     </div>
-   {% endfor %}
-
-</dl>
-
-</fieldset>
-</div>
-#}
-
-{# TODO delete see pumuikit.js
-<script type="text/javascript">
-window.toggle_show_all = function()
-{
-  // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
-  $$(".expanded.element, .collapsed.element").each(function(e){
-    e.removeClassName("element");
-  });
-
-  // SHOW & HIDE - Oculto/Muestro elementos finales que no tiene objetos multimedia
-  $$(".nomm.element").each(function(e){
-    e.toggleClassName("nodisplayall");
-  });
-
-  // SHOW & HIDE - Oculto/Muestro elementos todos sus hijos son finales sin objetos multimedia
-  $$(".nomm.expanded, .nomm.collapsed").each(function(e){
-    if (e.getElementsBySelector("li.nomm").length == e.getElementsBySelector("li").length) {
-      e.toggleClassName("nodisplayall");
-    }
-  });
-
-  // HIDE - Pongo el punto a los nodos que se quedan sin hijos al ocultar
-  $$(".nomm").each(function(e){
-    p = e.parentElement.parentElement;
-    if (p.getElementsBySelector("li.nodisplayall").length == p.getElementsBySelector("li").length) {
-      p.addClassName("element");
-    }
-  });
-
-}
-
-window.create_li_in_select = function(tag, block_tag_cod, mm_id) {
-  var $ul = $("select_ul_tag_cod_" + block_tag_cod);
-  var li = new Element("li", {"id": "select_li_" + tag.id, "class": "element"});
-  var span1 = new Element("span", {"class": "icon"}).update("&nbsp;");
-  var span2 = new Element("span", {"onclick":"$$(\'.clicked_tag_left\').invoke(\'removeClassName\', \'clicked_tag_left\'); this.addClassName(\'clicked_tag_left\');", "ondblclick": "del_tree_tag(\'" + tag.id +"\', \'"+ mm_id + "\')"}).update(tag.cod+ " - " + tag.name);
-  li.insert(span1).insert(span2);
-  //Add quit logica.
-  $ul.insert(li);
-}
-
-window.add_tree_tag = function(tag_id, mm_id, block_tag_id) {
-  var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
-  route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
-  new Ajax.Request(route,  {
-    method: "POST",
-    parameters: "tag=" + tag_id,
-    asynchronous: true,
-    evalScripts: true,
-    onSuccess: function(response){
-        for (var i=0; i<response.responseJSON.added.length; i++) {
-            var c = response.responseJSON.added[i];
-            !response.prototype && inc_num_mm(c.id, 1);
-            var aux = c.group.split("|");
-            if(aux[1] && aux.length > 3) create_li_in_select(c, aux[1], mm_id);
-        }
-    }
-  });
-}
-
-
-window.del_tree_tag = function(tag_id, mm_id) {
-  // TODO Si ya lo tiene no hacer nada.
-  console.log("del_tree_tag info_num_mm_" + tag_id);
-
-  var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' }) }}";
-  route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
-  new Ajax.Request(route,  {
-    method: "DELETE",
-    parameters:  {'_method': 'DELETE'},
-    asynchronous: true,
-    evalScripts: true,
-    onSuccess: function(response){
-        for (var i=0; i<response.responseJSON.deleted.length; i++) {
-            var c = response.responseJSON.deleted[i];
-            var $_element = $("select_li_" + c.id);
-            if ($_element)  $_element.remove();
-            !response.prototype && inc_num_mm(c.id, -1);
-        }
-    }
-  });
-}
-
-
-window.inc_num_mm = function(tag_id, num)
-{
-  var aux = $("info_num_mm_" + tag_id);
-  if (aux){
-    var nn = (parseInt(aux.innerHTML) + num);
-    var p = aux.parentElement.parentElement;
-    if (nn == 0){
-      p.addClassName("nomm");
-    } else {
-      p.removeClassName("nomm");
-    }
-    aux.innerHTML = nn;
-  }
-}
-
-</script>
-
-DELETE
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#}
+  <div style="height:41px"></div>
 </div>
