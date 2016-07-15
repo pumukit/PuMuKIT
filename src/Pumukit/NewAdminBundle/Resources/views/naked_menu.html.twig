@@ -14,7 +14,7 @@
 {% endspaceless %}{% endset %}
 
 {% set route_name = app.request.get('_route') %}
-{% set series_routes = ['pumukitnewadmin_series_index', 'pumukitnewadmin_mms_index'] %}
+{% set series_routes = ['pumukitnewadmin_series_index', 'pumukitnewadmin_mms_index', 'pumukitwizard_default_multimediaobject', 'pumukitwizard_default_track', 'pumukitwizard_default_series'] %}
 {% set playlist_routes = ['pumukitnewadmin_playlist_index', 'pumukitnewadmin_playlistmms_index'] %}
 {% set series_active = route_name in series_routes %}
 {% set playlist_active = route_name in playlist_routes %}
