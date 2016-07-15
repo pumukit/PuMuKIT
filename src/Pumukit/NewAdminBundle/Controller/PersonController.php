@@ -166,7 +166,7 @@ class PersonController extends AdminController implements NewAdminController
                      );
     }
 
-    /**  
+    /**
      * Create new person with role from Multimedia Object
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
@@ -181,7 +181,7 @@ class PersonController extends AdminController implements NewAdminController
 
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
-        
+
         $criteria = $this->getCriteria($config, $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
@@ -362,7 +362,7 @@ class PersonController extends AdminController implements NewAdminController
             //$msg_alert = array('info', $message);
         }catch(\Excepction $e){
             //$message = sprintf($this->getContext()->getI18N()->__("Persona ya asociada a la plantilla con el rol \"%s\"."), $this->role->getName());
-            //$this->msg_alert = array('error', $message);          
+            //$this->msg_alert = array('error', $message);
         }
 
         $template = '';
@@ -444,7 +444,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template
-                                   ));        
+                                   ));
     }
 
     /**
@@ -483,7 +483,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'mm' => $multimediaObject,
                                    'template' => $template
                                    ));
-    }    
+    }
 
     /**
      * Delete relation: EmbeddedPerson in Multimedia Object
@@ -504,14 +504,9 @@ class PersonController extends AdminController implements NewAdminController
             $userService = $this->get('pumukitschema.user');
             $person = $personService->findPersonById($request->get('id'));
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
-            $userLastRelation = $userService->isUserLastRelation($this->getUser(), $multimediaObject->getId(), $person->getId(), $multimediaObject->getProperty('owners'), array());
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         }catch (\Exception $e){
             return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
-        }
-
-        if ($userLastRelation) {
-            return new JsonResponse($this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)), JsonResponse::HTTP_OK);
         }
 
         $template = '';
@@ -597,7 +592,7 @@ class PersonController extends AdminController implements NewAdminController
             $this->get('session')->set('admin/person/criteria', $criteria);
         }
         $criteria = $this->get('session')->get('admin/person/criteria', array());
-        
+
         $new_criteria = array();
 
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)){
@@ -662,7 +657,7 @@ class PersonController extends AdminController implements NewAdminController
               ->resourceResolver
               ->getResource($repository, 'createPaginator', array($criteria, $sorting))
               ;
-            
+
             if ($request->get('page', null)) {
                 $session->set('admin/person/page', $request->get('page', 1));
             }
@@ -693,7 +688,7 @@ class PersonController extends AdminController implements NewAdminController
               ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()))
               ;
         }
-        
+
         return $resources;
     }
 }

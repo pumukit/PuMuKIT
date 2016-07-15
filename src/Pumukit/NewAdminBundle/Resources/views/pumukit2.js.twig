@@ -320,8 +320,8 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
                     no_success(message);
                 },
                 success: function(data){
-                    window.location.href = data;
                     success(success_message);
+                    window.location.href = "{{ path('pumukitnewadmin_series_index') }}";
                 }
             });
         }
