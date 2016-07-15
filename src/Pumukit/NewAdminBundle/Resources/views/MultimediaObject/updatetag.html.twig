@@ -1,16 +1,16 @@
-<div style="max-height:800px;overflow-y:auto">
-  <div id="tv_admin_container" class="well">
-    {% if not template %}
-      <div class="row">
-        <div class="col-md-12 text-right">
-          <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
-                  id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
-                  data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
-            {% trans %}Sync in this series{% endtrans %}
-          </button>
-        </div>
+<div id="tv_admin_container" class="well">
+  {% if not template %}
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
+                id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
+                data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
+          {% trans %}Sync in this series{% endtrans %}
+        </button>
       </div>
-    {% endif %}
+    </div>
+  {% endif %}
+  <div style="max-height:800px;overflow-y:auto;padding: 7px;">
     {% for parent in parent_tags if parent.getDisplay() %}
       <div class="panel panel-default">
         <div class="panel-heading">{{ parent.title }}</div>
