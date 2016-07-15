@@ -193,9 +193,9 @@ class UserService
      * @param boolean $executeFlush
      * @return User
      */
-    public function update(User $user, $executeFlush = true)
+    public function update(User $user, $executeFlush = true, $checkOrigin = true)
     {
-        if (!$user->isLocal()) {
+        if ($checkOrigin && !$user->isLocal()) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
         }
         if (!$user->isSuperAdmin()) {

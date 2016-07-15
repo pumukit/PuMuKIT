@@ -24,7 +24,7 @@ class PermissionProfileListener
         if (0 < $countUsers) {
             $usersWithPermissionProfile = $this->userService->getUsersWithPermissionProfile($permissionProfile);
             foreach ($usersWithPermissionProfile as $user) {
-                $user = $this->userService->update($user, false);
+                $user = $this->userService->update($user, false, false);
             }
             $this->dm->flush();
         }
