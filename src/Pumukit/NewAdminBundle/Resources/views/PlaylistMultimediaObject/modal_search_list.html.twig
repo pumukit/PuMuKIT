@@ -6,8 +6,8 @@
   <br>
   {% for mmobj in mmobjs %}
     <div class="col-md-12 mmobj">
-      <label style="width:100%">
-        <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" style="display:none"/>
+      <input type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" style="display:none" value="{{mmobj.id}}"/>
+      <label style="width:100%" for="modal-{{mmobj.id}}">
         <div class="mmobj_elem">
           {% include "PumukitNewAdminBundle:PlaylistMultimediaObject:modal_mmobj.html.twig" %}
         </div>
@@ -15,14 +15,3 @@
     </div>
   {% endfor %}
 </div>
-<script type="text/javascript">
- //Adds a 'select' effect when clicking and selecting a mmobj
- $(".mmobj input:checkbox").on('click', function(){
-     if($(this).prop('checked')) {
-         $(this).siblings(".mmobj_elem").addClass('checked');
-     }
-     else {
-         $(this).siblings(".mmobj_elem").removeClass('checked');
-     }
- });
-</script>

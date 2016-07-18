@@ -1,7 +1,7 @@
 {% for mmobj in my_mmobjs %}
   <div class="col-md-12 mmobj">
-    <label style="width:100%">
-      <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" style="display:none"/>
+    <input type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" style="display:none" value="{{mmobj.id}}"/>
+    <label style="width:100%" for="modal-{{mmobj.id}}">
       <div class="mmobj_elem">
         {% include "PumukitNewAdminBundle:PlaylistMultimediaObject:modal_mmobj.html.twig" %}
       </div>

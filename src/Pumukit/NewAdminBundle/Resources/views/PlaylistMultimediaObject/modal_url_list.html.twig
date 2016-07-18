@@ -1,5 +1,5 @@
 {% if mmobj %}
-    <input type="checkbox" name="{{mmobj.id}}" id="{{mmobj.id}}" checked="checked" disabled="disabled" style="display:none"/>
+    <input type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" checked="checked" disabled="disabled" style="display:none" value="{{mmobj.id}}"/>
     <h3>{{mmobj.title}} - {{mmobj.series.title}}</h3>
     <div style="display:block;width:80%;margin: 0 auto;">
       {% set url_iframe = url('pumukit_videoplayer_index', {'id':mmobj.id, 'autostart':false}) %}
