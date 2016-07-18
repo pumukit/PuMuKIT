@@ -13,7 +13,6 @@
  var maxPage = {{ (mmobjs_total/mmobjs_limit) |round(0, 'ceil')}};
  var ajaxurl = "{{url("pumukitnewadmin_playlistmms_modal_mymmobjs", {'id':playlist.id, 'modal_page':'__page__', 'modal_limit': mmobjs_limit})}}";
  $("#form_my_mmobjs_list").on("scroll", function(){
-     console.log(ajaxurl, maxPage);
      if(!calledAjax && (currentPage <= maxPage) && this.offsetHeight + this.scrollTop >= this.scrollHeight) {
          calledAjax = true;
          currentPage += 1;
@@ -31,14 +30,4 @@
      }
  });
  $("#form_my_mmobjs_list").scroll()
-
- $(".ajaxpagerfanta .pagination li a").on('click', function(){
-     var page = $(this).data('page');
-     var selected_ids = [];
-     $('.tab-pane.active fieldset input:checkbox').each(function(elem){
-         if($(this).prop('checked'))
-             selected_ids.push($(this).prop('id'));
-     });
- });
-</script>
 </script>
