@@ -45,7 +45,7 @@ class PermissionProfileRepositoryTest extends WebTestCase
     {
         $this->assertCount(0, $this->repo->findAll());
 
-        $permissionProfile = new PermissionProfile();
+        $permissionProfile = new PermissionProfile($this->dm);
         $permissionProfile->setName('test');
 
         $this->dm->persist($permissionProfile);
@@ -61,17 +61,17 @@ class PermissionProfileRepositoryTest extends WebTestCase
         $this->assertCount(0, $this->repo->findByDefault(true));
         $this->assertCount(0, $this->repo->findByDefault(false));
 
-        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1 = new PermissionProfile($this->dm);
         $permissionProfile1->setName('test1');
         $permissionProfile1->setSystem(true);
         $permissionProfile1->setDefault(true);
 
-        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2 = new PermissionProfile($this->dm);
         $permissionProfile2->setName('test2');
         $permissionProfile2->setSystem(true);
         $permissionProfile2->setDefault(false);
 
-        $permissionProfile3 = new PermissionProfile();
+        $permissionProfile3 = new PermissionProfile($this->dm);
         $permissionProfile3->setName('test3');
         $permissionProfile3->setSystem(true);
         $permissionProfile3->setDefault(false);
@@ -85,7 +85,7 @@ class PermissionProfileRepositoryTest extends WebTestCase
         $this->assertCount(2, $this->repo->findByDefault(false));
         $this->assertEquals($permissionProfile1, $this->repo->findOneByDefault(true));
 
-        $permissionProfile4 = new PermissionProfile();
+        $permissionProfile4 = new PermissionProfile($this->dm);
         $permissionProfile4->setName('test4');
         $permissionProfile4->setSystem(false);
         $permissionProfile4->setDefault(true);
@@ -108,23 +108,23 @@ class PermissionProfileRepositoryTest extends WebTestCase
                                            'description' => 'Access One'
                                            )
                                      );
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
 
         $this->assertNull($this->repo->findDefaultCandidate($totalPermissions));
 
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_LIVE_CHANNELS);
-        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1 = new PermissionProfile($this->dm);
         $permissionProfile1->setName('test1');
         $permissionProfile1->setPermissions($permissions1);
 
         $permissions2 = array();
-        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2 = new PermissionProfile($this->dm);
         $permissionProfile2->setName('test2');
         $permissionProfile2->setPermissions($permissions2);
 
         $permissions3 = array(Permission::ACCESS_DASHBOARD);
-        $permissionProfile3 = new PermissionProfile();
+        $permissionProfile3 = new PermissionProfile($this->dm);
         $permissionProfile3->setName('test3');
         $permissionProfile3->setPermissions($permissions3);
 
@@ -141,17 +141,17 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
     public function testRank()
     {
-        $permissionProfile1 = new PermissionProfile();
+        $permissionProfile1 = new PermissionProfile($this->dm);
         $permissionProfile1->setName('test1');
         $permissionProfile1->setSystem(true);
         $permissionProfile1->setDefault(true);
 
-        $permissionProfile2 = new PermissionProfile();
+        $permissionProfile2 = new PermissionProfile($this->dm);
         $permissionProfile2->setName('test2');
         $permissionProfile2->setSystem(true);
         $permissionProfile2->setDefault(false);
 
-        $permissionProfile3 = new PermissionProfile();
+        $permissionProfile3 = new PermissionProfile($this->dm);
         $permissionProfile3->setName('test3');
         $permissionProfile3->setSystem(true);
         $permissionProfile3->setDefault(false);

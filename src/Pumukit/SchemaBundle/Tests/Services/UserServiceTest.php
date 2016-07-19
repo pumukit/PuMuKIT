@@ -39,7 +39,7 @@ class UserServiceTest extends WebTestCase
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
-        $permissionService = new PermissionService();
+        $permissionService = new PermissionService($this->dm);
         $permissionProfileService = new PermissionProfileService(
             $this->dm, $permissionProfileDispatcher,
             $permissionService

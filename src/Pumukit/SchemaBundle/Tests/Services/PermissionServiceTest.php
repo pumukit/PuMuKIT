@@ -16,6 +16,8 @@ class PermissionServiceTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+
         $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
     }
@@ -30,7 +32,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetExternalPermissions()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
 
         $this->assertEquals($externalPermissions, $permissionService->getExternalPermissions());
     }
@@ -46,7 +48,7 @@ class PermissionServiceTest extends WebTestCase
             'role' => 'ROLE_FOUR',
             'description' => 'Access Four',
         );
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
     }
 
     /**
@@ -60,13 +62,13 @@ class PermissionServiceTest extends WebTestCase
             'role' => 'INVALID_NAME',
             'description' => 'Invalid Name',
         );
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
     }
 
     public function testGetLocalPermissions()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
 
         $this->assertEquals(Permission::$permissionDescription, $permissionService->getLocalPermissions());
     }
@@ -74,7 +76,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetAllPermissions()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
 
         $allPermissions = array_map(function($a){
             return $a['description'];
@@ -90,7 +92,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetAllDependencies()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
         $allDependencies = array_map(function($a){
             return $a['dependencies'];
         }, Permission::$permissionDescription);
@@ -118,7 +120,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetDependenciesByScope()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
 
         $this->assertEquals(array('ROLE_TWO', 'ROLE_THREE'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
         $this->assertEquals(array('ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
@@ -137,7 +139,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetDependenciesByScopeInvalidPermission()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
         $dependencies = $permissionService->getDependenciesByScope('ROLE_DOESNTEXIST', PermissionProfile::SCOPE_PERSONAL);
     }
 
@@ -148,7 +150,7 @@ class PermissionServiceTest extends WebTestCase
     public function testGetDependenciesByScopeInvalidScope()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
         $dependencies = $permissionService->getDependenciesByScope($externalPermissions[3]['role'], 'NO_SCOPE');
     }
 
@@ -168,7 +170,7 @@ class PermissionServiceTest extends WebTestCase
         );
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = $erroringPermission;
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
     }
 
     /**
@@ -183,7 +185,7 @@ class PermissionServiceTest extends WebTestCase
                                            'description' => 'Not valid'
                                            )
                                      );
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
     }
 
     private function getExternalPermissions()
