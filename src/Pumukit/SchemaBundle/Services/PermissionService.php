@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class PermissionService
 {
+    private $repo;
     private $externalPermissions;
     private $allPermissions;
 
@@ -16,8 +17,9 @@ class PermissionService
      *
      * @param array $externalPermissions
      */
-    public function __construct(array $externalPermissions = array())
+    public function __construct(DocumentManager $documentManager, array $externalPermissions = array())
     {
+        $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Tag');
         $this->externalPermissions = $externalPermissions;
         $this->allPermissions = $this->buildAllDependencies();
     }
@@ -36,6 +38,29 @@ class PermissionService
     public function getLocalPermissions()
     {
         return Permission::$permissionDescription;
+    }
+
+    /**
+     * Get local permissions
+     */
+    public function getPubTagsPermissions()
+    {
+        $return = array();
+        $tag = $this->repo->findOneByCod("PUBCHANNELS");
+        if (!$tag) return $return;
+
+        foreach($tag->getChildren() as $pubchannel) {
+            $return['ROLE_TAG_DISABLE_' . $pubchannel->getCod()] = array(
+                'description' => 'Disable publication channel ' . $pubchannel->getTitle(),
+                'dependencies' => array(
+                    PermissionProfile::SCOPE_GLOBAL => array(),
+                    PermissionProfile::SCOPE_PERSONAL => array()
+                )
+            );
+        }
+
+        return $return;
+
     }
 
     /**
@@ -79,7 +104,7 @@ class PermissionService
             PermissionProfile::SCOPE_GLOBAL => array(),
             PermissionProfile::SCOPE_PERSONAL => array()
         );
-        $allPermissions = $this->getLocalPermissions();
+        $allPermissions = $this->getLocalPermissions() + $this->getPubTagsPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
             if(array_key_exists($externalPermission['role'], $allPermissions))
                 throw new \RuntimeException(sprintf('The permission with role \'%s\' is duplicated. Please check the configuration.', $externalPermission['role']));

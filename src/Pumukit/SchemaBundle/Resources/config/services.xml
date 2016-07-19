@@ -108,6 +108,7 @@
         </service>
 
         <service id="pumukitschema.permission" class="Pumukit\SchemaBundle\Services\PermissionService">
+          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument>%pumukitschema.external_permissions%</argument>
         </service>
 
