@@ -73,6 +73,15 @@ class PermissionService
         },$this->allPermissions);
     }
 
+    /**
+     * Get permissions for super admin (see RoleHierarchy)
+     */
+    public function getPermissionsForSuperAdmin()
+    {
+        return array_keys($this->externalPermissions) + array_keys($this->getLocalPermissions());
+    }
+
+
 
     /**
      * Get all dependencies
