@@ -42,7 +42,10 @@ class SeriesController extends AdminController implements NewAdminController
             $this->get('session')->remove('admin/series/id');
         }
 
-        return array('series' => $resources);
+        return array(
+            'series' => $resources,
+            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew')
+        );
     }
 
     /**

@@ -59,9 +59,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         return array(
-                     'series' => $series,
-                     'mms' => $mms
-                     );
+            'series' => $series,
+            'mms' => $mms,
+            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew')
+        );
     }
 
     /**
