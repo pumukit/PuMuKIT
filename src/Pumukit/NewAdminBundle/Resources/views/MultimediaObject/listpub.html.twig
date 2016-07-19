@@ -10,7 +10,6 @@
                class="pub_channel_input_checkbox"
                {{ status ? 'checked="checked"' : '' }}
                {{ disabled ? 'disabled="disabled"' : '' }}
-               {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
                />
         {{ pub.getTitle() }}
 
@@ -19,12 +18,6 @@
           <i class="mdi-action-info"></i>
         </a>
         {% endif %}
-
-        {# TODO <?php if ($estado === 2):?>
-        <span style="font-size: 80%; font-style:italic;"><?php echo __('(Se  estan codificando los archivos necesarios)')?></span>
-        <?php elseif ($estado === 5):?>
-        <span style="font-size: 80%; font-style:italic;"><?php echo __('(Esperando máster para codificar los archivos necesarios)')?></span>
-        <?php endif ?> #}
 
         </label>
       </div>
