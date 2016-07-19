@@ -515,18 +515,24 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     protected function updateTags($checkedTags, $codStart, $resource)
     {
         if (null !== $checkedTags) {
-          foreach ($resource->getTags() as $tag) {
-              if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) && (!in_array($tag->getCod(), $checkedTags))) {
-                  $resource->removeTag($tag);
-              }
-          }
-          foreach ($checkedTags as $cod => $checked) {
-            $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
-            $resource->addTag($tag);
-          }
+            foreach ($resource->getTags() as $tag) {
+                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) &&
+                    (!in_array($tag->getCod(), $checkedTags)) &&
+                    (!$this->isGranted('ROLE_TAG_DISABLE_' . $tag->getCod()))) {
+                    $resource->removeTag($tag);
+                }
+            }
+            foreach ($checkedTags as $cod => $checked) {
+                if (!$this->isGranted('ROLE_TAG_DISABLE_' . $cod)) {
+                    $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
+                    $resource->addTag($tag);
+                }
+            }
         } else {
             foreach ($resource->getTags() as $tag) {
-                if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart))) {
+                if ((0 == strpos($tag->getCod(), $codStart)) &&
+                    (false !== strpos($tag->getCod(), $codStart)) &&
+                    (!$this->isGranted('ROLE_TAG_DISABLE_' . $tag->getCod()))) {
                     $resource->removeTag($tag);
                 }
             }
