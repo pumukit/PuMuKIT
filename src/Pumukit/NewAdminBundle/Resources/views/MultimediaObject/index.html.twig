@@ -31,7 +31,7 @@
             <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
             <option disabled="">---</option>
             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-            <option value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
+            <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
             <option disabled="">---</option>
             <option value="order_pub_date_desc">{% trans %}List multimedia objects in descending order of publication date{% endtrans %}</option>
             <option value="order_pub_date_asc">{% trans %}List multimedia objects in ascending order of publication date{% endtrans %}</option>
