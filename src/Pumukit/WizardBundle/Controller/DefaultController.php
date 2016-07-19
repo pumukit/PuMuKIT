@@ -427,11 +427,17 @@ class DefaultController extends Controller
      */
     private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
     {
+        $addedTags = array();
+
+        if ($this->isGranted('ROLE_TAG_DISABLE_' . $tagCode)) {
+            return $addedTags;
+        }
+
         $tagService = $this->get('pumukitschema.tag');
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
-        $addedTags = array();
+
 
         $tag = $tagRepo->findOneByCod($tagCode);
         if ($tag) $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());

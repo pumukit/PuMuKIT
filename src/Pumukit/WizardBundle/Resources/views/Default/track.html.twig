@@ -50,19 +50,21 @@
           {% endfor %}
         </div>
         {% endif %}
-	    <div class="form-group" id="pumukitwizard_track_pubchannel">
-	      <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
+        <div class="form-group" id="pumukitwizard_track_pubchannel">
+          <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
           {% for pub in pub_channels %}
-          {% if not pub.getDisplay() %}
-          <div style="color: grey">
-            <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
+          {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod) %}
+          <div style="color: grey" class="checkbox">
+            <label>
+              <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
+            </label>
           </div>
           {% else %}
           <div class="checkbox">
             <label>
               <input type="checkbox"
                      name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
-	                 id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
+                     id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
                      class="pub_channel_input_checkbox"
                      {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
                      />
@@ -71,10 +73,10 @@
           </div>
           {% endif %}
           {% endfor %}
-	    </div>
+        </div>
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_priority">
-          <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
+          <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
           <div class="radio">
             <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
           </div>
@@ -141,7 +143,7 @@
 <script type="text/javascript">
 {# USED to integrate with Moodle#}
 (function(){
-  var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled'); 
+  var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled');
   if (aux) {
     $('#pumukitwizard_track_pubchannel_'+ aux).prop('checked', true)
   }
