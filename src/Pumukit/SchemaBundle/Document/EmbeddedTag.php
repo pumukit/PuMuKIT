@@ -455,7 +455,7 @@ class EmbeddedTag
       {
           return true;
       }
-      return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;     
+      return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
   }
 
 
@@ -475,5 +475,13 @@ class EmbeddedTag
       }
 
       throw new \InvalidArgumentException('Only Tag or EmbeddedTag are allowed.');
+  }
+
+  /**
+   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office)
+   */
+  public function isPubTag()
+  {
+    return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
   }
 }

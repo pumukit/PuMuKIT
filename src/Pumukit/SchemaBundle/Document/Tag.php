@@ -585,4 +585,12 @@ class Tag
   {
     $this->properties[$key] = $value;
   }
+
+  /**
+   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office)
+   */
+  public function isPubTag()
+  {
+    return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
+  }
 }

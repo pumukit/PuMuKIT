@@ -112,8 +112,6 @@ class TagService
      */
     public function resetTags(array $mmobjs, array $tags)
     {
-        $modifyTags = array();
-
         foreach($mmobjs as $mmobj) {
             if (!$mmobj->isPrototype()) {
                 foreach($mmobj->getTags() as $originalEmbeddedTag) {
@@ -199,5 +197,43 @@ class TagService
         }
 
         return $embeddedTag;
+    }
+
+    /**
+     * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags
+     *
+     * @param array[MultimediaObject] $mmobjs
+     * @param array[string] $tags
+     */
+    public function resetCategories(array $mmobjs, array $newTags)
+    {
+        foreach($mmobjs as $mmobj) {
+            foreach($mmobj->getTags() as $originalEmbeddedTag) {
+                if($originalEmbeddedTag->isPubTag()){
+                    continue;
+                }
+                $mmobj->removeTag($originalEmbeddedTag);
+                if (!$mmobj->isPrototype() ) {
+                    $originalTag = $this->repository->find($originalEmbeddedTag->getId());
+                    $originalTag->decreaseNumberMultimediaObjects();
+                    $this->dm->persist($originalTag);
+                }
+            }
+            foreach($newTags as $newEmbeddedTag) {
+                if($newEmbeddedTag->isPubTag()){
+                    continue;
+                }
+                $mmobj->addTag($newEmbeddedTag);
+                if (!$mmobj->isPrototype() ) {
+                    $tag = $this->repository->find($newEmbeddedTag->getId());
+                    $tag->increaseNumberMultimediaObjects();
+                    $this->dm->persist($tag);
+                }
+            }
+
+            $this->dm->persist($mmobj);
+            $this->dispatcher->dispatchUpdate($mmobj);
+            $this->dm->flush(); //May cause performance issues in the future.
+        }
     }
 }

@@ -831,7 +831,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
         $tags = $multimediaObject->getTags()->toArray();
-        $this->get('pumukitschema.tag')->resetTags($mms, $tags);
+        $this->get('pumukitschema.tag')->resetCategories($mms, $tags);
 
         return new JsonResponse("");
     }
