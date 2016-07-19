@@ -39,14 +39,6 @@ class PermissionService
     }
 
     /**
-     * Get local dependencies
-     */
-    public function getLocalDependencies()
-    {
-        return Permission::$permissionDependencies;
-    }
-
-    /**
      * Get all permissions
      */
     public function getAllPermissions()
