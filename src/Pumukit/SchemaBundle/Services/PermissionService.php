@@ -19,7 +19,6 @@ class PermissionService
     public function __construct(array $externalPermissions = array())
     {
         $this->externalPermissions = $externalPermissions;
-        $this->allPermissions = $this->buildAllPermissions();
         $this->allPermissions = $this->buildAllDependencies();
     }
 
@@ -115,10 +114,10 @@ class PermissionService
      */
     private function buildAllDependencies()
     {
-        $allPermissions = $this->allPermissions;
+        $allPermissions = $this->buildAllPermissions();
         foreach($allPermissions as $role => $permission) {
             foreach($permission['dependencies'] as $scope => $dependencies) {
-                $allPermissions[$role]['dependencies'][$scope] = $this->buildDependenciesByScope($role, $scope);
+                $allPermissions[$role]['dependencies'][$scope] = $this->buildDependenciesByScope($role, $scope, $allPermissions);
             }
         }
         return $allPermissions;
@@ -129,22 +128,23 @@ class PermissionService
      *
      * @param string $permission
      * @param string $scope
+     * @param array $allPermissions
      */
-    private function buildDependenciesByScope($permission, $scope)
+    private function buildDependenciesByScope($permission, $scope, array $allPermissions)
     {
-        if(!array_key_exists($permission, $this->allPermissions))
+        if(!array_key_exists($permission, $allPermissions))
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         if(!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL)))
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
 
-        $dependencies = $this->allPermissions[$permission]['dependencies'][$scope];
+        $dependencies = $allPermissions[$permission]['dependencies'][$scope];
         $dependencies = array_diff($dependencies, array($permission));
 
         reset($dependencies);
         while(($elem = each($dependencies)) !== false) {
-            if(!array_key_exists($elem['value'], $this->allPermissions))
+            if(!array_key_exists($elem['value'], $allPermissions))
                 throw new \InvalidArgumentException(sprintf('The permission with role \'%s\' does not exist in the configuration', $elem['value']));
-            foreach($this->allPermissions[$elem['value']]['dependencies'][$scope] as $newDep) {
+            foreach($allPermissions[$elem['value']]['dependencies'][$scope] as $newDep) {
                 if($newDep != $permission && !in_array($newDep, $dependencies)) {
                     $dependencies[] = $newDep;
                 }
