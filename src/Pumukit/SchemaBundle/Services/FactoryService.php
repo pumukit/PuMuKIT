@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Security\Permission;
 
 class FactoryService
 {
@@ -165,7 +166,12 @@ class FactoryService
         }
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
-        $mm->setStatus(MultimediaObject::STATUS_BLOQ);
+
+        if ($loggedInUser && $loggedInUser->hasRole(Permission::INIT_STATUS_PUBLISHED)) {
+            $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        }else{
+            $mm->setStatus(MultimediaObject::STATUS_BLOQ);
+        }
 
         $mm->setSeries($series);
         $series->addMultimediaObject($mm);

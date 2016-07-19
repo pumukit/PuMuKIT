@@ -29,6 +29,7 @@ class Permission
     const ACCESS_API = 'ROLE_ACCESS_API';
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
+    const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
 
     public static $permissionDescription = array(
         Permission::ACCESS_DASHBOARD => array(
@@ -180,6 +181,13 @@ class Permission
         ),
         Permission::MODIFY_OWNER => array(
             'description' => "Modify Owners & Groups",
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array()
+            )
+        ),
+        Permission::INIT_STATUS_PUBLISHED => array(
+            'description' => "Init Multimedia Objects in published status",
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
