@@ -108,7 +108,7 @@ class PermissionProfileRepositoryTest extends WebTestCase
                                            'description' => 'Access One'
                                            )
                                      );
-        $permissionService = new PermissionService($externalPermissions);
+        $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
 
         $this->assertNull($this->repo->findDefaultCandidate($totalPermissions));

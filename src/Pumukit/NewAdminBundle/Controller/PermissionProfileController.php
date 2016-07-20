@@ -69,7 +69,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
         list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
-        
+
 
         return array(
                      'permissionprofiles' => $permissionProfiles,
@@ -226,12 +226,13 @@ class PermissionProfileController extends AdminController implements NewAdminCon
                 $newDefaultPermissionProfile = $permissionProfileService->update($newDefaultPermissionProfile);
             }
         }
-        $notSystemPermissionProfiles = $repo->findBySystem(false);
+
+        $allPermissionProfiles = $this->isGranted('ROLE_SUPER_ADMIN') ? $repo->findAll() : $repo->findBySystem(false);
 
         //Doing a batch update for all checked profiles. This will remove everything except the checked permissions.
         $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);
         foreach ($permissionProfiles as $profileId => $p) {
-            $permissionProfile = $this->findPermissionProfile($notSystemPermissionProfiles, $profileId);
+            $permissionProfile = $this->findPermissionProfile($allPermissionProfiles, $profileId);
             if (null == $permissionProfile)
                 continue;
             try {

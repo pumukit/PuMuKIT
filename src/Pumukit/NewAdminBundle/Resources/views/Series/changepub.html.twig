@@ -19,12 +19,12 @@
                 <th></th>
                 <th>{% trans %}Title{% endtrans %}</th>
                 {# TODO  sf_user.getAttribute(user_type_id, 1) is 0 #}
-	            {% if true %}
+                {% if true %}
                 <th>{% trans %}Status{% endtrans %}</th>
                 {% endif %}
                 {% for channel in pub_channels %}
-                <th style="{{ channel.display ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
-	            {% endfor %}
+                <th style="{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod)) ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
+                {% endfor %}
               </tr>
             </thead>
             <tbody>
@@ -38,12 +38,12 @@
                 </td>
                 <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
                 {# TODO sf_user getAttribute('user_type_id', 1) is 0 #}
-	            {% if true %}
+                {% if true %}
                 <td>
                   <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
                                     if (status_selected.length != 0){
-				                        $('select.status_change_pub').each(function(){$(this).val(status_selected)});
-				                    }"
+                                        $('select.status_change_pub').each(function(){$(this).val(status_selected)});
+                                    }"
                           id="all_status_change_pub" class="form-control">
                     <option selected="selected"></option>
                     <option value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
@@ -53,11 +53,11 @@
                 </td>
                 {% endif %}
                 {% for channel in pub_channels %}
-	            <td>
+                <td>
                   <div class="checkbox">
                     <label>
                       <input type="checkbox"
-                             {% if not channel.display %}
+                             {% if not channel.display or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod) %}
                              disabled="disabled"
                              {% else %}
                              onclick="window.click_checkbox_channel_changepub_all('{{ channel.id }}', this.checked);"
@@ -67,9 +67,9 @@
                     </label>
                   </div>
                 </td>
-	            {% endfor %}
+                {% endfor %}
               </tr>
-              
+
               {% for mm in series.getMultimediaObjects() %}
               <tr {{ (mm.status == mm_status.published) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
                 <td>
@@ -81,7 +81,7 @@
                 </td>
                 <td>{{ mm.getTitle() }}</td>
                 {# TODO sf_usergetAttribute('user_type_id', 1) is 0 #}
-	            {% if true %}
+                {% if true %}
                 <td>
                   <select name="data[{{ mm.id }}][status]" id="status_change_pub_{{ mm.id }}" class="status_change_pub form-control">
                     <option {{ ((mm_status.published) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
@@ -90,9 +90,9 @@
                   </select>
                 </td>
                 {% endif %}
-                
-	            {% for channel in pub_channels %}
-	            {% if not channel.display %}
+
+                {% for channel in pub_channels %}
+                {% if not channel.display or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod) %}
                 <td>
                   <div class="checkbox">
                     <label>
@@ -116,7 +116,7 @@
                   </div>
                 </td>
                 {% endif %}
-                {% endfor %}                
+                {% endfor %}
               </tr>
               {% endfor %}
             </tbody>

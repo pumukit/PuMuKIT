@@ -2214,12 +2214,12 @@ processPermissionProfilesOk = function(){
             selected_default = $this.attr("value");
     });
     var selected_scopes = [];
-    $('select.not_system option:selected').each(function(){
+    $('select.permissionprofile_scope:not([disabled]) option:selected').each(function(){
             var $this = $(this);
             selected_scopes.push($this.attr("value"));
     });
     var checked_permissions = [];
-    $('.not_system_permission_permissionprofile_checkbox:checked').each(function(){
+    $('.permission_permissionprofile_checkbox:checked:not([disabled])').each(function(){
             var $this = $(this);
             checked_permissions.push($this.attr("id"));
     });
@@ -2243,7 +2243,7 @@ processPermissionProfilesOk = function(){
     return false;
 }
 
-$(document).on('click', '.not_system_permission_permissionprofile_checkbox', function(event){
+$(document).on('click', '.permission_permissionprofile_checkbox:not([disabled])', function(event){
     var element = event.target;
     var checkedElement = element.checked;
     var elementId = element.id.split('__')[1];

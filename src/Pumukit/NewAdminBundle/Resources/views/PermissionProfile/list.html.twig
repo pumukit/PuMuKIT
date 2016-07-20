@@ -86,14 +86,16 @@
           {% for permissionprofile in permissionprofiles %}
           <td></td>
           <td>
-            <div class="checkbox{{ (permissionprofile.system or (permissionprofile.scope == constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE'))) ? ' pmk_disabled_checkbox'}}">
+            <div class="checkbox {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' pmk_disabled_checkbox'}}">
               <label>
                 <input id="{{ key }}__{{ permissionprofile.id }}__permission"
                        data-dependencies-global="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
                        data-dependencies-personal="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
                        form="pumukitnewadmin_permissionprofile_table_form"
-                       class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox"
-                       type="checkbox" size="1"{{ permissionprofile.containsPermission(key) ? ' checked="checked"':'' }}{{ (permissionprofile.system or (permissionprofile.scope == constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_NONE'))) ? ' disabled="disabled"':'' }}>
+                       class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox permission_permissionprofile_checkbox"
+                       type="checkbox" size="1"
+                       {{ permissionprofile.containsPermission(key) ? 'checked=" checked"':'' }}
+                       {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' disabled="disabled"':'' }}>
               </label>
             </div>
           </td>
