@@ -394,6 +394,18 @@
         <source>Enter pass</source>
         <target>Introducir contrasinal</target>
       </trans-unit>
+      <trans-unit id="1f4fbbcdcace47febd8ff3d588f658c6" resname="General %title%">
+        <source>General %title%</source>
+        <target>Xeneral %title%</target>
+      </trans-unit>
+      <trans-unit id="92c97d0ec6ab4e90a6d40a96d4ea37e1" resname="Multimedia objects with tag: %title%">
+        <source>Multimedia objects with tag: %title%</source>
+        <target>Objetos con categoría: %title%</target>
+      </trans-unit>
+      <trans-unit id="2b2374bf03e648b88354643a88e99f18" resname="Series with tag: %title%">
+        <source>Series with tag: %title%</source>
+        <target>Series con categoría: %title%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
