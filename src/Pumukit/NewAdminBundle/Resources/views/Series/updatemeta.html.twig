@@ -30,7 +30,7 @@
 
     <div>
       <fieldset>
-        <div class="col-md-7">
+        <div class="col-lg-7">
           {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
             {{ form_row(child) }}
           {% endfor %}
