@@ -1,3 +1,15 @@
+/*Naked css rules*/
+
+{% if app.request.attributes.get('nakedbackoffice_color') %}
+.hidden-naked {
+  display: none !important;
+}
+{% else %}
+.visible-naked {
+  display: none !important;
+}
+{% endif %}
+
 /* Overrided bootstrap .alert */
 .alert {
   line-height: 3.5em;
