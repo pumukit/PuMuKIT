@@ -65,17 +65,17 @@ class SeriesType extends AbstractType
             ->add('i18n_header', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Header Text', array(), null, $this->locale)))
             ->add('i18n_footer', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Footer Text', array(), null, $this->locale)))
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
            ->add('template', 'choice',
                   array(
@@ -84,6 +84,7 @@ class SeriesType extends AbstractType
                                            'multisubserial' => 'multisubserial', ),
                         'empty_data' => null,
                         'mapped' => false,
+                        'attr' => array('groupclass' => 'hidden-naked'),
                         'required' => true,
                         'label' => $this->translator->trans('Template', array(), null, $this->locale), ));
 

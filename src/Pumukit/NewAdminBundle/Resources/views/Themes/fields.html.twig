@@ -177,7 +177,7 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
@@ -185,7 +185,7 @@
 {%- endblock form_row %}
 
 {% block button_row -%}
-    <div class="form-group">
+    <div class="form-group {{attr.groupclass|default('') }}">
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row %}
@@ -211,14 +211,14 @@
 {%- endblock datetime_row %}
 
 {% block checkbox_row -%}
-    <div class="form-group{% if not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} form-group{% if not valid %} has-error{% endif %}">
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>
 {%- endblock checkbox_row %}
 
 {% block radio_row -%}
-    <div class="form-group{% if not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} form-group{% if not valid %} has-error{% endif %}">
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>

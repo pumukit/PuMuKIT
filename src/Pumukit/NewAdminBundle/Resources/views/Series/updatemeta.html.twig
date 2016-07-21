@@ -12,8 +12,8 @@
                   success(message);
                   }
                   });
-		  return false;"
-	action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
+          return false;"
+    action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
     <input type="hidden" name="id" id="id" value="{{ series.id }}">
 
@@ -31,65 +31,66 @@
     <div>
       <fieldset>
         <div class="col-md-7">
-	  {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
+          {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
             {{ form_row(child) }}
-	  {% endfor %}
+          {% endfor %}
 
-	  <div class="form-group">
-	    <dl>
-	      <dt>{% trans %}Thumbnails{% endtrans %}</dt>
-	      <dd>
+          <div class="form-group">
+            <dl>
+              <dt>{% trans %}Thumbnails{% endtrans %}</dt>
+              <dd>
                 <div id="pic_series_{{ series.id }}">
-		  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
+                  {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': series, 'resource_name': 'series'} %}
                 </div>
-	      </dd>
-	    </dl>
-	  </div>
+              </dd>
+            </dl>
+          </div>
 
-	  <div class="form-group">
-	    <a style="color:#666; text-decoration:underline" href="#"
-	       onclick="$('#pumukitnewadmin_series_header_banner').toggle();
-                        $('#pumukitnewadmin_series_i18n_header').toggle();
-                        $('#pumukitnewadmin_series_i18n_footer').toggle();
-                        $('#html_text_arr_1').toggle();
-                        $('#html_text_arr_2').toggle();
-                        return false;">
-	      <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
-	      {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %} <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to show or add header/banner and footer{% endtrans %}"></i>
-            </a>
-	    </a>
-	  </div>
+          <div class="hidden-naked">
+            <div class="form-group">
+              <a style="color:#666; text-decoration:underline" href="#"
+                 onclick="$('#pumukitnewadmin_series_header_banner').toggle();
+                          $('#pumukitnewadmin_series_i18n_header').toggle();
+                          $('#pumukitnewadmin_series_i18n_footer').toggle();
+                          $('#html_text_arr_1').toggle();
+                          $('#html_text_arr_2').toggle();
+                          return false;">
+                <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
+                {% trans %}Show configuration{% endtrans %} <strong>HTML</strong> {% trans %}Texts.{% endtrans %}
+                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to show or add header/banner and footer{% endtrans %}"></i>
+              </a>
+            </div>
 
-	  {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
-	    <div class="form-group" style="display:none" id="{{ child.vars.id }}">
+            {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_header']) %}
+            <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
               <div>
                 <a href="{{ path('pumukitnewadmin_seriespic_banner', {'id': series.id}) }}" style="float: right;" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Add banner{% endtrans %}</a>
               </div>
-	      <label for="header" class="control-label">{{ child.vars.label }}</label>
-	      <diV>
+              <label for="header" class="control-label">{{ child.vars.label }}</label>
+              <div>
                 {{ form_widget(child) }}
-	      </div>
-	    </div>
-          {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
 
-	  {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
-	    <div class="form-group" style="display:none" id="{{ child.vars.id }}">
-	      <label for="header" class="control-label">{{ child.vars.label }}</label>
-	      <diV>
+            {% for child in form if (child.vars.id in ['pumukitnewadmin_series_i18n_footer']) %}
+            <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
+              <label for="header" class="control-label">{{ child.vars.label }}</label>
+              <div>
                 {{ form_widget(child) }}
-	      </div>
-	    </div>
-          {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
 
-	  {{ form_row(form['i18n_line2']) }}
+            {{ form_row(form['i18n_line2']) }}
 
-          {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
-	  {% for child in form if (child.vars.id not in exclude_fields and not child.rendered) %}
+            {# This iterates over all children except for the excluded ones. form_widget doesn't print the same field twice, so it works ala form_rest(form) #}
+            {% for child in form if (child.vars.id not in exclude_fields and not child.rendered) %}
             {{ form_row(child) }}
-          {% endfor %}
+            {% endfor %}
+          </div>
         </div>
       </fieldset>
     </div>
-
   </form>
 </div>

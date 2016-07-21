@@ -47,7 +47,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale)));
     }
 
