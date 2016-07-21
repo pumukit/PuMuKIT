@@ -429,7 +429,7 @@ class DefaultController extends Controller
     {
         $addedTags = array();
 
-        if ($this->isGranted('ROLE_TAG_DISABLE_' . $tagCode)) {
+        if ($this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tagCode)) {
             return $addedTags;
         }
 

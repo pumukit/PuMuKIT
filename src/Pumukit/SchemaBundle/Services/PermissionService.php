@@ -50,8 +50,16 @@ class PermissionService
         if (!$tag) return $return;
 
         foreach($tag->getChildren() as $pubchannel) {
-            $return['ROLE_TAG_DISABLE_' . $pubchannel->getCod()] = array(
-                'description' => 'Disable publication channel ' . $pubchannel->getTitle(),
+            $return[Permission::PREFIX_ROLE_TAG_DISABLE . $pubchannel->getCod()] = array(
+                'description' => 'Publication channel "' . $pubchannel->getTitle() . '" disabled',
+                'dependencies' => array(
+                    PermissionProfile::SCOPE_GLOBAL => array(),
+                    PermissionProfile::SCOPE_PERSONAL => array()
+                )
+            );
+
+            $return[Permission::PREFIX_ROLE_TAG_DEFAULT . $pubchannel->getCod()] = array(
+                'description' => 'Publication channel "' . $pubchannel->getTitle() . '" activated by default',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),
                     PermissionProfile::SCOPE_PERSONAL => array()
@@ -78,7 +86,16 @@ class PermissionService
      */
     public function getPermissionsForSuperAdmin()
     {
-        return array_keys($this->externalPermissions) + array_keys($this->getLocalPermissions());
+        $permissions = array();
+        foreach ($this->externalPermissions as $perm) {
+            $permissions[] = $perm['role'];
+        }
+
+        foreach ($this->getLocalPermissions() as $role => $perm) {
+            $permissions[] = $role;
+        }
+
+        return $permissions;
     }
 
 

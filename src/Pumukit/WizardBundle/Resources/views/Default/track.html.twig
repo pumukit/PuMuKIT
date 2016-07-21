@@ -56,7 +56,10 @@
           {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod) %}
           <div style="color: grey" class="checkbox">
             <label>
-              <input type="checkbox" disabled="disabled" />  {{ pub.getTitle() }}
+              <input type="checkbox"
+                     disabled="disabled"
+                     {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod) %}checked="checked"{% endif %}
+                     />  {{ pub.getTitle() }}
             </label>
           </div>
           {% else %}
@@ -66,7 +69,7 @@
                      name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
                      id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
                      class="pub_channel_input_checkbox"
-                     {# TODO <?php echo(($estado === 2) || ($estado === 2)) ? 'disabled="disabled"' : ''?> #}
+                     {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod) %}checked="checked"{% endif %}
                      />
               {{ pub.getTitle() }}
             </label>

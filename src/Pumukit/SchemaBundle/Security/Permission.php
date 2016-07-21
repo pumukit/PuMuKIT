@@ -194,4 +194,38 @@ class Permission
             )
         ),
     );
+
+
+    const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
+
+    public static function isRoleTagDefaul($role)
+    {
+        return 0 === strpos($role, self::PREFIX_ROLE_TAG_DEFAULT);
+    }
+
+    public static function getPubChannelForRoleTagDefaul($role)
+    {
+        if (self::isRoleTagDefaul($role)) {
+            return substr($role, strlen(self::PREFIX_ROLE_TAG_DEFAULT));
+        }
+
+        return false;
+    }
+
+
+    const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
+
+    public static function isRoleTagDisable($role)
+    {
+        return 0 === strpos($role, self::PREFIX_ROLE_TAG_DISABLE);
+    }
+
+    public static function getPubChannelForRoleTagDisable($role)
+    {
+        if (self::isRoleTagDisable($role)) {
+            return substr($role, strlen(self::PREFIX_ROLE_TAG_DISABLE));
+        }
+
+        return false;
+    }
 }
