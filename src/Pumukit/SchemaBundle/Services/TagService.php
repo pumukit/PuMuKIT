@@ -32,12 +32,44 @@ class TagService
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
     {
-        $tagAdded = array();
-
         $tag = $this->repository->find($tagId);
         if (!$tag) {
             throw new \Exception("Tag with id ".$tagId." not found.");
         }
+
+        return $this->addTag($mmobj, $tag, $executeFlush);
+    }
+
+    /**
+     * Add Tag to Multimedia Object
+     *
+     * @param  MultimediaObject $mmobj
+     * @param  string           $tagCod
+     * @param  boolean          $executeFlush
+     * @return Array[Tag]       addded tags
+     */
+    public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush=true)
+    {
+
+        $tag = $this->repository->findOneByCod($tagCod);
+        if (!$tag) {
+            throw new \Exception("Tag with id ".$tagId." not found.");
+        }
+
+        return $this->addTag($mmobj, $tag, $executeFlush);
+    }
+
+    /**
+     * Add Tag to Multimedia Object
+     *
+     * @param  MultimediaObject $mmobj
+     * @param  Tag              $tag
+     * @param  boolean          $executeFlush
+     * @return Array[Tag]       addded tags
+     */
+    public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush=true)
+    {
+        $tagAdded = array();
 
         if( $mmobj->containsTag($tag)) {
             return $tagAdded;
