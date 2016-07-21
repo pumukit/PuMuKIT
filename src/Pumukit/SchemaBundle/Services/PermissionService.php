@@ -57,6 +57,14 @@ class PermissionService
                     PermissionProfile::SCOPE_PERSONAL => array()
                 )
             );
+
+            $return[Permission::PREFIX_ROLE_TAG_DEFAULT . $pubchannel->getCod()] = array(
+                'description' => 'Publication channel "' . $pubchannel->getTitle() . '" activated by default',
+                'dependencies' => array(
+                    PermissionProfile::SCOPE_GLOBAL => array(),
+                    PermissionProfile::SCOPE_PERSONAL => array()
+                )
+            );
         }
 
         return $return;
