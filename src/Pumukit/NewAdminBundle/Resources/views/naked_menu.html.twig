@@ -19,7 +19,7 @@
 {% set series_active = route_name in series_routes %}
 {% set playlist_active = route_name in playlist_routes %}
 
-<div class="col-md-10">
+<div class="col-md-12">
   <ul class="nav nav-tabs title-tabs">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
       <li {{series_active ? "class=\"active\"":""}}>
