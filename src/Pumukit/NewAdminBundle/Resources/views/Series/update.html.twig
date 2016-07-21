@@ -31,12 +31,13 @@
     </div>
   </div>
 
+
   <div role="tabpanel">
     <ul id="seriesTab" class="nav nav-tabs" role="tablist">
       <li class="active">
         <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Series Metadata{% endtrans %}</a>
       </li>
-      {% if mmtemplate %}
+      {% if mmtemplate and not is_naked() %}
       <li>
         <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Videos Metadata Template{% endtrans %}</a>
       </li>
@@ -47,7 +48,7 @@
       <div id="editSeries" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
       </div>
-      {% if mmtemplate %}
+      {% if mmtemplate and not is_naked() %}
       <div id="editTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
       </div>

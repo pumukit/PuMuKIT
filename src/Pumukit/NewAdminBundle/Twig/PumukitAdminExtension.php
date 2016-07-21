@@ -582,7 +582,7 @@ class PumukitAdminExtension extends \Twig_Extension
     public function isNaked(\Twig_Environment $env)
     {
         if (isset($env->getGlobals()['app'])) {
-            return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice');
+            return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice', false);
         }
         return false;
     }
