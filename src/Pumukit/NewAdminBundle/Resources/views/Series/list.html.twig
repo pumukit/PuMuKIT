@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        <th colspan="4" width="4%"></th>
+        <th colspan="3" width="4%"></th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
       </tr>
@@ -31,7 +31,7 @@
           <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
           <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
           {% endspaceless %}
-        </td> 
+        </td>
         <td>
           {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
@@ -42,19 +42,18 @@
           {% endif %}
         </td>
         <td>
-	      {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
-        </td>
-        <td>
-	      <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
+          {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           <img src="{{ oneseries|first_url_pic }}" height="23" width="23" />
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
-	      {{ oneseries.getTitle() }}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
+            {{ oneseries.getTitle() }}
+          </a>
         </td>
         <td class="text-nowrap" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
-	      {{ oneseries.getPublicDate()|date('Y-m-d') }}
+          {{ oneseries.getPublicDate()|date('Y-m-d') }}
         </td>
         <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           {{ oneseries|count_multimedia_objects }}
@@ -62,7 +61,7 @@
       </tr>
       {% else %}
       <tr>
-        <td colspan="12">
+        <td colspan="8">
           {% trans %}There are no series with those values.{% endtrans %}
         </td>
       </tr>
@@ -70,7 +69,6 @@
       {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
       {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
       <tr>
-        <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -90,11 +88,11 @@
             <div class="col-md-6">
               {{ series.getNbResults }}
               {% transchoice series.getNbResults %}
-	              {0} series|{1} series|]1,Inf] series
-	            {% endtranschoice %}
-	            {% if app.session.get('admin/series/criteria')|length != 0%}
+                  {0} series|{1} series|]1,Inf] series
+                {% endtranschoice %}
+                {% if app.session.get('admin/series/criteria')|length != 0%}
                 <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	            {% endif %}
+                {% endif %}
             </div>
             <div class="col-md-6 text-right">
               <div class="pagerfanta">
@@ -109,7 +107,7 @@
 
               </div>
             </div>
-          </div>            
+          </div>
         </th>
       </tr>
     </tfoot>
