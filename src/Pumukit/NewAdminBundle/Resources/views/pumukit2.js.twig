@@ -674,12 +674,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
-
-    case 'series_preview':
-        var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
-        var secret = selector.find(':selected').attr('id');
-        if (secret !== '') window.open(url.replace('__mmSecret__', secret));
-        break;
 /* TODO
     case 'serial_master':
     Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
