@@ -78,7 +78,16 @@ class PermissionService
      */
     public function getPermissionsForSuperAdmin()
     {
-        return array_keys($this->externalPermissions) + array_keys($this->getLocalPermissions());
+        $permissions = array();
+        foreach ($this->externalPermissions as $perm) {
+            $permissions[] = $perm['role'];
+        }
+
+        foreach ($this->getLocalPermissions() as $role => $perm) {
+            $permissions[] = $role;
+        }
+
+        return $permissions;
     }
 
 
