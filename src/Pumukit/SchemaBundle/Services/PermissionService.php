@@ -50,8 +50,8 @@ class PermissionService
         if (!$tag) return $return;
 
         foreach($tag->getChildren() as $pubchannel) {
-            $return['ROLE_TAG_DISABLE_' . $pubchannel->getCod()] = array(
-                'description' => 'Disable publication channel ' . $pubchannel->getTitle(),
+            $return[Permission::PREFIX_ROLE_TAG_DISABLE . $pubchannel->getCod()] = array(
+                'description' => 'Publication channel "' . $pubchannel->getTitle() . '" disabled',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),
                     PermissionProfile::SCOPE_PERSONAL => array()
