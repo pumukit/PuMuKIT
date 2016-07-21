@@ -1,7 +1,7 @@
 <div class="well">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <form class="form-horizontal">
           <fieldset>
             <legend>{% trans %}Metadata{% endtrans %}</legend>
@@ -10,8 +10,8 @@
               <div class="col-xs-10 input-group">
                 <input type="text" class="form-control" id="inputROId" readonly onclick="select()" value="{{ series.id }}">
               </div>
-              <label for="inputROUrl" class="col-xs-2 control-label">{% trans %}Preview:{% endtrans %}</label>
-              <div class="col-xs-10 input-group">
+              <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">{% trans %}Preview:{% endtrans %}</label>
+              <div class="col-xs-10 input-group hidden-naked">
                 <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}">
                 <span class="input-group-addon"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
               </div>
