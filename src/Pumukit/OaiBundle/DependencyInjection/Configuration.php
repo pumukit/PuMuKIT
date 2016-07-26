@@ -33,6 +33,10 @@ class Configuration implements ConfigurationInterface
                   ->defaultValue('Sound')
                   ->info('DublinCore type for audio contents. See http://dublincore.org/documents/dcmi-type-vocabulary/#H7')
               ->end()
+              ->booleanNode('use_license_as_dc_rights')
+                  ->defaultFalse()
+                  ->info('Use the object license as dc:rights')
+              ->end()
             ->end()
         ;
 

@@ -329,8 +329,14 @@ class OaiController extends Controller
         $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
         $XMLpublisher->addCDATA('');
         $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
-        $XMLrights = $XMLoai_dc->addChild('dc:rights', $object->getCopyright(), 'http://purl.org/dc/elements/1.1/');
-        $XMLrights->addCDATA('');
+        if ($this->container->getParameter('pumukitoai.use_license_as_dc_rights')) {
+            $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLrights->addCDATA($object->getLicense());
+        } else {
+            $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLrights->addCDATA($object->getCopyright());
+        }
+
 
         $toDom = dom_import_simplexml($XMLmetadata);
         $fromDom = dom_import_simplexml($XMLoai_dc);
