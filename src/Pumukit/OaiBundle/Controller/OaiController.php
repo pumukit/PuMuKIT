@@ -314,7 +314,10 @@ class OaiController extends Controller
         }
 
         foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
-            $XMLoai_dc->addChild('dc:type', 'Moving Image', 'http://purl.org/dc/elements/1.1/');
+            $type = $track->isOnlyAudio() ?
+                $this->container->getParameter('pumukitoai.audio_dc_type') :
+                $this->container->getParameter('pumukitoai.video_dc_type');
+            $XMLoai_dc->addChild('dc:type', $type, 'http://purl.org/dc/elements/1.1/');
             $XMLoai_dc->addChild('dc:format', $track->getMimeType(), 'http://purl.org/dc/elements/1.1/');
         }
         foreach ($object->getTags() as $tag) {

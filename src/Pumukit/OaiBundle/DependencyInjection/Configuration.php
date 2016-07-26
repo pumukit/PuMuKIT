@@ -25,6 +25,14 @@ class Configuration implements ConfigurationInterface
                   ->defaultTrue()
                   ->info('Use special tag dc:thumbnail to list the first object thumbnail (deprecated and non standard)')
               ->end()
+              ->scalarNode('video_dc_type')
+                  ->defaultValue('Moving Image')
+                  ->info('DublinCore type for video contents. See http://dublincore.org/documents/dcmi-type-vocabulary/#H7')
+              ->end()
+              ->scalarNode('audio_dc_type')
+                  ->defaultValue('Sound')
+                  ->info('DublinCore type for audio contents. See http://dublincore.org/documents/dcmi-type-vocabulary/#H7')
+              ->end()
             ->end()
         ;
 

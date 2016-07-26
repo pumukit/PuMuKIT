@@ -23,6 +23,8 @@ class PumukitOaiExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pumukitoai.use_dc_thumbnail', $config['use_dc_thumbnail']);
+        $container->setParameter('pumukitoai.ovideo_dc_type', $config['video_dc_type']);
+        $container->setParameter('pumukitoai.audio_dc_type', $config['audio_dc_type']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
