@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
+use Pumukit\OaiBundle\Utils\Iso639Convert;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -328,7 +329,14 @@ class OaiController extends Controller
         $XMLcreator->addCDATA('');
         $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
         $XMLpublisher->addCDATA('');
-        $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
+
+        if ($object->getLocale()) {
+            $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
+        }
+        if ($codeLocale3 = Iso639Convert::get($object->getLocale())) {
+            $XMLoai_dc->addChild('dc:language', $codeLocale3, 'http://purl.org/dc/elements/1.1/');
+        }
+
         if ($this->container->getParameter('pumukitoai.use_license_as_dc_rights')) {
             $XMLrights = $XMLoai_dc->addChild('dc:rights', null, 'http://purl.org/dc/elements/1.1/');
             $XMLrights->addCDATA($object->getLicense());
