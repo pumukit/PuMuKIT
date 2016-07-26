@@ -50,6 +50,7 @@
           {% endfor %}
         </div>
         {% endif %}
+        {% if not is_naked() %}
         <div class="form-group" id="pumukitwizard_track_pubchannel">
           <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
           {% for pub in pub_channels %}
@@ -77,6 +78,7 @@
           {% endif %}
           {% endfor %}
         </div>
+        {% endif %}
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_priority">
           <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
