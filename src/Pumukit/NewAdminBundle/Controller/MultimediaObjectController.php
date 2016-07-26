@@ -882,10 +882,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Update groups action
+     *
+     * @Security("is_granted('ROLE_MODIFY_OWNER')")
      */
     public function updateGroupsAction(Request $request)
     {
-        // TODO. Add security permission to access.
         $multimediaObject = $this->findOr404($request);
         $series = $multimediaObject->getSeries();
         $seriesId = $series->getId();
