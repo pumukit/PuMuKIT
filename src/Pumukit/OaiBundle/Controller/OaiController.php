@@ -323,7 +323,18 @@ class OaiController extends Controller
         }
         foreach ($object->getTags() as $tag) {
             $XMLsubject = $XMLoai_dc->addChild('dc:subject', null, 'http://purl.org/dc/elements/1.1/');
-            $XMLsubject->addCDATA($tag->getTitle());
+            switch ($this->container->getParameter('pumukitoai.dc_subject_format')) {
+                case 'all':
+                    $subject = sprintf('%s - %s', $tag->getCod(), $tag->getTitle());
+                    break;
+                case 'code':
+                    $subject = $tag->getCod();
+                    break;
+                default: //title
+                    $subject = $tag->getTitle();
+                    break;
+            }
+            $XMLsubject->addCDATA($subject);
         }
         $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
         $XMLcreator->addCDATA('');

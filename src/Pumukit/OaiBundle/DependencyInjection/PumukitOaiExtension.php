@@ -26,6 +26,7 @@ class PumukitOaiExtension extends Extension
         $container->setParameter('pumukitoai.use_license_as_dc_rights', $config['use_license_as_dc_rights']);
         $container->setParameter('pumukitoai.video_dc_type', $config['video_dc_type']);
         $container->setParameter('pumukitoai.audio_dc_type', $config['audio_dc_type']);
+        $container->setParameter('pumukitoai.dc_subject_format', $config['dc_subject_format']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
