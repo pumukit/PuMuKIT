@@ -38,9 +38,9 @@ class Configuration implements ConfigurationInterface
                   ->info('Use the object license as dc:rights')
               ->end()
               ->enumNode('dc_subject_format')
-                  ->values(array('all', 'code', 'title'))
+                  ->values(array('all', 'code', 'title', 'e-ciencia'))
                   ->defaultValue('title')
-                  ->info('Format used with dc:subject. All: "120000 - Mathematics", Code: "120000", Title: "Mathematics"')
+                  ->info('Format used with dc:subject. All: "120000 - Mathematics", Code: "120000", Title: "Mathematics", E-ciencia: "12 Matemáticas"')
               ->end()
             ->end()
         ;

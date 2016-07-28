@@ -324,6 +324,24 @@ class OaiController extends Controller
         foreach ($object->getTags() as $tag) {
             $XMLsubject = $XMLoai_dc->addChild('dc:subject', null, 'http://purl.org/dc/elements/1.1/');
             switch ($this->container->getParameter('pumukitoai.dc_subject_format')) {
+                case 'e-ciencia':
+                    $cod = $tag->getCod();
+                    if ($tag->isDescendantOfByCod('UNESCO')) {
+                        $cod = $tag->getLevel();
+                        switch ($tag->getLevel()) {
+                        case 3:
+                            $cod = substr($tag->getCod(), 1, 2);
+                            break;
+                        case 4:
+                            $cod = substr($tag->getCod(), 1, 4);
+                            break;
+                        case 5:
+                            $cod = sprintf('%s.%s', substr($tag->getCod(), 1, 4), substr($tag->getCod(), 5, 2));
+                            break;
+                        }
+                    }
+                    $subject = sprintf('%s %s', $cod, $tag->getTitle());
+                    break;
                 case 'all':
                     $subject = sprintf('%s - %s', $tag->getCod(), $tag->getTitle());
                     break;
