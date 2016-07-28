@@ -13,6 +13,42 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 class EventRepository extends DocumentRepository
 {
     /**
+     * Find next events
+     */
+    public function findNextEvents()
+    {
+        $now = new \DateTime("now");
+
+        return $this->createQueryBuilder()
+            ->field('display')->equals(true)
+            ->field('date')->gte($now)
+            ->sort('date', 1)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * Find next event
+     */
+    public function findNextEvent()
+    {
+        $now = new \DateTime("now");
+
+        return $this->createQueryBuilder()
+            ->field('display')->equals(true)
+            ->field('date')->gte($now)
+            ->sort('date', 1)
+            ->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Find current events
+     */
+    public function findCurrentEvents()
+    {
+        return array();
+    }
+
+    /**
      * Find future and not finished
      *
      * @param integer $limit
