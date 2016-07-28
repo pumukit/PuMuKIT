@@ -2461,7 +2461,7 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
         } else {
             var item_class = 'class="list-group-item add-' + resource + '-group-item pumukitnewadmin-trim-row"';
         }
-        if (can_modify_groups == 'no') {
+        if ((can_modify_groups == 'no') && ((resource == 'mm') || (resource == 'mm_template'))){
             var item_onclick = 'onclick="return false;"';
             var item_ondblclick = 'ondblclick="window.alert(\'{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}\');return false;"';
         } else {
@@ -2491,7 +2491,7 @@ function create_element_group_in_delete_groups(group_id, group_key, group_name, 
             var item_class = 'class="list-group-item delete-' + resource + '-group-item pumukitnewadmin-trim-row"';
             var $delete_groups_list = $('#delete_' + resource + '_groups');
         }
-        if (can_modify_groups == 'no') {
+        if ((can_modify_groups == 'no') && ((resource == 'mm') || (resource == 'mm_template'))){
             var item_onclick = 'onclick="return false;"';
             var item_ondblclick = 'ondblclick="window.alert(\'{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}\');return false;"';
         } else {
