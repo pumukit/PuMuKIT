@@ -326,7 +326,7 @@ class OaiController extends Controller
             switch ($this->container->getParameter('pumukitoai.dc_subject_format')) {
                 case 'e-ciencia':
                     $cod = $tag->getCod();
-                    if ($tag->isDescendantOfByCod('UNESCO')) {
+                    if (($tag->isDescendantOfByCod('UNESCO')) || (0 === strpos($tag->getCod(), 'U9'))) {
                         $cod = $tag->getLevel();
                         switch ($tag->getLevel()) {
                         case 3:
