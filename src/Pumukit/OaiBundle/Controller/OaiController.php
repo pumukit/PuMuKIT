@@ -303,7 +303,7 @@ class OaiController extends Controller
         $XMLtitle->addCDATA($object->getTitle());
         $XMLdescription = $XMLoai_dc->addChild('dc:description', null, 'http://purl.org/dc/elements/1.1/');
         $XMLdescription->addCDATA($object->getDescription());
-        $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'));
+        $XMLoai_dc->addChild('dc:date', $object->getPublicDate()->format('Y-m-d'), 'http://purl.org/dc/elements/1.1/');
         $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
         $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
         //$XMLiden->addAttribute('xsi:type', 'dcterms:URI');
