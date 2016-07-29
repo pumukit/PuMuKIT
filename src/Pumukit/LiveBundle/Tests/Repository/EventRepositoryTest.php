@@ -171,4 +171,58 @@ class EventRepositoryTest extends WebTestCase
 
         $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
     }
+
+
+
+    public function testFindCurrentEvents()
+    {
+        $this->assertEquals(0, count($this->repo->findCurrentEvents()));
+
+
+        $this->createEvent('PAST', new \DateTime('-3 minute'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $this->createEvent('LONG PAST', new \DateTime('yesterday'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $this->createEvent('FUTURE', new \DateTime('+1 minute'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $this->createEvent('LONG FUTURE', new \DateTime('tomorrow'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $this->createEvent('ONE', new \DateTime('1 minute ago'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(1, count($events));
+        $this->assertEquals('ONE', $events->getSingleResult()->getName());
+
+        $this->createEvent('TWO', new \DateTime('2 minute ago'), 4);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(2, count($events));
+
+        $this->createEvent('THREE', new \DateTime('3 minute ago'), 6);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(3, count($events));
+
+        $events = $this->repo->findCurrentEvents(1);
+        $this->assertEquals(1, count($events));
+
+    }
+
+
+
+    private function createEvent($name, $datetime, $duration)
+    {
+        $event = new Event();
+        $event->setName($name);
+        $event->setDisplay(true);
+        $event->setDate($datetime);
+        $event->setDuration($duration);
+        $this->dm->persist($event);
+        $this->dm->flush();
+    }
 }

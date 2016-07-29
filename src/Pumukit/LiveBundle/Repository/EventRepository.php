@@ -45,23 +45,9 @@ class EventRepository extends DocumentRepository
      */
     public function findCurrentEvents($limit = null)
     {
-
-        //TODO fix bug
-        return $this->createQueryBuilder()
-            ->limit(2)
-            ->sort('date', 1)
-            ->getQuery()->execute()->toArray();
-
         $dmColl = $this->dm->getDocumentCollection("PumukitLiveBundle:Event");
 
-        /*
-          Aggregate:
-          db.Event.aggregate([{$match: {display: true}},
-                              {$project: {"date": 1, "live": 1, "name": 1, "duration": 1, end: {$add: ["$date", {$multiply: ["$duration", 60000]} ]}}},
-                              {$match: {$and: [{date: {$lte: new Date}}, {end: {$gte: new Date}}]}},
-                              { $limit : 3 }])
-         */
-        $now = new \DateTime("now");
+        $now = new \MongoDate();
         $pipeline = array(
             array('$match' => array('display'=> true)),
             array('$project' => array('date'=> true, 'end'=> array('$add'=> array('$date', array('$multiply'=> array('$duration', 60000)))))),
@@ -73,14 +59,16 @@ class EventRepository extends DocumentRepository
         }
         $aggregation = $dmColl->aggregate($pipeline);
 
-        dump($aggregation);
-        dump($aggregation->toArray());
-
         if (0 === $aggregation->count()) {
             return array();
         }
 
-        return $aggregation;
+        $ids = array_map(function($e){return $e['_id'];}, $aggregation->toArray());
+
+        return $this->createQueryBuilder()
+            ->field('_id')->in($ids)
+            ->getQuery()->execute();
+
     }
 
     /**
