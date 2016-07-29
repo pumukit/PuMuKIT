@@ -207,3 +207,9 @@ pumukitnewadmin_mms_listproperties:
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.mms:listPropertiesAction
+
+pumukitnewadmin_mms_modal_preview:
+    pattern: /{id}/modalpreview
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:modalPreviewAction

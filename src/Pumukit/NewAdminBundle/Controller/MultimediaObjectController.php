@@ -1040,13 +1040,30 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * List the properties of a series in a modal
+     * List the properties of a multimedia object in a modal
      *
      * @Template
      */
     public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
         return array('multimediaObject' => $multimediaObject);
+    }
+
+    /**
+     * Show a player of a multimedia object in a modal
+     *
+     * @Template
+     */
+    public function modalPreviewAction(Multimediaobject $multimediaObject)
+    {
+        $mmService = $this->get('pumukitschema.multimedia_object');
+
+
+        return array(
+             'multimediaObject' => $multimediaObject,
+             'is_published' => ($multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED),
+             'is_playable' => $mmService->hasPlayableResource($multimediaObject),
+        );
     }
 
     /**

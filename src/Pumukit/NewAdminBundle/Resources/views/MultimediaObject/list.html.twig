@@ -34,43 +34,43 @@
           <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
         </td>
         <td>
-	      {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+          {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
         </td>
         <td>
-	      {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
+          {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
         </td>
         <td>
-	      {% if mms.getCurrentPage() != 1 or not loop.first %}
-	      {% spaceless %}
-	      <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-	      <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-	      {% endspaceless %}
-	      {% endif %}
+          {% if mms.getCurrentPage() != 1 or not loop.first %}
+          {% spaceless %}
+          <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+          <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+          {% endspaceless %}
+          {% endif %}
         </td>
         <td>
-	      {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
-	      {% spaceless %}
- 	    <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-	    <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-	    {% endspaceless %}
-	    {% endif %}
+          {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
+          {% spaceless %}
+        <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+        <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+        {% endspaceless %}
+        {% endif %}
         </td>
-        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
-        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
-        <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+          <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
         </td>
-        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           {{ mm.getTitle() }}
         </td>
-        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           {{ mmobj_duration(mm) | duration_string  }}
         </td>
-        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           {{ mm.getRecordDate()|date('d-m-Y') }}
         </td>
-        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+        <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           {{ mm.getPublicDate()|date('d-m-Y') }}
         </td>
       </tr>
@@ -92,7 +92,7 @@
 
     {% for i in range %}
       <tr>
-  	    <td>&nbsp;</td>
+        <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -113,9 +113,9 @@
         <div class="row">
           <div class="col-md-6">
             {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
-	          {% if app.session.get('admin/mms/criteria')|length != 0%}
+              {% if app.session.get('admin/mms/criteria')|length != 0%}
               <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	          {% endif %}
+              {% endif %}
           </div>
             <div class="col-md-6 text-right">
               <div class="pagerfanta">

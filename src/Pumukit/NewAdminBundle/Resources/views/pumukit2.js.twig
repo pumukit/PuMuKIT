@@ -1024,7 +1024,21 @@ window.click_fila_edit_urls = function(element, tr, show_url, update_url)
 
 window.dblclick_fila_url = function(element, tr, url)
 {
-  document.location.href= (url);
+    document.location.href= (url);
+}
+
+window.dblclick_preview_mm = function(id)
+{
+    var url = "{{ path('pumukitnewadmin_mms_modal_preview', {'id': '__id__'})|raw }}";
+    $.ajax({
+        url: url.replace('__id__', id),
+        type: 'GET',
+        success: function(response){
+            var $modal = $('#myModal');
+            $modal.modal('show');
+            $modal.find('.modal-content').html(response);
+        }
+    });
 }
 
 
