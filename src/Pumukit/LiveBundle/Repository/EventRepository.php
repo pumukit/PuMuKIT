@@ -42,16 +42,23 @@ class EventRepository extends DocumentRepository
 
     /**
      * Find current events
-     */
-    public function findCurrentEvents($limit = null)
+     * Find current events
+     *
+     * @param $limit int|null
+     * @param $marginBefore int defalt 0
+     * @param $marginAfter int default 0
+     * @return array of Events
+    */
+    public function findCurrentEvents($limit = null, $marginBefore = 0, $marginAfter = 0)
     {
         $dmColl = $this->dm->getDocumentCollection("PumukitLiveBundle:Event");
 
-        $now = new \MongoDate();
+        $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
+        $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));
         $pipeline = array(
             array('$match' => array('display'=> true)),
             array('$project' => array('date'=> true, 'end'=> array('$add'=> array('$date', array('$multiply'=> array('$duration', 60000)))))),
-            array('$match' => array('$and' => array( array('date'=> array('$lte'=> $now)), array('end' =>  array('$gte' => $now)))))
+            array('$match' => array('$and' => array( array('date'=> array('$lte'=> $nowWithMarginBefore)), array('end' =>  array('$gte' => $nowWithMarginAfter)))))
         );
 
         if ($limit) {

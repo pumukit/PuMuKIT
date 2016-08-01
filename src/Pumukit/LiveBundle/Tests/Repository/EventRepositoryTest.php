@@ -215,6 +215,36 @@ class EventRepositoryTest extends WebTestCase
 
 
 
+    public function testFindCurrentEventsWithMargin()
+    {
+        $this->assertEquals(0, count($this->repo->findCurrentEvents()));
+
+        $this->createEvent('ONE', new \DateTime('+1 minute'), 2);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $events = $this->repo->findCurrentEvents(null, 2);
+        $this->assertEquals(1, count($events));
+
+        $events = $this->repo->findCurrentEvents(null, 22);
+        $this->assertEquals(1, count($events));
+
+        $this->createEvent('ONE', new \DateTime('-2 minute'), 1);
+        $events = $this->repo->findCurrentEvents();
+        $this->assertEquals(0, count($events));
+
+        $events = $this->repo->findCurrentEvents(null, 0, 1);
+        $this->assertEquals(1, count($events));
+
+        $events = $this->repo->findCurrentEvents(null, 0, 11);
+        $this->assertEquals(1, count($events));
+
+        $events = $this->repo->findCurrentEvents(null, 2, 1);
+        $this->assertEquals(2, count($events));
+
+
+    }
+
     private function createEvent($name, $datetime, $duration)
     {
         $event = new Event();
