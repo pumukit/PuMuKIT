@@ -35,32 +35,34 @@ document.addEventListener('DOMContentLoaded', function(){
         document.getElementById('showFlashMessage-{{id}}').style.display = 'table';
     }
     var livePlayerInstance = jwplayer("directo-{{id}}").setup({
-        {% if live.broadcasting %}
-        {% if mobile_device %}
-        file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
-        {% else %}
-        file: "{{ live.url }}/{{ live.sourcename }}",
-        {% endif %}
-        {% else %}
-        playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
+        {% if live is defined and live %}
+            {% if live.broadcasting %}
+                {% if mobile_device %}
+                    file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
+                {% else %}
+                    file: "{{ live.url }}/{{ live.sourcename }}",
+                {% endif %}
+            {% else %}
+                playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
+            {% endif %}
         {% endif %}
         {% if isIE and versionIE == 10 %}
-        autostart: 'true',
+            autostart: 'true',
         {% else %}
-        autostart: true,
+            autostart: true,
         {% endif %}
         width: "{{ width is defined ? width : '100%' }}",
         {% if height is defined %}
-        height: height,
+            height: height,
         {% endif %}
         {% if controlbar is defined %}
-        controlbar: "{{ controlbar }}",
+            controlbar: "{{ controlbar }}",
         {% endif %}
         {% if stretching is defined %}
-        stretching: "{{ stretching }}",
+            stretching: "{{ stretching }}",
         {% endif %}
         {% if aspectratio is defined %}
-        aspectratio: "{{ aspectratio }}",
+            aspectratio: "{{ aspectratio }}",
         {% endif %}
         logo: {hide: true},
         analytics: {enabled: false},
