@@ -19,7 +19,7 @@
     <tbody>
       {% if events|length == 0 %}
       <tr>
-        <td colspan="7">
+        <td colspan="8">
           {% trans %}There are no live events with those values.{% endtrans %}
         </td>
       </tr>
@@ -34,22 +34,22 @@
         </div>
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-	    <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-	      <i class="mdi-editor-mode-edit"></i>
+        <a title="{% trans %}Edit Event {% endtrans %}{{ event.id }}" href="{{ path('pumukitnewadmin_event_update', {'id': event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <i class="mdi-editor-mode-edit"></i>
         </a>
       </td>
       <td>
         <div class="dropdown">
-	      {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': event} %}
+          {% include 'PumukitNewAdminBundle:Event:updatemenu.html.twig' with {'event': event} %}
         </div>
       </td>
       <td>
         <a href="#" onclick="window.submit_delete_event('{{ event.id }}'); return false;">
-	      <i class="mdi-content-clear"></i>
+          <i class="mdi-content-clear"></i>
         </a>
       </td>
       <td class="text-nowrap" onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-	    {{ event.date|date('d/m/Y-H:i') }}
+        {{ event.date|date('d/m/Y-H:i') }}
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}')">
         {% if event.getPic() is not empty %}
@@ -57,27 +57,27 @@
         {% endif %}
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-	    {{ event.name }}
+        {{ event.name }}
       </td>
       <td onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': event.id}) }}');">
-	    {{ event.display }}
+        {{ event.display }}
       </td>
       </tr>
       {% endfor %}
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="7">
+        <th colspan="8">
           {# TODO review column size to be responsive #}
           {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
           <div class="col-md-8">
-            {{ events.getNbResults }} 
+            {{ events.getNbResults }}
             {% transchoice events.getNbResults %}
-	        {0} live events|{1} live event|]1,Inf] live events
-	        {% endtranschoice %}
-	        {% if app.session.get('admin/event/criteria')|length != 0%}
+            {0} live events|{1} live event|]1,Inf] live events
+            {% endtranschoice %}
+            {% if app.session.get('admin/event/criteria')|length != 0%}
             <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	        {% endif %}
+            {% endif %}
           </div>
           <div class="col-md-4 text-right">
             <div class="pagerfanta">
