@@ -34,6 +34,13 @@ class Event
   private $name;
 
   /**
+   * @var string $description
+   *
+   * @MongoDB\Raw
+   */
+  private $description = array('en' => '');
+
+  /**
    * @var string $place
    *
    * @MongoDB\String
@@ -136,6 +143,56 @@ class Event
   public function getName()
   {
       return $this->name;
+  }
+
+  /**
+   * Set description
+   *
+   * @param string $description
+   */
+  public function setDescription($description, $locale = null)
+  {
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      $this->description[$locale] = $description;
+  }
+
+  /**
+   * Get description
+   *
+   * @return string
+   */
+  public function getDescription($locale = null)
+  {
+      if ($locale == null) {
+          $locale = $this->locale;
+      }
+      if (!isset($this->description[$locale])) {
+          return '';
+      }
+
+      return $this->description[$locale];
+  }
+
+  /**
+   * Set I18n description
+   *
+   * @param array $description
+   */
+  public function setI18nDescription(array $description)
+  {
+      $this->description = $description;
+  }
+
+  /**
+   * Get I18n description
+   *
+   * @return array
+   */
+  public function getI18nDescription()
+  {
+      return $this->description;
   }
 
   /**

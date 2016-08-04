@@ -24,6 +24,11 @@ class EventType extends AbstractType
         $builder
             ->add('name', 'text',
                   array('label' => $this->translator->trans('Event', array(), null, $this->locale)))
+            ->add('i18n_description', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('place', 'text',
                   array('label' => $this->translator->trans('Location', array(), null, $this->locale)))
             ->add('live', null,
