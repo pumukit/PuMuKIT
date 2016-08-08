@@ -14,7 +14,7 @@
                                     {% if template != '_template' %}
                                     $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
                                     {% endif %}
-                                    success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\'');
+                                    success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
                           },
                           error: function(jqXHR, textStatus, errorThrown){
                                     var textError = jqXHR.responseText;
@@ -22,8 +22,8 @@
                                     no_success(message);
                           }
                   });
-		          return false;"
-	    action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+                  return false;"
+        action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
     <input type="hidden" name="id" id="id" value="{{ person.id }}">
     <input type="hidden" name="roleId" id="roleId" value="{{ role.id }}">

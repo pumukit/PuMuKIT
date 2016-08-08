@@ -11,10 +11,10 @@
                           data: $(this).serialize(),
                           success: function(response){
                                     $('#{{ role.id }}_person_mms{{ template }}').html(response);
-                                    {% if template != '_template' %}                                    
+                                    {% if template != '_template' %}
                                     $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
                                     {% endif %}
-                                    success('{% trans %}Person associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle() }}\' {% trans %}with role{% endtrans %} \'{{ role.getName() }}\' {% trans %}successfully updated{% endtrans %}.');
+                                    success('{% trans %}Person associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\' {% trans %}successfully updated{% endtrans %}.');
                           },
                           error: function(jqXHR, textStatus, errorThrown){
                                     var textError = jqXHR.responseText;
@@ -22,8 +22,8 @@
                                     no_success(message);
                           }
                   });
-		          return false;"
-	    action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+                  return false;"
+        action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
     <input type="hidden" name="id" id="id" value="{{ person.id }}">
     <fieldset>
