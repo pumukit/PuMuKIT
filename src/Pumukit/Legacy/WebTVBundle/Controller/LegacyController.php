@@ -70,11 +70,13 @@ class LegacyController extends Controller
         } else {
             return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
         }
-        
+
     }
-    
+
     /**
      * @Route("/{_locale}/video/iframe/{pumukit1id}.html")
+     * @Route("/pumoodle/embed/m/{pumukit1id}")
+     * @Route("/mmobj/iframe/id/{pumukit1id}")
      *
      * Parameters:
      * - {_locale} matches the current locale
