@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
 use Pumukit\OaiBundle\Utils\Iso639Convert;
+use Pumukit\OaiBundle\Utils\ResumptionToken;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -93,47 +94,49 @@ class OaiController extends Controller
 
     public function listIdentifiers($request)
     {
-        $pag = 2;
         $verb = $request->query->get('verb');
-        $from = $request->query->get('from');
-        $until = $request->query->get('until');
-        $set = $request->query->get('set');
-        $resumptionToken = $request->query->get('resumptionToken');
+        $limit = 10;
 
-        if ($request->query->get('metadataPrefix') != 'oai_dc') {
+        if ($request->query->has('resumptionToken')) {
+            try {
+                $token = ResumptionToken::decode($request->query->get('resumptionToken'));
+            } catch (\Exception $e) {
+                return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
+            }
+        } else {
+            $from = $request->query->has('from') ?
+                \DateTime::createFromFormat('Y/m/d', $request->query->get('from')) :
+                null;
+
+            $until = $request->query->has('until') ?
+                \DateTime::createFromFormat('Y/m/d', $request->query->get('until')) :
+                null;
+
+            $token = new ResumptionToken(0, $from , $until, $request->query->get('metadataPrefix'), $request->query->get('set'));
+        }
+
+
+        if ($token->getMetadataPrefix() != 'oai_dc') {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
         }
 
-        $token = $this->validateToken($resumptionToken);
-        if ($token['pag'] != null) {
-            $pag = $token['pag'];
-        }
-
-        $mmObjColl = $this->filter($request, $pag);
+        $mmObjColl = $this->filter($limit, $token->getOffset(), $token->getFrom(), $token->getUntil(), $token->getSet());
 
         if (count($mmObjColl) == 0) {
             return $this->error('noRecordsMatch', 'The combination of the values of the from, until, and set arguments results in an empty list');
         }
 
-        if ((($resumptionToken > ceil(count($mmObjColl) / 10)) || ($resumptionToken < 1)) && $resumptionToken != null) {
-            return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
-        }
-
-        if ($pag >= ceil(count($mmObjColl) / 10)) {
-            $pag = ceil(count($mmObjColl) / 10);
-        }
-
         $XMLrequestText = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
         $XMLrequest = new SimpleXMLExtended($XMLrequestText);
         $XMLrequest->addAttribute('metadataPrefix', 'oai_dc');
-        if ($request->query->get('from')) {
-            $XMLrequest->addAttribute('from', $from);
+        if ($token->getFrom()) {
+            $XMLrequest->addAttribute('from', $token->getFrom()->format('Y/m/d'));
         }
-        if ($request->query->get('until')) {
-            $XMLrequest->addAttribute('until', $until);
+        if ($token->getUntil()) {
+            $XMLrequest->addAttribute('until', $token->getUntil()->format('Y/m/d'));
         }
-        if ($request->query->get('set')) {
-            $XMLrequest->addAttribute('set', $set);
+        if ($token->getSet()) {
+            $XMLrequest->addAttribute('set', $token->getSet());
         }
 
         $XMLrequest->addAttribute('verb', $verb);
@@ -150,10 +153,11 @@ class OaiController extends Controller
                 $this->genObjectMetadata($XMLrecord, $object);
             }
         }
-        $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $pag);
+        $next = $token->next();
+        $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $next->encode());
         $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
         $XMLresumptionToken->addAttribute('completeListSize', count($mmObjColl));
-        $XMLresumptionToken->addAttribute('cursor', '0');
+        $XMLresumptionToken->addAttribute('cursor', $limit * $next->getOffset());
 
         return $this->genResponse($XMLrequest, $XMLlist);
     }
@@ -253,33 +257,31 @@ class OaiController extends Controller
     /*
      * Modifica el objeto criteria de entrada añadiendo filtros de fechas (until & from) y de set si están definidos en la URI
      */
-    protected function filter($request, $pag)
+    protected function filter($limit, $offset, \DateTime $from = null, \DateTime $until = null, $set = null)
     {
-        $repository_multimediaObjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $multimediaObjectRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
 
-        $queryBuilder_multimediaObjects = $repository_multimediaObjects->createStandardQueryBuilder()->limit(10)->skip(10 * ($pag - 2));
-        $queryBuilder_series = $repository_series->createQueryBuilder();
+        $queryBuilder = $multimediaObjectRepo
+            ->createStandardQueryBuilder()
+            ->limit($limit)
+            ->skip($limit * $offset);
 
-        if ($request->query->get('from')) {
-            $from = \DateTime::createFromFormat('Y/m/d', $request->query->get('from'));
-            $queryBuilder_multimediaObjects->field('public_date')->gte($from);
+        if ($from) {
+            $queryBuilder->field('public_date')->gte($from);
         }
 
-        if ($request->query->get('until')) {
-            $until = \DateTime::createFromFormat('Y/m/d', $request->query->get('until'));
-            $queryBuilder_multimediaObjects->field('public_date')->lte($until);
+        if ($until) {
+            $queryBuilder->field('public_date')->lte($until);
         }
 
-        if ($request->query->get('set')) {
-            $set = $request->query->get('set');
-            $series = $repository_series->find(array('id' => $set));
-            $queryBuilder_multimediaObjects->field('series')->references($series);
+        if ($set) {
+            $series = $seriesRepo->find(array('id' => $set));
+            if (!$series) return array();
+            $queryBuilder->field('series')->references($series);
         }
 
-        $objects = $queryBuilder_multimediaObjects->getQuery()->execute();
-
-        return $objects;
+        return $queryBuilder->getQuery()->execute();
     }
 
     private function genObjectHeader($XMLlist, $object)
@@ -380,6 +382,7 @@ class OaiController extends Controller
         $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
     }
 
+    //TODO Delete using ResumptionToken
     private function validateToken($resumptionToken)
     {
         if ($resumptionToken != null) {
