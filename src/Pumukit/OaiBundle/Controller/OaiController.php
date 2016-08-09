@@ -97,24 +97,11 @@ class OaiController extends Controller
         $verb = $request->query->get('verb');
         $limit = 10;
 
-        if ($request->query->has('resumptionToken')) {
-            try {
-                $token = ResumptionToken::decode($request->query->get('resumptionToken'));
-            } catch (\Exception $e) {
-                return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
-            }
-        } else {
-            $from = $request->query->has('from') ?
-                \DateTime::createFromFormat('Y/m/d', $request->query->get('from')) :
-                null;
-
-            $until = $request->query->has('until') ?
-                \DateTime::createFromFormat('Y/m/d', $request->query->get('until')) :
-                null;
-
-            $token = new ResumptionToken(0, $from , $until, $request->query->get('metadataPrefix'), $request->query->get('set'));
+        try {
+            $token = $this->getResumptionToken($request);
+        } catch (\Exception $e) {
+            return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
         }
-
 
         if ($token->getMetadataPrefix() != 'oai_dc') {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
@@ -153,11 +140,15 @@ class OaiController extends Controller
                 $this->genObjectMetadata($XMLrecord, $object);
             }
         }
+
         $next = $token->next();
+        $cursor = $limit * $next->getOffset();
+        $count = count($mmObjColl);
+
         $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $next->encode());
         $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-        $XMLresumptionToken->addAttribute('completeListSize', count($mmObjColl));
-        $XMLresumptionToken->addAttribute('cursor', $limit * $next->getOffset());
+        $XMLresumptionToken->addAttribute('completeListSize', $count);
+        $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
 
         return $this->genResponse($XMLrequest, $XMLlist);
     }
@@ -191,30 +182,21 @@ class OaiController extends Controller
 
     private function listSets($request)
     {
-        $pag = 2;
-        $resumptionToken = $request->query->get('resumptionToken');
+        $limit = 10;
 
-        //TODO fix.
-        $token = $this->validateToken($resumptionToken);
-        if ($token['error'] == true) {
+        try {
+            $token = $this->getResumptionToken($request);
+        } catch (\Exception $e) {
             return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
-        }
-
-        if ($token['pag'] != null) {
-            $pag = $token['pag'];
         }
 
         $allSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $allSeries = $allSeries->createQueryBuilder()->limit(10)->skip(10 * ($pag - 2));
-        $allSeries = $allSeries->getQuery()->execute();
-
-        if ((($resumptionToken > ceil(count($allSeries) / 10)) || ($resumptionToken < 1)) && $resumptionToken != null) {
-            return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
-        }
-
-        if ($pag >= ceil(count($allSeries) / 10)) {
-            $pag = ceil(count($allSeries) / 10);
-        }
+        $allSeries = $allSeries
+            ->createQueryBuilder()
+            ->limit($limit)
+            ->skip($limit * $token->getOffset())
+            ->getQuery()
+            ->execute();
 
         $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
@@ -228,10 +210,15 @@ class OaiController extends Controller
             $XMLsetName = $XMLset->addChild('setName');
             $XMLsetName->addCDATA($series->getTitle());
         }
-        $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $pag);
+
+        $next = $token->next();
+        $cursor = $limit * $next->getOffset();
+        $count = count($allSeries);
+
+        $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $next->encode());
         $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-        $XMLresumptionToken->addAttribute('completeListSize', count($allSeries));
-        $XMLresumptionToken->addAttribute('cursor', '0');
+        $XMLresumptionToken->addAttribute('completeListSize', $count);
+        $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
 
         return $this->genResponse($XMLrequest, $XMLlistSets);
     }
@@ -277,7 +264,9 @@ class OaiController extends Controller
 
         if ($set) {
             $series = $seriesRepo->find(array('id' => $set));
-            if (!$series) return array();
+            if (!$series) {
+                return array();
+            }
             $queryBuilder->field('series')->references($series);
         }
 
@@ -376,7 +365,6 @@ class OaiController extends Controller
             $XMLrights->addCDATA($object->getCopyright());
         }
 
-
         $toDom = dom_import_simplexml($XMLmetadata);
         $fromDom = dom_import_simplexml($XMLoai_dc);
         $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
@@ -410,5 +398,22 @@ class OaiController extends Controller
         $XML = simplexml_import_dom($toDom);
 
         return new Response($XML->asXML(), 200, array('Content-Type' => 'text/xml'));
+    }
+
+    private function getResumptionToken(Request $request)
+    {
+        if ($request->query->has('resumptionToken')) {
+            return ResumptionToken::decode($request->query->get('resumptionToken'));
+        }
+
+        $from = $request->query->has('from') ?
+            \DateTime::createFromFormat('Y/m/d', $request->query->get('from')) :
+            null;
+
+        $until = $request->query->has('until') ?
+            \DateTime::createFromFormat('Y/m/d', $request->query->get('until')) :
+            null;
+
+        return new ResumptionToken(0, $from, $until, $request->query->get('metadataPrefix'), $request->query->get('set'));
     }
 }
