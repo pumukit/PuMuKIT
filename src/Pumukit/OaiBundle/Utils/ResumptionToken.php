@@ -109,6 +109,17 @@ class ResumptionToken
     }
 
     /**
+     * Return next ResumptionToken with same parameters.
+     */
+    public function next()
+    {
+        $next = clone $this;
+        $next->offset++;
+
+        return $next;
+    }
+
+    /**
      * Factory method to create a new ResumptionToken from a token.
      *
      * @param token string
