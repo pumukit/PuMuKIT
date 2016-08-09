@@ -16,6 +16,8 @@ use Pumukit\SchemaBundle\Document\User;
 
 class PumukitProvider implements AuthenticationProviderInterface
 {
+    const CAS_MAIL_KEY = 'MAIL';
+
     private $userProvider;
     private $providerKey;
     private $userChecker;
@@ -70,11 +72,21 @@ class PumukitProvider implements AuthenticationProviderInterface
         $userService = $this->container->get('pumukitschema.user');
         $personService = $this->container->get('pumukitschema.person');
         $permissionProfileService = $this->container->get('pumukitschema.permissionprofile');
+        $casService = $this->container->get('pumukit.casservice');
+
+        $casService->forceAuthentication();
+        $attributes = $casService->getAttributes();
+
         if ($userService && $personService) {
             //TODO create createDefaultUser in UserService.
             //$this->userService->createDefaultUser($user);
             $user = new User();
             $user->setUsername($userName);
+
+            if (isset($attributes[self::CAS_MAIL_KEY])) {
+                $user->setEmail($attributes[self::CAS_MAIL_KEY]);
+            }
+
             $defaultPermissionProfile = $permissionProfileService->getDefault();
             if (null == $defaultPermissionProfile) {
                 throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
