@@ -51,9 +51,3 @@ pumukitwizard_default_error:
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:error
-
-pumukitwizard_default_data:
-    pattern: /data
-    methods: [GET, POST]
-    defaults:
-        _controller: PumukitWizardBundle:Default:data
