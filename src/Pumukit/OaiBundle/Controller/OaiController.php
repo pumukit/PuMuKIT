@@ -262,7 +262,7 @@ class OaiController extends Controller
             $queryBuilder->field('public_date')->lte($until);
         }
 
-        if ($set) {
+        if ($set && '_all_' != $set) {
             $series = $seriesRepo->find(array('id' => $set));
             if (!$series) {
                 return array();
