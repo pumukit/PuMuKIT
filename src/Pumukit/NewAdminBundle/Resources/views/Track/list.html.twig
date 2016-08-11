@@ -8,7 +8,7 @@
            style="color:inherit"
            data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
            href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
-            <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate{% endif %}"></i>
+            <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate pmk-job-animate-hover{% endif %}"></i>
         </a>
 
         {% if constant('STATUS_EXECUTING', job) != job.getStatus() %}
@@ -50,14 +50,14 @@
         {% if track.containsTag('opencast') or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
           <i class="mdi-content-block" style="color:#009587"></i>
         {% else %}
-          <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#" 
+          <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
              onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
              <i class="mdi-content-clear"></i>
           </a>
         {% endif %}
       </td>
       <td>
-        <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#" 
+        <a title="{% trans %}Autocomplete technical metadata of track{% endtrans %} {{ track.id }}" href="#"
            onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukitnewadmin_track_autocomplete', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'mod': 'mm'}) }}'); return false;">
           <i class="mdi-hardware-keyboard-return"></i>
         </a>
@@ -102,7 +102,7 @@
             </li>
             {% endfor %}
             <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
-          </ul>        
+          </ul>
         </div>
       </td>
       {% else %}

@@ -31,7 +31,20 @@
           </div>
         </td>
         <td>
-          <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
+          <span id="table_mms_status_wrapper_{{ mm.id }}">
+          {% if mm.getProperty('executing_jobs') or mm.getProperty('pending_jobs') %}
+            <i class="mdi-navigation-refresh pmk-job-animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
+                {% transchoice mm.getProperty('pending_jobs')|length %}
+                    {0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.
+                {% endtranschoice %}
+                {% transchoice mm.getProperty('executing_jobs')|length %}
+                    {0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.
+                {% endtranschoice %}
+                {% endspaceless %}"></i>
+          {% else%}
+            <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
+          {% endif %}
+          </span>
         </td>
         <td>
           {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
