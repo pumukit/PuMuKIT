@@ -396,7 +396,6 @@ class JobService
     {
         set_time_limit(0);
 
-        $multimediaObject = $this->getMultimediaObject($job);
         $profile = $this->getProfile($job);
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
@@ -406,7 +405,9 @@ class JobService
         $executor = $this->getExecutor($profile['app'], $cpu);
 
         try{
+            $multimediaObject = $this->getMultimediaObject($job);
             $this->propService->executeJob($multimediaObject, $job);
+
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
@@ -426,6 +427,8 @@ class JobService
 
             $track = $this->createTrackWithJob($job);
             $this->dispatch(true, $job, $track);
+
+            $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
             $this->propService->finishJob($multimediaObject, $job);
         }catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
@@ -434,6 +437,8 @@ class JobService
             $job->appendOutput($e->getMessage());
             $this->logger->addError('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
+
+            $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
         }
 
