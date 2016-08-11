@@ -30,9 +30,14 @@
             <argument type="service" id="logger"/>
             <argument type="service" id="pumukitschema.track"/>
             <argument type="service" id="security.token_storage"/>
-            <tag name="monolog.logger" channel="encoder"/>
+            <argument type="service" id="pumukitencoder.mmpropertyjob"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
+            <tag name="monolog.logger" channel="encoder"/>
+        </service>
+
+        <service id="pumukitencoder.mmpropertyjob" class="Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
         <service id="pumukitencoder.picextractor" class="Pumukit\EncoderBundle\Services\PicExtractorService">

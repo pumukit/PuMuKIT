@@ -39,6 +39,7 @@ class FuncionalTest extends WebTestCase
         $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
+        $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
         $this->videoInputPath = realpath(__DIR__.'/../Resources') . '/CAMERA.mp4';
 
@@ -50,7 +51,10 @@ class FuncionalTest extends WebTestCase
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $logger = new Logger('job_service_test_logger');
         $logger->pushHandler(new StreamHandler(realpath(__DIR__.'/../Resources').'/encoder_test.log', Logger::WARNING));
-        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService, $this->inspectionService, $dispatcher, $logger, $this->trackService, $this->tokenStorage, "test");
+        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService,
+                                           $this->inspectionService, $dispatcher, $logger,
+                                           $this->trackService, $this->tokenStorage, $this->propService,
+                                           "test");
     }
 
     public function testSimpleEncoding()
