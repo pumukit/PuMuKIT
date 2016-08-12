@@ -14,9 +14,10 @@ class AuthController extends Controller implements WebTVController
   public function changeAction(Request $request)
   {
     $session = $this->get('session');
-    
+
     if (!$session->has('target_path')) {
-        $session->set('target_path', $request->headers->get('referer', '/'));
+        $referer = $request->headers->get('referer', '/');
+        $session->set('target_path', $request->query->get('referer', $referer);
     }
 
     if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -25,7 +26,7 @@ class AuthController extends Controller implements WebTVController
 
     $targetUrl = $session->get('target_path');
     $session->remove('target_path');
-    
+
     return $this->redirect($targetUrl);
   }
 }
