@@ -31,7 +31,7 @@
           </div>
         </td>
         <td>
-          <span id="table_mms_status_wrapper_{{ mm.id }}">
+          <span id="table_mms_status_wrapper_{{ mm.id }}"> {# See Task/list for AJAX update #}
           {% if mm.getProperty('executing_jobs') or mm.getProperty('pending_jobs') %}
             <i class="mdi-navigation-refresh pmk-job-animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
                 {% transchoice mm.getProperty('pending_jobs')|length %}
