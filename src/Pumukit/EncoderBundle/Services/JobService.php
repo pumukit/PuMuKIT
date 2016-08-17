@@ -674,6 +674,8 @@ class JobService
         $this->dm->persist($job);
         $this->dm->flush();
 
+        $this->propService->retryJob($mmobj, $job);
+
         $this->executeNextJob();
 
         return true;

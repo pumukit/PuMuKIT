@@ -45,6 +45,13 @@ class MultimediaObjectPropertyJobService
         $this->save($multimediaObject);
     }
 
+    public function retryJob(MultimediaObject $multimediaObject, Job $job)
+    {
+        if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId()))
+            $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
+        $this->save($multimediaObject);
+    }
+
 
     private function save(MultimediaObject $multimediaObject)
     {
