@@ -10,7 +10,7 @@
               </label>
             </div>
           </th>
-          <th colspan="2" width="4%"></th>
+          <th width="1%"></th>
           <th width="1%">{% trans %}Img{% endtrans %}</th>
           {% include 'PumukitNewAdminBundle:Playlist:listth.html.twig' %}
         </tr>
@@ -29,14 +29,14 @@
             <td>
               {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
             </td>
-            <td>
-              <a href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">{% trans %}videos{% endtrans %}</a>
-            </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
               <img src="{{ oneseries|first_url_pic }}" height="23" width="23" />
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-              {{ oneseries.getTitle() }}
+              <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
+                {{ oneseries.getTitle() }}
+              </a>
+
             </td>
             <td onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
               {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
@@ -44,7 +44,7 @@
           </tr>
   {% else %}
           <tr>
-            <td colspan="6">
+            <td colspan="5">
               {% trans %}There are no playlist with those values.{% endtrans %}
             </td>
           </tr>
@@ -52,7 +52,6 @@
         {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
           {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
             <tr>
-              <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
