@@ -10,7 +10,7 @@
               </label>
             </div>
           </th>
-          <th colspan="7" width="5%"></th>
+          <th colspan="6" width="5%"></th>
           <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
           <th width="1%">{% trans %}Img{% endtrans %}</th>
           <th>{% trans %}Title{% endtrans %}</th>
@@ -43,11 +43,6 @@
             </td>
             <td>
               {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
-            </td>
-            <td>
-              <a href="#" onclick="delete_mm('{{ mm.id }}', '{{ mm_pos }}')">
-                <i class="mdi-content-clear"></i>
-              </a>
             </td>
             <td>
               {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
@@ -89,7 +84,7 @@
           </tr>
   {% else %}
           <tr>
-            <td colspan="14">
+            <td colspan="13">
               {% trans %}There are no multimedia objects with those values.{% endtrans %}
             </td>
           </tr>
@@ -105,7 +100,6 @@
 
         {% for i in range %}
           <tr>
-            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
