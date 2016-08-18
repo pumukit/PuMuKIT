@@ -159,5 +159,9 @@
      edit_url = edit_url.replace('__mmid__', id);
      $('#preview_playlistmm').load(show_url);
      $('#edit_playlistmm').load(edit_url, function(){init_tabs();});
+ }).dblclick(function(){
+     var id = $(this).data('id');
+     dblclick_preview_mm(id);
  });
+
 </script>
