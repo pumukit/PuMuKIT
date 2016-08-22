@@ -25,13 +25,11 @@ class NakedBackofficeListener
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        if ($event->isMasterRequest()) {
-            $req = $event->getRequest();
+        $req = $event->getRequest();
 
-            if ($req->getHttpHost() == $this->domain) {
-                $req->attributes->set('nakedbackoffice', true);
-                $req->attributes->set('nakedbackoffice_color', $this->background);
-            }
+        if ($req->getHttpHost() == $this->domain) {
+            $req->attributes->set('nakedbackoffice', true);
+            $req->attributes->set('nakedbackoffice_color', $this->background);
         }
     }
 }

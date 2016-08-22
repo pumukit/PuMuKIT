@@ -5,12 +5,12 @@
   <form autocomplete="off" id="pumukitnewadmin_mms_updatemeta_form"
         action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
 
-	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
-	<input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
+    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
+    <input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
 
     <div class="row">
       <div class="col-md-6">
-	    <span id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
+        <span id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
       </div>
 
       <div class="col-md-6 text-right">
@@ -19,14 +19,14 @@
       </div>
     </div>
 
-	<fieldset>
-      <div class="col-md-7">
+    <fieldset>
+      <div class="col-lg-7">
 
-  	    {% for child in form_meta %}
+        {% for child in form_meta %}
         {{ form_row(child) }}
-	    {% endfor %}
+        {% endfor %}
 
       </div>
-	</fieldset>
+    </fieldset>
   </form>
 </div>

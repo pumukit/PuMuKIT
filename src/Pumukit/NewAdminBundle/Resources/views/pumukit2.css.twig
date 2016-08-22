@@ -1,3 +1,15 @@
+/*Naked css rules*/
+
+{% if app.request.attributes.get('nakedbackoffice_color') %}
+.hidden-naked {
+  display: none !important;
+}
+{% else %}
+.visible-naked {
+  display: none !important;
+}
+{% endif %}
+
 /* Overrided bootstrap .alert */
 .alert {
   line-height: 3.5em;
@@ -360,7 +372,7 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   color: #ED6D00 !important;
 }
 
-.pmk-job-animate:hover {
+.pmk-job-animate-hover:hover {
   -webkit-animation: initial;
   -moz-animation: initial;
   -ms-animation: initial;
@@ -368,21 +380,22 @@ body .well-pumukit,.container .well-pumukit,.container-fluid .well-pumukit,body 
   animation: initial;
 }
 
-.pmk-job-animate:hover:before {
+.pmk-job-animate-hover:hover:before {
   content: "\e638";
 }
 
 .pmk-job-animate {
-  -webkit-animation: spin 1s infinite linear;
-  -moz-animation: spin 1s infinite linear;
-  -ms-animation: spin 1s infinite linear;
-  -o-animation: spin 1s infinite linear;
-  animation: spin 1s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -ms-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
+  display: inline-block;
 }
 
 @-moz-keyframes spin {

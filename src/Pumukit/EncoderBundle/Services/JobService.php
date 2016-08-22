@@ -41,10 +41,12 @@ class JobService
     private $logger;
     private $environment;
     private $tokenStorage;
+    private $propService;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-                                TrackService $trackService, TokenStorage $tokenStorage, $environment="dev", $tmpPath=null)
+                                TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService,
+                                $environment="dev", $tmpPath=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -57,6 +59,7 @@ class JobService
         $this->tokenStorage = $tokenStorage;
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
+        $this->propService = $propService;
     }
 
     /**
@@ -203,6 +206,7 @@ class JobService
         $this->setPathEndAndExtensions($job);
 
         $this->logger->addInfo('[addJob] Added job with id: '.$job->getId());
+        $this->propService->addJob($multimediaObject, $job);
 
         $this->executeNextJob();
 
@@ -401,6 +405,9 @@ class JobService
         $executor = $this->getExecutor($profile['app'], $cpu);
 
         try{
+            $multimediaObject = $this->getMultimediaObject($job);
+            $this->propService->executeJob($multimediaObject, $job);
+
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
@@ -420,6 +427,9 @@ class JobService
 
             $track = $this->createTrackWithJob($job);
             $this->dispatch(true, $job, $track);
+
+            $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
+            $this->propService->finishJob($multimediaObject, $job);
         }catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
@@ -427,6 +437,9 @@ class JobService
             $job->appendOutput($e->getMessage());
             $this->logger->addError('[execute] error job output: '.$e->getMessage());
             $this->dispatch(false, $job);
+
+            $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
+            $this->propService->errorJob($multimediaObject, $job);
         }
 
         $this->dm->persist($job);
@@ -614,7 +627,7 @@ class JobService
         $multimediaObject->setDuration($track->getDuration());
 
         $this->trackService->addTrackToMultimediaObject($multimediaObject, $track);
-        
+
         return $track;
     }
 
@@ -647,12 +660,12 @@ class JobService
         if (Job::STATUS_ERROR !== $job->getStatus()){
             return false;
         }
-        
+
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
-        
+
         $this->mkdir($tempDir);
 
         $job->setStatus(Job::STATUS_WAITING);
@@ -660,6 +673,8 @@ class JobService
         $job->setTimeIni(new \DateTime('now'));
         $this->dm->persist($job);
         $this->dm->flush();
+
+        $this->propService->retryJob($mmobj, $job);
 
         $this->executeNextJob();
 
@@ -689,13 +704,13 @@ class JobService
     private function getMultimediaObject($job)
     {
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
-        
+
         if(!$multimediaObject) {
           $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job %s creates the track", $job->getMmId(), $job->getId());
           $this->logger->addError($errorMsg);
           throw new \Exception($errorMsg);
         }
-        
+
         return $multimediaObject;
     }
 
@@ -717,7 +732,7 @@ class JobService
     private function checkService()
     {
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
-        $yesterday = new \DateTime('-1 day'); 
+        $yesterday = new \DateTime('-1 day');
 
         foreach ($jobs as $job) {
             if($job->getTimestart() < $yesterday) {
@@ -751,7 +766,7 @@ class JobService
 
 
     /**
-     * 
+     *
      */
     private function mkdir($path)
     {

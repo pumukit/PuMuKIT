@@ -33,6 +33,7 @@ class JobServiceTest extends WebTestCase
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
+        $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
@@ -47,7 +48,8 @@ class JobServiceTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService,
                                            $inspectionService, $dispatcher, $this->logger,
-                                           $this->trackService, $this->tokenStorage, "test", null);
+                                           $this->trackService, $this->tokenStorage, $this->propService,
+                                           "test", null);
     }
 
     public function tearDown()

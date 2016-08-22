@@ -2,6 +2,11 @@
   <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
     <li>
+      <a  title="{% trans %}List multimedia objects of the series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}">
+        <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the series{% endtrans %}
+      </a>
+    </li>
+    <li>
       <a  title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
         <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
       </a>

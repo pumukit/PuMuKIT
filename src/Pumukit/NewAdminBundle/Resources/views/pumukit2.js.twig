@@ -674,12 +674,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
             });
         }
         break;
-
-    case 'series_preview':
-        var url = "{{ url('pumukit_webtv_series_magicindex', {secret: '__mmSecret__'}) }}";
-        var secret = selector.find(':selected').attr('id');
-        if (secret !== '') window.open(url.replace('__mmSecret__', secret));
-        break;
 /* TODO
     case 'serial_master':
     Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
@@ -1030,7 +1024,21 @@ window.click_fila_edit_urls = function(element, tr, show_url, update_url)
 
 window.dblclick_fila_url = function(element, tr, url)
 {
-  document.location.href= (url);
+    document.location.href= (url);
+}
+
+window.dblclick_preview_mm = function(id)
+{
+    var url = "{{ path('pumukitnewadmin_mms_modal_preview', {'id': '__id__'})|raw }}";
+    $.ajax({
+        url: url.replace('__id__', id),
+        type: 'GET',
+        success: function(response){
+            var $modal = $('#myModal');
+            $modal.modal('show');
+            $modal.find('.modal-content').html(response);
+        }
+    });
 }
 
 

@@ -51,16 +51,19 @@ class MultimediaObjectMetaType extends AbstractType
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('i18n_line2', 'textareai18n',
                   array('required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale), ))
             ->add('subseries', 'checkbox',
                   array('mapped' => false,
                         'required' => false,
+                        'attr' => array('groupclass' => 'hidden-naked'),
                         'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ))
             ->add('subseriestitle', 'texti18n',
                   array('mapped' => false,
                         'required' => false,
+                        'attr' => array('groupclass' => 'hidden-naked'),
                         'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ));
+
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $multimediaObject = $event->getData();
             $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));

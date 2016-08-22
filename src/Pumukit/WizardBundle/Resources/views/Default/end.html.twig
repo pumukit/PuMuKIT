@@ -3,7 +3,7 @@
 <div class="well">
   <h3>{% trans %}Audio/Video uploaded successfully{% endtrans %}</h3>
   <h4>
-    {% trans %}The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.{% endtrans %}
+    {% trans %}The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.{% endtrans %}
   </h4>
   {% if mm is not empty %}
   <div class="well">
@@ -28,22 +28,23 @@
   </div>
   {% endif %}
   <div class="row">
-    <div class="col-md-12">
-      {% trans %}Actions{% endtrans %}:
-      <ul>
+    <div class="col-md-6">
+      {% trans %}Main action{% endtrans %}:
+      <div style="padding-left: 50px;">
         {% if series is not empty and mm is not empty %}
-        <li>
-          <a href="{{ path('pumukitwizard_default_data', {'mmId': mm.getId(), 'seriesId': series.getId()}) }}">
-            {% trans %}Edit Multimedia Object{% endtrans %}
-          </a>
-        </li>
+        <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.getId()}) }}" class="btn btn-primary btn-raised">
+          {% trans %}Edit Multimedia Object{% endtrans %}
+        </a>
         {% elseif series is not empty %}
-        <li>
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}">
-            {% trans %}Back to Series{% endtrans %}
-          </a>
-        </li>
+        <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}" class="btn btn-primary btn-raised">
+          {% trans %}Back to Series{% endtrans %}
+        </a>
         {% endif %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      {% trans %}Other actions{% endtrans %}:
+      <ul>
         {% if series is not empty %}
         <li>
           <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
@@ -54,6 +55,11 @@
         <li>
           <a href="{{ path('pumukitwizard_default_series') }}">
             {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
+          </a>
+        </li>
+        <li>
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+            {% trans %}Back to Media Manager{% endtrans %}
           </a>
         </li>
       </ul>
