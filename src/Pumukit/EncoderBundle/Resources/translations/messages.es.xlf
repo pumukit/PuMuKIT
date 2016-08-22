@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="eb6f9298251729ce25963477b32c6245" resname="Pending jobs (paused &amp; waiting)">
+        <source>Pending jobs (paused &amp; waiting)</source>
+        <target xml:lang="es-ES" state="translated">Tareas pendientes (pausadas &amp; esperando)</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Trabajos pendientes (pausados &amp; esperando)</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="86ca3ab6fc59d8ae02dbc91c63419584" resname="Executing jobs">
+        <source>Executing jobs</source>
+        <target xml:lang="es-ES" state="translated">Tareas en ejecución</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Trabajos en ejecución</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="bd3507e49a4df5619011bf068816adb7" resname="Executed jobs">
+        <source>Executed jobs</source>
+        <target xml:lang="es-ES" state="translated">Tareas ejecutadas</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Trabajos ejecutados</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
+        <source>You don't have enough permissions to access this content.</source>
+        <target xml:lang="es-ES" state="translated">No tienes permisos suficientes para acceder a este contenido.</target>
+      </trans-unit>
+      <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
+        <source>Job info</source>
+        <target xml:lang="es-ES" state="translated">Información de la tarea</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Información del trabajo</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+        <source>Id</source>
+        <target xml:lang="es-ES" state="translated">Id</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+        <source>Status</source>
+        <target xml:lang="es-ES" state="translated">Estado</target>
+      </trans-unit>
+      <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
+        <source>Mm</source>
+        <target xml:lang="es-ES" state="translated">Mm</target>
+      </trans-unit>
+      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+        <source>Profile</source>
+        <target xml:lang="es-ES" state="translated">Perfil</target>
+      </trans-unit>
+      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
+        <source>Cpu</source>
+        <target xml:lang="es-ES" state="translated">Cpu</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+        <source>Duration</source>
+        <target xml:lang="es-ES" state="translated">Duración</target>
+      </trans-unit>
+      <trans-unit id="9060587edeb01a63e3d3edc959678d1e" resname="Before">
+        <source>Before</source>
+        <target xml:lang="es-ES" state="translated">Antes</target>
+      </trans-unit>
+      <trans-unit id="632a2406bbcbcd553eec45ac14b40a0a" resname="after">
+        <source>after</source>
+        <target xml:lang="es-ES" state="translated">después</target>
+      </trans-unit>
+      <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
+        <source>Times</source>
+        <target xml:lang="es-ES" state="translated">Fecha</target>
+      </trans-unit>
+      <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
+        <source>Created</source>
+        <target xml:lang="es-ES" state="translated">Creado</target>
+      </trans-unit>
+      <trans-unit id="3bebb2f89180b03fa5ae736665f648d9" resname="started">
+        <source>started</source>
+        <target xml:lang="es-ES" state="translated">empezado</target>
+      </trans-unit>
+      <trans-unit id="a5d7ceb2c59b8cee46c2953fec9abc19" resname="finished">
+        <source>finished</source>
+        <target xml:lang="es-ES" state="translated">terminado</target>
+      </trans-unit>
+      <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
+        <source>Priority</source>
+        <target xml:lang="es-ES" state="translated">Prioridad</target>
+      </trans-unit>
+      <trans-unit id="08f935001020133c14d4d97e789f105a" resname="Edit priority">
+        <source>Edit priority</source>
+        <target xml:lang="es-ES" state="translated">Editar prioridad</target>
+      </trans-unit>
+      <trans-unit id="a6fbb2ce4173b61ca5a2f0450191112c" resname="Output Command">
+        <source>Output Command</source>
+        <target xml:lang="es-ES" state="translated">Comando de salida</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target xml:lang="es-ES" state="translated">Cancelar</target>
+      </trans-unit>
+      <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
+        <source>RETRY</source>
+        <target xml:lang="es-ES" state="translated">REINTENTO</target>
+        <alt-trans>
+          <target xml:lang="es-ES">REINTENTAR</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="32f68a60cef40faedbc6af20298c1a1e" resname="DELETE">
+        <source>DELETE</source>
+        <target xml:lang="es-ES" state="translated">ELIMINAR</target>
+      </trans-unit>
+      <trans-unit id="12ceff2290bb9039beaa8f36d5dec226" resname="Jobs">
+        <source>Jobs</source>
+        <target xml:lang="es-ES" state="translated">Trabajos</target>
+      </trans-unit>
+      <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
+        <source>No</source>
+        <target xml:lang="es-ES" state="translated">Tareas</target>
+      </trans-unit>
+      <trans-unit id="a97a53891aaa0e1e806ed87486edaf93" resname="No showing">
+        <source>No showing</source>
+        <target xml:lang="es-ES" state="translated">No mostrado</target>
+      </trans-unit>
+      <trans-unit id="374cf3e959215546c32da5ffc58377ca" resname="Please change the filter or">
+        <source>Please change the filter or</source>
+        <target xml:lang="es-ES" state="translated">Por favor, cambie el filtro o</target>
+      </trans-unit>
+      <trans-unit id="020a0ac0479ca173abe32eeae82da63a" resname="reset it">
+        <source>reset it</source>
+        <target xml:lang="es-ES" state="translated">resetéelo</target>
+      </trans-unit>
+      <trans-unit id="ad05f78187c942f9dd521605fa81f1ba" resname="MM">
+        <source>MM</source>
+        <target xml:lang="es-ES" state="translated">MM</target>
+      </trans-unit>
+      <trans-unit id="13427dbd0b43c7c05931e734f40d0a3c" resname="Timeini">
+        <source>Timeini</source>
+        <target xml:lang="es-ES" state="translated">Hora de inicio</target>
+      </trans-unit>
+      <trans-unit id="42883eb38646fc2c2498101d4373bcb1" resname="Timestart">
+        <source>Timestart</source>
+        <target xml:lang="es-ES" state="translated">Hora de comienzo</target>
+      </trans-unit>
+      <trans-unit id="6de1d7293f1c9304bb0d3fd7033d6557" resname="Timeend">
+        <source>Timeend</source>
+        <target xml:lang="es-ES" state="translated">Hora de finalización</target>
+      </trans-unit>
+      <trans-unit id="371ab4ac98728d66b49d1a14ba726292" resname="Encoder Job info">
+        <source>Encoder Job info</source>
+        <target xml:lang="es-ES" state="translated">Información de la tarea de codificación</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Información del trabajo de codificación</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="654ff8bc59f856f8da10158830c43a48" resname="{0} jobs|{1} job|]1,Inf] jobs">
+        <source>{0} jobs|{1} job|]1,Inf] jobs</source>
+        <target xml:lang="es-ES" state="translated">{0} trabajos |{1} trabajo|]1,Inf] trabajos</target>
+      </trans-unit>
+      <trans-unit id="e99180abf47a8b3a856e0bcb2656990a" resname="Paused">
+        <source>Paused</source>
+        <target xml:lang="es-ES" state="translated">En pausa</target>
+      </trans-unit>
+      <trans-unit id="5706de961fb376d701be6e7762d8b09c" resname="Waiting">
+        <source>Waiting</source>
+        <target xml:lang="es-ES" state="translated">En espera</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Esperando</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="63c4cc5944eb60b1969f2333ead70fc9" resname="Executing">
+        <source>Executing</source>
+        <target xml:lang="es-ES" state="translated">En ejecución</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Ejecutándose</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="8f3d10eb21bd36347c258679eba9e92b" resname="Finished">
+        <source>Finished</source>
+        <target xml:lang="es-ES" state="translated">Finalizadas</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Finalizados</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="902b0d55fddef6f8d651fe1035b7d4bd" resname="Error">
+        <source>Error</source>
+        <target xml:lang="es-ES" state="translated">Erroróneas</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Erroróneos</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="es-ES">Error</target>
+        </alt-trans>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
