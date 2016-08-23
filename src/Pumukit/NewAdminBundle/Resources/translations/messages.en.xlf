@@ -2182,6 +2182,98 @@
         <source>Only users in the selected Groups can play this multimedia object</source>
         <target>Only users in the selected Groups can play this multimedia object</target>
       </trans-unit>
+      <trans-unit id="e988260bcd2c444e8d7a8b3f7d943886" resname="Dashboard">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="e0fcbdbcc92c49a78be3acf8693bc6dd" resname="Media Manager">
+        <source>Media Manager</source>
+        <target>Media Manager</target>
+      </trans-unit>
+      <trans-unit id="6bf929ceefdc4234852a48d37d43d390" resname="Series">
+        <source>Series</source>
+        <target>Series</target>
+      </trans-unit>
+      <trans-unit id="b501a38eab924a8b8ff48e78bbb5f382" resname="Multimedia">
+        <source>Multimedia</source>
+        <target>Multimedia</target>
+      </trans-unit>
+      <trans-unit id="4cb1faa4923d4628bbefc4f396883641" resname="Moodle Playlists">
+        <source>Moodle Playlists</source>
+        <target>Moodle Playlists</target>
+      </trans-unit>
+      <trans-unit id="5913dc8a254f4e989f825e3e74d2c78c" resname="Multimedia">
+        <source>Multimedia</source>
+        <target>Multimedia</target>
+      </trans-unit>
+      <trans-unit id="867947d1ac4b499a8b608adaeacee893" resname="Stats">
+        <source>Stats</source>
+        <target>Stats</target>
+      </trans-unit>
+      <trans-unit id="553c030d268b41619d10e366a4a101c0" resname="Multimedia Objects">
+        <source>Multimedia Objects</source>
+        <target>Multimedia Objects</target>
+      </trans-unit>
+      <trans-unit id="fe9f7b19b3f547bf8108220bc356f465" resname="Live">
+        <source>Live</source>
+        <target>Live</target>
+      </trans-unit>
+      <trans-unit id="31852be95c2c4ab0b200a7af05551764" resname="Live Channels">
+        <source>Live Channels</source>
+        <target>Live Channels</target>
+      </trans-unit>
+      <trans-unit id="dfa278e837034cbc8ab476e89dee9b86" resname="Live Events">
+        <source>Live Events</source>
+        <target>Live Events</target>
+      </trans-unit>
+      <trans-unit id="d4b066d479124464b629bdf90b008188" resname="Encoder jobs">
+        <source>Encoder jobs</source>
+        <target>Encoder jobs</target>
+      </trans-unit>
+      <trans-unit id="b6aeecf9e4af4bb28f666204f40feef6" resname="Tables">
+        <source>Tables</source>
+        <target>Tables</target>
+      </trans-unit>
+      <trans-unit id="aed5d602a0c0479e8c0e90af45b7e178" resname="People">
+        <source>People</source>
+        <target>People</target>
+      </trans-unit>
+      <trans-unit id="813c22885cc24e3eb7bde2faa7bf42d9" resname="Tags">
+        <source>Tags</source>
+        <target>Tags</target>
+      </trans-unit>
+      <trans-unit id="597a125f4221473b82c7a4f72c4c42f6" resname="Series types">
+        <source>Series types</source>
+        <target>Series types</target>
+      </trans-unit>
+      <trans-unit id="2e26a8edaeb949558122256cef18f6af" resname="Management">
+        <source>Management</source>
+        <target>Management</target>
+      </trans-unit>
+      <trans-unit id="be237038610a470291a106f254219a2b" resname="Admin users">
+        <source>Admin users</source>
+        <target>Admin users</target>
+      </trans-unit>
+      <trans-unit id="10cab39128e34de5981ecc71559b65e8" resname="Groups">
+        <source>Groups</source>
+        <target>Groups</target>
+      </trans-unit>
+      <trans-unit id="e2efd93e2ca8409db7694af436b2947c" resname="Permission profiles">
+        <source>Permission profiles</source>
+        <target>Permission profiles</target>
+      </trans-unit>
+      <trans-unit id="595e714d41f147a3ba1f252aecb5c333" resname="Roles">
+        <source>Roles</source>
+        <target>Roles</target>
+      </trans-unit>
+      <trans-unit id="64e1982bea2e438097f37371adc6ff21" resname="Tools">
+        <source>Tools</source>
+        <target>Tools</target>
+      </trans-unit>
+      <trans-unit id="f67d567331cb43e689db8dc4784ba324" resname="OC-Importer">
+        <source>OC-Importer</source>
+        <target>OC-Importer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
