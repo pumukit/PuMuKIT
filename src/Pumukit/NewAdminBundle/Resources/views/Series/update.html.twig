@@ -4,7 +4,7 @@
     <div class="col-lg-6">
       <form class="form-horizontal">
         <fieldset>
-          <legend>{% trans %}Metadata{% endtrans %}</legend>
+          <legend>{{ is_naked() ? 'Series Metadata'|trans : 'Metadata'|trans }}</legend>
           <div class="form-group">
             <label for="inputROId" class="col-xs-2 control-label">Id:</label>
             <div class="col-xs-10 input-group">
@@ -32,12 +32,15 @@
   </div>
 
 
+  {% if is_naked() %}
+    {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
+  {% else %}
   <div role="tabpanel">
     <ul id="seriesTab" class="nav nav-tabs" role="tablist">
       <li class="active">
         <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Series Metadata{% endtrans %}</a>
       </li>
-      {% if mmtemplate and not is_naked() %}
+      {% if mmtemplate %}
       <li>
         <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Videos Metadata Template{% endtrans %}</a>
       </li>
@@ -48,13 +51,15 @@
       <div id="editSeries" role="tabpanel" class="tab-pane active">
         {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
       </div>
-      {% if mmtemplate and not is_naked() %}
+      {% if mmtemplate %}
       <div id="editTemplate" role="tabpanel" class="tab-pane">
         {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
       </div>
       {% endif %}
     </div>
   </div>
+  {% endif %}
+
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
   {% endif %}
