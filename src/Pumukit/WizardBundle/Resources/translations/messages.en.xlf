@@ -202,6 +202,22 @@
         <source>Add multiple multimedia objects</source>
         <target>Add multiple multimedia objects</target>
       </trans-unit>
+      <trans-unit id="ac645573724145961004e8cf4ca1f161" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
+        <source>The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</source>
+        <target>__The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</target>
+      </trans-unit>
+      <trans-unit id="0e0c1fbe23cc8b0a6efe81ad19696cde" resname="Main action">
+        <source>Main action</source>
+        <target>__Main action</target>
+      </trans-unit>
+      <trans-unit id="9877bbb1e06f0d527d6db7730b280808" resname="Other actions">
+        <source>Other actions</source>
+        <target>__Other actions</target>
+      </trans-unit>
+      <trans-unit id="00e7eb6faf895de659ff4867af26f4b2" resname="Back to Media Manager">
+        <source>Back to Media Manager</source>
+        <target>__Back to Media Manager</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
