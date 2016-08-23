@@ -177,7 +177,7 @@
 
 {% if jobs|length != 0 %}
 <script type="text/javascript">
-  $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
+  $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
                 {% transchoice mm.getProperty('pending_jobs')|length %}
                     {0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.
                 {% endtranschoice %}
@@ -190,10 +190,6 @@
     //$('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
     //$('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
   }, 8000);
-</script>
-{% else %}
-<script type="text/javascript">
-  $('#table_mms_status_wrapper_{{ mm.id }}').html('<i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>');
 </script>
 {% endif %}
 {% endif %}

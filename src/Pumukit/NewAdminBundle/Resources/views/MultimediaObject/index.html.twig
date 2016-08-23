@@ -111,6 +111,8 @@ window.onload = function(){
 };
 */
 
+window.setInterval(window.update_mms_status_wrapper, 15000);
+
 window.update_preview_mms = function(id) {
   var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
   $.ajax({

@@ -136,6 +136,12 @@ pumukitnewadmin_mms_list:
     defaults:
         _controller: pumukitnewadmin.controller.mms:listAction
 
+pumukitnewadmin_mms_status:
+    pattern: /{id}/status
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:statusAction
+
 pumukitnewadmin_mms_invert_announce:
     pattern: /invertannounce
     methods: [GET, POST]

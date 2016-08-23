@@ -1068,6 +1068,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
+     * Used to update table_mms_status_wrapper via AJAX
+     *
+     * @Template
+     */
+    public function statusAction(MultimediaObject $mm, Request $request)
+    {
+        return array('mm' => $mm);
+    }
+
+    /**
      * Modify MultimediaObject Groups
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
