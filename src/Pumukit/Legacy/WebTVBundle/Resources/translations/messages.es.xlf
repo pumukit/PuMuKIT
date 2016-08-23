@@ -1,202 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
-        <target>Ciencias de la Salud</target>
+        <target xml:lang="es-ES" state="translated">Ciencias de la Salud</target>
       </trans-unit>
       <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities">
         <source>Humanities</source>
-        <target>Humanidades</target>
+        <target xml:lang="es-ES" state="translated">Humanidades</target>
       </trans-unit>
       <trans-unit id="8e8790229c666128fa88ff6e76de8565" resname="Experimental sciences">
         <source>Experimental sciences</source>
-        <target>Ciencias Experimentales</target>
+        <target xml:lang="es-ES" state="translated">Ciencias Experimentales</target>
       </trans-unit>
       <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science">
         <source>Technical science</source>
-        <target>Ciencias tecnológicas</target>
+        <target xml:lang="es-ES" state="translated">Ciencias tecnológicas</target>
       </trans-unit>
       <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
         <source>Social and Legal sciences</source>
-        <target>Ciencias Jurídico-Sociales</target>
+        <target xml:lang="es-ES" state="translated">Ciencias Jurídico-Sociales</target>
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target>PuMuKIT</target>
+        <target xml:lang="es-ES" state="needs-translation">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+        <target xml:lang="es-ES" state="needs-translation">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target>Sin título</target>
+        <target xml:lang="es-ES" state="translated">Sin título</target>
       </trans-unit>
       <trans-unit id="9aeb3ef76717905e375b8c8604d48c11" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
-        <target>También te interesan</target>
+        <target xml:lang="es-ES" state="translated">También te interesan</target>
       </trans-unit>
       <trans-unit id="c69c53aeab6542e087ba6b2d175ca78b" resname="Videos from same Series">
         <source>Videos from same Series</source>
-        <target>Vídeos de la misma serie</target>
+        <target xml:lang="es-ES" state="translated">Vídeos de la misma serie</target>
       </trans-unit>
       <trans-unit id="d8b432ad04a16f807bd4f10794c069fa" resname="Record Date">
         <source>Record Date</source>
-        <target>Fecha de grabación</target>
+        <target xml:lang="es-ES" state="translated">Fecha de grabación</target>
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
-        <target>Vídeo</target>
+        <target xml:lang="es-ES" state="translated">Vídeo</target>
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
         <source>Viewed</source>
-        <target>Visto</target>
+        <target xml:lang="es-ES" state="translated">Visto</target>
       </trans-unit>
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
         <source>time</source>
-        <target>vez</target>
+        <target xml:lang="es-ES" state="translated">vez</target>
       </trans-unit>
       <trans-unit id="f2b798f672d4b42c0359ced11d4f10cd" resname="times">
         <source>times</source>
-        <target>veces</target>
+        <target xml:lang="es-ES" state="translated">veces</target>
       </trans-unit>
       <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
-        <target>{0}veces|{1}vez|]1,Inf]veces</target>
+        <target xml:lang="es-ES" state="translated">{0}veces|{1}vez|]1,Inf]veces</target>
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target>Series</target>
+        <target xml:lang="es-ES" state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
-        <target>Vídeos</target>
+        <target xml:lang="es-ES" state="translated">Vídeos</target>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
         <source>Hours</source>
-        <target>Horas</target>
+        <target xml:lang="es-ES" state="translated">Horas</target>
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target>No existen vídeos de estas características</target>
+        <target xml:lang="es-ES" state="translated">No existen vídeos de estas características</target>
       </trans-unit>
       <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding">
         <source>Date of holding</source>
-        <target>Fecha de celebración</target>
+        <target xml:lang="es-ES" state="translated">Fecha de celebración</target>
       </trans-unit>
       <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
         <source>Audio</source>
-        <target>Audio</target>
+        <target xml:lang="es-ES" state="needs-translation">Audio</target>
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
-        <target>privado</target>
+        <target xml:lang="es-ES" state="translated">privado</target>
       </trans-unit>
       <trans-unit id="987ec9e1c847709406571048e5a96a18" resname="401 Unauthorized">
         <source>401 Unauthorized</source>
-        <target>401 No autorizado</target>
+        <target xml:lang="es-ES" state="translated">401 No autorizado</target>
       </trans-unit>
       <trans-unit id="bae8ed4159c5b1341ce7fe680c4c572d" resname="No permission to access this video">
         <source>No permission to access this video</source>
-        <target>Sin permisos para acceder a ese vídeo</target>
+        <target xml:lang="es-ES" state="translated">Sin permisos para acceder a ese vídeo</target>
       </trans-unit>
       <trans-unit id="0b60091a7f70b3d4ad0e3cd7060ffb67" resname="404 Not found">
         <source>404 Not found</source>
-        <target>404 No encontrado</target>
+        <target xml:lang="es-ES" state="translated">404 No encontrado</target>
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target>Buscar</target>
+        <target xml:lang="es-ES" state="translated">Buscar</target>
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
-        <target>Categorías</target>
+        <target xml:lang="es-ES" state="translated">Categorías</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target>Duración</target>
+        <target xml:lang="es-ES" state="translated">Duración</target>
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
-        <target>Todos</target>
+        <target xml:lang="es-ES" state="translated">Todos</target>
       </trans-unit>
       <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
-        <target>Hasta 5 minutos</target>
+        <target xml:lang="es-ES" state="translated">Hasta 5 minutos</target>
       </trans-unit>
       <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
         <source>Up to 10 minutes</source>
-        <target>Hasta 10 minutos</target>
+        <target xml:lang="es-ES" state="translated">Hasta 10 minutos</target>
       </trans-unit>
       <trans-unit id="cf0e47fa01c0301688b0988a34f05556" resname="Up to 30 minutes">
         <source>Up to 30 minutes</source>
-        <target>Hasta 30 minutos</target>
+        <target xml:lang="es-ES" state="translated">Hasta 30 minutos</target>
       </trans-unit>
       <trans-unit id="0379225ae7d7c577c4fcf72e5cbf026e" resname="Up to 60 minutes">
         <source>Up to 60 minutes</source>
-        <target>Hasta 60 minutos</target>
+        <target xml:lang="es-ES" state="translated">Hasta 60 minutos</target>
       </trans-unit>
       <trans-unit id="33cfc2709fe67cc82cf324f9c7f57cef" resname="More than 60 minutes">
         <source>More than 60 minutes</source>
-        <target>Más de 60 minutos</target>
+        <target xml:lang="es-ES" state="translated">Más de 60 minutos</target>
       </trans-unit>
       <trans-unit id="24105bbb65df055ed4fe0eea90c13f75" resname="Video/Audio">
         <source>Video/Audio</source>
-        <target>Vídeo/Audio</target>
+        <target xml:lang="es-ES" state="translated">Vídeo/Audio</target>
       </trans-unit>
       <trans-unit id="4d34f1097f6c8b9cee28bca8b78bbee9" resname="Start date">
         <source>Start date</source>
-        <target>Fecha de comienzo</target>
+        <target xml:lang="es-ES" state="translated">Fecha de comienzo</target>
       </trans-unit>
       <trans-unit id="70936d272892e3873e7c8c77991e5518" resname="Finish date">
         <source>Finish date</source>
-        <target>Fecha de finalización</target>
+        <target xml:lang="es-ES" state="translated">Fecha de finalización</target>
       </trans-unit>
       <trans-unit id="268d1dca05a4dd6c3d647a4de01bf9d5" resname="Reset filters">
         <source>Reset filters</source>
-        <target>Limpiar filtros</target>
+        <target xml:lang="es-ES" state="translated">Limpiar filtros</target>
       </trans-unit>
       <trans-unit id="7da5e0c74a08ab8ede2f33fa2644c181" resname="Series search">
         <source>Series search</source>
-        <target>Buscar series</target>
+        <target xml:lang="es-ES" state="translated">Buscar series</target>
       </trans-unit>
       <trans-unit id="12b214e7c67af198fa672b60161eac75" resname="Multimedia object search">
         <source>Multimedia object search</source>
-        <target>Buscar objetos multimedia</target>
+        <target xml:lang="es-ES" state="translated">Buscar objetos multimedia</target>
       </trans-unit>
       <trans-unit id="633e57bd46fdbfeb7b92ee75c5a5386e" resname="Not series found">
         <source>Not series found</source>
-        <target>No se ha encontrado ninguna serie</target>
+        <target xml:lang="es-ES" state="translated">No se ha encontrado ninguna serie</target>
       </trans-unit>
       <trans-unit id="9b248b04a66449e2826a663ecd5fe41a" resname="Not multimedia objects found.">
         <source>Not multimedia objects found.</source>
-        <target>No se ha encontrado ningún objeto multimedia.</target>
+        <target xml:lang="es-ES" state="translated">No se ha encontrado ningún objeto multimedia.</target>
       </trans-unit>
       <trans-unit id="67a8bca76a5ac5b8a2fc146a89104972" resname="Download master">
         <source>Download master</source>
-        <target>Descarga master</target>
+        <target xml:lang="es-ES" state="translated">Descarga master</target>
       </trans-unit>
       <trans-unit id="6351030f724f6f42fd11ec9aa6ee8c76" resname="403 Forbidden">
         <source>403 Forbidden</source>
-        <target>403 Prohibido</target>
+        <target xml:lang="es-ES" state="translated">403 Prohibido</target>
       </trans-unit>
       <trans-unit id="3f23f5e89e88dba25ea0f44e359452b6" resname="Forbidden to access this video">
         <source>Forbidden to access this video</source>
-        <target>Prohibido acceder a este vídeo</target>
+        <target xml:lang="es-ES" state="translated">Prohibido acceder a este vídeo</target>
       </trans-unit>
       <trans-unit id="9a19d5d5280f20e67fc97cea5212ebae" resname="Warning: This URL is not for public use.">
         <source>Warning: This URL is not for public use.</source>
-        <target>Advertencia: Esta URL no es para uso público.</target>
+        <target xml:lang="es-ES" state="translated">Advertencia: Esta URL no es para uso público.</target>
       </trans-unit>
       <trans-unit id="4758dceaf837bdcdc9761caa8e71f0dc" resname="No Track.">
         <source>No Track.</source>
-        <target>Sin Track.</target>
+        <target xml:lang="es-ES" state="translated">Sin Track.</target>
       </trans-unit>
       <trans-unit id="c1a65631c7c397dd4cc3be65afd6a54b" resname="This series does not have any multimedia objects.">
         <source>This series does not have any multimedia objects.</source>
-        <target>Esta serie no tiene objetos multimedia.</target>
+        <target xml:lang="es-ES" state="translated">Esta serie no tiene objetos multimedia.</target>
       </trans-unit>
     </body>
   </file>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>
-        <target xml:lang="es-ES" state="translated">Id</target>
+        <target xml:lang="es-ES" state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="es-ES" state="translated">Cpu</target>
+        <target xml:lang="es-ES" state="needs-translation">Cpu</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>

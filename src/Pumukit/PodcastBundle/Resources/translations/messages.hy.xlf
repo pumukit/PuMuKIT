@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hy-AM" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="778165da01a1188513a46798e98af1ec" resname="Podcast info For Multimedia Object:">
+        <source>Podcast info For Multimedia Object:</source>
+        <target xml:lang="hy-AM" state="needs-translation">Podcast info For Multimedia Object:</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+        <source>Status</source>
+        <target xml:lang="hy-AM" state="needs-translation">Status</target>
+      </trans-unit>
+      <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU.">
+        <source>Not published on PodcastEDU.</source>
+        <target xml:lang="hy-AM" state="needs-translation">Not published on PodcastEDU.</target>
+      </trans-unit>
+      <trans-unit id="712d3f979769cd5fe11bbdaa5e650541" resname="WARNING, Not video tracks with">
+        <source>WARNING, Not video tracks with</source>
+        <target xml:lang="hy-AM" state="needs-translation">WARNING, Not video tracks with</target>
+      </trans-unit>
+      <trans-unit id="41981645c29b944b17d9db3c9aabc515" resname="WARNING, Not audio tracks with">
+        <source>WARNING, Not audio tracks with</source>
+        <target xml:lang="hy-AM" state="needs-translation">WARNING, Not audio tracks with</target>
+      </trans-unit>
+      <trans-unit id="9b9d8a976b42e0bd66381797644943d5" resname="Published">
+        <source>Published</source>
+        <target xml:lang="hy-AM" state="needs-translation">Published</target>
+      </trans-unit>
+      <trans-unit id="dd2771c80b506d8d4ff74b4ab60edb3d" resname="Podcast info For Series:">
+        <source>Podcast info For Series:</source>
+        <target xml:lang="hy-AM" state="needs-translation">Podcast info For Series:</target>
+      </trans-unit>
+      <trans-unit id="ee701975bddf870abb94b7c3c33659a6" resname="It downloads and subscribes to an audio-only podcasts of this series.">
+        <source>It downloads and subscribes to an audio-only podcasts of this series.</source>
+        <target xml:lang="hy-AM" state="needs-translation">It downloads and subscribes to an audio-only podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id="843903dabb8d6bb0c9ccca82a864a004" resname="Audio POD">
+        <source>Audio POD</source>
+        <target xml:lang="hy-AM" state="needs-translation">Audio POD</target>
+      </trans-unit>
+      <trans-unit id="613b1a00ac381aba783479879e63263c" resname="Subscribe to this series podcast (requires iTunes)">
+        <source>Subscribe to this series podcast (requires iTunes)</source>
+        <target xml:lang="hy-AM" state="needs-translation">Subscribe to this series podcast (requires iTunes)</target>
+      </trans-unit>
+      <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
+        <source>It downloads and subscribes to the full video podcasts of this series.</source>
+        <target xml:lang="hy-AM" state="needs-translation">It downloads and subscribes to the full video podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id="967205de32bc11bcebfa0f940ad1bc09" resname="Video POD">
+        <source>Video POD</source>
+        <target xml:lang="hy-AM" state="needs-translation">Video POD</target>
+      </trans-unit>
+      <trans-unit id="9290d28ab5e949c5456784c27440090b" resname="It downloads and subscribes to the video and audio podcasts of this series.">
+        <source>It downloads and subscribes to the video and audio podcasts of this series.</source>
+        <target xml:lang="hy-AM" state="needs-translation">It downloads and subscribes to the video and audio podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id="7de670fb5df1ea744e72712d4ea29cbe" resname="All POD">
+        <source>All POD</source>
+        <target xml:lang="hy-AM" state="needs-translation">All POD</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

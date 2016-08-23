@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="es-ES" state="translated">SERIES</target>
+        <target xml:lang="es-ES" state="needs-translation">SERIES</target>
       </trans-unit>
       <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
         <source>VIDEO</source>
@@ -165,9 +165,6 @@
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
         <target xml:lang="es-ES" state="translated">Buzón de entrada en el servidor</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Carpeta de entrada en el servidor</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>

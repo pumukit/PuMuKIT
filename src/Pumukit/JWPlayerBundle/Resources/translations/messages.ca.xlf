@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ca" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
+        <source>Use</source>
+        <target xml:lang="ca" state="needs-translation">Use</target>
+      </trans-unit>
+      <trans-unit id="e81c4e4f2b7b93b481e13a8553c2ae1b" resname="or">
+        <source>or</source>
+        <target xml:lang="ca" state="needs-translation">or</target>
+      </trans-unit>
+      <trans-unit id="e723931919d56cef7931968684de17a7" resname="to improve your experience in watching recorded lectures">
+        <source>to improve your experience in watching recorded lectures</source>
+        <target xml:lang="ca" state="needs-translation">to improve your experience in watching recorded lectures</target>
+      </trans-unit>
+      <trans-unit id="1bec2303919e8e55e3f4b4ba314ad859" resname="Web explorers with HTML5 and h.264 codec video support">
+        <source>Web explorers with HTML5 and h.264 codec video support</source>
+        <target xml:lang="ca" state="needs-translation">Web explorers with HTML5 and h.264 codec video support</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
         <source>reset</source>
-        <target xml:lang="es-ES" state="translated">reset</target>
+        <target xml:lang="es-ES" state="needs-translation">reset</target>
       </trans-unit>
       <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
         <source>filter</source>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
-        <target xml:lang="es-ES" state="translated">Mm.Obj.</target>
+        <target xml:lang="es-ES" state="needs-translation">Mm.Obj.</target>
       </trans-unit>
       <trans-unit id="c91391b6983c77f7562c2a156a321f07" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
@@ -144,7 +144,7 @@
       </trans-unit>
       <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
         <source>Img</source>
-        <target xml:lang="es-ES" state="translated">Img</target>
+        <target xml:lang="es-ES" state="needs-translation">Img</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
@@ -240,7 +240,7 @@
       </trans-unit>
       <trans-unit id="96aa8615b9f8a7330695d231603ac9ce" resname="min.">
         <source>min.</source>
-        <target xml:lang="es-ES" state="translated">min.</target>
+        <target xml:lang="es-ES" state="needs-translation">min.</target>
       </trans-unit>
       <trans-unit id="cc58cd4895e7a86c70d4fa9d9427da40" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -301,9 +301,6 @@
       <trans-unit id="2dd035582d170f46a5772e6e5fa27adf" resname="group deletion">
         <source>group deletion</source>
         <target xml:lang="es-ES" state="translated">borrado de grupos</target>
-        <alt-trans>
-          <target xml:lang="es-ES">eliminación de grupos</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="1dfbcae6b26a494f2698e15b4723076f" resname="group info">
         <source>group info</source>
@@ -312,16 +309,10 @@
       <trans-unit id="f7f389b820140a98d5ce7387d6b88c86" resname="Delete Group">
         <source>Delete Group</source>
         <target xml:lang="es-ES" state="translated">Borrar grupo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Eliminar grupo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="27f2870eaa01c99fc83105240ad15f7f" resname="Delete All">
         <source>Delete All</source>
         <target xml:lang="es-ES" state="translated">Borrar Todo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Eliminar Todo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="afac306f409a3cb36b595b3215e24487" resname="There are no groups with those values.">
         <source>There are no groups with those values.</source>
@@ -389,7 +380,7 @@
       </trans-unit>
       <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
         <source>OK</source>
-        <target xml:lang="es-ES" state="translated">OK</target>
+        <target xml:lang="es-ES" state="needs-translation">OK</target>
       </trans-unit>
       <trans-unit id="9b36d7411de98344e6dbbe8c0e8abcf0" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
@@ -410,27 +401,18 @@
       <trans-unit id="a9e77665b6abe64830336745d22c80e9" resname="Live channels">
         <source>Live channels</source>
         <target xml:lang="es-ES" state="translated">Canales en vivo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Canales en directo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="418623d9ef2cbd1ec0f9d9da294241d3" resname="Create new live channel">
         <source>Create new live channel</source>
         <target xml:lang="es-ES" state="translated">Crear nuevo canal en vivo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Crear nuevo canal en directo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="792f61a257799d5184116e7514e3aed2" resname="Select any live channel.">
         <source>Select any live channel.</source>
         <target xml:lang="es-ES" state="translated">Seleccione algún canal en vivo.</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Seleccione algún canal en directo.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
         <source>URL</source>
-        <target xml:lang="es-ES" state="translated">URL</target>
+        <target xml:lang="es-ES" state="needs-translation">URL</target>
       </trans-unit>
       <trans-unit id="b5a4b64b2aa505bd7c11f79b8a9f458d" resname="Resolution">
         <source>Resolution</source>
@@ -443,16 +425,10 @@
       <trans-unit id="159689e05160dd2cfef39b2aa30e5ce2" resname="Edit live channel">
         <source>Edit live channel</source>
         <target xml:lang="es-ES" state="translated">Editar canal en vivo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Editar canal en directo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="02b7b3f2e7279c0a8fafdecfb61293dc" resname="{0} live channels|{1} live channel|]1,Inf] live channels">
         <source>{0} live channels|{1} live channel|]1,Inf] live channels</source>
         <target xml:lang="es-ES" state="translated">{0} canales en vivo|{1} canal en vivo|]1,Inf] canales en vivo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">{0} canales en directo|{1} canal en directo|]1,Inf] canales en directo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7d367dab8b471ac44dddc3ab3aa2c1bf" resname="Source IP">
         <source>Source IP</source>
@@ -465,16 +441,10 @@
       <trans-unit id="cb456215c3333db0551bd0788bc258c7" resname="Activated">
         <source>Activated</source>
         <target xml:lang="es-ES" state="translated">Activado</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Activada</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="43c7582c40594c3fe32a6634ef9dcb07" resname="Deactivated">
         <source>Deactivated</source>
         <target xml:lang="es-ES" state="translated">Desactivado</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Desactivada</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -587,9 +557,6 @@
       <trans-unit id="c57a8997db1db3976eac323c51725bd6" resname="Passwords can not be empty">
         <source>Passwords can not be empty</source>
         <target xml:lang="es-ES" state="translated">Las contraseñas no pueden estar en blanco</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Las contraseñas no pueden estar vacías</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="6bd6beac1da76b2d2a9c3b7914ba034c" resname="Publication">
         <source>Publication</source>
@@ -613,7 +580,7 @@
       </trans-unit>
       <trans-unit id="2f56b4f336dc97edf739bf79523fb9a6" resname="Multimedia">
         <source>Multimedia</source>
-        <target xml:lang="es-ES" state="translated">Multimedia</target>
+        <target xml:lang="es-ES" state="needs-translation">Multimedia</target>
       </trans-unit>
       <trans-unit id="28df46edd340e0938d203f84334d17ff" resname="Media Edition">
         <source>Media Edition</source>
@@ -713,7 +680,7 @@
       </trans-unit>
       <trans-unit id="e0c2297cd0586edafa230edc0585c1af" resname="Audio/Video">
         <source>Audio/Video</source>
-        <target xml:lang="es-ES" state="translated">Audio/Video</target>
+        <target xml:lang="es-ES" state="needs-translation">Audio/Video</target>
       </trans-unit>
       <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
         <source>Title</source>
@@ -726,16 +693,10 @@
       <trans-unit id="b11befb9b12822f75e5f3d0131e08fec" resname="RecDate">
         <source>RecDate</source>
         <target xml:lang="es-ES" state="translated">FechGrab</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Fecha de grabación</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="b9098dfe6720d6c108e103efa643a582" resname="PubDate">
         <source>PubDate</source>
         <target xml:lang="es-ES" state="translated">FechPub</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Fecha de publicación</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="6ad82d464215ca3b501dad2cfdfea8fa" resname="Move one position up">
         <source>Move one position up</source>
@@ -815,10 +776,7 @@
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="es-ES" state="translated">Email</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Correo electrónico</target>
-        </alt-trans>
+        <target xml:lang="es-ES" state="needs-translation">Email</target>
       </trans-unit>
       <trans-unit id="cc991c5669b278ab24bee4d0c911f3c9" resname="Edit Person">
         <source>Edit Person</source>
@@ -850,7 +808,7 @@
       </trans-unit>
       <trans-unit id="526d688f37a86d3c3f27d0c5016eb71d" resname="Reset">
         <source>Reset</source>
-        <target xml:lang="es-ES" state="translated">Reset</target>
+        <target xml:lang="es-ES" state="needs-translation">Reset</target>
       </trans-unit>
       <trans-unit id="eac43c6192e71b67210c7e4310d0f13b" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
@@ -1074,7 +1032,7 @@
       </trans-unit>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>
-        <target xml:lang="es-ES" state="translated">Id</target>
+        <target xml:lang="es-ES" state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="bcc254b55c4a1babdf1dcb82c207506b" resname="Phone">
         <source>Phone</source>
@@ -1082,11 +1040,11 @@
       </trans-unit>
       <trans-unit id="551b723eafd6a31d444fcb2f5920fbd3" resname="INFO">
         <source>INFO</source>
-        <target xml:lang="es-ES" state="translated">INFO</target>
+        <target xml:lang="es-ES" state="needs-translation">INFO</target>
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="es-ES" state="translated">SERIES</target>
+        <target xml:lang="es-ES" state="needs-translation">SERIES</target>
       </trans-unit>
       <trans-unit id="f3177b164abaa30bcc742ed6dec3c7a3" resname="Select any person">
         <source>Select any person</source>
@@ -1123,9 +1081,6 @@
       <trans-unit id="05e496590ca0fdbba1f85fcbd918ced2" resname="Banner from local hard drive">
         <source>Banner from local hard drive</source>
         <target xml:lang="es-ES" state="translated">Banner desde el disco duro</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Banner desde el disco duro local</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0080299bc013b5534d0229eed5acc4ee" resname="New Pic added.">
         <source>New Pic added.</source>
@@ -1222,9 +1177,6 @@
       <trans-unit id="6f78058d9e836449f256d83bd46a2925" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
         <target xml:lang="es-ES" state="translated">Listas de moodle</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Listas de reproducción de moodle</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="df0980fff413870fce6c098525d3f5ff" resname="Create new playlist">
         <source>Create new playlist</source>
@@ -1256,7 +1208,7 @@
       </trans-unit>
       <trans-unit id="2b3e9d78880001e51d2a8bbec9c67f06" resname="Id:">
         <source>Id:</source>
-        <target xml:lang="es-ES" state="translated">Id:</target>
+        <target xml:lang="es-ES" state="needs-translation">Id:</target>
       </trans-unit>
       <trans-unit id="3aea427a69e8906b95790872a9ab07cd" resname="Preview:">
         <source>Preview:</source>
@@ -1265,9 +1217,6 @@
       <trans-unit id="1ba9cf1a2b7fc310aa7b5f76e76f5558" resname="Playlist Metadata">
         <source>Playlist Metadata</source>
         <target xml:lang="es-ES" state="translated">Metadatos listas de reproducción</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Metadatos de las listas de reproducción</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f2b23a160d7d4477a369f93b7e3f05df" resname="Delete the playlist">
         <source>Delete the playlist</source>
@@ -1292,9 +1241,6 @@
       <trans-unit id="aa79aaf7fc30827bb332e7c796c7f8cb" resname="There are no playlist, please create one.">
         <source>There are no playlist, please create one.</source>
         <target xml:lang="es-ES" state="translated">No hay listas de reproducción, por favor cree una.</target>
-        <alt-trans>
-          <target xml:lang="es-ES">No hay listas de reproducción. Por favor, cree una.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="df1ef3fc95811d8bad93af7b53bbe697" resname="Create playlist">
         <source>Create playlist</source>
@@ -1322,7 +1268,7 @@
       </trans-unit>
       <trans-unit id="4059b0251f66a18cb56f544728796875" resname="Info">
         <source>Info</source>
-        <target xml:lang="es-ES" state="translated">Info</target>
+        <target xml:lang="es-ES" state="needs-translation">Info</target>
       </trans-unit>
       <trans-unit id="31fde7b05ac8952dacf4af8a704074ec" resname="Preview">
         <source>Preview</source>
@@ -1370,7 +1316,7 @@
       </trans-unit>
       <trans-unit id="a5cd3ed116608dac017f14c046ea56bf" resname="Roles">
         <source>Roles</source>
-        <target xml:lang="es-ES" state="translated">Roles</target>
+        <target xml:lang="es-ES" state="needs-translation">Roles</target>
       </trans-unit>
       <trans-unit id="b9987a246a537f4fe86f1f2e3d10dbdb" resname="Display">
         <source>Display</source>
@@ -1422,7 +1368,7 @@
       </trans-unit>
       <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
         <source>No</source>
-        <target xml:lang="es-ES" state="translated">No</target>
+        <target xml:lang="es-ES" state="needs-translation">No</target>
       </trans-unit>
       <trans-unit id="db05535e84f43715a5315c58a3c56807" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
@@ -1534,7 +1480,7 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="es-ES" state="translated">Series</target>
+        <target xml:lang="es-ES" state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="a660a21039b071f0270003f3941694f7" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
@@ -1627,9 +1573,6 @@
       <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
         <source>Low-Priority</source>
         <target xml:lang="es-ES" state="translated">Prioridad Baja</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Baja Prioridad</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
         <source>Normal-Priority</source>
@@ -1642,9 +1585,6 @@
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
         <target xml:lang="es-ES" state="translated">Carpeta de entrada en el servidor</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Buzón de entrada en el servidor</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
@@ -1677,17 +1617,14 @@
       <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
         <source>Job info</source>
         <target xml:lang="es-ES" state="translated">Información del trabajo</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Información de la tarea</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
         <source>Mm</source>
-        <target xml:lang="es-ES" state="translated">Mm</target>
+        <target xml:lang="es-ES" state="needs-translation">Mm</target>
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="es-ES" state="translated">Cpu</target>
+        <target xml:lang="es-ES" state="needs-translation">Cpu</target>
       </trans-unit>
       <trans-unit id="9060587edeb01a63e3d3edc959678d1e" resname="Before">
         <source>Before</source>
@@ -1700,9 +1637,6 @@
       <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
         <source>Times</source>
         <target xml:lang="es-ES" state="translated">Hora</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Fecha</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
         <source>Created</source>
@@ -1803,9 +1737,6 @@
       <trans-unit id="51e6b65d60448f48c3740dac84741ee9" resname="edit groups for user">
         <source>edit groups for user</source>
         <target xml:lang="es-ES" state="translated">editar grupos del usuario</target>
-        <alt-trans>
-          <target xml:lang="es-ES">editar grupos para el usuario</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="367b31a3305562f20d1d0cf93ba10031" resname="GROUPS">
         <source>GROUPS</source>
@@ -1858,9 +1789,6 @@
       <trans-unit id="fb51b403bdd54cec0f0fe19b9ab4c5fc" resname="User Groups">
         <source>User Groups</source>
         <target xml:lang="es-ES" state="translated">Grupos del Usuario</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Usuarios del Grupo</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bae41d2524d769cd9de6d6048841d052" resname="{0} users|{1} user|]1,Inf] users">
         <source>{0} users|{1} user|]1,Inf] users</source>
@@ -1989,9 +1917,6 @@
       <trans-unit id="b9e6a581c8bda90f8722c4210f9f1d26" resname="successfully deleted">
         <source>successfully deleted</source>
         <target xml:lang="es-ES" state="translated">eliminados correctamente</target>
-        <alt-trans>
-          <target xml:lang="es-ES">eliminado correctamente</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e4f43ec84514c27900e6395df72eb6d2" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
@@ -2052,9 +1977,6 @@
       <trans-unit id="8527935745926a5d29101e1a7eea97ff" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
         <target xml:lang="es-ES" state="translated">Está seguro de querer eliminar los datos de</target>
-        <alt-trans>
-          <target xml:lang="es-ES">¿Está seguro de querer eliminar los datos de</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="40bed7cf9b3d4bb3a3d7a7e3eb18c5eb" resname="Person">
         <source>Person</source>
@@ -2270,95 +2192,95 @@
       </trans-unit>
       <trans-unit id="e988260bcd2c444e8d7a8b3f7d943886" resname="Dashboard">
         <source>Dashboard</source>
-        <target>Dashboard</target>
+        <target xml:lang="es-ES" state="needs-translation">Dashboard</target>
       </trans-unit>
       <trans-unit id="e0fcbdbcc92c49a78be3acf8693bc6dd" resname="Media Manager">
         <source>Media Manager</source>
-        <target>Gestor de contenidos</target>
+        <target xml:lang="es-ES" state="translated">Gestor de contenidos</target>
       </trans-unit>
       <trans-unit id="6bf929ceefdc4234852a48d37d43d390" resname="Series">
         <source>Series</source>
-        <target>Series</target>
+        <target xml:lang="es-ES" state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="b501a38eab924a8b8ff48e78bbb5f382" resname="Multimedia">
         <source>Multimedia</source>
-        <target>Multimedia</target>
+        <target xml:lang="es-ES" state="needs-translation">Multimedia</target>
       </trans-unit>
       <trans-unit id="4cb1faa4923d4628bbefc4f396883641" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
-        <target>Playlists de Moodle</target>
+        <target xml:lang="es-ES" state="translated">Playlists de Moodle</target>
       </trans-unit>
       <trans-unit id="5913dc8a254f4e989f825e3e74d2c78c" resname="Multimedia">
         <source>Multimedia</source>
-        <target>Multimedia</target>
+        <target xml:lang="es-ES" state="needs-translation">Multimedia</target>
       </trans-unit>
       <trans-unit id="867947d1ac4b499a8b608adaeacee893" resname="Stats">
         <source>Stats</source>
-        <target>Estadísticas</target>
+        <target xml:lang="es-ES" state="translated">Estadísticas</target>
       </trans-unit>
       <trans-unit id="553c030d268b41619d10e366a4a101c0" resname="Multimedia Objects">
         <source>Multimedia Objects</source>
-        <target>Objetos Multimedia</target>
+        <target xml:lang="es-ES" state="translated">Objetos Multimedia</target>
       </trans-unit>
       <trans-unit id="fe9f7b19b3f547bf8108220bc356f465" resname="Live">
         <source>Live</source>
-        <target>Directos</target>
+        <target xml:lang="es-ES" state="translated">Directos</target>
       </trans-unit>
       <trans-unit id="31852be95c2c4ab0b200a7af05551764" resname="Live Channels">
         <source>Live Channels</source>
-        <target>Canales de Directo</target>
+        <target xml:lang="es-ES" state="translated">Canales de Directo</target>
       </trans-unit>
       <trans-unit id="dfa278e837034cbc8ab476e89dee9b86" resname="Live Events">
         <source>Live Events</source>
-        <target>Eventos en Directo</target>
+        <target xml:lang="es-ES" state="translated">Eventos en Directo</target>
       </trans-unit>
       <trans-unit id="d4b066d479124464b629bdf90b008188" resname="Encoder jobs">
         <source>Encoder jobs</source>
-        <target>Trabajos de codificacion</target>
+        <target xml:lang="es-ES" state="translated">Trabajos de codificacion</target>
       </trans-unit>
       <trans-unit id="b6aeecf9e4af4bb28f666204f40feef6" resname="Tables">
         <source>Tables</source>
-        <target>Tablas</target>
+        <target xml:lang="es-ES" state="translated">Tablas</target>
       </trans-unit>
       <trans-unit id="aed5d602a0c0479e8c0e90af45b7e178" resname="People">
         <source>People</source>
-        <target>Personas</target>
+        <target xml:lang="es-ES" state="translated">Personas</target>
       </trans-unit>
       <trans-unit id="813c22885cc24e3eb7bde2faa7bf42d9" resname="Tags">
         <source>Tags</source>
-        <target>Tags</target>
+        <target xml:lang="es-ES" state="needs-translation">Tags</target>
       </trans-unit>
       <trans-unit id="597a125f4221473b82c7a4f72c4c42f6" resname="Series types">
         <source>Series types</source>
-        <target>Tipos de Series</target>
+        <target xml:lang="es-ES" state="translated">Tipos de Series</target>
       </trans-unit>
       <trans-unit id="2e26a8edaeb949558122256cef18f6af" resname="Management">
         <source>Management</source>
-        <target>Administración</target>
+        <target xml:lang="es-ES" state="translated">Administración</target>
       </trans-unit>
       <trans-unit id="be237038610a470291a106f254219a2b" resname="Admin users">
         <source>Admin users</source>
-        <target>Usuarios administradores</target>
+        <target xml:lang="es-ES" state="translated">Usuarios administradores</target>
       </trans-unit>
       <trans-unit id="10cab39128e34de5981ecc71559b65e8" resname="Groups">
         <source>Groups</source>
-        <target>Grupos</target>
+        <target xml:lang="es-ES" state="translated">Grupos</target>
       </trans-unit>
       <trans-unit id="e2efd93e2ca8409db7694af436b2947c" resname="Permission profiles">
         <source>Permission profiles</source>
-        <target>Perfiles de permisos</target>
+        <target xml:lang="es-ES" state="translated">Perfiles de permisos</target>
       </trans-unit>
       <trans-unit id="595e714d41f147a3ba1f252aecb5c333" resname="Roles">
         <source>Roles</source>
-        <target>Roles</target>
+        <target xml:lang="es-ES" state="needs-translation">Roles</target>
       </trans-unit>
       <trans-unit id="64e1982bea2e438097f37371adc6ff21" resname="Tools">
         <source>Tools</source>
-        <target>Herramientas</target>
+        <target xml:lang="es-ES" state="translated">Herramientas</target>
       </trans-unit>
       <trans-unit id="f67d567331cb43e689db8dc4784ba324" resname="OC-Importer">
         <source>OC-Importer</source>
-        <target>Importador OC</target>
+        <target xml:lang="es-ES" state="translated">Importador OC</target>
       </trans-unit>
     </body>
   </file>

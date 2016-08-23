@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ja" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
+        <source>Current live event</source>
+        <target xml:lang="ja" state="needs-translation">Current live event</target>
+      </trans-unit>
+      <trans-unit id="19633d75b6ef363510f653f26704a4e1" resname="Next live event">
+        <source>Next live event</source>
+        <target xml:lang="ja" state="needs-translation">Next live event</target>
+      </trans-unit>
+      <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
+        <source>EVENT</source>
+        <target xml:lang="ja" state="needs-translation">EVENT</target>
+      </trans-unit>
+      <trans-unit id="8c756b7e3daff6db3808a377b05a148f" resname="PLACE">
+        <source>PLACE</source>
+        <target xml:lang="ja" state="needs-translation">PLACE</target>
+      </trans-unit>
+      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+        <source>DATE</source>
+        <target xml:lang="ja" state="needs-translation">DATE</target>
+      </trans-unit>
+      <trans-unit id="346ff32eaa3c09983fb2ec057816d352" resname="TIME">
+        <source>TIME</source>
+        <target xml:lang="ja" state="needs-translation">TIME</target>
+      </trans-unit>
+      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+        <source>No title</source>
+        <target xml:lang="ja" state="needs-translation">No title</target>
+      </trans-unit>
+      <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
+        <source>Event</source>
+        <target xml:lang="ja" state="needs-translation">Event</target>
+      </trans-unit>
+      <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
+        <source>Place</source>
+        <target xml:lang="ja" state="needs-translation">Place</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target xml:lang="ja" state="needs-translation">Date</target>
+      </trans-unit>
+      <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
+        <source>Time</source>
+        <target xml:lang="ja" state="needs-translation">Time</target>
+      </trans-unit>
+      <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
+        <source>JWPlayer does not support your browser version</source>
+        <target xml:lang="ja" state="needs-translation">JWPlayer does not support your browser version</target>
+      </trans-unit>
+      <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
+        <source>Please use 9.0 or higher version or use another browser.</source>
+        <target xml:lang="ja" state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+      </trans-unit>
+      <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
+        <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
+        <target xml:lang="ja" state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

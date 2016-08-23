@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hy-AM" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer">
+        <source>Opencast Importer</source>
+        <target xml:lang="hy-AM" state="needs-translation">Opencast Importer</target>
+      </trans-unit>
+      <trans-unit id="bb1ca97ec761fc37101737ba0aa2e7c5" resname="ERROR">
+        <source>ERROR</source>
+        <target xml:lang="hy-AM" state="needs-translation">ERROR</target>
+      </trans-unit>
+      <trans-unit id="a11b072c3d08c062a300f31d69537da5" resname="Execute on the server">
+        <source>Execute on the server</source>
+        <target xml:lang="hy-AM" state="needs-translation">Execute on the server</target>
+      </trans-unit>
+      <trans-unit id="567904efe9e64d9faf3e41ef402cb568" resname="where">
+        <source>where</source>
+        <target xml:lang="hy-AM" state="needs-translation">where</target>
+      </trans-unit>
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+        <source>Search</source>
+        <target xml:lang="hy-AM" state="needs-translation">Search</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target xml:lang="hy-AM" state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
+        <source>reset</source>
+        <target xml:lang="hy-AM" state="needs-translation">reset</target>
+      </trans-unit>
+      <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
+        <source>filter</source>
+        <target xml:lang="hy-AM" state="needs-translation">filter</target>
+      </trans-unit>
+      <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
+        <source>Img</source>
+        <target xml:lang="hy-AM" state="needs-translation">Img</target>
+      </trans-unit>
+      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+        <source>Id</source>
+        <target xml:lang="hy-AM" state="needs-translation">Id</target>
+      </trans-unit>
+      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+        <source>Series</source>
+        <target xml:lang="hy-AM" state="needs-translation">Series</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+        <source>Duration</source>
+        <target xml:lang="hy-AM" state="needs-translation">Duration</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+        <source>Date</source>
+        <target xml:lang="hy-AM" state="needs-translation">Date</target>
+      </trans-unit>
+      <trans-unit id="984c6990081d06520196629b3ce40e54" resname="There are no mediapackages with those values.">
+        <source>There are no mediapackages with those values.</source>
+        <target xml:lang="hy-AM" state="needs-translation">There are no mediapackages with those values.</target>
+      </trans-unit>
+      <trans-unit id="b754e0e9927059d42b166c04f3ef8975" resname="play in opencast">
+        <source>play in opencast</source>
+        <target xml:lang="hy-AM" state="needs-translation">play in opencast</target>
+      </trans-unit>
+      <trans-unit id="de3c731be5633838089a07179d301d7b" resname="Play">
+        <source>Play</source>
+        <target xml:lang="hy-AM" state="needs-translation">Play</target>
+      </trans-unit>
+      <trans-unit id="ad10bb5ab7a1c1883447a5dda931bb47" resname="View on Pumukit">
+        <source>View on Pumukit</source>
+        <target xml:lang="hy-AM" state="needs-translation">View on Pumukit</target>
+      </trans-unit>
+      <trans-unit id="858a2b552953bc182248fe9374646398" resname="Imported">
+        <source>Imported</source>
+        <target xml:lang="hy-AM" state="needs-translation">Imported</target>
+      </trans-unit>
+      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import">
+        <source>Import</source>
+        <target xml:lang="hy-AM" state="needs-translation">Import</target>
+      </trans-unit>
+      <trans-unit id="98b21d345c906eb9ab72133821217a43" resname="Import inverted">
+        <source>Import inverted</source>
+        <target xml:lang="hy-AM" state="needs-translation">Import inverted</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target xml:lang="hy-AM" state="needs-translation">Cancel</target>
+      </trans-unit>
+      <trans-unit id="63ca19d0f7bd43783e79c5ff2e2a7b4a" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
+        <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
+        <target xml:lang="hy-AM" state="needs-translation">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
+      </trans-unit>
+      <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
+        <source>Cancel current search</source>
+        <target xml:lang="hy-AM" state="needs-translation">Cancel current search</target>
+      </trans-unit>
+      <trans-unit id="036934cf9842451c835a9981a067d0c3" resname="Cancel search">
+        <source>Cancel search</source>
+        <target xml:lang="hy-AM" state="needs-translation">Cancel search</target>
+      </trans-unit>
+      <trans-unit id="967840de4334a3f36a61a835b080f063" resname="Edit Opencast file of multimedia object">
+        <source>Edit Opencast file of multimedia object</source>
+        <target xml:lang="hy-AM" state="needs-translation">Edit Opencast file of multimedia object</target>
+      </trans-unit>
+      <trans-unit id="c3e53f75912bdea8c95c7ae9851d659a" resname="File info of multimedia object">
+        <source>File info of multimedia object</source>
+        <target xml:lang="hy-AM" state="needs-translation">File info of multimedia object</target>
+      </trans-unit>
+      <trans-unit id="ab6b7e1b0708d1ad1d4ba0f137f95817" resname="Capture frame from">
+        <source>Capture frame from</source>
+        <target xml:lang="hy-AM" state="needs-translation">Capture frame from</target>
+      </trans-unit>
+      <trans-unit id="0e3a50ba0067d015c223dcaed58f9fb3" resname="Transcode to profile">
+        <source>Transcode to profile</source>
+        <target xml:lang="hy-AM" state="needs-translation">Transcode to profile</target>
+      </trans-unit>
+      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Matterhorn Recording">
+        <source>Opencast Matterhorn Recording</source>
+        <target xml:lang="hy-AM" state="needs-translation">Opencast Matterhorn Recording</target>
+      </trans-unit>
+      <trans-unit id="00da4a0903d7faecfeb939d677e211ca" resname="opencast track info">
+        <source>opencast track info</source>
+        <target xml:lang="hy-AM" state="needs-translation">opencast track info</target>
+      </trans-unit>
+      <trans-unit id="52d75534a246ed7c58239ab61d736cfb" resname="URLs for images">
+        <source>URLs for images</source>
+        <target xml:lang="hy-AM" state="needs-translation">URLs for images</target>
+      </trans-unit>
+      <trans-unit id="1d9e0c7f416168ad1b1d297816b48341" resname="Presenter">
+        <source>Presenter</source>
+        <target xml:lang="hy-AM" state="needs-translation">Presenter</target>
+      </trans-unit>
+      <trans-unit id="c7bc3fddddb62d5b656adc30cea77a55" resname="Presentation">
+        <source>Presentation</source>
+        <target xml:lang="hy-AM" state="needs-translation">Presentation</target>
+      </trans-unit>
+      <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
+        <source>OK</source>
+        <target xml:lang="hy-AM" state="needs-translation">OK</target>
+      </trans-unit>
+      <trans-unit id="a0a7b04286793b4b5812c07b4ec10475" resname="update Opencast track of Multimedia Object">
+        <source>update Opencast track of Multimedia Object</source>
+        <target xml:lang="hy-AM" state="needs-translation">update Opencast track of Multimedia Object</target>
+      </trans-unit>
+      <trans-unit id="befcc65c57d8bf87d3b1cc3f52dcff0b" resname="Track successfully updated.">
+        <source>Track successfully updated.</source>
+        <target xml:lang="hy-AM" state="needs-translation">Track successfully updated.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

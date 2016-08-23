@@ -33,9 +33,6 @@
       <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
         <source>Use</source>
         <target xml:lang="es-ES" state="translated">Uso</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Usar</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>

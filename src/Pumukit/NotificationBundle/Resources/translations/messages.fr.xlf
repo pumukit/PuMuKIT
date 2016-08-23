@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+        <source>Id</source>
+        <target xml:lang="fr" state="needs-translation">Id</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+        <source>Status</source>
+        <target xml:lang="fr" state="needs-translation">Status</target>
+      </trans-unit>
+      <trans-unit id="66a0a78cd1e3aaed9aa1073b49b48270" resname="Multimedia Object Id">
+        <source>Multimedia Object Id</source>
+        <target xml:lang="fr" state="needs-translation">Multimedia Object Id</target>
+      </trans-unit>
+      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+        <source>Profile</source>
+        <target xml:lang="fr" state="needs-translation">Profile</target>
+      </trans-unit>
+      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
+        <source>Cpu</source>
+        <target xml:lang="fr" state="needs-translation">Cpu</target>
+      </trans-unit>
+      <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
+        <source>Priority</source>
+        <target xml:lang="fr" state="needs-translation">Priority</target>
+      </trans-unit>
+      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+        <source>Duration</source>
+        <target xml:lang="fr" state="needs-translation">Duration</target>
+      </trans-unit>
+      <trans-unit id="36961322944d2a6b24a72b0293e873c9" resname="New Duration">
+        <source>New Duration</source>
+        <target xml:lang="fr" state="needs-translation">New Duration</target>
+      </trans-unit>
+      <trans-unit id="ae4b4760a9029fe4ac4cc850946b3537" resname="Initial Time">
+        <source>Initial Time</source>
+        <target xml:lang="fr" state="needs-translation">Initial Time</target>
+      </trans-unit>
+      <trans-unit id="2bbc845892f400626baab5af687527c5" resname="Start Time">
+        <source>Start Time</source>
+        <target xml:lang="fr" state="needs-translation">Start Time</target>
+      </trans-unit>
+      <trans-unit id="c91a577b72313356fad611c55f43c10f" resname="End Time">
+        <source>End Time</source>
+        <target xml:lang="fr" state="needs-translation">End Time</target>
+      </trans-unit>
+      <trans-unit id="ee97be03cb04119af45014d815621ce1" resname="Command">
+        <source>Command</source>
+        <target xml:lang="fr" state="needs-translation">Command</target>
+      </trans-unit>
+      <trans-unit id="29c2c02a361c9d7028472e5d92cd4a54" resname="Output">
+        <source>Output</source>
+        <target xml:lang="fr" state="needs-translation">Output</target>
+      </trans-unit>
+      <trans-unit id="a114134ff06747be968e691ea851239f" resname="Multimedia Object Admin Link">
+        <source>Multimedia Object Admin Link</source>
+        <target xml:lang="fr" state="needs-translation">Multimedia Object Admin Link</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -33,13 +33,10 @@
       <trans-unit id="ee701975bddf870abb94b7c3c33659a6" resname="It downloads and subscribes to an audio-only podcasts of this series.">
         <source>It downloads and subscribes to an audio-only podcasts of this series.</source>
         <target xml:lang="es-ES" state="translated">Descargarse y suscribirse a un podcast, sólo de audio, de esta serie.</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Descarga y se suscribe a un podcast, sólo de audio, de esta serie.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="843903dabb8d6bb0c9ccca82a864a004" resname="Audio POD">
         <source>Audio POD</source>
-        <target xml:lang="es-ES" state="translated">Audio POD</target>
+        <target xml:lang="es-ES" state="needs-translation">Audio POD</target>
       </trans-unit>
       <trans-unit id="613b1a00ac381aba783479879e63263c" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
@@ -48,9 +45,6 @@
       <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
         <source>It downloads and subscribes to the full video podcasts of this series.</source>
         <target xml:lang="es-ES" state="translated">Descargase y suscribirse a todos los podcasts de vídeo de esta serie.</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Se descarga y se suscribe a todos los podcasts de vídeo de esta serie.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="967205de32bc11bcebfa0f940ad1bc09" resname="Video POD">
         <source>Video POD</source>
@@ -59,9 +53,6 @@
       <trans-unit id="9290d28ab5e949c5456784c27440090b" resname="It downloads and subscribes to the video and audio podcasts of this series.">
         <source>It downloads and subscribes to the video and audio podcasts of this series.</source>
         <target xml:lang="es-ES" state="translated">Se descarga y se suscribe a los podcasts de vídeo y audio de esta serie.</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Descargase y suscribirse a los podcasts de vídeo y audio de esta serie.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7de670fb5df1ea744e72712d4ea29cbe" resname="All POD">
         <source>All POD</source>
