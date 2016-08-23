@@ -19,8 +19,8 @@
 {% set series_active = route_name in series_routes %}
 {% set playlist_active = route_name in playlist_routes %}
 
-<div class="col-md-12">
-  <ul class="nav nav-tabs title-tabs">
+<div>
+  <ul class="nav nav-tabs title-tabs" style="background: #ED6D00;">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
       <li {{series_active ? "class=\"active\"":""}}>
         <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index')}}">
@@ -39,13 +39,3 @@
     {% endif %}
   </ul>
 </div>
-{# TO REMOVE TITLES #}
-<style>
- .main > h3 {
-   display:none;
- }
- .nav.nav-tabs.title-tabs {
-   background: #ED6D00;
- }
-</style>
-{# END TO REMOVE TITLES #}
