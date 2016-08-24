@@ -2,7 +2,7 @@ pumukitwizard_default_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: PumukitWizardBundle:Default:index
+        _controller: PumukitWizardBundle:Default:series
 
 pumukitwizard_default_series:
     pattern: /series

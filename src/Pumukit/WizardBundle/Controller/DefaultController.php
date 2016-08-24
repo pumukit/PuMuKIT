@@ -23,14 +23,6 @@ class DefaultController extends Controller
     /**
      * @Template()
      */
-    public function indexAction()
-    {
-        return array();
-    }
-
-    /**
-     * @Template()
-     */
     public function seriesAction(Request $request)
     {
         $formData = $request->get('pumukitwizard_form_data');
