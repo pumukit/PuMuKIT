@@ -51,9 +51,7 @@
         </div>
         <div class="col-xs-8 text-right">
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
-          <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_type', {'id': series.id}) }}">{% trans %}Wizard{% endtrans %}</a>
-          {# TODO mmwizard and path with series id (add title to pumukitwizard default type)
-          <a class="btn btn-primary btn-raised" href="#" onclick="Modalbox.show('/editar.php/mmwizard/index/mod/mms/serial_id/782',{width: 800, title:'{% trans %}STEP II: MM.OBJ.{% endtrans %}'}); return false;">Wizard</a> #}
+          <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_type', {'id': series.id, 'from':'mms'}) }}">{% trans %}Wizard{% endtrans %}</a>
           {% endif %}
           {# TODO Path create with page number #}
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}

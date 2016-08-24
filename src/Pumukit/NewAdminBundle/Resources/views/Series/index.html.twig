@@ -25,11 +25,15 @@
           </select>
         </div>
         <div class="col-xs-8 text-right">
+          {#
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
           <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
           {% endif %}
-          {# TODO check route with filter /editar.php/serials/create/filter/filter #}
           {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
+          <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+          {% endif %}
+          #}
+          {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
           <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
           {% endif %}
         </div>
