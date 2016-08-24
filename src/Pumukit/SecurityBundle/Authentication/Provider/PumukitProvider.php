@@ -63,6 +63,7 @@ class PumukitProvider implements AuthenticationProviderInterface
         }
 
         $this->userChecker->checkPreAuth($user);
+        $this->updateUser($user);
         $this->userChecker->checkPostAuth($user);
 
         $authenticatedToken = new PreAuthenticatedToken($user, $token->getCredentials(), $this->providerKey, $user->getRoles());
@@ -136,7 +137,21 @@ class PumukitProvider implements AuthenticationProviderInterface
         $groupService->create($group);
 
         return $group;
+    }
 
+    private function updateUser(User $user)
+    {
+        $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
+        $casService = $this->container->get('pumukit.casservice');
+
+        $casService->forceAuthentication();
+        $attributes = $casService->getAttributes();
+
+        if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
+            $user->setEmail($attributes[self::CAS_MAIL_KEY]);
+            $dm->persist($object);
+            $dm->flush();
+        }
     }
 
     public function supports(TokenInterface $token)
