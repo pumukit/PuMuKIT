@@ -28,15 +28,15 @@ class PlaylistType extends AbstractType
         $builder
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
-            ->add('i18n_keyword', 'texti18n',
-                  array(
-                        'required' => false,
-                        'label' => $this->translator->trans('Keywords', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+            ->add('i18n_keyword', 'texti18n',
+                  array(
+                        'required' => false,
+                        'label' => $this->translator->trans('Keywords', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

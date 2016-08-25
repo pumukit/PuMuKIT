@@ -30,6 +30,10 @@ class MultimediaObjectMetaType extends AbstractType
             ->add('i18n_subtitle', 'texti18n',
                   array('required' => false,
                         'label' => $this->translator->trans('Subtitle', array(), null, $this->locale), ))
+            ->add('i18n_description', 'textareai18n',
+                  array('required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('i18n_keyword', 'texti18n',
                   array('required' => false,
                         'label' => $this->translator->trans('Keywords', array(), null, $this->locale), ))
@@ -45,10 +49,6 @@ class MultimediaObjectMetaType extends AbstractType
             ->add('record_date', new Html5dateType(),
                   array('data_class' => 'DateTime',
                         'label' => $this->translator->trans('Recording Date', array(), null, $this->locale), ))
-            ->add('i18n_description', 'textareai18n',
-                  array('required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('i18n_line2', 'textareai18n',
                   array('required' => false,
                         'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),

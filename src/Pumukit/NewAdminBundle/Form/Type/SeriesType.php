@@ -37,6 +37,11 @@ class SeriesType extends AbstractType
                   array(
                         'required' => false,
                         'label' => $this->translator->trans('Subtitle', array(), null, $this->locale), ))
+            ->add('i18n_description', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
@@ -57,11 +62,6 @@ class SeriesType extends AbstractType
                   array(
                         'data_class' => 'DateTime',
                         'label' => $this->translator->trans('Publication Date', array(), null, $this->locale), ))
-            ->add('i18n_description', 'textareai18n',
-                  array(
-                        'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('i18n_header', 'textareai18n',
                   array(
                         'required' => false,

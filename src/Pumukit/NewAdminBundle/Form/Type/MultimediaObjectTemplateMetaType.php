@@ -23,6 +23,11 @@ class MultimediaObjectTemplateMetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('i18n_description', 'textareai18n',
+                  array(
+                        'required' => false,
+                        'attr' => array('style' => 'resize:vertical;'),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
@@ -39,11 +44,6 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                   array(
                         'data_class' => 'DateTime',
                         'label' => $this->translator->trans('Recording Date', array(), null, $this->locale)))
-            ->add('i18n_description', 'textareai18n',
-                  array(
-                        'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
