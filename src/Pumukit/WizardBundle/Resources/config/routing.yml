@@ -9,3 +9,7 @@ pumukitwizard_js:
 pumukitwizard_default:
     resource: @PumukitWizardBundle/Resources/config/routes/default.yml
     prefix: /admin/wizard
+
+pumukitwizard_simple:
+    resource: @PumukitWizardBundle/Resources/config/routes/simple.yml
+    prefix: /admin/simplewizard

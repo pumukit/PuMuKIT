@@ -1,0 +1,11 @@
+pumukitwizard_simple_index:
+    pattern: /index/{id}
+    methods: [GET]
+    defaults:
+        _controller: PumukitWizardBundle:Simple:index
+
+pumukitwizard_simple_upload:
+    pattern: /upload/{id}
+    methods: [POST]
+    defaults:
+        _controller: PumukitWizardBundle:Simple:upload
