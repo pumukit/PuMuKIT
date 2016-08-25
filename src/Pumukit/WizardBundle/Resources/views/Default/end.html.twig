@@ -59,7 +59,11 @@
         </li>
         <li>
           <a href="{{ path('pumukitnewadmin_series_index') }}">
-            {% trans %}Back to Media Manager{% endtrans %}
+            {% if is_naked() %}
+                {% trans %}back to My Multimedia Series{% endtrans %}
+            {% else %}
+                {% trans %}Back to Media Manager{% endtrans %}
+            {% endif %}
           </a>
         </li>
       </ul>
