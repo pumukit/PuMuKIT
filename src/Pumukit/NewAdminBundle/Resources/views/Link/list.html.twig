@@ -17,22 +17,22 @@
       </td>
       <td>
         {% if loop.first %}
-	  &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
-	{% endif %}
+      &nbsp;
+    {% else %}
+      <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+    {% endif %}
       </td>
       <td>
-	{% if loop.last %}
+    {% if loop.last %}
           &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
-	{% endif %}
+    {% else %}
+      <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+    {% endif %}
       </td>
       <td>
-        &nbsp;{{ link.id }} - {{ link.getUrl() }}
+        &nbsp;{% if not is_naked() %}{{ link.id }} - {% endif %}{{ link.getUrl() }}
         {% if link.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
-        {% for tag in link.getTags() %}   
+        {% for tag in link.getTags() %}
           <span class="label label-primary">{{ tag }}</span>
         {% endfor %}
       </td>
@@ -48,7 +48,7 @@
 </tbody></table>
 
 {# TODO
-<?php 
+<?php
 if ($sf_request->getParameter('preview')){
   echo javascript_tag("update_preview(" . $mm . ");");
 }

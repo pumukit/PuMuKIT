@@ -19,20 +19,20 @@
       </td>
       <td>
         {% if loop.first %}
-	    &nbsp;&nbsp;
-	    {% else %}
-	    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
-	    {% endif %}
+        &nbsp;&nbsp;
+        {% else %}
+        <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
+        {% endif %}
       </td>
       <td>
-	    {% if loop.last %}
+        {% if loop.last %}
         &nbsp;&nbsp;
-	    {% else %}
-	    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
-	    {% endif %}
+        {% else %}
+        <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
+        {% endif %}
       </td>
       {% endif %}
-      <td>&nbsp;{{ person.id }} - {{ person.getHName() }}</td>
+      <td>&nbsp;{% if not is_naked() %}{{ person.id }} - {% endif %}{{ person.getHName() }}</td>
     </tr>
     {% endfor %}
     {% if not ((role.getCod() == personal_scope_role_code) and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}

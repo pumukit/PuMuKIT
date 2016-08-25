@@ -23,7 +23,7 @@
         <small>{{ job.getStatusText() }}</small>
       </td>
       <td>
-        &nbsp; {{ job.getId() }} - <strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
+        &nbsp;{% if not is_naked() %}{{ job.getId() }} - {% endif %}<strong>{{ job.getProfile() }}</strong> - {{ job.getPathIni()|basename }} - {{ job.getDuration()|duration_string }}
       </td>
     </tr>
   {% endfor %}
@@ -39,6 +39,7 @@
           <i class="mdi-editor-mode-edit"></i>
         </a>
       </td>
+      {% if not is_naked() %}
       <td>
         <a title="{% trans %}File info of multimedia object{% endtrans %} {{ track.id }}"
            data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
@@ -62,7 +63,7 @@
           <i class="mdi-hardware-keyboard-return"></i>
         </a>
       </td>
-
+      {% endif %}
       <td>
         <div class="dropdown">
           <i class="mdi-image-camera-alt" id="list_capture_frame_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
@@ -128,9 +129,9 @@
       </td>
 
       <td>
-        &nbsp;{{ track.id }} - <strong>{{ track.getTags()|profile }}</strong>
+        &nbsp;{% if not is_naked() %}{{ track.id }} - {% endif %}<strong>{{ track.getTags()|profile }}</strong>
         {{ track.getDescription() }}
-        ({{ track.getPath()|basename }}/{{ track.getLanguage()|language_name }})
+        ({% if not is_naked() %}{{ track.getPath()|basename }}/{% endif %}{{ track.getLanguage()|language_name }})
          - {{ track.getDuration()|duration_string }}
          - {{ (track.getSize() / 1048576)|number_format(2) }} MB
          {% if track.getWidth() and track.getHeight() %}- {{ track.getWidth() }}x{{ track.getHeight() }}{% endif %}

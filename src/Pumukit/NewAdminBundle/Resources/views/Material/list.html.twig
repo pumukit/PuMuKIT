@@ -22,22 +22,22 @@
       </td>
       <td>
         {% if loop.first %}
-	  &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_up', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
-	{% endif %}
+      &nbsp;
+    {% else %}
+      <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_up', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+    {% endif %}
       </td>
       <td>
-	{% if loop.last %}
+    {% if loop.last %}
           &nbsp;
-	{% else %}
-	  <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_down', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
-	{% endif %}
+    {% else %}
+      <a href="#" onclick="$('#materials_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_material_down', {'id': material.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+    {% endif %}
       </td>
       <td>
-        &nbsp; {{ material.id }} - {{ material.getName() }} ({{ material.getPath()|basename }}/{{ material.getLanguage()|language_name }})
+        &nbsp; {% if not is_naked() %}{{ material.id }} - {% endif %}{{ material.getName() }} ({{ material.getPath()|basename }}/{{ material.getLanguage()|language_name }})
         {% if material.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
-        {% for tag in material.getTags() %}   
+        {% for tag in material.getTags() %}
           <span class="label label-primary">{{ tag }}</span>
         {% endfor %}
       </td>
