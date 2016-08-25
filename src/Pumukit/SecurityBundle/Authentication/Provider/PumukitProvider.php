@@ -17,6 +17,8 @@ use Pumukit\SchemaBundle\Document\User;
 class PumukitProvider implements AuthenticationProviderInterface
 {
     const CAS_MAIL_KEY = 'MAIL';
+    const CAS_GIVENNAME_KEY = 'GIVENNAME';
+    const CAS_SURNAME_KEY = 'SURNAME';
 
     private $userProvider;
     private $providerKey;
@@ -86,6 +88,11 @@ class PumukitProvider implements AuthenticationProviderInterface
 
             if (isset($attributes[self::CAS_MAIL_KEY])) {
                 $user->setEmail($attributes[self::CAS_MAIL_KEY]);
+            }
+
+            if (isset($attributes[self::CAS_GIVENNAME_KEY]) && isset($attributes[self::CAS_SURNAME_KEY])) {
+                $fullname = $attributes[self::CAS_GIVENNAME_KEY] .' '. $attributes[self::CAS_SURNAME_KEY];
+                $user->setFullname($fullname);
             }
 
             $defaultPermissionProfile = $permissionProfileService->getDefault();
