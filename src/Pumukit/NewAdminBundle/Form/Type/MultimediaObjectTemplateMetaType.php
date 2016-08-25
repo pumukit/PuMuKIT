@@ -26,7 +26,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('Keyword', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Keywords', array(), null, $this->locale)))
             ->add('copyright', 'text',
                   array(
                         'required' => false,
