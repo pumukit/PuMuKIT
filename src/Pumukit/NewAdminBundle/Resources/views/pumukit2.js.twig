@@ -2025,7 +2025,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
     var recordDate = new Date(recordDateVal);
 
     if (publicDate.getTime() < recordDate.getTime()){
-        var message = '{% trans %}Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.{% endtrans %}';
+        var message = '{% trans %}Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.{% endtrans %}';
         no_success(message);
         return false;
     }

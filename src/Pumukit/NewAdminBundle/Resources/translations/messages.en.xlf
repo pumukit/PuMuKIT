@@ -2106,9 +2106,9 @@
         <source>Series type channel successfully created.</source>
         <target>Series type channel successfully created.</target>
       </trans-unit>
-      <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.">
-        <source>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</source>
-        <target>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</target>
+      <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
+        <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
+        <target>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</target>
       </trans-unit>
       <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>

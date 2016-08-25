@@ -56,7 +56,7 @@ class SeriesType extends AbstractType
             ->add('public_date', new Html5dateType(),
                   array(
                         'data_class' => 'DateTime',
-                        'label' => $this->translator->trans('Public Date', array(), null, $this->locale), ))
+                        'label' => $this->translator->trans('Publication Date', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
