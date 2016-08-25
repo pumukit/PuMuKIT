@@ -77,7 +77,7 @@ EOT
 
         if (!$input->getOption('reusezip')) {
             if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
-                echo "Failed to copy $file...\n";
+                echo "Failed to copy $newFile...\n";
             }
 
             $zip = new ZipArchive();
