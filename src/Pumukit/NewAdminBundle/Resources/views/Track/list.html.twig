@@ -3,7 +3,7 @@
   {% for job in jobs %}
     <tr>
       <td><ul><li></li></ul></td>
-      <td colspan="9" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
+      <td colspan="{% if is_naked() %}6{% else %}9{% endif %}" {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
         <a title="{% trans %}Encoder Job info{% endtrans %}"
            style="color:inherit"
            data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
