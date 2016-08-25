@@ -187,6 +187,7 @@ class DefaultController extends Controller
                     if (empty(array_filter($i18nTitle))) $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
 
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
+                    $multimediaObject->setDuration($duration);
 
 
                     if ('file' === $filetype){
