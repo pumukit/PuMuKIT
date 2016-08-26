@@ -20,7 +20,10 @@ class PumukitProvider implements AuthenticationProviderInterface
 
     const CAS_CN_KEY = 'CN';
     const CAS_MAIL_KEY = 'MAIL';
+    const CAS_GIVENNAME_KEY = 'GIVENNAME';
+    const CAS_SURNAME_KEY = 'SURNAME';
     const CAS_GROUP_KEY = 'GROUP';
+
 
     private $userProvider;
     private $providerKey;
@@ -95,6 +98,12 @@ class PumukitProvider implements AuthenticationProviderInterface
             if (isset($attributes[self::CAS_MAIL_KEY])) {
                 $user->setEmail($attributes[self::CAS_MAIL_KEY]);
             }
+
+            if (isset($attributes[self::CAS_GIVENNAME_KEY]) && isset($attributes[self::CAS_SURNAME_KEY])) {
+                $fullname = $attributes[self::CAS_GIVENNAME_KEY] .' '. $attributes[self::CAS_SURNAME_KEY];
+                $user->setFullname($fullname);
+            }
+
             $defaultPermissionProfile = $permissionProfileService->getDefault();
             if (null == $defaultPermissionProfile) {
                 throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
