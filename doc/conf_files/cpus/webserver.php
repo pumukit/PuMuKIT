@@ -4,7 +4,7 @@ define("USER", "pumukit");
 define("PASSWORD", "PUMUKIT");
 
 
-function rrmdir($dir) { 
+function rrmdir($dir) {
     if (is_dir($dir)) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
@@ -46,7 +46,7 @@ if (!isset($username)) {
             $dcurrent = getcwd();
             chdir($tempDir);
 
-            exec(stripslashes($_POST['command']), $salida);
+            exec(stripslashes($_POST['command'] . ' 2>&1'), $salida);
 
             chdir($dcurrent);
 
