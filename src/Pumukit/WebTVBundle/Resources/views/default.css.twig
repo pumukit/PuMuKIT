@@ -694,6 +694,11 @@ a:hover .cover {
     padding: {{ menu_padding }};
     color: {{ menu_font_color }};
 }
+
+.pmk_menu_element {
+    color: {{ menu_font_color }} !important;
+}
+
 .widget.slidebar .element:hover, .widget.slidebar .element.selected {
     background: {{ menu_selected_background }};
     color: {{ menu_selected_font_color }};
@@ -704,8 +709,14 @@ a:hover .cover {
     transition: background 0.3s ease;
 }
 
+.pmk_menu_element:hover {
+    background: {{ menu_selected_background }} !important;
+    color: {{ menu_selected_font_color }} !important;
+}
+
+
 @media (max-width: 1199px) {
-    .widget.slidebar {
+    .widget.slidebar, .widget.slidebar .dropdown-menu {
         text-align: center;
     }
 }

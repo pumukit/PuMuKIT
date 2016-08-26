@@ -36,7 +36,7 @@
       {% elseif ('multiple' == option) and access_inbox %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% set i = i -1%}{% endif %}">
         <a href="#">{% trans with {'%i%': i} %}Step %i% Files{% endtrans %}<br/>
-          <span>{% trans %}Upload the multimedia file{% endtrans %}</span>
+          <span>{% trans %}Select an inbox folder with the multimedia files{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
       </li>

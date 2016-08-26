@@ -50,6 +50,22 @@
         {{ categories_title |trans }}
       </a>
     </li>
+
+  </ul>
+  <ul class="nav navbar-nav visible-xs">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle pmk_menu_element" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.request.locale | language_name }} <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        {% for lang in ['es', 'en', 'gl'] %}
+          <li><a class="pmk_menu_element" href="{{ path('pumukit_locale', {'locale': lang } ) }}" > {{ lang | language_name }} </a></li>
+        {% endfor %}
+      </ul>
+    </li>
+
+
+    <li>
+      {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
+    </li>
   </ul>
 </div>
 

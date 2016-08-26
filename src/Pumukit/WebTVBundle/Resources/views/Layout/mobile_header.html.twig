@@ -5,10 +5,12 @@
         {% include 'PumukitWebTVBundle:Layout:logo.html.twig' %}
       </span>
       <span class="pull-right"> {# This gets all objects together, so when the bar is too small, it nicely goes to the second row alltogether#}
-        <span class="pull-right" style="margin:15px 2px">
+        <span class="pull-right hidden-xs" style="margin:15px 2px">
           {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
         </span>
+        <span class="hidden-xs">
         {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+        </span>
 
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
           <span class="sr-only">TOGGLE NAVIGATION</span>
