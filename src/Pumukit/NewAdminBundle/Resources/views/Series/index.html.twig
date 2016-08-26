@@ -3,7 +3,11 @@
 {% block body %}
 
 {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-  <h3> {% trans %}My Multimedia Series{% endtrans %}</h3>
+  {% if is_naked() %}
+    <h3> {% trans %}My Series{% endtrans %}</h3>
+  {% else %}
+    <h3> {% trans %}My Multimedia Series{% endtrans %}</h3>
+  {% endif %}
 {% else %}
   <h3> {% trans %}Multimedia Series{% endtrans %}</h3>
 {% endif %}

@@ -1,13 +1,13 @@
 {% set series_title %}{% spaceless %}
   {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-    {% trans %}My Multimedia Series{% endtrans %}
+    {% trans %}My Series{% endtrans %}
   {% else %}
     {% trans %}Multimedia Series{% endtrans %}
   {% endif %}
 {% endspaceless %}{% endset %}
 {% set playlist_title %}{% spaceless %}
   {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-    {% trans %}My Moodle Playlists{% endtrans %}
+    {% trans %}My Playlists{% endtrans %}
   {% else %}
     {% trans %}Moodle Playlists{% endtrans %}
   {% endif %}

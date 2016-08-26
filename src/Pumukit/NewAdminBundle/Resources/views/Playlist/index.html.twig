@@ -2,7 +2,11 @@
 
 {% block body %}
   {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-    <h3> {% trans %}My Moodle Playlists{% endtrans %}</h3>
+    {% if is_naked() %}
+      <h3> {% trans %}My Playlists{% endtrans %}</h3>
+    {% else %}
+      <h3> {% trans %}My Moodle Playlists{% endtrans %}</h3>
+    {% endif %}
   {% else %}
     <h3> {% trans %}Moodle Playlists{% endtrans %}</h3>
   {% endif %}
