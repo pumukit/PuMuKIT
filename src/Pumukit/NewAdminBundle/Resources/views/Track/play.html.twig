@@ -15,7 +15,7 @@
 
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <script type="text/javascript">
-$('#myModal').on('hide.bs.modal', function (e) {
+$('#myModal').one('hide.bs.modal', function (e) {
     var player = document.getElementById('player_{{ track.id }}');
     if (player) player.pause();
 })
