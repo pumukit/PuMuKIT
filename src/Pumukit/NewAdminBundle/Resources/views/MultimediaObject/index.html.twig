@@ -3,7 +3,7 @@
 {% block body %}
 <h3 class="cab_body_div">
   <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right" style="margin:0px">
-    {% trans %}« Back to series list{% endtrans %}
+    « {% trans %}Back to series list{% endtrans %}
   </a>
   <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="{{ path('pumukitnewadmin_series_index') }}">Series{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} ({{ series.getTitle() }}){% endif %}</a></li>

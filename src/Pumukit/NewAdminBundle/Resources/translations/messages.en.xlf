@@ -606,10 +606,6 @@
         <source>Back to series list</source>
         <target>Back to series list</target>
       </trans-unit>
-      <trans-unit id="2a7981bf2eade9177034e99bd34a4851" resname="« Back to series">
-        <source>« Back to series</source>
-        <target>« Back to series</target>
-      </trans-unit>
       <trans-unit id="44dfd689352039aac0f6247bf94fa03c" resname="Select an action">
         <source>Select an action</source>
         <target>Select an action</target>
@@ -1257,10 +1253,6 @@
       <trans-unit id="4e2db3b9797fbf3266283bc32e626e37" resname="Back to playlist list">
         <source>Back to playlist list</source>
         <target>Back to playlist list</target>
-      </trans-unit>
-      <trans-unit id="e6e5705d9e831c7eadff764e953f02a5" resname="« Back to playlist">
-        <source>« Back to playlist</source>
-        <target>« Back to playlist</target>
       </trans-unit>
       <trans-unit id="16515bd9582b55f6698c1f23267f44ec" resname="Add multimedia object">
         <source>Add multimedia object</source>
