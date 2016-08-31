@@ -75,8 +75,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $session = $this->get('session');
         $paginate = $session->get('admin/mms/paginate', 10);
 
+        $page = (int)ceil($mm->getRank() / $paginate);
+        if ($page < 1) {
+            $page = 1;
+        }
+
         $session->set('admin/mms/id', $mm->getId());
-        $session->set('admin/mms/page', ceil($mm->getRank() / $paginate));
+        $session->set('admin/mms/page', $page);
 
         return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $mm->getSeries()->getId()));
     }
