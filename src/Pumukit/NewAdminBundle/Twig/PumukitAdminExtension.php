@@ -77,6 +77,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
             new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
             new \Twig_SimpleFunction('is_playable_on_playlist', array($this, 'isPlayableOnPlaylist')),
+            new \Twig_SimpleFunction('is_mmobj_owner', array($this, 'isUserOwner')),
             new \Twig_SimpleFunction('broadcast_description', array($this, 'getBroadcastDescription')),
             new \Twig_SimpleFunction('is_naked', array($this, 'isNaked'), array('needs_environment' => true)),
         );
@@ -571,6 +572,19 @@ class PumukitAdminExtension extends \Twig_Extension
     public function isPlayableOnPlaylist($mmobj)
     {
         return $this->mmobjService->isPlayableOnPlaylist($mmobj);
+    }
+
+    /**
+     * Returns a boolean is user is owner
+     *
+     * @param User $user
+     * @param MultimediaObject $mmobj
+     *
+     * @return boolean
+     */
+    public function isUserOwner($user, $mmobj)
+    {
+        return $this->mmobjService->isUserOwner($user, $mmobj);
     }
 
     /**
