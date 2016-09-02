@@ -1218,6 +1218,24 @@ $(function() {
     });
     return false;
   });
+
+
+
+  {% if is_naked() %}
+  var naked_modal_handler = function (e) {
+     var top = e.relatedTarget.getBoundingClientRect().top - 50 - $('.modal-content:visible').height();
+     if (top > 26) {
+         $('.modal-dialog:visible').css("margin", top + "px auto 30px")
+     }else {
+         $('.modal-dialog:visible').css("margin", "26px auto 30px")
+     }
+  };
+
+  $('#myModal').on('shown.bs.modal', naked_modal_handler);
+  $('#myAuxModal').on('shown.bs.modal', naked_modal_handler);
+  {% endif %}
+
+
 });
 
 $(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
