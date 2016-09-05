@@ -406,6 +406,18 @@
         <source>Series with tag: %title%</source>
         <target>Series con categoría: %title%</target>
       </trans-unit>
+      <trans-unit id="4a2a40ab-1512-4997-affd-40f47d482af5" resname="Spanish Sign Language">
+        <source>Spanish Sign Language</source>
+        <target>Linguaxe de Signos Española</target>
+      </trans-unit>
+      <trans-unit id="95429ad1-feee-4619-a301-e2ab08287f27" resname="Sign Language">
+        <source>Sign Language</source>
+        <target>Linguaxe de Signos</target>
+      </trans-unit>
+      <trans-unit id="291d7154-72a2-4422-a9d9-fda0adfcdd13" resname="International Sign Language">
+        <source>International Sign Language</source>
+        <target>Linguaxe de Signos Internacional</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
