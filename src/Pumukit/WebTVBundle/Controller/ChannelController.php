@@ -47,9 +47,9 @@ class ChannelController extends Controller implements WebTVController
         $results = array();
 
         foreach($channelTags as $tag) {
-            $series = $repoSeries->createBuilderWithTag($tag, array('record_date' => 1));
+            $series = $repoSeries->createBuilderWithTag($tag, array('record_date' => -1));
             $series = $series->getQuery()->execute();
-            $numMmobjs = $repoMmobj->createBuilderWithTag($tag, array('record_date' => 1))
+            $numMmobjs = $repoMmobj->createBuilderWithTag($tag, array('record_date' => -1))
                                    ->count()->getQuery()->execute();
 
             $results[] = array('tag' => $tag,

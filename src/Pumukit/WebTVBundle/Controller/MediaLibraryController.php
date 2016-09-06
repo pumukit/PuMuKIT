@@ -51,13 +51,13 @@ class MediaLibraryController extends Controller implements WebTVController
                 break;
             case 'date':
                 $sortField = 'public_date';
-                $series = $series_repo->findBy($criteria, array($sortField => 1));
+                $series = $series_repo->findBy($criteria, array($sortField => -1));
                 foreach ($series as $serie) {
                     $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
                     if ($num_mm < 1) {
                         continue;
                     }
-                    $key = $serie->getPublicDate()->format('d/m/Y');
+                    $key = $serie->getPublicDate()->format('m/Y');
                     if (!isset($result[ $key ])) {
                         $result[ $key ] = array();
                     }
@@ -78,7 +78,7 @@ class MediaLibraryController extends Controller implements WebTVController
                     }
                     $key = $tag->getTitle();
 
-                    $seriesQB = $series_repo->createBuilderWithTag($tag, array('public_date' => +1));
+                    $seriesQB = $series_repo->createBuilderWithTag($tag, array('public_date' => -1));
                     if ($criteria) {
                         $seriesQB->addAnd($criteria);
                     }
