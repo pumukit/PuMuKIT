@@ -3,15 +3,13 @@
 {% block body %}
   <div class="row">
     <div class="col-xs-12">
-        <br>
+      <br>
       <div class="row">
         <div class="col-xs-12">
           <h1 class="title-for-crumbs">{{ title }}</h1>
         </div>
       </div>
-      <div class="row">
-        {% include 'PumukitWebTVBundle:ByTag:list.html.twig' %}
-      </div>
+      {% include 'PumukitWebTVBundle:ByTag:list.html.twig' %}
       <div class="row">
         {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
       </div>

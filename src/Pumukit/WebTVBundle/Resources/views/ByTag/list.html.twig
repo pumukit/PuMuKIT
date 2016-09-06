@@ -1,10 +1,22 @@
 <div>
+  {% set nameDate = '00/0000' %}
   {% for object in objects %}
-    {% if object.isCollection() %}
-      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
-    {% else %}
-      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+    {% set newNameDate = object.getRecordDate().format('m/Y')%}
+    {% if nameDate != newNameDate %}
+      {% set nameDate = newNameDate %}
+      <div class="name row">
+        <div class="col-xs-12">
+          <h2>{{ nameDate }}</h2>
+        </div>
+      </div>
     {% endif %}
+    <div class="row">
+      {% if object.isCollection() %}
+        {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+      {% else %}
+        {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+      {% endif %}
+    </div>
 
   {% endfor %}
 </div>
