@@ -61,7 +61,8 @@ class SimpleController extends Controller
                 throw new \Exception('The file is not a valid video or audio file (duration is zero)');
             }
 
-            $multimediaObject = $this->createMultimediaObject($file->getClientOriginalName(), $series);
+            $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $multimediaObject = $this->createMultimediaObject($title, $series);
             $multimediaObject->setDuration($duration);
 
             $jobService->createTrackFromLocalHardDrive(
