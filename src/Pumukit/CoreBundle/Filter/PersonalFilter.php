@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-class PersonalFilter extends SchemaFilter
+class PersonalFilter extends WebTVFilter
 {
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
