@@ -1,36 +1,60 @@
 <h2>{{ subject }}</h2>
-<br/>
-<strong>{% trans %}Id{% endtrans %}:</strong> {{ job.getId() }}
-<br/>
+
+
+<p>
+{% trans %}Multimedia Object Admin Link{% endtrans %}: <a href="{{ multimedia_object_admin_link }}" target="_blank">{{ multimedia_object_admin_link }}</a>
+</p>
+
+<details>
+<summary>{% trans %}Technical info{% endtrans %}</summary>
+
+<ul>
+<li>
 <strong>{% trans %}Status{% endtrans %}:</strong> {{ job_status }}
-<br/>
+</li>
+<li>
+<strong>{% trans %}Job Id{% endtrans %}:</strong> {{ job.getId() }}
+</li>
+<li>
 <strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ job.getMmId() }}
-<br/>
-<strong>{% trans %}Multimedia Object Admin Link{% endtrans %}:</strong> {{ multimedia_object_admin_link }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Profile{% endtrans %}:</strong> {{ job.getProfile() }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Cpu{% endtrans %}:</strong> {{ job.getCpu() }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Priority{% endtrans %}:</strong> {{ job.getPriority() }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Duration{% endtrans %}:</strong> {{ job.getDuration() }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}New Duration{% endtrans %}:</strong> {{ job.getNewDuration() }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Initial Time{% endtrans %}:</strong> {{ job.getTimeini()|date('Y-m-d H:i:s') }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Start Time{% endtrans %}:</strong> {{ job.getTimestart()|date('Y-m-d H:i:s') }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}End Time{% endtrans %}:</strong> {{ job.getTimeend()|date('Y-m-d H:i:s') }}
-<br/>
+</li>
+<li>
 <strong>{% trans %}Command{% endtrans %}:</strong>
-<br/>
-{{ commandLine }}
-<br/>
+<code>
+{{ commandLine|nl2br }}
+</code>
+</li>
+<li>
 <strong>{% trans %}Output{% endtrans %}:</strong>
-<br/>
-{{ job.getOutput() }}
-<br/>
-<br/>
+<code>
+{{ job.getOutput()|nl2br }}
+</code>
+</li>
+</ul>
+</details>
+
 {{ sender_name }}
