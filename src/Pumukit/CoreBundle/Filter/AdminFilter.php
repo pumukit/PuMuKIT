@@ -24,7 +24,7 @@ class AdminFilter extends BsonFilter
         if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
             $criteria['$or'] = array(
                 array('people' => $this->parameters['people']),
-                array('groups' => $this->parameters['groups'])
+                array('groups' => $this->parameters['groups']),
             );
         }
 
@@ -35,15 +35,16 @@ class AdminFilter extends BsonFilter
     {
         $criteria = array();
         if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
-            $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
+            $criteria['_id'] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
         }
+
         return $criteria;
     }
 
     /**
      * Get series mongo query
      * Match the Series
-     * with given ids
+     * with given ids.
      *
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
@@ -51,6 +52,7 @@ class AdminFilter extends BsonFilter
      * @param MongoId $personId
      * @param string  $roleCode
      * @param array   $groups
+     *
      * @return array
      */
     private function getSeriesMongoQuery($personId, $roleCode, $groups)

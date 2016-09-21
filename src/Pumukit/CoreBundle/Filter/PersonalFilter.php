@@ -3,8 +3,6 @@
 namespace Pumukit\CoreBundle\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
-use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PersonalFilter extends WebTVFilter
 {
@@ -26,13 +24,15 @@ class PersonalFilter extends WebTVFilter
         if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
             $criteria_backoffice['$or'] = array(
                 array('people' => $this->parameters['people']),
-                array('groups' => $this->parameters['groups'])
+                array('groups' => $this->parameters['groups']),
             );
         }
-        if($criteria_portal && $criteria_backoffice)
+        if ($criteria_portal && $criteria_backoffice) {
             $criteria['$or'] = array($criteria_portal, $criteria_backoffice);
-        else
-            $criteria = $criteria_portal?:$criteria_backoffice;
+        } else {
+            $criteria = $criteria_portal ?: $criteria_backoffice;
+        }
+
         return $criteria;
     }
 
@@ -40,8 +40,9 @@ class PersonalFilter extends WebTVFilter
     {
         $criteria = array();
         if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
-            $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
+            $criteria['_id'] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
         }
+
         return $criteria;
     }
 }
