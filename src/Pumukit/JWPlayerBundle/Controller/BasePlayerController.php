@@ -15,7 +15,7 @@ use Pumukit\WebTVBundle\Controller\WebTVController;
 
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
-class BasePlayerController extends BasePlayerControllero implements WebTVController
+class BasePlayerController extends BasePlayerControllero implements PersonalController
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
