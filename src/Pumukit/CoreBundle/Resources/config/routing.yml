@@ -1,0 +1,9 @@
+pumukit_core_parent:
+    resource: "../../src/Pumukit/CoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_core:
+    resource: "@PumukitCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
