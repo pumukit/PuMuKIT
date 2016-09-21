@@ -2,6 +2,7 @@
 <span id="div_messages_span_error" data-toggle="snackbar" data-style="toast error" data-content="Error message" data-timeout="7000"></span>
 <span id="div_messages_span_info" data-toggle="snackbar" data-style="toast info" data-content="Information message" data-timeout="3000"></span>
 
+{% if not is_naked() %}
 <! --- FOOTER INFO --- !>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
   <div id="footer" class="panel-footer">
@@ -11,3 +12,4 @@
     </p>
   </div>
 </nav>
+{% endif %}
