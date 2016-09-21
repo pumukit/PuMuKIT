@@ -51,7 +51,7 @@ class FilterListener
             || !$isFilterActivated) {
             return;
         }
-        if ($controller[0] instanceof NewAdminController) {
+        if ($controller[0] instanceof AdminController) {
             $this->enableAdminFilter($routeParams);
         } elseif ($controller[0] instanceof WebTVController) {
             $this->enableWebTVFilter($routeParams);
@@ -132,11 +132,19 @@ class FilterListener
         }
         //Users with SCOPE_GLOBAL can view everything.
         $loggedInUser = $this->getLoggedInUser();
-        if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+
+        if($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
             return;
         }
 
-        $filter = $this->dm->getFilterCollection()->enable("admin");
+        $filter = $this->dm->getFilterCollection()->enable("backoffice");
+        //Returns empty results, since the user is anonimous or does not have SCOPE_PERSONAL
+        if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)){
+            $filter->setParameter('people', []);
+            $filter->setParameter('groups', []);
+            return;
+        }
+
         $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
         if (null != $people = $this->getPeopleMongoQuery($person)) {
@@ -163,7 +171,7 @@ class FilterListener
      */
     private function enableWebTVFilter($routeParams)
     {
-        $filter = $this->dm->getFilterCollection()->enable("webtv");
+        $filter = $this->dm->getFilterCollection()->enable("frontend");
         if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
             $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
         } else {
