@@ -1067,7 +1067,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return array(
              'multimediaObject' => $multimediaObject,
-             'is_published' => ($multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED),
              'is_playable' => $mmService->hasPlayableResource($multimediaObject),
         );
     }

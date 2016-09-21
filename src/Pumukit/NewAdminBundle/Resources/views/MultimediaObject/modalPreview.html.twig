@@ -3,17 +3,13 @@
   <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Multimedia object preview{% endtrans %}</h3>
 </div>
 <div class="modal-body">
-    <fieldset>
-      <div>
-        {% if not is_playable %}
+  <fieldset>
+    <div>
+      {% if not is_playable %}
         <span class="alert alert-dismissable alert-warning">
-            {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
+          {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
-        {% elseif not is_published %}
-        <span class="alert alert-dismissable alert-warning">
-            {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not published{% endtrans %}.
-        </span>
-        {% else %}
+      {% else %}
         <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id}) }}"
                 id="paellaiframe_{{ multimediaObject.id }}"
                 frameborder="0"
@@ -23,16 +19,16 @@
                 scrolling="no"
                 allowfullscreen>
         </iframe>
-        {% endif %}
-      </div>
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+      {% endif %}
     </div>
+  </fieldset>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+  </div>
 </div>
 <script type="text/javascript">
-$('#myModal').one('hide.bs.modal', function (e) {
-    var paellaiframe = document.getElementById('paellaiframe_{{ multimediaObject.id }}');
-    if (paellaiframe) paellaiframe.parentNode.removeChild(paellaiframe);
-})
+ $('#myModal').one('hide.bs.modal', function (e) {
+     var paellaiframe = document.getElementById('paellaiframe_{{ multimediaObject.id }}');
+     if (paellaiframe) paellaiframe.parentNode.removeChild(paellaiframe);
+ })
 </script>
