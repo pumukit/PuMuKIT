@@ -61,7 +61,7 @@
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-          <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+          <img class="mini pic-{{mm.id}} preview" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
         </td>
         <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           {{ mm.getTitle() }}

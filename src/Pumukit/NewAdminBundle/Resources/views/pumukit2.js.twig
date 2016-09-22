@@ -347,6 +347,17 @@ window.submit_delete_link = function(id, mmId)
     }
 }
 
+window.update_mmspic = function(mm_id, resource_type) {
+    var resource_type = typeof resource_type !== 'undefined' ? resource_type : 'mms';
+    var element = document.querySelector('img.pic-' + mm_id + '.first');
+    var default_pic = resource_type == 'playlist' ? '/bundles/pumukitschema/images/playlist_folder.png' : '/images/none.jpg'; //TODO get default images from service.
+    var src = element ? element.src : default_pic;
+    document.querySelectorAll('img.pic-' + mm_id + '.preview').forEach(function(e, i){e.src = src});
+}
+
+window.update_seriespic = window.update_mmspic;
+window.update_playlistpic = window.update_mmspic;
+
 window.delete_mmspic = function(id, resourceId) {
     if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %}')) {
         var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___'})|raw }}';

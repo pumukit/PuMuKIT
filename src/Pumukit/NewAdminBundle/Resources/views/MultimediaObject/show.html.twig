@@ -13,7 +13,7 @@
   {% else %}
     <div class="well" style="padding: 3px;">
       <div class="embed-responsive embed-responsive-16by9">
-        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive" style="width: 100%">
+        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{mm.id}} preview" style="width: 100%">
       </div>
     </div>
   {% endif %}
@@ -48,15 +48,15 @@
   <ul>
     {% for act in actors %}
       <li>
-	    {{ role.getText() }}
-	    {% if act.getWeb() is not empty %}
-	      <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+        {{ role.getText() }}
+        {% if act.getWeb() is not empty %}
+          <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
         {% else %}
           {{ act.getHName() }}
         {% endif %}
         <small>{{ act.getInfo() }}</small>
       </li>
-    {% endfor %}    
+    {% endfor %}
   </ul>
   {% endif %}
 {% endfor %}
