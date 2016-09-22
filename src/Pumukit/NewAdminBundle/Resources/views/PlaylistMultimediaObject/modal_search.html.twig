@@ -22,4 +22,11 @@ $('#modal_search_button').on('click', function(){
         $('#modal_search_list').show();
     });
 });
+
+
+$("#modal_search").keyup(function (e) {
+    if (e.keyCode == 13) {
+        $('#modal_search_button').click();
+    }
+});
 </script>
