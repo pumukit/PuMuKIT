@@ -381,6 +381,21 @@ window.down_mmspic = function(id, resourceId) {
     $(div_id).load(url.replace('___id___', id), {method:'POST'});
 }
 
+window.upload_mmspic = function(resourceId) {
+    var url = '{{ path('pumukitnewadmin_mmspic_list', {'id': '___id___'})|raw }}';
+    var div_id = '#pic_mms___resourceId__';
+    div_id = div_id.replace('__resourceId__', resourceId);
+    $(div_id).load(url.replace('___id___', resourceId));
+}
+
+
+window.check_for_new_pics = function(resourceId, numPics) {
+    var uiNumPics = $('.admin-pic-' + resourceId).size();
+    if (uiNumPics != numPics) {
+        upload_mmspic(resourceId);
+    }
+}
+
 window.submit_delete_material = function(id, mmId)
 {
     if (window.confirm('{% trans %}Are you sure you want to delete this material?{% endtrans %}')){

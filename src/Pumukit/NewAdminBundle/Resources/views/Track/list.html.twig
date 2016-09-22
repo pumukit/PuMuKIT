@@ -178,6 +178,7 @@
 
 {% if jobs|length != 0 %}
 <script type="text/javascript">
+  {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With')  %}
   $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
                 {% transchoice mm.getProperty('pending_jobs')|length %}
                     {0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.
@@ -186,6 +187,7 @@
                     {0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.
                 {% endtranschoice %}
                 {% endspaceless %}"></i>');
+  {% endif %}
   setTimeout(function(){
     $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
     //$('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');

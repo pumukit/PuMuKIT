@@ -10,3 +10,10 @@
 {% else%}
   <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
 {% endif %}
+
+
+{% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %}
+<script type="text/javascript">
+window.check_for_new_pics('{{ mm.id }}', {{mm.getPics()|length}} );
+</script>
+{% endif %}
