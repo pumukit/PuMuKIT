@@ -350,7 +350,8 @@ window.submit_delete_link = function(id, mmId)
 window.update_mmspic = function(mm_id, resource_type) {
     var resource_type = typeof resource_type !== 'undefined' ? resource_type : 'mms';
     var element = document.querySelector('img.pic-' + mm_id + '.first');
-    var default_pic = resource_type == 'playlist' ? '/bundles/pumukitschema/images/playlist_folder.png' : '/images/none.jpg'; //TODO get default images from service.
+    var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'}; //TODO get default images from service.
+    var default_pic = default_pics[resource_type] || default_pics['mms'];
     var src = element ? element.src : default_pic;
     document.querySelectorAll('img.pic-' + mm_id + '.preview').forEach(function(e, i){e.src = src});
 }
