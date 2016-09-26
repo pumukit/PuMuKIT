@@ -2098,7 +2098,7 @@
         <source>Series type channel successfully created.</source>
         <target>Series type channel successfully created.</target>
       </trans-unit>
-      <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
+      <trans-unit id="3c7955415edc493ea8db119150385ef0" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
         <target>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</target>
       </trans-unit>
@@ -2232,67 +2232,83 @@
       </trans-unit>
       <trans-unit id="f040dc03ee5ceda15a7a4d39ae18d210" resname="My Multimedia Objects">
         <source>My Multimedia Objects</source>
-        <target>__My Multimedia Objects</target>
+        <target>My Multimedia Objects</target>
       </trans-unit>
       <trans-unit id="e622429156edfbdf560c765a86d633ce" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
         <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
-        <target>__{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
+        <target>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
       </trans-unit>
       <trans-unit id="215f26215b6734e1db7b1473532c0530" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
         <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
-        <target>__{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</target>
+        <target>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</target>
       </trans-unit>
       <trans-unit id="b12959058e1e722f9e557ffccfbbf96e" resname="Multimedia object preview">
         <source>Multimedia object preview</source>
-        <target>__Multimedia object preview</target>
+        <target>Multimedia object preview</target>
       </trans-unit>
       <trans-unit id="a179bfbcfd79b846e9321376e49f1397" resname="The multimedia object '%title%' is not playable">
         <source>The multimedia object '%title%' is not playable</source>
-        <target>__The multimedia object '%title%' is not playable</target>
+        <target>The multimedia object '%title%' is not playable</target>
       </trans-unit>
       <trans-unit id="096783234f0908eb8e8cdda7c3e12e75" resname="The multimedia object '%title%' is not published">
         <source>The multimedia object '%title%' is not published</source>
-        <target>__The multimedia object '%title%' is not published</target>
+        <target>The multimedia object '%title%' is not published</target>
       </trans-unit>
       <trans-unit id="01a6cb8dcbd38ae87536e8142909224f" resname="My Moodle Playlists">
         <source>My Moodle Playlists</source>
-        <target>__My Moodle Playlists</target>
+        <target>My Moodle Playlists</target>
       </trans-unit>
       <trans-unit id="4b6b564a4eb02ec0a83052adbf1909c8" resname="List multimedia objects of the playlist">
         <source>List multimedia objects of the playlist</source>
-        <target>__List multimedia objects of the playlist</target>
+        <target>List multimedia objects of the playlist</target>
       </trans-unit>
       <trans-unit id="55483e9fdd78d5ecc8e884deee206c03" resname="This object cannot be played on the playlist">
         <source>This object cannot be played on the playlist</source>
-        <target>__This object cannot be played on the playlist</target>
+        <target>This object cannot be played on the playlist</target>
       </trans-unit>
       <trans-unit id="e499d880b861f4238bf7305842298db6" resname="This user does not own any multimedia objects">
         <source>This user does not own any multimedia objects</source>
-        <target>__This user does not own any multimedia objects</target>
+        <target>This user does not own any multimedia objects</target>
       </trans-unit>
       <trans-unit id="0448191f48f4a6fcec112c635d80b132" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target>__Edit multimedia object</target>
+        <target>Edit multimedia object</target>
       </trans-unit>
       <trans-unit id="56014549547131f0a7aada0a6e2755f3" resname="Delete multimedia object from de playlist">
         <source>Delete multimedia object from de playlist</source>
-        <target>__Delete multimedia object from de playlist</target>
+        <target>Delete multimedia object from de playlist</target>
       </trans-unit>
       <trans-unit id="6aa2a91ae07341251a38ce9baba096c2" resname="My Multimedia Series">
         <source>My Multimedia Series</source>
-        <target>__My Multimedia Series</target>
+        <target>My Multimedia Series</target>
       </trans-unit>
       <trans-unit id="2b43a6b1eccbd8daef150f773042aa8c" resname="List multimedia objects of the series">
         <source>List multimedia objects of the series</source>
-        <target>__List multimedia objects of the series</target>
+        <target>List multimedia objects of the series</target>
       </trans-unit>
       <trans-unit id="5e79b0d8a06fd5dbe575442ebb51ee65" resname="Go to series">
         <source>Go to series</source>
-        <target>__Go to series</target>
+        <target>Go to series</target>
       </trans-unit>
       <trans-unit id="39985c3fc2a605a19b4b7e1f83b8c543" resname="Go to playlists">
         <source>Go to playlists</source>
-        <target>__Go to playlists</target>
+        <target>Go to playlists</target>
+      </trans-unit>
+      <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
+        <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+        <target><![CDATA[Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and <strong>use him/her</strong>. If he/she doesn't exist in the database, <strong>create</strong> a new entrance with the written name]]></target>
+      </trans-unit>
+      <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
+        <source>My Playlists</source>
+        <target>My Playlists</target>
+      </trans-unit>
+      <trans-unit id="9bd384bbde98d3d5879435c04014c2b8" resname="Delete multimedia object from the playlist">
+        <source>Delete multimedia object from the playlist</source>
+        <target>Delete multimedia object from the playlist</target>
+      </trans-unit>
+      <trans-unit id="949eb1e696fd6358006f4828f0dbf865" resname="My Series">
+        <source>My Series</source>
+        <target>My Series</target>
       </trans-unit>
     </body>
   </file>
