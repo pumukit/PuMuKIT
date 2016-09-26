@@ -2310,6 +2310,42 @@
         <source>My Series</source>
         <target>My Series</target>
       </trans-unit>
+      <trans-unit id="5a662bf43da341daa1c27090ea149507" resname="Keywords">
+        <source>Keywords</source>
+        <target>Keywords</target>
+      </trans-unit>
+      <trans-unit id="d2ee18a675894fd99edfdb225945ac93" resname="Copyright">
+        <source>Copyright</source>
+        <target>Copyright</target>
+      </trans-unit>
+      <trans-unit id="f65a39a59c6c4f1dbf752e939f4d1c17" resname="License">
+        <source>License</source>
+        <target>License</target>
+      </trans-unit>
+      <trans-unit id="d2ee18a675894fd99edfdb225945ac93" resname="Publication Date">
+        <source>Publication Date</source>
+        <target>Publication Date</target>
+      </trans-unit>
+      <trans-unit id="09280ca945984b609825b000db70d3b1" resname="Recording Date">
+        <source>Recording Date</source>
+        <target>Recording Date</target>
+      </trans-unit>
+      <trans-unit id="5ee9abd1ecab4ace9e65f7b051924758" resname="Header Text">
+        <source>Header Text</source>
+        <target>Header Text</target>
+      </trans-unit>
+      <trans-unit id="730bbfe868bf4148a5a6ac1a023573e6" resname="Footer Text">
+        <source>Footer Text</source>
+        <target>Footer Text</target>
+      </trans-unit>
+      <trans-unit id="3d07fc411b93494892017ac09a1bc8a7" resname="Template">
+        <source>Template</source>
+        <target>Template</target>
+      </trans-unit>
+      <trans-unit id="e28537a749fe4fbdb7330d0279440ca1" resname="Subseries">
+        <source>Subseries</source>
+        <target>Subseries</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
