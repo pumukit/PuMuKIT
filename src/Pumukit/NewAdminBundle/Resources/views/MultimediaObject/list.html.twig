@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        <th colspan="5" width="5%"></th>
+        <th colspan="{{ is_naked() ? 4 : 5 }}" width="5%"></th>
         <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         <th>{% trans %}Title{% endtrans %}</th>
@@ -35,9 +35,11 @@
           {% include 'PumukitNewAdminBundle:MultimediaObject:status.html.twig' with {'mm': mm} %}
           </span>
         </td>
+        {% if not is_naked() %}
         <td>
           {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
         </td>
+        {% endif %}
         <td>
           {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
         </td>
@@ -96,7 +98,9 @@
       <tr>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
+        {% if not is_naked() %}
         <td>&nbsp;</td>
+        {% endif %}
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
