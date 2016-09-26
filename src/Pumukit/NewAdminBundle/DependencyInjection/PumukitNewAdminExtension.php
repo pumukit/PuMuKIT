@@ -31,7 +31,9 @@ class PumukitNewAdminExtension extends Extension
 
         if ($container->hasParameter('pumukit2.naked_backoffice_domain')) {
             $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener',
-                array('%pumukit2.naked_backoffice_domain%', '%pumukit2.naked_backoffice_background%'));
+                array('%pumukit2.naked_backoffice_domain%',
+                      '%pumukit2.naked_backoffice_background%',
+                      '%pumukit2.naked_backoffice_color%'));
 
             $definition->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
             $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);

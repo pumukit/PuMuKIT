@@ -16,11 +16,13 @@ class NakedBackofficeListener
 {
     private $domain;
     private $background;
+    private $color;
 
-    public function __construct($domain, $background)
+    public function __construct($domain, $background, $color = '#ED6D00')
     {
         $this->domain = $domain;
         $this->background = $background;
+        $this->color = $color;
     }
 
     public function onKernelController(FilterControllerEvent $event)
@@ -30,6 +32,7 @@ class NakedBackofficeListener
         if ($req->getHttpHost() == $this->domain) {
             $req->attributes->set('nakedbackoffice', true);
             $req->attributes->set('nakedbackoffice_color', $this->background);
+            $req->attributes->set('nakedbackoffice_main_color', $this->color);
         }
     }
 }

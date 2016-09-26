@@ -22,6 +22,12 @@ body {
 {% endif %}
 }
 
+{% if app.request.attributes.get('nakedbackoffice_main_color') %}
+.btn-pumukit:not(.btn-link):not(.btn-flat) {
+  background-color: {{ app.request.attributes.get('nakedbackoffice_main_color') }} !important;
+}
+{% endif %}
+
 .checkbox {
   margin-top: 0px;
   margin-bottom: 0px;
