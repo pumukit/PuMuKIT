@@ -8,7 +8,9 @@
       {% endtranschoice %}
       {% endspaceless %}"></i>
 {% else%}
+  {% if not is_naked() %}
   <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
+  {% endif %}
 {% endif %}
 
 

@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        <th colspan="{{ is_naked() ? 2 : 3 }}" width="4%"></th>
+        <th colspan="{{ is_naked() ? 1 : 3 }}" width="4%"></th>
         <th width="1%">{% trans %}Img{% endtrans %}</th>
         {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
       </tr>
@@ -34,8 +34,6 @@
           <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
           {% endspaceless %}
         </td>
-        {% endif %}
-
         <td>
           {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
@@ -45,6 +43,7 @@
           <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Not enough privileges to modify status of all Multimedia Objects{% endtrans %})"></i>
           {% endif %}
         </td>
+        {% endif %}
         <td>
           {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
         </td>
@@ -76,8 +75,8 @@
         <td>&nbsp;</td>
         {% if not is_naked() %}
         <td>&nbsp;</td>
-        {% endif %}
         <td>&nbsp;</td>
+        {% endif %}
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
