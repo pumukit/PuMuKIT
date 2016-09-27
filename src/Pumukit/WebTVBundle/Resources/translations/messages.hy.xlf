@@ -406,17 +406,29 @@
         <source>Enter pass</source>
         <target xml:lang="hy-AM" state="needs-translation">Enter pass</target>
       </trans-unit>
-      <trans-unit id="1f4fbbcdcace47febd8ff3d588f658c6" resname="General %title%">
+      <trans-unit id="a657405e3424fc63b9165585e40d2cae" resname="General %title%">
         <source>General %title%</source>
         <target xml:lang="hy-AM" state="needs-translation">General %title%</target>
       </trans-unit>
-      <trans-unit id="92c97d0ec6ab4e90a6d40a96d4ea37e1" resname="Multimedia objects with tag: %title%">
+      <trans-unit id="bb6e3e7941f7c00d905c3f11b602dec4" resname="Multimedia objects with tag: %title%">
         <source>Multimedia objects with tag: %title%</source>
         <target xml:lang="hy-AM" state="needs-translation">Multimedia objects with tag: %title%</target>
       </trans-unit>
-      <trans-unit id="2b2374bf03e648b88354643a88e99f18" resname="Series with tag: %title%">
+      <trans-unit id="a3546e4e0fce18914e4fc2a38c0a0bc0" resname="Series with tag: %title%">
         <source>Series with tag: %title%</source>
         <target xml:lang="hy-AM" state="needs-translation">Series with tag: %title%</target>
+      </trans-unit>
+      <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
+        <source>Spanish Sign Language</source>
+        <target xml:lang="hy-AM" state="needs-translation">Spanish Sign Language</target>
+      </trans-unit>
+      <trans-unit id="a266861eb483e0bb66410fff933bf0f9" resname="Sign Language">
+        <source>Sign Language</source>
+        <target xml:lang="hy-AM" state="needs-translation">Sign Language</target>
+      </trans-unit>
+      <trans-unit id="860b918fdae8371e66c317159ae71dfd" resname="International Sign Language">
+        <source>International Sign Language</source>
+        <target xml:lang="hy-AM" state="needs-translation">International Sign Language</target>
       </trans-unit>
     </body>
   </file>

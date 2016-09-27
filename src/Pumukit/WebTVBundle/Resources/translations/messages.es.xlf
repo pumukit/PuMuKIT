@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target xml:lang="es-ES" state="needs-translation">PuMuKIT</target>
+        <target xml:lang="es-ES" state="translated">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
         <source>Audio</source>
-        <target xml:lang="es-ES" state="needs-translation">Audio</target>
+        <target xml:lang="es-ES" state="translated">Audio</target>
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private" approved="yes">
         <source>private</source>
@@ -198,169 +198,157 @@
         <source>This series does not have any multimedia objects.</source>
         <target xml:lang="es-ES" state="translated">Esta serie no tiene objetos multimedia.</target>
       </trans-unit>
-      <trans-unit id="631d6846-a458-4538-bf4d-62f5a2d09e4b" resname="Spanish Sign Language">
-        <source>Spanish Sign Language</source>
-        <target>Lengua de Signos Española</target>
-      </trans-unit>
-      <trans-unit id="347d381f-3434-4ec6-893f-645352443ab3" resname="Sign Language">
-        <source>Sign Language</source>
-        <target>Lengua de Signos</target>
-      </trans-unit>
-      <trans-unit id="8e28e5ea-9224-41e7-86b9-d12e9dac9ec3" resname="International Sign Language">
-        <source>International Sign Language</source>
-        <target>Lengua de Signos Internacional</target>
-      </trans-unit>
       <trans-unit id="132482b5ee2d95cfcbe8ae9b288c047b" resname="{0}no videos yet|{1}1 video|]1,Inf[%count% videos">
         <source>{0}no videos yet|{1}1 video|]1,Inf[%count% videos</source>
-        <target xml:lang="es-ES" state="needs-translation">{0}no videos yet|{1}1 video|]1,Inf[%count% videos</target>
+        <target xml:lang="es-ES" state="translated">{0}aún no hay vídeos|{1}1 video|]1,Inf[%count% videos</target>
       </trans-unit>
       <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
         <source>Categories</source>
-        <target xml:lang="es-ES" state="needs-translation">Categories</target>
+        <target xml:lang="es-ES" state="translated">Categorías</target>
       </trans-unit>
       <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
         <source>Most viewed</source>
-        <target xml:lang="es-ES" state="needs-translation">Most viewed</target>
+        <target xml:lang="es-ES" state="translated">Más Vistos</target>
       </trans-unit>
       <trans-unit id="945d258623dcac0fa86586d6a0056452" resname="Recently added">
         <source>Recently added</source>
-        <target xml:lang="es-ES" state="needs-translation">Recently added</target>
+        <target xml:lang="es-ES" state="translated">Añadidos recientemente</target>
       </trans-unit>
       <trans-unit id="e5e13447e7fd56ed3179869f274069bb" resname="Full Catalogue">
         <source>Full Catalogue</source>
-        <target xml:lang="es-ES" state="needs-translation">Full Catalogue</target>
+        <target xml:lang="es-ES" state="translated">Catálogo completo</target>
       </trans-unit>
       <trans-unit id="33d8042bd735c559cc3206f4bc99aedc" resname="Sort by">
         <source>Sort by</source>
-        <target xml:lang="es-ES" state="needs-translation">Sort by</target>
+        <target xml:lang="es-ES" state="translated">Ordenar por</target>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="es-ES" state="needs-translation">Date</target>
+        <target xml:lang="es-ES" state="translated">Fecha</target>
       </trans-unit>
       <trans-unit id="05602ad27c432a05f26a92b6bc277994" resname="Alphabetically">
         <source>Alphabetically</source>
-        <target xml:lang="es-ES" state="needs-translation">Alphabetically</target>
+        <target xml:lang="es-ES" state="translated">Alfabéticamente</target>
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
-        <target xml:lang="es-ES" state="needs-translation">Recording date</target>
+        <target xml:lang="es-ES" state="translated">Fecha de grabación</target>
       </trans-unit>
       <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
         <source>Marks:</source>
-        <target xml:lang="es-ES" state="needs-translation">Marks:</target>
+        <target xml:lang="es-ES" state="translated">Marcas:</target>
       </trans-unit>
       <trans-unit id="23ce0eb7d180f3dc8391d4af48572d21" resname="Materials">
         <source>Materials</source>
-        <target xml:lang="es-ES" state="needs-translation">Materials</target>
+        <target xml:lang="es-ES" state="translated">Materiales</target>
       </trans-unit>
       <trans-unit id="594926470af8adae2a0914a57f89605f" resname="There is no materials">
         <source>There is no materials</source>
-        <target xml:lang="es-ES" state="needs-translation">There is no materials</target>
+        <target xml:lang="es-ES" state="translated">No hay materiales</target>
       </trans-unit>
       <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
         <source>Share this video</source>
-        <target xml:lang="es-ES" state="needs-translation">Share this video</target>
+        <target xml:lang="es-ES" state="translated">Compartir este vídeo</target>
       </trans-unit>
       <trans-unit id="3b3d06023f6353f8fd05f859b298573e" resname="URL:">
         <source>URL:</source>
-        <target xml:lang="es-ES" state="needs-translation">URL:</target>
+        <target xml:lang="es-ES" state="translated">URL:</target>
       </trans-unit>
       <trans-unit id="7610774817c30466188bfb70778b7a48" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target xml:lang="es-ES" state="needs-translation">IFRAME:</target>
+        <target xml:lang="es-ES" state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="4994a8ffeba4ac3140beb89e8d41f174" resname="Language">
         <source>Language</source>
-        <target xml:lang="es-ES" state="needs-translation">Language</target>
+        <target xml:lang="es-ES" state="translated">Idioma</target>
       </trans-unit>
       <trans-unit id="8d098c874004071be31f616d9edfdd2f" resname="Private video">
         <source>Private video</source>
-        <target xml:lang="es-ES" state="needs-translation">Private video</target>
+        <target xml:lang="es-ES" state="translated">Vídeo privado</target>
       </trans-unit>
       <trans-unit id="39ad68dfe686cfdda66b23ae04ef45d6" resname="{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos">
         <source>{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</source>
-        <target xml:lang="es-ES" state="needs-translation">{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos</target>
+        <target xml:lang="es-ES" state="translated">{0}0 Vídeos|{1}%count% Vídeo|]1,Inf[%count% Vídeos</target>
       </trans-unit>
       <trans-unit id="e6b06dea9ac5e0330e37ee581f323e90" resname="Show videos">
         <source>Show videos</source>
-        <target xml:lang="es-ES" state="needs-translation">Show videos</target>
+        <target xml:lang="es-ES" state="translated">Mostrar vídeos</target>
       </trans-unit>
       <trans-unit id="445bd664985fd3d87bdfdc0da47507fa" resname="No resources available">
         <source>No resources available</source>
-        <target xml:lang="es-ES" state="needs-translation">No resources available</target>
+        <target xml:lang="es-ES" state="translated">Recursos no disponibles</target>
       </trans-unit>
       <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
         <source>Private Video</source>
-        <target xml:lang="es-ES" state="needs-translation">Private Video</target>
+        <target xml:lang="es-ES" state="translated">Vídeo privado</target>
       </trans-unit>
       <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target xml:lang="es-ES" state="needs-translation">This video is private with restricted access</target>
+        <target xml:lang="es-ES" state="translated">Este vídeo es privado con acceso restringido</target>
       </trans-unit>
       <trans-unit id="d2e23e955956256bed1752d5f85b0899" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
-        <target xml:lang="es-ES" state="needs-translation">Log in is required to watch it</target>
+        <target xml:lang="es-ES" state="translated">Se requiere iniciar sesión para ver el vídeo</target>
       </trans-unit>
       <trans-unit id="d4a3404790a7d7c5dc96d18cdaa8850a" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target xml:lang="es-ES" state="needs-translation">Go to back-office</target>
+        <target xml:lang="es-ES" state="translated">Ir al panel de gestión de contenidos</target>
       </trans-unit>
       <trans-unit id="054c9692816df8b7212f4407755f82a2" resname="Manage my videos">
         <source>Manage my videos</source>
-        <target xml:lang="es-ES" state="needs-translation">Manage my videos</target>
+        <target xml:lang="es-ES" state="translated">Administrar mis vídeos</target>
       </trans-unit>
       <trans-unit id="4394c8d8e63c470de62ced3ae85de5ae" resname="Log out">
         <source>Log out</source>
-        <target xml:lang="es-ES" state="needs-translation">Log out</target>
+        <target xml:lang="es-ES" state="translated">Cerrar sesión</target>
       </trans-unit>
       <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
         <source>Log in</source>
-        <target xml:lang="es-ES" state="needs-translation">Log in</target>
+        <target xml:lang="es-ES" state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="8904f2049376128f0e548157cbd7d160" resname="Most viewed since last month">
         <source>Most viewed since last month</source>
-        <target xml:lang="es-ES" state="needs-translation">Most viewed since last month</target>
+        <target xml:lang="es-ES" state="translated">Más vistos desde el mes pasado</target>
       </trans-unit>
       <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
         <source>Attachments</source>
-        <target xml:lang="es-ES" state="needs-translation">Attachments</target>
+        <target xml:lang="es-ES" state="translated">Archivos adjuntos</target>
       </trans-unit>
       <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
         <source>There are no attachments</source>
-        <target xml:lang="es-ES" state="needs-translation">There are no attachments</target>
+        <target xml:lang="es-ES" state="translated">No hay archivos adjuntos</target>
       </trans-unit>
       <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
         <source>Share on Facebook</source>
-        <target xml:lang="es-ES" state="needs-translation">Share on Facebook</target>
+        <target xml:lang="es-ES" state="translated">Compartir en Facebook</target>
       </trans-unit>
       <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
         <source>Share on Google +</source>
-        <target xml:lang="es-ES" state="needs-translation">Share on Google +</target>
+        <target xml:lang="es-ES" state="translated">Compartir en Google+</target>
       </trans-unit>
       <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
         <source>Share on Twitter</source>
-        <target xml:lang="es-ES" state="needs-translation">Share on Twitter</target>
+        <target xml:lang="es-ES" state="translated">Compartir en Twitter</target>
       </trans-unit>
       <trans-unit id="318ad6c5b14a4f5c80f83363033e94cc" resname="Select by year">
         <source>Select by year</source>
-        <target xml:lang="es-ES" state="needs-translation">Select by year</target>
+        <target xml:lang="es-ES" state="translated">Seleccionar por año</target>
       </trans-unit>
       <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
         <source>From</source>
-        <target xml:lang="es-ES" state="needs-translation">From</target>
+        <target xml:lang="es-ES" state="translated">Desde</target>
       </trans-unit>
       <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
         <source>Until</source>
-        <target xml:lang="es-ES" state="needs-translation">Until</target>
+        <target xml:lang="es-ES" state="translated">Hasta</target>
       </trans-unit>
       <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
         <source>Year</source>
-        <target xml:lang="es-ES" state="needs-translation">Year</target>
+        <target xml:lang="es-ES" state="translated">Año</target>
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>
-        <target xml:lang="es-ES" state="needs-translation">Select by date range</target>
+        <target xml:lang="es-ES" state="translated">Seleccionar por rango de fechas</target>
       </trans-unit>
       <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
         <source>Any</source>
@@ -368,67 +356,85 @@
       </trans-unit>
       <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
         <source>Search by series</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by series</target>
+        <target xml:lang="es-ES" state="translated">Búsqueda por series</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Buscar por series</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="es-ES" state="needs-translation">Email</target>
+        <target xml:lang="es-ES" state="translated">Email</target>
       </trans-unit>
       <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by multimedia objects</target>
+        <target xml:lang="es-ES" state="translated">Búsqueda por objetos multimedia</target>
       </trans-unit>
       <trans-unit id="0a18493501c4a7d1e08bb9e4fbe98a3b" resname="Multimedia objects search">
         <source>Multimedia objects search</source>
-        <target xml:lang="es-ES" state="needs-translation">Multimedia objects search</target>
+        <target xml:lang="es-ES" state="translated">Búsqueda de objetos multimedia</target>
       </trans-unit>
       <trans-unit id="3c53c398c3e076a5b04c2c94e0e7921c" resname="Total search results:">
         <source>Total search results:</source>
-        <target xml:lang="es-ES" state="needs-translation">Total search results:</target>
+        <target xml:lang="es-ES" state="translated">Resultado de la búsqueda:</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Resultado total de la búsqueda:</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
         <source>Not multimedia objects found</source>
-        <target xml:lang="es-ES" state="needs-translation">Not multimedia objects found</target>
+        <target xml:lang="es-ES" state="translated">No se han encontrado objetos multimedia</target>
       </trans-unit>
       <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
         <source>Private audio</source>
-        <target xml:lang="es-ES" state="needs-translation">Private audio</target>
+        <target xml:lang="es-ES" state="translated">Audio privado</target>
       </trans-unit>
       <trans-unit id="c525e0d86d7e6c4901a1c82950e9d913" resname="Log in with a valid user is required to watch it">
         <source>Log in with a valid user is required to watch it</source>
-        <target xml:lang="es-ES" state="needs-translation">Log in with a valid user is required to watch it</target>
+        <target xml:lang="es-ES" state="translated">Se requiere iniciar sesión con un usuario válido para verlo</target>
       </trans-unit>
       <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
-        <target xml:lang="es-ES" state="needs-translation">Enter a valid password to watch it</target>
+        <target xml:lang="es-ES" state="translated">Introduzca una contraseña válida para verlo</target>
       </trans-unit>
       <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target xml:lang="es-ES" state="needs-translation">Introduce a password</target>
+        <target xml:lang="es-ES" state="translated">Introducir una contraseña</target>
       </trans-unit>
       <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
         <source>Password is not valid</source>
-        <target xml:lang="es-ES" state="needs-translation">Password is not valid</target>
+        <target xml:lang="es-ES" state="translated">La contraseña no es válida</target>
       </trans-unit>
       <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
         <source>Log In</source>
-        <target xml:lang="es-ES" state="needs-translation">Log In</target>
+        <target xml:lang="es-ES" state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
-        <target xml:lang="es-ES" state="needs-translation">Enter pass</target>
+        <target xml:lang="es-ES" state="translated">Introducir contraseña</target>
       </trans-unit>
-      <trans-unit id="1f4fbbcdcace47febd8ff3d588f658c6" resname="General %title%">
+      <trans-unit id="a657405e3424fc63b9165585e40d2cae" resname="General %title%">
         <source>General %title%</source>
-        <target xml:lang="es-ES" state="needs-translation">General %title%</target>
+        <target xml:lang="es-ES" state="translated">%title% general</target>
       </trans-unit>
-      <trans-unit id="92c97d0ec6ab4e90a6d40a96d4ea37e1" resname="Multimedia objects with tag: %title%">
+      <trans-unit id="bb6e3e7941f7c00d905c3f11b602dec4" resname="Multimedia objects with tag: %title%">
         <source>Multimedia objects with tag: %title%</source>
-        <target xml:lang="es-ES" state="needs-translation">Multimedia objects with tag: %title%</target>
+        <target xml:lang="es-ES" state="translated">Objetos multimedia con etiqueta: %title%</target>
       </trans-unit>
-      <trans-unit id="2b2374bf03e648b88354643a88e99f18" resname="Series with tag: %title%">
+      <trans-unit id="a3546e4e0fce18914e4fc2a38c0a0bc0" resname="Series with tag: %title%">
         <source>Series with tag: %title%</source>
-        <target xml:lang="es-ES" state="needs-translation">Series with tag: %title%</target>
+        <target xml:lang="es-ES" state="translated">Series con etiqueta: %title%</target>
+      </trans-unit>
+      <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
+        <source>Spanish Sign Language</source>
+        <target xml:lang="es-ES" state="needs-translation">Spanish Sign Language</target>
+      </trans-unit>
+      <trans-unit id="a266861eb483e0bb66410fff933bf0f9" resname="Sign Language">
+        <source>Sign Language</source>
+        <target xml:lang="es-ES" state="needs-translation">Sign Language</target>
+      </trans-unit>
+      <trans-unit id="860b918fdae8371e66c317159ae71dfd" resname="International Sign Language">
+        <source>International Sign Language</source>
+        <target xml:lang="es-ES" state="needs-translation">International Sign Language</target>
       </trans-unit>
     </body>
   </file>

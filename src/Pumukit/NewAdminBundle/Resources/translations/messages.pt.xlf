@@ -606,10 +606,6 @@
         <source>Back to series list</source>
         <target xml:lang="pt-PT" state="needs-translation">Back to series list</target>
       </trans-unit>
-      <trans-unit id="2a7981bf2eade9177034e99bd34a4851" resname="« Back to series">
-        <source>« Back to series</source>
-        <target xml:lang="pt-PT" state="needs-translation">« Back to series</target>
-      </trans-unit>
       <trans-unit id="44dfd689352039aac0f6247bf94fa03c" resname="Select an action">
         <source>Select an action</source>
         <target xml:lang="pt-PT" state="needs-translation">Select an action</target>
@@ -1257,10 +1253,6 @@
       <trans-unit id="4e2db3b9797fbf3266283bc32e626e37" resname="Back to playlist list">
         <source>Back to playlist list</source>
         <target xml:lang="pt-PT" state="needs-translation">Back to playlist list</target>
-      </trans-unit>
-      <trans-unit id="e6e5705d9e831c7eadff764e953f02a5" resname="« Back to playlist">
-        <source>« Back to playlist</source>
-        <target xml:lang="pt-PT" state="needs-translation">« Back to playlist</target>
       </trans-unit>
       <trans-unit id="16515bd9582b55f6698c1f23267f44ec" resname="Add multimedia object">
         <source>Add multimedia object</source>
@@ -2106,9 +2098,9 @@
         <source>Series type channel successfully created.</source>
         <target xml:lang="pt-PT" state="needs-translation">Series type channel successfully created.</target>
       </trans-unit>
-      <trans-unit id="1ce5275a34f518c105ff88bbb5d415df" resname="Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.">
-        <source>Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</source>
-        <target xml:lang="pt-PT" state="needs-translation">Multimedia Object saved ERROR: Public Date can not be lower than Date of holding.</target>
+      <trans-unit id="3c7955415edc493ea8db119150385ef0" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
+        <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
+        <target xml:lang="pt-PT" state="needs-translation">Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</target>
       </trans-unit>
       <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
@@ -2190,97 +2182,169 @@
         <source>Only users in the selected Groups can play this multimedia object</source>
         <target xml:lang="pt-PT" state="needs-translation">Only users in the selected Groups can play this multimedia object</target>
       </trans-unit>
-      <trans-unit id="e988260bcd2c444e8d7a8b3f7d943886" resname="Dashboard">
-        <source>Dashboard</source>
-        <target xml:lang="pt-PT" state="needs-translation">Dashboard</target>
-      </trans-unit>
-      <trans-unit id="e0fcbdbcc92c49a78be3acf8693bc6dd" resname="Media Manager">
+      <trans-unit id="d5ddfae94fbec629e0f0535615b05fdd" resname="Media Manager">
         <source>Media Manager</source>
         <target xml:lang="pt-PT" state="needs-translation">Media Manager</target>
       </trans-unit>
-      <trans-unit id="6bf929ceefdc4234852a48d37d43d390" resname="Series">
-        <source>Series</source>
-        <target xml:lang="pt-PT" state="needs-translation">Series</target>
-      </trans-unit>
-      <trans-unit id="b501a38eab924a8b8ff48e78bbb5f382" resname="Multimedia">
-        <source>Multimedia</source>
-        <target xml:lang="pt-PT" state="needs-translation">Multimedia</target>
-      </trans-unit>
-      <trans-unit id="4cb1faa4923d4628bbefc4f396883641" resname="Moodle Playlists">
-        <source>Moodle Playlists</source>
-        <target xml:lang="pt-PT" state="needs-translation">Moodle Playlists</target>
-      </trans-unit>
-      <trans-unit id="5913dc8a254f4e989f825e3e74d2c78c" resname="Multimedia">
-        <source>Multimedia</source>
-        <target xml:lang="pt-PT" state="needs-translation">Multimedia</target>
-      </trans-unit>
-      <trans-unit id="867947d1ac4b499a8b608adaeacee893" resname="Stats">
+      <trans-unit id="452a7601dbc6f2c38aa89e68bda8b603" resname="Stats">
         <source>Stats</source>
         <target xml:lang="pt-PT" state="needs-translation">Stats</target>
       </trans-unit>
-      <trans-unit id="553c030d268b41619d10e366a4a101c0" resname="Multimedia Objects">
-        <source>Multimedia Objects</source>
-        <target xml:lang="pt-PT" state="needs-translation">Multimedia Objects</target>
-      </trans-unit>
-      <trans-unit id="fe9f7b19b3f547bf8108220bc356f465" resname="Live">
+      <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
         <target xml:lang="pt-PT" state="needs-translation">Live</target>
       </trans-unit>
-      <trans-unit id="31852be95c2c4ab0b200a7af05551764" resname="Live Channels">
+      <trans-unit id="da23c48b10196885e040559efc3bc716" resname="Live Channels">
         <source>Live Channels</source>
         <target xml:lang="pt-PT" state="needs-translation">Live Channels</target>
       </trans-unit>
-      <trans-unit id="dfa278e837034cbc8ab476e89dee9b86" resname="Live Events">
+      <trans-unit id="b707c92b1edc44effce6cb88dfc5c0ef" resname="Live Events">
         <source>Live Events</source>
         <target xml:lang="pt-PT" state="needs-translation">Live Events</target>
       </trans-unit>
-      <trans-unit id="d4b066d479124464b629bdf90b008188" resname="Encoder jobs">
+      <trans-unit id="34d6e8ba053900267b682d33ec7a5a80" resname="Encoder jobs">
         <source>Encoder jobs</source>
         <target xml:lang="pt-PT" state="needs-translation">Encoder jobs</target>
       </trans-unit>
-      <trans-unit id="b6aeecf9e4af4bb28f666204f40feef6" resname="Tables">
+      <trans-unit id="651ae5789ab776f2fcaf80b5e62801dc" resname="Tables">
         <source>Tables</source>
         <target xml:lang="pt-PT" state="needs-translation">Tables</target>
       </trans-unit>
-      <trans-unit id="aed5d602a0c0479e8c0e90af45b7e178" resname="People">
-        <source>People</source>
-        <target xml:lang="pt-PT" state="needs-translation">People</target>
-      </trans-unit>
-      <trans-unit id="813c22885cc24e3eb7bde2faa7bf42d9" resname="Tags">
-        <source>Tags</source>
-        <target xml:lang="pt-PT" state="needs-translation">Tags</target>
-      </trans-unit>
-      <trans-unit id="597a125f4221473b82c7a4f72c4c42f6" resname="Series types">
-        <source>Series types</source>
-        <target xml:lang="pt-PT" state="needs-translation">Series types</target>
-      </trans-unit>
-      <trans-unit id="2e26a8edaeb949558122256cef18f6af" resname="Management">
+      <trans-unit id="fe4dbcab9b910577e5035e97ac068dae" resname="Management">
         <source>Management</source>
         <target xml:lang="pt-PT" state="needs-translation">Management</target>
       </trans-unit>
-      <trans-unit id="be237038610a470291a106f254219a2b" resname="Admin users">
+      <trans-unit id="3832dee32fb5053c64441a629488b42a" resname="Admin users">
         <source>Admin users</source>
         <target xml:lang="pt-PT" state="needs-translation">Admin users</target>
       </trans-unit>
-      <trans-unit id="10cab39128e34de5981ecc71559b65e8" resname="Groups">
-        <source>Groups</source>
-        <target xml:lang="pt-PT" state="needs-translation">Groups</target>
-      </trans-unit>
-      <trans-unit id="e2efd93e2ca8409db7694af436b2947c" resname="Permission profiles">
+      <trans-unit id="83a203553faed8d8ecc37700756273be" resname="Permission profiles">
         <source>Permission profiles</source>
         <target xml:lang="pt-PT" state="needs-translation">Permission profiles</target>
       </trans-unit>
-      <trans-unit id="595e714d41f147a3ba1f252aecb5c333" resname="Roles">
-        <source>Roles</source>
-        <target xml:lang="pt-PT" state="needs-translation">Roles</target>
-      </trans-unit>
-      <trans-unit id="64e1982bea2e438097f37371adc6ff21" resname="Tools">
+      <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
         <source>Tools</source>
         <target xml:lang="pt-PT" state="needs-translation">Tools</target>
       </trans-unit>
-      <trans-unit id="f67d567331cb43e689db8dc4784ba324" resname="OC-Importer">
+      <trans-unit id="4b8141e27afd35a6ee26d006316d7721" resname="OC-Importer">
         <source>OC-Importer</source>
         <target xml:lang="pt-PT" state="needs-translation">OC-Importer</target>
+      </trans-unit>
+      <trans-unit id="f040dc03ee5ceda15a7a4d39ae18d210" resname="My Multimedia Objects">
+        <source>My Multimedia Objects</source>
+        <target xml:lang="pt-PT" state="needs-translation">My Multimedia Objects</target>
+      </trans-unit>
+      <trans-unit id="e622429156edfbdf560c765a86d633ce" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
+        <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
+        <target xml:lang="pt-PT" state="needs-translation">{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
+      </trans-unit>
+      <trans-unit id="215f26215b6734e1db7b1473532c0530" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
+        <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
+        <target xml:lang="pt-PT" state="needs-translation">{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</target>
+      </trans-unit>
+      <trans-unit id="b12959058e1e722f9e557ffccfbbf96e" resname="Multimedia object preview">
+        <source>Multimedia object preview</source>
+        <target xml:lang="pt-PT" state="needs-translation">Multimedia object preview</target>
+      </trans-unit>
+      <trans-unit id="a179bfbcfd79b846e9321376e49f1397" resname="The multimedia object '%title%' is not playable">
+        <source>The multimedia object '%title%' is not playable</source>
+        <target xml:lang="pt-PT" state="needs-translation">The multimedia object '%title%' is not playable</target>
+      </trans-unit>
+      <trans-unit id="096783234f0908eb8e8cdda7c3e12e75" resname="The multimedia object '%title%' is not published">
+        <source>The multimedia object '%title%' is not published</source>
+        <target xml:lang="pt-PT" state="needs-translation">The multimedia object '%title%' is not published</target>
+      </trans-unit>
+      <trans-unit id="01a6cb8dcbd38ae87536e8142909224f" resname="My Moodle Playlists">
+        <source>My Moodle Playlists</source>
+        <target xml:lang="pt-PT" state="needs-translation">My Moodle Playlists</target>
+      </trans-unit>
+      <trans-unit id="4b6b564a4eb02ec0a83052adbf1909c8" resname="List multimedia objects of the playlist">
+        <source>List multimedia objects of the playlist</source>
+        <target xml:lang="pt-PT" state="needs-translation">List multimedia objects of the playlist</target>
+      </trans-unit>
+      <trans-unit id="55483e9fdd78d5ecc8e884deee206c03" resname="This object cannot be played on the playlist">
+        <source>This object cannot be played on the playlist</source>
+        <target xml:lang="pt-PT" state="needs-translation">This object cannot be played on the playlist</target>
+      </trans-unit>
+      <trans-unit id="e499d880b861f4238bf7305842298db6" resname="This user does not own any multimedia objects">
+        <source>This user does not own any multimedia objects</source>
+        <target xml:lang="pt-PT" state="needs-translation">This user does not own any multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="0448191f48f4a6fcec112c635d80b132" resname="Edit multimedia object">
+        <source>Edit multimedia object</source>
+        <target xml:lang="pt-PT" state="needs-translation">Edit multimedia object</target>
+      </trans-unit>
+      <trans-unit id="56014549547131f0a7aada0a6e2755f3" resname="Delete multimedia object from de playlist">
+        <source>Delete multimedia object from de playlist</source>
+        <target xml:lang="pt-PT" state="needs-translation">Delete multimedia object from de playlist</target>
+      </trans-unit>
+      <trans-unit id="6aa2a91ae07341251a38ce9baba096c2" resname="My Multimedia Series">
+        <source>My Multimedia Series</source>
+        <target xml:lang="pt-PT" state="needs-translation">My Multimedia Series</target>
+      </trans-unit>
+      <trans-unit id="2b43a6b1eccbd8daef150f773042aa8c" resname="List multimedia objects of the series">
+        <source>List multimedia objects of the series</source>
+        <target xml:lang="pt-PT" state="needs-translation">List multimedia objects of the series</target>
+      </trans-unit>
+      <trans-unit id="5e79b0d8a06fd5dbe575442ebb51ee65" resname="Go to series">
+        <source>Go to series</source>
+        <target xml:lang="pt-PT" state="needs-translation">Go to series</target>
+      </trans-unit>
+      <trans-unit id="39985c3fc2a605a19b4b7e1f83b8c543" resname="Go to playlists">
+        <source>Go to playlists</source>
+        <target xml:lang="pt-PT" state="needs-translation">Go to playlists</target>
+      </trans-unit>
+      <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
+        <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+        <target xml:lang="pt-PT" state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+      </trans-unit>
+      <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
+        <source>My Playlists</source>
+        <target xml:lang="pt-PT" state="needs-translation">My Playlists</target>
+      </trans-unit>
+      <trans-unit id="9bd384bbde98d3d5879435c04014c2b8" resname="Delete multimedia object from the playlist">
+        <source>Delete multimedia object from the playlist</source>
+        <target xml:lang="pt-PT" state="needs-translation">Delete multimedia object from the playlist</target>
+      </trans-unit>
+      <trans-unit id="949eb1e696fd6358006f4828f0dbf865" resname="My Series">
+        <source>My Series</source>
+        <target xml:lang="pt-PT" state="needs-translation">My Series</target>
+      </trans-unit>
+      <trans-unit id="5a662bf43da341daa1c27090ea149507" resname="Keywords">
+        <source>Keywords</source>
+        <target xml:lang="pt-PT" state="needs-translation">Keywords</target>
+      </trans-unit>
+      <trans-unit id="d2ee18a675894fd99edfdb225945ac93" resname="Copyright">
+        <source>Copyright</source>
+        <target xml:lang="pt-PT" state="needs-translation">Copyright</target>
+      </trans-unit>
+      <trans-unit id="f65a39a59c6c4f1dbf752e939f4d1c17" resname="License">
+        <source>License</source>
+        <target xml:lang="pt-PT" state="needs-translation">License</target>
+      </trans-unit>
+      <trans-unit id="5ca66bca10c5423ab25de5ba9b8e4300" resname="Publication Date">
+        <source>Publication Date</source>
+        <target xml:lang="pt-PT" state="needs-translation">Publication Date</target>
+      </trans-unit>
+      <trans-unit id="09280ca945984b609825b000db70d3b1" resname="Recording Date">
+        <source>Recording Date</source>
+        <target xml:lang="pt-PT" state="needs-translation">Recording Date</target>
+      </trans-unit>
+      <trans-unit id="5ee9abd1ecab4ace9e65f7b051924758" resname="Header Text">
+        <source>Header Text</source>
+        <target xml:lang="pt-PT" state="needs-translation">Header Text</target>
+      </trans-unit>
+      <trans-unit id="730bbfe868bf4148a5a6ac1a023573e6" resname="Footer Text">
+        <source>Footer Text</source>
+        <target xml:lang="pt-PT" state="needs-translation">Footer Text</target>
+      </trans-unit>
+      <trans-unit id="3d07fc411b93494892017ac09a1bc8a7" resname="Template">
+        <source>Template</source>
+        <target xml:lang="pt-PT" state="needs-translation">Template</target>
+      </trans-unit>
+      <trans-unit id="e28537a749fe4fbdb7330d0279440ca1" resname="Subseries">
+        <source>Subseries</source>
+        <target xml:lang="pt-PT" state="needs-translation">Subseries</target>
       </trans-unit>
     </body>
   </file>
