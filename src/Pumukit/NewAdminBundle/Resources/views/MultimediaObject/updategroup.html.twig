@@ -1,13 +1,13 @@
 <div class="well">
-	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
-	<input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
-	<input type="hidden" name="template" id="template" value="{{ template }}">
+    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
+    <input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
+    <input type="hidden" name="template" id="template" value="{{ template }}">
     <div class="row">
-      <div class="col-md-6">
-	    <span id="remember_save_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
-	    <span id="warning_personal_user_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}WARNING: If you press OK, you will no longer have access to this Multimedia Object{% endtrans %}</span> &nbsp;
+      <div class="col-xs-6">
+        <span id="remember_save_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
+        <span id="warning_personal_user_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}WARNING: If you press OK, you will no longer have access to this Multimedia Object{% endtrans %}</span> &nbsp;
       </div>
-      <div class="col-md-6 text-right">
+      <div class="col-xs-6 text-right">
         <button type="button" class="btn btn-default btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_reset">{% trans %}Cancel{% endtrans %}</button>
         <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_submit">{% trans %}OK{% endtrans %}</button>
       </div>
@@ -17,14 +17,14 @@
       {% if personal_scope_role %}
       <div class="form-row">
           <div id="{{ personal_scope_role.getId() }}_person_mms{{ template }}">
-	        {% include 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig' with {'people': mm.getPeopleByRole(personal_scope_role, true), 'mm': mm, 'role': personal_scope_role, 'personal_scope_role': personal_scope_role, 'template': template} %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig' with {'people': mm.getPeopleByRole(personal_scope_role, true), 'mm': mm, 'role': personal_scope_role, 'personal_scope_role': personal_scope_role, 'template': template} %}
           </div>
       </div>
       <hr class="pumukit-green"/>
       {% endif %}
       <div class="form-row">
           <div id="group_mms{{ template }}">
-	        {% include 'PumukitNewAdminBundle:MultimediaObject:listgrouprelation.html.twig' with {'groups': groups, 'mm': mm, 'template': template} %}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:listgrouprelation.html.twig' with {'groups': groups, 'mm': mm, 'template': template} %}
           </div>
       </div>
     </dl>
