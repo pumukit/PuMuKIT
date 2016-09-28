@@ -28,8 +28,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         }
 
         $track = $request->query->has('track_id') ?
-        $multimediaObject->getTrackById($request->query->get('track_id')) :
-        $multimediaObject->getFilteredTrackWithTags(array('display'));
+               $multimediaObject->getTrackById($request->query->get('track_id')) :
+               $multimediaObject->getDisplayTrack();
 
         if (!$track) {
             throw $this->createNotFoundException();
@@ -83,8 +83,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         }
 
         $track = $request->query->has('track_id') ?
-                 $multimediaObject->getTrackById($request->query->get('track_id')) :
-                 $multimediaObject->getTrackWithTag('display');
+               $multimediaObject->getTrackById($request->query->get('track_id')) :
+               $multimediaObject->getDisplayTrack();
 
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
@@ -142,4 +142,5 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
                 return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
         }
     }
+
 }

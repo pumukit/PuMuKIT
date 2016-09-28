@@ -34,8 +34,8 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
             return $this->forward('PumukitBasePlayerBundle:BasePlayer:opencast', array('request' => $request, 'multimediaObject' => $multimediaObject));
 
         $track = $request->query->has('track_id') ?
-                 $multimediaObject->getTrackById($request->query->get('track_id')) :
-                 $multimediaObject->getFilteredTrackWithTags(array('display'));
+               $multimediaObject->getTrackById($request->query->get('track_id')) :
+               $multimediaObject->getDisplayTrack();
 
         if($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
@@ -73,8 +73,8 @@ class BasePlayerController extends BasePlayerControllero implements WebTVControl
         }
 
         $track = $request->query->has('track_id') ?
-                 $multimediaObject->getTrackById($request->query->get('track_id')) :
-                 $multimediaObject->getTrackWithTag('display');
+               $multimediaObject->getTrackById($request->query->get('track_id')) :
+               $multimediaObject->getDisplayTrack();
 
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());

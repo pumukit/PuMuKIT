@@ -71,6 +71,6 @@ class BasePlayerExtension extends \Twig_Extension
      * @return Track
      */
     public function getFirstPublicTrackFilter(MultimediaObject $mmobj) {
-        return $mmobj->getFilteredTrackWithTags(array('display'));
+        return $mmobj->getDisplayTrack();
     }
 }

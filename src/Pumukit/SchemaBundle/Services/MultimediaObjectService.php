@@ -59,7 +59,7 @@ class MultimediaObjectService
      * @return boolean
      */
     public function hasPlayableResource($mm){
-        return $mm->getFilteredTracksWithTags(['display']) || $mm->getProperty('opencast');
+        return $mm->getDisplayTrack() || $mm->getProperty('opencast');
     }
 
     /**

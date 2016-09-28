@@ -838,7 +838,6 @@ class MultimediaObject
       return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
-
     /**
      * Set embedded broadcast
      *
@@ -1572,6 +1571,19 @@ class MultimediaObject
         }
 
         return null;
+    }
+
+
+    /**
+     * Get audio/video track with tag display. Get an audio track if the object is an audio.
+     *
+     * @return Track|null
+     */
+    public function getDisplayTrack()
+    {
+        return $this->isOnlyAudio() ?
+            $this->getFilteredTrackWithTags(array('display')) :
+            $this->getFilteredTrackWithTags(array('display'), array(), array('audio'));
     }
 
     /**
