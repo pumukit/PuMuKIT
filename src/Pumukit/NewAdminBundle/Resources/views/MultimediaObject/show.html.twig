@@ -2,7 +2,7 @@
 {% if mm is not empty %}
 
 <p>
-  Is part of: <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{mm.series.title}} </a>.
+  {% trans %}Is part of {% endtrans %}: <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{mm.series.title}} </a>.
 </p>
 
 <div>
