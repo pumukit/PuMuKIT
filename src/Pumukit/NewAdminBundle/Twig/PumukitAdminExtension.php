@@ -217,13 +217,13 @@ class PumukitAdminExtension extends \Twig_Extension
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconText = 'Published: is listed in the Series and can be played with published URL';
+                $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
                 break;
             case MultimediaObject::STATUS_HIDE:
-                $iconText = 'Hidden: is not listed in the Series but can be played with magic URL';
+                $iconText = $this->translator->trans('Hidden: is not listed in the Series but can be played with magic URL');
                 break;
             case MultimediaObject::STATUS_BLOQ:
-                $iconText = 'Blocked: cannot be accessed outside the back-end';
+                $iconText = $this->translator->trans('Blocked: cannot be accessed outside the back-end');
                 break;
         }
 
@@ -350,7 +350,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $text = '';
 
         if ($series->getAnnounce()) {
-            return 'This Series is announced';
+            return $this->translator->trans('This Series is announced');
         }
 
         return $text;
