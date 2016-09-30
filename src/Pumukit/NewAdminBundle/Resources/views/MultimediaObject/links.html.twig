@@ -22,7 +22,7 @@
               <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
             {% endif %}
           </div>
-          <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
+          <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}"> {% trans %}Magic Url{% endtrans%}:</label>
           <div class="col-xs-10 input-group hidden-naked">
             <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
             {% if is_hidden %}
