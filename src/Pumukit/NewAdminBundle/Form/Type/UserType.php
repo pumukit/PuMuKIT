@@ -29,15 +29,17 @@ class UserType extends AbstractType
             ->add('username', 'text',
                   array(
                         'attr' => array(
-                                        'autocomplete' => 'off',
-                                        'pattern' => '^[a-zA-Z0-9_]{4,16}$',
-                                        'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
-                                        'oninput' => "setCustomValidity('')", ),
+                            'autocomplete' => 'off',
+                            'pattern' => '^[a-zA-Z0-9_]{4,16}$',
+                            'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
+                            'oninput' => "setCustomValidity('')", ),
                         'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
             ->add('plain_password', 'password',
                   array(
-                        'attr' => array('autocomplete' => 'off'),
-                        'required' => false,
+                        'attr' => array(
+                            'autocomplete' => 'off',
+                        ),
+                        'required' => true,
                         'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
           /* TODO check password
             ->add('plain_password', 'repeated', array(
