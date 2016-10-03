@@ -131,11 +131,13 @@
                   {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
                       "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"}) }}
 
+                  {% if not is_naked() %}
                   <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value">
                     <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                     <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                     <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
                   </select>
+                {% endif %}
 
                 </div>
               </div>
