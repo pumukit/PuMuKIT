@@ -23,12 +23,12 @@
             {% endfor %}
             {% set is_audio = mm.getTrackWithTag('master').isOnlyAudio() %}
             {% if not has_video and not is_audio %}
-                <span class="alert alert-dismissable alert-warning">
+                <span class="label label-dismissable label-warning">
                     <i class="mdi-action-report-problem alert-warning"></i>
                     {% trans %}WARNING, Not video tracks with{% endtrans %} <span class="label label-primary">podcast</span> tag.
                 </span>
             {% elseif not has_audio %}
-                <span class="alert alert-dismissable alert-warning">
+                <span class="label label-dismissable label-warning">
                     <i class="mdi-action-report-problem alert-warning"></i>
                     {% trans %}WARNING, Not audio tracks with{% endtrans %} <span class="label label-primary">podcast</span> tag.
                 </span>
