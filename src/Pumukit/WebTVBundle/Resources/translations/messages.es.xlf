@@ -426,15 +426,15 @@
       </trans-unit>
       <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
         <source>Spanish Sign Language</source>
-        <target xml:lang="es-ES" state="needs-translation">Spanish Sign Language</target>
+        <target xml:lang="es-ES" state="translated">lengua de signos española</target>
       </trans-unit>
       <trans-unit id="a266861eb483e0bb66410fff933bf0f9" resname="Sign Language">
         <source>Sign Language</source>
-        <target xml:lang="es-ES" state="needs-translation">Sign Language</target>
+        <target xml:lang="es-ES" state="translated">lengua de signos</target>
       </trans-unit>
       <trans-unit id="860b918fdae8371e66c317159ae71dfd" resname="International Sign Language">
         <source>International Sign Language</source>
-        <target xml:lang="es-ES" state="needs-translation">International Sign Language</target>
+        <target xml:lang="es-ES" state="translated">lengua de signos internacional</target>
       </trans-unit>
     </body>
   </file>
