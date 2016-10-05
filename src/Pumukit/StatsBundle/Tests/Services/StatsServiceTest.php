@@ -220,6 +220,7 @@ class StatsServiceTest extends WebTestCase
         });
 
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array(), array('sort' => 1));
+
         $this->assertEquals($listMapped, $mostViewed);
 
         //Sorts by most viewed
@@ -242,13 +243,17 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($total, 0);
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days')));
         $this->assertEquals(array($listMapped[1], $listMapped[2]), $mostViewed);
-        $this->assertEquals($total, 3);
+        $this->assertEquals(4, $total);
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days'), 'page' => 1));
-        $this->assertEquals(array($listMapped[3]), $mostViewed);
-        $this->assertEquals($total, 3);
+        $this->assertEquals(array($listMapped[3], array('mmobj' => $list[3], 'num_viewed' => 0)), $mostViewed);
+        $this->assertEquals(4, $total);
 
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array(), array('from_date' => new \DateTime('-21 days'), 'to_date' => new \DateTime('-9 days')));
-        $this->assertEquals(array($listMapped[0], $listMapped[1]), $mostViewed);
-        $this->assertEquals($total, 2);
+
+        $this->assertEquals(array($listMapped[0], $listMapped[1]), array_slice($mostViewed, 0, 2));
+        $this->assertEquals(0, $mostViewed[2]['num_viewed']);
+        $this->assertEquals(0, $mostViewed[3]['num_viewed']);
+        $this->assertEquals(0, $mostViewed[4]['num_viewed']);
+        $this->assertEquals(5, $total);
     }
 }
