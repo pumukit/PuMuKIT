@@ -96,7 +96,8 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
-        $total = count($aggregation);
+        $totalInAggegation = count($aggregation);
+        $total = count($mmobjIds);
         $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
 
         $mostViewed = array();
@@ -107,6 +108,36 @@ class StatsService
                 $mostViewed[] = array('mmobj' => $multimediaObject,
                                       'num_viewed' => $element['numView'],
                 );
+            }
+        }
+
+
+        //Add mmobj with zero views
+        if (count($aggregation) < $options['limit']) {
+
+            if (count($aggregation) == 0) {
+
+                for ($i = ($options['page'] * $options['limit']); $i < (( 1 + $options['page']) * $options['limit']); $i++) {
+                    $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
+                    if ($multimediaObject) {
+                        $mostViewed[] = array('mmobj' => $multimediaObject,
+                                              'num_viewed' => 0,
+                        );
+                    }
+                }
+            } else {
+
+                foreach ($mmobjIds as $element) {
+                    if (!in_array($element, $ids)) {
+                        $multimediaObject = $this->repo->find($element);
+                        if ($multimediaObject) {
+                            $mostViewed[] = array('mmobj' => $multimediaObject,
+                                                  'num_viewed' => 0,
+                            );
+                            if (count($mostViewed) == $options['limit']) break;
+                        }
+                    }
+                }
             }
         }
 
@@ -136,7 +167,8 @@ class StatsService
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
 
-        $total = count($aggregation);
+        $totalInAggegation = count($aggregation);
+        $total = count($mmobjIds);
         $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
 
         $mostViewed = array();
@@ -147,6 +179,36 @@ class StatsService
                 $mostViewed[] = array('series' => $series,
                                       'num_viewed' => $element['numView'],
                 );
+            }
+        }
+
+
+        //Add series with zero views
+        if (count($aggregation) < $options['limit']) {
+
+            if (count($aggregation) == 0) {
+
+                for ($i = ($options['page'] * $options['limit']); $i < (( 1 + $options['page']) * $options['limit']); $i++) {
+                    $series = $this->repoSeries->find($mmobjIds[$i - $totalInAggegation]);
+                    if ($series) {
+                        $mostViewed[] = array('series' => $series,
+                                              'num_viewed' => 0,
+                        );
+                    }
+                }
+            } else {
+
+                foreach ($mmobjIds as $element) {
+                    if (!in_array($element, $ids)) {
+                        $series = $this->repoSeries->find($element);
+                        if ($series) {
+                            $mostViewed[] = array('series' => $series,
+                                                  'num_viewed' => 0,
+                            );
+                            if (count($mostViewed) == $options['limit']) break;
+                        }
+                    }
+                }
             }
         }
 
