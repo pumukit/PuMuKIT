@@ -50,6 +50,11 @@
     <p class="description">
       {{ multimediaObject.getDescription()|nl2br }}
     </p>
+    {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
+        <div>{% trans %}Series{% endtrans %}: <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">{{ multimediaObject.getTitle() }}</a></div>
+    {% else %}
+        <div>{% trans %}Series{% endtrans %}: <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">{{ multimediaObject.getTitle() }}</a></div>
+    {% endif %}
     <!-- PERSONS ACT -->
     <div class="persons">
       {% for role in multimediaObject.getRoles() if role.getDisplay() %}
