@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Series
 {
+    use Traits\Keywords;
 
     const TYPE_SERIES = 0;
     const TYPE_PLAYLIST = 1;
@@ -128,13 +129,6 @@ class Series
      * @MongoDB\String
      */
     private $license;
-
-    /**
-     * @var string $keyword
-     *
-     * @MongoDB\Raw
-     */
-    private $keyword = array('en' => '');
 
     /**
      * @var string $line2
@@ -652,58 +646,6 @@ class Series
     public function getLicense()
     {
         return $this->license;
-    }
-
-    /**
-     * Set keyword
-     *
-     * @param string $keyword
-     * @param string|null $locale
-     */
-    public function setKeyword($keyword, $locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        $this->keyword[$locale] = $keyword;
-    }
-
-    /**
-     * Get keyword
-     *
-     * @param string|null $locale
-     * @return string
-     */
-    public function getKeyword($locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->keyword[$locale])) {
-            return '';
-        }
-
-        return $this->keyword[$locale];
-    }
-
-    /**
-     * Set I18n keyword
-     *
-     * @param array $keyword
-     */
-    public function setI18nKeyword(array $keyword)
-    {
-        $this->keyword = $keyword;
-    }
-
-    /**
-     * Get i18n keyword
-     *
-     * @return array
-     */
-    public function getI18nKeyword()
-    {
-        return $this->keyword;
     }
 
     /**

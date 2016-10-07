@@ -16,6 +16,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MultimediaObject
 {
+    use Traits\Keywords;
+
     const STATUS_PUBLISHED = 0;
     const STATUS_BLOQ = 1; //Kept for backwards compatibility
     const STATUS_BLOCKED = 1;
@@ -190,13 +192,6 @@ class MultimediaObject
      * @MongoDB\String
      */
     private $license;
-
-    /**
-     * @var string $keyword
-     *
-     * @MongoDB\Raw
-     */
-    private $keyword = array('en' => '');
 
     /**
      * @var int $duration
@@ -640,58 +635,6 @@ class MultimediaObject
     public function getLicense()
     {
         return $this->license;
-    }
-
-    /**
-     * Set keyword
-     *
-     * @param string $keyword
-     * @param string|null $locale
-     */
-    public function setKeyword($keyword, $locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        $this->keyword[$locale] = $keyword;
-    }
-
-    /**
-     * Get keyword
-     *
-     * @param string|null $locale
-     * @return string
-     */
-    public function getKeyword($locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->keyword[$locale])) {
-            return '';
-        }
-
-        return $this->keyword[$locale];
-    }
-
-    /**
-     * Set I18n keyword
-     *
-     * @param array $keyword
-     */
-    public function setI18nKeyword(array $keyword)
-    {
-        $this->keyword = $keyword;
-    }
-
-    /**
-     * Get I18n keyword
-     *
-     * @return array
-     */
-    public function getI18nKeyword()
-    {
-        return $this->keyword;
     }
 
     /**
