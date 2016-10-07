@@ -33,3 +33,5 @@ script:
     - phpunit -c app
     - php app/console yaml:lint src
     - php app/console yaml:lint app
+    - php app/console twig:lint src
+    - php app/console twig:lint app
