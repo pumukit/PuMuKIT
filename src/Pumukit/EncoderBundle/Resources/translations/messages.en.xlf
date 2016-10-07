@@ -158,6 +158,10 @@
         <source>Error</source>
         <target>Error</target>
       </trans-unit>
+      <trans-unit id="27a06a9e3d5e7f67eb604a39536208c9" resname="jobs">
+        <source>jobs</source>
+        <target>jobs</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
