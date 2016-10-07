@@ -15,7 +15,7 @@
               <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
               <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
             </div>
-            <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">Magic Url:</label>
+            <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">{% trans %}Magic Url{% endtrans %}:</label>
             <div class="col-xs-10 input-group hidden-naked">
               <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
               <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>

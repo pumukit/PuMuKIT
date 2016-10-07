@@ -12,7 +12,7 @@
           <label><input id="show_paused" type="checkbox" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Paused{% endtrans %}</h4>
-        <p class="list-group-item-text">{{ stats['paused'] }} jobs</p>
+        <p class="list-group-item-text">{{ stats['paused'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
           <label><input id="show_waiting" type="checkbox" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Waiting{% endtrans %}</h4>
-        <p class="list-group-item-text">{{ stats['waiting'] }} jobs</p>
+        <p class="list-group-item-text">{{ stats['waiting'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div>    
@@ -44,7 +44,7 @@
       <div class="row-content">
         <div class="least-content togglebutton" style="bottom: 10px; top: inherit"></div>
         <h4 class="list-group-item-heading">{% trans %}Executing{% endtrans %}</h4>
-        <p class="list-group-item-text">{{ stats['executing'] }} jobs</p>
+        <p class="list-group-item-text">{{ stats['executing'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div>  
@@ -61,7 +61,7 @@
           <label><input id="show_finished" type="checkbox" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Finished{% endtrans %}</h4>
-        <p class="list-group-item-text">{{ stats['finished'] }} jobs</p>
+        <p class="list-group-item-text">{{ stats['finished'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div> 
@@ -78,7 +78,7 @@
           <label><input id="show_error" type="checkbox" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Error{% endtrans %}</h4>
-        <p class="list-group-item-text">{{ stats['error'] }} jobs</p>
+        <p class="list-group-item-text">{{ stats['error'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div>
