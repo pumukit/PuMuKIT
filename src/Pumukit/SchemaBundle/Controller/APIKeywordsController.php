@@ -17,7 +17,12 @@ class APIKeywordsController extends Controller
      */
     public function seriesAction(Request $request)
     {
-        return $this->base('PumukitSchemaBundle:Series', $request->getRequestFormat(), 1000);
+        return $this->base(
+            'PumukitSchemaBundle:Series',
+            $request->getLocale(),
+            $request->getRequestFormat(),
+            1000
+        );
     }
 
     /**
@@ -25,10 +30,15 @@ class APIKeywordsController extends Controller
      */
     public function mmobjAction(Request $request)
     {
-        return $this->base('PumukitSchemaBundle:MultimediaObject', $request->getRequestFormat(), 1000);
+        return $this->base(
+            'PumukitSchemaBundle:MultimediaObject',
+            $request->getLocale(),
+            $request->getRequestFormat(),
+            1000
+        );
     }
 
-    private function base($collName, $format = 'json', $limit = null)
+    private function base($collName, $lang, $format = 'json', $limit = null)
     {
         $coll = $this
           ->get('doctrine_mongodb.odm.document_manager')
@@ -36,7 +46,7 @@ class APIKeywordsController extends Controller
         $serializer = $this->get('serializer');
 
         $pipeline = array(
-            array('$project' => array( 'k' => '$keywords.en', '_id' => false )),
+            array('$project' => array( 'k' => '$keywords.' . $lang , '_id' => false )),
             array('$match' => array('k' => array('$ne' => ''))),
             array('$unwind' => array('path' => '$k')),
             array('$group' => array('_id' => '$k', 'count' => array( '$sum' => 1 ))),
