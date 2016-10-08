@@ -17,7 +17,7 @@ class APIKeywordsController extends Controller
      */
     public function seriesAction(Request $request)
     {
-        return $this->base('PumukitSchemaBundle:Series', $request->getRequestFormat(), 10);
+        return $this->base('PumukitSchemaBundle:Series', $request->getRequestFormat(), 1000);
     }
 
     /**
@@ -25,7 +25,7 @@ class APIKeywordsController extends Controller
      */
     public function mmobjAction(Request $request)
     {
-        return $this->base('PumukitSchemaBundle:MultimediaObject', $request->getRequestFormat(), 10);
+        return $this->base('PumukitSchemaBundle:MultimediaObject', $request->getRequestFormat(), 1000);
     }
 
     private function base($collName, $format = 'json', $limit = null)
