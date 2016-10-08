@@ -31,7 +31,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
-                        'attr' => array('data-role'=> 'materialtags'),
+                        'attr' => array('class'=> 'mmobj materialtags'),
                         'label' => $this->translator->trans('Keywords', array(), null, $this->locale)))
             ->add('copyright', 'text',
                   array(

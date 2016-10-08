@@ -30,3 +30,19 @@
     </fieldset>
   </form>
 </div>
+
+<script type="text/javascript">
+
+$(function(){
+    $('input.mmobj.materialtags').materialtags({
+        typeaheadjs: {
+            name: 'keywords',
+            displayKey: '_id',
+            valueKey: '_id',
+            source: window.mmobjkeywords.ttAdapter()
+        }
+    });
+
+});
+
+</script>
