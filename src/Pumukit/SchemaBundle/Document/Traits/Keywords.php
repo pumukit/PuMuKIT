@@ -57,7 +57,7 @@ trait Keywords
             return '';
         }
 
-        return implode(', ', $this->keywords[$locale]);
+        return implode(',', $this->keywords[$locale]);
     }
 
     /**
@@ -85,7 +85,7 @@ trait Keywords
     {
         $keywords = array();
         foreach($this->keywords as $lang => $value) {
-            $keywords[$lang] = implode(', ', $value);
+            $keywords[$lang] = implode(',', $value);
         }
 
         return $keywords;

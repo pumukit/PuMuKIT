@@ -2104,16 +2104,16 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
     return false;
 });
 
-$(document).on('change', "*[id^='pumukitnewadmin_series_']", function(){
-    $('#remember_save_series').css('display', 'inline-block');
+$(document).on('change', "*[id^='pumukitnewadmin_series_']", function(e){
+    if (e.target.value != e.target.defaultValue){
+        $('#remember_save_series').css('display', 'inline-block');
+    }
 });
 
-$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
-    $('#remember_save_mm').css('display', 'inline-block');
-});
-
-$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(){
-    $('#remember_save_mm').css('display', 'inline-block');
+$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
+    if (e.target.value != e.target.defaultValue){
+        $('#remember_save_mm').css('display', 'inline-block');
+    }
 });
 
 $(document).on('change', 'form#pumukitnewadmin_mms_updatepub_form input, form#pumukitnewadmin_mms_updatepub_form select', function(){
