@@ -24,6 +24,8 @@
 <!-- SnackbarJS CSS core -->
 <link href="{{ asset('/bundles/pumukitnewadmin/css/snackbar.min.css') }}" rel="stylesheet">
 <link href="{{ asset('/bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
+<!-- materialize tags -->
+<link href="{{ asset('/bundles/pumukitnewadmin/css/materialize-tags.min.css') }}" rel="stylesheet">
 {% endblock %}
 {% block javascripts %}
 <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-1.10.2.min.js') }}"></script>
@@ -35,6 +37,8 @@
 <script type="text/javascript" src="{{ path('pumukitnewadmin_js') }}"></script>
 <script src="{{ asset('/bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
 <script src="{{ asset('/bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/typeahead.bundle.min.js') }}"></script>
+<script src="{{ asset('/bundles/pumukitnewadmin/js/materialize-tags.min.js') }}"></script>
 {% endblock %}
 {% block body_base %}
 {% include is_naked() ? 'PumukitNewAdminBundle::naked_menu.html.twig' : 'PumukitNewAdminBundle::menu.html.twig' %}
