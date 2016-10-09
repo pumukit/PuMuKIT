@@ -1,8 +1,8 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% for node in nodes %}
   {% set children_length = node.getChildren()|length %}
-   <a href="#" 
-      onclick="javascript:return select_tree_tag(this);" 
+   <a href="#"
+      onclick="javascript:return select_tree_tag(this);"
       {% if not node.getMetatag() %} ondblclick="javascript:add_tree_tag('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %}
       class="list-group-item notload
              tag_li_parent_{{ parent }}
@@ -15,13 +15,21 @@
      <span class="badge" id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>
      {% endif %}
 
-     <span style="padding-left:{{ 10 * (node.level - 3)}}px" 
+     <span style="padding-left:{{ 10 * (node.level - 3)}}px"
            {% if children_length %} onclick="javascript:toggle_tree_tag(this, '{{ node.id }}', '{{ mmId }}', '{{ block_tag }}', '{{ node.cod }}')" {% endif %}>
        <i class="mdi- tag_icon"></i>
      </span>
-     <span>
+     <span class="tag">
        {{ node.getCod() }} - {{ node.getTitle() }}
      </span>
    </a>
 {% endfor %}
+
+<script type="text/javascript">
+$input = $('input#filter_tags_{{block_tag}}')
+if($input && $input.val() != "") {
+    $("#all_tag_{{ block_tag }} a span").removeClass("highlighted");
+    $("#all_tag_{{ block_tag }} a span:containsNC(" + $input.val().trim() + ")").addClass("highlighted");
+}
+</script>
 {% endif %}

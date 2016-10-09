@@ -15,13 +15,22 @@
       <div class="panel panel-default">
         <div class="panel-heading">{{ parent.title }}</div>
         <div class="panel-body" id="tag{{ parent.id }}_mms">
-          <div style="overflow:hidden;height: 270px">
+          <div class="row"><div class="col-xs-12">
+              {% include 'PumukitNewAdminBundle:MultimediaObject:tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
+          </div></div>
+
+          <div class="col-xs-12" style="overflow:hidden;height: 270px">
             {# Available tags #}
             <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
               {% if (0 != parent.getChildren()|length) %}
                 {% include 'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
               {% endif %}
             </div>
+
+            <div style="display:none; width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree filter" id="all_tag_{{ parent.id }}_filter">
+              {# Here is where the filtered tags go #}
+            </div>
+
 
             <div style="float: left; padding: 150px 5px 0px">
               <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>

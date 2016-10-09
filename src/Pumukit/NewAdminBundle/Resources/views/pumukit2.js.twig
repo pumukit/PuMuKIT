@@ -1,3 +1,10 @@
+//Creates a new "containsNC" function to use in jQuery being case insensitive
+$.extend($.expr[":"], {
+    "containsNC": function(elem, i, match, array) {
+        return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+    }
+});
+
 window.submit_delete_role = function(id, countMm)
 {
     if (countMm == 0){
@@ -944,7 +951,10 @@ function select_tree_tag(element)
 function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 {
   parent = $(element.parentElement);
-  if (parent.hasClass("notload")) {
+
+ var search_text=$("#filter_tags_"+tag_id).val().trim();
+
+  if (parent.hasClass("notload") && !parent.hasClass("searchresult")) {
     parent.removeClass("notload");
 
     var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
@@ -956,6 +966,7 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
     parent.addClass("expanded").removeClass("collapsed");
   } else {
     if (parent.hasClass("expanded")) {
+      parent.removeClass("searchresult")
       $(".c_" + tag_cod).hide();
       $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
       parent.removeClass("expanded").addClass("collapsed");
@@ -1049,6 +1060,41 @@ function del_tree_tag(tag_id, mm_id)
       $('#preview_mm').load(url.replace('__mmId__', mm_id));
     }
   });
+}
+
+
+var filter_wrapper_timeout;
+function search_tags_wrapper(mmId, parentid){
+    if(typeof filter_wrapper_timeout != 'undefined') {
+        clearTimeout(filter_wrapper_timeout);
+    }
+    $("#tag_filter_" + parentid + "_loader").css('opacity','1');
+    filter_wrapper_timeout = setTimeout(search_tags, 300, event.target, mmId, parentid);
+}
+function search_tags(target, mmId, parentid)
+{
+    var search_text=target.value;
+    search_text = search_text.trim();
+    //$("#tag_filter_" + parentid + "_loader").show();
+    if(/\S/.test(search_text) && /\w([%\s]*)\w([%\s]*)\w/.test(search_text)) {
+    var route = "{{ path('pumukitnewadmin_tag_search') }}";
+    $("#all_tag_"+ parentid ).load( route + "?search_text=" + encodeURIComponent(search_text) + "&mmId=" + mmId + "&parent=" + parentid,
+                            function() {
+                            $("#all_tag_" + parentid + " .list-group-item.collapsed").removeClass("collapsed").addClass("searchresult expanded");
+                                            $("#tag_filter_" + parentid + "_loader").css('opacity', '0');
+                                });
+    }
+    else {
+    reset_tags(mmId, parentid);
+    }
+}
+function reset_tags(mmId, parentid){
+    var route = "{{ path('pumukitnewadmin_mms_reloadtags') }}";
+    $("#all_tag_"+ parentid ).load( route + "?mmId=" + mmId + "&parentId=" + parentid,
+                                    function() {
+                                        $("#tag_filter_" + parentid + "_loader").css('opacity', '0');
+                                    });
+    $("#all_tag_" + parentid + " a span").removeClass("highlighted");//.addClass("tag notresult");
 }
 
 window.click_fila_edit_urls = function(element, tr, show_url, update_url)

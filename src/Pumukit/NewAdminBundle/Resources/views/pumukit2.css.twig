@@ -245,13 +245,20 @@ label.pmk_disabled_checkbox
 /**
  * Icons for tag tree
  */
+.highlighted.tag {
+    font-weight: bold;
+}
+
 .pmk-tag-tree .collapsed i.tag_icon:before {
     content: "\e89b"; /*mdi-navigation-chevron-right*/
 }
 
 .pmk-tag-tree .expanded i.tag_icon:before {
     content: "\e89e"; /*mdi-navigation-expand-more*/
+}
 
+.pmk-tag-tree .searchresult i.tag_icon:before {
+    color: #CCC;
 }
 
 .pmk-tag-tree .element i.tag_icon {

@@ -847,6 +847,23 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return new JsonResponse("");
     }
 
+    /**
+     * Render tags tree via AJAX.
+     **/
+    public function reloadTagsAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $mmId = $request->get('mmId');
+        $parent = $repo->findOneById("".$request->get('parentId'));
+
+        return $this->render(
+            'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
+            array('nodes' => $parent->getChildren(), 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => 'root')
+        );
+    }
+
     protected function dispatchUpdate($multimediaObject)
     {
         $event = new MultimediaObjectEvent($multimediaObject);
