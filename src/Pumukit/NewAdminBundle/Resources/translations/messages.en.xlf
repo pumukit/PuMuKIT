@@ -2378,6 +2378,22 @@
         <source>Logout</source>
         <target>Logout</target>
       </trans-unit>
+      <trans-unit id="fa6317c858c9425a8835b30cbb28c6a2" resname="Published Multimedia Object(s)">
+        <source>Published Multimedia Object(s)</source>
+        <target>Published Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="28739550ba0942b2b17ffebc03110d8c" resname="Hidden Multimedia Object(s)">
+        <source>Hidden Multimedia Object(s)</source>
+        <target>Hidden Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="e3c5acaa79d747c081309c1817cbdbc0" resname="Hidden Multimedia Object(s)">
+        <source>Hidden Multimedia Object(s)</source>
+        <target>Hidden Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="c6c4690a8d7c4a94a15304f96d7a8da2" resname="Blocked Multimedia Object(s)">
+        <source>Blocked Multimedia Object(s)</source>
+        <target>Blocked Multimedia Object(s)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
