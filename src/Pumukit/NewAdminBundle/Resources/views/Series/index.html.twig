@@ -83,4 +83,27 @@
     </div>
   </div>
 </div>
+
+<script>
+window.mmobjkeywords = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+        url: '/api/keywords/mmobj.json',
+    }
+});
+
+window.mmobjkeywords.initialize();
+
+window.serieskeywords = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+        url: '/api/keywords/series.json',
+    }
+});
+
+window.serieskeywords.initialize();
+
+</script>
 {% endblock %}
