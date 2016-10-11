@@ -3072,7 +3072,8 @@ is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, 
 
 //
 window.init_series_materialtags = function() {
-    $('input.series.materialtags').materialtags({
+    $inputs = $('input.series.materialtags')
+    $inputs.materialtags({
         typeaheadjs: {
             name: 'keywords',
             displayKey: '_id',
@@ -3080,10 +3081,15 @@ window.init_series_materialtags = function() {
             source: window.serieskeywords.ttAdapter()
         }
     });
+
+    $inputs.on('itemAdded', function(event) {
+        window.serieskeywords.add({'_id': event.item})
+    });
 }
 
 window.init_mmobj_materialtags = function() {
-    $('input.mmobj.materialtags').materialtags({
+    $inputs = $('input.mmobj.materialtags');
+    $inputs.materialtags({
         typeaheadjs: {
             name: 'keywords',
             displayKey: '_id',
@@ -3091,4 +3097,9 @@ window.init_mmobj_materialtags = function() {
             source: window.mmobjkeywords.ttAdapter()
         }
     });
+
+    $inputs.on('itemAdded', function(event) {
+        window.mmobjkeywords.add({'_id': event.item})
+    });
+
 }
