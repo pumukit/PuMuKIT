@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Document\CpuStatus;
 
 class CpuService
 {
@@ -14,7 +15,7 @@ class CpuService
     const TYPE_LINUX = 'linux';
     const TYPE_WINDOWS = 'windows';
     const TYPE_GSTREAMER = 'gstreamer';
-    
+
     /**
      * Constructor
      */
@@ -22,7 +23,8 @@ class CpuService
     {
         $this->cpus = $cpus;
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->jobRepo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->cpuRepo = $this->dm->getRepository('PumukitEncoderBundle:CpuStatus');
     }
 
     /**
@@ -30,7 +32,7 @@ class CpuService
      */
     public function getFreeCpu($type = null)
     {
-        $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
+        $executingJobs = $this->jobRepo->findWithStatus(array(Job::STATUS_EXECUTING));
 
         $freeCpus = array();
         foreach ($this->cpus as $name => $cpu){
@@ -101,5 +103,52 @@ class CpuService
             return $optimalCpu['name'];
         }
         return null;
+    }
+
+    public function activateMaintenance($cpuName, $flush = true)
+    {
+        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        if(!$cpuStatus) {
+            $cpuStatus = new CpuStatus();
+            $cpuStatus->setName($cpuName);
+            $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
+        } elseif ($cpuStatus->getStatus() != CpuStatus::STATUS_MAINTENANCE) {
+            $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
+        }
+        $this->dm->persist($cpuStatus);
+        if($flush) {
+            $this->dm->flush();
+        }
+
+    }
+
+    public function deactivateMaintenance($cpuName, $flush = true)
+    {
+        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        //So far, if it exists in the db, it IS in maintenance mode. This may change in the future. Change this logic accordingly.
+        if($cpuStatus) {
+            $this->dm->remove($cpuStatus);
+            if($flush) {
+                $this->dm->flush();
+            }
+        }
+    }
+
+    public function isInMaintenance($cpuName)
+    {
+        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        if($cpuStatus && $cpuStatus->getStatus() == CpuStatus::STATUS_MAINTENANCE){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function getCpuNamesInMaintenanceMode()
+    {
+        $cpus = $this->cpuRepo->findBy(array('status' => CpuStatus::STATUS_MAINTENANCE));
+        $cpuNames = array_map(function($a){return $a->getName();}, $cpus);
+        return $cpuNames;
     }
 }
