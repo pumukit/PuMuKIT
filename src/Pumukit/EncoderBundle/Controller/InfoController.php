@@ -46,8 +46,10 @@ class InfoController extends Controller
 
         $jobService = $this->get('pumukitencoder.job');
         $stats = $jobService->getAllJobsStatus();
-
+        $cpuService = $this->get('pumukitencoder.cpu');
+        $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
         return array('cpus' => $cpus,
+                     'deactivated_cpus' => $deactivatedCpus,
                      'jobs' => array('pending' =>   array('total' => ($stats['paused'] + $stats['waiting']),
                                                           'jobs' => $this->createPager($pendingJobs, $request->query->get('page_pending',1))),
                                      'executing' => array('total' => ($stats['executing']),
