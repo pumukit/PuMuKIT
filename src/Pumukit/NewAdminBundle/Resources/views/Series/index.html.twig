@@ -90,6 +90,7 @@ window.mmobjkeywords = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         url: '/api/keywords/mmobj.json',
+        ttl: 1800000
     }
 });
 
@@ -100,6 +101,7 @@ window.serieskeywords = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         url: '/api/keywords/series.json',
+        ttl: 1800000
     }
 });
 
@@ -107,3 +109,4 @@ window.serieskeywords.initialize();
 
 </script>
 {% endblock %}
+>

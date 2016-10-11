@@ -135,6 +135,7 @@ window.mmobjkeywords = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
         url: '/api/keywords/mmobj.json',
+        ttl: 1800000
     }
 });
 
