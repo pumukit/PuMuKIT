@@ -27,7 +27,7 @@
 
 <script type="text/javascript">
 $input = $('input#filter_tags_{{block_tag}}')
-if($input && $input.val() != "") {
+if($input && $input.val() != "" && /[0-9a-z\u00E0-\u00FC]{3,}/i.test($input.val())) {
     $("#all_tag_{{ block_tag }} a span").removeClass("highlighted");
     $("#all_tag_{{ block_tag }} a span:containsNC(" + $input.val().trim() + ")").addClass("highlighted");
 }
