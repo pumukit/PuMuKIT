@@ -99,23 +99,8 @@
 <script type="text/javascript">
 
 $(function(){
-    $('input.series.materialtags').materialtags({
-        typeaheadjs: {
-            name: 'keywords',
-            displayKey: '_id',
-            valueKey: '_id',
-            source: window.serieskeywords.ttAdapter()
-        }
-    });
-    $('input.mmobj.materialtags').materialtags({
-        typeaheadjs: {
-            name: 'keywords',
-            displayKey: '_id',
-            valueKey: '_id',
-            source: window.mmobjkeywords.ttAdapter()
-        }
-    });
-
+    window.init_series_materialtags();
+    window.init_mmobj_materialtags();
 });
 
 </script>

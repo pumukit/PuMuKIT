@@ -2168,6 +2168,8 @@ $(document).on('change', 'form#pumukitnewadmin_mms_updatepub_form input, form#pu
 
 $(document).on('click', '#pumukitnewadmin_series_updatemeta_cancel', function(){
     $('#pumukitnewadmin_series_updatemeta_form')[0].reset();
+    $('input.series.materialtags').materialtags('destroy');
+    window.init_series_materialtags();
     $('#remember_save_series').hide();
 });
 
@@ -2178,11 +2180,15 @@ $(document).on('click', '#pumukitnewadmin_mms_updatepub_cancel', function(){
 
 $(document).on('click', '#pumukitnewadmin_mms_updatemeta_cancel', function(){
     $('#pumukitnewadmin_mms_updatemeta_form')[0].reset();
+    $('input.mmobj.materialtags').materialtags('destroy');
+    window.init_mmobj_materialtags();
     $('#remember_save_mm').hide();
 });
 
 $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', function(){
     $('#pumukitnewadmin_mmtemplate_updatemeta_form')[0].reset();
+    $('input.mmobj.materialtags').materialtags('destroy');
+    window.init_mmobj_materialtags();
     $('#remember_save_mm_template').hide();
 });
 
@@ -3061,4 +3067,28 @@ is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, 
     });
 
     return false;
+}
+
+
+//
+window.init_series_materialtags = function() {
+    $('input.series.materialtags').materialtags({
+        typeaheadjs: {
+            name: 'keywords',
+            displayKey: '_id',
+            valueKey: '_id',
+            source: window.serieskeywords.ttAdapter()
+        }
+    });
+}
+
+window.init_mmobj_materialtags = function() {
+    $('input.mmobj.materialtags').materialtags({
+        typeaheadjs: {
+            name: 'keywords',
+            displayKey: '_id',
+            valueKey: '_id',
+            source: window.mmobjkeywords.ttAdapter()
+        }
+    });
 }
