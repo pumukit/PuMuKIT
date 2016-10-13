@@ -22,6 +22,9 @@ class PumukitOaiExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukitoai.list_only_published_objects', $config['list_only_published_objects']);
+        $container->setParameter('pumukitoai.pub_channel_tag', $config['pub_channel_tag']);
+        $container->setParameter('pumukitoai.display_track_tag', $config['display_track_tag']);
         $container->setParameter('pumukitoai.use_dc_thumbnail', $config['use_dc_thumbnail']);
         $container->setParameter('pumukitoai.use_license_as_dc_rights', $config['use_license_as_dc_rights']);
         $container->setParameter('pumukitoai.video_dc_type', $config['video_dc_type']);

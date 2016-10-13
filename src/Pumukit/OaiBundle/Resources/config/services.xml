@@ -7,6 +7,9 @@
     <services>
         <service id="pumukitoai.filter" class="Pumukit\OaiBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+          <argument>%pumukitoai.list_only_published_objects%</argument>
+          <argument>%pumukitoai.pub_channel_tag%</argument>
+          <argument>%pumukitoai.display_track_tag%</argument>
           <tag name="kernel.event_listener" event="kernel.request" />
         </service>
     </services>

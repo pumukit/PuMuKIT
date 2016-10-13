@@ -21,6 +21,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+              ->booleanNode('list_only_published_objects')
+                  ->defaultTrue()
+                  ->info('List only multimedia objects in published status')
+              ->end()
+              ->scalarNode('pub_channel_tag')
+                  ->defaultValue('PUCHWEBTV')
+                  ->info('The pub_channel_tag parameter used in the frontend filter')
+              ->end()
+              ->scalarNode('display_track_tag')
+                  ->defaultValue('display')
+                  ->info('The display_track_tag parameter used in the frontend filter')
+              ->end()
               ->booleanNode('use_dc_thumbnail')
                   ->defaultTrue()
                   ->info('Use special tag dc:thumbnail to list the first object thumbnail (deprecated and non standard)')
