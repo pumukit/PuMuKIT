@@ -61,16 +61,16 @@ doctrine_mongodb:
             auto_mapping: true
             filters:
                 frontend:
-                    class:     Pumukit\SchemaBundle\Filter\SchemaFilter
+                    class:     Pumukit\CoreBundle\Filter\WebTVFilter
                     enabled:   false
                 channel:
-                    class:     Pumukit\SchemaBundle\Filter\ChannelFilter
+                    class:     Pumukit\CoreBundle\Filter\ChannelFilter
                     enabled:   false
                 backoffice:
-                    class:     Pumukit\SchemaBundle\Filter\AdminFilter
+                    class:     Pumukit\CoreBundle\Filter\AdminFilter
                     enabled:   false
                 personal:
-                    class:     Pumukit\SchemaBundle\Filter\PersonalFilter
+                    class:     Pumukit\CoreBundle\Filter\PersonalFilter
                     enabled:   false
 
 
