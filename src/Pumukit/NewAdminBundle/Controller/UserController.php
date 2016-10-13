@@ -402,12 +402,17 @@ class UserController extends AdminController implements NewAdminController
 
         $checkOrigin = !$this->isGranted('ROLE_ADMIN');
 
-        foreach ($users as $user) {
-            if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
-                $user->setPermissionProfile($profile);
-                $user = $this->get('pumukitschema.user')->update($user, true, $checkOrigin);
+        try {
+            foreach ($users as $user) {
+                if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
+                    $user->setPermissionProfile($profile);
+                    $user = $this->get('pumukitschema.user')->update($user, true, $checkOrigin);
+                }
             }
+        } catch (\Exception $e) {
+            throw $this->createAccessDeniedException('Unable to promote user');
         }
+
 
         return new JsonResponse(array('ok'));
     }
