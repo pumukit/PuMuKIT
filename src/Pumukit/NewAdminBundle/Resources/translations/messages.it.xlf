@@ -2310,41 +2310,97 @@
         <source>My Series</source>
         <target xml:lang="it" state="needs-translation">My Series</target>
       </trans-unit>
-      <trans-unit id="5a662bf43da341daa1c27090ea149507" resname="Keywords">
+      <trans-unit id="867343577fa1f33caa632a19543bd252" resname="Keywords">
         <source>Keywords</source>
         <target xml:lang="it" state="needs-translation">Keywords</target>
       </trans-unit>
-      <trans-unit id="d2ee18a675894fd99edfdb225945ac93" resname="Copyright">
+      <trans-unit id="6016a2b341113bf496b719905398ecd2" resname="Copyright">
         <source>Copyright</source>
         <target xml:lang="it" state="needs-translation">Copyright</target>
       </trans-unit>
-      <trans-unit id="f65a39a59c6c4f1dbf752e939f4d1c17" resname="License">
+      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
         <source>License</source>
         <target xml:lang="it" state="needs-translation">License</target>
       </trans-unit>
-      <trans-unit id="5ca66bca10c5423ab25de5ba9b8e4300" resname="Publication Date">
+      <trans-unit id="2b3b9b61e8fc6dd332b0ed323c03a6eb" resname="Publication Date">
         <source>Publication Date</source>
         <target xml:lang="it" state="needs-translation">Publication Date</target>
       </trans-unit>
-      <trans-unit id="09280ca945984b609825b000db70d3b1" resname="Recording Date">
+      <trans-unit id="947ba93ec078bdb6d2e549cf6abda63a" resname="Recording Date">
         <source>Recording Date</source>
         <target xml:lang="it" state="needs-translation">Recording Date</target>
       </trans-unit>
-      <trans-unit id="5ee9abd1ecab4ace9e65f7b051924758" resname="Header Text">
+      <trans-unit id="c994e942a74632f42cc7c6a620cb4170" resname="Header Text">
         <source>Header Text</source>
         <target xml:lang="it" state="needs-translation">Header Text</target>
       </trans-unit>
-      <trans-unit id="730bbfe868bf4148a5a6ac1a023573e6" resname="Footer Text">
+      <trans-unit id="2d0644f36acd270644efd8e35980e7cd" resname="Footer Text">
         <source>Footer Text</source>
         <target xml:lang="it" state="needs-translation">Footer Text</target>
       </trans-unit>
-      <trans-unit id="3d07fc411b93494892017ac09a1bc8a7" resname="Template">
+      <trans-unit id="278c491bdd8a53618c149c4ac790da34" resname="Template">
         <source>Template</source>
         <target xml:lang="it" state="needs-translation">Template</target>
       </trans-unit>
-      <trans-unit id="e28537a749fe4fbdb7330d0279440ca1" resname="Subseries">
+      <trans-unit id="930b8c3c83b91181a331f0d737c67476" resname="Subseries">
         <source>Subseries</source>
         <target xml:lang="it" state="needs-translation">Subseries</target>
+      </trans-unit>
+      <trans-unit id="4020d50ee12e4b5063fb4137dce9b739" resname="USERS">
+        <source>USERS</source>
+        <target xml:lang="it" state="needs-translation">USERS</target>
+      </trans-unit>
+      <trans-unit id="b3e5c110448bc59ded1173ef3c950612" resname="ADMIN MULTIMEDIA OBJECTS">
+        <source>ADMIN MULTIMEDIA OBJECTS</source>
+        <target xml:lang="it" state="needs-translation">ADMIN MULTIMEDIA OBJECTS</target>
+      </trans-unit>
+      <trans-unit id="2e8b54f9c9c331f8563bf970ed457a6b" resname="PLAY MULTIMEDIA OBJECTS">
+        <source>PLAY MULTIMEDIA OBJECTS</source>
+        <target xml:lang="it" state="needs-translation">PLAY MULTIMEDIA OBJECTS</target>
+      </trans-unit>
+      <trans-unit id="ea3d36cf90bb480aab9af57ec9ff9c6d" resname="Magic Url">
+        <source>Magic Url</source>
+        <target xml:lang="it" state="needs-translation">Magic Url</target>
+      </trans-unit>
+      <trans-unit id="d280bac8163cec97cf883e810414356a" resname="Is part of">
+        <source>Is part of</source>
+        <target xml:lang="it" state="needs-translation">Is part of</target>
+      </trans-unit>
+      <trans-unit id="2b8ba42c8bb3f57b0d36f683bdc7e8ba" resname="No tags">
+        <source>No tags</source>
+        <target xml:lang="it" state="needs-translation">No tags</target>
+      </trans-unit>
+      <trans-unit id="3de416b3cae663f5745aba3830466ed8" resname="Login from">
+        <source>Login from</source>
+        <target xml:lang="it" state="needs-translation">Login from</target>
+      </trans-unit>
+      <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
+        <source>Logout</source>
+        <target xml:lang="it" state="needs-translation">Logout</target>
+      </trans-unit>
+      <trans-unit id="ce5768e0e63e0c65fa630b67f203404b" resname="Published Multimedia Object(s)">
+        <source>Published Multimedia Object(s)</source>
+        <target xml:lang="it" state="needs-translation">Published Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="a5ece1faf05dfd55a81f9ac6eddacfaf" resname="Hidden Multimedia Object(s)">
+        <source>Hidden Multimedia Object(s)</source>
+        <target xml:lang="it" state="needs-translation">Hidden Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="3ce2d527d5d326fcde609139b44ef14f" resname="Blocked Multimedia Object(s)">
+        <source>Blocked Multimedia Object(s)</source>
+        <target xml:lang="it" state="needs-translation">Blocked Multimedia Object(s)</target>
+      </trans-unit>
+      <trans-unit id="c0bd5e93fb36b061318a7a0a0ae0c4af" resname="No tags found with this criteria">
+        <source>No tags found with this criteria</source>
+        <target xml:lang="it" state="needs-translation">No tags found with this criteria</target>
+      </trans-unit>
+      <trans-unit id="d1ae987b7c965cbd288021882edf02ce" resname="Insert filter...">
+        <source>Insert filter...</source>
+        <target xml:lang="it" state="needs-translation">Insert filter...</target>
+      </trans-unit>
+      <trans-unit id="e776ae357de310dcfd7159f11188aace" resname="Login since">
+        <source>Login since</source>
+        <target xml:lang="it" state="needs-translation">Login since</target>
       </trans-unit>
     </body>
   </file>

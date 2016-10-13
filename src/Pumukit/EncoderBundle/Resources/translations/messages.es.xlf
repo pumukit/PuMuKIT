@@ -156,7 +156,14 @@
       </trans-unit>
       <trans-unit id="902b0d55fddef6f8d651fe1035b7d4bd" resname="Error">
         <source>Error</source>
-        <target xml:lang="es-ES" state="translated">Erroróneas</target>
+        <target xml:lang="es-ES" state="translated">Erróneas</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Erroróneas</target>
+        </alt-trans>
+      </trans-unit>
+      <trans-unit id="27a06a9e3d5e7f67eb604a39536208c9" resname="jobs">
+        <source>jobs</source>
+        <target xml:lang="es-ES" state="translated">tareas</target>
       </trans-unit>
     </body>
   </file>

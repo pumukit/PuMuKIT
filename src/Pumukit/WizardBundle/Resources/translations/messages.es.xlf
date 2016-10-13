@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="es-ES" state="needs-translation">SERIES</target>
+        <target xml:lang="es-ES" state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
         <source>VIDEO</source>
@@ -220,39 +220,39 @@
       </trans-unit>
       <trans-unit id="3581c92a1b99446dd964e2f17a237fb0" resname="back to My Multimedia Series">
         <source>back to My Multimedia Series</source>
-        <target xml:lang="es-ES" state="needs-translation">back to My Multimedia Series</target>
+        <target xml:lang="es-ES" state="translated">volver a la Lista de Series</target>
       </trans-unit>
       <trans-unit id="bdd2527a33dde2cebd2505fe6c632901" resname="Step %i%: Series">
         <source>Step %i%: Series</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: Series</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Serie</target>
       </trans-unit>
       <trans-unit id="c25f54728be4b84db806278226cb807c" resname="Step %i%: Type">
         <source>Step %i%: Type</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: Type</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Tipo</target>
       </trans-unit>
       <trans-unit id="db92647ad45e71b6a0c78c4db8bd1b59" resname="Step %i%: Metadata">
         <source>Step %i%: Metadata</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: Metadata</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Metadatos</target>
       </trans-unit>
       <trans-unit id="dbc36739335bda25dfacef1bd59b542f" resname="Step %i%: File">
         <source>Step %i%: File</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: File</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Archivo</target>
       </trans-unit>
       <trans-unit id="0facbdaa7637bd7301367e5d6dc289bd" resname="Step %i% Files">
         <source>Step %i% Files</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i% Files</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Archivos</target>
       </trans-unit>
       <trans-unit id="7944880ab2acaba249065098a6aad7db" resname="Select an inbox folder with the multimedia files">
         <source>Select an inbox folder with the multimedia files</source>
-        <target xml:lang="es-ES" state="needs-translation">Select an inbox folder with the multimedia files</target>
+        <target xml:lang="es-ES" state="translated">Seleccione el directorio con los ficheros multimedia</target>
       </trans-unit>
       <trans-unit id="aa5744ab814190a3518c1146c8202b4d" resname="Upload local file">
         <source>Upload local file</source>
-        <target xml:lang="es-ES" state="needs-translation">Upload local file</target>
+        <target xml:lang="es-ES" state="translated">Subir fichero local</target>
       </trans-unit>
       <trans-unit id="91412465ea9169dfd901dd5e7c96dd99" resname="Upload">
         <source>Upload</source>
-        <target xml:lang="es-ES" state="needs-translation">Upload</target>
+        <target xml:lang="es-ES" state="translated">Subida</target>
       </trans-unit>
     </body>
   </file>

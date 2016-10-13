@@ -58,6 +58,14 @@
         <source>Multimedia Object Admin Link</source>
         <target xml:lang="fr" state="needs-translation">Multimedia Object Admin Link</target>
       </trans-unit>
+      <trans-unit id="0a3573688f840d220e260fed1a22e801" resname="Technical info">
+        <source>Technical info</source>
+        <target xml:lang="fr" state="needs-translation">Technical info</target>
+      </trans-unit>
+      <trans-unit id="4acd6f830ae820b400fa57ff7c5a8a69" resname="Job Id">
+        <source>Job Id</source>
+        <target xml:lang="fr" state="needs-translation">Job Id</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

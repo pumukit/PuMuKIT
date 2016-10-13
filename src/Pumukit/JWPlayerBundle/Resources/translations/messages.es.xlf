@@ -4,7 +4,10 @@
     <body>
       <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
         <source>Use</source>
-        <target xml:lang="es-ES" state="translated">Uso</target>
+        <target xml:lang="es-ES" state="translated">Use</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Uso</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e81c4e4f2b7b93b481e13a8553c2ae1b" resname="or">
         <source>or</source>
@@ -12,7 +15,10 @@
       </trans-unit>
       <trans-unit id="e723931919d56cef7931968684de17a7" resname="to improve your experience in watching recorded lectures">
         <source>to improve your experience in watching recorded lectures</source>
-        <target xml:lang="es-ES" state="translated">para mejorar su experiencia visualizando conferencias</target>
+        <target xml:lang="es-ES" state="translated">para mejorar su experiencia durante el visionado de conferencias</target>
+        <alt-trans>
+          <target xml:lang="es-ES">para mejorar su experiencia visualizando conferencias</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1bec2303919e8e55e3f4b4ba314ad859" resname="Web explorers with HTML5 and h.264 codec video support">
         <source>Web explorers with HTML5 and h.264 codec video support</source>
@@ -20,7 +26,10 @@
       </trans-unit>
       <trans-unit id="0ed148f322c5b94b371e9b74d9c54a82" resname="Use &lt;a href=&quot;https://www.google.com/intl/es/chrome/browser/?hl=es&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Google Chrome&lt;/a&gt; or &lt;a href=&quot;http://www.apple.com/es/safari/&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures">
         <source>Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; or &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures</source>
-        <target xml:lang="es-ES" state="needs-translation">Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; or &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures</target>
+        <target xml:lang="es-ES" state="translated">Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; para mejorar su experiencia durante el visionado de conferencias</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; para mejorar su experiencia en el visionado de conferencias</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

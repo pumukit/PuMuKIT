@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target xml:lang="es-ES" state="needs-translation">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+        <target xml:lang="es-ES" state="translated">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title" approved="yes">
         <source>No title</source>
@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="es-ES" state="needs-translation">Series</target>
+        <target xml:lang="es-ES" state="translated">Series</target>
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos" approved="yes">
         <source>Videos</source>
@@ -352,7 +352,7 @@
       </trans-unit>
       <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
         <source>Any</source>
-        <target xml:lang="es-ES" state="needs-translation">Any</target>
+        <target xml:lang="es-ES" state="translated">Cualquier</target>
       </trans-unit>
       <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
         <source>Search by series</source>
