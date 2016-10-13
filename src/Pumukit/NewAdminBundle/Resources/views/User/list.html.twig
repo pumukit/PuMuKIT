@@ -40,7 +40,7 @@
           </td>
           <td>
             {% if user.isLocal() %}
-            <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <a title="{% trans %}Edit non local user{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
             </a>
             {% else %}

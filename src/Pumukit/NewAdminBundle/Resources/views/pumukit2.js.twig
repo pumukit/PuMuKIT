@@ -920,7 +920,9 @@ window.change_select = function(element, selector, pluralName, seriesId)
             url: '{{ path('pumukitnewadmin_user_promote')|raw }}',
             type: 'POST',
             data: {'ids': ids, 'profile': profile},
-            error: function(jqXHR, textStatus, errorThrown){ debugger; },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success('{% trans %}Error promoting user{% endtrans %}.');
+            },
             success: function(response){
                 ids.forEach(function(e){$('#profile'+e).html(profilename)})
                 $('.' + element + '_checkbox:checked').each(function(){
