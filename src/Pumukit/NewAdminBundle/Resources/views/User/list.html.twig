@@ -18,7 +18,7 @@
           <th>{% trans %}Email{% endtrans %}</th>
         </tr>
       </thead>
-  
+
       <tbody>
 
         {% if users is empty %}
@@ -44,7 +44,13 @@
               <i class="mdi-editor-mode-edit"></i>
             </a>
             {% else %}
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important"></i>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                  <i class="mdi-editor-mode-edit"></i>
+                </a>
+                {% else %}
+                <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important"></i>
+                {% endif %}
             {% endif %}
           </td>
           <td>
@@ -62,10 +68,10 @@
             </a>
           </td>
           <td>
-	          {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
+              {% if user.fullname is not empty %}{{ user.fullname }}{% endif %}
           </td>
           <td>
-	          {% if user.username is not empty %}{{ user.username }}{% endif %}
+              {% if user.username is not empty %}{{ user.username }}{% endif %}
           </td>
           <td id="profile{{ user.id }}">
             {% if 'ROLE_SUPER_ADMIN' in user.roles %}
@@ -75,10 +81,10 @@
             {% endif %}
           </td>
           <td>
-	          {{ user.origin }}
+              {{ user.origin }}
           </td>
           <td>
-	          {% if user.email is not empty %}{{ user.email }}{% endif %}
+              {% if user.email is not empty %}{{ user.email }}{% endif %}
           </td>
         </tr>
         {% endfor %}
@@ -89,17 +95,17 @@
             <div class="col-md-8" id="numberUsers">
               {{ users.getNbResults }}
               {% transchoice users.getNbResults %}
-	                {0} users|{1} user|]1,Inf] users
-	            {% endtranschoice %}
-	            {% if app.session.get('admin/user/criteria')|length != 0%}
+                    {0} users|{1} user|]1,Inf] users
+                {% endtranschoice %}
+                {% if app.session.get('admin/user/criteria')|length != 0%}
                 <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	            {% endif %}
+                {% endif %}
             </div>
             <div class="col-md-4 text-right">
               <div class="pagerfanta">
                 {{ pagerfanta(users, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_user_index"}) }}
               </div>
-            </div>                
+            </div>
           </th>
         </tr>
       </tfoot>

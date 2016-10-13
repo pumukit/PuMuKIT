@@ -22,19 +22,23 @@ class UserUpdateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $builder->getData();
         $builder
             ->add('enabled', 'hidden', array('data' => true))
             ->add('fullname', 'text',
-                  array('label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
+                  array(
+                      'disabled' => !$user->isLocal(),
+                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
             ->add('username', 'text',
                   array(
-                        'disabled' => true,
-                        'label' => $this->translator->trans('Username', array(), null, $this->locale)))
+                      'disabled' => true,
+                      'label' => $this->translator->trans('Username', array(), null, $this->locale)))
             ->add('plain_password', 'password',
                   array(
-                        'attr' => array('autocomplete' => 'off'),
-                        'required' => false,
-                        'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
+                      'disabled' => !$user->isLocal(),
+                      'attr' => array('autocomplete' => 'off'),
+                      'required' => false,
+                      'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
           /* TODO check password
             ->add('plain_password', 'repeated', array(
             'type' => 'password',
@@ -46,9 +50,12 @@ class UserUpdateType extends AbstractType
             'attr' => array('style' => 'width: 420px')))
           */
             ->add('email', 'email',
-                  array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
+                  array(
+                      'disabled' => !$user->isLocal(),
+                      'label' => $this->translator->trans('Email', array(), null, $this->locale)))
             ->add('permissionProfile', null,
-                  array('label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+                  array(
+                      'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $user = $event->getData();

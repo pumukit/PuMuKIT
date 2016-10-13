@@ -98,14 +98,18 @@ class UserController extends AdminController implements NewAdminController
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {
-                $response = $this->isAllowedToBeUpdated($user);
-                if ($response instanceof Response) {
-                    return $response;
+                if ($this->isGranted('ROLE_ADMIN')) {
+                    $user = $this->get('pumukitschema.user')->update($user, true, false);
+                } else {
+                    $response = $this->isAllowedToBeUpdated($user);
+                    if ($response instanceof Response) {
+                        return $response;
+                    }
+                    // false to not flush
+                    $userManager->updateUser($user, false);
+                    // To update aditional fields added
+                    $user = $this->get('pumukitschema.user')->update($user);
                 }
-                // false to not flush
-                $userManager->updateUser($user, false);
-                // To update aditional fields added
-                $user = $this->get('pumukitschema.user')->update($user);
             } catch (\Exception $e) {
                 throw $e;
             }
@@ -395,10 +399,13 @@ class UserController extends AdminController implements NewAdminController
         }
 
         $users = $usersRepo->findBy(array('_id' => array('$in' => $ids)));
+
+        $checkOrigin = !$this->isGranted('ROLE_ADMIN');
+
         foreach ($users as $user) {
             if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
                 $user->setPermissionProfile($profile);
-                $user = $this->get('pumukitschema.user')->update($user);
+                $user = $this->get('pumukitschema.user')->update($user, true, $checkOrigin);
             }
         }
 
