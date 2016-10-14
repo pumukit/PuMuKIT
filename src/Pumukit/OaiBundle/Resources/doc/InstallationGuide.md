@@ -34,8 +34,14 @@ pumukit_oai:
     # DublinCore type for audio contents. See http://dublincore.org/documents/dcmi-type-vocabulary/#H7
     audio_dc_type:        Sound
 
+    # PuMuKIT role used to get the dc:creator. Null to use all the roles
+    role_for_dc_creator:  actor
+
     # Use the object license as dc:rights
     use_license_as_dc_rights:  false
+
+    # Use the object copyright as dc:publisher
+    use_copyright_as_dc_publisher:  false
 
     # Format used with dc:subject. All: "120000 - Mathematics", Code: "120000", Title: "Mathematics", E-ciencia: "12 Matemáticas"
     dc_subject_format:    ~ # One of "all"; "code"; "title"; "e-ciencia"

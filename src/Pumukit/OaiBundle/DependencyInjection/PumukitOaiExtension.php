@@ -27,8 +27,10 @@ class PumukitOaiExtension extends Extension
         $container->setParameter('pumukitoai.display_track_tag', $config['display_track_tag']);
         $container->setParameter('pumukitoai.use_dc_thumbnail', $config['use_dc_thumbnail']);
         $container->setParameter('pumukitoai.use_license_as_dc_rights', $config['use_license_as_dc_rights']);
+        $container->setParameter('pumukitoai.use_copyright_as_dc_publisher', $config['use_copyright_as_dc_publisher']);
         $container->setParameter('pumukitoai.video_dc_type', $config['video_dc_type']);
         $container->setParameter('pumukitoai.audio_dc_type', $config['audio_dc_type']);
+        $container->setParameter('pumukitoai.role_for_dc_creator', $config['role_for_dc_creator']);
         $container->setParameter('pumukitoai.dc_subject_format', $config['dc_subject_format']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

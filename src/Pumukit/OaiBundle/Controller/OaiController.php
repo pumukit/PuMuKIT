@@ -345,10 +345,23 @@ class OaiController extends Controller
             }
             $XMLsubject->addCDATA($subject);
         }
-        $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
-        $XMLcreator->addCDATA('');
-        $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
-        $XMLpublisher->addCDATA('');
+
+
+        if ($this->container->getParameter('pumukitoai.use_copyright_as_dc_publisher')) {
+            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLpublisher->addCDATA($object->getCopyright());
+        } else {
+            $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLpublisher->addCDATA('');
+        }
+
+
+        $people = $object->getPeopleByRoleCod($this->container->getParameter('pumukitoai.role_for_dc_creator'), true);
+        foreach ($people as $person) {
+            $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
+            $XMLcreator->addCDATA($person->getName());
+        }
+
 
         if ($object->getLocale()) {
             $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
