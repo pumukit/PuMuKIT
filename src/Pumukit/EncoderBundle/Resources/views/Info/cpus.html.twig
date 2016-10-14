@@ -1,19 +1,46 @@
-<h3>CPUs</h3> 
+<h3>CPUs</h3>
 
 <div class="list-group">
   {% for name, cpu in cpus %}
-  {% if not loop.first %}
-  <div class="list-group-separator"></div>
-  {% endif %}  
-  <div class="list-group-item">
-    <div class="row-action-primary">
-      <i class="mdi-action-dns"></i>
+    {% if not loop.first %}
+      <div class="list-group-separator"></div>
+    {% endif %}
+    {% set deactivated = (name in deactivated_cpus) %}
+    <div class="list-group-item">
+      <div class="row-action-primary" style="position:relative">
+        <i class="mdi-action-dns"></i>
+        {% if deactivated %}
+          <i id="maintenance-{{name}}-warning" title="{% trans %}This CPU is in maintenance mode.{% endtrans %}" class="mdi-av-new-releases" aria-hidden="true"
+             style="cursor:pointer;position: absolute;background:none;color:orange;border-radius:0;line-height:1;left:-35px;top:0;/*text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;*/"></i>
+        {% endif %}
+      </div>
+      <div class="row-content">
+        <h4 class="list-group-item-heading">{{ name }} ({{ cpu.max }})</h4>
+        <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
+        <small>{{ cpu.host }}</small>
+        <div>
+          <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+            <label><input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}></label>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row-content">
-      <h4 class="list-group-item-heading">{{ name }} ({{ cpu.max }})</h4>
-      <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
-      <small>{{ cpu.host }}</small>
-    </div>
-  </div>
+    <script>
+     $('#maintenance-{{name}}-toggle').click(function(){
+         var url = '';
+         var activateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'activate' , 'cpuName': name} ) }}';
+         var deactivateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'deactivate' , 'cpuName': name} ) }}';
+         console.log(this.checked);
+         if( this.checked ) {
+             url = deactivateUrl;
+         } else {
+             url = activateUrl;
+         }
+         console.log(url);
+         $.get(url).done(function(){
+             window.location.reload(true);
+         });
+     });
+    </script>
   {% endfor %}
 </div>
