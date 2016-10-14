@@ -10,6 +10,10 @@ pumukit_base_player:
     resource: @PumukitBasePlayerBundle/Resources/config/routing.yml
     prefix:   /
 
+pumukit_core:
+    resource: @PumukitCoreBundle/Resources/config/routing.yml
+    prefix:   /
+
 pumukit_stats:
     resource: "@PumukitStatsBundle/Controller/"
     type:     annotation
