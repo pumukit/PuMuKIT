@@ -2402,6 +2402,18 @@
         <source>Login since</source>
         <target>Login since</target>
       </trans-unit>
+      <trans-unit id="94562c7a1cc5e4824ab689927f57cc07" resname="Edit non local user">
+        <source>Edit non local user</source>
+        <target>Edit non local user</target>
+      </trans-unit>
+      <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
+        <source>modify non local user</source>
+        <target>modify non local user</target>
+      </trans-unit>
+      <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
+        <source>Error promoting user</source>
+        <target>Error promoting user</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
