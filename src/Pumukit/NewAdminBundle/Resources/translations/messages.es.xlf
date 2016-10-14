@@ -2420,6 +2420,50 @@
         <source>Login since</source>
         <target xml:lang="es-ES" state="translated">Logueado desde</target>
       </trans-unit>
+      <trans-unit id="94562c7a1cc5e4824ab689927f57cc07" resname="Edit non local user">
+        <source>Edit non local user</source>
+        <target xml:lang="es-ES" state="translated">Editar usuario no local</target>
+      </trans-unit>
+      <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
+        <source>modify non local user</source>
+        <target xml:lang="es-ES" state="translated">Editar usuario no local</target>
+      </trans-unit>
+      <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
+        <source>Error promoting user</source>
+        <target xml:lang="es-ES" state="translated">Error promocionando usuario</target>
+      </trans-unit>
+      <trans-unit id="ce5bf551379459c1c61d2a204061c455" resname="Location">
+        <source>Location</source>
+        <target xml:lang="es-ES" state="translated">Lugar</target>
+      </trans-unit>
+      <trans-unit id="14cb425d8170ed04f3d8016d5a0ccf20" resname="Channels">
+        <source>Channels</source>
+        <target xml:lang="es-ES" state="translated">Canales</target>
+      </trans-unit>
+      <trans-unit id="25f7347236b51a5eae4ba01a7862cb55" resname="Schedule">
+        <source>Schedule</source>
+        <target xml:lang="es-ES" state="translated">Programación</target>
+      </trans-unit>
+      <trans-unit id="7c4e293d2026ae87797c8368b4e0b50d" resname="Announce">
+        <source>Announce</source>
+        <target xml:lang="es-ES" state="translated">Anunciado</target>
+      </trans-unit>
+      <trans-unit id="2f05998d2a71cdc19b7109549bbe2646" resname="STREAM">
+        <source>STREAM</source>
+        <target xml:lang="es-ES" state="translated">STREAM</target>
+      </trans-unit>
+      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Tecnology">
+        <source>Tecnology</source>
+        <target xml:lang="es-ES" state="translated">Tecnología</target>
+      </trans-unit>
+      <trans-unit id="2b04c55d965ae0389fb7c3cf48ae335a" resname="Qualities">
+        <source>Qualities</source>
+        <target xml:lang="es-ES" state="translated">Calidades</target>
+      </trans-unit>
+      <trans-unit id="3621b45dde403e2543b561294aab35e6" resname="IP source">
+        <source>IP source</source>
+        <target xml:lang="es-ES" state="translated">IP Origen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
