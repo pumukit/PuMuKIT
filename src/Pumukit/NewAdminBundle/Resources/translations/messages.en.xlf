@@ -2414,6 +2414,38 @@
         <source>Error promoting user</source>
         <target>Error promoting user</target>
       </trans-unit>
+      <trans-unit id="ce5bf551379459c1c61d2a204061c455" resname="Location">
+        <source>Location</source>
+        <target>Location</target>
+      </trans-unit>
+      <trans-unit id="14cb425d8170ed04f3d8016d5a0ccf20" resname="Channels">
+        <source>Channels</source>
+        <target>Channels</target>
+      </trans-unit>
+      <trans-unit id="25f7347236b51a5eae4ba01a7862cb55" resname="Schedule">
+        <source>Schedule</source>
+        <target>Schedule</target>
+      </trans-unit>
+      <trans-unit id="7c4e293d2026ae87797c8368b4e0b50d" resname="Announce">
+        <source>Announce</source>
+        <target>Announce</target>
+      </trans-unit>
+      <trans-unit id="2f05998d2a71cdc19b7109549bbe2646" resname="STREAM">
+        <source>STREAM</source>
+        <target>STREAM</target>
+      </trans-unit>
+      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Tecnology">
+        <source>Tecnology</source>
+        <target>Tecnology</target>
+      </trans-unit>
+      <trans-unit id="2b04c55d965ae0389fb7c3cf48ae335a" resname="Qualities">
+        <source>Qualities</source>
+        <target>Qualities</target>
+      </trans-unit>
+      <trans-unit id="3621b45dde403e2543b561294aab35e6" resname="IP source">
+        <source>IP source</source>
+        <target>IP source</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
