@@ -2296,11 +2296,24 @@ class MultimediaObject
      */
     public function getPeopleByRole($role = null, $always = false)
     {
+        return $this->getPeopleByRoleCod($role ? $role->getCod() : null, $always);
+    }
+
+
+    /**
+     * Get people in multimedia object by role
+     *
+     * @param  string  $roleCod
+     * @param  boolean $always
+     * @return array
+     */
+    public function getPeopleByRoleCod($roleCod = null, $always = false)
+    {
         $aux = array();
 
-        if (null !== $role) {
+        if (null !== $roleCod) {
             foreach ($this->people as $embeddedRole) {
-                if ($role->getCod() == $embeddedRole->getCod()) {
+                if ($roleCod == $embeddedRole->getCod()) {
                     if ($always || $embeddedRole->getDisplay()) {
                         foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                             $aux[] = $embeddedPerson;
