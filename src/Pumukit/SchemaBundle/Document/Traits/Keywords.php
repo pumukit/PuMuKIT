@@ -2,6 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Document\Traits;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
 trait Keywords
 {
     /**
