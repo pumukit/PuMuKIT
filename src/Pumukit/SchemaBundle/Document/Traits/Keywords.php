@@ -5,7 +5,7 @@ namespace Pumukit\SchemaBundle\Document\Traits;
 trait Keywords
 {
     /**
-     * @var string $keyword
+     * @var string
      *
      * @deprecated in version 2.3
      * use keywords instead
@@ -15,19 +15,19 @@ trait Keywords
     private $keyword = array('en' => '');
 
     /**
-     * @var array $keywords
+     * @var array
      *
      * @MongoDB\Raw
      */
     private $keywords = array('en' => array());
 
     /**
-     * Set keyword
+     * Set keyword.
      *
      * @deprecated in version 2.3
      * use setKeywords instead
      *
-     * @param string $keyword
+     * @param string      $keyword
      * @param string|null $locale
      */
     public function setKeyword($keyword, $locale = null)
@@ -40,12 +40,13 @@ trait Keywords
     }
 
     /**
-     * Get keyword
+     * Get keyword.
      *
      * @deprecated in version 2.3
      * use getKeywords instead
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getKeyword($locale = null)
@@ -61,14 +62,14 @@ trait Keywords
     }
 
     /**
-     * Set I18n keyword
+     * Set I18n keyword.
      *
      * @param array $keyword
      */
     public function setI18nKeyword(array $keyword)
     {
         $keywords = array();
-        foreach($keyword as $lang => $value) {
+        foreach ($keyword as $lang => $value) {
             $keywords[$lang] = array_filter(array_map('trim', explode(',', $value)));
         }
 
@@ -77,14 +78,14 @@ trait Keywords
     }
 
     /**
-     * Get i18n keyword
+     * Get i18n keyword.
      *
      * @return array
      */
     public function getI18nKeyword()
     {
         $keywords = array();
-        foreach($this->keywords as $lang => $value) {
+        foreach ($this->keywords as $lang => $value) {
             $keywords[$lang] = implode(',', $value);
         }
 
@@ -92,11 +93,12 @@ trait Keywords
     }
 
     /**
-     * Contains keyword
+     * Contains keyword.
      *
      *
      * @param string|null $locale
-     * @return boolean    TRUE if this multimedia_object contained the keyword, FALSE otherwise.
+     *
+     * @return bool TRUE if this multimedia_object contained the keyword, FALSE otherwise
      */
     public function containsKeyword($keyword, $locale = null)
     {
@@ -108,11 +110,12 @@ trait Keywords
     }
 
     /**
-     * Add keyword
+     * Add keyword.
      *
      * @param string      $keyword
      * @param string|null $locale
-     * @return boolean Always TRUE.
+     *
+     * @return bool Always TRUE
      */
     public function addKeyword($keyword, $locale = null)
     {
@@ -125,15 +128,17 @@ trait Keywords
         }
 
         $this->keyword[$locale] = $keyword;
+
         return true;
     }
 
     /**
-     * Remove keyword
+     * Remove keyword.
      *
      * @param string      $keyword
      * @param string|null $locale
-     * @return boolean TRUE if object contains the keyword
+     *
+     * @return bool TRUE if object contains the keyword
      */
     public function removeKeyword($keyword, $locale = null)
     {
@@ -152,14 +157,14 @@ trait Keywords
 
             return true;
         }
+
         return false;
     }
 
-
     /**
-     * Set keywords
+     * Set keywords.
      *
-     * @param array $keyword
+     * @param array       $keyword
      * @param string|null $locale
      */
     public function setKeywords(array $keywords, $locale = null)
@@ -167,13 +172,14 @@ trait Keywords
         if ($locale == null) {
             $locale = $this->locale;
         }
-        $this->keyword[$locale] = $keyword;
+        $this->keywords[$locale] = $keywords;
     }
 
     /**
-     * Get keyword
+     * Get keyword.
      *
      * @param string|null $locale
+     *
      * @return array
      */
     public function getKeywords($locale = null)
@@ -189,7 +195,7 @@ trait Keywords
     }
 
     /**
-     * Set I18n keywords
+     * Set I18n keywords.
      *
      * @param array $keywords
      */
@@ -199,7 +205,7 @@ trait Keywords
     }
 
     /**
-     * Get i18n keywords
+     * Get i18n keywords.
      *
      * @return array
      */
@@ -207,5 +213,4 @@ trait Keywords
     {
         return $this->keywords;
     }
-
 }
