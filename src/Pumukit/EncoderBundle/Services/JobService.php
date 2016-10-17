@@ -404,12 +404,15 @@ class JobService
 
         $executor = $this->getExecutor($profile['app'], $cpu);
 
-        try{
-            $multimediaObject = $this->getMultimediaObject($job);
-            $this->propService->executeJob($multimediaObject, $job);
+        $multimediaObject = $this->getMultimediaObject($job);
+        //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.
+        $this->propService->executeJob($multimediaObject, $job);
 
+        try{
+            //Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
+            //Throws exception if the video does not exist or does not have video/audio tracks.
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
@@ -420,6 +423,7 @@ class JobService
             $this->logger->addInfo('[execute] job duration: '.$job->getDuration());
             $this->logger->addInfo('[execute] duration: '.$duration);
 
+            //Check for different durations. Throws exception if they don't match.
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
@@ -430,7 +434,8 @@ class JobService
 
             $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
             $this->propService->finishJob($multimediaObject, $job);
-        }catch (\Exception $e){
+
+        } catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
@@ -440,6 +445,13 @@ class JobService
 
             $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
+            // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
+            if( strpos($e->getMessage(), 'HTTP 401')
+                || strpos($e->getMessage(), 'Could not resolve host')) {
+                $cpuName = $job->getCpu();
+                $this->cpuService->activateMaintenance($cpuName);
+                //TODO: SEND EMAIL TO SYSADMIN.
+            }
         }
 
         $this->dm->persist($job);
