@@ -30,7 +30,13 @@ class UserController extends AdminController implements NewAdminController
         $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
         $profiles = $repo->findAll();
 
-        return array('users' => $users, 'profiles' => $profiles);
+        $origins = $dm
+                ->createQueryBuilder('PumukitSchemaBundle:User')
+                ->distinct('origin')
+                ->getQuery()
+                ->execute();
+
+        return array('users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray());
     }
 
     /**

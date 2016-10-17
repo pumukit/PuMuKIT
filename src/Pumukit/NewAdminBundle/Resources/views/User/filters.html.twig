@@ -15,14 +15,28 @@
     <div class="form-group">
       <label for="permissionProfile" class="control-label">{% trans %}Permission Profile{% endtrans %}:</label>
       <div>
-	    <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">
+        <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">
           <option value="all" {% if criteria is null or criteria['permissionProfile'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
           {% for profile in profiles %}
-		  <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile'] == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
+          <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile'] == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
           {% endfor %}
-	    </select>
+        </select>
       </div>
     </div>
+
+    {% if origins|length > 1 %}
+    <div class="form-group">
+      <label for="origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
+      <div>
+        <select class="form-control" name="criteria[origin]" id="filters_profile">
+          <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+          {% for origin in origins %}
+          <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    {% endif %}
 
   </fieldset>
 
