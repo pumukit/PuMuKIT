@@ -28,7 +28,7 @@
     <div class="form-group">
       <label for="origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
       <div>
-        <select class="form-control" name="criteria[origin]" id="filters_profile">
+        <select class="form-control" name="criteria[origin]" id="filters_origin">
           <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
           {% for origin in origins %}
           <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
