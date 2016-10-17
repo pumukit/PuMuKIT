@@ -28,7 +28,15 @@ class GroupController extends AdminController implements NewAdminController
         $criteria = $this->getCriteria($config);
         $groups = $this->getResources($request, $config, $criteria);
 
-        return array('groups' => $groups);
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $origins = $dm
+                ->createQueryBuilder('PumukitSchemaBundle:Group')
+                ->distinct('origin')
+                ->getQuery()
+                ->execute();
+
+
+        return array('groups' => $groups, 'origins' => $origins->toArray());
     }
 
     /**

@@ -1,33 +1,39 @@
 <!-- Filter -->
 <div class="well">
-  <form autocomplete="off" class="form-horizontal" id="filter_groups" onsubmit="$('#list_groups').load('{{ path('pumukitnewadmin_group_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_group_list') }}" method="post">
+  <form autocomplete="off" id="filter_groups" onsubmit="$('#list_groups').load('{{ path('pumukitnewadmin_group_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_group_list') }}" method="post">
   <fieldset>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="key" class="col-md-2 control-label">{% trans %}Key{% endtrans %}:</label>
+      <label for="key" class="control-label">{% trans %}Key{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/group/criteria') %}
-      <div class="col-md-10">
+      <div>
         <input type="text" class="reset form-control" name="criteria[key]" id="filters_key" value="{{ criteria['key']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/group/criteria') %}
-      <div class="col-md-10">
+      <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+
+      <div>
         <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
       </div>
     </div>
 
+    {% if origins|length > 1 %}
     <div class="form-group">
-      <label for="origin" class="col-md-2 control-label">{% trans %}Origin{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/group/criteria') %}
-      <div class="col-md-10">
-        <input type="text" class="reset form-control" name="criteria[origin]" id="filters_origin" value="{{ criteria['origin']|default("") }}">
+      <label for="origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
+      <div>
+        <select class="form-control" name="criteria[origin]" id="filters_origin">
+          <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+          {% for origin in origins %}
+          <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
+          {% endfor %}
+        </select>
       </div>
     </div>
-      
+    {% endif %}
+
   </fieldset>
 
   <div class="text-right">
