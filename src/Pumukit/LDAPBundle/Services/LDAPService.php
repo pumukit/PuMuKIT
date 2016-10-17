@@ -168,13 +168,27 @@ class LDAPService
      */
     public function getInfoFromEmail($email)
     {
+        return $this->getInfoFrom('email', $email);
+    }
+
+
+    /**
+     * Get all the LDAP info from the user email
+     *
+     * @public
+     * @pararm string $key
+     * @pararm string $value
+     * @return array|false
+     */
+    public function getInfoFrom($key, $value)
+    {
         $return = false;
 
         $linkIdentifier = ldap_connect( $this->server );
         ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
         if ($linkIdentifier) {
             $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-            $searchResult = ldap_search($linkIdentifier, $this->baseDn, "mail=" . $email, array(), 0, 1);
+            $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key . "=" . $value, array(), 0, 1);
             if ($searchResult){
                 $info = ldap_get_entries($linkIdentifier, $searchResult);
                 if (($info)&&(count($info) != 0)){
