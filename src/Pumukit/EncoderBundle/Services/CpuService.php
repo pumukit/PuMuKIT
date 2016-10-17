@@ -36,6 +36,9 @@ class CpuService
 
         $freeCpus = array();
         foreach ($this->cpus as $name => $cpu){
+            if($this->isInMaintenance($name)) {
+                continue;
+            }
             $busy = 0;
             foreach ($executingJobs as $job){
                 if ($name === $job->getCpu()){
