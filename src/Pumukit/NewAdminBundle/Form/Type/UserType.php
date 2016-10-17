@@ -30,7 +30,7 @@ class UserType extends AbstractType
                   array(
                         'attr' => array(
                             'autocomplete' => 'off',
-                            'pattern' => '^[a-zA-Z0-9_]{4,16}$',
+                            'pattern' => '^[a-zA-Z0-9_\.]{4,16}$',
                             'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
                             'oninput' => "setCustomValidity('')", ),
                         'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
