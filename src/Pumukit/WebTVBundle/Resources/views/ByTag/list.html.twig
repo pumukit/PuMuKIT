@@ -15,13 +15,12 @@
         </div>
       </div>
     {% endif %}
-    <div class="row">
-      {% if object.isCollection() %}
-        {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
-      {% else %}
-        {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
-      {% endif %}
-    </div>
+
+    {% if object.isCollection() %}
+      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+    {% else %}
+      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+    {% endif %}
 
   {% endfor %}
 </div>
