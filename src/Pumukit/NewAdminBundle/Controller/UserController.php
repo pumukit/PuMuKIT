@@ -380,6 +380,10 @@ class UserController extends AdminController implements NewAdminController
                 if('all' != $value) {
                     $new_criteria[$property] = new \MongoId($value);
                 }
+            } elseif ('origin' == $property) {
+                if('all' != $value) {
+                    $new_criteria[$property] = $value;
+                }
             } elseif ('' !== $value) {
                 $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
             }

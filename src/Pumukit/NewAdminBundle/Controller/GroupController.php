@@ -474,4 +474,15 @@ class GroupController extends AdminController implements NewAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
     }
+
+
+    public function getCriteria($config)
+    {
+        $new_criteria = parent::getCriteria($config);
+        if (isset($new_criteria['origin']) &&
+            '/all/i' == (string)$new_criteria['origin']) {
+            unset($new_criteria['origin']);
+        }
+        return $new_criteria;
+    }
 }
