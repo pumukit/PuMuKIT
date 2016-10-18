@@ -167,13 +167,11 @@ class FactoryService
         $mm->setPublicDate(new \DateTime("now"));
         $mm->setRecordDate($mm->getPublicDate());
 
+        $mm->setStatus(MultimediaObject::STATUS_BLOQ);
         if ($loggedInUser) {
             if ($loggedInUser->hasRole(Permission::INIT_STATUS_PUBLISHED)) {
                 $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
-            }else{
-                $mm->setStatus(MultimediaObject::STATUS_BLOQ);
             }
-
             foreach ($loggedInUser->getRoles() as $role) {
                 if ($pubCh = Permission::getPubChannelForRoleTagDefaul($role)) {
                     $this->tagService->addTagByCodToMultimediaObject($mm, $pubCh, false);
