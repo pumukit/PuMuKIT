@@ -95,6 +95,8 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->mmobjRepo->findWithoutPrototype($series)));
         $this->assertEquals(1, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
         $this->assertEquals($mmobj, $this->seriesRepo->findAll()[0]->getMultimediaObjects()->toArray()[0]);
+
+        $this->assertEquals($mmobj->getStatus(), MultimediaObject::STATUS_BLOCKED);
     }
 
     public function testUpdateMultimediaObjectTemplate()
