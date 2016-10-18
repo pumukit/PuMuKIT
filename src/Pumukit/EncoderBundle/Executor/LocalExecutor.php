@@ -23,9 +23,9 @@ class LocalExecutor
       $process->run();
 
       $fs->remove($tempfile);
-      
+
       if (!$process->isSuccessful()) {
-          throw new \RuntimeException($process->getErrorOutput());
+          throw new ExecutorException($process->getErrorOutput());
       }
 
       //TODO mix strerr and strout.

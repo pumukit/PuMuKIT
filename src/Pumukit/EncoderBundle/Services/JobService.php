@@ -17,6 +17,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
+use Pumukit\EncoderBundle\Executor\ExecutorException;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Services\TrackService;
@@ -446,11 +447,10 @@ class JobService
             $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
             // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
-            if( strpos($e->getMessage(), 'HTTP 401')
-                || strpos($e->getMessage(), 'Could not resolve host')) {
+            if($e instanceof ExecutorException) {
                 $cpuName = $job->getCpu();
                 $this->cpuService->activateMaintenance($cpuName);
-                //TODO: SEND EMAIL TO SYSADMIN.
+                //TODO: Refactor in a service and send email to sysadmin.
             }
         }
 
