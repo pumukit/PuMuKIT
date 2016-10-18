@@ -18,6 +18,8 @@ use Pumukit\SchemaBundle\Document\Group;
 class PumukitProvider implements AuthenticationProviderInterface
 {
 
+    const CAS_ID_KEY = 'UID'; //TODO configurable
+
     const CAS_CN_KEY = 'CN';
     const CAS_MAIL_KEY = 'MAIL';
     const CAS_GIVENNAME_KEY = 'GIVENNAME';
@@ -89,8 +91,8 @@ class PumukitProvider implements AuthenticationProviderInterface
             //TODO create createDefaultUser in UserService.
             //$this->userService->createDefaultUser($user);
             $user = new User();
-            if (isset($attributes[self::CAS_CN_KEY])) {
-                $user->setUsername($attributes[self::CAS_CN_KEY]);
+            if (isset($attributes[self::CAS_ID_KEY])) {
+                $user->setUsername($attributes[self::CAS_ID_KEY]);
             } else {
                 $user->setUsername($userName);
             }
