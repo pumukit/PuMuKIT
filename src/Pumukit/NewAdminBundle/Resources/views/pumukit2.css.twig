@@ -709,3 +709,53 @@ hr.pumukit-green {
 .modal-title {
     font-size: 22px;
 }
+
+
+{% if is_naked() %}
+{# See S#2400 #}
+
+/** MODIFICACIONES INTEGRACIÓN EN MOODLE **/
+
+/* material-wfont.min.css (1) */
+a, a:hover, a:focus {
+  color: #cb0017;
+}
+.nav-tabs {
+  background-color: #eee;
+}
+.dropdown-menu li a:hover, .dropdown-menu-default li a:hover {
+  color: #cb0017;
+}
+
+/* pumukit2.css (178) */
+.pagination > .active > span, .pagination > .active > a, .pagination > .active > span:hover, .pagination > .active > a:hover {
+  background-color: #cb0017;
+  border-bottom-color: #cb0017;
+  border-left-color: #cb0017;
+  border-right-color: #cb0017;
+  border-top-color: #cb0017;
+}
+/* pumukit2.css (493) */
+.dropdown i {
+  color: #111;
+}
+/* pumukit2.css (208) */
+.nav-tabs {
+  border-bottom-color: #ccc;
+  border-bottom-width: 1px;
+}
+/* pumukit2.css (216) */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border-left-color: #ccc !important;
+  border-left-style: solid !important;
+  border-left-width: 1px !important;
+  border-right-color: #ccc !important;
+  border-right-style: solid !important;
+  border-right-width: 1px !important;
+  border-top-color: #ccc !important;
+  border-top-style: solid !important;
+  border-top-width: 1px !important;
+}
+/***/
+
+{% endif %}
