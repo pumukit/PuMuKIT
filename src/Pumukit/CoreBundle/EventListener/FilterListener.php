@@ -172,14 +172,9 @@ class FilterListener
     private function enableWebTVFilter($routeParams)
     {
         $filter = $this->dm->getFilterCollection()->enable("frontend");
-        if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
-            $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
-        } else {
-            $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
-        }
-        if(!isset($routeParams["track"]) || $routeParams["track"]) {
-            $filter->setParameter("display_track_tag", "display");
-        }
+
+        $this->setParameters($filter, $routeParams);
+
         if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
             $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
         }
@@ -210,7 +205,19 @@ class FilterListener
             ];
             $filter->setParameter('people', $people);
         }
-        $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
-        $filter->setParameter("display_track_tag", "display");
+        $this->setParameters($filter, $routeParams);
+    }
+
+
+    private function setParameters($filter, $routeParams)
+    {
+        if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
+            $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
+        } else {
+            $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
+        }
+        if(!isset($routeParams["track"]) || $routeParams["track"]) {
+            $filter->setParameter("display_track_tag", "display");
+        }
     }
 }
