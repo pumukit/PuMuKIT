@@ -172,7 +172,12 @@ class FilterListener
     private function enableWebTVFilter($routeParams)
     {
         $filter = $this->dm->getFilterCollection()->enable("frontend");
+
         $this->setParameters($filter, $routeParams);
+
+        if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
+            $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
+        }
     }
 
     private function enablePersonalFilter($routeParams)
@@ -213,9 +218,6 @@ class FilterListener
         }
         if(!isset($routeParams["track"]) || $routeParams["track"]) {
             $filter->setParameter("display_track_tag", "display");
-        }
-        if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
-            $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
         }
     }
 }
