@@ -2446,6 +2446,18 @@
         <source>IP source</source>
         <target>IP source</target>
       </trans-unit>
+      <trans-unit id="767efddb2025409194f2d950bb07fd72" resname="Last Added (Announced)">
+        <source>Last Added (Announced)</source>
+        <target>Last Added (Announced)</target>
+      </trans-unit>
+      <trans-unit id="a1af20cc91fd49d2b4b4f37d16a61a1f" resname="Subtitle">
+        <source>Subtitle</source>
+        <target>Subtitle</target>
+      </trans-unit>
+      <trans-unit id="14c40ffdb0e14c1bafdf955221e4bdf2" resname="Headline">
+        <source>Headline</source>
+        <target>Headline</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
