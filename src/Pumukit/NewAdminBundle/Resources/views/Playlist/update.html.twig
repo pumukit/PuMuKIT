@@ -4,7 +4,7 @@
       <div class="col-lg-6">
         <form class="form-horizontal">
           <fieldset>
-            <legend>{% trans %}Metadata{% endtrans %}</legend>
+            <legend>{{ is_naked() ? 'Playlist Metadata'|trans : 'Metadata'|trans }}</legend>
             <div class="form-group">
               <label for="inputROId" class="col-xs-2 control-label">{% trans %}Id:{% endtrans %}</label>
               <div class="col-xs-10 input-group">
@@ -21,19 +21,23 @@
       </div>
     </div>
 
-    <div role="tabpanel">
-      <ul id="seriesTab" class="nav nav-tabs" role="tablist">
-        <li class="active">
-          <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Playlist Metadata{% endtrans %}</a>
-        </li>
-      </ul>
+    {% if is_naked() %}
+      {% include 'PumukitNewAdminBundle:Playlist:updatemeta.html.twig' %}
+    {% else %}
+      <div role="tabpanel">
+        <ul id="seriesTab" class="nav nav-tabs" role="tablist">
+          <li class="active">
+            <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Playlist Metadata{% endtrans %}</a>
+          </li>
+        </ul>
 
-      <div class="tab-content">
-        <div id="editSeries" role="tabpanel" class="tab-pane active">
-          {% include 'PumukitNewAdminBundle:Playlist:updatemeta.html.twig' %}
+        <div class="tab-content">
+          <div id="editSeries" role="tabpanel" class="tab-pane active">
+            {% include 'PumukitNewAdminBundle:Playlist:updatemeta.html.twig' %}
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
   {% endif %}
