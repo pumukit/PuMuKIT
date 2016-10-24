@@ -2434,9 +2434,9 @@
         <source>STREAM</source>
         <target>STREAM</target>
       </trans-unit>
-      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Tecnology">
-        <source>Tecnology</source>
-        <target>Tecnology</target>
+      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Technology">
+        <source>Technology</source>
+        <target>Technology</target>
       </trans-unit>
       <trans-unit id="2b04c55d965ae0389fb7c3cf48ae335a" resname="Qualities">
         <source>Qualities</source>

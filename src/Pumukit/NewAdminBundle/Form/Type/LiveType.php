@@ -42,7 +42,7 @@ class LiveType extends AbstractType
             ->add('live_type', 'choice',
                   array(
                         'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
-                        'label' => $this->translator->trans('Tecnology', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Technology', array(), null, $this->locale)));
         /*
             ->add('resolution', new LiveresolutionType(),
                   array(
