@@ -17,6 +17,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
+use Pumukit\EncoderBundle\Executor\ExecutorException;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\SchemaBundle\Services\TrackService;
@@ -405,11 +406,14 @@ class JobService
         $executor = $this->getExecutor($profile['app'], $cpu);
 
         try{
+            //Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
+            //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.
             $this->propService->executeJob($multimediaObject, $job);
-
+            //Executes the job. It can throw exceptions if the executor has issues.
             $out = $executor->execute($commandLine, $cpu);
             $job->setOutput($out);
+            //Throws exception if the video does not exist or does not have video/audio tracks.
             $duration = $this->inspectionService->getDuration($job->getPathEnd());
             $job->setNewDuration($duration);
 
@@ -420,6 +424,7 @@ class JobService
             $this->logger->addInfo('[execute] job duration: '.$job->getDuration());
             $this->logger->addInfo('[execute] duration: '.$duration);
 
+            //Check for different durations. Throws exception if they don't match.
             $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
@@ -430,7 +435,8 @@ class JobService
 
             $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
             $this->propService->finishJob($multimediaObject, $job);
-        }catch (\Exception $e){
+
+        } catch (\Exception $e){
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
 
@@ -440,6 +446,12 @@ class JobService
 
             $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
+            // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
+            if($e instanceof ExecutorException) {
+                $cpuName = $job->getCpu();
+                $this->cpuService->activateMaintenance($cpuName);
+                //TODO: Refactor in a service and send email to sysadmin.
+            }
         }
 
         $this->dm->persist($job);

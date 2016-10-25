@@ -11,11 +11,11 @@ class RemoteHTTPExecutor
   {
         //TODO TEST
         if (!function_exists('curl_init')) {
-            throw new \RuntimeException('Curl is required to execute remote commands.');
+            throw new ExecutorException('Curl is required to execute remote commands.');
         }
 
         if (false === $curl = curl_init()) {
-            throw new \RuntimeException('Unable to create a new curl handle.');
+            throw new ExecutorException('Unable to create a new curl handle.');
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -32,14 +32,14 @@ class RemoteHTTPExecutor
             $error = curl_error($curl);
             curl_close($curl);
 
-            throw new \RuntimeException(sprintf('An error occurred: %s.', $error));
+            throw new ExecutorException(sprintf('An error occurred: %s.', $error));
         }
 
 
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);        
+        curl_close($curl);
         if (200 != $statusCode) {
-            throw new \RuntimeException(sprintf('The web service failed for an unknown reason (HTTP %s).', $statusCode));
+            throw new ExecutorException(sprintf('The web service failed for an unknown reason (HTTP %s).', $statusCode));
         }
 
         return $response;
