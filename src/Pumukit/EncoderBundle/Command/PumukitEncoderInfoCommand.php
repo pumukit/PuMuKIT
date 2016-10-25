@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Pumukit\EncoderBundle\Document\Job;
-      
+
 class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
 {
     protected function configure()
@@ -53,15 +53,19 @@ EOT
     {
 
         $cpuService = $this->getContainer()->get('pumukitencoder.cpu');
+        $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
         $cpus = $cpuService->getCpus();
-        
+
         $output->writeln("<info>CPUS:</info>");
         $table = new Table($output);
-        $table->setHeaders(array('Name', 'Type', 'Host', 'Number', 'Description'));
+        $table->setHeaders(array('Name', 'Status', 'Type', 'Host', 'Number', 'Description'));
 
         foreach($cpus as $name => $cpu) {
             $table->addRow(array(
                 $name,
+                in_array($name, $deactivatedCpus) ?
+                    '<error>In Maintenance</error>' :
+                    '<info>Working</info>',
                 $cpu['type'],
                 $cpu['host'],
                 $cpu['number'] .'/'. $cpu['max'],
@@ -78,7 +82,7 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
         $stats = $jobService->getAllJobsStatus();
-        
+
         $output->writeln("<info>JOBS NUMBERS:</info>");
         $table = new Table($output);
         $table->setHeaders(array_keys($stats));
@@ -118,7 +122,7 @@ EOT
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
-        
+
         if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
             throw new \RuntimeException("Not job found with id $id.");
         }
