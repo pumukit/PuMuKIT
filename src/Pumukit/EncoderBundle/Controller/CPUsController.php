@@ -49,6 +49,7 @@ class CPUsController extends Controller
     public function switchMaintenanceAction(Request $request, $activateMaintenance, $cpuName)
     {
         $cpuService = $this->get('pumukitencoder.cpu');
+        $jobService = $this->get('pumukitencoder.job');
         $cpu = $cpuService->getCpuByName($cpuName);
         if(!$cpu) {
             throw $this->createNotFoundException("The CPU with the name $cpuName does not exist");
@@ -59,6 +60,7 @@ class CPUsController extends Controller
             break;
         case 'deactivate':
             $cpuService->deactivateMaintenance($cpuName);
+            $jobService->executeNextJob();
             break;
         }
         return new Response();
