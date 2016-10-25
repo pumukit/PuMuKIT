@@ -30,13 +30,11 @@
          var url = '';
          var activateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'activate' , 'cpuName': name} ) }}';
          var deactivateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'deactivate' , 'cpuName': name} ) }}';
-         console.log(this.checked);
          if( this.checked ) {
              url = deactivateUrl;
          } else {
              url = activateUrl;
          }
-         console.log(url);
          $.get(url).done(function(){
              window.location.reload(true);
          });

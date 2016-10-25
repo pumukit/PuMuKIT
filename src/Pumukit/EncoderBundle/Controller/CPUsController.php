@@ -55,11 +55,9 @@ class CPUsController extends Controller
         }
         switch($activateMaintenance) {
         case 'activate':
-            dump('activate');
             $cpuService->activateMaintenance($cpuName);
             break;
         case 'deactivate':
-            dump('deactivate');
             $cpuService->deactivateMaintenance($cpuName);
             break;
         }
