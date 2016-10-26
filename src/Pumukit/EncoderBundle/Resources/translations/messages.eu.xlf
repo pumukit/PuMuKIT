@@ -162,6 +162,10 @@
         <source>jobs</source>
         <target xml:lang="eu" state="needs-translation">jobs</target>
       </trans-unit>
+      <trans-unit id="1f47aaef4e18375487b09f623bd90866" resname="This CPU is in maintenance mode.">
+        <source>This CPU is in maintenance mode.</source>
+        <target xml:lang="eu" state="needs-translation">This CPU is in maintenance mode.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

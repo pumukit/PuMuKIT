@@ -438,7 +438,10 @@
       </trans-unit>
       <trans-unit id="77737b0446ac4e3aac8c00bd8043a564" resname="Latest Uploads">
         <source>Latest Uploads</source>
-        <target>Lo último</target>
+        <target xml:lang="es-ES" state="translated">Lo último</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Últimos Añadidos (Anunciado)</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

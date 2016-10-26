@@ -2452,7 +2452,7 @@
         <source>STREAM</source>
         <target xml:lang="es-ES" state="translated">STREAM</target>
       </trans-unit>
-      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Technology">
+      <trans-unit id="e7e767d7c0e58b16e57d3ab16150db80" resname="Technology">
         <source>Technology</source>
         <target xml:lang="es-ES" state="translated">Tecnología</target>
       </trans-unit>
@@ -2463,6 +2463,18 @@
       <trans-unit id="3621b45dde403e2543b561294aab35e6" resname="IP source">
         <source>IP source</source>
         <target xml:lang="es-ES" state="translated">IP Origen</target>
+      </trans-unit>
+      <trans-unit id="1bd204c5dc85295ede7e6a600ab6b472" resname="Last Added (Announced)">
+        <source>Last Added (Announced)</source>
+        <target xml:lang="es-ES" state="translated">Últimos Añadidos (Anunciado)</target>
+      </trans-unit>
+      <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
+        <source>Subtitle</source>
+        <target xml:lang="es-ES" state="translated">Subtítulo</target>
+      </trans-unit>
+      <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
+        <source>Headline</source>
+        <target xml:lang="es-ES" state="translated">Titular</target>
       </trans-unit>
     </body>
   </file>

@@ -430,6 +430,10 @@
         <source>International Sign Language</source>
         <target xml:lang="gl" state="needs-translation">International Sign Language</target>
       </trans-unit>
+      <trans-unit id="77737b0446ac4e3aac8c00bd8043a564" resname="Latest Uploads">
+        <source>Latest Uploads</source>
+        <target xml:lang="gl" state="needs-translation">Latest Uploads</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

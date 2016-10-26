@@ -2434,7 +2434,7 @@
         <source>STREAM</source>
         <target>STREAM</target>
       </trans-unit>
-      <trans-unit id="b56365ebe33b6296339d3dd9a097d20f" resname="Technology">
+      <trans-unit id="e7e767d7c0e58b16e57d3ab16150db80" resname="Technology">
         <source>Technology</source>
         <target>Technology</target>
       </trans-unit>
@@ -2446,15 +2446,15 @@
         <source>IP source</source>
         <target>IP source</target>
       </trans-unit>
-      <trans-unit id="767efddb2025409194f2d950bb07fd72" resname="Last Added (Announced)">
+      <trans-unit id="1bd204c5dc85295ede7e6a600ab6b472" resname="Last Added (Announced)">
         <source>Last Added (Announced)</source>
         <target>Last Added (Announced)</target>
       </trans-unit>
-      <trans-unit id="a1af20cc91fd49d2b4b4f37d16a61a1f" resname="Subtitle">
+      <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
         <target>Subtitle</target>
       </trans-unit>
-      <trans-unit id="14c40ffdb0e14c1bafdf955221e4bdf2" resname="Headline">
+      <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
         <target>Headline</target>
       </trans-unit>

@@ -2402,6 +2402,62 @@
         <source>Login since</source>
         <target xml:lang="ca" state="needs-translation">Login since</target>
       </trans-unit>
+      <trans-unit id="94562c7a1cc5e4824ab689927f57cc07" resname="Edit non local user">
+        <source>Edit non local user</source>
+        <target xml:lang="ca" state="needs-translation">Edit non local user</target>
+      </trans-unit>
+      <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
+        <source>modify non local user</source>
+        <target xml:lang="ca" state="needs-translation">modify non local user</target>
+      </trans-unit>
+      <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
+        <source>Error promoting user</source>
+        <target xml:lang="ca" state="needs-translation">Error promoting user</target>
+      </trans-unit>
+      <trans-unit id="ce5bf551379459c1c61d2a204061c455" resname="Location">
+        <source>Location</source>
+        <target xml:lang="ca" state="needs-translation">Location</target>
+      </trans-unit>
+      <trans-unit id="14cb425d8170ed04f3d8016d5a0ccf20" resname="Channels">
+        <source>Channels</source>
+        <target xml:lang="ca" state="needs-translation">Channels</target>
+      </trans-unit>
+      <trans-unit id="25f7347236b51a5eae4ba01a7862cb55" resname="Schedule">
+        <source>Schedule</source>
+        <target xml:lang="ca" state="needs-translation">Schedule</target>
+      </trans-unit>
+      <trans-unit id="7c4e293d2026ae87797c8368b4e0b50d" resname="Announce">
+        <source>Announce</source>
+        <target xml:lang="ca" state="needs-translation">Announce</target>
+      </trans-unit>
+      <trans-unit id="2f05998d2a71cdc19b7109549bbe2646" resname="STREAM">
+        <source>STREAM</source>
+        <target xml:lang="ca" state="needs-translation">STREAM</target>
+      </trans-unit>
+      <trans-unit id="e7e767d7c0e58b16e57d3ab16150db80" resname="Technology">
+        <source>Technology</source>
+        <target xml:lang="ca" state="needs-translation">Technology</target>
+      </trans-unit>
+      <trans-unit id="2b04c55d965ae0389fb7c3cf48ae335a" resname="Qualities">
+        <source>Qualities</source>
+        <target xml:lang="ca" state="needs-translation">Qualities</target>
+      </trans-unit>
+      <trans-unit id="3621b45dde403e2543b561294aab35e6" resname="IP source">
+        <source>IP source</source>
+        <target xml:lang="ca" state="needs-translation">IP source</target>
+      </trans-unit>
+      <trans-unit id="1bd204c5dc85295ede7e6a600ab6b472" resname="Last Added (Announced)">
+        <source>Last Added (Announced)</source>
+        <target xml:lang="ca" state="needs-translation">Last Added (Announced)</target>
+      </trans-unit>
+      <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
+        <source>Subtitle</source>
+        <target xml:lang="ca" state="needs-translation">Subtitle</target>
+      </trans-unit>
+      <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
+        <source>Headline</source>
+        <target xml:lang="ca" state="needs-translation">Headline</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
