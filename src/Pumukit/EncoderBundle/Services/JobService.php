@@ -331,6 +331,12 @@ class JobService
             return null;
         }
 
+        $nextJobToExecute = null;
+
+        $SEMKey = 1234569;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
         $freeCpu = $this->cpuService->getFreeCpu();
         $nextJob = $this->getNextJob();
         if (($freeCpu) && ($nextJob) && ($this->cpuService->isActive($freeCpu))){
@@ -341,10 +347,12 @@ class JobService
             $this->dm->flush();
             $this->executeInBackground($nextJob);
 
-            return $nextJob;
+            $nextJobToExecute = $nextJob;
         }
 
-        return null;
+        sem_release($seg);
+
+        return $nextJobToExecute;
     }
 
 
