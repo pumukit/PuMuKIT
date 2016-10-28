@@ -54,7 +54,7 @@
             {% endif %}
           </td>
           <td>
-            {% if user.isLocal() %}
+            {% if user.isLocal() or is_granted('ROLE_SUPER_ADMIN') %}
             <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
