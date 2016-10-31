@@ -365,7 +365,7 @@ window.update_mmspic = function(mm_id, resource_type) {
     var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'}; //TODO get default images from service.
     var default_pic = default_pics[resource_type] || default_pics['mms'];
     var src = element ? element.src : default_pic;
-    document.querySelectorAll('img.pic-' + mm_id + '.preview').forEach(function(e, i){e.src = src});
+    $('img.pic-' + mm_id + '.preview').each(function(e, i){e.src = src});
 }
 
 window.update_seriespic = window.update_mmspic;
