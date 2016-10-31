@@ -5,7 +5,7 @@
 <div class="modal-body">
     <fieldset>
       <div class="form-group">
-        <pre id="multimediaobject_properties_code"></pre>
+        <pre id="multimediaobject_properties_code" style="white-space: pre-wrap;"></pre>
         {% autoescape 'js' %}
         <script type="text/javascript">
           var str = JSON.stringify({{ multimediaObject.getProperties()|json_encode|raw }}, null, 4);
