@@ -60,7 +60,9 @@ class CPUsController extends Controller
             break;
         case 'deactivate':
             $cpuService->deactivateMaintenance($cpuName);
-            $jobService->executeNextJob();
+            for($i = 0; $i < $cpu['max']; $i++){
+                $jobService->executeNextJob();
+            }
             break;
         }
         return new Response();
