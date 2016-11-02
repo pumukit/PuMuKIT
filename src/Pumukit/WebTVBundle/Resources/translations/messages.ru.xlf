@@ -430,9 +430,13 @@
         <source>International Sign Language</source>
         <target xml:lang="ru" state="needs-translation">International Sign Language</target>
       </trans-unit>
-      <trans-unit id="77737b0446ac4e3aac8c00bd8043a564" resname="Latest Uploads">
+      <trans-unit id="b3e5ff3eb8faf64fda7a6d32de6ade6d" resname="Latest Uploads">
         <source>Latest Uploads</source>
         <target xml:lang="ru" state="needs-translation">Latest Uploads</target>
+      </trans-unit>
+      <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
+        <source>i18n.one.Series</source>
+        <target xml:lang="ru" state="needs-translation">i18n.one.Series</target>
       </trans-unit>
     </body>
   </file>

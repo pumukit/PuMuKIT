@@ -74,6 +74,10 @@
         <source>Description</source>
         <target xml:lang="ru" state="needs-translation">Description</target>
       </trans-unit>
+      <trans-unit id="62a5e490880a92eef74f167d9dc6dca0" resname="Hide">
+        <source>Hide</source>
+        <target xml:lang="ru" state="needs-translation">Hide</target>
+      </trans-unit>
       <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
         <target xml:lang="ru" state="needs-translation">Mm.Obj.</target>
@@ -1158,6 +1162,18 @@
         <source>Hidden</source>
         <target xml:lang="ru" state="needs-translation">Hidden</target>
       </trans-unit>
+      <trans-unit id="98d3e521741790e0895166ca674c9ad8" resname="Published: is listed in the Series and can be played with published URL">
+        <source>Published: is listed in the Series and can be played with published URL</source>
+        <target xml:lang="ru" state="needs-translation">Published: is listed in the Series and can be played with published URL</target>
+      </trans-unit>
+      <trans-unit id="c6b7e9af7d5f66f937d19b1583827225" resname="Hidden: is not listed in the Series but can be played with magic URL">
+        <source>Hidden: is not listed in the Series but can be played with magic URL</source>
+        <target xml:lang="ru" state="needs-translation">Hidden: is not listed in the Series but can be played with magic URL</target>
+      </trans-unit>
+      <trans-unit id="7338c1d663923b728431d5b0ce1caf33" resname="Blocked: cannot be accessed outside the back-end">
+        <source>Blocked: cannot be accessed outside the back-end</source>
+        <target xml:lang="ru" state="needs-translation">Blocked: cannot be accessed outside the back-end</target>
+      </trans-unit>
       <trans-unit id="e0626222614bdee31951d84c64e5e9ff" resname="Select">
         <source>Select</source>
         <target xml:lang="ru" state="needs-translation">Select</target>
@@ -1405,6 +1421,18 @@
       <trans-unit id="37b36104a0071afb0c434e07e6df43ad" resname="Videos Metadata Template">
         <source>Videos Metadata Template</source>
         <target xml:lang="ru" state="needs-translation">Videos Metadata Template</target>
+      </trans-unit>
+      <trans-unit id="7aa025f6e74bac2cf484b03f7b013ab6" resname="Password protected">
+        <source>Password protected</source>
+        <target xml:lang="ru" state="needs-translation">Password protected</target>
+      </trans-unit>
+      <trans-unit id="7a414755f6bc758bb5f195de272838f3" resname="Only logged in Users">
+        <source>Only logged in Users</source>
+        <target xml:lang="ru" state="needs-translation">Only logged in Users</target>
+      </trans-unit>
+      <trans-unit id="ff3e5991a8b49b8cb3fb588bdd099ded" resname="Only Users in Groups">
+        <source>Only Users in Groups</source>
+        <target xml:lang="ru" state="needs-translation">Only Users in Groups</target>
       </trans-unit>
       <trans-unit id="287acf341ae9b6ec834a7880b6208a16" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
@@ -2457,6 +2485,62 @@
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
         <target xml:lang="ru" state="needs-translation">Headline</target>
+      </trans-unit>
+      <trans-unit id="66229fde78c4665849b90f9fedea6881" resname="zip - Compress file">
+        <source>zip - Compress file</source>
+        <target xml:lang="ru" state="needs-translation">zip - Compress file</target>
+      </trans-unit>
+      <trans-unit id="9c329c025958466cf21139235503c65f" resname="tgz - Compress file">
+        <source>tgz - Compress file</source>
+        <target xml:lang="ru" state="needs-translation">tgz - Compress file</target>
+      </trans-unit>
+      <trans-unit id="7ef0e40f79bba5ecf5d9a8000112e0a9" resname="tar - Backup file">
+        <source>tar - Backup file</source>
+        <target xml:lang="ru" state="needs-translation">tar - Backup file</target>
+      </trans-unit>
+      <trans-unit id="976e82b6f91426ad1e99bb78d7a4930c" resname="swf - Flash file">
+        <source>swf - Flash file</source>
+        <target xml:lang="ru" state="needs-translation">swf - Flash file</target>
+      </trans-unit>
+      <trans-unit id="4388686ca3334db76426f4d674fc8115" resname="rar - Compress file">
+        <source>rar - Compress file</source>
+        <target xml:lang="ru" state="needs-translation">rar - Compress file</target>
+      </trans-unit>
+      <trans-unit id="80116d88597d1535dde025b0388faebb" resname="ppt - Power Point file">
+        <source>ppt - Power Point file</source>
+        <target xml:lang="ru" state="needs-translation">ppt - Power Point file</target>
+      </trans-unit>
+      <trans-unit id="ed981faa220300cea4458c0e9deff7da" resname="pps - Power Point file">
+        <source>pps - Power Point file</source>
+        <target xml:lang="ru" state="needs-translation">pps - Power Point file</target>
+      </trans-unit>
+      <trans-unit id="54a2000339679bb1f54ad06b429bf034" resname="pdf - PDF file">
+        <source>pdf - PDF file</source>
+        <target xml:lang="ru" state="needs-translation">pdf - PDF file</target>
+      </trans-unit>
+      <trans-unit id="48ec292d136b557b78ea59735b4cec80" resname="mp3 - MP3 file">
+        <source>mp3 - MP3 file</source>
+        <target xml:lang="ru" state="needs-translation">mp3 - MP3 file</target>
+      </trans-unit>
+      <trans-unit id="42953541a254c2a2272dd3a9ca48aeb3" resname="gz - Compress file">
+        <source>gz - Compress file</source>
+        <target xml:lang="ru" state="needs-translation">gz - Compress file</target>
+      </trans-unit>
+      <trans-unit id="8ac9b92d0fb9f8a49d1b1a6f5a12116c" resname="doc - Word file">
+        <source>doc - Word file</source>
+        <target xml:lang="ru" state="needs-translation">doc - Word file</target>
+      </trans-unit>
+      <trans-unit id="77812a51703949b0e06be9f0fd645d6e" resname="srt - Text-captions srt">
+        <source>srt - Text-captions srt</source>
+        <target xml:lang="ru" state="needs-translation">srt - Text-captions srt</target>
+      </trans-unit>
+      <trans-unit id="f161fd04576ad81116f4a76432ea733e" resname="vtt - Video Text Tracks">
+        <source>vtt - Video Text Tracks</source>
+        <target xml:lang="ru" state="needs-translation">vtt - Video Text Tracks</target>
+      </trans-unit>
+      <trans-unit id="155b1df1148cc19be298f9507aa3964d" resname="dfxp - Distribution Format Exchange Profile">
+        <source>dfxp - Distribution Format Exchange Profile</source>
+        <target xml:lang="ru" state="needs-translation">dfxp - Distribution Format Exchange Profile</target>
       </trans-unit>
     </body>
   </file>
