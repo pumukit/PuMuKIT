@@ -3,11 +3,10 @@
 namespace Pumukit\EncoderBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\EncoderBundle\Document\Job
+ * Pumukit\EncoderBundle\Document\Job.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
  *
@@ -28,23 +27,23 @@ class Job
      * @var array
      */
     public static $statusTexts = array(
-                                       self::STATUS_ERROR => "Error",
-                                       self::STATUS_PAUSED => "Paused",
-                                       self::STATUS_WAITING => "Waiting",
-                                       self::STATUS_EXECUTING => "Executing",
-                                       self::STATUS_FINISHED => "Finished"
-                                       );
-    
+        self::STATUS_ERROR => 'Error',
+        self::STATUS_PAUSED => 'Paused',
+        self::STATUS_WAITING => 'Waiting',
+        self::STATUS_EXECUTING => 'Executing',
+        self::STATUS_FINISHED => 'Finished',
+    );
+
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string $mm_id
-     * 
+     * @var string
+     *
      * @MongoDB\String
      */
     private $mm_id;
@@ -53,145 +52,145 @@ class Job
      * //@var int $language_id
      * // TODO check this or next
      * // language code instead of integer
-     * //@MongoDB\Int
+     * //@MongoDB\Int.
      */
     //private $language_id;
 
     /**
-     * @var string $language_id
+     * @var string
      *
      * @MongoDB\String
      */
     private $language_id;
 
     /**
-     * @var string $profile
+     * @var string
      *
      * @MongoDB\String
      */
     private $profile;
 
     /**
-     * @var string $cpu
+     * @var string
      *
      * @MongoDB\String
      */
     private $cpu;
 
     /**
-     * @var string $url
+     * @var string
      *
      * @MongoDB\String
      */
     private $url;
 
     /**
-     * @var int $status_id
+     * @var int
      *
      * @MongoDB\Int
      */
     private $status = self::STATUS_WAITING;
-    
+
     /**
-     * @var int $priority
+     * @var int
      *
      * @MongoDB\Int
      */
     private $priority;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
 
     /**
-     * @var string $description
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
 
     /**
-     * @var date $timeini
+     * @var date
      *
      * @MongoDB\Date
      */
     private $timeini;
 
     /**
-     * @var date $timestart
+     * @var date
      *
      * @MongoDB\Date
      */
     private $timestart;
 
     /**
-     * @var date $timeend
+     * @var date
      *
      * @MongoDB\Date
      */
     private $timeend;
 
     /**
-     * @var int $pid
+     * @var int
      *
      * @MongoDB\Int
      */
     private $pid;
 
     /**
-     * @var string $path_ini
+     * @var string
      *
      * @MongoDB\String
      */
     private $path_ini;
 
     /**
-     * @var string $path_end
+     * @var string
      *
      * @MongoDB\String
      */
     private $path_end;
 
     /**
-     * @var string $ext_ini
+     * @var string
      *
      * @MongoDB\String
      */
     private $ext_ini;
 
     /**
-     * @var string $ext_end
+     * @var string
      *
      * @MongoDB\String
      */
     private $ext_end;
 
     /**
-     * @var int $duration
+     * @var int
      *
      * @MongoDB\Int
      */
     private $duration = 0;
 
     /**
-     * @var int $duration
+     * @var int
      *
      * @MongoDB\Int
      */
     private $new_duration = 0;
 
     /**
-     * @var string $size
+     * @var string
      *
      * @MongoDB\String
      */
     private $size = '0';
 
     /**
-     * @var string $email
+     * @var string
      *
      * @MongoDB\String
      * @Assert\Email
@@ -199,26 +198,26 @@ class Job
     private $email;
 
     /**
-     * @var string $output
+     * @var string
      *
      * @MongoDB\String
      */
     private $output = '';
 
     /**
-     * @var array $initVars
+     * @var array
      *
      * @MongoDB\Raw
      */
     private $initVars = array();
 
     /**
-     * @var locale $locale
+     * @var locale
      */
     private $locale = 'en';
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -228,7 +227,7 @@ class Job
     }
 
     /**
-     * Set mm_id
+     * Set mm_id.
      *
      * @param string $mm_id
      */
@@ -238,7 +237,7 @@ class Job
     }
 
     /**
-     * Get mm_id
+     * Get mm_id.
      *
      * @return string
      */
@@ -248,7 +247,7 @@ class Job
     }
 
     /**
-     * Set language_id
+     * Set language_id.
      *
      * @param string $language_id
      */
@@ -258,7 +257,7 @@ class Job
     }
 
     /**
-     * Get language_id
+     * Get language_id.
      *
      * @return string
      */
@@ -268,7 +267,7 @@ class Job
     }
 
     /**
-     * Set profile
+     * Set profile.
      *
      * @param string $profile
      */
@@ -278,7 +277,7 @@ class Job
     }
 
     /**
-     * Get profile
+     * Get profile.
      *
      * @return string
      */
@@ -288,7 +287,7 @@ class Job
     }
 
     /**
-     * Set cpu
+     * Set cpu.
      *
      * @param string $cpu
      */
@@ -298,7 +297,7 @@ class Job
     }
 
     /**
-     * Get cpu
+     * Get cpu.
      *
      * @return string
      */
@@ -308,7 +307,7 @@ class Job
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      */
@@ -318,7 +317,7 @@ class Job
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -328,7 +327,7 @@ class Job
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param int $status
      */
@@ -338,7 +337,7 @@ class Job
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return int
      */
@@ -348,7 +347,7 @@ class Job
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
      * @param int $priority
      */
@@ -358,7 +357,7 @@ class Job
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
      * @return int
      */
@@ -368,7 +367,7 @@ class Job
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -379,9 +378,9 @@ class Job
         }
         $this->name[$locale] = $name;
     }
-    
+
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -393,12 +392,12 @@ class Job
         if (!isset($this->name[$locale])) {
             return;
         }
-        
+
         return $this->name[$locale];
     }
-    
+
     /**
-     * Set I18n name
+     * Set I18n name.
      *
      * @param array $name
      */
@@ -408,7 +407,7 @@ class Job
     }
 
     /**
-     * Get I18n name
+     * Get I18n name.
      *
      * @return array
      */
@@ -418,7 +417,7 @@ class Job
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      */
@@ -429,9 +428,9 @@ class Job
         }
         $this->description[$locale] = $description;
     }
-    
+
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -443,12 +442,12 @@ class Job
         if (!isset($this->description[$locale])) {
             return;
         }
-        
+
         return $this->description[$locale];
     }
-    
+
     /**
-     * Set I18n description
+     * Set I18n description.
      *
      * @param array $description
      */
@@ -458,7 +457,7 @@ class Job
     }
 
     /**
-     * Get I18n description
+     * Get I18n description.
      *
      * @return array
      */
@@ -468,7 +467,7 @@ class Job
     }
 
     /**
-     * Set timeini
+     * Set timeini.
      *
      * @param datetime $timeini
      */
@@ -478,20 +477,21 @@ class Job
     }
 
     /**
-     * Get timeini
+     * Get timeini.
      *
      * @return datetime
      */
     public function getTimeini($format = null)
     {
-        if((null === $this->timeini) || (null === $format)) {
+        if ((null === $this->timeini) || (null === $format)) {
             return $this->timeini;
         }
-        return $this->timeini->format($format);;
+
+        return $this->timeini->format($format);
     }
 
     /**
-     * Set timestart
+     * Set timestart.
      *
      * @param datetime $timestart
      */
@@ -501,21 +501,21 @@ class Job
     }
 
     /**
-     * Get timestart
+     * Get timestart.
      *
      * @return datetime
      */
     public function getTimestart($format = null)
     {
-        if((null === $this->timestart) || (null === $format)) {
+        if ((null === $this->timestart) || (null === $format)) {
             return $this->timestart;
         }
-        return $this->timestart->format($format);;
-        
+
+        return $this->timestart->format($format);
     }
 
     /**
-     * Set timeend
+     * Set timeend.
      *
      * @param datetime $timeend
      */
@@ -525,21 +525,21 @@ class Job
     }
 
     /**
-     * Get timeend
+     * Get timeend.
      *
      * @return datetime
      */
     public function getTimeend($format = null)
     {
-        if((null === $this->timeend) || (null === $format)) {
+        if ((null === $this->timeend) || (null === $format)) {
             return $this->timeend;
         }
-        return $this->timeend->format($format);;
 
+        return $this->timeend->format($format);
     }
 
     /**
-     * Set pid
+     * Set pid.
      *
      * @param int $pid
      */
@@ -549,7 +549,7 @@ class Job
     }
 
     /**
-     * Get pid
+     * Get pid.
      *
      * @return int
      */
@@ -559,7 +559,7 @@ class Job
     }
 
     /**
-     * Set path_ini
+     * Set path_ini.
      *
      * @param string $path_ini
      */
@@ -569,7 +569,7 @@ class Job
     }
 
     /**
-     * Get path_ini
+     * Get path_ini.
      *
      * @return string
      */
@@ -579,7 +579,7 @@ class Job
     }
 
     /**
-     * Set path_end
+     * Set path_end.
      *
      * @param string $path_end
      */
@@ -589,7 +589,7 @@ class Job
     }
 
     /**
-     * Get path_end
+     * Get path_end.
      *
      * @return string
      */
@@ -599,7 +599,7 @@ class Job
     }
 
     /**
-     * Set ext_ini
+     * Set ext_ini.
      *
      * @param string $ext_ini
      */
@@ -609,7 +609,7 @@ class Job
     }
 
     /**
-     * Get ext_ini
+     * Get ext_ini.
      *
      * @return string
      */
@@ -619,7 +619,7 @@ class Job
     }
 
     /**
-     * Set ext_end
+     * Set ext_end.
      *
      * @param string $ext_end
      */
@@ -629,7 +629,7 @@ class Job
     }
 
     /**
-     * Get ext_end
+     * Get ext_end.
      *
      * @return string
      */
@@ -639,7 +639,7 @@ class Job
     }
 
     /**
-     * Set duration
+     * Set duration.
      *
      * @param int $duration
      */
@@ -649,7 +649,7 @@ class Job
     }
 
     /**
-     * Get duration
+     * Get duration.
      *
      * @return int
      */
@@ -659,7 +659,7 @@ class Job
     }
 
     /**
-     * Set new_duration
+     * Set new_duration.
      *
      * @param int $new_duration
      */
@@ -669,7 +669,7 @@ class Job
     }
 
     /**
-     * Get new_duration
+     * Get new_duration.
      *
      * @return int
      */
@@ -679,7 +679,7 @@ class Job
     }
 
     /**
-     * Set size
+     * Set size.
      *
      * @param string $size
      */
@@ -689,7 +689,7 @@ class Job
     }
 
     /**
-     * Get size
+     * Get size.
      *
      * @return string
      */
@@ -699,7 +699,7 @@ class Job
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      */
@@ -709,7 +709,7 @@ class Job
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -719,7 +719,7 @@ class Job
     }
 
     /**
-     * Set output
+     * Set output.
      *
      * @param string $output
      */
@@ -729,7 +729,7 @@ class Job
     }
 
     /**
-     * Append output
+     * Append output.
      *
      * @param string $output
      */
@@ -739,7 +739,7 @@ class Job
     }
 
     /**
-     * Get output
+     * Get output.
      *
      * @return string
      */
@@ -749,7 +749,7 @@ class Job
     }
 
     /**
-     * Set initVars
+     * Set initVars.
      *
      * @param string $initVars
      */
@@ -759,7 +759,7 @@ class Job
     }
 
     /**
-     * Get initVars
+     * Get initVars.
      *
      * @return string
      */
@@ -769,7 +769,7 @@ class Job
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      */
@@ -777,9 +777,9 @@ class Job
     {
         $this->locale = $locale;
     }
-    
+
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -789,7 +789,7 @@ class Job
     }
 
     /**
-     * Get status text
+     * Get status text.
      *
      * @return string
      */
@@ -799,7 +799,7 @@ class Job
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPending()
     {
@@ -807,23 +807,23 @@ class Job
     }
 
     /**
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function isWaiting()
     {
         return $this->status == self::STATUS_WAITING;
     }
 
     /**
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function isPaused()
     {
         return $this->status == self::STATUS_PAUSED;
     }
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function isExecuting()
     {
@@ -831,7 +831,7 @@ class Job
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFailed()
     {
@@ -839,7 +839,7 @@ class Job
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFinished()
     {
@@ -847,10 +847,10 @@ class Job
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isExecuted()
     {
         return $this->status == self::STATUS_ERROR || $this->status == self::STATUS_FINISHED;
-    }    
+    }
 }
