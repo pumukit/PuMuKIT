@@ -74,6 +74,10 @@
         <source>Description</source>
         <target>Description</target>
       </trans-unit>
+      <trans-unit id="62a5e490880a92eef74f167d9dc6dca0" resname="Hide">
+        <source>Hide</source>
+        <target>Hide</target>
+      </trans-unit>
       <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
         <target>Mm.Obj.</target>
