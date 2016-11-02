@@ -52,14 +52,14 @@
     </p>
     {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
       <div>
-        {% trans %}Series{% endtrans %}:
+        {% trans %}i18n.one.Series{% endtrans %}:
         <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
           {{ multimediaObject.getSeries().getTitle() }}
         </a>
       </div>
     {% else %}
       <div>
-        {% trans %}Series{% endtrans %}:
+        {% trans %}i18n.one.Series{% endtrans %}:
         <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
           {{ multimediaObject.getSeries().getTitle() }}
         </a>
