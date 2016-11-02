@@ -1410,6 +1410,18 @@
         <source>Videos Metadata Template</source>
         <target>Videos Metadata Template</target>
       </trans-unit>
+      <trans-unit id="7aa025f6e74bac2cf484b03f7b013ab6" resname="Password protected">
+        <source>Password protected</source>
+        <target>Password protected</target>
+      </trans-unit>
+      <trans-unit id="7a414755f6bc758bb5f195de272838f3" resname="Only logged in Users">
+        <source>Only logged in Users</source>
+        <target>Only logged in Users</target>
+      </trans-unit>
+      <trans-unit id="ff3e5991a8b49b8cb3fb588bdd099ded" resname="Only Users in Groups">
+        <source>Only Users in Groups</source>
+        <target>Only Users in Groups</target>
+      </trans-unit>
       <trans-unit id="287acf341ae9b6ec834a7880b6208a16" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
         <target>Modify broadcast profile of all multimedia objects in this Series</target>

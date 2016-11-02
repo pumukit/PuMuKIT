@@ -1,7 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <div class="col-md-9" id="pumukitnewadmin_mm{{ template }}_broadcast_description">
   {% if mm.getEmbeddedBroadcast() %}
-  {{ mm.getEmbeddedBroadcast() }}
+  {{ mm.getEmbeddedBroadcast()|trans }}
   {% else %}
   {% trans %}None{% endtrans %}
   {% endif %}

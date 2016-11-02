@@ -17,8 +17,9 @@
           {% for broadcast_type, broadcast_name in broadcasts %}
           <div class="radio">
             <label class="required">
-              <input id="pumukitnewadmin_mms_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
-              {{ broadcast_name }}
+              <input id="pumukitnewadmin_mms_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}"
+                     type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+              {{ broadcast_name|trans }}
             </label>
             <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{{ broadcast_description(broadcast_type, template) }}"></i>
           </div>
