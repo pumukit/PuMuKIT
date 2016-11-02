@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
@@ -2457,6 +2457,62 @@
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
         <target>Headline</target>
+      </trans-unit>
+      <trans-unit id="66229fde78c4665849b90f9fedea6881" resname="zip - Compress file">
+        <source>zip - Compress file</source>
+        <target>zip - Compress file</target>
+      </trans-unit>
+      <trans-unit id="9c329c025958466cf21139235503c65f" resname="tgz - Compress file">
+        <source>tgz - Compress file</source>
+        <target>tgz - Compress file</target>
+      </trans-unit>
+      <trans-unit id="7ef0e40f79bba5ecf5d9a8000112e0a9" resname="tar - Backup file">
+        <source>tar - Backup file</source>
+        <target>tar - Backup file</target>
+      </trans-unit>
+      <trans-unit id="976e82b6f91426ad1e99bb78d7a4930c" resname="swf - Flash file">
+        <source>swf - Flash file</source>
+        <target>swf - Flash file</target>
+      </trans-unit>
+      <trans-unit id="4388686ca3334db76426f4d674fc8115" resname="rar - Compress file">
+        <source>rar - Compress file</source>
+        <target>rar - Compress file</target>
+      </trans-unit>
+      <trans-unit id="80116d88597d1535dde025b0388faebb" resname="ppt - Power Point file">
+        <source>ppt - Power Point file</source>
+        <target>ppt - Power Point file</target>
+      </trans-unit>
+      <trans-unit id="ed981faa220300cea4458c0e9deff7da" resname="pps - Power Point file">
+        <source>pps - Power Point file</source>
+        <target>pps - Power Point file</target>
+      </trans-unit>
+      <trans-unit id="54a2000339679bb1f54ad06b429bf034" resname="pdf - PDF file">
+        <source>pdf - PDF file</source>
+        <target>pdf - PDF file</target>
+      </trans-unit>
+      <trans-unit id="48ec292d136b557b78ea59735b4cec80" resname="mp3 - MP3 file">
+        <source>mp3 - MP3 file</source>
+        <target>mp3 - MP3 file</target>
+      </trans-unit>
+      <trans-unit id="42953541a254c2a2272dd3a9ca48aeb3" resname="gz - Compress file">
+        <source>gz - Compress file</source>
+        <target>gz - Compress file</target>
+      </trans-unit>
+      <trans-unit id="8ac9b92d0fb9f8a49d1b1a6f5a12116c" resname="doc - Word file">
+        <source>doc - Word file</source>
+        <target>doc - Word file</target>
+      </trans-unit>
+      <trans-unit id="77812a51703949b0e06be9f0fd645d6e" resname="srt - Text-captions srt">
+        <source>srt - Text-captions srt</source>
+        <target>srt - Text-captions srt</target>
+      </trans-unit>
+      <trans-unit id="f161fd04576ad81116f4a76432ea733e" resname="vtt - Video Text Tracks">
+        <source>vtt - Video Text Tracks</source>
+        <target>vtt - Video Text Tracks</target>
+      </trans-unit>
+      <trans-unit id="155b1df1148cc19be298f9507aa3964d" resname="dfxp - Distribution Format Exchange Profile">
+        <source>dfxp - Distribution Format Exchange Profile</source>
+        <target>dfxp - Distribution Format Exchange Profile</target>
       </trans-unit>
     </body>
   </file>
