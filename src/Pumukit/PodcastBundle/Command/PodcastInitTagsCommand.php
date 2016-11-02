@@ -35,7 +35,7 @@ EOT
         $this->tagRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
         if ($input->getOption('force')){
-            $podcastPublicationChannelTag = $this->createTagWithCode('PUCHPODCAST', 'PodcastEDU', 'PUBCHANNELS', false);
+            $podcastPublicationChannelTag = $this->createTagWithCode('PUCHPODCAST', 'PodcastEDU/iTunesU', 'PUBCHANNELS', false);
             $podcastPublicationChannelTag->setProperty('modal_path', 'pumukitpodcast_modal_index');
             $this->dm->persist($podcastPublicationChannelTag);
             $this->dm->flush();
