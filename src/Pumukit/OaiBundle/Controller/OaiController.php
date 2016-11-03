@@ -145,10 +145,12 @@ class OaiController extends Controller
         $cursor = $limit * $next->getOffset();
         $count = count($mmObjColl);
 
-        $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $next->encode());
-        $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-        $XMLresumptionToken->addAttribute('completeListSize', $count);
-        $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+        if ($cursor < $count) {
+            $XMLresumptionToken = $XMLlist->addChild('resumptionToken', $next->encode());
+            $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
+            $XMLresumptionToken->addAttribute('completeListSize', $count);
+            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+        }
 
         return $this->genResponse($XMLrequest, $XMLlist);
     }
@@ -215,10 +217,12 @@ class OaiController extends Controller
         $cursor = $limit * $next->getOffset();
         $count = count($allSeries);
 
-        $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $next->encode());
-        $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
-        $XMLresumptionToken->addAttribute('completeListSize', $count);
-        $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+        if ($cursor < $count) {
+            $XMLresumptionToken = $XMLlistSets->addChild('resumptionToken', $next->encode());
+            $XMLresumptionToken->addAttribute('expirationDate', '2222-06-01T23:20:00Z');
+            $XMLresumptionToken->addAttribute('completeListSize', $count);
+            $XMLresumptionToken->addAttribute('cursor', $cursor < $count ? $cursor : $count);
+        }
 
         return $this->genResponse($XMLrequest, $XMLlistSets);
     }
