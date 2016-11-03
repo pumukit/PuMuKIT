@@ -9,11 +9,11 @@ class ResumptionTokenTest extends \PHPUnit_Framework_TestCase
     public function testConstructAndGetter()
     {
         $token = new ResumptionToken();
-        $this->assertEquals(0, $token->getOffset());
-        $this->assertEquals(null, $token->getFrom());
-        $this->assertEquals(null, $token->getUntil());
-        $this->assertEquals(null, $token->getMetadataPrefix());
-        $this->assertEquals(null, $token->getSet());
+        $this->assertSame(0, $token->getOffset());
+        $this->assertSame(null, $token->getFrom());
+        $this->assertSame(null, $token->getUntil());
+        $this->assertSame(null, $token->getMetadataPrefix());
+        $this->assertSame(null, $token->getSet());
 
         $offset = 10;
         $from = new \DateTime('yesterday');
@@ -21,11 +21,11 @@ class ResumptionTokenTest extends \PHPUnit_Framework_TestCase
         $metadataPrefix = 'oai_dc';
         $set = 'castillo';
         $token = new ResumptionToken($offset, $from, $until, $metadataPrefix, $set);
-        $this->assertEquals($offset, $token->getOffset());
-        $this->assertEquals($from, $token->getFrom());
-        $this->assertEquals($until, $token->getUntil());
-        $this->assertEquals($metadataPrefix, $token->getMetadataPrefix());
-        $this->assertEquals($set, $token->getSet());
+        $this->assertSame($offset, $token->getOffset());
+        $this->assertSame($from, $token->getFrom());
+        $this->assertSame($until, $token->getUntil());
+        $this->assertSame($metadataPrefix, $token->getMetadataPrefix());
+        $this->assertSame($set, $token->getSet());
 
         $this->assertTrue(strlen($token->encode()) > 0);
     }
@@ -48,8 +48,8 @@ class ResumptionTokenTest extends \PHPUnit_Framework_TestCase
         $set = 'castillo';
         $token = ResumptionToken::decode($rawToken);
 
-        $this->assertEquals($offset, $token->getOffset());
-        $this->assertEquals($metadataPrefix, $token->getMetadataPrefix());
-        $this->assertEquals($set, $token->getSet());
+        $this->assertSame($offset, $token->getOffset());
+        $this->assertSame($metadataPrefix, $token->getMetadataPrefix());
+        $this->assertSame($set, $token->getSet());
     }
 }

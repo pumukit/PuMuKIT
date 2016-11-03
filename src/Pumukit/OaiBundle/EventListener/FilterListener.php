@@ -3,13 +3,12 @@
 namespace Pumukit\OaiBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class FilterListener
 {
-
     private $dm;
     private $listOnlyPublishedObjects;
     private $pubChannelTag;
@@ -30,14 +29,13 @@ class FilterListener
     {
         $req = $event->getRequest();
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST &&
-            "Pumukit\OaiBundle" === substr($req->attributes->get("_controller"), 0, 17)) {
-
-            $filter = $this->dm->getFilterCollection()->enable("frontend");
-            $filter->setParameter("pub_channel_tag", $this->pubChannelTag);
-            $filter->setParameter("display_track_tag", $this->displayTrackTag);
+            "Pumukit\OaiBundle" === substr($req->attributes->get('_controller'), 0, 17)) {
+            $filter = $this->dm->getFilterCollection()->enable('frontend');
+            $filter->setParameter('pub_channel_tag', $this->pubChannelTag);
+            $filter->setParameter('display_track_tag', $this->displayTrackTag);
 
             if ($this->listOnlyPublishedObjects) {
-                $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
+                $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
             }
         }
     }

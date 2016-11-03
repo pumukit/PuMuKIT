@@ -2,13 +2,13 @@
 
 namespace Pumukit\OaiBundle\Controller;
 
+use Pumukit\OaiBundle\Utils\Iso639Convert;
+use Pumukit\OaiBundle\Utils\ResumptionToken;
+use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
-use Pumukit\OaiBundle\Utils\Iso639Convert;
-use Pumukit\OaiBundle\Utils\ResumptionToken;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -46,7 +46,7 @@ class OaiController extends Controller
      */
     public function getRecord($request)
     {
-        if ($request->query->get('metadataPrefix') != 'oai_dc') {
+        if ($request->query->get('metadataPrefix') !== 'oai_dc') {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
         }
 
@@ -55,7 +55,7 @@ class OaiController extends Controller
         $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $object = $mmObjColl->find(array('id' => $identifier));
 
-        if ($object == null) {
+        if ($object === null) {
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
@@ -103,13 +103,13 @@ class OaiController extends Controller
             return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
         }
 
-        if ($token->getMetadataPrefix() != 'oai_dc') {
+        if ($token->getMetadataPrefix() !== 'oai_dc') {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
         }
 
         $mmObjColl = $this->filter($limit, $token->getOffset(), $token->getFrom(), $token->getUntil(), $token->getSet());
 
-        if (count($mmObjColl) == 0) {
+        if (count($mmObjColl) === 0) {
             return $this->error('noRecordsMatch', 'The combination of the values of the from, until, and set arguments results in an empty list');
         }
 
@@ -127,7 +127,7 @@ class OaiController extends Controller
         }
 
         $XMLrequest->addAttribute('verb', $verb);
-        if ($verb == 'ListIdentifiers') {
+        if ($verb === 'ListIdentifiers') {
             $XMLlist = new SimpleXMLExtended('<ListIdentifiers></ListIdentifiers>');
             foreach ($mmObjColl as $object) {
                 $this->genObjectHeader($XMLlist, $object);
@@ -162,7 +162,7 @@ class OaiController extends Controller
         $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mmObj = $mmObjColl->find(array('id' => $identifier));
 
-        if ($request->query->has('identifier') && $mmObj == null) {
+        if ($request->query->has('identifier') && $mmObj === null) {
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
@@ -266,7 +266,7 @@ class OaiController extends Controller
             $queryBuilder->field('public_date')->lte($until);
         }
 
-        if ($set && '_all_' != $set) {
+        if ($set && '_all_' !== $set) {
             $series = $seriesRepo->find(array('id' => $set));
             if (!$series) {
                 return array();
@@ -350,7 +350,6 @@ class OaiController extends Controller
             $XMLsubject->addCDATA($subject);
         }
 
-
         if ($this->container->getParameter('pumukitoai.use_copyright_as_dc_publisher')) {
             $XMLpublisher = $XMLoai_dc->addChild('dc:publisher', null, 'http://purl.org/dc/elements/1.1/');
             $XMLpublisher->addCDATA($object->getCopyright());
@@ -359,13 +358,11 @@ class OaiController extends Controller
             $XMLpublisher->addCDATA('');
         }
 
-
         $people = $object->getPeopleByRoleCod($this->container->getParameter('pumukitoai.role_for_dc_creator'), true);
         foreach ($people as $person) {
             $XMLcreator = $XMLoai_dc->addChild('dc:creator', null, 'http://purl.org/dc/elements/1.1/');
             $XMLcreator->addCDATA($person->getName());
         }
-
 
         if ($object->getLocale()) {
             $XMLoai_dc->addChild('dc:language', $object->getLocale(), 'http://purl.org/dc/elements/1.1/');
@@ -390,7 +387,7 @@ class OaiController extends Controller
     //TODO Delete using ResumptionToken
     private function validateToken($resumptionToken)
     {
-        if ($resumptionToken != null) {
+        if ($resumptionToken !== null) {
             $error = false;
 
             return array('pag' => (((int) $resumptionToken) + 1), 'error' => $error);

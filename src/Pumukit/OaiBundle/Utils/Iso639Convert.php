@@ -192,8 +192,7 @@ class Iso639Convert
         'yi' => 'yid',
         'yo' => 'yor',
         'za' => 'zha',
-        'zu' => 'zul');
-
+        'zu' => 'zul', );
 
     public static function get($code1)
     {
@@ -201,6 +200,6 @@ class Iso639Convert
             return self::$languages[$code1];
         }
 
-        return "";
+        return '';
     }
 }

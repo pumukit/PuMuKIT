@@ -114,7 +114,7 @@ class ResumptionToken
     public function next()
     {
         $next = clone $this;
-        $next->offset++;
+        ++$next->offset;
 
         return $next;
     }
@@ -128,11 +128,11 @@ class ResumptionToken
      */
     public static function decode($token)
     {
-        $base64Decode = base64_decode($token);
+        $base64Decode = base64_decode($token, true);
         if (false === $base64Decode) {
             throw new \InvalidArgumentException('base64_decode error');
         }
-        $params = (array) json_decode(base64_decode($token));
+        $params = (array) json_decode(base64_decode($token, true));
 
         if (json_last_error()) {
             throw new \InvalidArgumentException('json_decode error');
