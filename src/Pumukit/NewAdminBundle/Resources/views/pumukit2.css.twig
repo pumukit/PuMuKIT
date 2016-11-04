@@ -1,6 +1,10 @@
-/*Naked css rules*/
+{% if is_naked() and app.request.attributes.has('nakedbackoffice_custom_css_url') %}
+/*Naked import custom css url*/
+@import url("{{ app.request.attributes.get('nakedbackoffice_custom_css_url') }}");
+{% endif %}
 
 {% if app.request.attributes.get('nakedbackoffice_color') %}
+/*Naked css rules*/
 .hidden-naked {
   display: none !important;
 }

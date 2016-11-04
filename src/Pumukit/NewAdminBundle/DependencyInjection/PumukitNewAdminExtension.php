@@ -30,11 +30,20 @@ class PumukitNewAdminExtension extends Extension
         $loader->load('services.xml');
 
         if ($container->hasParameter('pumukit2.naked_backoffice_domain')) {
-            $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener',
-                array('%pumukit2.naked_backoffice_domain%',
-                      '%pumukit2.naked_backoffice_background%',
-                      '%pumukit2.naked_backoffice_color%'));
+            $arguments = array(
+                '%pumukit2.naked_backoffice_domain%',
+                '%pumukit2.naked_backoffice_background%'
+            );
 
+            if ($container->hasParameter('pumukit2.naked_backoffice_color')) {
+                $arguments[] = '%pumukit2.naked_backoffice_color%';
+            }
+
+            if ($container->hasParameter('pumukit2.naked_custom_css_url')) {
+                $arguments[] = '%pumukit2.naked_custom_css_url%';
+            }
+
+            $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener', $arguments);
             $definition->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
             $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);
         }
