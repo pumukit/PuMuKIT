@@ -10,9 +10,9 @@
         <source>Status</source>
         <target xml:lang="it" state="needs-translation">Status</target>
       </trans-unit>
-      <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU.">
-        <source>Not published on PodcastEDU.</source>
-        <target xml:lang="it" state="needs-translation">Not published on PodcastEDU.</target>
+      <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU/iTunesU.">
+        <source>Not published on PodcastEDU/iTunesU.</source>
+        <target xml:lang="it" state="needs-translation">Not published on PodcastEDU/iTunesU.</target>
       </trans-unit>
       <trans-unit id="712d3f979769cd5fe11bbdaa5e650541" resname="WARNING, Not video tracks with">
         <source>WARNING, Not video tracks with</source>
