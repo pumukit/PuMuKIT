@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Person;

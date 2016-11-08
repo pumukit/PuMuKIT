@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;

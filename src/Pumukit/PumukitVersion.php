@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit;
 
 class PumukitVersion

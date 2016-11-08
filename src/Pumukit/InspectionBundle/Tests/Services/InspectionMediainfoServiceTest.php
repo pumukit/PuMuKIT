@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit\InspectionBundle\Tests\Services;
 
 use Pumukit\InspectionBundle\Services\InspectionMediainfoService;

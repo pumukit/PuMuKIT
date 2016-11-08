@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit\InspectionBundle\Utils;
 
 class TestCommand

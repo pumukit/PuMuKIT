@@ -1,4 +1,5 @@
 <?php
+
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
