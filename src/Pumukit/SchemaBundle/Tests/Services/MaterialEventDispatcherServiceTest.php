@@ -25,8 +25,8 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpMaterialListener::$called = false;
-        MockUpMaterialListener::$title = MaterialEventDispatcherServiceTest::EMPTY_TITLE;
-        MockUpMaterialListener::$url = MaterialEventDispatcherServiceTest::EMPTY_URL;
+        MockUpMaterialListener::$title = self::EMPTY_TITLE;
+        MockUpMaterialListener::$url = self::EMPTY_URL;
 
         $this->materialDispatcher = new MaterialEventDispatcherService($this->dispatcher);
     }
@@ -54,8 +54,8 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_URL, MockUpMaterialListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -88,8 +88,8 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_URL, MockUpMaterialListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';
@@ -125,8 +125,8 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMaterialListener::$called);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_TITLE, MockUpMaterialListener::$title);
-        $this->assertEquals(MaterialEventDispatcherServiceTest::EMPTY_URL, MockUpMaterialListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMaterialListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpMaterialListener::$url);
 
         $title = 'test title';
         $url = 'http://testmaterial.com';

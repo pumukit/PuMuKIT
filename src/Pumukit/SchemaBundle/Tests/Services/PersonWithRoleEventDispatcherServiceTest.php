@@ -27,9 +27,9 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpPersonWithRoleListener::$called = false;
-        MockUpPersonWithRoleListener::$title = PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE;
-        MockUpPersonWithRoleListener::$name = PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME;
-        MockUpPersonWithRoleListener::$code = PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE;
+        MockUpPersonWithRoleListener::$title = self::EMPTY_TITLE;
+        MockUpPersonWithRoleListener::$name = self::EMPTY_NAME;
+        MockUpPersonWithRoleListener::$code = self::EMPTY_CODE;
 
         $this->personWithRoleDispatcher = new PersonWithRoleEventDispatcherService($this->dispatcher);
     }
@@ -59,9 +59,9 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';
@@ -101,9 +101,9 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';
@@ -146,9 +146,9 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
-        $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPersonWithRoleListener::$name);
+        $this->assertEquals(self::EMPTY_CODE, MockUpPersonWithRoleListener::$code);
 
         $title = 'test title';
         $name = 'Bob';

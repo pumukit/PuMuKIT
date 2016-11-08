@@ -25,8 +25,8 @@ class LinkEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpLinkListener::$called = false;
-        MockUpLinkListener::$title = LinkEventDispatcherServiceTest::EMPTY_TITLE;
-        MockUpLinkListener::$url = LinkEventDispatcherServiceTest::EMPTY_URL;
+        MockUpLinkListener::$title = self::EMPTY_TITLE;
+        MockUpLinkListener::$url = self::EMPTY_URL;
 
         $this->linkDispatcher = new LinkEventDispatcherService($this->dispatcher);
     }
@@ -54,8 +54,8 @@ class LinkEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_URL, MockUpLinkListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';
@@ -88,8 +88,8 @@ class LinkEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_URL, MockUpLinkListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';
@@ -125,8 +125,8 @@ class LinkEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpLinkListener::$called);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_TITLE, MockUpLinkListener::$title);
-        $this->assertEquals(LinkEventDispatcherServiceTest::EMPTY_URL, MockUpLinkListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpLinkListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpLinkListener::$url);
 
         $title = 'test title';
         $url = 'http://testlink.com';

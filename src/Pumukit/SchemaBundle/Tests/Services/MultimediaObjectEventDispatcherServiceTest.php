@@ -23,7 +23,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpMultimediaObjectListener::$called = false;
-        MockUpMultimediaObjectListener::$title = MultimediaObjectEventDispatcherServiceTest::EMPTY_TITLE;
+        MockUpMultimediaObjectListener::$title = self::EMPTY_TITLE;
 
         $this->multimediaObjectDispatcher = new MultimediaObjectEventDispatcherService($this->dispatcher);
     }
@@ -49,7 +49,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(MultimediaObjectEventDispatcherServiceTest::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 
@@ -75,7 +75,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(MultimediaObjectEventDispatcherServiceTest::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 
@@ -104,7 +104,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpMultimediaObjectListener::$called);
-        $this->assertEquals(MultimediaObjectEventDispatcherServiceTest::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpMultimediaObjectListener::$title);
 
         $title = 'test title';
 

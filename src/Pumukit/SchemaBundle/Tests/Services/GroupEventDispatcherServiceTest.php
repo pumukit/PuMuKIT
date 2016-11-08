@@ -30,7 +30,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         $this->dm->flush();
 
         MockUpGroupListener::$called = false;
-        MockUpGroupListener::$name = GroupEventDispatcherServiceTest::EMPTY_NAME;
+        MockUpGroupListener::$name = self::EMPTY_NAME;
 
         $this->groupDispatcher = new GroupEventDispatcherService($this->dispatcher);
     }
@@ -58,7 +58,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 
@@ -87,7 +87,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 
@@ -122,7 +122,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpGroupListener::$called);
-        $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpGroupListener::$name);
 
         $name = 'test_name';
 

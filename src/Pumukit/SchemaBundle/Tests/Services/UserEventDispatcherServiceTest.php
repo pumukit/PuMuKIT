@@ -29,7 +29,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         $this->dm->flush();
 
         MockUpUserListener::$called = false;
-        MockUpUserListener::$name = UserEventDispatcherServiceTest::EMPTY_NAME;
+        MockUpUserListener::$name = self::EMPTY_NAME;
 
         $this->userDispatcher = new UserEventDispatcherService($this->dispatcher);
     }
@@ -57,7 +57,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 
@@ -86,7 +86,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 
@@ -121,7 +121,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpUserListener::$called);
-        $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpUserListener::$name);
 
         $name = 'test_name';
 

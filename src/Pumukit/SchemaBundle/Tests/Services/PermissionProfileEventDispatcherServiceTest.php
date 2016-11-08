@@ -29,7 +29,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         $this->dm->flush();
 
         MockUpPermissionProfileListener::$called = false;
-        MockUpPermissionProfileListener::$name = PermissionProfileEventDispatcherServiceTest::EMPTY_NAME;
+        MockUpPermissionProfileListener::$name = self::EMPTY_NAME;
 
         $this->permissionProfileDispatcher = new PermissionProfileEventDispatcherService($this->dispatcher);
     }
@@ -57,7 +57,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(PermissionProfileEventDispatcherServiceTest::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -86,7 +86,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(PermissionProfileEventDispatcherServiceTest::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 
@@ -121,7 +121,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPermissionProfileListener::$called);
-        $this->assertEquals(PermissionProfileEventDispatcherServiceTest::EMPTY_NAME, MockUpPermissionProfileListener::$name);
+        $this->assertEquals(self::EMPTY_NAME, MockUpPermissionProfileListener::$name);
 
         $name = 'test_name';
 

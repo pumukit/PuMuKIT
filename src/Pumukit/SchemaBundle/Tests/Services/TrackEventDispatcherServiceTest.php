@@ -25,8 +25,8 @@ class TrackEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpTrackListener::$called = false;
-        MockUpTrackListener::$title = TrackEventDispatcherServiceTest::EMPTY_TITLE;
-        MockUpTrackListener::$url = TrackEventDispatcherServiceTest::EMPTY_URL;
+        MockUpTrackListener::$title = self::EMPTY_TITLE;
+        MockUpTrackListener::$url = self::EMPTY_URL;
 
         $this->trackDispatcher = new TrackEventDispatcherService($this->dispatcher);
     }
@@ -54,8 +54,8 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_URL, MockUpTrackListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';
@@ -88,8 +88,8 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_URL, MockUpTrackListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';
@@ -125,8 +125,8 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpTrackListener::$called);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_TITLE, MockUpTrackListener::$title);
-        $this->assertEquals(TrackEventDispatcherServiceTest::EMPTY_URL, MockUpTrackListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpTrackListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpTrackListener::$url);
 
         $title = 'test title';
         $url = 'http://testtrack.com';

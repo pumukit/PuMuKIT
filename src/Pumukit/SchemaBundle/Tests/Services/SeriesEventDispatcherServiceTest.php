@@ -29,7 +29,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         $this->dm->flush();
 
         MockUpSeriesListener::$called = false;
-        MockUpSeriesListener::$title = SeriesEventDispatcherServiceTest::EMPTY_TITLE;
+        MockUpSeriesListener::$title = self::EMPTY_TITLE;
 
         $this->seriesDispatcher = new SeriesEventDispatcherService($this->dispatcher);
     }
@@ -57,7 +57,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 
@@ -86,7 +86,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 
@@ -121,7 +121,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpSeriesListener::$called);
-        $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpSeriesListener::$title);
 
         $title = 'test_title';
 

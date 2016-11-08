@@ -25,8 +25,8 @@ class PicEventDispatcherServiceTest extends WebTestCase
           ->get('event_dispatcher');
 
         MockUpPicListener::$called = false;
-        MockUpPicListener::$title = PicEventDispatcherServiceTest::EMPTY_TITLE;
-        MockUpPicListener::$url = PicEventDispatcherServiceTest::EMPTY_URL;
+        MockUpPicListener::$title = self::EMPTY_TITLE;
+        MockUpPicListener::$url = self::EMPTY_URL;
 
         $this->picDispatcher = new PicEventDispatcherService($this->dispatcher);
     }
@@ -54,8 +54,8 @@ class PicEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPicListener::$called);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_TITLE, MockUpPicListener::$title);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_URL, MockUpPicListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPicListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpPicListener::$url);
 
         $title = 'test title';
         $url = 'http://testpic.com';
@@ -88,8 +88,8 @@ class PicEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPicListener::$called);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_TITLE, MockUpPicListener::$title);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_URL, MockUpPicListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPicListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpPicListener::$url);
 
         $title = 'test title';
         $url = 'http://testpic.com';
@@ -125,8 +125,8 @@ class PicEventDispatcherServiceTest extends WebTestCase
         });
 
         $this->assertFalse(MockUpPicListener::$called);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_TITLE, MockUpPicListener::$title);
-        $this->assertEquals(PicEventDispatcherServiceTest::EMPTY_URL, MockUpPicListener::$url);
+        $this->assertEquals(self::EMPTY_TITLE, MockUpPicListener::$title);
+        $this->assertEquals(self::EMPTY_URL, MockUpPicListener::$url);
 
         $title = 'test title';
         $url = 'http://testpic.com';

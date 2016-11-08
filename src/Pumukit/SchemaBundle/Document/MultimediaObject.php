@@ -748,11 +748,11 @@ class MultimediaObject
      */
     public function setBroadcast(Broadcast $broadcast)
     {
-        if (($this->broadcast instanceof Broadcast) && ($this->status != MultimediaObject::STATUS_PROTOTYPE)) {
+        if (($this->broadcast instanceof Broadcast) && ($this->status != self::STATUS_PROTOTYPE)) {
             $this->broadcast->decreaseNumberMultimediaObjects();
         }
         $this->broadcast = $broadcast;
-        if ($this->status != MultimediaObject::STATUS_PROTOTYPE) {
+        if ($this->status != self::STATUS_PROTOTYPE) {
             $broadcast->increaseNumberMultimediaObjects();
         }
     }

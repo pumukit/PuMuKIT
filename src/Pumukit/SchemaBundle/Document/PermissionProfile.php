@@ -15,9 +15,9 @@ class PermissionProfile
     const SCOPE_NONE = 'ROLE_SCOPE_NONE';
 
     public static $scopeDescription = array(
-                                            PermissionProfile::SCOPE_GLOBAL => 'Global Scope',
-                                            PermissionProfile::SCOPE_PERSONAL => 'Personal Scope',
-                                            PermissionProfile::SCOPE_NONE => 'No Scope',
+                                            self::SCOPE_GLOBAL => 'Global Scope',
+                                            self::SCOPE_PERSONAL => 'Personal Scope',
+                                            self::SCOPE_NONE => 'No Scope',
                                             );
 
     /**
