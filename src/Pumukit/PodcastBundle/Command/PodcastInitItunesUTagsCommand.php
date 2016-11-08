@@ -23,7 +23,7 @@ class PodcastInitItunesUTagsCommand extends ContainerAwareCommand
             ->setDescription('Load podcast itunesu tag data fixture to your database')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 Command to load a controlled Podcast ItunesU tags data into a database. Useful for init Podcast environment.
 
 The --force parameter has to be used to actually drop the database.

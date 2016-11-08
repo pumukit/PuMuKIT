@@ -34,7 +34,7 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->addOption('noviewlogs', null, InputOption::VALUE_NONE, 'Does not add viewlog dummy views')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Add examples without deleting')
             ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
 

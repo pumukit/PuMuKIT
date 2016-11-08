@@ -22,7 +22,7 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
             ->addOption('append-to-end', null, InputOption::VALUE_NONE, 'Set this parameter to append the routing bundle configuration to the end of routing file')
             ->addOption('uninstall', null, InputOption::VALUE_NONE)
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>pumukit:install:bundle</info> command helps you installs bundles.
 
 The command updates the Kernel to enable the bundle (<comment>app/AppKernel.php</comment>) and loads the routing (<comment>app/config/routing.yml</comment>) to add the bundle routes.
@@ -31,7 +31,7 @@ The parameter --append-to-end adds the bundle routes at the end fo the <comment>
 
 <info>php app/console pumukit:install:bundle Pumukit/Cmar/WebTVBundle/PumukitCmarWebTVBundle</info>
 
-Note that the bundle namespace must end with "Bundle" and  / instead of \\ has to be used for the namespace delimiter to avoid any problem.
+Note that the bundle namespace must end with "Bundle" and  / instead of \ has to be used for the namespace delimiter to avoid any problem.
 EOT
             );
     }

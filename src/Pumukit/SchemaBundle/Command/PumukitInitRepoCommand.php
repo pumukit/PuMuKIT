@@ -34,7 +34,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
             ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 
 Command to load a controlled set of data into a database. Useful for init Pumukit environment.
 

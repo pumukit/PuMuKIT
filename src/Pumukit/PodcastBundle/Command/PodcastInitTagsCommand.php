@@ -20,7 +20,7 @@ class PodcastInitTagsCommand extends ContainerAwareCommand
             ->setName('podcast:init:tags')
             ->setDescription('Load podcast tag data fixture to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 Command to load a controlled Podcast tags data into a database. Useful for init Podcast environment.
 
 The --force parameter has to be used to actually drop the database.

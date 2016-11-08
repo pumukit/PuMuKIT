@@ -19,7 +19,7 @@ class PumukitEncoderExecuteCommand extends ContainerAwareCommand
             ->setDescription('Pumukit execute a encoder job')
             ->addArgument('id', InputArgument::REQUIRED, 'Job identifier to execute')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to re-execute jobs')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 TODO
 
 The --force parameter ...

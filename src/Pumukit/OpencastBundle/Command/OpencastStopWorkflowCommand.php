@@ -16,7 +16,7 @@ class OpencastStopWorkflowCommand extends ContainerAwareCommand
             ->setName('pumukit:opencast:workflow:stop')
             ->setDescription('Stop given workflow or all finished workflows')
             ->addOption('mediaPackageId', null, InputOption::VALUE_REQUIRED, 'Set this parameter to stop workflow with given mediaPackageId')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 Command to stop workflows in Opencast Server.
 
 Given mediaPackageId, will stop that workflow, all finished otherwise.

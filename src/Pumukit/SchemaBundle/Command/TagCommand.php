@@ -25,7 +25,7 @@ class TagCommand extends ContainerAwareCommand
                 new InputArgument('tag', InputArgument::REQUIRED, 'The tag'),
                 new InputOption('display', null, InputOption::VALUE_NONE, 'Use to set the display field of a tag to true, set to false by default'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>pumukit:tag:update</info> command set the display field of a tag to true/false.
 
   <info>php app/console pumukit:tag:update PUDEPD1</info>

@@ -23,7 +23,7 @@ class PermissionCommand extends ContainerAwareCommand
                 new InputArgument('permission', InputArgument::REQUIRED, 'The permission'),
                 new InputOption('delete', null, InputOption::VALUE_NONE, 'User to delete a permission of a profile, add by default'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>pumukit:permission:update</info> command adds/deletes a permission from a permission profile.
 
   <info>php app/console pumukit:permission:update admin ROLE_CUSTOM</info>

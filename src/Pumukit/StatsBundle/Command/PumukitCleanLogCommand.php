@@ -20,7 +20,7 @@ class PumukitCleanLogCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:stats:clean')
             ->setDescription('Clean bots from ViewsLog collections')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 Clean bots, crawlers, spiders and validators from ViewsLog collections.
 
 This command doesn't work in `prod` environments.

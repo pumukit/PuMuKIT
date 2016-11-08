@@ -20,7 +20,7 @@ class ArcaInitTagsCommand extends ContainerAwareCommand
             ->setName('arca:init:tags')
             ->setDescription('Load arca tag data fixture to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 Command to load a controlled Arca tags data into a database. Useful for init Arca environment.
 
 The --force parameter has to be used to actually drop the database.
