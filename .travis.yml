@@ -34,5 +34,5 @@ script:
     - php app/console yaml:lint app
     - php app/console twig:lint src
     - php app/console twig:lint app
-    - php bin/php-cs-fixer.phar fix --level=symfony --dry-run
+    - php bin/php-cs-fixer.phar fix src --level=symfony --dry-run
     - phpunit -c app
