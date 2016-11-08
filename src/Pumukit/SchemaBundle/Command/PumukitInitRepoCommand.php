@@ -322,7 +322,6 @@ EOT
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
         if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {
-            ;
             throw new \LengthException('Nothing done - Tag already on DB - id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 
