@@ -478,7 +478,7 @@ class GroupController extends AdminController implements NewAdminController
     {
         $new_criteria = parent::getCriteria($config);
         if (isset($new_criteria['origin']) &&
-            '/all/i' == (string)$new_criteria['origin']) {
+            '/all/i' == (string) $new_criteria['origin']) {
             unset($new_criteria['origin']);
         }
 

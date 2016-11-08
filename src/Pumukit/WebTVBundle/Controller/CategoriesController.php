@@ -154,7 +154,7 @@ class CategoriesController extends Controller implements WebTVController
         $aggregation = $multimediaObjectsColl->aggregate($pipeline);
         $mmobjCount = array();
         foreach ($aggregation as $a) {
-            $mmobjCount[(string)$a['_id']] = $a['count'];
+            $mmobjCount[(string) $a['_id']] = $a['count'];
         }
 
         return $mmobjCount;

@@ -613,7 +613,7 @@ class SeriesController extends AdminController implements NewAdminController
                 $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
             }
 
-            return new JsonResponse(array('description' => (string)$embeddedBroadcast));
+            return new JsonResponse(array('description' => (string) $embeddedBroadcast));
         }
 
         return array(

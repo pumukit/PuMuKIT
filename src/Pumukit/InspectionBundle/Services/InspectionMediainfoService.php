@@ -62,21 +62,21 @@ class InspectionMediainfoService implements InspectionServiceInterface
                 case 'General':
                     $track->setMimetype($xml_track->Internet_media_type);
                     $track->setBitrate(intval($xml_track->Overall_bit_rate[0]));
-                    $aux = intval((string)$xml_track->Duration[0]);
+                    $aux = intval((string) $xml_track->Duration[0]);
                     $track->setDuration(ceil($aux / 1000));
-                    $track->setSize((string)$xml_track->File_size[0]);
+                    $track->setSize((string) $xml_track->File_size[0]);
                     break;
 
                 case 'Video':
-                    $track->setVcodec((string)$xml_track->Format[0]);
-                    $track->setFramerate((string)$xml_track->Frame_rate[0]);
+                    $track->setVcodec((string) $xml_track->Format[0]);
+                    $track->setFramerate((string) $xml_track->Frame_rate[0]);
                     $track->setWidth(intval($xml_track->Width));
                     $track->setHeight(intval($xml_track->Height));
                     $only_audio = false;
                     break;
 
                 case 'Audio':
-                    $track->setAcodec((string)$xml_track->Format[0]);
+                    $track->setAcodec((string) $xml_track->Format[0]);
                     $track->setChannels(intval($xml_track->Channel_s_));
                     break;
             }

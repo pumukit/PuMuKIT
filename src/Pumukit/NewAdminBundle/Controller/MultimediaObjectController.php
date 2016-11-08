@@ -77,7 +77,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $session = $this->get('session');
         $paginate = $session->get('admin/mms/paginate', 10);
 
-        $page = (int)ceil($mm->getRank() / $paginate);
+        $page = (int) ceil($mm->getRank() / $paginate);
         if ($page < 1) {
             $page = 1;
         }
@@ -1020,7 +1020,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
             $jsonResponse = array(
-                                  'description' => (string)$embeddedBroadcast,
+                                  'description' => (string) $embeddedBroadcast,
                                   'template' => $template,
                                   );
 

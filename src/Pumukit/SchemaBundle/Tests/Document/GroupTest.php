@@ -23,7 +23,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group->setUpdatedAt($updatedAt);
 
         $this->assertEquals($key, $group->getKey());
-        $this->assertEquals($key, (string)$group);
+        $this->assertEquals($key, (string) $group);
         $this->assertEquals($name, $group->getName());
         $this->assertEquals($comments, $group->getComments());
         $this->assertEquals($origin, $group->getOrigin());

@@ -35,7 +35,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
                 "nor audio tracks\n".$file);
         }
 
-        $duration = ceil(intval((string)$json->format->duration));
+        $duration = ceil(intval((string) $json->format->duration));
 
         return $duration;
     }
@@ -61,22 +61,22 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $track->setMimetype(mime_content_type($track->getPath()));
         $track->setBitrate(intval($json->format->bit_rate));
-        $aux = intval((string)$json->format->duration);
+        $aux = intval((string) $json->format->duration);
         $track->setDuration(ceil($aux));
-        $track->setSize((string)$json->format->size);
+        $track->setSize((string) $json->format->size);
 
         foreach ($json->streams as $stream) {
             switch ((string) $stream->codec_type) {
                 case 'video':
-                    $track->setVcodec((string)$stream->codec_name);
-                    $track->setFramerate((string)$stream->avg_frame_rate);
+                    $track->setVcodec((string) $stream->codec_name);
+                    $track->setFramerate((string) $stream->avg_frame_rate);
                     $track->setWidth(intval($stream->width));
                     $track->setHeight(intval($stream->height));
                     $only_audio = false;
                     break;
 
                 case 'audio':
-                    $track->setAcodec((string)$stream->codec_name);
+                    $track->setAcodec((string) $stream->codec_name);
                     $track->setChannels(intval($stream->channels));
                     break;
 

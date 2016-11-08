@@ -778,7 +778,7 @@ class MultimediaObject
      */
     public function isPublicBroadcast()
     {
-        return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
+        return (bool) (!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
@@ -808,7 +808,7 @@ class MultimediaObject
      */
     public function isPublicEmbeddedBroadcast()
     {
-        return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+        return (bool) (!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
     }
 
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
