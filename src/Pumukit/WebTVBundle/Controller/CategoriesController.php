@@ -45,20 +45,20 @@ class CategoriesController extends Controller implements WebTVController
         foreach ($tagsTree as $tag) {
             $path = sprintf('%s__object', $tag->getPath());
             $keys = explode('|', $path);
-            $ref = & $tagsArray;
+            $ref = &$tagsArray;
             foreach ($keys as $key) {
                 if (!array_key_exists($key, $ref)) {
                     $ref[$key] = array();
                 }
-                $ref = & $ref[$key];
+                $ref = &$ref[$key];
             }
             $ref = $tag;
         }
         //Removes unnecessary parent nodes.
         $parentKeys = explode('|', substr($groundsRoot->getPath(), 0, -1));
-        $ref = & $tagsArray;
+        $ref = &$tagsArray;
         foreach ($parentKeys as $key) {
-            $ref = & $ref[$key];
+            $ref = &$ref[$key];
         }
         $tagsArray = $ref;
         //End removes unnecessary parent nodes.
