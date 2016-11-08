@@ -101,6 +101,6 @@ class MediaLibraryController extends Controller implements WebTVController
                 break;
         }
 
-        return array('objects' => $result, 'sort' => $sort, 'tags' => $selectionTags, 'number_cols' => $numberCols, 'catalogue_thumbnails' => $hasCatalogueThumbnails );
+        return array('objects' => $result, 'sort' => $sort, 'tags' => $selectionTags, 'number_cols' => $numberCols, 'catalogue_thumbnails' => $hasCatalogueThumbnails);
     }
 }

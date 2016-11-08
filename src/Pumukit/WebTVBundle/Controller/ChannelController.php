@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class ChannelController extends Controller implements WebTVController
 {
-    private $titles = array( 1 => 'University',
+    private $titles = array(1 => 'University',
                              2 => 'Business',
                              3 => 'Natural Sciences',
                              5 => 'Humanities',
@@ -21,7 +21,7 @@ class ChannelController extends Controller implements WebTVController
                              4 => 'Law',
                              7 => 'Social Matters & Education', );
 
-    private $tags = array( 1 => array('PUDEUNI'), //"University",
+    private $tags = array(1 => array('PUDEUNI'), //"University",
                            2 => array('100'), //"Business",
                            3 => array('101', '108', '109'), //"Natural Sciences",
                            5 => array('102', '104', '106', '107', '114', '115'), //"Humanities",

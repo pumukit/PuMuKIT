@@ -128,7 +128,7 @@ class CategoriesController extends Controller implements WebTVController
             }
         }
 
-        return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam );
+        return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam);
     }
 
     //TODO Move this function into a service.
@@ -147,7 +147,7 @@ class CategoriesController extends Controller implements WebTVController
         }
         $pipeline = array(
             array('$match' => $criteria),
-            array('$unwind' => '$tags' ),
+            array('$unwind' => '$tags'),
             array('$group' => array('_id' => '$tags.cod', 'count' => array('$sum' => 1))),
         );
 
