@@ -1102,7 +1102,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return Query
      */
-    public function findByTagCodQuery($tag, $sort=array())
+    public function findByTagCodQuery($tag, $sort = array())
     {
         $qb = $this->findByTagCodQueryBuilder($tag);
         if ($sort) {
@@ -1118,7 +1118,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return Cursor
      */
-    public function findByTagCod($tag, $sort=array())
+    public function findByTagCod($tag, $sort = array())
     {
         return $this->findByTagCodQuery($tag, $sort)
           ->execute();
@@ -1143,7 +1143,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return Query
      */
-    public function findAllByTagQuery($tag, $sort=array())
+    public function findAllByTagQuery($tag, $sort = array())
     {
         $qb = $this->findAllByTagQueryBuilder($tag);
         if ($sort) {
@@ -1159,7 +1159,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $sort
      * @return Cursor
      */
-    public function findAllByTag($tag, $sort=array())
+    public function findAllByTag($tag, $sort = array())
     {
         return $this->findAllByTagQuery($tag, $sort)
           ->execute();

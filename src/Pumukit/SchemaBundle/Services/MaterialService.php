@@ -19,7 +19,7 @@ class MaterialService
     private $targetUrl;
     private $forceDeleteOnDisk;
 
-    public function __construct(DocumentManager $documentManager, MaterialEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, MaterialEventDispatcherService $dispatcher, $targetPath, $targetUrl, $forceDeleteOnDisk = true)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;

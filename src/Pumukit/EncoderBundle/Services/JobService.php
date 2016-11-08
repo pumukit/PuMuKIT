@@ -47,7 +47,7 @@ class JobService
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
                                 TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService,
-                                $environment='dev', $tmpPath=null)
+                                $environment = 'dev', $tmpPath = null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -732,7 +732,7 @@ class JobService
     /**
      * Emit an event to notifiy finised job.
      */
-    private function dispatch($success, Job $job, Track $track=null)
+    private function dispatch($success, Job $job, Track $track = null)
     {
         $multimediaObject = $this->getMultimediaObject($job);
 
@@ -760,7 +760,7 @@ class JobService
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      */
-    private function getUserEmail(Job $job=null)
+    private function getUserEmail(Job $job = null)
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
             if (is_object($user = $token->getUser())) {

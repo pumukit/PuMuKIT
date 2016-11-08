@@ -115,7 +115,7 @@ class PersonController extends Controller
                                    ));
     }
 
-    private function createPersonFromLDAP($cn='', $mail='')
+    private function createPersonFromLDAP($cn = '', $mail = '')
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $ldapService = $this->get('pumukit_ldap.ldap');

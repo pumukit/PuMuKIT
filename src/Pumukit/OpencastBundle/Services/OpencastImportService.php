@@ -54,7 +54,7 @@ class OpencastImportService
      * @param boolean   $invert
      * @param User|null $loggedInUser
      */
-    public function importRecording($opencastId, $invert=false, User $loggedInUser = null)
+    public function importRecording($opencastId, $invert = false, User $loggedInUser = null)
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
 
@@ -113,7 +113,7 @@ class OpencastImportService
             $tracks = $this->getMediaPackageField($media, 'track');
             if (isset($tracks[0])) {
                 // NOTE: Multiple tracks
-                for ($i=0; $i < count($tracks); $i++) {
+                for ($i = 0; $i < count($tracks); $i++) {
                     $track = $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
                 }
             } else {
@@ -175,7 +175,7 @@ class OpencastImportService
         return $series;
     }
 
-    public function getOpencastUrls($opencastId='')
+    public function getOpencastUrls($opencastId = '')
     {
         $opencastUrls = array();
         if (null != $opencastId) {
@@ -189,7 +189,7 @@ class OpencastImportService
             $tracks = $this->getMediaPackageField($media, 'track');
             if (isset($tracks[0])) {
                 // NOTE: Multiple tracks
-                for ($i=0; $i < count($tracks); $i++) {
+                for ($i = 0; $i < count($tracks); $i++) {
                     $track = $tracks[$i];
                     $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
                 }
@@ -203,7 +203,7 @@ class OpencastImportService
         return $opencastUrls;
     }
 
-    private function addOpencastUrl($opencastUrls=array(), $track=array())
+    private function addOpencastUrl($opencastUrls = array(), $track = array())
     {
         $type = $this->getMediaPackageField($track, 'type');
         $url = $this->getMediaPackageField($track, 'url');
@@ -249,7 +249,7 @@ class OpencastImportService
         $tags = $this->getMediaPackageField($tagsArray, 'tag');
         if (isset($tags[0])) {
             // NOTE: Multiple tags
-            for ($i=0; $i < count($tags); $i++) {
+            for ($i = 0; $i < count($tags); $i++) {
                 $track = $this->addTagToTrack($tags, $track, $i);
             }
         } else {
@@ -270,7 +270,7 @@ class OpencastImportService
 
         $duration = $this->getMediaPackageField($opencastTrack, 'duration');
         if ($duration) {
-            $track->setDuration($duration/1000);
+            $track->setDuration($duration / 1000);
         }
 
         $audio = $this->getMediaPackageField($opencastTrack, 'audio');

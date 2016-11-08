@@ -22,7 +22,7 @@ class ViewedEvent extends Event
      * @param Track $track
      * @param MultimediaObject $multimediaObject
      */
-    public function __construct(MultimediaObject $multimediaObject, Track $track=null)
+    public function __construct(MultimediaObject $multimediaObject, Track $track = null)
     {
         $this->multimediaObject = $multimediaObject;
         $this->track            = $track;

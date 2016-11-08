@@ -162,7 +162,7 @@ class MultimediaObjectController extends Controller
                    'unescoTag' => $unescoTag, );
     }
 
-    protected function getIntro($queryIntro=false)
+    protected function getIntro($queryIntro = false)
     {
         $hasIntro = $this->container->hasParameter('pumukit2.intro');
       
@@ -177,7 +177,7 @@ class MultimediaObjectController extends Controller
         return $intro;
     }
 
-    protected function incNumView(MultimediaObject $multimediaObject, Track $track=null)
+    protected function incNumView(MultimediaObject $multimediaObject, Track $track = null)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObject->incNumview();
@@ -186,7 +186,7 @@ class MultimediaObjectController extends Controller
         $dm->flush();
     }
 
-    protected function dispatch(MultimediaObject $multimediaObject, Track $track=null)
+    protected function dispatch(MultimediaObject $multimediaObject, Track $track = null)
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);

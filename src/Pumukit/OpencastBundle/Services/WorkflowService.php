@@ -28,7 +28,7 @@ class WorkflowService
      * @param string $mediaPackageId
      * @return boolean
      */
-    public function stopSucceededWorkflows($mediaPackageId='')
+    public function stopSucceededWorkflows($mediaPackageId = '')
     {
         $errors = 0;
         if ($this->deleteArchiveMediaPackage) {
@@ -100,7 +100,7 @@ class WorkflowService
      * @param string $template
      * @return array
      */
-    private function getWorkflowsWithTemplate(array $workflows = array(), $template='')
+    private function getWorkflowsWithTemplate(array $workflows = array(), $template = '')
     {
         $templateWorkflows = array();
         foreach ($workflows as $workflow) {

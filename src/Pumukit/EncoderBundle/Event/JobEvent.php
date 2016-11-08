@@ -29,7 +29,7 @@ class JobEvent extends Event
      * @param Track $track
      * @param MultimediaObject $multimediaObject
      */
-    public function __construct(Job $job, Track $track=null, MultimediaObject $multimediaObject=null)
+    public function __construct(Job $job, Track $track = null, MultimediaObject $multimediaObject = null)
     {
         $this->job              = $job;
         $this->track            = $track;

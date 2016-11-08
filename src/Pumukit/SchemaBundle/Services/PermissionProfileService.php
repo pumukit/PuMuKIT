@@ -110,7 +110,7 @@ class PermissionProfileService
      * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
+    public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
     {
         $this->doAddPermission($permissionProfile, $permission, $executeFlush);
         $this->dispatcher->dispatchUpdate($permissionProfile);
@@ -125,7 +125,7 @@ class PermissionProfileService
      * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
+    public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
     {
         if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
@@ -149,7 +149,7 @@ class PermissionProfileService
      * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush=true)
+    public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
     {
         if ($permissionProfile->containsPermission($permission)) {
             $dependencies = $this->permissionService->getDependablesByScope($permission, $permissionProfile->getScope());
@@ -178,7 +178,7 @@ class PermissionProfileService
      * @param boolean $executeFlush
      * @return PermissionProfile
      */
-    public function setScope(PermissionProfile $permissionProfile, $scope, $executeFlush=true)
+    public function setScope(PermissionProfile $permissionProfile, $scope, $executeFlush = true)
     {
         if (array_key_exists($scope, PermissionProfile::$scopeDescription)) {
             $permissionProfile->setScope($scope);

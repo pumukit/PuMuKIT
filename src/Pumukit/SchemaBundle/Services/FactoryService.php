@@ -29,7 +29,7 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -202,7 +202,7 @@ class FactoryService
      * @param string $sessionId
      * @return Series
      */
-    public function findSeriesById($id, $sessionId=null)
+    public function findSeriesById($id, $sessionId = null)
     {
         $repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
 
@@ -246,7 +246,7 @@ class FactoryService
      * @param Series $series
      * @return MultimediaObject
      */
-    public function getMultimediaObjectPrototype(Series $series=null)
+    public function getMultimediaObjectPrototype(Series $series = null)
     {
         return $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject')

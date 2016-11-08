@@ -61,7 +61,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $page = $session->get('admin/permissionprofile/page', 1);
         $maxPerPage = $session->get('admin/permissionprofile/paginate', 9);
         $newPermissionProfileId = $request->get('id');
-        if ($newPermissionProfileId && (($permissionProfiles->getNbResults()/$maxPerPage) > $page)) {
+        if ($newPermissionProfileId && (($permissionProfiles->getNbResults() / $maxPerPage) > $page)) {
             $page = $permissionProfiles->getNbPages();
             $session->set('admin/permissionprofile/page', $page);
         }
@@ -277,7 +277,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         return $permissionProfiles;
     }
 
-    private function separateAttributePermissionProfilesIds($pair='')
+    private function separateAttributePermissionProfilesIds($pair = '')
     {
         $data = array('attribute' => '', 'profileId' => '');
         if ($pair) {
@@ -293,7 +293,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         return $data;
     }
 
-    private function findPermissionProfile($permissionProfiles, $id='')
+    private function findPermissionProfile($permissionProfiles, $id = '')
     {
         foreach ($permissionProfiles as $permissionProfile) {
             if ($id == $permissionProfile->getId()) {

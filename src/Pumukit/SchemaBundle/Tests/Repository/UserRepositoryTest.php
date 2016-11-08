@@ -189,7 +189,7 @@ class UserRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($user->getGroupsIds()));
     }
 
-    private function createGroup($key='Group1', $name='Group 1')
+    private function createGroup($key = 'Group1', $name = 'Group 1')
     {
         $group = new Group();
 

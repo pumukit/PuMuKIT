@@ -283,7 +283,7 @@ class EmbeddedBroadcastService
             return false;
         }
         $userGroups = $user->getGroups()->toArray();
-        if ($embeddedBroadcast= $multimediaObject->getEmbeddedBroadcast()) {
+        if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
             $playGroups = $embeddedBroadcast->getGroups()->toArray();
         } else {
             $playGroups = array();

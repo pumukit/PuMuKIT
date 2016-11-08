@@ -64,7 +64,7 @@ class LDAPService
      * @param string $pass Password to verify
      * @return boolean true if user exists, false otherwise
      */
-    public function isUser($user=false, $pass='')
+    public function isUser($user = false, $pass = '')
     {
         if ($pass === '') {
             return false;
@@ -78,7 +78,7 @@ class LDAPService
                 $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&($info['count'] != 0)) {
+                    if (($info) && ($info['count'] != 0)) {
                         $dn = $info[0]['dn'];
                         $ret = @ldap_bind($linkIdentifier, $dn, $pass);
                     }
@@ -112,7 +112,7 @@ class LDAPService
                 $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&(count($info) != 0)) {
+                    if (($info) && (count($info) != 0)) {
                         $name = $info[0]['cn'][0];
                     }
                 }
@@ -146,7 +146,7 @@ class LDAPService
                 $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&(count($info) != 0)) {
+                    if (($info) && (count($info) != 0)) {
                         $name = $info[0]['mail'][0];
                     }
                 }
@@ -191,7 +191,7 @@ class LDAPService
             $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key.'='.$value, array(), 0, 1);
             if ($searchResult) {
                 $info = ldap_get_entries($linkIdentifier, $searchResult);
-                if (($info)&&(count($info) != 0)) {
+                if (($info) && (count($info) != 0)) {
                     $return = $info[0];
                 }
             }
@@ -216,7 +216,7 @@ class LDAPService
      * @param string $mail
      * @return array
      */
-    public function getListUsers($cn='', $mail='')
+    public function getListUsers($cn = '', $mail = '')
     {
         $limit = 40;
         $out = array();
@@ -224,13 +224,13 @@ class LDAPService
             $linkIdentifier = ldap_connect($this->server);
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
-                $result=ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
+                $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
                 $filter = $this->getFilter($cn, $mail);
                 $searchResult = ldap_search($linkIdentifier, $this->baseDn, $filter, array(), 0, $limit);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&(count($info) != 0)) {
-                        foreach ($info as $k=>$i) {
+                    if (($info) && (count($info) != 0)) {
+                        foreach ($info as $k => $i) {
                             if ($k === 'count') {
                                 continue;
                             }
@@ -266,7 +266,7 @@ class LDAPService
      * @param string $mail
      * @return string
      */
-    private function getFilter($cn='', $mail='')
+    private function getFilter($cn = '', $mail = '')
     {
         $filter = ($cn ? 'cn='.$cn : '');
         if ($mail) {

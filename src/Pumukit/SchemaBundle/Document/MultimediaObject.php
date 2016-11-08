@@ -666,7 +666,7 @@ class MultimediaObject
     {
         if ($this->duration > 0) {
             $min =  floor($this->duration / 60);
-            $seg = $this->duration %60;
+            $seg = $this->duration % 60;
 
             if ($seg < 10) {
                 $seg = '0'.$seg;
@@ -1120,7 +1120,7 @@ class MultimediaObject
      *
      * @return string
      */
-    public function getFirstUrlPic($default='')
+    public function getFirstUrlPic($default = '')
     {
         $url = $default;
         foreach ($this->pics as $pic) {
@@ -1541,7 +1541,7 @@ class MultimediaObject
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
                                             array $not_all_tags = array(),
-                                            $all=true)
+                                            $all = true)
     {
         $r = array();
 
@@ -1584,7 +1584,7 @@ class MultimediaObject
                                             array $all_tags = array(),
                                             array $not_any_tags = array(),
                                             array $not_all_tags = array(),
-                                            $all=true)
+                                            $all = true)
     {
         foreach ($this->tracks as $track) {
             // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)

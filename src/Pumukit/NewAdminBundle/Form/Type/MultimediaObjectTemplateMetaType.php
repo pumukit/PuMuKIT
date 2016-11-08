@@ -14,7 +14,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale='en')
+    public function __construct(TranslatorInterface $translator, $locale = 'en')
     {
         $this->translator = $translator;
         $this->locale = $locale;
@@ -31,7 +31,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
-                        'attr' => array('class'=> 'mmobj materialtags'),
+                        'attr' => array('class' => 'mmobj materialtags'),
                         'label' => $this->translator->trans('Keywords', array(), null, $this->locale), ))
             ->add('copyright', 'text',
                   array(

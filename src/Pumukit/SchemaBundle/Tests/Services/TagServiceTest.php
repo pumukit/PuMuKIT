@@ -363,7 +363,7 @@ class TagServiceTest extends WebTestCase
         }
     }
 
-    private function createMultimediaObject($title, $prototype=false)
+    private function createMultimediaObject($title, $prototype = false)
     {
         $locale = 'en';
         $status = $prototype ? MultimediaObject::STATUS_PROTOTYPE : MultimediaObject::STATUS_NEW;

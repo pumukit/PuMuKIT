@@ -53,7 +53,7 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function testOnJobSuccess()
     {
-        $multimediaObject= $this->createNewMultimediaObjectWithTrack();
+        $multimediaObject = $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 
@@ -70,7 +70,7 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function testOnJobError()
     {
-        $multimediaObject= $this->createNewMultimediaObjectWithTrack();
+        $multimediaObject = $this->createNewMultimediaObjectWithTrack();
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 

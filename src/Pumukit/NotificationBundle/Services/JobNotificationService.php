@@ -19,7 +19,7 @@ class JobNotificationService
     private $translator;
     private $router;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment='dev')
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment = 'dev')
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
@@ -103,7 +103,7 @@ class JobNotificationService
         }
     }
 
-    private function getMultimediaObjectAdminLink($multimediaObject, $id='')
+    private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
     {
         if (null != $multimediaObject) {
             return $this->router->generate('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId()), true);

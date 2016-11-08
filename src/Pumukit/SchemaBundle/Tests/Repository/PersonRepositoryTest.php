@@ -134,7 +134,7 @@ class PersonRepositoryTest extends WebTestCase
         $this->assertNull($this->repo->findByRoleCodAndEmail($role_hand->getCod(), $email_benjen));
     }
 
-    private function createNewPerson($name='name', $email='email@email.com')
+    private function createNewPerson($name = 'name', $email = 'email@email.com')
     {
         $web = 'web';
         $phone = 'phone';

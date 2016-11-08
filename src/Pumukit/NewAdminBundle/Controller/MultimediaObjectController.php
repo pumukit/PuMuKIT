@@ -549,7 +549,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Get the view list of multimedia objects
      * belonging to a series
      */
-    protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId=null)
+    protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId = null)
     {
         $session = $this->get('session');
         $page = $session->get('admin/mms/page', 1);
@@ -575,7 +575,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
           We update the page if a new page is created to show the
           the new MultimediaObject in new last page.
         */
-        if ($newMultimediaObjectId && (($mms->getNbResults()/$maxPerPage) > $page)) {
+        if ($newMultimediaObjectId && (($mms->getNbResults() / $maxPerPage) > $page)) {
             $page = $mms->getNbPages();
             $session->set('admin/mms/page', $page);
         }

@@ -83,7 +83,7 @@ class LiveController extends AdminController implements NewAdminController
                 ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
               ->setNormalizeOutOfRangePages(true);
 
-            if ($newLiveId && (($resources->getNbResults()/$resources->getMaxPerPage()) > $page)) {
+            if ($newLiveId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
                 $page = $resources->getNbPages();
                 $session->set($session_namespace.'/page', $page);
             }

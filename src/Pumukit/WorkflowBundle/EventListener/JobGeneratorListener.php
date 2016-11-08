@@ -73,7 +73,7 @@ class JobGeneratorListener
             if ((in_array($pubChannelCod, $targets['standard']))
                && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
                 if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
-                    $profileAspectRatio = $profile['resolution_hor']/$profile['resolution_ver'];
+                    $profileAspectRatio = $profile['resolution_hor'] / $profile['resolution_ver'];
                     $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag('master')->getAspectRatio();
                     if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
                         $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".

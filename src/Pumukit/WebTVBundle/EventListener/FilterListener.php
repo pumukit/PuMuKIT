@@ -36,7 +36,7 @@ class FilterListener
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
         $deprecatedCheck = false && (false !== strpos($req->attributes->get('_controller'), 'WebTVBundle'));
 
-        if (($controller[0] instanceof WebTVController /*deprecated*/|| $deprecatedCheck)
+        if (($controller[0] instanceof WebTVController /*deprecated*/ || $deprecatedCheck)
             && $event->isMasterRequest()
                 && $isFilterActivated) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');

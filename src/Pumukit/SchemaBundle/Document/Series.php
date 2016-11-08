@@ -1018,7 +1018,7 @@ class Series
      *
      * @return string
      */
-    public function getFirstUrlPic($default='')
+    public function getFirstUrlPic($default = '')
     {
         $url = $default;
         foreach ($this->pics as $pic) {

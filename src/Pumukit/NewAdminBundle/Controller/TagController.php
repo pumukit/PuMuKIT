@@ -229,18 +229,18 @@ class TagController extends Controller implements NewAdminController
 
     private function getAllParents($element, $tags = array(), $top_parent)
     {
-        if ($element->getParent()!=null) {
+        if ($element->getParent() != null) {
             $parentMissing = true;
             foreach ($tags as $tag) {
                 if ($element->getParent() == $tag) {
-                    $parentMissing=false;
+                    $parentMissing = false;
                     break;
                 }
             }
 
             if ($parentMissing) {
-                $parent= $element->getParent();//"retrieveByPKWithI18n");
-                if ($parent->getId()!=$top_parent) {
+                $parent = $element->getParent();//"retrieveByPKWithI18n");
+                if ($parent->getId() != $top_parent) {
                     $tags[] = $parent;
                     $tags = $this->getAllParents($parent, $tags, $top_parent);
                 }

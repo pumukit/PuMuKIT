@@ -367,7 +367,7 @@ class SeriesController extends AdminController implements NewAdminController
         $key = $session->get('admin/series/sort', 'public_date');
 
         if ($key == 'title') {
-            $key .='.'.$request->getLocale();
+            $key .= '.'.$request->getLocale();
         }
 
         return  array($key => $value);
@@ -376,7 +376,7 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria
      */
-    public function getResources(Request $request, $config, $criteria, $selectedSeriesId=null)
+    public function getResources(Request $request, $config, $criteria, $selectedSeriesId = null)
     {
         $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
@@ -419,7 +419,7 @@ class SeriesController extends AdminController implements NewAdminController
                     ++$position;
                 }
                 $maxPerPage = $session->get($session_namespace.'/paginate', 10);
-                $page = intval(ceil($position/$maxPerPage));
+                $page = intval(ceil($position / $maxPerPage));
             } else {
                 $page = $session->get($session_namespace.'/page', 1);
             }

@@ -54,7 +54,7 @@ class MediaPackageController extends Controller
             list($total, $mediaPackages) = $opencastClient->getMediaPackages(
                 (isset($criteria['name'])) ? $criteria['name']->regex : '',
                 $limit,
-                ($page -1) * $limit);
+                ($page - 1) * $limit);
         } catch (\Exception $e) {
             return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', array('admin_url' => $opencastClient->getUrl(), 'message' => $e->getMessage())), 503);
         }

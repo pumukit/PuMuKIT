@@ -129,12 +129,12 @@ class Playlist
         $tempObject = $this->multimedia_objects->get($posStart);
         if ($posStart - $posEnd > 0) {
             for ($i = $posStart; $i > $posEnd; $i--) {
-                $prevObject = $this->multimedia_objects->get($i-1);
+                $prevObject = $this->multimedia_objects->get($i - 1);
                 $this->multimedia_objects->set($i, $prevObject);
             }
         } else {
             for ($i = $posStart; $i < $posEnd; $i++) {
-                $nextObject = $this->multimedia_objects->get($i+1);
+                $nextObject = $this->multimedia_objects->get($i + 1);
                 $this->multimedia_objects->set($i, $nextObject);
             }
         }

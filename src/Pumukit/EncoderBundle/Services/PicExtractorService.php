@@ -19,7 +19,7 @@ class PicExtractorService
     private $targetUrl;
     private $command;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl, $command=null)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl, $command = null)
     {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
@@ -73,10 +73,10 @@ class PicExtractorService
 
         $num_frames = $track->getNumFrames();
 
-        if ((is_null($numframe)||($num_frames == 0))) {
+        if ((is_null($numframe) || ($num_frames == 0))) {
             $num = 125 * (count($multimediaObject->getPics())) + 1;
         } elseif (substr($numframe, -1, 1) === '%') {
-            $num = intval($numframe)* $num_frames /100;
+            $num = intval($numframe) * $num_frames / 100;
         } else {
             $num = intval($numframe);
         }
@@ -178,7 +178,7 @@ class PicExtractorService
      * @param int    $height
      * @return MultimediaObject $multimediaObject
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath='', $width = 0, $height = 0, array $tags = array())
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath = '', $width = 0, $height = 0, array $tags = array())
     {
         $pic->setPath($picPath);
         $pic->setWidth($width);

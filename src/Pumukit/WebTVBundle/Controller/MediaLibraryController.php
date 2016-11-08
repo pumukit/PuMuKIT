@@ -23,7 +23,7 @@ class MediaLibraryController extends Controller implements WebTVController
         $tags_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
         $array_tags = $this->container->getParameter('pumukit_web_tv.media_library.filter_tags');
-        $selectionTags = $tags_repo->findBy(array('cod' => array('$in'=> $array_tags)));
+        $selectionTags = $tags_repo->findBy(array('cod' => array('$in' => $array_tags)));
 
         $criteria = $request->query->get('search', false) ?
                     array('title.'.$request->getLocale() => new \MongoRegex(sprintf('/%s/i', $request->query->get('search')))) :

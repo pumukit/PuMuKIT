@@ -81,7 +81,7 @@ class SearchController extends Controller
     $tags = $repository_tags->findall();
 
     //Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
-    for ($i=0;$i<count($tags);$i++) {
+    for ($i = 0;$i < count($tags);$i++) {
         if ($tags[$i]->getTitle() == $tag_found) {
             $tag_search = $tags[$i];
         }

@@ -126,7 +126,7 @@ class EventController extends AdminController implements NewAdminController
             $tabValue = 'Active tab: listTab';
         }
 
-        return new JsonResponse(array('tabValue'=> $tabValue));
+        return new JsonResponse(array('tabValue' => $tabValue));
     }
 
     /**
@@ -148,11 +148,11 @@ class EventController extends AdminController implements NewAdminController
         $y = $this->get('session')->get('admin/event/year');
 
         if ($request->query->get('month') == 'next') {
-            $changed_date = mktime(0, 0, 0, $m+1, 1, $y);
+            $changed_date = mktime(0, 0, 0, $m + 1, 1, $y);
             $this->get('session')->set('admin/event/year', date('Y', $changed_date));
             $this->get('session')->set('admin/event/month', date('m', $changed_date));
         } elseif ($request->query->get('month') == 'previous') {
-            $changed_date = mktime(0, 0, 0, $m-1, 1, $y);
+            $changed_date = mktime(0, 0, 0, $m - 1, 1, $y);
             $this->get('session')->set('admin/event/year', date('Y', $changed_date));
             $this->get('session')->set('admin/event/month', date('m', $changed_date));
         } elseif ($request->query->get('month') == 'today') {
@@ -180,9 +180,9 @@ class EventController extends AdminController implements NewAdminController
         $d = self::$daysInMonth[$month - 1];
 
         if ($month == 2) {
-            if ($year%4 == 0) {
-                if ($year%100 == 0) {
-                    if ($year%400 == 0) {
+            if ($year % 4 == 0) {
+                if ($year % 100 == 0) {
+                    if ($year % 400 == 0) {
                         $d = 29;
                     }
                 } else {
@@ -285,7 +285,7 @@ class EventController extends AdminController implements NewAdminController
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
                 ->setNormalizeOutOfRangePages(true);
 
-            if ($newEventId && (($resources->getNbResults()/$resources->getMaxPerPage()) > $page)) {
+            if ($newEventId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
                 $page = $resources->getNbPages();
                 $session->set($session_namespace.'/page', $page);
             }

@@ -57,7 +57,7 @@ class OpencastService
      * @param array            $opencastUrls
      * @return boolean
      */
-    public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
+    public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls = array())
     {
         if (!$this->generateSbs) {
             return false;
@@ -105,7 +105,7 @@ class OpencastService
      * @param array            $opencastUrls
      * @rettun boolean
      */
-    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls=array())
+    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls = array())
     {
         if (!$this->generateSbs) {
             return false;

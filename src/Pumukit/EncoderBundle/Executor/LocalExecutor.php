@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 
 class LocalExecutor
 {
-    public function execute($command, array $cpu=null)
+    public function execute($command, array $cpu = null)
     {
         $fs = new Filesystem();
 

@@ -88,7 +88,7 @@ class CpuService
         return true;
     }
 
-    private function getOptimalCpuName($freeCpus=array())
+    private function getOptimalCpuName($freeCpus = array())
     {
         $optimalCpu = null;
         foreach ($freeCpus as $cpu) {
@@ -96,7 +96,7 @@ class CpuService
                 $optimalCpu = $cpu;
                 continue;
             }
-            if (($cpu['busy']/$cpu['max']) < ($optimalCpu['busy']/$optimalCpu['max'])) {
+            if (($cpu['busy'] / $cpu['max']) < ($optimalCpu['busy'] / $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
             } elseif (($cpu['busy'] === 0) && ($optimalCpu['busy'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
                 $optimalCpu = $cpu;

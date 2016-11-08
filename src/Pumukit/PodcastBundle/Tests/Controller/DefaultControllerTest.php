@@ -14,7 +14,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment'=>'test');
+        $options = array('environment' => 'test');
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 

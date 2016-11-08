@@ -15,7 +15,7 @@ class LiveType extends AbstractType
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale='en')
+    public function __construct(TranslatorInterface $translator, $locale = 'en')
     {
         $this->translator = $translator;
         $this->locale = $locale;

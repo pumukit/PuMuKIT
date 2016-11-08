@@ -79,7 +79,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getFirstUrlPicFilter($object, $absolute=false, $hd=true)
+    public function getFirstUrlPicFilter($object, $absolute = false, $hd = true)
     {
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }
@@ -210,7 +210,7 @@ class PumukitExtension extends \Twig_Extension
     {
         if ($duration > 0) {
             $min =  floor($duration / 60);
-            $seg = $duration %60;
+            $seg = $duration % 60;
 
             if ($seg < 10) {
                 $seg = '0'.$seg;

@@ -32,7 +32,7 @@ class PersonService
      * @param boolean         $addUserAsPerson
      * @param string          $personalScopeRoleCode
      */
-    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson=true, $personalScopeRoleCode='owner')
+    public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson = true, $personalScopeRoleCode = 'owner')
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
@@ -289,7 +289,7 @@ class PersonService
     /**
      * Delete Person
      */
-    public function deletePerson(Person $person, $deleteFromUser=false)
+    public function deletePerson(Person $person, $deleteFromUser = false)
     {
         if (0 !== count($this->repoMmobj->findByPersonId($person->getId()))) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');

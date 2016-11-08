@@ -55,9 +55,9 @@ class EventRepository extends DocumentRepository
         $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
         $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));
         $pipeline = array(
-            array('$match' => array('display'=> true)),
-            array('$project' => array('date'=> true, 'end'=> array('$add'=> array('$date', array('$multiply'=> array('$duration', 60000)))))),
-            array('$match' => array('$and' => array( array('date'=> array('$lte'=> $nowWithMarginBefore)), array('end' =>  array('$gte' => $nowWithMarginAfter))))),
+            array('$match' => array('display' => true)),
+            array('$project' => array('date' => true, 'end' => array('$add' => array('$date', array('$multiply' => array('$duration', 60000)))))),
+            array('$match' => array('$and' => array( array('date' => array('$lte' => $nowWithMarginBefore)), array('end' =>  array('$gte' => $nowWithMarginAfter))))),
         );
 
         if ($limit) {
@@ -85,7 +85,7 @@ class EventRepository extends DocumentRepository
      * @param Date $date
      * @return Cursor
      */
-    public function findFutureAndNotFinished($limit=null, $date=null)
+    public function findFutureAndNotFinished($limit = null, $date = null)
     {
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
@@ -137,7 +137,7 @@ class EventRepository extends DocumentRepository
      * @param Date $date
      * @return Cursor
      */
-    public function findOneByHoursEvent($hours=null, $date=null)
+    public function findOneByHoursEvent($hours = null, $date = null)
     {
         if (!$date) {
             $currentDatetime = new \DateTime('now');

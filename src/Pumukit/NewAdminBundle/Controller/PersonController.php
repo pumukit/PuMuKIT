@@ -398,8 +398,8 @@ class PersonController extends AdminController implements NewAdminController
         $out = [];
         foreach ($people as $p) {
             $out[] = array(
-                           'id'=> $p->getId(),
-                           'label'=> $p->getName(),
+                           'id' => $p->getId(),
+                           'label' => $p->getName(),
                            'desc' => $p->getPost().' '.$p->getFirm(),
                            'value' => $p->getName(),
                            );
@@ -581,7 +581,7 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Gets the criteria values
      */
-    public function getCriteria($config, $locale='en')
+    public function getCriteria($config, $locale = 'en')
     {
         $criteria = $config->getCriteria();
 
@@ -643,7 +643,7 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria
      */
-    public function getResources(Request $request, $config, $criteria, $selectedPersonId=null)
+    public function getResources(Request $request, $config, $criteria, $selectedPersonId = null)
     {
         $sorting = $this->getSorting($request);
 
@@ -672,7 +672,7 @@ class PersonController extends AdminController implements NewAdminController
                     ++$position;
                 }
                 $maxPerPage = $session->get('admin/person/paginate', 10);
-                $page = intval(ceil($position/$maxPerPage));
+                $page = intval(ceil($position / $maxPerPage));
             } else {
                 $page = $session->get('admin/person/page', 1);
             }

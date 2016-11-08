@@ -19,7 +19,7 @@ class PicService
      */
     protected $context;
 
-    public function __construct(RequestContext $context, $webDir='', $defaultSeriesPic='', $defaultPlaylistPic='', $defaultVideoPic='', $defaultAudioHDPic='', $defaultAudioSDPic='')
+    public function __construct(RequestContext $context, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
         $this->context = $context;
         $this->webDir = $webDir;
@@ -45,7 +45,7 @@ class PicService
      *
      * @return string
      */
-    public function getFirstUrlPic($object, $absolute=false, $hd=true)
+    public function getFirstUrlPic($object, $absolute = false, $hd = true)
     {
         $pics = $object->getPics();
         if (0 === count($pics)) {
@@ -83,7 +83,7 @@ class PicService
      *
      * @return string
      */
-    public function getDefaultUrlPicForObject($object, $absolute=false, $hd=true)
+    public function getDefaultUrlPicForObject($object, $absolute = false, $hd = true)
     {
         if ($object instanceof Series) {
             if ($object->getType() == Series::TYPE_PLAYLIST) {
@@ -106,7 +106,7 @@ class PicService
      * @param boolean $absolute Returns absolute path
      * @returns string
      */
-    public function getDefaultSeriesUrlPic($absolute=false)
+    public function getDefaultSeriesUrlPic($absolute = false)
     {
         if ($absolute) {
             return $this->getAbsoluteUrlPic($this->defaultSeriesPic);
@@ -123,7 +123,7 @@ class PicService
      * @param boolean $absolute Returns absolute path
      * @returns string
      */
-    public function getDefaultPlaylistUrlPic($absolute=false)
+    public function getDefaultPlaylistUrlPic($absolute = false)
     {
         if ($absolute) {
             return $this->getAbsoluteUrlPic($this->defaultPlaylistPic);
@@ -143,7 +143,7 @@ class PicService
      * @param boolean $absolute Returns absolute path
      * @returns string
      */
-    public function getDefaultMultimediaObjectUrlPic($absolute=false, $audio=false, $hd=true)
+    public function getDefaultMultimediaObjectUrlPic($absolute = false, $audio = false, $hd = true)
     {
         if ($audio) {
             if ($hd) {
@@ -168,7 +168,7 @@ class PicService
      * @param string $picUrl
      * @return string
      */
-    private function getAbsoluteUrlPic($picUrl='')
+    private function getAbsoluteUrlPic($picUrl = '')
     {
         if ($picUrl) {
             if ('/' == $picUrl[0]) {
@@ -202,7 +202,7 @@ class PicService
      *
      * @return string
      */
-    public function getFirstPathPic($object, $hd=true)
+    public function getFirstPathPic($object, $hd = true)
     {
         $pics = $object->getPics();
         if (0 === count($pics)) {
@@ -235,7 +235,7 @@ class PicService
      *
      * @return string
      */
-    public function getDefaultPathPicForObject($object, $hd=true)
+    public function getDefaultPathPicForObject($object, $hd = true)
     {
         if ($object instanceof Series) {
             return $this->getDefaultSeriesPathPic();
@@ -266,7 +266,7 @@ class PicService
      * @param boolean $hd       Returns pic in HD
      * @returns string
      */
-    public function getDefaultMultimediaObjectPathPic($audio=false, $hd=true)
+    public function getDefaultMultimediaObjectPathPic($audio = false, $hd = true)
     {
         if ($audio) {
             if ($hd) {
@@ -287,7 +287,7 @@ class PicService
      * @param string $picPath
      * @return string
      */
-    private function getAbsolutePathPic($picPath='')
+    private function getAbsolutePathPic($picPath = '')
     {
         if ($picPath) {
             if ('/' == $picPath[0]) {

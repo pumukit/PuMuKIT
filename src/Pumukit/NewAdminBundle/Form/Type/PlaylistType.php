@@ -16,7 +16,7 @@ class PlaylistType extends AbstractType
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale='en', $disablePudenew = true)
+    public function __construct(TranslatorInterface $translator, $locale = 'en', $disablePudenew = true)
     {
         $this->translator = $translator;
         $this->locale = $locale;

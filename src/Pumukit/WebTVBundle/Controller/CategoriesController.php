@@ -45,20 +45,20 @@ class CategoriesController extends Controller implements WebTVController
         foreach ($tagsTree as $tag) {
             $path = sprintf('%s__object', $tag->getPath());
             $keys = explode('|', $path);
-            $ref =& $tagsArray;
+            $ref = & $tagsArray;
             foreach ($keys as $key) {
                 if (!array_key_exists($key, $ref)) {
                     $ref[$key] = array();
                 }
-                $ref =& $ref[$key];
+                $ref = & $ref[$key];
             }
             $ref = $tag;
         }
         //Removes unnecessary parent nodes.
         $parentKeys = explode('|', substr($groundsRoot->getPath(), 0, -1));
-        $ref =& $tagsArray;
+        $ref = & $tagsArray;
         foreach ($parentKeys as $key) {
-            $ref =& $ref[$key];
+            $ref = & $ref[$key];
         }
         $tagsArray = $ref;
         //End removes unnecessary parent nodes.
@@ -68,7 +68,7 @@ class CategoriesController extends Controller implements WebTVController
         //TODO Move this logic into a service.
         $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');
-        foreach ($tagsArray as $id=>$parent) {
+        foreach ($tagsArray as $id => $parent) {
             if ($id == '__object') {
                 continue;
             }
@@ -95,7 +95,7 @@ class CategoriesController extends Controller implements WebTVController
                 $allGrounds[$id]['children']['general']['num_mmobjs'] = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
                 $allGrounds[$id]['children']['general']['children'] = array();
             }
-            foreach ($parent as $id2=>$child) {
+            foreach ($parent as $id2 => $child) {
                 if ($id2 == '__object') {
                     continue;
                 }
@@ -111,7 +111,7 @@ class CategoriesController extends Controller implements WebTVController
                 $allGrounds[$id]['children'][$id2]['num_mmobjs'] = $numMmobjs;
                 $allGrounds[$id]['children'][$id2]['children'] = array();
 
-                foreach ($child as $id3=>$grandchild) {
+                foreach ($child as $id3 => $grandchild) {
                     if ($id3 == '__object') {
                         continue;
                     }
@@ -135,7 +135,7 @@ class CategoriesController extends Controller implements WebTVController
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' =>'ITUNESU');
+        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' => 'ITUNESU');
         $criteria['$or'] = array(
              array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
              array('properties.opencast' => array('$exists' => true)),

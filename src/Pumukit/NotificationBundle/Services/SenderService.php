@@ -16,7 +16,7 @@ class SenderService
     private $environment;
     private $translator;
 
-    public function __construct($mailer, EngineInterface $templating, TranslatorInterface $translator, $enable, $senderEmail, $senderName, $notificateErrorsToSender, $environment='dev')
+    public function __construct($mailer, EngineInterface $templating, TranslatorInterface $translator, $enable, $senderEmail, $senderName, $notificateErrorsToSender, $environment = 'dev')
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
@@ -77,7 +77,7 @@ class SenderService
      * @param array $parameters
      * @param boolean $error
      */
-    public function sendNotification($emailTo, $subject = 'Pumukit2 Notification', $template, $parameters=array(), $error=true)
+    public function sendNotification($emailTo, $subject = 'Pumukit2 Notification', $template, $parameters = array(), $error = true)
     {
         if ($this->enable && filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
             $message = \Swift_Message::newInstance();

@@ -242,7 +242,7 @@ class RemoveListenerTest extends WebTestCase
         $this->assertFalse(in_array($group2, $user2->getGroups()->toArray()));
     }
 
-    private function createJobWithStatus($status=Job::STATUS_WAITING, $multimediaObject)
+    private function createJobWithStatus($status = Job::STATUS_WAITING, $multimediaObject)
     {
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
@@ -282,7 +282,7 @@ class RemoveListenerTest extends WebTestCase
         }
     }
 
-    private function createGroup($key='Group1', $name='Group 1')
+    private function createGroup($key = 'Group1', $name = 'Group 1')
     {
         $group = new Group();
         $group->setKey($key);

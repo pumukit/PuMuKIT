@@ -221,7 +221,7 @@ class SeriesServiceTest extends WebTestCase
         $this->assertTrue($this->seriesService->sameEmbeddedBroadcast($series1));
     }
 
-    private function createGroup($key='Group1', $name='Group 1')
+    private function createGroup($key = 'Group1', $name = 'Group 1')
     {
         $group = new Group();
 

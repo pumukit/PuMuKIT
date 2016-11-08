@@ -31,7 +31,7 @@ class UserService
      * @param PermissionService $permissionService
      * @param PermissionProfileService $permissionProfileService
      */
-    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners=false, $genUserSalt=false)
+    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false, $genUserSalt = false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
@@ -56,7 +56,7 @@ class UserService
      * @param boolean          $executeFlush
      * @return MultimediaObject
      */
-    public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush=true)
+    public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
         $multimediaObject = $this->addOwnerUserToObject($multimediaObject, $user, $executeFlush);
         $series = $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
@@ -78,7 +78,7 @@ class UserService
      * @param boolean                 $executeFlush
      * @return MultimediaObject
      */
-    private function addOwnerUserToObject($object, User $user, $executeFlush=true)
+    private function addOwnerUserToObject($object, User $user, $executeFlush = true)
     {
         if (null != $object) {
             $owners = $object->getProperty('owners');
@@ -110,7 +110,7 @@ class UserService
      * @param boolean          $executeFlush
      * @return MultimediaObject
      */
-    public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush=true)
+    public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
         $multimediaObject = $this->removeOwnerUserFromObject($multimediaObject, $user, $executeFlush);
         $series = $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
@@ -118,7 +118,7 @@ class UserService
         return $multimediaObject;
     }
 
-    private function removeOwnerUserFromObject($object, User $user, $executeFlush=true)
+    private function removeOwnerUserFromObject($object, User $user, $executeFlush = true)
     {
         if (null != $object) {
             $owners = $object->getProperty('owners');
@@ -148,7 +148,7 @@ class UserService
         return $object;
     }
 
-    private function removeUserFromOwnerProperty($object, User $user, $executeFlush=true)
+    private function removeUserFromOwnerProperty($object, User $user, $executeFlush = true)
     {
         if (null != $object) {
             $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
@@ -377,7 +377,7 @@ class UserService
      * @param User $user
      * @return User
      */
-    public function addUserScope(User $user, $scope= '')
+    public function addUserScope(User $user, $scope = '')
     {
         if ((!$user->hasRole($scope)) &&
             (in_array($scope, array_keys(PermissionProfile::$scopeDescription)))) {

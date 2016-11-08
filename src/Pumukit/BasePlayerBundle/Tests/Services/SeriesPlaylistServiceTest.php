@@ -23,7 +23,7 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $container = static::$kernel->getContainer();
         $this->dm = $container->get('doctrine_mongodb')->getManager();
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->seriesRepo =$this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->seriesPlaylistService = $container->get('pumukit_baseplayer.seriesplaylist');
 
         $track = new Track();

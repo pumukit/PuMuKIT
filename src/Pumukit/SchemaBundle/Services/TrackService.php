@@ -19,7 +19,7 @@ class TrackService
     private $forceDeleteOnDisk;
     private $jobRepo;
 
-    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, ProfileService $profileService, $tmpPath=null, $forceDeleteOnDisk=true)
+    public function __construct(DocumentManager $documentManager, TrackEventDispatcherService $dispatcher, ProfileService $profileService, $tmpPath = null, $forceDeleteOnDisk = true)
     {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;

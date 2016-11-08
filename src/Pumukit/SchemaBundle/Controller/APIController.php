@@ -60,7 +60,7 @@ class APIController extends Controller implements NewAdminController
         }
         if ($page && $page > 0) {
             $limit = $limit?:10;
-            $skip = $limit*($page-1);
+            $skip = $limit * ($page - 1);
         } else {
             $page = null;
         }
@@ -113,7 +113,7 @@ class APIController extends Controller implements NewAdminController
         }
         if ($page && $page > 0) {
             $limit = $limit?:10;
-            $skip = $limit*($page-1);
+            $skip = $limit * ($page - 1);
         } else {
             $page = null;
         }

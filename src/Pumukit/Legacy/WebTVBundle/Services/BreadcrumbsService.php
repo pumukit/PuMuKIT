@@ -16,7 +16,7 @@ class BreadcrumbsService
     private $breadcrumbs;
     private $translator;
 
-    public function __construct(Router $router, Session $session, $allTitle='All', $allRoute='pumukit_webtv_medialibrary_index', $translator)
+    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $translator)
     {
         $this->session = $session;
         $this->router = $router;
@@ -51,7 +51,7 @@ class BreadcrumbsService
     }
 
   
-    public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation=false)
+    public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)
     {
         if ($forceTranslation) {
             $title = $this->translator->trans($title);

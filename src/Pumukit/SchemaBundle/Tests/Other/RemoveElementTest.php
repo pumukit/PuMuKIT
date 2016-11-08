@@ -1240,7 +1240,7 @@ class RemoveElementTest extends WebTestCase
         $this->assertEquals(1, $eb4->getGroups()->count());
     }
 
-    private function createGroup($key='Group1', $name='Group 1', $persist = true)
+    private function createGroup($key = 'Group1', $name = 'Group 1', $persist = true)
     {
         $group = new Group();
 
@@ -1255,7 +1255,7 @@ class RemoveElementTest extends WebTestCase
         return $group;
     }
 
-    private function createUser($username='user')
+    private function createUser($username = 'user')
     {
         $user = new User();
         $user->setUsername($username);

@@ -69,7 +69,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getFirstUrlPicFilter($object, $absolute=false, $hd=true)
+    public function getFirstUrlPicFilter($object, $absolute = false, $hd = true)
     {
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }

@@ -1952,7 +1952,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $cod = 'EmbeddedRole';
         $xml = '<xml content and definition of this/>';
         $text = 'Black then white are all i see in my infancy.';
-        $locale= 'en';
+        $locale = 'en';
 
         $embeddedRole->setName($name);
         $embeddedRole->setCod($cod);
@@ -3165,7 +3165,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         return $broadcast;
     }
 
-    private function createGroup($key='Group1', $name='Group 1')
+    private function createGroup($key = 'Group1', $name = 'Group 1')
     {
         $group = new Group();
 

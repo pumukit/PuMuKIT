@@ -30,7 +30,7 @@ class TagService
      * @param  boolean          $executeFlush
      * @return Array[Tag]       addded tags
      */
-    public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
+    public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
         $tag = $this->repository->find($tagId);
         if (!$tag) {
@@ -48,7 +48,7 @@ class TagService
      * @param  boolean          $executeFlush
      * @return Array[Tag]       addded tags
      */
-    public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush=true)
+    public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
         $tag = $this->repository->findOneByCod($tagCod);
         if (!$tag) {
@@ -66,7 +66,7 @@ class TagService
      * @param  boolean          $executeFlush
      * @return Array[Tag]       addded tags
      */
-    public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush=true)
+    public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
     {
         $tagAdded = array();
 
@@ -102,7 +102,7 @@ class TagService
      * @param  boolean          $executeFlush
      * @return Array[Tag] removed tags
      */
-    public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush=true)
+    public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
         $removeTags = array();
 

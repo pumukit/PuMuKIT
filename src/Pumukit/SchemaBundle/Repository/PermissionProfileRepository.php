@@ -20,7 +20,7 @@ class PermissionProfileRepository extends DocumentRepository
      * @param PermissionProfile $permissionProfile
      * @param boolean $default
      */
-    public function changeDefault(PermissionProfile $permissionProfile, $default=true)
+    public function changeDefault(PermissionProfile $permissionProfile, $default = true)
     {
         $this->createQueryBuilder()
             ->field('name')->notEqual($permissionProfile->getName())

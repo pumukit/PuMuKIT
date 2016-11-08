@@ -195,7 +195,7 @@ EOT
     {
         $root = $this->tagsRepo->findOneByCod('ROOT');
         if (!$root) {
-            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>'ROOT', 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0, 'name_en' =>'ROOT'));
+            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT'));
         }
         $this->dm->persist($root);
         $this->dm->flush();

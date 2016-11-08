@@ -68,7 +68,7 @@ class CollectionController extends Controller implements NewAdminController
         }
     }
 
-    protected function createPager($queryBuilder, $request, $session_namespace='admin/collection')
+    protected function createPager($queryBuilder, $request, $session_namespace = 'admin/collection')
     {
         $session = $this->get('session');
         if ($request->get('page', null)) {

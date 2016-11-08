@@ -358,7 +358,7 @@ class DefaultController extends Controller
     /**
      * Get series (new or existing one)
      */
-    private function getSeries($seriesData=array())
+    private function getSeries($seriesData = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
@@ -376,7 +376,7 @@ class DefaultController extends Controller
     /**
      * Create Series
      */
-    private function createSeries($seriesData=array())
+    private function createSeries($seriesData = array())
     {
         if ($seriesData) {
             $factoryService = $this->get('pumukitschema.factory');
@@ -476,7 +476,7 @@ class DefaultController extends Controller
      * Get default field values in data
      * for those important fields that can not be empty
      */
-    private function getDefaultFieldValuesInData($resourceData=array(), $fieldName='', $defaultValue='', $isI18nField=false)
+    private function getDefaultFieldValuesInData($resourceData = array(), $fieldName = '', $defaultValue = '', $isI18nField = false)
     {
         if ($fieldName && $defaultValue) {
             if ($isI18nField) {
@@ -497,7 +497,7 @@ class DefaultController extends Controller
      * Get uppercase field name
      * Converts something like 'i18n_title' into 'I18nTitle'
      */
-    private function getUpperFieldName($key='')
+    private function getUpperFieldName($key = '')
     {
         $pattern = '/_[a-z]?/';
         $aux = preg_replace_callback($pattern, function ($matches) {
