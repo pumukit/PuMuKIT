@@ -4,7 +4,6 @@ namespace Pumukit\OpencastBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\ODM\MongoDB\DocumentManager;
-
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Services\TagService;

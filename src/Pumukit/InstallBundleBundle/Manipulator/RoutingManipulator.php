@@ -3,7 +3,6 @@
 namespace Pumukit\InstallBundleBundle\Manipulator;
 
 use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
-
 use Symfony\Component\DependencyInjection\Container;
 
 /**

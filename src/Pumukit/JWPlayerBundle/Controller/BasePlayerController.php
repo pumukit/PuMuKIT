@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Controller\WebTVController;
 use Pumukit\CoreBundle\Controller\PersonalController;
-
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
 class BasePlayerController extends BasePlayerControllero implements PersonalController
