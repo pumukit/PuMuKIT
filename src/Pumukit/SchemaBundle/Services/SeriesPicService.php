@@ -20,7 +20,7 @@ class SeriesPicService
     private $forceDeleteOnDisk;
     private $defaultBanner = '<a href="#"><img  style="width:100%" src="___banner_url___" border="0"/></a>';
 
-    public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher, $locales = array(), $targetPath, $targetUrl, $forceDeleteOnDisk = true)
+    public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher, array $locales, $targetPath, $targetUrl, $forceDeleteOnDisk = true)
     {
         $this->dm = $documentManager;
         $this->seriesDispatcher = $seriesDispatcher;

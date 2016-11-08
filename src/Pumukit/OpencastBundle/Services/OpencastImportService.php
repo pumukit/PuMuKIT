@@ -221,7 +221,7 @@ class OpencastImportService
         return null;
     }
 
-    private function createTrackFromMediaPackage($mediaPackage = array(), MultimediaObject $multimediaObject, $index = null)
+    private function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null)
     {
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');
@@ -312,7 +312,7 @@ class OpencastImportService
         return $track;
     }
 
-    private function createPicFromAttachment($attachment = array(), MultimediaObject $multimediaObject, $index = null)
+    private function createPicFromAttachment($attachment, MultimediaObject $multimediaObject, $index = null)
     {
         if ($attachment) {
             if (null === $index) {
@@ -342,7 +342,7 @@ class OpencastImportService
         return $multimediaObject;
     }
 
-    private function addTagToTrack($tags = array(), Track $track, $index = null)
+    private function addTagToTrack($tags, Track $track, $index = null)
     {
         if ($tags) {
             if (null === $index) {

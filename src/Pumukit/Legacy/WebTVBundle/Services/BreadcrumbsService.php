@@ -16,7 +16,7 @@ class BreadcrumbsService
     private $breadcrumbs;
     private $translator;
 
-    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $translator)
+    public function __construct(Router $router, Session $session, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $translator = null)
     {
         $this->session = $session;
         $this->router = $router;
@@ -30,7 +30,7 @@ class BreadcrumbsService
     public function init()
     {
         if (!$this->session->has('breadcrumbs/title')) {
-            $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
+            $this->session->set('breadcrumbs/title', $this->trans($this->allTitle));
         }
         if (!$this->session->has('breadcrumbs/routeParameters')) {
             $this->session->set('breadcrumbs/routeName', $this->allRoute);
@@ -44,7 +44,7 @@ class BreadcrumbsService
 
     public function reset()
     {
-        $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
+        $this->session->set('breadcrumbs/title', $this->trans($this->allTitle));
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
         $this->session->set('breadcrumbs/routeParameters', array());
         $this->breadcrumbs = array(array('title' => 'Home', 'link' => $this->router->generate('pumukit_webtv_index_index')));
@@ -53,7 +53,7 @@ class BreadcrumbsService
     public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)
     {
         if ($forceTranslation) {
-            $title = $this->translator->trans($title);
+            $title = $this->trans($title);
         }
         $this->reset();
         $this->session->set('breadcrumbs/title', $title);
@@ -88,5 +88,14 @@ class BreadcrumbsService
     public function getBreadcrumbs()
     {
         return $this->breadcrumbs;
+    }
+
+    private function trans($target)
+    {
+        if (!$this->translator) {
+            return $target;
+        }
+
+        return $this->translator->trans($target);
     }
 }

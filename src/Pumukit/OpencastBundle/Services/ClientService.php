@@ -36,8 +36,8 @@ class ClientService
      * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger,
-                                RoleHierarchy $roleHierarchy = null)
+                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null,
+                                LoggerInterface $logger = null, RoleHierarchy $roleHierarchy = null)
     {
         $this->logger = $logger;
 

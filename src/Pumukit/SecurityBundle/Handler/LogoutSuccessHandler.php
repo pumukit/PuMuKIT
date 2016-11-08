@@ -13,7 +13,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
     private $router;
     protected $casService;
 
-    public function __construct(array $options = array(), UrlGeneratorInterface $router, CASService $casService)
+    public function __construct(array $options, UrlGeneratorInterface $router, CASService $casService)
     {
         $this->options = $options;
         $this->router = $router;

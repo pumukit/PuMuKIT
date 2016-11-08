@@ -227,7 +227,7 @@ class TagController extends Controller implements NewAdminController
         );
     }
 
-    private function getAllParents($element, $tags = array(), $top_parent)
+    private function getAllParents($element, $tags, $top_parent)
     {
         if ($element->getParent() != null) {
             $parentMissing = true;

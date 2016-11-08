@@ -122,7 +122,7 @@ class FeedController extends Controller
         return $qb->getQuery()->execute();
     }
 
-    private function getPodcastMultimediaObjectsByAudioAndSeries($isOnlyAudio = false, Series $series)
+    private function getPodcastMultimediaObjectsByAudioAndSeries($isOnlyAudio, Series $series)
     {
         $qb = $this->createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio);
         $qb->field('series')->references($series);

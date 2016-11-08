@@ -85,7 +85,7 @@ class RemoveListenerTest extends WebTestCase
         $this->assertEquals(0, count($this->repoJobs->findAll()));
     }
 
-    private function createJobWithStatusAndPathEnd($status = Job::STATUS_WAITING, $multimediaObject, $pathEnd)
+    private function createJobWithStatusAndPathEnd($status, $multimediaObject, $pathEnd)
     {
         $job = new Job();
         $job->setMmId($multimediaObject->getId());

@@ -77,7 +77,7 @@ class SenderService
      * @param array  $parameters
      * @param bool   $error
      */
-    public function sendNotification($emailTo, $subject = 'Pumukit2 Notification', $template, $parameters = array(), $error = true)
+    public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
     {
         if ($this->enable && filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
             $message = \Swift_Message::newInstance();

@@ -82,7 +82,7 @@ class JobNotificationServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findAll()));
     }
 
-    private function createNewJob($status = null, $multimediaObject)
+    private function createNewJob($status, $multimediaObject)
     {
         $job = new Job();
         if (null !== $status) {
