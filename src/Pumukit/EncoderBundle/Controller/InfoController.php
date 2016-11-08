@@ -59,11 +59,11 @@ class InfoController extends Controller
 
         return array('cpus' => $cpus,
                      'deactivated_cpus' => $deactivatedCpus,
-                     'jobs' => array('pending' =>   array('total' => ($stats['paused'] + $stats['waiting']),
+                     'jobs' => array('pending' => array('total' => ($stats['paused'] + $stats['waiting']),
                                                           'jobs' => $this->createPager($pendingJobs, $request->query->get('page_pending', 1)), ),
                                      'executing' => array('total' => ($stats['executing']),
                                                           'jobs' => $this->createPager($executingJobs, $request->query->get('page_executing', 1), 20), ),
-                                     'executed' =>  array('total' => ($stats['error'] + $stats['finished']),
+                                     'executed' => array('total' => ($stats['error'] + $stats['finished']),
                                                           'jobs' => $this->createPager($executedJobs, $request->query->get('page_executed', 1)), ), ),
                      'stats' => $stats, );
     }

@@ -72,7 +72,7 @@ class MultimediaObjectController extends Controller
         }
 
         return array(
-                     'form'     => $form->createView(),
+                     'form' => $form->createView(),
                      'multimediaObject' => $multimediaObject,
                      );
     }

@@ -32,9 +32,9 @@ class PersonController extends Controller
         $ldapConnected = $ldapService->checkConnection();
       
         return array(
-                     'ldap_connected'  => $ldapConnected,
-                     'mm'              => $multimediaObject,
-                     'role'            => $role,
+                     'ldap_connected' => $ldapConnected,
+                     'mm' => $multimediaObject,
+                     'role' => $role,
                      );
     }
 
@@ -70,8 +70,8 @@ class PersonController extends Controller
                 $out[] = array(
                                'value' => $person['cn'],
                                'label' => $person['cn'],
-                               'mail'  => $person['mail'],
-                               'cn'    => $person['cn'],
+                               'mail' => $person['mail'],
+                               'cn' => $person['cn'],
                                );
             }
         } catch (\Exception $e) {

@@ -88,7 +88,7 @@ class APIController extends Controller implements NewAdminController
                         'limit' => $limit,
                         'page' => $page,
                         'criteria' => $criteria,
-                        'sort'  => $sort,
+                        'sort' => $sort,
                         'mmobjs' => $mmobjs, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
@@ -138,7 +138,7 @@ class APIController extends Controller implements NewAdminController
                         'limit' => $limit,
                         'page' => $page,
                         'criteria' => $criteria,
-                        'sort'  => $sort,
+                        'sort' => $sort,
                         'series' => $series, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
@@ -180,7 +180,7 @@ class APIController extends Controller implements NewAdminController
         $counts = array('total' => $total,
                         'limit' => $limit,
                         'criteria' => $criteria,
-                        'sort'  => $sort,
+                        'sort' => $sort,
                         'live' => $live, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());

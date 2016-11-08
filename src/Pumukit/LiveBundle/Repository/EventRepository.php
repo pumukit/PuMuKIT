@@ -57,7 +57,7 @@ class EventRepository extends DocumentRepository
         $pipeline = array(
             array('$match' => array('display' => true)),
             array('$project' => array('date' => true, 'end' => array('$add' => array('$date', array('$multiply' => array('$duration', 60000)))))),
-            array('$match' => array('$and' => array(array('date' => array('$lte' => $nowWithMarginBefore)), array('end' =>  array('$gte' => $nowWithMarginAfter))))),
+            array('$match' => array('$and' => array(array('date' => array('$lte' => $nowWithMarginBefore)), array('end' => array('$gte' => $nowWithMarginAfter))))),
         );
 
         if ($limit) {

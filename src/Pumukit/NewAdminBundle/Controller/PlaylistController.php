@@ -100,9 +100,9 @@ class PlaylistController extends CollectionController
 
         return $this->render('PumukitNewAdminBundle:Playlist:update.html.twig',
                              array(
-                                   'series'                   => $series,
-                                   'form'                     => $form->createView(),
-                                   'template'                 => '_template',
+                                   'series' => $series,
+                                   'form' => $form->createView(),
+                                   'template' => '_template',
                                    )
                              );
     }

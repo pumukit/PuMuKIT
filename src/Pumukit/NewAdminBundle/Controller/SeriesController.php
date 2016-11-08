@@ -154,19 +154,19 @@ class SeriesController extends AdminController implements NewAdminController
 
         return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
                              array(
-                                   'series'                   => $resource,
-                                   'form'                     => $form->createView(),
-                                   'mmtemplate'               => $mmtemplate,
-                                   'form_meta'                => $formMeta->createView(),
-                                   'roles'                    => $roles,
-                                   'personal_scope_role'      => $personalScopeRole,
+                                   'series' => $resource,
+                                   'form' => $form->createView(),
+                                   'mmtemplate' => $mmtemplate,
+                                   'form_meta' => $formMeta->createView(),
+                                   'roles' => $roles,
+                                   'personal_scope_role' => $personalScopeRole,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'pub_decisions'            => $pubDecisionsTags,
-                                   'parent_tags'              => $parentTags,
-                                   'exclude_fields'           => $exclude_fields,
-                                   'show_later_fields'        => $show_later_fields,
-                                   'template'                 => '_template',
-                                   'groups'                   => $allGroups,
+                                   'pub_decisions' => $pubDecisionsTags,
+                                   'parent_tags' => $parentTags,
+                                   'exclude_fields' => $exclude_fields,
+                                   'show_later_fields' => $show_later_fields,
+                                   'template' => '_template',
+                                   'groups' => $allGroups,
                                    )
                              );
     }

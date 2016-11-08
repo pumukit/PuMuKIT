@@ -342,9 +342,9 @@ class GroupController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'group'         => $group,
-                     'action'        => $action,
-                     'resources'     => $resources,
+                     'group' => $group,
+                     'action' => $action,
+                     'resources' => $resources,
                      'resource_name' => $resourceName,
                      );
     }
@@ -413,7 +413,7 @@ class GroupController extends AdminController implements NewAdminController
         return new JsonResponse(array(
                                       'canbedeleted' => $value,
                                       'deleteMessage' => $deleteMessage,
-                                      'groupName'    => $group->getName(),
+                                      'groupName' => $group->getName(),
                                       ));
     }
 
