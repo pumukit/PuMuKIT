@@ -67,7 +67,9 @@ class PicExtractorListener
     private function addDefaultAudioPic(MultimediaObject $multimediaObject, Track $track)
     {
         $picFile = $this->createPicFile();
-        if (null === $picFile) return false;
+        if (null === $picFile) {
+            return false;
+        }
         $multimediaObject = $this->mmsPicService->addPicFile($multimediaObject, $picFile);
         if ($multimediaObject !== null) {
             if ($multimediaObject instanceof MultimediaObject) {
@@ -99,7 +101,7 @@ class PicExtractorListener
 
     private function createPicFile()
     {
-        if (copy($this->defaultAudioPic, $this->audioPicCopy)){
+        if (copy($this->defaultAudioPic, $this->audioPicCopy)) {
             $picFile = new UploadedFile($this->audioPicCopy, $this->defaultAudioPicOriginalName, null, null, null, true);
             return $picFile;
         }

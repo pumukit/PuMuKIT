@@ -117,7 +117,6 @@ class MultimediaObjectRankTest extends WebTestCase
         $this->assertEquals(1, $mm2->getRank());
         $this->assertEquals(2, $mm3->getRank());
         $this->assertEquals(3, $mm4->getRank());
-
     }
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
@@ -165,5 +164,4 @@ class MultimediaObjectRankTest extends WebTestCase
 
         return $series;
     }
-
 }

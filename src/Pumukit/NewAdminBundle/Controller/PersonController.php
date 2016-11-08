@@ -32,7 +32,7 @@ class PersonController extends AdminController implements NewAdminController
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
-        foreach($resources as $person){
+        foreach ($resources as $person) {
             $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
         }
 
@@ -156,7 +156,7 @@ class PersonController extends AdminController implements NewAdminController
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
-        foreach($resources as $person){
+        foreach ($resources as $person) {
             $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
         }
 
@@ -355,18 +355,18 @@ class PersonController extends AdminController implements NewAdminController
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
-        try{
+        try {
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
             // TODO Snackbars and toasts
             //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$msg_alert = array('info', $message);
-        }catch(\Excepction $e){
+        } catch (\Excepction $e) {
             //$message = sprintf($this->getContext()->getI18N()->__("Persona ya asociada a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$this->msg_alert = array('error', $message);
         }
 
         $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
         $owner = $request->get('owner', false);
@@ -396,14 +396,13 @@ class PersonController extends AdminController implements NewAdminController
         $people = $personService->autoCompletePeopleByName($name);
 
         $out = [];
-        foreach($people as $p){
+        foreach ($people as $p) {
             $out[] = array(
                            "id"=> $p->getId(),
                            "label"=> $p->getName(),
                            "desc" => $p->getPost()." ". $p->getFirm(),
                            "value" => $p->getName()
                            );
-
         }
 
         return new JsonResponse($out);
@@ -427,7 +426,7 @@ class PersonController extends AdminController implements NewAdminController
         $multimediaObject = $personService->upPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
         $owner = $request->get('owner', false);
@@ -465,7 +464,7 @@ class PersonController extends AdminController implements NewAdminController
         $multimediaObject = $personService->downPersonWithRole($person, $role, $multimediaObject);
 
         $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
         $owner = $request->get('owner', false);
@@ -505,12 +504,12 @@ class PersonController extends AdminController implements NewAdminController
             $person = $personService->findPersonById($request->get('id'));
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
         }
 
         $template = '';
-        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()){
+        if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
         if ($owner === 'owner') {
@@ -538,13 +537,13 @@ class PersonController extends AdminController implements NewAdminController
     {
         $personService = $this->get('pumukitschema.person');
         $person = $personService->findPersonById($request->get('id'));
-        try{
-            if (0 === $personService->countMultimediaObjectsWithPerson($person)){
+        try {
+            if (0 === $personService->countMultimediaObjectsWithPerson($person)) {
                 $personService->deletePerson($person);
             } else {
                 return new Response("Can not delete Person '".$person->getName()."'. There are Multimedia objects with this Person.", 409);
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return new Response("Can not delete Person '".$person->getName()."'. ".$e->getMessage(), 409);
         }
 
@@ -559,19 +558,19 @@ class PersonController extends AdminController implements NewAdminController
     {
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
         $personService = $this->get('pumukitschema.person');
         foreach ($ids as $id) {
             $person = $this->find($id);
-            try{
+            try {
                 $personService->deletePerson($person);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/person/id')){
+            if ($id === $this->get('session')->get('admin/person/id')) {
                 $this->get('session')->remove('admin/person/id');
             }
         }
@@ -595,28 +594,27 @@ class PersonController extends AdminController implements NewAdminController
 
         $new_criteria = array();
 
-        if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)){
-            if (('' !== $criteria['name']) && ('' !== $criteria['letter'])){
+        if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)) {
+            if (('' !== $criteria['name']) && ('' !== $criteria['letter'])) {
                 $more = strtoupper($criteria['name'][0]) == strtoupper($criteria['letter']) ? "|^" . $criteria['name'] . ".*" : "";
                 $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'.*'.$criteria['name'].'.*'.$more.'/i');
-            }elseif('' !== $criteria['name']){
+            } elseif ('' !== $criteria['name']) {
                 $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'/i');
-            }elseif('' !== $criteria['letter']){
+            } elseif ('' !== $criteria['letter']) {
                 $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'/i');
             }
-        }elseif(array_key_exists('name', $criteria)){
-            if ('' !== $criteria['name']){
+        } elseif (array_key_exists('name', $criteria)) {
+            if ('' !== $criteria['name']) {
                 $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'/i');
             }
-
-        }elseif(array_key_exists('letter', $criteria)){
-            if ('' !== $criteria['letter']){
+        } elseif (array_key_exists('letter', $criteria)) {
+            if ('' !== $criteria['letter']) {
                 $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'/i');
             }
         }
 
-        if (array_key_exists('post', $criteria)){
-            if ('' !== $criteria['post']){
+        if (array_key_exists('post', $criteria)) {
+            if ('' !== $criteria['post']) {
                 $new_criteria['post.' . $locale] = new \MongoRegex('/'.$criteria['post'].'/i');
             }
         }
@@ -631,7 +629,7 @@ class PersonController extends AdminController implements NewAdminController
     {
         $session = $this->get('session');
 
-        if ($sorting = $request->get('sorting')){
+        if ($sorting = $request->get('sorting')) {
             $session->set('admin/person/type', $sorting[key($sorting)]);
             $session->set('admin/person/sort', key($sorting));
         }
@@ -668,7 +666,9 @@ class PersonController extends AdminController implements NewAdminController
                 $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
                 $position = 1;
                 foreach ($returnedPerson as $person) {
-                    if ($selectedPersonId == $person->getId()) break;
+                    if ($selectedPersonId == $person->getId()) {
+                        break;
+                    }
                     ++$position;
                 }
                 $maxPerPage = $session->get('admin/person/paginate', 10);
@@ -681,7 +681,7 @@ class PersonController extends AdminController implements NewAdminController
               ->setMaxPerPage($config->getPaginationMaxPerPage())
               ->setNormalizeOutOfRangePages(true)
               ->setCurrentPage($session->get('admin/person/page', 1));
-              ;
+            ;
         } else {
             $resources = $this
               ->resourceResolver

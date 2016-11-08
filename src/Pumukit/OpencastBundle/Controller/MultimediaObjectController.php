@@ -32,7 +32,7 @@ class MultimediaObjectController extends Controller
         $sbsProfile = '';
         if ($this->container->hasParameter('pumukit_opencast.sbs.profile')) {
             $sbsProfile = $this->container->getParameter('pumukit_opencast.sbs.profile');
-        }      
+        }
 
         return array(
                      'mm' => $multimediaObject,
@@ -87,8 +87,12 @@ class MultimediaObjectController extends Controller
         $presenterDeliveryTrack = $multimediaObject->getTrackWithTag('presenter/delivery');
         $presentationDeliveryTrack = $multimediaObject->getTrackWithTag('presentation/delivery');
 
-        if (null !== $presenterDeliveryTrack) $presenterDeliveryUrl = $presenterDeliveryTrack->getUrl();
-        if (null !== $presentationDeliveryTrack) $presentationDeliveryUrl = $presentationDeliveryTrack->getUrl();
+        if (null !== $presenterDeliveryTrack) {
+            $presenterDeliveryUrl = $presenterDeliveryTrack->getUrl();
+        }
+        if (null !== $presentationDeliveryTrack) {
+            $presentationDeliveryUrl = $presentationDeliveryTrack->getUrl();
+        }
 
         return array(
                      'presenter_delivery_url' => $presenterDeliveryUrl,

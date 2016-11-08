@@ -124,12 +124,12 @@ class AnnounceServiceTest extends WebTestCase
 
         //We check the response is correct (returns objects within the same month)
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date);
-        $this->assertEquals( "05/1999", $dateEnd->format("m/Y"));
-        $this->assertEquals( array($series2, $mm11), $last);
+        $this->assertEquals("05/1999", $dateEnd->format("m/Y"));
+        $this->assertEquals(array($series2, $mm11), $last);
 
         //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date, false);
-        $this->assertEquals( array($mm33->getId() => $mm33, $mm11->getId() => $mm11), $last);
+        $this->assertEquals(array($mm33->getId() => $mm33, $mm11->getId() => $mm11), $last);
 
         //We reuse the series and change the date
         $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', "05/04/1999"));
@@ -141,20 +141,20 @@ class AnnounceServiceTest extends WebTestCase
         $dateEnd->modify('first day of last month');
         //We check again for a correct answer (the series shouldn't be here at all)
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
-        $this->assertEquals( array($mm22), $last);
+        $this->assertEquals(array($mm22), $last);
 
         //Finally, we check the answer is empty after searching for 24 months. (calling it two times)
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
-        $this->assertEquals( array(), $last);
-        $this->assertEquals( "04/1997", $dateEnd->format("m/Y"));
+        $this->assertEquals(array(), $last);
+        $this->assertEquals("04/1997", $dateEnd->format("m/Y"));
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
-        $this->assertEquals( array(), $last);
-        $this->assertEquals( "04/1995", $dateEnd->format("m/Y"));
+        $this->assertEquals(array(), $last);
+        $this->assertEquals("04/1995", $dateEnd->format("m/Y"));
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd, false);
-        $this->assertEquals( array(), $last);
-        $this->assertEquals( "04/1993", $dateEnd->format("m/Y"));
+        $this->assertEquals(array(), $last);
+        $this->assertEquals("04/1993", $dateEnd->format("m/Y"));
     }
 }

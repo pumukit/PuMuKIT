@@ -252,7 +252,6 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $tag1->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
-
     }
 
     /**
@@ -405,9 +404,9 @@ class TagServiceTest extends WebTestCase
         } else {
             $rootTag = $this->tagRepo->findOneByCod('grandparent');
             if (null == $rootTag) {
-              $rootTag = new Tag();
-              $rootTag->setCod('grandparent');
-              $this->dm->persist($rootTag);
+                $rootTag = new Tag();
+                $rootTag->setCod('grandparent');
+                $this->dm->persist($rootTag);
             }
         }
 

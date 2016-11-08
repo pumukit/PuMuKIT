@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class InspectionMediainfoService implements InspectionServiceInterface
 {
-
     private $logger;
 
     public function __construct(LoggerInterface $logger = null)
@@ -59,7 +58,6 @@ class InspectionMediainfoService implements InspectionServiceInterface
         }
 
         foreach ($xml->File->track as $xml_track) {
-
             switch ((string) $xml_track['type']) {
                 case "General":
                     $track->setMimetype($xml_track->Internet_media_type);
@@ -109,7 +107,9 @@ class InspectionMediainfoService implements InspectionServiceInterface
         if (!$process->isSuccessful()) {
             $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
               $process->getExitCodeText().'. '.$process->getErrorOutput();
-            if($this->logger) $this->logger->error($message);
+            if ($this->logger) {
+                $this->logger->error($message);
+            }
             throw new \RuntimeException($message);
         }
 

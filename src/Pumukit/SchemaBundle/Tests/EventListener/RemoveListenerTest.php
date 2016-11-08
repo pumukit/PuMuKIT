@@ -258,13 +258,13 @@ class RemoveListenerTest extends WebTestCase
     {
         $mmobjs = $this->repoMmobj->findAll();
 
-        foreach($mmobjs as $mm){
+        foreach ($mmobjs as $mm) {
             $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
-            if (is_dir($mmDir)){
+            if (is_dir($mmDir)) {
                 $files = glob($mmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 
@@ -272,11 +272,11 @@ class RemoveListenerTest extends WebTestCase
             }
 
             $tmpMmDir = '/tmp/'.$mm->getId().'/';
-            if (is_dir($tmpMmDir)){
+            if (is_dir($tmpMmDir)) {
                 $files = glob($tmpMmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 
@@ -307,4 +307,3 @@ class RemoveListenerTest extends WebTestCase
         return $user;
     }
 }
-

@@ -33,7 +33,7 @@ class APIController extends Controller implements NewAdminController
 
         $counts = array('series' => $totalSeries,
                         'mms' => $totalMmobjs,
-                        'hours' => $totalHours, 
+                        'hours' => $totalHours,
                         'live_channels' => $totalLiveChannels,);
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
@@ -55,25 +55,23 @@ class APIController extends Controller implements NewAdminController
         $sort = $request->get('sort')?:array();
         $prototypes = $request->get('prototypes')?:false;
 
-        if(!$limit || $limit > 100 ) {
+        if (!$limit || $limit > 100) {
             $limit = 100;
         }
-        if($page && $page > 0) {
+        if ($page && $page > 0) {
             $limit = $limit?:10;
             $skip = $limit*($page-1);
-        }
-        else {
+        } else {
             $page = null;
         }
 
-        if($prototypes) {
+        if ($prototypes) {
             $qb = $mmRepo->createQueryBuilder();
-        }
-        else {
+        } else {
             $qb = $mmRepo->createStandardQueryBuilder();
         }
 
-        if($criteria){
+        if ($criteria) {
             $qb = $qb->addAnd($criteria);
         }
 
@@ -82,13 +80,13 @@ class APIController extends Controller implements NewAdminController
                                ->skip($skip)
                                ->sort($sort);
 
-        $total = $qb->count()->getQuery()->execute();        
+        $total = $qb->count()->getQuery()->execute();
         $mmobjs = $qb_mmobjs->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total, 
+        $counts = array('total' => $total,
                         'limit' => $limit,
                         'page' => $page ,
-                        'criteria' => $criteria, 
+                        'criteria' => $criteria,
                         'sort'  => $sort,
                         'mmobjs' => $mmobjs);
 
@@ -110,20 +108,19 @@ class APIController extends Controller implements NewAdminController
         $sort = $request->get('sort')?:array();
         $prototypes = $request->get('prototypes')?:false;
 
-        if(!$limit || $limit > 100 ) {
+        if (!$limit || $limit > 100) {
             $limit = 100;
         }
-        if($page && $page > 0) {
+        if ($page && $page > 0) {
             $limit = $limit?:10;
             $skip = $limit*($page-1);
-        }
-        else {
+        } else {
             $page = null;
         }
 
         $qb = $seriesRepo->createQueryBuilder();
 
-        if($criteria){
+        if ($criteria) {
             $qb = $qb->addAnd($criteria);
         }
 
@@ -132,13 +129,13 @@ class APIController extends Controller implements NewAdminController
                                ->skip($skip)
                                ->sort($sort);
 
-        $total = $qb->count()->getQuery()->execute();        
+        $total = $qb->count()->getQuery()->execute();
         $series = $qb_series->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total, 
+        $counts = array('total' => $total,
                         'limit' => $limit,
                         'page' => $page ,
-                        'criteria' => $criteria, 
+                        'criteria' => $criteria,
                         'sort'  => $sort,
                         'series' => $series,);
 
@@ -155,7 +152,7 @@ class APIController extends Controller implements NewAdminController
         $serializer = $this->get('serializer');
 
         $limit = $request->get('limit');
-        if(!$limit || $limit > 100 ) {
+        if (!$limit || $limit > 100) {
             $limit = 100;
         }
 
@@ -164,7 +161,7 @@ class APIController extends Controller implements NewAdminController
 
         $qb = $liveRepo->createQueryBuilder();
 
-        if($criteria){
+        if ($criteria) {
             $qb = $qb->addAnd($criteria);
         }
 
@@ -177,9 +174,9 @@ class APIController extends Controller implements NewAdminController
         $total = $qb->count()->getQuery()->execute();
         $live = $qb_live->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total, 
+        $counts = array('total' => $total,
                         'limit' => $limit,
-                        'criteria' => $criteria, 
+                        'criteria' => $criteria,
                         'sort'  => $sort,
                         'live' => $live);
 

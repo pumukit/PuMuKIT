@@ -44,9 +44,9 @@ class DefaultController extends Controller
             ->getRepository('PumukitSchemaBundle:Series');
         $series = $seriesRepo->find($id);
 
-        if ($series){
+        if ($series) {
             $showSeries = false;
-            if (!$formData){
+            if (!$formData) {
                 $formData = array('series' => array(
                                                    'i18n_title' => $series->getI18nTitle(),
                                                    'i18n_subtitle' => $series->getI18nSubtitle(),
@@ -129,7 +129,7 @@ class DefaultController extends Controller
         $multimediaObject = null;
         $mmId = null;
         $formData = $request->get('pumukitwizard_form_data');
-        if ($formData){
+        if ($formData) {
             $seriesData = $this->getKeyData('series', $formData);
 
             $seriesId = $this->getKeyData('id', $seriesData);
@@ -142,7 +142,9 @@ class DefaultController extends Controller
             } else {
                 $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
             }
-            if (!$profile) throw \Exception('Not exists master profile');
+            if (!$profile) {
+                throw \Exception('Not exists master profile');
+            }
 
             $priority = $this->getKeyData('priority', $trackData, 2);
             $language = $this->getKeyData('language', $trackData);
@@ -151,21 +153,23 @@ class DefaultController extends Controller
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
 
             $showSeries = false;
-            if (('null' === $seriesId) || (null === $seriesId)) $showSeries = true;
+            if (('null' === $seriesId) || (null === $seriesId)) {
+                $showSeries = true;
+            }
 
             // TODO Fragment this. Develop better way.
             $option = $this->getKeyData('option', $typeData);
-            try{
-                if ('single' === $option){
+            try {
+                if ('single' === $option) {
                     $filetype = $this->getKeyData('filetype', $trackData);
-                    if ('file' === $filetype){
-                        if(!$request->files->get('resource')->isValid()) {
-                          throw new \Exception($request->files->get('resource')->getErrorMessage());
+                    if ('file' === $filetype) {
+                        if (!$request->files->get('resource')->isValid()) {
+                            throw new \Exception($request->files->get('resource')->getErrorMessage());
                         }
                         $filePath = $request->files->get('resource')->getPathname();
-                    }elseif ('inbox' === $filetype){
+                    } elseif ('inbox' === $filetype) {
                         $filePath = $request->get('file');
-                    }else{
+                    } else {
                         throw new \Exception('Not uploaded file or inbox path');
                     }
 
@@ -176,7 +180,7 @@ class DefaultController extends Controller
                         throw new \Exception('The file is not a valid video or audio file');
                     }
 
-                    if(0 == $duration) {
+                    if (0 == $duration) {
                         throw new \Exception('The file is not a valid video or audio file (duration is zero)');
                     }
 
@@ -184,35 +188,37 @@ class DefaultController extends Controller
                     $multimediaObjectData = $this->getKeyData('multimediaobject', $formData);
 
                     $i18nTitle = $this->getKeyData('i18n_title', $multimediaObjectData);
-                    if (empty(array_filter($i18nTitle))) $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
+                    if (empty(array_filter($i18nTitle))) {
+                        $multimediaObjectData = $this->getDefaultFieldValuesInData($multimediaObjectData, 'i18n_title', 'New', true);
+                    }
 
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
                     $multimediaObject->setDuration($duration);
 
 
-                    if ('file' === $filetype){
+                    if ('file' === $filetype) {
                         $selectedPath = $request->get('resource');
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description,
                                                                                        array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
-                    }elseif ('inbox' === $filetype){
+                    } elseif ('inbox' === $filetype) {
                         $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                         $selectedPath = $request->get('file');
                         $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description,
                                                                                       array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
                     }
 
-                    if ($multimediaObject && $pubchannel){
-                        foreach($pubchannel as $tagCode => $valueOn){
+                    if ($multimediaObject && $pubchannel) {
+                        foreach ($pubchannel as $tagCode => $valueOn) {
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                         }
                     }
-                }elseif ('multiple' === $option){
+                } elseif ('multiple' === $option) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                     $series = $this->getSeries($seriesData);
                     $selectedPath = $request->get('file');
                     $finder = new Finder();
                     $finder->files()->in($selectedPath);
-                    foreach ($finder as $f){
+                    foreach ($finder as $f) {
                         $filePath = $f->getRealpath();
                         try {
                             $duration = $inspectionService->getDuration($filePath);
@@ -221,25 +227,25 @@ class DefaultController extends Controller
                         }
                         $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
-                        if ($multimediaObject){
-                            try{
+                        if ($multimediaObject) {
+                            try {
                                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
-                            }catch(\Exception $e){
+                            } catch (\Exception $e) {
                                 // TODO: filter invalid files another way
-                                if (!strpos($e->getMessage(), 'Unknown error')){
+                                if (!strpos($e->getMessage(), 'Unknown error')) {
                                     $this->removeInvalidMultimediaObject($multimediaObject, $series);
                                     throw $e;
                                 }
                             }
-                            foreach($pubchannel as $tagCode => $valueOn){
+                            foreach ($pubchannel as $tagCode => $valueOn) {
                                 $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                             }
                         }
                     }
                 }
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 // TODO filter unknown errors
-                $message = preg_replace( "/\r|\n/", "", $e->getMessage());
+                $message = preg_replace("/\r|\n/", "", $e->getMessage());
                 return array(
                              'uploaded' => 'failed',
                              'message' => $message,
@@ -249,7 +255,7 @@ class DefaultController extends Controller
                              'show_series' => $showSeries
                              );
             }
-        }else{
+        } else {
             // TODO THROW EXCEPTION OR RENDER SPECIFIC TEMPLATE WITH MESSAGE
             return array(
                          'uploaded' => 'failed',
@@ -261,10 +267,16 @@ class DefaultController extends Controller
                          );
         }
 
-        if ($series) $seriesId = $series->getId();
-        else $seriesId = null;
-        if ($multimediaObject) $mmId = $multimediaObject->getId();
-        else $mmId = null;
+        if ($series) {
+            $seriesId = $series->getId();
+        } else {
+            $seriesId = null;
+        }
+        if ($multimediaObject) {
+            $mmId = $multimediaObject->getId();
+        } else {
+            $mmId = null;
+        }
 
         return array(
                      'uploaded' => 'success',
@@ -353,9 +365,9 @@ class DefaultController extends Controller
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
 
         $seriesId = $this->getKeyData('id', $seriesData);
-        if ($seriesId && ('null' !== $seriesId)){
+        if ($seriesId && ('null' !== $seriesId)) {
             $series = $seriesRepo->find($seriesId);
-        }else{
+        } else {
             $series = $this->createSeries($seriesData);
         }
 
@@ -367,12 +379,14 @@ class DefaultController extends Controller
      */
     private function createSeries($seriesData=array())
     {
-        if ($seriesData){
+        if ($seriesData) {
             $factoryService = $this->get('pumukitschema.factory');
             $series = $factoryService->createSeries($this->getUser());
 
             $i18nTitle = $this->getKeyData('i18n_title', $seriesData);
-            if (empty(array_filter($i18nTitle))) $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
+            if (empty(array_filter($i18nTitle))) {
+                $seriesData = $this->getDefaultFieldValuesInData($seriesData, 'i18n_title', 'New', true);
+            }
 
             $keys = array('i18n_title', 'i18n_subtitle', 'i18n_description');
             $series = $this->setData($series, $seriesData, $keys);
@@ -388,11 +402,11 @@ class DefaultController extends Controller
      */
     private function createMultimediaObject($mmData, $series)
     {
-        if ($series){
+        if ($series) {
             $factoryService = $this->get('pumukitschema.factory');
             $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
-            if ($mmData){
+            if ($mmData) {
                 $keys = array('i18n_title', 'i18n_subtitle', 'i18n_description', 'i18n_line2');
                 $multimediaObject = $this->setData($multimediaObject, $mmData, $keys);
             }
@@ -421,7 +435,9 @@ class DefaultController extends Controller
 
 
         $tag = $tagRepo->findOneByCod($tagCode);
-        if ($tag) $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+        if ($tag) {
+            $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+        }
 
         return $addedTags;
     }
@@ -433,9 +449,9 @@ class DefaultController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
-        foreach ($keys as $key){
+        foreach ($keys as $key) {
             $value = $this->getKeyData($key, $resourceData);
-            if ($value){
+            if ($value) {
                 $upperField = $this->getUpperFieldName($key);
                 $setField = 'set'.$upperField;
                 $resource->$setField($value);
@@ -465,14 +481,14 @@ class DefaultController extends Controller
      */
     private function getDefaultFieldValuesInData($resourceData=array(), $fieldName='', $defaultValue='', $isI18nField=false)
     {
-        if ($fieldName && $defaultValue){
-            if ($isI18nField){
+        if ($fieldName && $defaultValue) {
+            if ($isI18nField) {
                 $resourceData[$fieldName] = array();
                 $locales = $this->container->getParameter('pumukit2.locales');
-                foreach($locales as $locale){
+                foreach ($locales as $locale) {
                     $resourceData[$fieldName][$locale] = $defaultValue;
                 }
-            }else{
+            } else {
                 $resourceData[$fieldName] = $defaultValue;
             }
         }
@@ -487,9 +503,9 @@ class DefaultController extends Controller
     private function getUpperFieldName($key='')
     {
         $pattern = "/_[a-z]?/";
-        $aux = preg_replace_callback($pattern, function($matches){
+        $aux = preg_replace_callback($pattern, function ($matches) {
             return strtoupper(ltrim($matches[0], "_"));
-          }, $key);
+        }, $key);
 
         return ucfirst($aux);
     }

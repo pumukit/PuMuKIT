@@ -21,9 +21,11 @@ class PersonRepository extends DocumentRepository
 
         $mmobjRepo = $this->getDocumentManager()
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        foreach ($people as $person){
+        foreach ($people as $person) {
             $mms = $mmobjRepo->findByPersonIdWithRoleCod($person->getId(), $roleCode);
-            if ($mms->count() > 0) return $person;
+            if ($mms->count() > 0) {
+                return $person;
+            }
         }
 
         return null;

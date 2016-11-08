@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+
 /**
  *  @Route("/annotation")
  */
@@ -64,7 +65,7 @@ class AnnotationsAPIController extends Controller
         $annonQB->limit($limit)->skip($offset);
         $resAnnotations = $annonQB->getQuery()->execute()->toArray();
         $annotations = array();
-        foreach( $resAnnotations as $ann) {
+        foreach ($resAnnotations as $ann) {
             $annotations[] = $ann;
         }
 

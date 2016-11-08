@@ -23,6 +23,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
@@ -38,10 +39,12 @@ class PlaylistMultimediaObjectController extends Controller
         $session = $this->get('session');
         $sessionId = $session->get('admin/playlist/id', null);
         $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
-        if(!$series) throw $this->createNotFoundException();
+        if (!$series) {
+            throw $this->createNotFoundException();
+        }
 
         $session->set('admin/playlist/id', $series->getId());
-        if($request->query->has('mmid')) {
+        if ($request->query->has('mmid')) {
             $session->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
@@ -51,14 +54,15 @@ class PlaylistMultimediaObjectController extends Controller
 
         // Removes the session mmobj (shown on info and preview) if it does not belong to THIS playlist.
         $update_session = true;
-        foreach($mms as $mm) {
-            if($mm->getId() == $this->get('session')->get('admin/playlistmms/id')){
+        foreach ($mms as $mm) {
+            if ($mm->getId() == $this->get('session')->get('admin/playlistmms/id')) {
                 $update_session = false;
                 break;
             }
         }
-        if($update_session)
+        if ($update_session) {
             $session->remove('admin/playlistmms/id');
+        }
 
         return array(
             'playlist' => $series,
@@ -73,8 +77,9 @@ class PlaylistMultimediaObjectController extends Controller
     public function showAction(MultimediaObject $mmobj, Request $request)
     {
         $this->get('session')->set('admin/playlistmms/id', $mmobj->getId());
-        if($request->query->has('pos'))
+        if ($request->query->has('pos')) {
             $this->get('session')->set('admin/playlistmms/pos', $request->query->get('pos'));
+        }
         $roles = $this->get('pumukitschema.person')->getRoles();
         $activeEditor = $this->checkHasEditor();
         return array(
@@ -110,11 +115,13 @@ class PlaylistMultimediaObjectController extends Controller
         $factoryService = $this->get('pumukitschema.factory');
         $sessionId = $this->get('session')->get('admin/playlist/id', null);
         $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
-        if(!$series) throw $this->createNotFoundException();
+        if (!$series) {
+            throw $this->createNotFoundException();
+        }
 
         $this->get('session')->set('admin/playlist/id', $series->getId());
 
-        if($request->query->has('mmid')) {
+        if ($request->query->has('mmid')) {
             $this->get('session')->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
@@ -180,7 +187,7 @@ class PlaylistMultimediaObjectController extends Controller
     public function modalMyMmobjsAction(Series $playlist, Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $page = $request->get('modal_page',1);
+        $page = $request->get('modal_page', 1);
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
         $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
@@ -225,12 +232,13 @@ class PlaylistMultimediaObjectController extends Controller
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
         $user = $this->getUser();
-        if($mmobj) {
+        if ($mmobj) {
             $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
             $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');
         }
-        if($mmobj && (!$canBePlayed || !$canUserPlay))
+        if ($mmobj && (!$canBePlayed || !$canUserPlay)) {
             $mmobj = null;
+        }
         return array(
             'mmobj' => $mmobj,
             'mmobj_id' => $id
@@ -242,13 +250,15 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $this->enableFilter();
         $mmobjIds = $request->query->get('ids', '');
-        if(!$mmobjIds)
+        if (!$mmobjIds) {
             throw $this->createNotFoundException();
+        }
         //Sanity check. (May be remove if we want to mix series and playlists in the future.)
-        if($playlist->getType() != Series::TYPE_PLAYLIST)
+        if ($playlist->getType() != Series::TYPE_PLAYLIST) {
             throw $this->createNotFoundException();
+        }
 
-        if ('string' === gettype($mmobjIds)){
+        if ('string' === gettype($mmobjIds)) {
             $mmobjIds = json_decode($mmobjIds, true);
         }
 
@@ -256,8 +266,9 @@ class PlaylistMultimediaObjectController extends Controller
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         foreach ($mmobjIds as $id) {
             $mmobj = $mmobjRepo->find($id);
-            if(!$mmobj)
+            if (!$mmobj) {
                 continue;
+            }
             $playlist->getPlaylist()->addMultimediaObject($mmobj);
             $dm->persist($playlist);
             $dm->flush();
@@ -269,13 +280,15 @@ class PlaylistMultimediaObjectController extends Controller
     public function deleteBatchAction(Series $playlist, Request $request)
     {
         $mmobjIds = $request->query->get('ids', '');
-        if(!$mmobjIds)
+        if (!$mmobjIds) {
             throw $this->createNotFoundException();
+        }
         //Sanity check. (May be remove if we want to mix series and playlists in the future.)
-        if($playlist->getType() != Series::TYPE_PLAYLIST)
+        if ($playlist->getType() != Series::TYPE_PLAYLIST) {
             throw $this->createNotFoundException();
+        }
 
-        if ('string' === gettype($mmobjIds)){
+        if ('string' === gettype($mmobjIds)) {
             $mmobjIds = json_decode($mmobjIds, true);
         }
 
@@ -283,8 +296,9 @@ class PlaylistMultimediaObjectController extends Controller
         //$mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
         foreach ($mmobjIds as $pos => $id) {
-            if(isset($mms[$pos]) && $mms[$pos]->getId() == $id)
+            if (isset($mms[$pos]) && $mms[$pos]->getId() == $id) {
                 $playlist->getPlaylist()->removeMultimediaObjectByPos($pos);
+            }
         }
         $dm->persist($playlist);
         $dm->flush();
@@ -298,14 +312,16 @@ class PlaylistMultimediaObjectController extends Controller
     public function addMmobjAction(Series $series, Request $request)
     {
         $this->enableFilter();
-        if(!$request->query->has('mm_id'))
+        if (!$request->query->has('mm_id')) {
             throw new \Exception('The request is missing the \'mm_id\' parameter');
+        }
 
         $playlistEmbed = $series->getPlaylist();
         $mmobjId = $request->query->get('mm_id');
         $mm = $mmobjRepo->find($mmobjId);
-        if(!$mm)
+        if (!$mm) {
             throw new \Exception("The id: $mmobjId , does not belong to any Multimedia Object");
+        }
 
         $playlistEmbed->addMultimediaObject($mm);
         $dm->persist($playlistEmbed);
@@ -315,7 +331,8 @@ class PlaylistMultimediaObjectController extends Controller
     /**
      * Moves the mmobj in $initPos to $endPos
      */
-    protected function moveAction(Series $playlist, $initPos, $endPos) {
+    protected function moveAction(Series $playlist, $initPos, $endPos)
+    {
         $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', array('id' => $playlist->getId())));
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
@@ -324,13 +341,15 @@ class PlaylistMultimediaObjectController extends Controller
         return $actionResponse;
     }
 
-    public function upAction(Series $playlist, Request $request) {
+    public function upAction(Series $playlist, Request $request)
+    {
         $initPos = $request->query->get('mm_pos');
         $endPos = ($initPos < 1) ? 0 : $initPos - 1;
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
-    public function downAction(Series $playlist, Request $request) {
+    public function downAction(Series $playlist, Request $request)
+    {
         $initPos = $request->query->get('mm_pos');
         $numMmobjs = count($playlist->getPlaylist()->getMultimediaObjects());
         $lastPos = $numMmobjs - 1;
@@ -338,13 +357,15 @@ class PlaylistMultimediaObjectController extends Controller
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
-    public function topAction(Series $playlist, Request $request) {
+    public function topAction(Series $playlist, Request $request)
+    {
         $initPos = $request->query->get('mm_pos');
         $firstPos = 0;
         return $this->moveAction($playlist, $initPos, $firstPos);
     }
 
-    public function bottomAction(Series $playlist, Request $request) {
+    public function bottomAction(Series $playlist, Request $request)
+    {
         $initPos = $request->query->get('mm_pos');
         $lastPos = -1;
         return $this->moveAction($playlist, $initPos, $lastPos);
@@ -366,7 +387,7 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $user = $this->get('security.context')->getToken()->getUser();
-        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)){
+        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
         $dm->getFilterCollection()->disable("backoffice");
@@ -432,7 +453,6 @@ class PlaylistMultimediaObjectController extends Controller
      */
     public function addBatchToSeveralPlaylistAction(Request $request)
     {
-
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');

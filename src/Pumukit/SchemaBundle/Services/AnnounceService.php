@@ -18,10 +18,9 @@ class AnnounceService
 
     public function getLast($limit = 3, $withPudenewTag = true)
     {
-        if($withPudenewTag) {
+        if ($withPudenewTag) {
             $return = $this->getLastMmobjsWithSeries($limit);
-        }
-        else {
+        } else {
             //Get recently added mmobjs
             $return = $this->mmobjRepo->findStandardBy(array(), array('public_date' => -1), $limit, 0);
         }
@@ -73,7 +72,7 @@ class AnnounceService
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
         $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
 
-        if(!$withPudenewTag) {
+        if (!$withPudenewTag) {
             return $queryBuilderMms->sort(array('public_date' => 1))->getQuery()->execute()->toArray();
         }
 

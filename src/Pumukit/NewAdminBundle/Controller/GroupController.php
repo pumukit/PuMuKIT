@@ -176,7 +176,7 @@ class GroupController extends AdminController implements NewAdminController
     {
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -194,7 +194,7 @@ class GroupController extends AdminController implements NewAdminController
                     return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
                 }
             }
-            if ($id === $this->get('session')->get('admin/group/id')){
+            if ($id === $this->get('session')->get('admin/group/id')) {
                 $this->get('session')->remove('admin/group/id');
             }
         }
@@ -264,7 +264,7 @@ class GroupController extends AdminController implements NewAdminController
     private function getSorting(Request $request)
     {
         $session = $this->get('session');
-        if ($sorting = $request->get('sorting')){
+        if ($sorting = $request->get('sorting')) {
             $session->set('admin/group/type', $sorting[key($sorting)]);
             $session->set('admin/group/sort', key($sorting));
         }
@@ -407,7 +407,7 @@ class GroupController extends AdminController implements NewAdminController
             $value = $canBeDeleted ? 1:0;
             $locale = $request->getLocale();
             $deleteMessage = $groupService->getDeleteMessage($group, $locale);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
         }
 

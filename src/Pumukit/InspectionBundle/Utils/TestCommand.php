@@ -4,7 +4,8 @@ namespace Pumukit\InspectionBundle\Utils;
 class TestCommand
 {
     //TODO: Move away
-    static function commandExists($command) {
+    public static function commandExists($command)
+    {
         if (!function_exists('exec')) {
             return false;
         }

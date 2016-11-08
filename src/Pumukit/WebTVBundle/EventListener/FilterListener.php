@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class FilterListener
 {
-
     private $dm;
 
     public function __construct(DocumentManager $documentManager)
@@ -30,27 +29,26 @@ class FilterListener
          * From Symfony Docs: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html
          */
         $controller = $event->getController();
-        if(!is_array($controller)) {
+        if (!is_array($controller)) {
             return;
         }
 
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
         $deprecatedCheck = false && (false !== strpos($req->attributes->get("_controller"), 'WebTVBundle'));
 
-        if (($controller[0] instanceof WebTVController /*deprecated*/|| $deprecatedCheck/**/ )
+        if (($controller[0] instanceof WebTVController /*deprecated*/|| $deprecatedCheck/**/)
             && $event->isMasterRequest()
                 && $isFilterActivated) {
-
             $filter = $this->dm->getFilterCollection()->enable("frontend");
-            if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
+            if (isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
                 $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
             } else {
                 $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
             }
-            if(!isset($routeParams["track"]) || $routeParams["track"]) {
+            if (!isset($routeParams["track"]) || $routeParams["track"]) {
                 $filter->setParameter("display_track_tag", "display");
             }
-            if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
+            if (!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
                 $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
             }
         }

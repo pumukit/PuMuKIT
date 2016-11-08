@@ -29,10 +29,11 @@ class PersonalFilter extends SchemaFilter
                 array('groups' => $this->parameters['groups'])
             );
         }
-        if($criteria_portal && $criteria_backoffice)
+        if ($criteria_portal && $criteria_backoffice) {
             $criteria['$or'] = array($criteria_portal, $criteria_backoffice);
-        else
+        } else {
             $criteria = $criteria_portal?:$criteria_backoffice;
+        }
         return $criteria;
     }
 

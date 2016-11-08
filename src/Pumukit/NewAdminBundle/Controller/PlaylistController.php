@@ -36,13 +36,13 @@ class PlaylistController extends CollectionController
         $update_session = true;
         $resources = $this->getResources($request);
 
-        foreach($resources as $playlist) {
-            if($playlist->getId() == $this->get('session')->get('admin/playlist/id')){
+        foreach ($resources as $playlist) {
+            if ($playlist->getId() == $this->get('session')->get('admin/playlist/id')) {
                 $update_session = false;
             }
         }
 
-        if($update_session){
+        if ($update_session) {
             $this->get('session')->remove('admin/playlist/id');
         }
 
@@ -113,8 +113,9 @@ class PlaylistController extends CollectionController
     {
         $factoryService = $this->get('pumukitschema.factory');
 
-        if(!$this->isUserAllowedToDelete($playlist))
+        if (!$this->isUserAllowedToDelete($playlist)) {
             return new Response('You don\'t have enough permissions to delete this playlist. Contact your administrator.', Response::HTTP_FORBIDDEN);
+        }
 
         try {
             $factoryService->deleteSeries($playlist);
@@ -124,13 +125,13 @@ class PlaylistController extends CollectionController
 
         $playlistId = $playlist->getId();
         $playlistSessionId = $this->get('session')->get('admin/mms/id');
-        if ($playlistId === $playlistSessionId){
+        if ($playlistId === $playlistSessionId) {
             $this->get('session')->remove('admin/playlist/id');
         }
         $mmSessionId = $this->get('session')->get('admin/mms/id');
-        if ($mmSessionId){
+        if ($mmSessionId) {
             $mm = $factoryService->findMultimediaObjectById($mmSessionId);
-            if ($playlistId === $mm->getSeries()->getId()){
+            if ($playlistId === $mm->getSeries()->getId()) {
                 $this->get('session')->remove('admin/mms/id');
             }
         }
@@ -145,7 +146,7 @@ class PlaylistController extends CollectionController
     public function batchDeleteAction(Request $request)
     {
         $ids = $this->getRequest()->get('ids');
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -159,11 +160,11 @@ class PlaylistController extends CollectionController
 
 //        $this->get('doctrine_mongodb.odm.document_manager')->clear();
         $playlist = $seriesRepo->find($this->get('session')->get('admin/playlist/id'));
-        if(!$playlist) {
+        if (!$playlist) {
             $this->get('session')->remove('admin/playlist/id');
         }
         $mm = $mmobjRepo->find($this->get('session')->get('admin/mms/id'));
-        if(!$mm) {
+        if (!$mm) {
             $this->get('session')->remove('admin/mms/id');
         }
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', array()));
@@ -222,21 +223,20 @@ class PlaylistController extends CollectionController
      */
     private function getSorting(Request $request)
     {
-      $session = $this->get('session');
+        $session = $this->get('session');
 
-      if ($sorting = $request->get('sorting')){
-          $session->set('admin/playlist/type', current($sorting));
-          $session->set('admin/playlist/sort', key($sorting));
-      }
+        if ($sorting = $request->get('sorting')) {
+            $session->set('admin/playlist/type', current($sorting));
+            $session->set('admin/playlist/sort', key($sorting));
+        }
 
-      $value = $session->get('admin/playlist/type', 'desc');
-      $key = $session->get('admin/playlist/sort', 'public_date');
+        $value = $session->get('admin/playlist/type', 'desc');
+        $key = $session->get('admin/playlist/sort', 'public_date');
 
-      if($key == 'title') {
-          $key .='.'.$request->getLocale();
-      }
+        if ($key == 'title') {
+            $key .='.'.$request->getLocale();
+        }
 
-      return  array($key => $value);
+        return  array($key => $value);
     }
-
 }

@@ -30,7 +30,8 @@ class OpencastImportService
     private $inspectionService;
     private $otherLocales;
     
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array()) {
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array())
+    {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
@@ -63,7 +64,7 @@ class OpencastImportService
         if ($seriesOpencastId) {
             $series = $seriesRepo->findOneBy(array("properties.opencast" => $seriesOpencastId));
         } else {
-            $series = $seriesRepo->findOneBy(array("properties.opencast" => "default"));            
+            $series = $seriesRepo->findOneBy(array("properties.opencast" => "default"));
         }
         if (!$series) {
             $series = $this->importSeries($mediaPackage, $loggedInUser);
@@ -81,7 +82,9 @@ class OpencastImportService
             $multimediaObject->setSeries($series);
 
             $title = $this->getMediaPackageField($mediaPackage, 'title');
-            if ($title) $multimediaObject->setTitle($title);
+            if ($title) {
+                $multimediaObject->setTitle($title);
+            }
 
             $properties = $this->getMediaPackageField($mediaPackage, 'id');
             if ($properties) {
@@ -91,7 +94,9 @@ class OpencastImportService
             $multimediaObject->setProperty("opencastinvert", boolval($invert));
 
             $recDate = $this->getMediaPackageField($mediaPackage, 'start');
-            if ($recDate) $multimediaObject->setRecordDate($recDate);
+            if ($recDate) {
+                $multimediaObject->setRecordDate($recDate);
+            }
 
             $language = $this->getMediaPackageField($mediaPackage, 'language');
             if ($language) {
@@ -150,9 +155,9 @@ class OpencastImportService
         if ($seriesOpencastId) {
             $title = $this->getMediaPackageField($mediaPackage, 'seriestitle');
             $properties = $seriesOpencastId;
-        } else{
+        } else {
             $title = "MediaPackages without series";
-            $properties = "default";            
+            $properties = "default";
         }
 
         $series = $this->factoryService->createSeries($loggedInUser);
@@ -176,7 +181,7 @@ class OpencastImportService
         if (null != $opencastId) {
             try {
                 $archiveMediaPackage = $this->opencastClient->getMediapackageFromArchive($opencastId);
-            } catch (\Exception $e){
+            } catch (\Exception $e) {
                 // TODO - Trace error
                 return $opencastUrls;
             }
@@ -314,7 +319,7 @@ class OpencastImportService
     {
         if ($attachment) {
             if (null === $index) {
-                $itemAttachment = $attachment; 
+                $itemAttachment = $attachment;
             } else {
                 $itemAttachment = $attachment[$index];
             }
@@ -329,7 +334,9 @@ class OpencastImportService
                             $pic->addTag($tag);
                         }
                     }
-                    if ($url) $pic->setUrl($url);
+                    if ($url) {
+                        $pic->setUrl($url);
+                    }
                     $multimediaObject->addPic($pic);
                 }
             }

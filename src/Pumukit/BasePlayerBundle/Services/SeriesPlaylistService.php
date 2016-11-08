@@ -28,9 +28,10 @@ class SeriesPlaylistService
      * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
      * @return QueryBuilder
      */
-    protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = array()) {
+    protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = array())
+    {
         $qb = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjIds);
-        if($criteria) {
+        if ($criteria) {
             $qb->addAnd($criteria);
         }
         return $qb;
@@ -43,10 +44,11 @@ class SeriesPlaylistService
      * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
      * @return QueryBuilder
      */
-    protected function createSortedQuerySeriesMmobjs($series, $criteria = array()) {
+    protected function createSortedQuerySeriesMmobjs($series, $criteria = array())
+    {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
                     ->field('series')->references($series);
-        if($criteria) {
+        if ($criteria) {
             $qb->addAnd($criteria);
         }
         $qb->sort('rank', 'asc');
@@ -71,10 +73,11 @@ class SeriesPlaylistService
         $playlist = array();
         //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
         //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
-        foreach($playlistMmobjs as $playMmobj){
-            foreach($playlistMmobjsFiltered as $mmobj) {
-                if($playMmobj == $mmobj->getId())
+        foreach ($playlistMmobjs as $playMmobj) {
+            foreach ($playlistMmobjsFiltered as $mmobj) {
+                if ($playMmobj == $mmobj->getId()) {
                     $playlist[] = $mmobj;
+                }
             }
         }
         return $playlist;
@@ -120,10 +123,11 @@ class SeriesPlaylistService
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria);
         $mmobj = $qb->getQuery()->getSingleResult();
 
-        if(!$mmobj) {
+        if (!$mmobj) {
             $playlist = $this->retrieveSortedPlaylistMmobjs($series, $criteria);
-            if($playlist)
+            if ($playlist) {
                 return reset($playlist);
+            }
         }
         return $mmobj;
     }
@@ -144,11 +148,12 @@ class SeriesPlaylistService
                    ->field('id')->equals(new \MongoId($mmobjId));
         $mmobj = $qb->getQuery()->getSingleResult();
 
-        if(!$mmobj) {
+        if (!$mmobj) {
             $playlistMmobjs = $this->retrieveSortedPlaylistMmobjs($series, $criteria);
-            foreach($playlistMmobjs as $playMmobj) {
-                if($playMmobj->getId() == $mmobjId)
+            foreach ($playlistMmobjs as $playMmobj) {
+                if ($playMmobj->getId() == $mmobjId) {
                     return $playMmobj;
+                }
             }
         }
         return $mmobj;

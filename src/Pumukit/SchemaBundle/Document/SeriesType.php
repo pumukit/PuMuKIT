@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class SeriesType
 {
-  /**
+    /**
    * @var int $id
    *
    * @MongoDB\Id

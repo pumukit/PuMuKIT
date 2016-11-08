@@ -40,8 +40,9 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function tearDown()
     {
-        if(isset($this->dm))
+        if (isset($this->dm)) {
             $this->dm->close();
+        }
         $this->container = null;
         $this->dm = null;
         $this->repo = null;
@@ -89,7 +90,7 @@ class JobNotificationServiceTest extends WebTestCase
     private function createNewJob($status = null, $multimediaObject)
     {
         $job = new Job();
-        if (null !== $status){
+        if (null !== $status) {
             $job->setStatus($status);
         }
         $job->setMmId($multimediaObject->getId());

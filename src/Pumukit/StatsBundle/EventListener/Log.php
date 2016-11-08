@@ -27,8 +27,9 @@ class Log
     {
         $req = $this->requestStack->getMasterRequest();
         $track = $event->getTrack();
-        if(!$this->isViewableTrack($track))
+        if (!$this->isViewableTrack($track)) {
             return;
+        }
 
         $log = new ViewsLog($req->getUri(),
                             $req->getClientIp(),

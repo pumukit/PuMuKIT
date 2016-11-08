@@ -4,7 +4,7 @@ namespace Pumukit\EncoderBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\EncoderBundle\Document\Job;
-      
+
 abstract class BasePumukitEncoderCommand extends ContainerAwareCommand
 {
     protected function formatStatus($job_status)
@@ -18,6 +18,5 @@ abstract class BasePumukitEncoderCommand extends ContainerAwareCommand
         );
 
         return $tags[$job_status][0] . Job::$statusTexts[$job_status] . $tags[$job_status][1];
-        
     }
 }

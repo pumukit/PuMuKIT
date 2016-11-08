@@ -49,16 +49,17 @@ class PlayerController extends Controller implements WebTVController
 
         $editorChapters = array();
 
-        if($marks) {
+        if ($marks) {
             $marks = json_decode($marks->getValue(), true);
-            if($trimming) {
+            if ($trimming) {
                 $trimming = json_decode($trimming->getValue(), true);
-                if(isset($trimming['trimming']))
+                if (isset($trimming['trimming'])) {
                     $trimming = $trimming['trimming'];
+                }
 
-                foreach($marks['marks'] as $chapt) {
+                foreach ($marks['marks'] as $chapt) {
                     $time = $chapt['s'];
-                    if($trimming['start'] <= $time && $trimming['end'] >= $time) {
+                    if ($trimming['start'] <= $time && $trimming['end'] >= $time) {
                         $editorChapters[] = array('title' => $chapt['name'],
                                                   'real_time' => $time,
                                                   'time_to_show' => $time - $trimming['start']);
@@ -66,10 +67,9 @@ class PlayerController extends Controller implements WebTVController
                 }
             }
             
-            usort($editorChapters, function($a, $b) {
+            usort($editorChapters, function ($a, $b) {
                 return $a['real_time'] > $b['real_time'];
             });
-
         }
 
         return $editorChapters;

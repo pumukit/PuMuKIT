@@ -43,7 +43,7 @@ class RemoveListener
             $mmsService->removeFromAllPlaylists($document);
 
             $tagService = $this->container->get("pumukitschema.tag");
-            foreach($document->getTags() as $tag) {
+            foreach ($document->getTags() as $tag) {
                 if ($document->containsTag($tag)) {
                     $tagService->removeTagFromMultimediaObject($document, $tag->getId());
                 }

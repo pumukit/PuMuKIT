@@ -37,7 +37,7 @@ class PersonWithRoleEventDispatcherService
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, $person, $role)
     {
-      $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
+        $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
         $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_CREATE, $event);
     }
 
@@ -54,7 +54,7 @@ class PersonWithRoleEventDispatcherService
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, $person, $role)
     {
-      $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
+        $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
         $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_UPDATE, $event);
     }
 
@@ -71,7 +71,7 @@ class PersonWithRoleEventDispatcherService
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, $person, $role)
     {
-      $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
+        $event = new PersonWithRoleEvent($multimediaObject, $person, $role);
         $this->dispatcher->dispatch(SchemaEvents::PERSONWITHROLE_DELETE, $event);
     }
 }

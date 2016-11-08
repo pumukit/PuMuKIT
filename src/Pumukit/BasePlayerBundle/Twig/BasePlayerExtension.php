@@ -2,7 +2,6 @@
 
 namespace Pumukit\BasePlayerBundle\Twig;
 
-
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\SchemaBundle\Document\Broadcast;
@@ -70,7 +69,8 @@ class BasePlayerExtension extends \Twig_Extension
      *
      * @return Track
      */
-    public function getFirstPublicTrackFilter(MultimediaObject $mmobj) {
+    public function getFirstPublicTrackFilter(MultimediaObject $mmobj)
+    {
         return $mmobj->getDisplayTrack();
     }
 }

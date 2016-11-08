@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PlaylistTest extends WebTestCase
 {
-
     public function testCreate()
     {
         $playlist = new Playlist();
@@ -34,10 +33,10 @@ class PlaylistTest extends WebTestCase
         $playlist->getPlaylist()->addMultimediaObject($mmobjC);
         //Nothing changes
         $oldArray = $playlist->getPlaylist()->getMultimediaObjects()->toArray();
-        $this->assertFalse(false, $playlist->getPlaylist()->moveMultimediaObject(123,123));
+        $this->assertFalse(false, $playlist->getPlaylist()->moveMultimediaObject(123, 123));
         $this->assertEquals($oldArray, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Start out of bounds (nothing changes either).
-        $this->assertFalse($playlist->getPlaylist()->moveMultimediaObject(-123,0));
+        $this->assertFalse($playlist->getPlaylist()->moveMultimediaObject(-123, 0));
         $mmobjs = array(
             $mmobjA,
             $mmobjB,
@@ -48,7 +47,7 @@ class PlaylistTest extends WebTestCase
         );
         $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
         //Move one.
-        $playlist->getPlaylist()->moveMultimediaObject(3,1);
+        $playlist->getPlaylist()->moveMultimediaObject(3, 1);
         $mmobjs = array(
             $mmobjA,
             $mmobjA,
@@ -114,6 +113,6 @@ class PlaylistTest extends WebTestCase
         );
         $this->assertEquals($mmobjs, $playlist->getPlaylist()->getMultimediaObjects()->toArray());
 
-	$this->assertEquals(false, false);
+        $this->assertEquals(false, false);
     }
 }

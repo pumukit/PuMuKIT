@@ -26,16 +26,15 @@ class ByTagController extends Controller implements WebTVController
 
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-      if( $request->get('useTagAsGeneral') ){
-        //This should be included on SchemaBundle:MultimediaObjectRepository.
+      if ($request->get('useTagAsGeneral')) {
+          //This should be included on SchemaBundle:MultimediaObjectRepository.
         $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => -1));
-        $title = $this->get('translator')->trans("General %title%", array('%title%' => $tag->getTitle()));
-        $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'useTagAsGeneral' => true));
-      }
-      else {
-        $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => -1));
-        $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
-        $title = $tag->getTitle();
+          $title = $this->get('translator')->trans("General %title%", array('%title%' => $tag->getTitle()));
+          $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'useTagAsGeneral' => true));
+      } else {
+          $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => -1));
+          $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
+          $title = $tag->getTitle();
       }
 
       $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
@@ -54,7 +53,6 @@ class ByTagController extends Controller implements WebTVController
    */
   public function seriesAction(Tag $tag, Request $request)
   {
-
       $numberCols = $this->container->getParameter('columns_objs_bytag');
       $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
       $series = $repo->createBuilderWithTag($tag, array('public_date' => -1));

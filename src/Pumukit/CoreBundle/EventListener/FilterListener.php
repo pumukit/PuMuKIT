@@ -43,7 +43,7 @@ class FilterListener
          * From Symfony Docs: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html
          */
         $controller = $event->getController();
-        if(!is_array($controller)) {
+        if (!is_array($controller)) {
             return;
         }
 
@@ -91,7 +91,7 @@ class FilterListener
     {
         if (null != $token = $this->securityContext->getToken()) {
             $user = $token->getUser();
-            if($user instanceof User) {
+            if ($user instanceof User) {
                 return $user;
             }
         }
@@ -133,13 +133,13 @@ class FilterListener
         //Users with SCOPE_GLOBAL can view everything.
         $loggedInUser = $this->getLoggedInUser();
 
-        if($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
+        if ($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
             return;
         }
 
         $filter = $this->dm->getFilterCollection()->enable("backoffice");
         //Returns empty results, since the user is anonimous or does not have SCOPE_PERSONAL
-        if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)){
+        if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $filter->setParameter('people', []);
             $filter->setParameter('groups', []);
             return;
@@ -175,7 +175,7 @@ class FilterListener
 
         $this->setParameters($filter, $routeParams);
 
-        if(!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
+        if (!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
             $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
         }
     }
@@ -184,13 +184,13 @@ class FilterListener
     {
         $loggedInUser = $this->getLoggedInUser();
 
-        if($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
+        if ($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
             return;
         }
         $filter = $this->dm->getFilterCollection()->enable("personal");
 
         $groups = array();
-        if(null != $loggedInUser) {
+        if (null != $loggedInUser) {
             $groups['$in'] = $loggedInUser->getGroupsIds();
             $filter->setParameter('groups', $groups);
         }
@@ -211,12 +211,12 @@ class FilterListener
 
     private function setParameters($filter, $routeParams)
     {
-        if(isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
+        if (isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
             $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
         } else {
             $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
         }
-        if(!isset($routeParams["track"]) || $routeParams["track"]) {
+        if (!isset($routeParams["track"]) || $routeParams["track"]) {
             $filter->setParameter("display_track_tag", "display");
         }
     }

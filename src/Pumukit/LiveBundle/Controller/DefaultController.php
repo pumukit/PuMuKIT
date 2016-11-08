@@ -54,8 +54,9 @@ class DefaultController extends Controller
           ->getRepository('PumukitLiveBundle:Live');
         $live = $repo->findOneBy(array());
 
-        if(!$live)
-          throw $this->createNotFoundException('The live channel does not exist');
+        if (!$live) {
+            throw $this->createNotFoundException('The live channel does not exist');
+        }
 
         $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
 
@@ -76,9 +77,9 @@ class DefaultController extends Controller
      */
     public function playlistAction(Live $live)
     {
-      $intro = $this->container->hasParameter('pumukit2.intro') ?
+        $intro = $this->container->hasParameter('pumukit2.intro') ?
         $this->container->getParameter('pumukit2.intro') :
         null;
-      return array('live' => $live, 'intro' => $intro);
+        return array('live' => $live, 'intro' => $intro);
     }
 }

@@ -204,7 +204,7 @@ class PersonService
         $this->dm->persist($multimediaObject);
         $this->dm->persist($role);
 
-        if($flush) {
+        if ($flush) {
             $this->dm->flush();
         }
 
@@ -460,7 +460,9 @@ class PersonService
     {
         $person->setUser(null);
         $this->dm->persist($person);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
     }
 
     /**

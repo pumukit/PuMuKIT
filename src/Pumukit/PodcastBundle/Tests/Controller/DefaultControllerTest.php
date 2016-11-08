@@ -41,8 +41,9 @@ class DefaultControllerTest extends WebTestCase
 
     public function tearDown()
     {
-        if(isset($this->dm))
+        if (isset($this->dm)) {
             $this->dm->close();
+        }
         $this->container = null;
         $this->client = null;
         $this->dm = null;
@@ -57,7 +58,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testVideo()
     {
-
         $route = $this->router->generate('pumukit_podcast_video', array());
         $crawler = $this->client->request('GET', $route);
         $response = $this->client->getResponse();
@@ -88,7 +88,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testAudio()
     {
-
         $route = $this->router->generate('pumukit_podcast_audio', array());
         $crawler = $this->client->request('GET', $route);
         $response = $this->client->getResponse();
@@ -119,7 +118,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSeriesVideo()
     {
-
         $series = $this->factory->createSeries();
         $route = $this->router->generate('pumukit_podcast_series_video', array('id' => $series->getId()));
         $crawler = $this->client->request('GET', $route);
@@ -151,7 +149,6 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSeriesAudio()
     {
-
         $series = $this->factory->createSeries();
         $route = $this->router->generate('pumukit_podcast_series_audio', array('id' => $series->getId()));
         $crawler = $this->client->request('GET', $route);

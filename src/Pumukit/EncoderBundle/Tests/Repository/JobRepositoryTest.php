@@ -138,7 +138,6 @@ class JobRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($executingJob2, $errorJobs));
         $this->assertFalse(in_array($finishedJob, $errorJobs));
         $this->assertTrue(in_array($errorJob, $errorJobs));
-
     }
 
     public function testFindHigherPriorityWithStatus()
@@ -210,7 +209,7 @@ class JobRepositoryTest extends WebTestCase
         $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
 
         $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));
-  }
+    }
 
     public function testFindNotFinishedByMultimediaObjectId()
     {

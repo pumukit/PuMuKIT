@@ -59,7 +59,7 @@ class StatsServiceTest extends WebTestCase
         $list[4] = $this->factoryService->createMultimediaObject($series);
         $list[5] = $this->factoryService->createMultimediaObject($series);
 
-        foreach($list as $i => $mm) {
+        foreach ($list as $i => $mm) {
             $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
             $this->dm->persist($mm);
         }
@@ -97,7 +97,7 @@ class StatsServiceTest extends WebTestCase
         $this->dm->persist($globalTag);
 
         $tags = array();
-        foreach($list as $i => $mm) {
+        foreach ($list as $i => $mm) {
             $tag = new Tag();
             $tag->setCod($i);
             $this->dm->persist($tag);
@@ -105,7 +105,7 @@ class StatsServiceTest extends WebTestCase
         }
         $this->dm->flush();
 
-        foreach($list as $i => $mm) {
+        foreach ($list as $i => $mm) {
             $mm->addTag($globalTag);
             $mm->addTag($tags[$i]);
             $this->dm->persist($mm);
@@ -158,8 +158,8 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($mv, array($list[5], $list[4], $list[3]));
 
         $mm = $list[5];
-        foreach($mm->getTags() as $tag) {
-          $mm->removeTag($tag);
+        foreach ($mm->getTags() as $tag) {
+            $mm->removeTag($tag);
         }
         $this->dm->persist($mm);
         $this->dm->flush();
@@ -208,14 +208,14 @@ class StatsServiceTest extends WebTestCase
         $this->initTags($list);
         $service = new StatsService($this->dm);
         //Maps the list to give an output similar to function
-        $listMapped = array_map(function($a){
+        $listMapped = array_map(function ($a) {
             return array(
                 'mmobj' => $a,
                 'num_viewed' => $a->getNumview(),
             );
-        },$list);
+        }, $list);
         //Sorts by least viewed
-        usort($listMapped, function($a, $b){
+        usort($listMapped, function ($a, $b) {
             return $a['num_viewed'] > $b['num_viewed'];
         });
 
@@ -224,7 +224,7 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($listMapped, $mostViewed);
 
         //Sorts by most viewed
-        usort($listMapped, function($a, $b){
+        usort($listMapped, function ($a, $b) {
             return $a['num_viewed'] < $b['num_viewed'];
         });
 
@@ -241,10 +241,10 @@ class StatsServiceTest extends WebTestCase
         $this->assertEquals($total, 5);
         list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('not_a_parameter' => 'not_a_value'));
         $this->assertEquals($total, 0);
-        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days')));
+        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2, 'from_date' => new \DateTime('-11 days')));
         $this->assertEquals(array($listMapped[1], $listMapped[2]), $mostViewed);
         $this->assertEquals(4, $total);
-        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2,'from_date' => new \DateTime('-11 days'), 'page' => 1));
+        list($mostViewed, $total) =  $service->getMmobjsMostViewedByRange(array('title.en' => 'New'), array('limit' => 2, 'from_date' => new \DateTime('-11 days'), 'page' => 1));
         $this->assertEquals(array($listMapped[3], array('mmobj' => $list[3], 'num_viewed' => 0)), $mostViewed);
         $this->assertEquals(4, $total);
 

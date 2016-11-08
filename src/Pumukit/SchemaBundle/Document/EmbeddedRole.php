@@ -308,8 +308,8 @@ class EmbeddedRole
         $embeddedPerson = $this->getEmbeddedPerson($person);
 
         $aux = $this->people->filter(function ($i) use ($embeddedPerson) {
-              return $i->getId() !== $embeddedPerson->getId();
-          });
+            return $i->getId() !== $embeddedPerson->getId();
+        });
 
         $hasRemoved = (count($aux) !== count($this->people));
 

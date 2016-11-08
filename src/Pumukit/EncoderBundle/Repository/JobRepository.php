@@ -22,7 +22,7 @@ class JobRepository extends DocumentRepository
             ->field('status')->in($status);
 
         if (null != $sort) {
-          $qb->sort($sort);
+            $qb->sort($sort);
         }
         
         return $qb;
@@ -36,7 +36,7 @@ class JobRepository extends DocumentRepository
         return $this->createQueryWithStatus($status, $sort)
           ->getQuery()
           ->execute();
-    }    
+    }
 
     /**
      * Find the job with higher priority with given status

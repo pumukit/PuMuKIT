@@ -118,5 +118,4 @@ class FuncionalTest extends WebTestCase
 
         return $serie;
     }
-
 }

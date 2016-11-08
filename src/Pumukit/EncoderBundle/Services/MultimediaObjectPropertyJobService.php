@@ -26,29 +26,33 @@ class MultimediaObjectPropertyJobService
 
     public function executeJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId()))
+        if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
+        }
         $this->save($multimediaObject);
     }
 
     public function finishJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId()))
+        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
+        }
         $this->save($multimediaObject);
     }
 
     public function errorJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId()))
+        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
+        }
         $this->save($multimediaObject);
     }
 
     public function retryJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId()))
+        if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId())) {
             $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
+        }
         $this->save($multimediaObject);
     }
 
@@ -67,7 +71,6 @@ class MultimediaObjectPropertyJobService
         } else {
             $multimediaObject->setProperty($key, array($value));
         }
-
     }
 
     /**

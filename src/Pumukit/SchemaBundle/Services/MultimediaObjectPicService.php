@@ -23,7 +23,7 @@ class MultimediaObjectPicService
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath){
+        if (!$this->targetPath) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
@@ -66,7 +66,7 @@ class MultimediaObjectPicService
 
       $multimediaObject->addPic($pic);
       $this->dm->persist($multimediaObject);
-      if($flush) {
+      if ($flush) {
           $this->dm->flush();
       }
 
@@ -80,7 +80,7 @@ class MultimediaObjectPicService
    */
   public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
   {
-      if(UPLOAD_ERR_OK != $picFile->getError()) {
+      if (UPLOAD_ERR_OK != $picFile->getError()) {
           throw new \Exception($picFile->getErrorMessage());
       }
 
@@ -118,8 +118,9 @@ class MultimediaObjectPicService
 
         if ($this->forceDeleteOnDisk && $picPath) {
             $otherPics = $this->repo->findBy(array('pics.path' => $picPath));
-            if(count($otherPics) == 0)
+            if (count($otherPics) == 0) {
                 $this->deleteFileOnDisk($picPath, $multimediaObject);
+            }
         }
 
         $this->dispatcher->dispatchDelete($multimediaObject, $pic);

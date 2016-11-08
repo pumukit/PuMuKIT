@@ -47,9 +47,11 @@ class PermissionService
     {
         $return = array();
         $tag = $this->repo->findOneByCod("PUBCHANNELS");
-        if (!$tag) return $return;
+        if (!$tag) {
+            return $return;
+        }
 
-        foreach($tag->getChildren() as $pubchannel) {
+        foreach ($tag->getChildren() as $pubchannel) {
             $return[Permission::PREFIX_ROLE_TAG_DISABLE . $pubchannel->getCod()] = array(
                 'description' => 'Publication channel "' . $pubchannel->getTitle() . '" disabled',
                 'dependencies' => array(
@@ -68,7 +70,6 @@ class PermissionService
         }
 
         return $return;
-
     }
 
     /**
@@ -76,9 +77,9 @@ class PermissionService
      */
     public function getAllPermissions()
     {
-        return array_map(function($a){
+        return array_map(function ($a) {
             return $a['description'];
-        },$this->allPermissions);
+        }, $this->allPermissions);
     }
 
     /**
@@ -105,7 +106,7 @@ class PermissionService
      */
     public function getAllDependencies()
     {
-        return array_map(function($a){
+        return array_map(function ($a) {
             return $a['dependencies'];
         }, $this->allPermissions);
     }
@@ -132,14 +133,15 @@ class PermissionService
         );
         $allPermissions = $this->getLocalPermissions() + $this->getPubTagsPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
-            if(array_key_exists($externalPermission['role'], $allPermissions))
+            if (array_key_exists($externalPermission['role'], $allPermissions)) {
                 throw new \RuntimeException(sprintf('The permission with role \'%s\' is duplicated. Please check the configuration.', $externalPermission['role']));
+            }
             if (false === strpos($externalPermission['role'], 'ROLE_')) {
                 throw new \UnexpectedValueException('Invalid permission: "'.$externalPermission['role'].'". Permission must start with "ROLE_".');
             }
 
             $dependencies = $defaultDeps;
-            if(isset($externalPermission['dependencies'])) {
+            if (isset($externalPermission['dependencies'])) {
                 $dependencies[PermissionProfile::SCOPE_GLOBAL] = $externalPermission['dependencies']['global'];
                 $dependencies[PermissionProfile::SCOPE_PERSONAL] = $externalPermission['dependencies']['personal'];
             }
@@ -158,8 +160,8 @@ class PermissionService
     private function buildAllDependencies()
     {
         $allPermissions = $this->buildAllPermissions();
-        foreach($allPermissions as $role => $permission) {
-            foreach($permission['dependencies'] as $scope => $dependencies) {
+        foreach ($allPermissions as $role => $permission) {
+            foreach ($permission['dependencies'] as $scope => $dependencies) {
                 $allPermissions[$role]['dependencies'][$scope] = $this->buildDependenciesByScope($role, $scope, $allPermissions);
             }
         }
@@ -175,20 +177,23 @@ class PermissionService
      */
     private function buildDependenciesByScope($permission, $scope, array $allPermissions)
     {
-        if(!array_key_exists($permission, $allPermissions))
+        if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
-        if(!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL)))
+        }
+        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
+        }
 
         $dependencies = $allPermissions[$permission]['dependencies'][$scope];
         $dependencies = array_diff($dependencies, array($permission));
 
         reset($dependencies);
-        while(($elem = each($dependencies)) !== false) {
-            if(!array_key_exists($elem['value'], $allPermissions))
+        while (($elem = each($dependencies)) !== false) {
+            if (!array_key_exists($elem['value'], $allPermissions)) {
                 throw new \InvalidArgumentException(sprintf('The permission with role \'%s\' does not exist in the configuration', $elem['value']));
-            foreach($allPermissions[$elem['value']]['dependencies'][$scope] as $newDep) {
-                if($newDep != $permission && !in_array($newDep, $dependencies)) {
+            }
+            foreach ($allPermissions[$elem['value']]['dependencies'][$scope] as $newDep) {
+                if ($newDep != $permission && !in_array($newDep, $dependencies)) {
                     $dependencies[] = $newDep;
                 }
             }
@@ -206,13 +211,15 @@ class PermissionService
      */
     public function getDependablesByScope($permission, $scope)
     {
-        if(!array_key_exists($permission, $this->allPermissions))
+        if (!array_key_exists($permission, $this->allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
-        if(!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL)))
+        }
+        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
+        }
         $dependables = array_filter(
             $this->allPermissions,
-            function($a) use ($permission, $scope){
+            function ($a) use ($permission, $scope) {
                 return in_array($permission, $a['dependencies'][$scope]);
             }
         );
@@ -232,10 +239,12 @@ class PermissionService
      */
     public function getDependenciesByScope($permission, $scope)
     {
-        if(!array_key_exists($permission, $this->allPermissions))
+        if (!array_key_exists($permission, $this->allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
-        if(!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL)))
+        }
+        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
+        }
 
         return $this->allPermissions[$permission]['dependencies'][$scope];
     }

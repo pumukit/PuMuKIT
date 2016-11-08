@@ -31,14 +31,14 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      $jobService = $this->getContainer()->get('pumukitencoder.job');
-      $jobService->executeNextJob();
+        $jobService = $this->getContainer()->get('pumukitencoder.job');
+        $jobService->executeNextJob();
 
-      if ($id = $input->getArgument('id')){
-        $this->showInfo($input->getArgument('id'), $output);
-      }else{
-        $this->showList($input->getOption('all'), $output);
-      }
+        if ($id = $input->getArgument('id')) {
+            $this->showInfo($input->getArgument('id'), $output);
+        } else {
+            $this->showList($input->getOption('all'), $output);
+        }
     }
 
 
@@ -51,7 +51,6 @@ EOT
 
     private function listCpus(OutputInterface $output)
     {
-
         $cpuService = $this->getContainer()->get('pumukitencoder.cpu');
         $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
         $cpus = $cpuService->getCpus();
@@ -60,7 +59,7 @@ EOT
         $table = new Table($output);
         $table->setHeaders(array('Name', 'Status', 'Type', 'Host', 'Number', 'Description'));
 
-        foreach($cpus as $name => $cpu) {
+        foreach ($cpus as $name => $cpu) {
             $table->addRow(array(
                 $name,
                 in_array($name, $deactivatedCpus) ?
@@ -91,7 +90,7 @@ EOT
 
         if ($all) {
             $status = array_keys(Job::$statusTexts);
-        }else{
+        } else {
             $status = array(Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR);
         }
         $sort = array('timeini' => 'asc');
@@ -102,7 +101,7 @@ EOT
         $table->setHeaders(array('Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
                                  'Timeini', 'Timestart', 'Timeend'));
 
-        foreach($jobs as $name => $job) {
+        foreach ($jobs as $name => $job) {
             $table->addRow(array(
                 $job->getId(),
                 $this->formatStatus($job->getStatus()),
@@ -149,5 +148,4 @@ EOT
         $output->writeln("<comment>Out</comment>");
         $output->writeln($job->getOutput());
     }
-
 }

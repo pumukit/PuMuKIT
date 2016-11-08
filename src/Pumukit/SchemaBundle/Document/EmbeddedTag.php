@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class EmbeddedTag
 {
-  /**
+    /**
    * @var integer $id
    *
    * @MongoDB\Id
@@ -447,12 +447,10 @@ class EmbeddedTag
    */
   public function isDescendantOfByCod($tagCod)
   {
-       if( $tagCod == $this->getCod() )
-      {
+      if ($tagCod == $this->getCod()) {
           return false;
       }
-      if( strpos( $this->getPath(), sprintf('%s|',$tagCod ) ) === 0 )
-      {
+      if (strpos($this->getPath(), sprintf('%s|', $tagCod)) === 0) {
           return true;
       }
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
@@ -482,6 +480,6 @@ class EmbeddedTag
    */
   public function isPubTag()
   {
-    return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
+      return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
   }
 }

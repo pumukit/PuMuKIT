@@ -1,7 +1,7 @@
 <?php
 namespace Pumukit\NewAdminBundle\Controller;
 
-/** 
+/**
  * This interface adds the NewAdmin filter to any controller implementing it.
  *
  * This filter is used to avoid certain mmobjs/series from appearing when executing ODM calls. (check EventListener/FilterListener.php)

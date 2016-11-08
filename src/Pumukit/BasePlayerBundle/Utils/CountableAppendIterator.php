@@ -8,8 +8,10 @@ namespace Pumukit\BasePlayerBundle\Utils;
  * eliminating the need for remembering which results should be counted with 'count()' and
  * which ones with 'iterator_count()'.
  */
-class CountableAppendIterator extends \AppendIterator implements \Countable {
-    public function count() {
+class CountableAppendIterator extends \AppendIterator implements \Countable
+{
+    public function count()
+    {
         return iterator_count($this);
     }
 }

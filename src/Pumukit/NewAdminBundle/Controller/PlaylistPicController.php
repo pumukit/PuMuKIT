@@ -33,7 +33,7 @@ class PlaylistPicController extends Controller implements NewAdminController
      */
     public function listAction(Series $playlist)
     {
-      return array(
+        return array(
                    'resource' => $playlist,
                    'resource_name' => 'playlist',
                    );
@@ -71,8 +71,8 @@ class PlaylistPicController extends Controller implements NewAdminController
     public function uploadAction(Series $playlist, Request $request)
     {
         $isBanner = false;
-        try{
-            if (empty($_FILES) && empty($_POST)){
+        try {
+            if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has("file")) {
@@ -81,7 +81,7 @@ class PlaylistPicController extends Controller implements NewAdminController
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
                 $media = $picService->addPicFile($playlist, $request->files->get("file"), $isBanner, $bannerTargetUrl);
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return array(
                          'resource' => $playlist,
                          'resource_name' => 'playlist',

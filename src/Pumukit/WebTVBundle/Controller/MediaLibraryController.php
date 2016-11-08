@@ -86,7 +86,7 @@ class MediaLibraryController extends Controller implements WebTVController
 
 
                     if (!$series) {
-                      continue;
+                        continue;
                     }
                     foreach ($series as $serie) {
                         $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);

@@ -15,7 +15,6 @@ class MultimediaObjectDurationServiceTest extends WebTestCase
 
     public function setUp()
     {
-
         $options = array('environment' => 'test');
         static::bootKernel($options);
 

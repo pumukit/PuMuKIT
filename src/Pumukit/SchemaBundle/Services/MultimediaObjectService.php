@@ -11,7 +11,6 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
-
 class MultimediaObjectService
 {
     private $dm;
@@ -58,7 +57,8 @@ class MultimediaObjectService
      * @param MultimediaObject
      * @return boolean
      */
-    public function hasPlayableResource($mm){
+    public function hasPlayableResource($mm)
+    {
         return $mm->getDisplayTrack() || $mm->getProperty('opencast');
     }
 
@@ -68,7 +68,8 @@ class MultimediaObjectService
      * @param String
      * @return boolean
      */
-    public function canBeDisplayed($mm, $pubChannelCod){
+    public function canBeDisplayed($mm, $pubChannelCod)
+    {
         return $this->isPublished($mm, $pubChannelCod) && $this->hasPlayableResource($mm);
     }
 
@@ -78,7 +79,8 @@ class MultimediaObjectService
      * @param MultimediaObject
      * @return String
      */
-    public function resetMagicUrl($mm){
+    public function resetMagicUrl($mm)
+    {
         $mm->resetSecret();
         $this->dm->persist($mm);
         $this->dm->flush();
@@ -196,7 +198,7 @@ class MultimediaObjectService
         //Doing some variation of this should work as well. (Not this code particularly).
         //$qb = $this->seriesRepo->createQueryBuilder()->field('playlist.multimedia_objects')->pullAll(array(new \MongoId($multimediaObject->getId())));
         $playlists = $qb->getQuery()->execute();
-        foreach($playlists as $playlist) {
+        foreach ($playlists as $playlist) {
             $playlist->getPlaylist()->removeAllMultimediaObjectsById($multimediaObject->getId());
             $this->dm->persist($playlist);
         }

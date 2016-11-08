@@ -32,7 +32,8 @@ class SeriesService
      * @param Series
      * @return String
      */
-    public function resetMagicUrl($series){
+    public function resetMagicUrl($series)
+    {
         $series->resetSecret();
         $this->dm->persist($series);
         $this->dm->flush();

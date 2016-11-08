@@ -25,5 +25,4 @@ final class EncoderEvents
      * @var string
      */
     const JOB_ERROR = 'job.error';
-
 }

@@ -28,12 +28,11 @@ class ClientServiceTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
-        if(!static::$kernel->getContainer()->has('pumukitopencast.client')) {
+        if (!static::$kernel->getContainer()->has('pumukitopencast.client')) {
             $this->markTestSkipped("Opencast is not propertly configured.");
         }
 
         $this->clientService = static::$kernel->getContainer()->get('pumukitopencast.client');
-
     }
 
     public function tearDown()
@@ -67,7 +66,7 @@ class ClientServiceTest extends WebTestCase
           'Integration test.'
         );
 
-        $media = $this->clientService->getMediaPackages(0,0,0);
+        $media = $this->clientService->getMediaPackages(0, 0, 0);
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = array())
@@ -78,5 +77,4 @@ class ClientServiceTest extends WebTestCase
 
         return $method->invokeArgs($object, $parameters);
     }
-    
 }

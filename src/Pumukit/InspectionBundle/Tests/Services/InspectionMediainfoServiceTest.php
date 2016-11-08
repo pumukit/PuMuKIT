@@ -15,7 +15,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         if (TestCommand::commandExists('mediainfo') == false) {
-          $this->markTestSkipped('Mediainfo test marks skipped (No mediainfo command).');
+            $this->markTestSkipped('Mediainfo test marks skipped (No mediainfo command).');
         }
 
         $this->resources_dir = realpath(__DIR__.'/../Resources') . DIRECTORY_SEPARATOR;
@@ -41,8 +41,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDurationFileNotExists()
     {
-      $is = new InspectionMediainfoService();
-      $is->getDuration("http://trololo.com");
+        $is = new InspectionMediainfoService();
+        $is->getDuration("http://trololo.com");
     }
 
     /**
@@ -56,11 +56,11 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDuration()
     {
-      $file1 = $this->resources_dir . "AUDIO.mp3";
-      $file2 = $this->resources_dir . "CAMERA.mp4";
-      $is   = new InspectionMediainfoService (); //logger missing, it is not initialized here.
-      $this->assertEquals(2,$is->getDuration($file1));
-      $this->assertEquals(2,$is->getDuration($file2));
+        $file1 = $this->resources_dir . "AUDIO.mp3";
+        $file2 = $this->resources_dir . "CAMERA.mp4";
+        $is   = new InspectionMediainfoService(); //logger missing, it is not initialized here.
+      $this->assertEquals(2, $is->getDuration($file1));
+        $this->assertEquals(2, $is->getDuration($file2));
     }
 
     /**
@@ -68,9 +68,9 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testAutocompleteTrackWithoutPath()
     {
-      $empty_track = new Track();
-      $is          = new InspectionMediainfoService();
-      $is->autocompleteTrack($empty_track);
+        $empty_track = new Track();
+        $is          = new InspectionMediainfoService();
+        $is->autocompleteTrack($empty_track);
     }
 
     /**
@@ -78,10 +78,10 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testAutocompleteTrackFileWithoutMultimediaContent()
     {
-      $wrong_track = new Track();
-      $is          = new InspectionMediainfoService();
-      $wrong_track->setPath($this->wrong_file2);
-      $is->autocompleteTrack($wrong_track);
+        $wrong_track = new Track();
+        $is          = new InspectionMediainfoService();
+        $wrong_track->setPath($this->wrong_file2);
+        $is->autocompleteTrack($wrong_track);
     }
 
     public function testAutocompleteTrackOnlyAudio()

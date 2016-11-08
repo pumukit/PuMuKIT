@@ -38,7 +38,8 @@ class LogTest extends WebTestCase
             ->remove(array());
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->dm = null;
         $this->repo = null;
         $this->factoryService = null;

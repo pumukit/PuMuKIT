@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WebTVBundle\Controller\PlayerController;
 
-
 class MultimediaObjectController extends PlayerController implements WebTVController
 {
     /**
@@ -67,18 +66,18 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
-        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()){
+        if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+            if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
+        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 
         $response = $this->preExecute($multimediaObject, $request, true);
-        if($response instanceof Response) {
+        if ($response instanceof Response) {
             return $response;
         }
 
@@ -136,11 +135,11 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     public function preExecute(MultimediaObject $multimediaObject, Request $request, $secret = false)
     {
         if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
-            if($secret)
+            if ($secret) {
                 return $this->forward('PumukitWebTVBundle:Opencast:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
-            else
+            } else {
                 return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
+            }
         }
     }
-
 }

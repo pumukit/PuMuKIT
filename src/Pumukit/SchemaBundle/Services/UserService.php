@@ -153,8 +153,8 @@ class UserService
     {
         if (null != $object) {
             $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
-                    return $ownerId !== $user->getId();
-                });
+                return $ownerId !== $user->getId();
+            });
             $object->setProperty('owners', $owners);
 
             $this->dm->persist($object);
@@ -200,7 +200,9 @@ class UserService
         }
         if (!$user->isSuperAdmin()) {
             $permissionProfile = $user->getPermissionProfile();
-            if (null == $permissionProfile) throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
+            if (null == $permissionProfile) {
+                throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
+            }
             /** NOTE: User roles have:
                 - ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER
                 - permission profile roles
@@ -217,7 +219,9 @@ class UserService
             }
         }
         $this->dm->persist($user);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         $this->dispatcher->dispatchUpdate($user);
 
@@ -233,7 +237,9 @@ class UserService
     public function delete(User $user, $executeFlush = true)
     {
         $this->dm->remove($user);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         $this->dispatcher->dispatchDelete($user);
     }
@@ -254,7 +260,9 @@ class UserService
             }
         }
         $this->dm->persist($user);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         return $user;
     }
@@ -275,7 +283,9 @@ class UserService
             }
         }
         $this->dm->persist($user);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         return $user;
     }
@@ -337,7 +347,9 @@ class UserService
      */
     public function setUserScope(User $user, $oldScope = '', $newScope = '')
     {
-        if ($user->hasRole($oldScope)) $user->removeRole($oldScope);
+        if ($user->hasRole($oldScope)) {
+            $user->removeRole($oldScope);
+        }
         $user = $this->addUserScope($user, $newScope);
 
         return $user;
@@ -389,8 +401,12 @@ class UserService
     public function instantiate($userName = '', $email = '', $enabled = true)
     {
         $user = new User($this->genUserSalt);
-        if ($userName) $user->setUsername($userName);
-        if ($email) $user->setEmail($email);
+        if ($userName) {
+            $user->setUsername($userName);
+        }
+        if ($email) {
+            $user->setEmail($email);
+        }
         $defaultPermissionProfile = $this->permissionProfileService->getDefault();
         if (null == $defaultPermissionProfile) {
             throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
@@ -647,7 +663,7 @@ class UserService
                 }
             }
         } else {
-            foreach ($groups as $groupString){
+            foreach ($groups as $groupString) {
                 $groupArray = explode('_', $groupString);
                 $groupId = end($groupArray);
                 $group = $this->groupRepo->find($groupId);

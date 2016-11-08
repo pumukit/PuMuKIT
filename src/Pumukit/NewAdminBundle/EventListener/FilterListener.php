@@ -41,17 +41,16 @@ class FilterListener
          * From Symfony Docs: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html
          */
         $controller = $event->getController();
-        if(!is_array($controller)) {
+        if (!is_array($controller)) {
             return;
         }
 
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
         $deprecatedCheck = (false !== strpos($req->attributes->get("_controller"), 'pumukitnewadmin'));
 
-        if (($controller[0] instanceof NewAdminController /*deprecated*/|| $deprecatedCheck/**/ )
+        if (($controller[0] instanceof NewAdminController /*deprecated*/|| $deprecatedCheck/**/)
             && $event->isMasterRequest()
             && $isFilterActivated) {
-
             if ($this->addUserAsPerson) {
                 $loggedInUser = $this->getLoggedInUser();
                 if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
@@ -82,10 +81,10 @@ class FilterListener
 
     /**
      * Get people mongo query
-     * 
+     *
      * Match the MultimediaObjects
      * with given Person and Role code
-     * 
+     *
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *

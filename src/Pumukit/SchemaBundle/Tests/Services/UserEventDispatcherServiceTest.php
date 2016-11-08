@@ -49,16 +49,15 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchCreate()
     {
-        $this->dispatcher->addListener(SchemaEvents::USER_CREATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof UserEvent);
-                                           $this->assertEquals(SchemaEvents::USER_CREATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::USER_CREATE, function ($event, $name) {
+            $this->assertTrue($event instanceof UserEvent);
+            $this->assertEquals(SchemaEvents::USER_CREATE, $name);
 
-                                           $user = $event->getUser();
+            $user = $event->getUser();
 
-                                           MockUpUserListener::$called = true;
-                                           MockUpUserListener::$name = $user->getUsername();
-                                       });
+            MockUpUserListener::$called = true;
+            MockUpUserListener::$name = $user->getUsername();
+        });
 
         $this->assertFalse(MockUpUserListener::$called);
         $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
@@ -79,16 +78,15 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchUpdate()
     {
-        $this->dispatcher->addListener(SchemaEvents::USER_UPDATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof UserEvent);
-                                           $this->assertEquals(SchemaEvents::USER_UPDATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::USER_UPDATE, function ($event, $name) {
+            $this->assertTrue($event instanceof UserEvent);
+            $this->assertEquals(SchemaEvents::USER_UPDATE, $name);
 
-                                           $user = $event->getUser();
+            $user = $event->getUser();
 
-                                           MockUpUserListener::$called = true;
-                                           MockUpUserListener::$name = $user->getUsername();
-                                       });
+            MockUpUserListener::$called = true;
+            MockUpUserListener::$name = $user->getUsername();
+        });
 
         $this->assertFalse(MockUpUserListener::$called);
         $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
@@ -115,16 +113,15 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchDelete()
     {
-        $this->dispatcher->addListener(SchemaEvents::USER_DELETE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof UserEvent);
-                                           $this->assertEquals(SchemaEvents::USER_DELETE, $name);
+        $this->dispatcher->addListener(SchemaEvents::USER_DELETE, function ($event, $name) {
+            $this->assertTrue($event instanceof UserEvent);
+            $this->assertEquals(SchemaEvents::USER_DELETE, $name);
 
-                                           $user = $event->getUser();
+            $user = $event->getUser();
 
-                                           MockUpUserListener::$called = true;
-                                           MockUpUserListener::$name = $user->getUsername();
-                                       });
+            MockUpUserListener::$called = true;
+            MockUpUserListener::$name = $user->getUsername();
+        });
 
         $this->assertFalse(MockUpUserListener::$called);
         $this->assertEquals(UserEventDispatcherServiceTest::EMPTY_NAME, MockUpUserListener::$name);
@@ -146,6 +143,6 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
 class MockUpUserListener
 {
-    static public $called = false;
-    static public $name = UserEventDispatcherServiceTest::EMPTY_NAME;
+    public static $called = false;
+    public static $name = UserEventDispatcherServiceTest::EMPTY_NAME;
 }

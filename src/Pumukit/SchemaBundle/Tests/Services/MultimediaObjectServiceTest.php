@@ -56,7 +56,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->factory = null;
         $this->mmsService = null;
         $this->tagService = null;
-            gc_collect_cycles();
+        gc_collect_cycles();
         parent::tearDown();
     }
 

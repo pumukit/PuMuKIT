@@ -172,7 +172,7 @@ class EmbeddedBroadcastService
             }
             $this->dispatcher->dispatchUpdate($multimediaObject);
         }
-}
+    }
 
     /**
      * Update password
@@ -305,7 +305,7 @@ class EmbeddedBroadcastService
 
     private function isUserLoggedIn(User $user = null)
     {
-        if ($this->isAuthenticatedFully($user)){
+        if ($this->isAuthenticatedFully($user)) {
             return true;
         }
 
@@ -314,7 +314,7 @@ class EmbeddedBroadcastService
 
     private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null)
     {
-        if ($this->isAuthenticatedFully($user)){
+        if ($this->isAuthenticatedFully($user)) {
             if ($permissionProfile = $user->getPermissionProfile()) {
                 if ($permissionProfile->isGlobal()) {
                     return true;

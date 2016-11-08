@@ -63,7 +63,7 @@ class AdminController extends ResourceController implements NewAdminController
             }
 
             if (null === $resource) {
-              return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
@@ -177,7 +177,7 @@ class AdminController extends ResourceController implements NewAdminController
         $resourceName = $config->getResourceName();
 
         $this->get('pumukitschema.factory')->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')){
+        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
             $this->get('session')->remove('admin/'.$resourceName.'/id');
         }
 
@@ -223,7 +223,7 @@ class AdminController extends ResourceController implements NewAdminController
     {
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -233,12 +233,12 @@ class AdminController extends ResourceController implements NewAdminController
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            try{
+            try {
                 $factory->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')){
+            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
                 $this->get('session')->remove('admin/'.$resourceName.'/id');
             }
         }

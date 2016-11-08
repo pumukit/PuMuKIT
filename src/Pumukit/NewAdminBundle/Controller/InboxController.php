@@ -44,11 +44,11 @@ class InboxController extends Controller implements NewAdminController
                                'hash' => hash('md5', $f->getRealpath()),
                                'content' => false);
             }
-        }else{
+        } else {
             $finder->depth('< 1')->directories()->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
-                if (0 !== (count(glob("$f/*")))){
+                if (0 !== (count(glob("$f/*")))) {
                     $contentFinder = new Finder();
                     $contentFinder->files()->in($f->getRealpath());
                     $res[] = array('path' => $f->getRealpath(),

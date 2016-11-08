@@ -22,7 +22,7 @@ class PicExtractorServiceTest extends WebTestCase
     public function setUp()
     {
         if (TestCommand::commandExists('avconv') == false) {
-          $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
+            $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
         }
 
         $options = array('environment' => 'test');
@@ -49,8 +49,9 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function tearDown()
     {
-        if(isset($this->dm))
+        if (isset($this->dm)) {
             $this->dm->close();
+        }
         $this->dm = null;
         $this->mmobjRepo = null;
         $this->factory = null;
@@ -102,7 +103,9 @@ class PicExtractorServiceTest extends WebTestCase
     {
         $multimediaObjects = $this->mmobjRepo->findAll();
         foreach ($multimediaObjects as $multimediaObject) {
-            if (!$multimediaObject->isPrototype()) break;
+            if (!$multimediaObject->isPrototype()) {
+                break;
+            }
         }
         $dirSeries = $this->resourcesDir.'/series/';
         $dirSeriesId = $dirSeries . $multimediaObject->getSeries()->getId().'/';
@@ -110,7 +113,7 @@ class PicExtractorServiceTest extends WebTestCase
         $dirMmId = $dirVideo . $multimediaObject->getId() . '/';
         $files = glob($dirMmId.'*', GLOB_MARK);
         foreach ($files as $file) {
-            if (is_writable($file)){
+            if (is_writable($file)) {
                 unlink($file);
             }
         }

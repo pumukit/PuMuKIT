@@ -45,7 +45,9 @@ class PermissionProfileRepository extends DocumentRepository
         $count = 0;
         $size = -1;
         do {
-            if ($count > 0) break;
+            if ($count > 0) {
+                break;
+            }
             ++$size;
             $count = $this->createQueryBuilder()
                 ->field('permissions')->size($size)
@@ -62,5 +64,5 @@ class PermissionProfileRepository extends DocumentRepository
         }
 
         return null;
-   }
+    }
 }

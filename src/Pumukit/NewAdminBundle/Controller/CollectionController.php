@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
 class CollectionController extends Controller implements NewAdminController
 {
     /**
@@ -24,18 +23,19 @@ class CollectionController extends Controller implements NewAdminController
      */
     protected function isUserAllowedToDelete(Series $series)
     {
-        if(!$this->isGranted(Permission::MODIFY_OWNER)) {
+        if (!$this->isGranted(Permission::MODIFY_OWNER)) {
             $loggedInUser = $this->getUser();
             $personService = $this->get('pumukitschema.person');
             $person = $personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $personService->getPersonalScopeRole();
-            if(!$person)
+            if (!$person) {
                 return false;
+            }
             $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
                               ->getRepository('PumukitSchemaBundle:MultimediaObject');
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
-            foreach($allMmobjs as $resource) {
-                if(!$resource->containsPersonWithRole($person, $role) ||
+            foreach ($allMmobjs as $resource) {
+                if (!$resource->containsPersonWithRole($person, $role) ||
                    count($resource->getPeopleByRole($role, true)) > 1) {
                     return false;
                 }
@@ -56,11 +56,13 @@ class CollectionController extends Controller implements NewAdminController
                           ->getRepository('PumukitSchemaBundle:Series');
         foreach ($ids as $id) {
             $collection = $seriesRepo->find($id);
-            if(!$collection || !$this->isUserAllowedToDelete($collection))//Once isUserAllowedToDelete is passed to a service, this function can also be passed.
+            if (!$collection || !$this->isUserAllowedToDelete($collection)) {
+                //Once isUserAllowedToDelete is passed to a service, this function can also be passed.
                 continue;
+            }
             try {
                 $factoryService->deleteSeries($collection);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
         }

@@ -59,12 +59,13 @@ class OpencastService
      */
     public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls=array())
     {
-        if (!$this->generateSbs)
+        if (!$this->generateSbs) {
             return false;
+        }
 
         if ($this->useFlavour) {
             $flavourTrack = null;
-            foreach($multimediaObject->getTracksWithTag($this->sbsFlavour) as $track) {
+            foreach ($multimediaObject->getTracksWithTag($this->sbsFlavour) as $track) {
                 if (!$track->isOnlyAudio()) {
                     $flavourTrack = $track;
                     break;
@@ -87,7 +88,7 @@ class OpencastService
      */
     public function getPath($url)
     {
-        foreach($this->urlPathMapping as $m) {
+        foreach ($this->urlPathMapping as $m) {
             $path = str_replace($m["url"], $m["path"], $url);
             if (realpath($path)) {
                 return $path;
@@ -106,15 +107,18 @@ class OpencastService
      */
     public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls=array())
     {
-        if (!$this->generateSbs)
+        if (!$this->generateSbs) {
             return false;
+        }
 
-        if (!$this->sbsProfileName)
+        if (!$this->sbsProfileName) {
             return false;
+        }
 
         $tracks = $multimediaObject->getTracks();
-        if (!$tracks)
+        if (!$tracks) {
             return false;
+        }
 
         $track = $tracks[0];
         $path = $this->getPath($track->getUrl());
@@ -131,8 +135,9 @@ class OpencastService
 
     private function useTrackAsSbs(MultimediaObject $multimediaObject, Track $track)
     {
-        if (!$this->sbsProfileName)
+        if (!$this->sbsProfileName) {
             return false;
+        }
 
         $sbsProfile = $this->profileService->getProfile($this->sbsProfileName);
 
@@ -145,7 +150,7 @@ class OpencastService
             }
         }
 
-        foreach(array_filter(preg_split('/[,\s]+/', $sbsProfile['tags'])) as $tag) {
+        foreach (array_filter(preg_split('/[,\s]+/', $sbsProfile['tags'])) as $tag) {
             $track->addTag(trim($tag));
         }
 

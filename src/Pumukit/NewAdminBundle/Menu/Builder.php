@@ -29,8 +29,9 @@ class Builder extends ContainerAware
             $series->setDisplayChildren(false);
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST)) {
-            if(!isset($mediaManager))
+            if (!isset($mediaManager)) {
                 $mediaManager = $menu->addChild('Media Manager');
+            }
             $playlists = $mediaManager->addChild('Moodle Playlists', array('route' => 'pumukitnewadmin_playlist_index'));
             $playlists->addChild('Multimedia', array('route' => 'pumukitnewadmin_playlistmms_index'));
             $playlists->setDisplayChildren(false);
@@ -45,7 +46,7 @@ class Builder extends ContainerAware
             //Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually
             $route = $this->container->get('request_stack')->getMasterRequest()->attributes->get('_route');
             $statsRoutes = array('pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id');
-            if(in_array($route, $statsRoutes)) {
+            if (in_array($route, $statsRoutes)) {
                 $stats->setCurrent(true);
             }
         }

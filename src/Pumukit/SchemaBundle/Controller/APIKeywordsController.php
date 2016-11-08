@@ -61,5 +61,4 @@ class APIKeywordsController extends Controller
         $data = $serializer->serialize($kws->toArray(), $format);
         return new Response($data);
     }
-
 }

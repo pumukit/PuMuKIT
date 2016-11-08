@@ -14,8 +14,8 @@ class WidgetController extends Controller
      */
     public function menuAction()
     {
-      $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
-      return array('live_channels' => $channels);
+        $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+        return array('live_channels' => $channels);
     }
     
     /**
@@ -23,8 +23,8 @@ class WidgetController extends Controller
      */
     public function breadcrumbsAction()
     {
-      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-      return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
     }
 
     /**
@@ -32,13 +32,13 @@ class WidgetController extends Controller
      */
     public function statsAction()
     {
-      $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
 
-      $counts = array('series' => $seriesRepo->countPublic(),
+        $counts = array('series' => $seriesRepo->countPublic(),
                       'mms' => $mmRepo->count(),
                       'hours' => bcdiv($mmRepo->countDuration(), 3600, 2));
-      return array('counts' => $counts);
+        return array('counts' => $counts);
     }
 
     /**
@@ -46,7 +46,7 @@ class WidgetController extends Controller
      */
     public function contactAction()
     {
-      return array();
+        return array();
     }
 
     /**

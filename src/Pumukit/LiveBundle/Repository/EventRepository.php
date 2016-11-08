@@ -69,12 +69,13 @@ class EventRepository extends DocumentRepository
             return array();
         }
 
-        $ids = array_map(function($e){return $e['_id'];}, $aggregation->toArray());
+        $ids = array_map(function ($e) {
+            return $e['_id'];
+        }, $aggregation->toArray());
 
         return $this->createQueryBuilder()
             ->field('_id')->in($ids)
             ->getQuery()->execute();
-
     }
 
     /**
@@ -122,7 +123,9 @@ class EventRepository extends DocumentRepository
             ->field("date")->gte($currentDatetime)
             ->sort("date", 1);
 
-        if ($limit) $qb->limit($limit);
+        if ($limit) {
+            $qb->limit($limit);
+        }
 
         return $qb->getQuery()->execute();
     }

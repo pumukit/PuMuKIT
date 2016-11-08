@@ -150,7 +150,7 @@ class TagController extends Controller implements NewAdminController
 
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -160,20 +160,20 @@ class TagController extends Controller implements NewAdminController
             $tag = $repo->find($id);
             if (0 == count($tag->getChildren()) && 0 == $tag->getNumberMultimediaObjects()) {
                 $tags[] = $tag;
-            }else{
+            } else {
                 $tagsWithChildren[] = $tag;
             }
         }
 
-        if (0 !== count($tagsWithChildren)){
+        if (0 !== count($tagsWithChildren)) {
             $message = '';
-            foreach($tagsWithChildren as $tag){
+            foreach ($tagsWithChildren as $tag) {
                 $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren())."). ";
             }
 
             return new JsonResponse(array("status" => $message), JsonResponse::HTTP_CONFLICT);
-        }else{
-            foreach ($tags as $tag){
+        } else {
+            foreach ($tags as $tag) {
                 $dm->remove($tag);
             }
             $dm->flush();
@@ -194,12 +194,12 @@ class TagController extends Controller implements NewAdminController
         $mmId = $request->get('mmId');
 
         $parent = $repo->findOneById($request->get('parent'));
-        $parent_path = str_replace( "|", "\|", $parent->getPath());
+        $parent_path = str_replace("|", "\|", $parent->getPath());
 
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
         $children = $qb->addOr($qb->expr()->field("title.".$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
                   ->addOr($qb->expr()->field("cod")->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-                  ->addAnd($qb->expr()->field("path")->equals( new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/') ))
+                  ->addAnd($qb->expr()->field("path")->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
                   //->limit(20)
                   ->getQuery()
                   ->execute();
@@ -211,7 +211,7 @@ class TagController extends Controller implements NewAdminController
         }
 
 
-        foreach($children->toArray() as $tag){
+        foreach ($children->toArray() as $tag) {
             $result = $this->getAllParents($tag, $result, $parent->getId());
         }
 
@@ -224,22 +224,24 @@ class TagController extends Controller implements NewAdminController
 
         return $this->render(
             'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
-            array('nodes' => $result, 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => $parent ,'search_text' => $search_text )
+            array('nodes' => $result, 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => $parent, 'search_text' => $search_text )
         );
     }
 
-    private function getAllParents($element, $tags = array(), $top_parent) {
-        if($element->getParent()!=null) {
+    private function getAllParents($element, $tags = array(), $top_parent)
+    {
+        if ($element->getParent()!=null) {
             $parentMissing = true;
-            foreach($tags as $tag) {
-                if($element->getParent() == $tag ) {
+            foreach ($tags as $tag) {
+                if ($element->getParent() == $tag) {
                     $parentMissing=false;
-                    break; }
+                    break;
+                }
             }
 
-            if($parentMissing) {
+            if ($parentMissing) {
                 $parent= $element->getParent();//"retrieveByPKWithI18n");
-                if($parent->getId()!=$top_parent){
+                if ($parent->getId()!=$top_parent) {
                     $tags[] = $parent;
                     $tags = $this->getAllParents($parent, $tags, $top_parent);
                 }

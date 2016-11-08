@@ -188,7 +188,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         try {
             $this->get('pumukitschema.factory')->deleteResource($permissionProfile);
             $this->get('pumukitschema.permissionprofile_dispatcher')->dispatchDelete($permissionProfile);
-            if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')){
+            if ($permissionProfileId === $this->get('session')->get('admin/permissionprofile/id')) {
                 $this->get('session')->remove('admin/permissionprofile/id');
             }
             $newDefault = $this->get('pumukitschema.permissionprofile')->checkDefault($permissionProfile);
@@ -212,10 +212,10 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $selectedScopes = $this->getRequest()->get('selected_scopes');
         $checkedPermissions = $this->getRequest()->get('checked_permissions');
 
-        if ('string' === gettype($selectedScopes)){
+        if ('string' === gettype($selectedScopes)) {
             $selectedScopes = json_decode($selectedScopes, true);
         }
-        if ('string' === gettype($checkedPermissions)){
+        if ('string' === gettype($checkedPermissions)) {
             $checkedPermissions = json_decode($checkedPermissions, true);
         }
 
@@ -233,13 +233,13 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);
         foreach ($permissionProfiles as $profileId => $p) {
             $permissionProfile = $this->findPermissionProfile($allPermissionProfiles, $profileId);
-            if (null == $permissionProfile)
+            if (null == $permissionProfile) {
                 continue;
+            }
             try {
                 $permissionProfile = $permissionProfileService->setScope($permissionProfile, $p['scope'], false);
                 $permissionProfileService->batchUpdate($permissionProfile, $p['permissions'], false);
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
         }
@@ -259,13 +259,13 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $permissionProfiles = array();
         //Adds scope and checked permissions to permissions.
-        foreach($checkedPermissions as $permission) {
+        foreach ($checkedPermissions as $permission) {
             $data = $this->separateAttributePermissionProfilesIds($permission);
             $permissionProfiles[$data['profileId']]['permissions'][] = $data['attribute'];
         }
         foreach ($selectedScopes as $selectedScope) {
             $data = $this->separateAttributePermissionProfilesIds($selectedScope);
-            if(isset($permissionProfiles[$data['profileId']])) {
+            if (isset($permissionProfiles[$data['profileId']])) {
                 $permissionProfiles[$data['profileId']]['scope'] = $data['attribute'];
             } else {
                 $permissionProfiles[$data['profileId']] = array(
@@ -297,7 +297,9 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     private function findPermissionProfile($permissionProfiles, $id='')
     {
         foreach ($permissionProfiles as $permissionProfile) {
-            if ($id == $permissionProfile->getId()) return $permissionProfile;
+            if ($id == $permissionProfile->getId()) {
+                return $permissionProfile;
+            }
         }
 
         return null;

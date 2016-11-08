@@ -22,7 +22,7 @@ class EventPicService
     {
         $this->dm = $documentManager;
         $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath){
+        if (!$this->targetPath) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
@@ -50,7 +50,7 @@ class EventPicService
    */
   public function addPicFile(Event $event, UploadedFile $picFile)
   {
-      if(UPLOAD_ERR_OK != $picFile->getError()) {
+      if (UPLOAD_ERR_OK != $picFile->getError()) {
           throw new \Exception($picFile->getErrorMessage());
       }
 

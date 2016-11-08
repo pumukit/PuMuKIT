@@ -500,9 +500,9 @@ class ClientService
 
         if ($method == 'GET') {
             if (200 != $output['status']) {
-              $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                       .') Error (' . $output['status'] .') Processing Request : '.$requestUrl.'.');
-              throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
+                throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
             }
         }
 
@@ -528,9 +528,13 @@ class ClientService
     private function getUserRoles(User $user)
     {
         if ($this->roleHierarchy) {
-            $userRoles = array_map(function($r){return new Role($r);}, $user->getRoles());
+            $userRoles = array_map(function ($r) {
+                return new Role($r);
+            }, $user->getRoles());
             $allRoles = $this->roleHierarchy->getReachableRoles($userRoles);
-            $roles = array_map(function($r){return $r->getRole();}, $allRoles);
+            $roles = array_map(function ($r) {
+                return $r->getRole();
+            }, $allRoles);
         } else {
             $roles = $user->getRoles();
         }

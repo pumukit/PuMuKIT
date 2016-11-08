@@ -31,14 +31,15 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $response;
         }
         //Go to opencast
-        if( $multimediaObject->getProperty('opencast'))
+        if ($multimediaObject->getProperty('opencast')) {
             return $this->forward('PumukitBasePlayerBundle:BasePlayer:opencast', array('request' => $request, 'multimediaObject' => $multimediaObject));
+        }
 
         $track = $request->query->has('track_id') ?
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getDisplayTrack();
 
-        if($track && $track->containsTag("download")) {
+        if ($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
         }
 
@@ -56,11 +57,11 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
-        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()){
+        if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+            if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
+        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
@@ -87,7 +88,6 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                      'object' => $multimediaObject,
                      'track' => $track,
                      'magic_url' => true);
-
     }
 
     /**

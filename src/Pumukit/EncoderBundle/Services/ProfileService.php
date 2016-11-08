@@ -48,8 +48,7 @@ class ProfileService
             return ((is_null($display) || $profile['display'] === $display) &&
                     (is_null($wizard) || $profile['wizard'] === $wizard) &&
                     (is_null($master) || $profile['master'] === $master));
-        });        
-
+        });
     }
 
     /**
@@ -111,11 +110,11 @@ class ProfileService
      */
     public function getProfile($profile)
     {
-        if (isset($this->profiles[$profile])){
+        if (isset($this->profiles[$profile])) {
             return $this->profiles[$profile];
         }
 
-      return null;      
+        return null;
     }
 
     /**
@@ -123,11 +122,15 @@ class ProfileService
      */
     public function getDirOutInfo()
     {
-        $f = function($e){return $e['streamserver']['dir_out'];};
+        $f = function ($e) {
+            return $e['streamserver']['dir_out'];
+        };
         $shares = array_unique(array_values(array_map($f, $this->profiles)));
-        $info = array_map(function($e){return array('dir' => $e,
+        $info = array_map(function ($e) {
+            return array('dir' => $e,
                                                     'free' => disk_free_space($e),
-                                                    'total' => disk_total_space($e));}, $shares);
+                                                    'total' => disk_total_space($e));
+        }, $shares);
 
         return $info;
     }
@@ -137,9 +140,9 @@ class ProfileService
      */
     private function validateProfilesDirOut()
     {
-        foreach($this->profiles as $profile){
+        foreach ($this->profiles as $profile) {
             $dirOut = realpath($profile['streamserver']['dir_out']);
-            if (!$dirOut){
+            if (!$dirOut) {
                 throw new \InvalidArgumentException("The path '".$profile['streamserver']['dir_out']."' for dir_out of the streamserver '".$profile['streamserver']['name']."' doesn't exist.");
             }
         }

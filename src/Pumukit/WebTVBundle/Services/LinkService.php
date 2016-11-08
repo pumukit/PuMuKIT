@@ -18,14 +18,14 @@ class LinkService
     public function generatePathToTag($tagCod = null, $onlyGeneral = null, array $parameters = array())
     {
         $relative = true;
-        if($tagCod) {
+        if ($tagCod) {
             $parameters['tagCod'] = $tagCod;
         }
-        if($onlyGeneral) {
+        if ($onlyGeneral) {
             $parameters['useTagAsGeneral'] = $onlyGeneral;
         }
 
-        if($this->linkTagToSearch) {
+        if ($this->linkTagToSearch) {
             return $this->generator->generate('pumukit_webtv_search_multimediaobjects', $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
         } else {
             return $this->generator->generate('pumukit_webtv_bytag_multimediaobjects', $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);

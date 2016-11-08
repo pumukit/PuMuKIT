@@ -7,7 +7,6 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class InspectionFfmpegService implements InspectionServiceInterface
 {
-
     private $logger;
 
     public function __construct(LoggerInterface $logger = null)
@@ -46,7 +45,6 @@ class InspectionFfmpegService implements InspectionServiceInterface
      */
     public function autocompleteTrack(Track $track)
     {
-
         if (!$track->getPath()) {
             throw new \BadMethodCallException('Input track has no path defined');
         }
@@ -61,7 +59,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
         $only_audio = true;
 
         // General
-        $track->setMimetype($finfo->file($file,FILEINFO_MIME_TYPE));
+        $track->setMimetype($finfo->file($file, FILEINFO_MIME_TYPE));
         $track->setBitrate($movie->getBitRate());
         $track->setDuration(ceil($movie->getDuration()));
         $track->setSize(filesize($file));
@@ -84,7 +82,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
 
     private function fileHasMediaContent($finfo, $file)
     {
-        $mime = substr($finfo->file ($file, FILEINFO_MIME_TYPE), 0, 5);
+        $mime = substr($finfo->file($file, FILEINFO_MIME_TYPE), 0, 5);
         if ($mime == "audio" || $mime == "video") {
             return true;
         }

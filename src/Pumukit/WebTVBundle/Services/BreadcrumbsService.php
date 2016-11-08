@@ -41,11 +41,10 @@ class BreadcrumbsService
             $this->session->set('breadcrumbs/routeParameters', array());
         }
         $this->breadcrumbs = array();
-        if($this->parentWeb !== null) {
+        if ($this->parentWeb !== null) {
             $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
         }
         $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
-
     }
 
     public function reset()
@@ -54,7 +53,7 @@ class BreadcrumbsService
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
         $this->session->set('breadcrumbs/routeParameters', array());
         $this->breadcrumbs = array();
-        if($this->parentWeb !== null) {
+        if ($this->parentWeb !== null) {
             $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
         }
         $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));

@@ -47,16 +47,15 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchCreate()
     {
-        $this->dispatcher->addListener(SchemaEvents::SERIES_CREATE, function($event, $title)
-                                       {
-                                           $this->assertTrue($event instanceof SeriesEvent);
-                                           $this->assertEquals(SchemaEvents::SERIES_CREATE, $title);
+        $this->dispatcher->addListener(SchemaEvents::SERIES_CREATE, function ($event, $title) {
+            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertEquals(SchemaEvents::SERIES_CREATE, $title);
 
-                                           $series = $event->getSeries();
+            $series = $event->getSeries();
 
-                                           MockUpSeriesListener::$called = true;
-                                           MockUpSeriesListener::$title = $series->getTitle();
-                                       });
+            MockUpSeriesListener::$called = true;
+            MockUpSeriesListener::$title = $series->getTitle();
+        });
 
         $this->assertFalse(MockUpSeriesListener::$called);
         $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
@@ -77,16 +76,15 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchUpdate()
     {
-        $this->dispatcher->addListener(SchemaEvents::SERIES_UPDATE, function($event, $title)
-                                       {
-                                           $this->assertTrue($event instanceof SeriesEvent);
-                                           $this->assertEquals(SchemaEvents::SERIES_UPDATE, $title);
+        $this->dispatcher->addListener(SchemaEvents::SERIES_UPDATE, function ($event, $title) {
+            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertEquals(SchemaEvents::SERIES_UPDATE, $title);
 
-                                           $series = $event->getSeries();
+            $series = $event->getSeries();
 
-                                           MockUpSeriesListener::$called = true;
-                                           MockUpSeriesListener::$title = $series->getTitle();
-                                       });
+            MockUpSeriesListener::$called = true;
+            MockUpSeriesListener::$title = $series->getTitle();
+        });
 
         $this->assertFalse(MockUpSeriesListener::$called);
         $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
@@ -113,16 +111,15 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchDelete()
     {
-        $this->dispatcher->addListener(SchemaEvents::SERIES_DELETE, function($event, $title)
-                                       {
-                                           $this->assertTrue($event instanceof SeriesEvent);
-                                           $this->assertEquals(SchemaEvents::SERIES_DELETE, $title);
+        $this->dispatcher->addListener(SchemaEvents::SERIES_DELETE, function ($event, $title) {
+            $this->assertTrue($event instanceof SeriesEvent);
+            $this->assertEquals(SchemaEvents::SERIES_DELETE, $title);
 
-                                           $series = $event->getSeries();
+            $series = $event->getSeries();
 
-                                           MockUpSeriesListener::$called = true;
-                                           MockUpSeriesListener::$title = $series->getTitle();
-                                       });
+            MockUpSeriesListener::$called = true;
+            MockUpSeriesListener::$title = $series->getTitle();
+        });
 
         $this->assertFalse(MockUpSeriesListener::$called);
         $this->assertEquals(SeriesEventDispatcherServiceTest::EMPTY_TITLE, MockUpSeriesListener::$title);
@@ -144,6 +141,6 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
 class MockUpSeriesListener
 {
-    static public $called = false;
-    static public $title = SeriesEventDispatcherServiceTest::EMPTY_TITLE;
+    public static $called = false;
+    public static $title = SeriesEventDispatcherServiceTest::EMPTY_TITLE;
 }

@@ -89,6 +89,5 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
         $this->assertEquals(null, $mm->getProperty('executing_jobs'));
         $this->assertEquals(array($job->getId()), $mm->getProperty('finished_jobs'));
         $this->assertEquals(array($otherJob->getId()), $mm->getProperty('error_jobs'));
-
     }
 }

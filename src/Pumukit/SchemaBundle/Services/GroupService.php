@@ -105,7 +105,9 @@ class GroupService
             throw new \Exception('Not allowed to delete Group "'.$group->getKey().'": is external Group and/or has existent relations with users and multimedia objects.');
         }
         $this->dm->remove($group);
-        if ($executeFlush) $this->dm->flush();
+        if ($executeFlush) {
+            $this->dm->flush();
+        }
 
         $this->dispatcher->dispatchDelete($group);
     }
@@ -215,7 +217,7 @@ class GroupService
     public function countResources($groups)
     {
         $countResources = array();
-        foreach($groups as $group){
+        foreach ($groups as $group) {
             $countResources[$group->getId()] = $this->countResourcesInGroup($group);
         }
 

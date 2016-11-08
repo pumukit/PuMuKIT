@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\Role;
 
 class PumukitCleanLogCommand extends ContainerAwareCommand
 {
-
     private $dm = null;
 
     protected function configure()
@@ -39,10 +38,12 @@ EOT
         //TODO add to pumukit yml.
         $this->execRemoveQuery('TTK Zabbix Agent');
 
-        foreach($detector->getMetadatas() as $metadata) {
-            if ('' === $metadata->getAgent() && 'exact' !== $metadata->getAgentMatch()) continue;
+        foreach ($detector->getMetadatas() as $metadata) {
+            if ('' === $metadata->getAgent() && 'exact' !== $metadata->getAgentMatch()) {
+                continue;
+            }
 
-            if( 'exact' === $metadata->getAgentMatch()) {
+            if ('exact' === $metadata->getAgentMatch()) {
                 $this->execRemoveQuery($metadata->getAgent());
             } else {
                 $regex = sprintf('/%s/', preg_quote($metadata->getAgent()));
@@ -59,7 +60,7 @@ EOT
     {
         $qb = $this->dm->createQueryBuilder('PumukitStatsBundle:ViewsLog')
           ->remove()
-          ->multiple(true)        
+          ->multiple(true)
           ->field('userAgent')->equals($userAgent)
           ->getQuery()
           ->execute();

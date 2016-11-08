@@ -47,16 +47,15 @@ class GroupEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchCreate()
     {
-        $this->dispatcher->addListener(SchemaEvents::GROUP_CREATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof GroupEvent);
-                                           $this->assertEquals(SchemaEvents::GROUP_CREATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::GROUP_CREATE, function ($event, $name) {
+            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertEquals(SchemaEvents::GROUP_CREATE, $name);
 
-                                           $group = $event->getGroup();
+            $group = $event->getGroup();
 
-                                           MockUpGroupListener::$called = true;
-                                           MockUpGroupListener::$name = $group->getName();
-                                       });
+            MockUpGroupListener::$called = true;
+            MockUpGroupListener::$name = $group->getName();
+        });
 
         $this->assertFalse(MockUpGroupListener::$called);
         $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
@@ -77,16 +76,15 @@ class GroupEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchUpdate()
     {
-        $this->dispatcher->addListener(SchemaEvents::GROUP_UPDATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof GroupEvent);
-                                           $this->assertEquals(SchemaEvents::GROUP_UPDATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::GROUP_UPDATE, function ($event, $name) {
+            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertEquals(SchemaEvents::GROUP_UPDATE, $name);
 
-                                           $group = $event->getGroup();
+            $group = $event->getGroup();
 
-                                           MockUpGroupListener::$called = true;
-                                           MockUpGroupListener::$name = $group->getName();
-                                       });
+            MockUpGroupListener::$called = true;
+            MockUpGroupListener::$name = $group->getName();
+        });
 
         $this->assertFalse(MockUpGroupListener::$called);
         $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
@@ -113,16 +111,15 @@ class GroupEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchDelete()
     {
-        $this->dispatcher->addListener(SchemaEvents::GROUP_DELETE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof GroupEvent);
-                                           $this->assertEquals(SchemaEvents::GROUP_DELETE, $name);
+        $this->dispatcher->addListener(SchemaEvents::GROUP_DELETE, function ($event, $name) {
+            $this->assertTrue($event instanceof GroupEvent);
+            $this->assertEquals(SchemaEvents::GROUP_DELETE, $name);
 
-                                           $group = $event->getGroup();
+            $group = $event->getGroup();
 
-                                           MockUpGroupListener::$called = true;
-                                           MockUpGroupListener::$name = $group->getName();
-                                       });
+            MockUpGroupListener::$called = true;
+            MockUpGroupListener::$name = $group->getName();
+        });
 
         $this->assertFalse(MockUpGroupListener::$called);
         $this->assertEquals(GroupEventDispatcherServiceTest::EMPTY_NAME, MockUpGroupListener::$name);
@@ -144,6 +141,6 @@ class GroupEventDispatcherServiceTest extends WebTestCase
 
 class MockUpGroupListener
 {
-    static public $called = false;
-    static public $name = GroupEventDispatcherServiceTest::EMPTY_NAME;
+    public static $called = false;
+    public static $name = GroupEventDispatcherServiceTest::EMPTY_NAME;
 }

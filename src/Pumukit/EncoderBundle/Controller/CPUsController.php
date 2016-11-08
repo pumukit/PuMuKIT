@@ -28,13 +28,13 @@ class CPUsController extends Controller
         $activate = $request->get('activate');
         $deactivate = $request->get('deactivate');
         if (($activate !== null && ($activate == true || $activate === 'activate' || $activate === 'true' || $activate === ''))
-            || ($deactivate != null && ($deactivate == false || $deactivate === 'false')) ){
+            || ($deactivate != null && ($deactivate == false || $deactivate === 'false'))) {
             $activateMaintenance = 'activate';
         } elseif (($deactivate !== null && ($deactivate == true || $deactivate === 'deactivate' || $deactivate === 'true' || $deactivate === ''))
-                || ($activate != null && ($activate == false || $activate === 'false')) ) {
+                || ($activate != null && ($activate == false || $activate === 'false'))) {
             $activateMaintenance = 'deactivate';
         }
-        if(!$activateMaintenance) {
+        if (!$activateMaintenance) {
             throw $this->createNotFoundException("There is no required 'activate' or 'deactivate' parameter");
         }
         return $this->forward('PumukitEncoderBundle:CPUs:switchMaintenance', [
@@ -51,21 +51,20 @@ class CPUsController extends Controller
         $cpuService = $this->get('pumukitencoder.cpu');
         $jobService = $this->get('pumukitencoder.job');
         $cpu = $cpuService->getCpuByName($cpuName);
-        if(!$cpu) {
+        if (!$cpu) {
             throw $this->createNotFoundException("The CPU with the name $cpuName does not exist");
         }
-        switch($activateMaintenance) {
+        switch ($activateMaintenance) {
         case 'activate':
             $cpuService->activateMaintenance($cpuName);
             break;
         case 'deactivate':
             $cpuService->deactivateMaintenance($cpuName);
-            for($i = 0; $i < $cpu['max']; $i++){
+            for ($i = 0; $i < $cpu['max']; $i++) {
                 $jobService->executeNextJob();
             }
             break;
         }
         return new Response();
     }
-
 }

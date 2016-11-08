@@ -26,7 +26,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -49,7 +49,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
         return $qb;
@@ -92,11 +92,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -121,11 +121,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
         
@@ -168,11 +168,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
         
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
         
@@ -213,11 +213,11 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
         
@@ -232,11 +232,11 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByPicId($picId)
     {
-      return $this->createQueryBuilder()
+        return $this->createQueryBuilder()
           ->field('pics._id')->equals(new \MongoId($picId))
           ->getQuery()
           ->getSingleResult();
-  }
+    }
 
     /**
      * Find series by person id
@@ -295,7 +295,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function count()
     {
-      return $this
+        return $this
         ->createQueryBuilder()
         ->count()
         ->getQuery()
@@ -309,7 +309,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function countPublic()
     {
-      return $this
+        return $this
         ->getDocumentManager()
         ->getRepository('PumukitSchemaBundle:MultimediaObject')
         ->createStandardQueryBuilder()
@@ -333,7 +333,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType,  $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -358,7 +358,7 @@ class SeriesRepository extends DocumentRepository
             ->field('_id')->in($referencedSeries->toArray())
             ->field('series_type')->references($seriesType);
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
         return $qb;

@@ -22,14 +22,14 @@ class UserAgentParserService
   */
   public function isOldBrowser($userAgent)
   {
-    $isOldBrowser = false;
-    $webExplorer = $this->getWebExplorer($userAgent);
-    $version = $this->getVersion($userAgent, $webExplorer);
-    if (($webExplorer == 'IE') || ($webExplorer == 'MSIE') || $webExplorer == 'Firefox' || $webExplorer == 'Opera' || ($webExplorer == 'Safari' && $version < 4)) {
-      $isOldBrowser = true;
-    }
+      $isOldBrowser = false;
+      $webExplorer = $this->getWebExplorer($userAgent);
+      $version = $this->getVersion($userAgent, $webExplorer);
+      if (($webExplorer == 'IE') || ($webExplorer == 'MSIE') || $webExplorer == 'Firefox' || $webExplorer == 'Opera' || ($webExplorer == 'Safari' && $version < 4)) {
+          $isOldBrowser = true;
+      }
 
-    return $isOldBrowser;
+      return $isOldBrowser;
   }
 
   /**
@@ -42,24 +42,24 @@ class UserAgentParserService
   */
   public function getWebExplorer($userAgent)
   {
-    $webExplorer = 'unknown';
-    if (preg_match('/MSIE/i', $userAgent)) {
-      $webExplorer = 'MSIE';
-    }
-    if (preg_match('/Opera/i', $userAgent)) {
-      $webExplorer = 'Opera';
-    }
-    if (preg_match('/Firefox/i', $userAgent)) {
-      $webExplorer = 'Firefox';
-    }
-    if (preg_match('/Safari/i', $userAgent)) {
-      $webExplorer = 'Safari';
-    }
-    if (preg_match('/Chrome/i', $userAgent)) {
-      $webExplorer = 'Chrome';
-    }
+      $webExplorer = 'unknown';
+      if (preg_match('/MSIE/i', $userAgent)) {
+          $webExplorer = 'MSIE';
+      }
+      if (preg_match('/Opera/i', $userAgent)) {
+          $webExplorer = 'Opera';
+      }
+      if (preg_match('/Firefox/i', $userAgent)) {
+          $webExplorer = 'Firefox';
+      }
+      if (preg_match('/Safari/i', $userAgent)) {
+          $webExplorer = 'Safari';
+      }
+      if (preg_match('/Chrome/i', $userAgent)) {
+          $webExplorer = 'Chrome';
+      }
 
-    return $webExplorer;
+      return $webExplorer;
   }
 
   /**
@@ -71,14 +71,14 @@ class UserAgentParserService
   */
   public function getVersion($userAgent, $webExplorer)
   {
-    $version = null;
+      $version = null;
 
-    if ($webExplorer !== 'Opera' && preg_match('#('.$webExplorer.')[/ ]?([0-9.]*)#', $userAgent, $match)) {
-      $version = floor($match[2]);
-    }
-    if (($webExplorer == 'Opera' || $webExplorer == 'Safari') && preg_match('#(Version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
-      $version = floor($match[2]);
-    }
-    return $version;
+      if ($webExplorer !== 'Opera' && preg_match('#('.$webExplorer.')[/ ]?([0-9.]*)#', $userAgent, $match)) {
+          $version = floor($match[2]);
+      }
+      if (($webExplorer == 'Opera' || $webExplorer == 'Safari') && preg_match('#(Version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
+          $version = floor($match[2]);
+      }
+      return $version;
   }
 }

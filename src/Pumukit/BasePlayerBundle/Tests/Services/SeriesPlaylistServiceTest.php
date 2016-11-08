@@ -45,7 +45,7 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $track->setUrl('funnyurl.mp4');
         $playlistMmobjs['published']->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
-        foreach($mmobjs as $mmobj) {
+        foreach ($mmobjs as $mmobj) {
             $mmobj->setSeries($series);
             $mmobj->addTrack($track);
             $this->dm->persist($mmobj);
@@ -53,7 +53,7 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $this->dm->persist($series);
         $this->dm->persist($series2);
         $this->dm->flush();
-        foreach($playlistMmobjs as $mmobj) {
+        foreach ($playlistMmobjs as $mmobj) {
             $mmobj->addTrack($track);
             $mmobj->setSeries($series2);
             $this->dm->persist($mmobj);
@@ -63,10 +63,10 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $this->dm->flush();
         $this->dm->clear();
 
-        foreach($mmobjs as $key => $mmobj) {
+        foreach ($mmobjs as $key => $mmobj) {
             $mmobjs[$key] = $this->mmobjRepo->find($mmobj->getId());
         }
-        foreach($playlistMmobjs as $key => $mmobj) {
+        foreach ($playlistMmobjs as $key => $mmobj) {
             $playlistMmobjs[$key] = $this->mmobjRepo->find($mmobj->getId());
         }
         $series = $this->seriesRepo->find($series->getId());
@@ -108,7 +108,6 @@ class SeriesPlaylistServiceTest extends WebTestCase
 
     public function testGetMmobjFromIdAndPlaylist()
     {
-
         $playlistMmobj = $this->seriesPlaylistService->getMmobjFromIdAndPlaylist($this->testMmobjs['published']->getId(), $this->testSeries);
         $this->assertEquals($this->testMmobjs['published'], $playlistMmobj);
     }

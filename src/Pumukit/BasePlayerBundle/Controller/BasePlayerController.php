@@ -21,7 +21,6 @@ class BasePlayerController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-
     }
 
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)

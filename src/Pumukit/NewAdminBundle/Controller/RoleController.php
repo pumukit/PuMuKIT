@@ -104,7 +104,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
         }
 
         $this->get('pumukitschema.factory')->deleteResource($resource);
-        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')){
+        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
             $this->get('session')->remove('admin/'.$resourceName.'/id');
         }
 
@@ -116,7 +116,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
     {
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
@@ -126,14 +126,16 @@ class RoleController extends SortableAdminController implements NewAdminControll
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            if (0 !== $resource->getNumberPeopleInMultimediaObject()) continue;
+            if (0 !== $resource->getNumberPeopleInMultimediaObject()) {
+                continue;
+            }
 
-            try{
+            try {
                 $factory->deleteResource($resource);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')){
+            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
                 $this->get('session')->remove('admin/'.$resourceName.'/id');
             }
         }

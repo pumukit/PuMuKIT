@@ -52,7 +52,9 @@ class PicService
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         } else {
             foreach ($pics as $pic) {
-                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) break;
+                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) {
+                    break;
+                }
             }
         }
 
@@ -84,8 +86,9 @@ class PicService
     public function getDefaultUrlPicForObject($object, $absolute=false, $hd=true)
     {
         if ($object instanceof Series) {
-            if($object->getType() == Series::TYPE_PLAYLIST)
+            if ($object->getType() == Series::TYPE_PLAYLIST) {
                 return $this->getDefaultPlaylistUrlPic($absolute);
+            }
             return $this->getDefaultSeriesUrlPic($absolute);
         } elseif ($object instanceof MultimediaObject) {
             return $this->getDefaultMultimediaObjectUrlPic($absolute, $object->isOnlyAudio(), $hd);
@@ -169,16 +172,16 @@ class PicService
     {
         if ($picUrl) {
             if ("/" == $picUrl[0]) {
-              $scheme = $this->context->getScheme();
-              $host = $this->context->getHost();
-              $port = '';
-              if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-                  $port = ':'.$this->context->getHttpPort();
-              } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-                  $port = ':'.$this->context->getHttpsPort();
-              }
+                $scheme = $this->context->getScheme();
+                $host = $this->context->getHost();
+                $port = '';
+                if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
+                    $port = ':'.$this->context->getHttpPort();
+                } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
+                    $port = ':'.$this->context->getHttpsPort();
+                }
 
-              return $scheme."://".$host.$port.$picUrl;
+                return $scheme."://".$host.$port.$picUrl;
             }
         }
 
@@ -206,7 +209,9 @@ class PicService
             return $this->getDefaultPathPicForObject($object, $hd);
         } else {
             foreach ($pics as $pic) {
-                if (($picPath = $pic->getPath()) && !$pic->getHide() && !$pic->containsTag('banner')) break;
+                if (($picPath = $pic->getPath()) && !$pic->getHide() && !$pic->containsTag('banner')) {
+                    break;
+                }
             }
         }
 

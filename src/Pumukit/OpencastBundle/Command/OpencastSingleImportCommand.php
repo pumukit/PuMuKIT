@@ -21,7 +21,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute( InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $opencastId = $input->getArgument('id');
         if ($input->getOption('verbose')) {

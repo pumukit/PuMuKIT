@@ -78,7 +78,7 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
 
-        $allPermissions = array_map(function($a){
+        $allPermissions = array_map(function ($a) {
             return $a['description'];
         }, Permission::$permissionDescription);
         $allPermissions['ROLE_ONE'] = 'Access One';
@@ -93,7 +93,7 @@ class PermissionServiceTest extends WebTestCase
     {
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
-        $allDependencies = array_map(function($a){
+        $allDependencies = array_map(function ($a) {
             return $a['dependencies'];
         }, Permission::$permissionDescription);
 

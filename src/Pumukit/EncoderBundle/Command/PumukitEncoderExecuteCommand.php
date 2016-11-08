@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\EncoderBundle\Document\Job;
-      
+
 class PumukitEncoderExecuteCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -44,7 +44,7 @@ EOT
         //TODO STATUS is executing when this command is executed. Must be waiting.
         /*
         if ((!$input->getOption('force')) && (JOB::STATUS_WAITING != $job->getStatus())) {
-            throw new \RuntimeException("The job is not in the waiting state");        
+            throw new \RuntimeException("The job is not in the waiting state");
         }
         */
 

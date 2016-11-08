@@ -9,12 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-
 class ExceptionListener
 {
 
     /**
-     * Handles security related exceptions. 
+     * Handles security related exceptions.
      *
      * @param GetResponseForExceptionEvent $event An GetResponseForExceptionEvent instance
      */
@@ -33,7 +32,6 @@ class ExceptionListener
     {
         $req = $event->getRequest();
         if ($req->isXmlHttpRequest()) {
-    
             $exception = $event->getException();
       
             $response = new Response();

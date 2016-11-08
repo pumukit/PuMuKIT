@@ -114,9 +114,8 @@ class StatsService
 
         //Add mmobj with zero views
         if (count($aggregation) < $options['limit']) {
-
             if (count($aggregation) == 0) {
-                $max = min(( 1 + $options['page']) * $options['limit'], $total);
+                $max = min((1 + $options['page']) * $options['limit'], $total);
                 for ($i = ($options['page'] * $options['limit']); $i < $max; $i++) {
                     $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
                     if ($multimediaObject) {
@@ -126,7 +125,6 @@ class StatsService
                     }
                 }
             } else {
-
                 foreach ($mmobjIds as $element) {
                     if (!in_array($element, $ids)) {
                         $multimediaObject = $this->repo->find($element);
@@ -134,7 +132,9 @@ class StatsService
                             $mostViewed[] = array('mmobj' => $multimediaObject,
                                                   'num_viewed' => 0,
                             );
-                            if (count($mostViewed) == $options['limit']) break;
+                            if (count($mostViewed) == $options['limit']) {
+                                break;
+                            }
                         }
                     }
                 }
@@ -185,9 +185,8 @@ class StatsService
 
         //Add series with zero views
         if (count($aggregation) < $options['limit']) {
-
             if (count($aggregation) == 0) {
-                $max = min(( 1 + $options['page']) * $options['limit'], $total);
+                $max = min((1 + $options['page']) * $options['limit'], $total);
                 for ($i = ($options['page'] * $options['limit']); $i < $max; $i++) {
                     $series = $this->repoSeries->find($seriesIds[$i - $totalInAggegation]);
                     if ($series) {
@@ -197,7 +196,6 @@ class StatsService
                     }
                 }
             } else {
-
                 foreach ($seriesIds as $element) {
                     if (!in_array($element, $ids)) {
                         $series = $this->repoSeries->find($element);
@@ -205,7 +203,9 @@ class StatsService
                             $mostViewed[] = array('series' => $series,
                                                   'num_viewed' => 0,
                             );
-                            if (count($mostViewed) == $options['limit']) break;
+                            if (count($mostViewed) == $options['limit']) {
+                                break;
+                            }
                         }
                     }
                 }
@@ -250,12 +250,12 @@ class StatsService
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
         $options = $this->parseOptions($options);
 
-        if(!$matchExtra) {
-            if($options['criteria_series']) {
+        if (!$matchExtra) {
+            if ($options['criteria_series']) {
                 $seriesIds = $this->getSeriesIdsWithCriteria($options['criteria_series']);
                 $matchExtra['series'] = array('$in' => $seriesIds);
             }
-            if($options['criteria_mmobj']) {
+            if ($options['criteria_mmobj']) {
                 $mmobjIds = $this->getMmobjIdsWithCriteria($options['criteria_mmobj']);
                 $matchExtra['multimediaObject'] = array('$in' => $mmobjIds);
             }
@@ -296,7 +296,7 @@ class StatsService
         }
 
         if (count($matchExtra) > 0 || count($date) > 0) {
-          //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
+            //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
           $pipeline[] = array('$match' => array_merge($matchExtra, $date));
         }
 
@@ -394,7 +394,8 @@ class StatsService
      * @return array aggregation
      *
      */
-    function getPagedAggregation(array $aggregation, $page = 0, $limit = 10) {
+    public function getPagedAggregation(array $aggregation, $page = 0, $limit = 10)
+    {
         $offset = $page * $limit;
         return array_splice($aggregation, $offset, $limit);
     }

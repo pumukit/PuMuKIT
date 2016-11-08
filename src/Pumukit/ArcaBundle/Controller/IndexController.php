@@ -33,7 +33,7 @@ class IndexController extends Controller
      */
     public function listAction($year)
     {
-	    $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $start = new \DateTime($year . '/01/01');
         $end = new \DateTime($year . '/12/31');

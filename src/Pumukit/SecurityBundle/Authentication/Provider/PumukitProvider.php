@@ -17,7 +17,6 @@ use Pumukit\SchemaBundle\Document\Group;
 
 class PumukitProvider implements AuthenticationProviderInterface
 {
-
     const CAS_ID_KEY = 'UID'; //TODO configurable
 
     const CAS_CN_KEY = 'CN';

@@ -53,7 +53,9 @@ class WorkflowService
                 }
             }
         }
-        if ($errors > 0) return false;
+        if ($errors > 0) {
+            return false;
+        }
         
         return true;
     }
@@ -74,8 +76,9 @@ class WorkflowService
             $total = $statistics["statistics"]["total"];
         }
 
-        if ($total == 0)
+        if ($total == 0) {
             return null;
+        }
 
         $decode = $this->clientService->getCountedWorkflowInstances($id, $total, $workflowName);
 

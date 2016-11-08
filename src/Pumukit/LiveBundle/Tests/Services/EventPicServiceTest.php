@@ -71,7 +71,7 @@ class EventPicServiceTest extends WebTestCase
         $this->assertNull($event->getPic());
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $event = $this->eventPicService->addPicFile($event, $picFile);
             $event = $this->repo->find($event->getId());
@@ -92,7 +92,7 @@ class EventPicServiceTest extends WebTestCase
         $this->assertNull($event->getPic());
 
         $picPath = realpath(__DIR__.'/../Resources').'/picCopy.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $event = $this->eventPicService->addPicFile($event, $picFile);
             $event = $this->repo->find($event->getId());
@@ -154,14 +154,14 @@ class EventPicServiceTest extends WebTestCase
     {
         $events = $this->repo->findAll();
 
-        foreach($events as $event){
+        foreach ($events as $event) {
             $eventDir = $this->uploadsPath.'/'.$event->getId().'/';
 
-            if (is_dir($eventDir)){
+            if (is_dir($eventDir)) {
                 $files = glob($eventDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 

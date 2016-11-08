@@ -13,7 +13,6 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class ChannelController extends Controller implements WebTVController
 {
-
     private $titles = array( 1 => "University",
                              2 => "Business",
                              3 => "Natural Sciences",
@@ -46,7 +45,7 @@ class ChannelController extends Controller implements WebTVController
         $channelTags = $this->getTagsForChannel($channelNumber);
         $results = array();
 
-        foreach($channelTags as $tag) {
+        foreach ($channelTags as $tag) {
             $series = $repoSeries->createBuilderWithTag($tag, array('record_date' => -1));
             $series = $series->getQuery()->execute();
             $numMmobjs = $repoMmobj->createBuilderWithTag($tag, array('record_date' => -1))
@@ -75,7 +74,7 @@ class ChannelController extends Controller implements WebTVController
         $tagCods = isset($this->tags[$channelNumber])?$this->tags[$channelNumber]:array();
         $tags = array();
         $repoTags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        foreach($tagCods as $tagCod) {
+        foreach ($tagCods as $tagCod) {
             $tags[] = $repoTags->findOneByCod($tagCod);
         }
         return $tags;

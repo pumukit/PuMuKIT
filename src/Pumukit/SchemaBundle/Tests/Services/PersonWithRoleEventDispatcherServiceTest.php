@@ -44,20 +44,19 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchCreate()
     {
-        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_CREATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof PersonWithRoleEvent);
-                                           $this->assertEquals(SchemaEvents::PERSONWITHROLE_CREATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_CREATE, function ($event, $name) {
+            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertEquals(SchemaEvents::PERSONWITHROLE_CREATE, $name);
 
-                                           $multimediaObject = $event->getMultimediaObject();
-                                           $person = $event->getPerson();
-                                           $role = $event->getRole();
+            $multimediaObject = $event->getMultimediaObject();
+            $person = $event->getPerson();
+            $role = $event->getRole();
 
-                                           MockUpPersonWithRoleListener::$called = true;
-                                           MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
-                                           MockUpPersonWithRoleListener::$name = $person->getName();
-                                           MockUpPersonWithRoleListener::$code = $role->getCod();
-                                       });
+            MockUpPersonWithRoleListener::$called = true;
+            MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
+            MockUpPersonWithRoleListener::$name = $person->getName();
+            MockUpPersonWithRoleListener::$code = $role->getCod();
+        });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
         $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
@@ -87,20 +86,19 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchUpdate()
     {
-        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_UPDATE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof PersonWithRoleEvent);
-                                           $this->assertEquals(SchemaEvents::PERSONWITHROLE_UPDATE, $name);
+        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_UPDATE, function ($event, $name) {
+            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertEquals(SchemaEvents::PERSONWITHROLE_UPDATE, $name);
 
-                                           $multimediaObject = $event->getMultimediaObject();
-                                           $person = $event->getPerson();
-                                           $role = $event->getRole();
+            $multimediaObject = $event->getMultimediaObject();
+            $person = $event->getPerson();
+            $role = $event->getRole();
 
-                                           MockUpPersonWithRoleListener::$called = true;
-                                           MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
-                                           MockUpPersonWithRoleListener::$name = $person->getName();
-                                           MockUpPersonWithRoleListener::$code = $role->getCod();
-                                       });
+            MockUpPersonWithRoleListener::$called = true;
+            MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
+            MockUpPersonWithRoleListener::$name = $person->getName();
+            MockUpPersonWithRoleListener::$code = $role->getCod();
+        });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
         $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
@@ -133,20 +131,19 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
     public function testDispatchDelete()
     {
-        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_DELETE, function($event, $name)
-                                       {
-                                           $this->assertTrue($event instanceof PersonWithRoleEvent);
-                                           $this->assertEquals(SchemaEvents::PERSONWITHROLE_DELETE, $name);
+        $this->dispatcher->addListener(SchemaEvents::PERSONWITHROLE_DELETE, function ($event, $name) {
+            $this->assertTrue($event instanceof PersonWithRoleEvent);
+            $this->assertEquals(SchemaEvents::PERSONWITHROLE_DELETE, $name);
 
-                                           $multimediaObject = $event->getMultimediaObject();
-                                           $person = $event->getPerson();
-                                           $role = $event->getRole();
+            $multimediaObject = $event->getMultimediaObject();
+            $person = $event->getPerson();
+            $role = $event->getRole();
 
-                                           MockUpPersonWithRoleListener::$called = true;
-                                           MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
-                                           MockUpPersonWithRoleListener::$name = $person->getName();
-                                           MockUpPersonWithRoleListener::$code = $role->getCod();
-                                       });
+            MockUpPersonWithRoleListener::$called = true;
+            MockUpPersonWithRoleListener::$title = $multimediaObject->getTitle();
+            MockUpPersonWithRoleListener::$name = $person->getName();
+            MockUpPersonWithRoleListener::$code = $role->getCod();
+        });
 
         $this->assertFalse(MockUpPersonWithRoleListener::$called);
         $this->assertEquals(PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE, MockUpPersonWithRoleListener::$title);
@@ -177,8 +174,8 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
 
 class MockUpPersonWithRoleListener
 {
-    static public $called = false;
-    static public $title = PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE;
-    static public $name = PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME;
-    static public $code = PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE;
+    public static $called = false;
+    public static $title = PersonWithRoleEventDispatcherServiceTest::EMPTY_TITLE;
+    public static $name = PersonWithRoleEventDispatcherServiceTest::EMPTY_NAME;
+    public static $code = PersonWithRoleEventDispatcherServiceTest::EMPTY_CODE;
 }

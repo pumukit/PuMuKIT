@@ -26,26 +26,30 @@ class TrackFileController extends Controller
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $mmobj = $mmobjRepo->findOneByTrackId($id);
-        if(!$mmobj) {
+        if (!$mmobj) {
             throw $this->createNotFoundException("Not mmobj found with the track id: $id");
         }
         $track = $mmobj->getTrackById($id);
 
-        if($this->shouldIncreaseViews($track, $request)) {
+        if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
         }
         return $this->redirect($track->getUrl());
     }
 
-    protected function shouldIncreaseViews(Track $track, Request $request) {
+    protected function shouldIncreaseViews(Track $track, Request $request)
+    {
         $range = $request->headers->get('range');
         $start = $request->headers->get('start');
-        if (!$range && !$start)
+        if (!$range && !$start) {
             return true;
-        if($range && substr($range, 0, 8) == "bytes=0-")
+        }
+        if ($range && substr($range, 0, 8) == "bytes=0-") {
             return true;
-        if($start !== null && $start == 0)
+        }
+        if ($start !== null && $start == 0) {
             return true;
+        }
         return false;
     }
 
@@ -54,5 +58,4 @@ class TrackFileController extends Controller
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
-
 }

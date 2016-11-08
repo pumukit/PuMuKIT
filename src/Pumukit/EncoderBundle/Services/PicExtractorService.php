@@ -26,7 +26,7 @@ class PicExtractorService
         $this->width = $width;
         $this->height = $height;
         $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath){
+        if (!$this->targetPath) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pic does not exist.");
         }
         $this->targetUrl = $targetUrl;
@@ -44,11 +44,15 @@ class PicExtractorService
      */
     public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
     {
-        if ($multimediaObject->getProperty('imagesonbatch')) return false;
+        if ($multimediaObject->getProperty('imagesonbatch')) {
+            return false;
+        }
 
         $multimediaObject->setProperty('imagesonbatch', true);
 
-        if (!$marks) $marks = array('0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%');
+        if (!$marks) {
+            $marks = array('0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%');
+        }
         foreach ($marks as $mark) {
             $this->extractPic($multimediaObject, $track, $mark);
         }
@@ -64,17 +68,17 @@ class PicExtractorService
      */
     public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe)
     {
-        if (!file_exists($track->getPath())){
+        if (!file_exists($track->getPath())) {
             return "Error in data autocomplete of multimedia object.";
         }
 
         $num_frames = $track->getNumFrames();
 
-        if((is_null($numframe)||($num_frames == 0))){
+        if ((is_null($numframe)||($num_frames == 0))) {
             $num = 125 * (count($multimediaObject->getPics())) + 1;
-        }elseif(substr($numframe, -1, 1) === '%'){
+        } elseif (substr($numframe, -1, 1) === '%') {
             $num = intval($numframe)* $num_frames /100;
-        }else{
+        } else {
             $num = intval($numframe);
         }
 
@@ -101,7 +105,7 @@ class PicExtractorService
         $fs->mkdir($absCurrentDir);
 
         $picFileName = date('ymdGis').'.jpg';
-        while(file_exists($absCurrentDir.'/'.$picFileName)) {
+        while (file_exists($absCurrentDir.'/'.$picFileName)) {
             $picFileName = date('ymdGis'). rand(). '.jpg';
         }
 
@@ -110,7 +114,7 @@ class PicExtractorService
             $newHeight = intval(1.0 * $this->width / $aspectTrack);
             if ($newHeight <= $this->height) {
                 $newWidth = $this->width;
-            }else{
+            } else {
                 $newHeight = $this->height;
                 $newWidth = intval(1.0 * $this->height * $aspectTrack);
             }
@@ -138,7 +142,7 @@ class PicExtractorService
         //log $process->getOutput()
         $picUrl = $this->targetUrl.'/'.$currentDir.'/'.$picFileName;
         $picPath = $absCurrentDir .'/' . $picFileName;
-        if (file_exists($picPath)){
+        if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
             $tags = array('auto', 'frame_' . $frame, 'time_' . $track->getTimeOfAFrame($frame));
@@ -156,9 +160,12 @@ class PicExtractorService
      * @param Track $track
      * @return float aspect ratio
      */
-    private function getAspect(Track $track){
-      if (0 == $track->getHeight()) return 0;
-      return (1.0 * $track->getWidth() / $track->getHeight());
+    private function getAspect(Track $track)
+    {
+        if (0 == $track->getHeight()) {
+            return 0;
+        }
+        return (1.0 * $track->getWidth() / $track->getHeight());
     }
 
     /**
@@ -178,7 +185,9 @@ class PicExtractorService
         $pic->setPath($picPath);
         $pic->setWidth($width);
         $pic->setHeight($height);
-        foreach($tags as $tag) $pic->addTag($tag);
+        foreach ($tags as $tag) {
+            $pic->addTag($tag);
+        }
 
         $this->dm->persist($multimediaObject);
         $this->dm->flush();

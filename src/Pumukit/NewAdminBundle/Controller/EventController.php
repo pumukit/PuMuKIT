@@ -16,7 +16,7 @@ class EventController extends AdminController implements NewAdminController
     /**
      * @var array
      */
-    static $daysInMonth = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    public static $daysInMonth = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
     /**
      * Overwrite to get the calendar
@@ -30,13 +30,13 @@ class EventController extends AdminController implements NewAdminController
         list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
         $update_session = true;
-        foreach($events as $event) {
-            if($event->getId() == $this->get('session')->get('admin/event/id')){
+        foreach ($events as $event) {
+            if ($event->getId() == $this->get('session')->get('admin/event/id')) {
                 $update_session = false;
             }
         }
  
-        if($update_session){
+        if ($update_session) {
             $this->get('session')->remove('admin/event/id');
         }
 
@@ -118,10 +118,10 @@ class EventController extends AdminController implements NewAdminController
     {
         $activeTab = $request->get('activeTab', null);
 
-        if ($activeTab){
+        if ($activeTab) {
             $this->get('session')->set('admin/event/tab', $activeTab);
             $tabValue = 'Active tab: '.$activeTab;
-        }else{
+        } else {
             $this->get('session')->remove('admin/event/tab');
             $tabValue = 'Active tab: listTab';
         }
@@ -231,14 +231,19 @@ class EventController extends AdminController implements NewAdminController
             if (('' !== $value) && ('date' !== $property)) {
                 $new_criteria[$property] = new \MongoRegex('/'.$value.'/i');
             } elseif (('' !== $value) && ('date' == $property)) {
-                if ('' !== $value['from']) $date_from = new \DateTime($value['from']);
-                if ('' !== $value['to']) $date_to = new \DateTime($value['to']);
-                if (('' !== $value['from']) && ('' !== $value['to']))
+                if ('' !== $value['from']) {
+                    $date_from = new \DateTime($value['from']);
+                }
+                if ('' !== $value['to']) {
+                    $date_to = new \DateTime($value['to']);
+                }
+                if (('' !== $value['from']) && ('' !== $value['to'])) {
                     $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
-                elseif ('' !== $value['from'])
+                } elseif ('' !== $value['from']) {
                     $new_criteria[$property] = array('$gte' => $date_from);
-                elseif ('' !== $value['to'])
+                } elseif ('' !== $value['to']) {
                     $new_criteria[$property] = array('$lt' => $date_to);
+                }
             }
         }
 

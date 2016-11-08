@@ -20,7 +20,7 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
           ;
     }
 
-    protected function execute( InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startTime = microtime(true);
         $opencastClientService = $this->getContainer()->get('pumukit_opencast.client');
@@ -39,7 +39,7 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
 
         $output->writeln("Number of mediapackages: " . $mediaPackages[0]);
 
-        while($batchPlace < $totalMediaPackages) {
+        while ($batchPlace < $totalMediaPackages) {
             $output->writeln("Importing recordings " . $batchPlace . " to " . ($batchPlace + $batchSize));
             $mediaPackages = $opencastClientService->getMediaPackages('', $batchSize, $batchPlace);
 
@@ -48,7 +48,7 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
 
             foreach ($mediaPackages[1] as $mediaPackage) {
                 $output->writeln("Importing mediapackage: " . $mediaPackage['id']);
-                if($repositoryMultimediaObjects->findOneBy(array("properties.opencast" => $mediaPackage["id"]))) {
+                if ($repositoryMultimediaObjects->findOneBy(array("properties.opencast" => $mediaPackage["id"]))) {
                     $output->writeln("Mediapackage " . $mediaPackage['id'] . " has already been imported, skipping to next mediapackage");
                 } else {
                     $opencastImportService->importRecording($mediaPackage['id'], $invert);

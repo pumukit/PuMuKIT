@@ -37,7 +37,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
-        if ($input->getOption('force')){
+        if ($input->getOption('force')) {
             return $this->executeTags($input, $output);
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment without backup.');
@@ -94,7 +94,7 @@ EOT
         if (($file = fopen($file, "r")) !== false) {
             while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
                 $number = count($currentRow);
-                if (('tag' === $repoName) && ($number == 6 || $number == 9)){
+                if (('tag' === $repoName) && ($number == 6 || $number == 9)) {
                     //Check header rows
                     if (trim($currentRow[0]) == "id") {
                         continue;
@@ -152,7 +152,7 @@ EOT
         if (isset($csv_array[7])) {
             $tag->setTitle($csv_array[7], 'gl');
         }
-       if (isset($csv_array[8])) {
+        if (isset($csv_array[8])) {
             $tag->setTitle($csv_array[8], 'de');
         }
 

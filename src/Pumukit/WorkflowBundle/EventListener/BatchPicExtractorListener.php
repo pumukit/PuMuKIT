@@ -37,9 +37,9 @@ class BatchPicExtractorListener
     {
         //TODO check if repeat
         if ($this->enable) {
-          if (!$multimediaObject->isOnlyAudio() && !$track->isOnlyAudio()) {
-            return $this->generatePicFromVideo($multimediaObject, $track);
-          }
+            if (!$multimediaObject->isOnlyAudio() && !$track->isOnlyAudio()) {
+                return $this->generatePicFromVideo($multimediaObject, $track);
+            }
         }
 
         return false;
@@ -51,7 +51,7 @@ class BatchPicExtractorListener
         $outputMessage = $this->picExtractorService->extractPicOnBatch($multimediaObject, $track);
         if (false !== strpos($outputMessage, 'Error')) {
             throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
-      }
+        }
         $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
                           .'Extracted pic from track '.
                           $track->getId().' into MultimediaObject "'

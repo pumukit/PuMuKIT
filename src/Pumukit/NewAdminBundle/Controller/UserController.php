@@ -202,13 +202,13 @@ class UserController extends AdminController implements NewAdminController
         if (!$user->isLocal()) {
             return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
         }
-        if ('POST' === $request->getMethod()){
+        if ('POST' === $request->getMethod()) {
             $addGroups = $request->get('addGroups', array());
-            if ('string' === gettype($addGroups)){
+            if ('string' === gettype($addGroups)) {
                 $addGroups = json_decode($addGroups, true);
             }
             $deleteGroups = $request->get('deleteGroups', array());
-            if ('string' === gettype($deleteGroups)){
+            if ('string' === gettype($deleteGroups)) {
                 $deleteGroups = json_decode($deleteGroups, true);
             }
 
@@ -228,7 +228,7 @@ class UserController extends AdminController implements NewAdminController
         $addGroups = array();
         $addGroupsIds = array();
         $deleteGroups = array();
-        if ('GET' === $request->getMethod()){
+        if ('GET' === $request->getMethod()) {
             foreach ($user->getGroups() as $group) {
                 $addGroups[$group->getId()] = array(
                                                     'key' => $group->getKey(),
@@ -262,14 +262,14 @@ class UserController extends AdminController implements NewAdminController
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $userService = $this->get('pumukitschema.user');
 
-        foreach ($addGroups as $addGroup){
+        foreach ($addGroups as $addGroup) {
             $groupId = explode('_', $addGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
                 $userService->addGroup($group, $user, false);
             }
         }
-        foreach ($deleteGroups as $deleteGroup){
+        foreach ($deleteGroups as $deleteGroup) {
             $groupId = explode('_', $deleteGroup)[2];
             $group = $groupRepo->find($groupId);
             if ($group) {
@@ -377,11 +377,11 @@ class UserController extends AdminController implements NewAdminController
         $new_criteria = array();
         foreach ($criteria as $property => $value) {
             if ('permissionProfile' == $property) {
-                if('all' != $value) {
+                if ('all' != $value) {
                     $new_criteria[$property] = new \MongoId($value);
                 }
             } elseif ('origin' == $property) {
-                if('all' != $value) {
+                if ('all' != $value) {
                     $new_criteria[$property] = $value;
                 }
             } elseif ('' !== $value) {

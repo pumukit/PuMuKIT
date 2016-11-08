@@ -8,7 +8,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
 
-
 /**
  * @IgnoreAnnotation("dataProvider")
  */
@@ -81,7 +80,7 @@ class JobGeneratorListenerTest extends WebTestCase
             array('TAG0 TAG1*, TAG2* TAG3', array('standard' => array('TAG0', 'TAG3'), 'force' => array('TAG1', 'TAG2'))),
             array('TAG0 TAG1**, TAG2* TAG*3', array('standard' => array('TAG0', 'TAG*3'), 'force' => array('TAG1*', 'TAG2'))),
         );
-        foreach($data as $d) {
+        foreach ($data as $d) {
             $targets = $this->invokeMethod($this->jobGeneratorListener, 'getTargets', array($d[0]));
             $this->assertEquals($d[1], $targets);
         }
@@ -168,7 +167,6 @@ class JobGeneratorListenerTest extends WebTestCase
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
-
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = array())

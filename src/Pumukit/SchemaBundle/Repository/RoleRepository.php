@@ -24,5 +24,4 @@ class RoleRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
-
 }

@@ -41,8 +41,9 @@ class SenderServiceTest extends WebTestCase
 
     public function tearDown()
     {
-        if(isset($this->dm))
+        if (isset($this->dm)) {
             $this->dm->close();
+        }
         $this->dm = null;
         $this->mailer = null;
         $this->templating = null;
@@ -91,5 +92,4 @@ class SenderServiceTest extends WebTestCase
         $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
         $this->assertEquals(1, $output);
     }
-
 }

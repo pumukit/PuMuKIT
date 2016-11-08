@@ -142,7 +142,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testIsMaster()
-    {   
+    {
         $t1 = new Track();
         $t1->addTag('master');
 

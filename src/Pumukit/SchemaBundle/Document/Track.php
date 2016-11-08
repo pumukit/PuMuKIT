@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Track extends Element
 {
-  /**
+    /**
    * @var string $language
    *
    * @MongoDB\String
@@ -89,11 +89,11 @@ class Track extends Element
    */
   private $numview;
 
-  public function __construct()
-  {
-      $this->language = \Locale::getDefault();
-      parent::__construct();
-  }
+    public function __construct()
+    {
+        $this->language = \Locale::getDefault();
+        parent::__construct();
+    }
 
   /**
    * Set language
@@ -202,7 +202,7 @@ class Track extends Element
    */
   public function getNumFrames()
   {
-    return $this->getFrameNumber($this->getDuration());
+      return $this->getFrameNumber($this->getDuration());
   }
 
   /**
@@ -228,7 +228,9 @@ class Track extends Element
    */
   public function getTimeOfAFrame($frame)
   {
-      if(!$this->getFramerate()) return 0;
+      if (!$this->getFramerate()) {
+          return 0;
+      }
 
       if (false !== strpos($this->getFramerate(), '/')) {
           $aux = explode('/', $this->getFramerate());
@@ -367,7 +369,7 @@ class Track extends Element
    */
   public function incNumview()
   {
-    $this->numview++;
+      $this->numview++;
   }
 
   /**

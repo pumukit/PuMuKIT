@@ -34,7 +34,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
 
-        if ($input->getOption('force')){
+        if ($input->getOption('force')) {
             $podcastPublicationChannelTag = $this->createTagWithCode('PUCHPODCAST', 'PodcastEDU/iTunesU', 'PUBCHANNELS', false);
             $podcastPublicationChannelTag->setProperty('modal_path', 'pumukitpodcast_modal_index');
             $this->dm->persist($podcastPublicationChannelTag);
@@ -64,7 +64,7 @@ EOT
         $tag->setTitle($title, 'es');
         $tag->setTitle($title, 'gl');
         $tag->setTitle($title, 'en');
-        if ($tagParentCode){
+        if ($tagParentCode) {
             if ($parent = $this->tagRepo->findOneByCod($tagParentCode)) {
                 $tag->setParent($parent);
             } else {

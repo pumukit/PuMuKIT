@@ -228,7 +228,6 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
         $this->assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
         $this->assertFalse($mm3->getEmbeddedRole($rolePresenter));
-
     }
 
     public function testFindSeriesWithPerson()
@@ -334,12 +333,12 @@ class PersonServiceTest extends WebTestCase
         $this->assertEquals(2, count($seriesBob));
         $this->assertEquals(2, count($seriesKate));
 
-        $this->assertTrue(in_array($series1, $seriesJohn->toArray(), TRUE));
-        $this->assertTrue(in_array($series3, $seriesJohn->toArray(), TRUE));
-        $this->assertTrue(in_array($series1, $seriesBob->toArray(), TRUE));
-        $this->assertTrue(in_array($series3, $seriesBob->toArray(), TRUE));
-        $this->assertTrue(in_array($series1, $seriesKate->toArray(), TRUE));
-        $this->assertTrue(in_array($series2, $seriesKate->toArray(), TRUE));
+        $this->assertTrue(in_array($series1, $seriesJohn->toArray(), true));
+        $this->assertTrue(in_array($series3, $seriesJohn->toArray(), true));
+        $this->assertTrue(in_array($series1, $seriesBob->toArray(), true));
+        $this->assertTrue(in_array($series3, $seriesBob->toArray(), true));
+        $this->assertTrue(in_array($series1, $seriesKate->toArray(), true));
+        $this->assertTrue(in_array($series2, $seriesKate->toArray(), true));
 
         $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
         $this->assertEquals(array($series1), $seriesKate1->toArray());

@@ -204,4 +204,3 @@ class UserRepositoryTest extends WebTestCase
         return $group;
     }
 }
-

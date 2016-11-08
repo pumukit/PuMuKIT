@@ -10,5 +10,4 @@ use Pumukit\EncoderBundle\Document\CpuStatus;
  */
 class CpuStatusRepository extends DocumentRepository
 {
-
 }

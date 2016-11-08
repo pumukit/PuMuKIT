@@ -142,7 +142,5 @@ class LinkServiceTest extends WebTestCase
         $this->linkService->downLinkInMultimediaObject($mm, $link2->getId());
         $links = array($link3, $link2, $link1);
         $this->assertEquals($links, $mm->getLinks()->toArray());
-
     }
 }
-

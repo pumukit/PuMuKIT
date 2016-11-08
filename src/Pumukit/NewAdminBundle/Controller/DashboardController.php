@@ -37,11 +37,11 @@ class DashboardController extends Controller implements NewAdminController
         $XML->addAttribute('wiki-url', $request->getUri());
         $XML->addAttribute('wiki-section', 'Pumukit2 time-line Feed');
 
-        foreach($series as $s) {
-          $XMLSeries = $XML->addChild('event', $s->getTitle());
-          $XMLSeries->addAttribute('start', $s->getPublicDate()->format("M j Y H:i:s \G\M\TP"));
-          $XMLSeries->addAttribute('title', $s->getTitle());
-          $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', array('id' => $s->getId()), true)); 
+        foreach ($series as $s) {
+            $XMLSeries = $XML->addChild('event', $s->getTitle());
+            $XMLSeries->addAttribute('start', $s->getPublicDate()->format("M j Y H:i:s \G\M\TP"));
+            $XMLSeries->addAttribute('title', $s->getTitle());
+            $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', array('id' => $s->getId()), true));
         }
 
         return new Response($XML->asXML(), 200, array('Content-Type' => 'text/xml'));

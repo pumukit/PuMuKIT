@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Pic extends Element
 {
-  /**
+    /**
    * @var int $width
    *
    * @MongoDB\Int
@@ -75,10 +75,10 @@ class Pic extends Element
   {
       $time = 0;
 
-      foreach($this->getTags() as $tag) {
-        if ('time_' == substr($tag, 0, 5)) {
-          return floatval(substr($tag, 5));
-        }
+      foreach ($this->getTags() as $tag) {
+          if ('time_' == substr($tag, 0, 5)) {
+              return floatval(substr($tag, 5));
+          }
       }
       
       return $time;

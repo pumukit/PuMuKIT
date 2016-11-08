@@ -55,28 +55,42 @@ EOT
             switch ($repoName) {
                 case "all":
                   $errorExecuting = $this->executeTags($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     $errorExecuting = $this->executeRoles($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     $errorExecuting = $this->executePermissionProfiles($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     break;
                 case "tag":
                     $errorExecuting = $this->executeTags($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     break;
                 case "role":
                     $errorExecuting = $this->executeRoles($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     break;
                 case "permissionprofile":
                     $errorExecuting = $this->executePermissionProfiles($input, $output);
-                    if (-1 === $errorExecuting) return -1;
+                    if (-1 === $errorExecuting) {
+                        return -1;
+                    }
                     break;
             }
-        } else if ( $repoName == 'tag') {
+        } elseif ($repoName == 'tag') {
             $errorExecuting = $this->executeTags($input, $output, false);
-            if (-1 === $errorExecuting) return -1;
+            if (-1 === $errorExecuting) {
+                return -1;
+            }
         } else {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
             $output->writeln('');
@@ -100,8 +114,9 @@ EOT
 
             return -1;
         }
-        if($force)
+        if ($force) {
             $this->removeTags();
+        }
         $root = $this->createRoot();
         $verbose = $input->getOption('verbose');
         if ($file) {
@@ -179,8 +194,9 @@ EOT
     protected function createRoot()
     {
         $root = $this->tagsRepo->findOneByCod('ROOT');
-        if(!$root)
-            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0,'name_en' =>"ROOT"));
+        if (!$root) {
+            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0, 'name_en' =>"ROOT"));
+        }
         $this->dm->persist($root);
         $this->dm->flush();
 
@@ -202,7 +218,7 @@ EOT
             return -1;
         }
 
-        if($repoName == 'tag') {
+        if ($repoName == 'tag') {
             //Creates the csvTagHeaders (to be used later)
             if (($csvTagHeaders = fgetcsv($file, 300, ';', '"')) === false) {
                 $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
@@ -225,8 +241,9 @@ EOT
             $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
             return -1;
         }
-        if($verbose)
+        if ($verbose) {
             $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
+        }
 
         $idCodMapping = array();
 
@@ -236,14 +253,14 @@ EOT
             $number = count($currentRow);
             if (('tag' === $repoName) ||
                 (('role' === $repoName) && ($number == 7 || $number == 10)) ||
-                (('permissionprofile' === $repoName) && ($number == 6))){
+                (('permissionprofile' === $repoName) && ($number == 6))) {
                 //Check header rows
                 if (trim($currentRow[0]) == "id") {
                     continue;
                 }
 
                 try {
-                    switch ($repoName){
+                    switch ($repoName) {
                         case 'tag':
                             $csvTagsArray = array();
                             for ($i = 0; $i < count($currentRow); $i++) {
@@ -263,9 +280,10 @@ EOT
                             try {
                                 $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
                                 $importedTags[ $tag->getCod() ] = $tag;
-                            } catch(\LengthException $e) {
-                                if($verbose)
+                            } catch (\LengthException $e) {
+                                if ($verbose) {
                                     $output->writeln('<comment>'.$e->getMessage().'</comment>');
+                                }
                                 continue;
                             }
                             $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
@@ -305,7 +323,8 @@ EOT
      */
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {;
+        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {
+            ;
             throw new \LengthException('Nothing done - Tag already on DB - id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 

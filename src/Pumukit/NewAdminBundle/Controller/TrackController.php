@@ -59,8 +59,8 @@ class TrackController extends Controller implements NewAdminController
 
         $jobService = $this->get('pumukitencoder.job');
 
-        try{
-            if (empty($_FILES) && empty($_POST)){
+        try {
+            if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
@@ -68,7 +68,7 @@ class TrackController extends Controller implements NewAdminController
             } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return array(
                          'mm' => $multimediaObject,
                          'uploaded' => 'failed',
@@ -123,7 +123,7 @@ class TrackController extends Controller implements NewAdminController
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
-        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED; 
+        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED;
 
         return array(
                      'track' => $track,
@@ -218,7 +218,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction 
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
@@ -255,7 +255,7 @@ class TrackController extends Controller implements NewAdminController
         $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
         
         return new JsonResponse(array("jobId" => $jobId, "priority" => $priority));
-    }    
+    }
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})

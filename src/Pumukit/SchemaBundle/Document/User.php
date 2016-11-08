@@ -61,7 +61,7 @@ class User extends BaseUser
     {
         $this->groups = new ArrayCollection();
         parent::__construct();
-        if(false == $genUserSalt){
+        if (false == $genUserSalt) {
             $this->salt = '';
         }
     }
@@ -210,12 +210,16 @@ class User extends BaseUser
         if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection && !$this->groups->isDirty()) {
             //See PersistentCollection class (coll + mongoData)
             return array_merge(
-                array_map(function($g) {return new \MongoId($g->getId());}, $this->groups->unwrap()->toArray()),
+                array_map(function ($g) {
+                    return new \MongoId($g->getId());
+                }, $this->groups->unwrap()->toArray()),
                 $this->groups->getMongoData()
             );
         }
       
-        return array_map(function($g) {return new \MongoId($g->getId());}, $this->groups->toArray());
+        return array_map(function ($g) {
+            return new \MongoId($g->getId());
+        }, $this->groups->toArray());
     }
 
 

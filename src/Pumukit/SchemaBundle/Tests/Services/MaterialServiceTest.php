@@ -116,7 +116,7 @@ class MaterialServiceTest extends WebTestCase
         $this->assertEquals(0, count($mm->getMaterials()));
 
         $filePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'fileCopy.pdf';
-        if (copy($this->originalFilePath, $filePath)){
+        if (copy($this->originalFilePath, $filePath)) {
             $file = new UploadedFile($filePath, 'file.pdf', null, null, null, true);
 
             $formData['i18n_name'] = array('en' => 'Material');
@@ -160,7 +160,7 @@ class MaterialServiceTest extends WebTestCase
         $material = $materials[0];
 
         $materialPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'materialCopy';
-        if (copy($this->originalFilePath, $materialPath)){
+        if (copy($this->originalFilePath, $materialPath)) {
             $materialFile = new UploadedFile($materialPath, 'material', null, null, null, true);
             $mm = $this->materialService->addMaterialFile($mm, $materialFile, $formData);
             $mm = $this->repoMmobj->find($mm->getId());
@@ -284,14 +284,14 @@ class MaterialServiceTest extends WebTestCase
     {
         $mmobjs = $this->repoMmobj->findAll();
 
-        foreach($mmobjs as $mm){
+        foreach ($mmobjs as $mm) {
             $mmDir = $this->uploadsPath.DIRECTORY_SEPARATOR.$mm->getId().DIRECTORY_SEPARATOR;
 
-            if (is_dir($mmDir)){
+            if (is_dir($mmDir)) {
                 $files = glob($mmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 

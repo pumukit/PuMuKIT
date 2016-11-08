@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param ArrayNodeDefinition $node
      */
-    public function addProfilesSection(ArrayNodeDefinition $node) 
+    public function addProfilesSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -83,7 +83,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('name')->isRequired()->cannotBeEmpty()
                                         ->info('Name of the streamserver')->end()
                                     ->enumNode('type')
-                                        ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD, 
+                                        ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD,
                                                        ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5))
                                         ->isRequired()
                                         ->info('Streamserver type')->end()
@@ -96,7 +96,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->info('Type of streamserver for transcodification and data')->end()
                             ->scalarNode('app')->isRequired()->cannotBeEmpty()
-                                ->info('Application to execute')->end()      
+                                ->info('Application to execute')->end()
                             ->integerNode('rel_duration_size')->defaultValue(1)
                                 ->info('Relation between duration and size of track')->end()
                             ->integerNode('rel_duration_trans')->defaultValue(1)
@@ -115,7 +115,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param ArrayNodeDefinition $node
      */
-    public function addCpusSection(ArrayNodeDefinition $node) 
+    public function addCpusSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()

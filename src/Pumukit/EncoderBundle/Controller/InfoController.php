@@ -32,15 +32,23 @@ class InfoController extends Controller
         $jobRepo = $dm->getRepository('PumukitEncoderBundle:Job');
 
         $pendingStates = array();
-        if ($request->query->get('show_waiting', true)) $pendingStates[] = Job::STATUS_WAITING;
-        if ($request->query->get('show_paused', true)) $pendingStates[] = Job::STATUS_PAUSED;
+        if ($request->query->get('show_waiting', true)) {
+            $pendingStates[] = Job::STATUS_WAITING;
+        }
+        if ($request->query->get('show_paused', true)) {
+            $pendingStates[] = Job::STATUS_PAUSED;
+        }
         $pendingSort = array('priority' => 'desc', 'timeini' => 'asc');
         $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, $pendingSort);
         $executingSort = array('timestart' => 'desc');
         $executingJobs = $jobRepo->createQueryWithStatus(array(Job::STATUS_EXECUTING), $executingSort);
         $pendingStates = array();
-        if ($request->query->get('show_error', true)) $pendingStates[] = Job::STATUS_ERROR;
-        if ($request->query->get('show_finished', false)) $pendingStates[] = Job::STATUS_FINISHED;
+        if ($request->query->get('show_error', true)) {
+            $pendingStates[] = Job::STATUS_ERROR;
+        }
+        if ($request->query->get('show_finished', false)) {
+            $pendingStates[] = Job::STATUS_FINISHED;
+        }
         $executedSort = array('timeend' => 'desc');
         $executedJobs = $jobRepo->createQueryWithStatus($pendingStates, $executedSort);
 
@@ -51,11 +59,11 @@ class InfoController extends Controller
         return array('cpus' => $cpus,
                      'deactivated_cpus' => $deactivatedCpus,
                      'jobs' => array('pending' =>   array('total' => ($stats['paused'] + $stats['waiting']),
-                                                          'jobs' => $this->createPager($pendingJobs, $request->query->get('page_pending',1))),
+                                                          'jobs' => $this->createPager($pendingJobs, $request->query->get('page_pending', 1))),
                                      'executing' => array('total' => ($stats['executing']),
-                                                          'jobs' => $this->createPager($executingJobs, $request->query->get('page_executing',1), 20)),
+                                                          'jobs' => $this->createPager($executingJobs, $request->query->get('page_executing', 1), 20)),
                                      'executed' =>  array('total' => ($stats['error'] + $stats['finished']),
-                                                          'jobs' => $this->createPager($executedJobs, $request->query->get('page_executed',1)))),
+                                                          'jobs' => $this->createPager($executedJobs, $request->query->get('page_executed', 1)))),
                      'stats' => $stats);
     }
 

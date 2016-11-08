@@ -10,7 +10,6 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
-
 class MultimediaObjectViews
 {
     private $mm_manager;
@@ -25,8 +24,9 @@ class MultimediaObjectViews
         $track = $event->getTrack();
         $multimediaObject = $event->getMultimediaObject();
 
-        if(!$this->isViewableTrack($track))
+        if (!$this->isViewableTrack($track)) {
             return;
+        }
 
         $multimediaObject->incNumview();
         $track && $track->incNumview();

@@ -329,7 +329,7 @@ class FactoryServiceTest extends WebTestCase
         $new = $this->factory->cloneMultimediaObject($src);
 
         $newTitles = $new->getI18nTitle();
-        foreach($src->getI18nTitle() as $key => $title) {
+        foreach ($src->getI18nTitle() as $key => $title) {
             $string = $this->translator->trans('cloned', array(), null, $key);
             $title = $title . ' (' . $string. ')';
             $this->assertEquals($newTitles[$key], $title);

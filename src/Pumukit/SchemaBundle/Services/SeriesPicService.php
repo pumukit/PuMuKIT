@@ -26,7 +26,7 @@ class SeriesPicService
         $this->seriesDispatcher = $seriesDispatcher;
         $this->locales = $locales;
         $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath){
+        if (!$this->targetPath) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
@@ -85,7 +85,7 @@ class SeriesPicService
    */
   public function addPicFile(Series $series, UploadedFile $picFile, $isBanner=false, $bannerTargetUrl="")
   {
-      if(UPLOAD_ERR_OK != $picFile->getError()) {
+      if (UPLOAD_ERR_OK != $picFile->getError()) {
           throw new \Exception($picFile->getErrorMessage());
       }
 
@@ -170,12 +170,11 @@ class SeriesPicService
             if ($bannerTargetUrl) {
                 $banner = str_replace('#', $bannerTargetUrl, $banner);
             }
-            foreach ($this->locales as $locale){
+            foreach ($this->locales as $locale) {
                 $series->setHeader($banner, $locale);
             }
         }
 
         return $series;
     }
-
 }

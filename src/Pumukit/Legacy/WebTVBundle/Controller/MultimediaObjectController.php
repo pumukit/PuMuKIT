@@ -24,31 +24,32 @@ class MultimediaObjectController extends Controller
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-      $response = $this->testBroadcast($multimediaObject, $request);
-      if($response instanceof Response) {
-        return $response;
-      }
+        $response = $this->testBroadcast($multimediaObject, $request);
+        if ($response instanceof Response) {
+            return $response;
+        }
 
-      $response = $this->preExecute($multimediaObject, $request);
-      if($response instanceof Response) {
-        return $response;
-      }
+        $response = $this->preExecute($multimediaObject, $request);
+        if ($response instanceof Response) {
+            return $response;
+        }
     
-      $track = $request->query->has('track_id') ?
+        $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getFilteredTrackWithTags(array('display'));
 
-      if (!$track)
-        throw $this->createNotFoundException();
+        if (!$track) {
+            throw $this->createNotFoundException();
+        }
 
-      $this->dispatch($multimediaObject, $track);      
+        $this->dispatch($multimediaObject, $track);
 
-      if($track->containsTag("download")) {       
-          return $this->redirect($track->getUrl());
-      }
+        if ($track->containsTag("download")) {
+            return $this->redirect($track->getUrl());
+        }
 
-      $this->updateBreadcrumbs($multimediaObject);        
-      return array('autostart' => $request->query->get('autostart', 'true'),
+        $this->updateBreadcrumbs($multimediaObject);
+        return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
                    'multimediaObject' => $multimediaObject,
                    'track' => $track);
@@ -62,7 +63,7 @@ class MultimediaObjectController extends Controller
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
         $response = $this->testBroadcast($multimediaObject, $request);
-        if($response instanceof Response) {
+        if ($response instanceof Response) {
             return $response;
         }
 
@@ -73,7 +74,7 @@ class MultimediaObjectController extends Controller
         $this->incNumView($multimediaObject, $track);
         $this->dispatch($multimediaObject, $track);
 
-        if($track && $track->containsTag("download")) {       
+        if ($track && $track->containsTag("download")) {
             return $this->redirect($track->getUrl());
         }
 
@@ -91,18 +92,18 @@ class MultimediaObjectController extends Controller
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
-        if($mmobjService->isPublished($multimediaObject,'PUCHWEBTV')){
-            if($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()){
+        if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
+            if ($mmobjService->hasPlayableResource($multimediaObject) && Broadcast::BROADCAST_TYPE_PUB === $multimediaObject->getBroadcast()->getBroadcastTypeId()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif( ($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED 
+        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
 
         $response = $this->preExecute($multimediaObject, $request);
-        if($response instanceof Response) {
+        if ($response instanceof Response) {
             return $response;
         }
 
@@ -110,18 +111,18 @@ class MultimediaObjectController extends Controller
                  $multimediaObject->getTrackById($request->query->get('track_id')) :
                  $multimediaObject->getTrackWithTag('display');
 
-        if($track){
+        if ($track) {
             $this->incNumView($multimediaObject, $track);
-            $this->dispatch($multimediaObject, $track);            
-            if($track->containsTag("download")) {       
+            $this->dispatch($multimediaObject, $track);
+            if ($track->containsTag("download")) {
                 return $this->redirect($track->getUrl());
-            }            
+            }
         }
 
         $this->updateBreadcrumbs($multimediaObject);
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject, 
+                     'multimediaObject' => $multimediaObject,
                      'track' => $track,
                      'magic_url' => true);
     }
@@ -132,15 +133,15 @@ class MultimediaObjectController extends Controller
      */
     public function seriesAction(MultimediaObject $multimediaObject)
     {
-      $series = $multimediaObject->getSeries();
-      $multimediaObjects = $series->getMultimediaObjects();
+        $series = $multimediaObject->getSeries();
+        $multimediaObjects = $series->getMultimediaObjects();
 
-      $tagRepo = $this
+        $tagRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:Tag');
-      $unescoTag = $tagRepo->findOneByCod("UNESCO");
+        $unescoTag = $tagRepo->findOneByCod("UNESCO");
 
-      return array('series' => $series,
+        return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects,
                    'unescoTag' => $unescoTag);
     }
@@ -150,17 +151,17 @@ class MultimediaObjectController extends Controller
      */
     public function relatedAction(MultimediaObject $multimediaObject)
     {
-      $mmobjRepo = $this
+        $mmobjRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:MultimediaObject');
-      $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
+        $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
-      $tagRepo = $this
+        $tagRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')
         ->getRepository('PumukitSchemaBundle:Tag');
-      $unescoTag = $tagRepo->findOneByCod("UNESCO");
+        $unescoTag = $tagRepo->findOneByCod("UNESCO");
 
-      return array('multimediaObjects' => $relatedMms,
+        return array('multimediaObjects' => $relatedMms,
                    'unescoTag' => $unescoTag);
     }
 
@@ -168,26 +169,26 @@ class MultimediaObjectController extends Controller
 
     protected function getIntro($queryIntro=false)
     {
-      $hasIntro = $this->container->hasParameter('pumukit2.intro');
+        $hasIntro = $this->container->hasParameter('pumukit2.intro');
       
-      if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
-        $intro = $queryIntro;
-      } elseif($hasIntro) {
-        $intro = $this->container->getParameter('pumukit2.intro');
-      } else {
-        $intro = false;
-      }
+        if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
+            $intro = $queryIntro;
+        } elseif ($hasIntro) {
+            $intro = $this->container->getParameter('pumukit2.intro');
+        } else {
+            $intro = false;
+        }
 
-      return $intro;
+        return $intro;
     }
 
     protected function incNumView(MultimediaObject $multimediaObject, Track $track=null)
     {
-      $dm = $this->get('doctrine_mongodb.odm.document_manager');
-      $multimediaObject->incNumview();
-      $track && $track->incNumview();
-      $dm->persist($multimediaObject);
-      $dm->flush();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $multimediaObject->incNumview();
+        $track && $track->incNumview();
+        $dm->persist($multimediaObject);
+        $dm->flush();
     }
 
     protected function dispatch(MultimediaObject $multimediaObject, Track $track=null)
@@ -198,37 +199,38 @@ class MultimediaObjectController extends Controller
 
     protected function updateBreadcrumbs(MultimediaObject $multimediaObject)
     {
-      $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-      $breadcrumbs->addMultimediaObject($multimediaObject);
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs->addMultimediaObject($multimediaObject);
     }
 
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
-      if($opencasturl = $multimediaObject->getProperty("opencasturl")) {
-          $this->incNumView($multimediaObject);
-          $this->dispatch($multimediaObject);
-          if($invert = $multimediaObject->getProperty('opencastinvert')) {
-              $opencasturl .= '&display=invert';
-          }
+        if ($opencasturl = $multimediaObject->getProperty("opencasturl")) {
+            $this->incNumView($multimediaObject);
+            $this->dispatch($multimediaObject);
+            if ($invert = $multimediaObject->getProperty('opencastinvert')) {
+                $opencasturl .= '&display=invert';
+            }
 
-          return $this->redirect($opencasturl);
-      }
+            return $this->redirect($opencasturl);
+        }
     }
 
     public function testBroadcast(MultimediaObject $multimediaObject, Request $request)
     {
-      if (($broadcast = $multimediaObject->getBroadcast()) && 
+        if (($broadcast = $multimediaObject->getBroadcast()) &&
           (Broadcast::BROADCAST_TYPE_PUB !== $broadcast->getBroadcastTypeId()) &&
           ((!($broadcastName = $request->headers->get('PHP_AUTH_USER', false))) ||
-           ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd() ) ||
-           ($broadcastName !== $broadcast->getName() ))) {
-        $seriesUrl = $this->generateUrl('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
-        $redReq = new RedirectResponse($seriesUrl, 302);
-        return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
-      }
-      if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId()))
-        return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
-      return true;
-   }
+           ($request->headers->get('PHP_AUTH_PW') !== $broadcast->getPasswd()) ||
+           ($broadcastName !== $broadcast->getName()))) {
+            $seriesUrl = $this->generateUrl('pumukit_webtv_series_index', array('id' => $multimediaObject->getSeries()->getId()), true);
+            $redReq = new RedirectResponse($seriesUrl, 302);
+            return new Response($redReq->getContent(), 401, array('WWW-Authenticate' => 'Basic realm="Resource not public."'));
+        }
+        if ($broadcast && (Broadcast::BROADCAST_TYPE_PRI === $broadcast->getBroadcastTypeId())) {
+            return new Response($this->render("PumukitWebTVBundle:Index:403forbidden.html.twig", array()), 403);
+        }
+        return true;
+    }
 }

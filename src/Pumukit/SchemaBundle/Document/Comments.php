@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Comments
 {
-  /**
+    /**
    * @var int
    *
    * @MongoDB\Id

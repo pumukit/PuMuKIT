@@ -468,7 +468,9 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function filterProfiles($profiles, $onlyAudio)
     {
-        return array_filter($profiles, function ($elem) use ($onlyAudio) { return !$onlyAudio || $elem['audio'];});
+        return array_filter($profiles, function ($elem) use ($onlyAudio) {
+            return !$onlyAudio || $elem['audio'];
+        });
     }
 
     /**
@@ -496,19 +498,19 @@ class PumukitAdminExtension extends \Twig_Extension
         $description = '';
         if (($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) && $template) {
             $description = $this->translator->trans('Any Internet user can play the new multimedia objects created from this video template');
-        } else if ($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) {
+        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) {
             $description = $this->translator->trans('Any Internet user can play this multimedia object');
-        } else if (($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) && $template) {
+        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) && $template) {
             $description = $this->translator->trans('Only users with the defined password can play the new multimedia objects created from this video template');
-        } else if ($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) {
+        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) {
             $description = $this->translator->trans('Only users with the defined password can play this multimedia object');
-        } else if (($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) && $template) {
+        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) && $template) {
             $description = $this->translator->trans('Only logged in users in the system can play the new multimedia objects created from this video template');
-        } else if ($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) {
+        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) {
             $description = $this->translator->trans('Only logged in users in the system can play this multimedia object');
-        } else if (($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) && $template) {
+        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) && $template) {
             $description = $this->translator->trans('Only users in the selected Groups can play the new multimedia objects created from this video template');
-        } else if ($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) {
+        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) {
             $description = $this->translator->trans('Only users in the selected Groups can play this multimedia object');
         }
 

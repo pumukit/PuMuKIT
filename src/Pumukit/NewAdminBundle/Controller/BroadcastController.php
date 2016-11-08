@@ -89,7 +89,7 @@ class BroadcastController extends AdminController implements NewAdminController
             }
 
             if (null === $broadcast) {
-              return $this->redirect($this->generateUrl('pumukitnewadmin_broadcast_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_broadcast_list'));
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_broadcast_list'));
@@ -168,7 +168,7 @@ class BroadcastController extends AdminController implements NewAdminController
         }
         
         $this->get('pumukitschema.factory')->deleteResource($broadcast);
-        if ($broadcastId === $this->get('session')->get('admin/broadcast/id')){
+        if ($broadcastId === $this->get('session')->get('admin/broadcast/id')) {
             $this->get('session')->remove('admin/broadcast/id');
         }
 
@@ -222,21 +222,23 @@ class BroadcastController extends AdminController implements NewAdminController
 
         $ids = $this->getRequest()->get('ids');
 
-        if ('string' === gettype($ids)){
+        if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }
 
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $broadcast = $this->find($id);
-            if (0 !== $broadcast->getNumberMultimediaObjects()) continue;
+            if (0 !== $broadcast->getNumberMultimediaObjects()) {
+                continue;
+            }
 
-            try{
+            try {
                 $factory->deleteResource($broadcast);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->get('session')->get('admin/broadcast/id')){
+            if ($id === $this->get('session')->get('admin/broadcast/id')) {
                 $this->get('session')->remove('admin/broadcast/id');
             }
         }

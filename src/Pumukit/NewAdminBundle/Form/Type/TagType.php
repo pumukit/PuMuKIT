@@ -40,28 +40,28 @@ class TagType extends AbstractType
                         'label' => $this->translator->trans('Description', array(), null, $this->locale)));
 
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $tag = $event->getData();
 
             $fields = $tag->getProperty("customfield");
-            foreach(array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+            foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                 $auxField = explode(":", $field);
                 $formOptions = array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($auxField[0]));
                 
                 try {
                     $event->getForm()->add($auxField[0], isset($auxField[1])?$auxField[1]:'text', $formOptions);
-                } catch(\InvalidArgumentException $e) {
+                } catch (\InvalidArgumentException $e) {
                     $event->getForm()->add($auxField[0], 'text', $formOptions);
                 }
             }
         });
 
         
-        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $tag = $event->getData();
 
             $fields = $tag->getProperty("customfield");
-            foreach(array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
+            foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                 $auxField = explode(":", $field);
                 $data = $event->getForm()->get($auxField[0])->getData();
                 $tag->setProperty($auxField[0], $data);

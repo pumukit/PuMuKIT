@@ -79,7 +79,7 @@ class JobServiceTest extends WebTestCase
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
         $filePath = $this->resourcesDir.'CAMERACopy.mp4';
-        if (copy($originalFile, $filePath)){
+        if (copy($originalFile, $filePath)) {
             $file = new UploadedFile($filePath, 'CAMERA.mp4', null, null, null, true);
 
             $profile = 'MASTER_COPY';
@@ -110,7 +110,7 @@ class JobServiceTest extends WebTestCase
         $originalFile = $this->resourcesDir.'CAMERA.mp4';
 
         $filePath = $this->resourcesDir.'CAMERACopy.mp4';
-        if (copy($originalFile, $filePath)){
+        if (copy($originalFile, $filePath)) {
             $profile = 'MASTER_COPY';
             $priority = 2;
             $language = 'en';
@@ -340,10 +340,10 @@ class JobServiceTest extends WebTestCase
     private function createNewJob($status = null, $priority = null, $timeadd = 0)
     {
         $job = new Job();
-        if (null !== $status){
+        if (null !== $status) {
             $job->setStatus($status);
         }
-        if (null !== $priority){
+        if (null !== $priority) {
             $job->setPriority($priority);
         }
         $datetime = new \DateTime('now');
@@ -442,13 +442,13 @@ class JobServiceTest extends WebTestCase
     {
         $mmobjs = $this->repoMmobj->findAll();
 
-        foreach($mmobjs as $mm){
+        foreach ($mmobjs as $mm) {
             $mmDir = $this->getDemoProfiles()['MASTER_COPY']['streamserver']['dir_out'].'/'.$mm->getSeries()->getId().'/';
-            if (is_dir($mmDir)){
+            if (is_dir($mmDir)) {
                 $files = glob($mmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 
@@ -456,11 +456,11 @@ class JobServiceTest extends WebTestCase
             }
 
             $tmpMmDir = '/tmp/'.$mm->getId().'/';
-            if (is_dir($tmpMmDir)){
+            if (is_dir($tmpMmDir)) {
                 $files = glob($tmpMmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 

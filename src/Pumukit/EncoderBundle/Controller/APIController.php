@@ -27,7 +27,7 @@ class APIController extends Controller
     {
         $cpus = $this->get('pumukitencoder.cpu')->getCpus();
         return new JsonResponse($cpus);
-    }    
+    }
 
 
     /**

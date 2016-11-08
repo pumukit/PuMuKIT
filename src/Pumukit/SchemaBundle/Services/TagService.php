@@ -50,7 +50,6 @@ class TagService
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush=true)
     {
-
         $tag = $this->repository->findOneByCod($tagCod);
         if (!$tag) {
             throw new \Exception("Tag with id ".$tagId." not found.");
@@ -71,7 +70,7 @@ class TagService
     {
         $tagAdded = array();
 
-        if( $mmobj->containsTag($tag)) {
+        if ($mmobj->containsTag($tag)) {
             return $tagAdded;
         }
 
@@ -144,9 +143,9 @@ class TagService
      */
     public function resetTags(array $mmobjs, array $tags)
     {
-        foreach($mmobjs as $mmobj) {
+        foreach ($mmobjs as $mmobj) {
             if (!$mmobj->isPrototype()) {
-                foreach($mmobj->getTags() as $originalEmbeddedTag) {
+                foreach ($mmobj->getTags() as $originalEmbeddedTag) {
                     $originalTag = $this->repository->find($originalEmbeddedTag->getId());
                     $originalTag->decreaseNumberMultimediaObjects();
                     $this->dm->persist($originalTag);
@@ -155,7 +154,7 @@ class TagService
             $mmobj->setTags($tags);
             $this->dm->persist($mmobj);
             if (!$mmobj->isPrototype()) {
-                foreach($tags as $embeddedTag) {
+                foreach ($tags as $embeddedTag) {
                     $tag = $this->repository->find($embeddedTag->getId());
                     $tag->increaseNumberMultimediaObjects();
                     $this->dm->persist($tag);
@@ -239,24 +238,24 @@ class TagService
      */
     public function resetCategories(array $mmobjs, array $newTags)
     {
-        foreach($mmobjs as $mmobj) {
-            foreach($mmobj->getTags() as $originalEmbeddedTag) {
-                if($originalEmbeddedTag->isPubTag()){
+        foreach ($mmobjs as $mmobj) {
+            foreach ($mmobj->getTags() as $originalEmbeddedTag) {
+                if ($originalEmbeddedTag->isPubTag()) {
                     continue;
                 }
                 $mmobj->removeTag($originalEmbeddedTag);
-                if (!$mmobj->isPrototype() ) {
+                if (!$mmobj->isPrototype()) {
                     $originalTag = $this->repository->find($originalEmbeddedTag->getId());
                     $originalTag->decreaseNumberMultimediaObjects();
                     $this->dm->persist($originalTag);
                 }
             }
-            foreach($newTags as $newEmbeddedTag) {
-                if($newEmbeddedTag->isPubTag()){
+            foreach ($newTags as $newEmbeddedTag) {
+                if ($newEmbeddedTag->isPubTag()) {
                     continue;
                 }
                 $mmobj->addTag($newEmbeddedTag);
-                if (!$mmobj->isPrototype() ) {
+                if (!$mmobj->isPrototype()) {
                     $tag = $this->repository->find($newEmbeddedTag->getId());
                     $tag->increaseNumberMultimediaObjects();
                     $this->dm->persist($tag);

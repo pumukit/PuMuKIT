@@ -27,7 +27,7 @@ class CategoriesController extends Controller implements WebTVController
                               ->getRepository('PumukitSchemaBundle:Tag')
                               ->findOneByCod($parentCod);
 
-        if(!isset($groundsRoot)){
+        if (!isset($groundsRoot)) {
             throw $this->createNotFoundException('The parent with cod: '.$parentCod.' was not found. Please add it to the Tags database or configure another categories_tag_cod in parameters.yml');
         }
 
@@ -42,12 +42,12 @@ class CategoriesController extends Controller implements WebTVController
         //TODO Move this logic to a service.
         $tagsArray = array();
         $parentPathLength = strlen($groundsRoot->getPath());
-        foreach($tagsTree as $tag) {
+        foreach ($tagsTree as $tag) {
             $path = sprintf('%s__object', $tag->getPath());
             $keys = explode('|', $path);
             $ref =& $tagsArray;
-            foreach( $keys as $key ){
-                if(!array_key_exists($key, $ref)){
+            foreach ($keys as $key) {
+                if (!array_key_exists($key, $ref)) {
                     $ref[$key] = array();
                 }
                 $ref =& $ref[$key];
@@ -55,9 +55,9 @@ class CategoriesController extends Controller implements WebTVController
             $ref = $tag;
         }
         //Removes unnecessary parent nodes.
-        $parentKeys = explode('|', substr($groundsRoot->getPath(), 0 ,-1));
+        $parentKeys = explode('|', substr($groundsRoot->getPath(), 0, -1));
         $ref =& $tagsArray;
-        foreach( $parentKeys as $key ){
+        foreach ($parentKeys as $key) {
             $ref =& $ref[$key];
         }
         $tagsArray = $ref;
@@ -68,53 +68,62 @@ class CategoriesController extends Controller implements WebTVController
         //TODO Move this logic into a service.
         $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');
-        foreach ( $tagsArray as $id=>$parent ){if($id == '__object'){continue;}
+        foreach ($tagsArray as $id=>$parent) {
+            if ($id == '__object') {
+                continue;
+            }
             $allGrounds[$id] = array();
             $allGrounds[$id]['title'] = $parent['__object']->getTitle();
             $allGrounds[$id]['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), null, array('tags[]' => $provider));
             $numMmobjs = 0;
             $cod = $parent['__object']->getCod();
-            if(isset($counterMmobjs[$cod])){
+            if (isset($counterMmobjs[$cod])) {
                 $numMmobjs = $counterMmobjs[$cod];
             }
             $allGrounds[$id]['num_mmobjs'] = $numMmobjs;
             $allGrounds[$id]['children'] = array();
 
             //Add 'General' Tag
-            if( $listGeneralParam ){
+            if ($listGeneralParam) {
                 $allGrounds[$id]['children']['general'] = array();
                 $allGrounds[$id]['children']['general']['title'] = $this->get('translator')->trans("General %title%", array('%title%' => $parent['__object']->getTitle()));
                 $allGrounds[$id]['children']['general']['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), true, array('tags[]' => $provider));
                 $numMmobjs = 0;
-                if(isset($counterGeneralMmobjs[$cod])){
+                if (isset($counterGeneralMmobjs[$cod])) {
                     $numMmobjs = $counterMmobjs[$cod];
                 }
                 $allGrounds[$id]['children']['general']['num_mmobjs'] = $this->countGeneralMmobjsInTag($parent['__object'], $provider);
                 $allGrounds[$id]['children']['general']['children'] = array();
             }
-            foreach ($parent as $id2=>$child ) {if($id2 == '__object'){continue;}
+            foreach ($parent as $id2=>$child) {
+                if ($id2 == '__object') {
+                    continue;
+                }
                 $allGrounds[$id]['children'][$id2] = array();
                 $allGrounds[$id]['children'][$id2]['title'] = $child['__object']->getTitle();
                 $allGrounds[$id]['children'][$id2]['url'] = $linkService->generatePathToTag($child['__object']->getCod(), null, array('tags[]' => $provider));
 
                 $numMmobjs = 0;
                 $cod = $child['__object']->getCod();
-                if(isset($counterMmobjs[$cod])){
+                if (isset($counterMmobjs[$cod])) {
                     $numMmobjs = $counterMmobjs[$cod];
                 }
                 $allGrounds[$id]['children'][$id2]['num_mmobjs'] = $numMmobjs;
                 $allGrounds[$id]['children'][$id2]['children'] = array();
 
-                foreach($child as $id3=>$grandchild ){if($id3 == '__object'){continue;}
-                  $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
-                  $allGrounds[$id]['children'][$id2]['children'][$id3]['title'] = $grandchild['__object']->getTitle();
-                  $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $linkService->generatePathToTag($grandchild['__object']->getCod(), null, array('tags[]' => $provider));
-                  $numMmobjs = 0;
-                  $cod = $grandchild['__object']->getCod();
-                  if(isset($counterMmobjs[$cod])){
-                      $numMmobjs = $counterMmobjs[$cod];
-                  }
-                  $allGrounds[$id]['children'][$id2]['children'][$id3]['num_mmobjs'] = $numMmobjs;
+                foreach ($child as $id3=>$grandchild) {
+                    if ($id3 == '__object') {
+                        continue;
+                    }
+                    $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
+                    $allGrounds[$id]['children'][$id2]['children'][$id3]['title'] = $grandchild['__object']->getTitle();
+                    $allGrounds[$id]['children'][$id2]['children'][$id3]['url'] = $linkService->generatePathToTag($grandchild['__object']->getCod(), null, array('tags[]' => $provider));
+                    $numMmobjs = 0;
+                    $cod = $grandchild['__object']->getCod();
+                    if (isset($counterMmobjs[$cod])) {
+                        $numMmobjs = $counterMmobjs[$cod];
+                    }
+                    $allGrounds[$id]['children'][$id2]['children'][$id3]['num_mmobjs'] = $numMmobjs;
                 }
             }
         }
@@ -123,7 +132,8 @@ class CategoriesController extends Controller implements WebTVController
 
 
     //TODO Move this function into a service.
-    private function countMmobjInTags($provider = null){
+    private function countMmobjInTags($provider = null)
+    {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' =>'ITUNESU');
@@ -143,18 +153,19 @@ class CategoriesController extends Controller implements WebTVController
 
         $aggregation = $multimediaObjectsColl->aggregate($pipeline);
         $mmobjCount = array();
-        foreach($aggregation as $a) {
+        foreach ($aggregation as $a) {
             $mmobjCount[(string)$a['_id']] = $a['count'];
         }
         return $mmobjCount;
     }
 
     //TODO Move this function into a service.
-    private function countGeneralMmobjsInTag($tag, $provider = null){
+    private function countGeneralMmobjsInTag($tag, $provider = null)
+    {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $repo->createBuilderWithGeneralTag($tag);
-        if($provider !== null) {
+        if ($provider !== null) {
             $qb = $qb->field('tags.cod')->equals($provider);
         }
         $qb = $qb->count()

@@ -187,7 +187,7 @@ class FactoryService
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
-        if($flush) {
+        if ($flush) {
             $this->dm->flush();
         }
 
@@ -213,7 +213,7 @@ class FactoryService
         } elseif (null !== $sessionId) {
             $series = $repo->find($sessionId);
         } else {
-          return null;
+            return null;
         }
 
         return $series;
@@ -285,7 +285,7 @@ class FactoryService
         $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $multimediaObjects = $repoMmobjs->findBySeries($series);
-        foreach($multimediaObjects as $mm){
+        foreach ($multimediaObjects as $mm) {
             $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
             $this->mmsDispatcher->dispatchDelete($mm);
@@ -314,7 +314,7 @@ class FactoryService
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
         $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($multimediaObject->getId())));
-        foreach( $annotations as $annot) {
+        foreach ($annotations as $annot) {
             $this->dm->remove($annot);
         }
         $this->dm->remove($multimediaObject);
@@ -366,7 +366,7 @@ class FactoryService
 
 
         foreach ($prototype->getTags() as $tag) {
-          $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {
@@ -395,7 +395,7 @@ class FactoryService
         $new->setLocale($this->locales[0]);
 
         $i18nTitles = array();
-        foreach($src->getI18nTitle() as $key => $val) {
+        foreach ($src->getI18nTitle() as $key => $val) {
             $string = $this->translator->trans('cloned', array(), null, $key);
             $i18nTitles[$key] = $val . ' (' . $string. ')';
         }
@@ -414,7 +414,7 @@ class FactoryService
         $new->setProperty("clonedfrom", $src->getId());
 
         foreach ($src->getTags() as $tag) {
-          $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
         foreach ($src->getRoles() as $embeddedRole) {
@@ -451,7 +451,7 @@ class FactoryService
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
         $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($src->getId())));
-        foreach($annotations as $annot) {
+        foreach ($annotations as $annot) {
             $clonedAnnot = clone $annot;
             $clonedAnnot->setMultimediaObject($new->getId());
             $this->dm->persist($clonedAnnot);

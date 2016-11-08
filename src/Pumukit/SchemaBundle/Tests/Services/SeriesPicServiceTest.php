@@ -143,7 +143,7 @@ class SeriesPicServiceTest extends WebTestCase
         $this->assertEquals(0, count($series->getPics()));
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $series = $this->seriesPicService->addPicFile($series, $picFile);
             $series = $this->repo->find($series->getId());
@@ -158,7 +158,7 @@ class SeriesPicServiceTest extends WebTestCase
         }
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
 
             $bannerTargetUrl = 'http://domain.com/banner';
@@ -195,7 +195,7 @@ class SeriesPicServiceTest extends WebTestCase
         $this->assertEquals(0, count($series->getPics()));
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy2.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic2.png', null, null, null, true);
 
             $bannerTargetUrl = 'http://domain.com/banner';
@@ -225,14 +225,14 @@ class SeriesPicServiceTest extends WebTestCase
     {
         $series = $this->repo->findAll();
 
-        foreach($series as $oneSeries){
+        foreach ($series as $oneSeries) {
             $oneSeriesDir = $this->uploadsPath.DIRECTORY_SEPARATOR.$oneSeries->getId().DIRECTORY_SEPARATOR;
 
-            if (is_dir($oneSeriesDir)){
+            if (is_dir($oneSeriesDir)) {
                 $files = glob($oneSeriesDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 

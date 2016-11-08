@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Tag
 {
-  /**
+    /**
    * @var integer $id
    *
    * @MongoDB\Id
@@ -526,12 +526,10 @@ class Tag
    */
   public function isDescendantOfByCod($tagCod)
   {
-      if( $tagCod == $this->getCod() )
-      {
+      if ($tagCod == $this->getCod()) {
           return false;
       }
-      if( strpos( $this->getPath(), sprintf('%s|',$tagCod ) ) === 0 )
-      {
+      if (strpos($this->getPath(), sprintf('%s|', $tagCod)) === 0) {
           return true;
       }
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
@@ -545,7 +543,7 @@ class Tag
    */
   public function getProperties()
   {
-    return $this->properties;
+      return $this->properties;
   }
 
 
@@ -556,7 +554,7 @@ class Tag
    */
   public function setProperties($properties)
   {
-    $this->properties = $properties;
+      $this->properties = $properties;
   }
 
 
@@ -569,10 +567,10 @@ class Tag
    */
   public function getProperty($key)
   {
-    if (isset($this->properties[$key])) {
-      return $this->properties[$key];
-    }
-    return null;
+      if (isset($this->properties[$key])) {
+          return $this->properties[$key];
+      }
+      return null;
   }
 
   /**
@@ -583,7 +581,7 @@ class Tag
    */
   public function setProperty($key, $value)
   {
-    $this->properties[$key] = $value;
+      $this->properties[$key] = $value;
   }
 
   /**
@@ -591,6 +589,6 @@ class Tag
    */
   public function isPubTag()
   {
-    return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
+      return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
   }
 }

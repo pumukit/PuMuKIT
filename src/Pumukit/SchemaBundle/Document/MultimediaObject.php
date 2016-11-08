@@ -236,7 +236,7 @@ class MultimediaObject
 
     public function __toString()
     {
-      return $this->getTitle();
+        return $this->getTitle();
     }
 
     /**
@@ -245,7 +245,7 @@ class MultimediaObject
      */
     public function isCollection()
     {
-      return false;
+        return false;
     }
 
     /**
@@ -747,7 +747,7 @@ class MultimediaObject
      */
     public function setBroadcast(Broadcast $broadcast)
     {
-        if (($this->broadcast instanceof Broadcast) && ($this->status != MultimediaObject::STATUS_PROTOTYPE)){
+        if (($this->broadcast instanceof Broadcast) && ($this->status != MultimediaObject::STATUS_PROTOTYPE)) {
             $this->broadcast->decreaseNumberMultimediaObjects();
         }
         $this->broadcast = $broadcast;
@@ -778,7 +778,7 @@ class MultimediaObject
      */
     public function isPublicBroadcast()
     {
-      return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
+        return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
@@ -808,7 +808,7 @@ class MultimediaObject
      */
     public function isPublicEmbeddedBroadcast()
     {
-      return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+        return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
     }
 
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
@@ -1013,7 +1013,7 @@ class MultimediaObject
     public function removePicById($picId)
     {
         $this->pics = $this->pics->filter(function ($pic) use ($picId) {
-          return $pic->getId() !== $picId;
+            return $pic->getId() !== $picId;
         });
     }
 
@@ -1316,7 +1316,7 @@ class MultimediaObject
     public function removeTrackById($trackId)
     {
         $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
-          return $track->getId() !== $trackId;
+            return $track->getId() !== $trackId;
         });
 
         $this->updateDuration();
@@ -1644,7 +1644,7 @@ class MultimediaObject
     public function removeMaterialById($materialId)
     {
         $this->materials = $this->materials->filter(function ($material) use ($materialId) {
-          return $material->getId() !== $materialId;
+            return $material->getId() !== $materialId;
         });
     }
 
@@ -1910,7 +1910,7 @@ class MultimediaObject
     public function removeLinkById($linkId)
     {
         $this->links = $this->links->filter(function ($link) use ($linkId) {
-          return $link->getId() !== $linkId;
+            return $link->getId() !== $linkId;
         });
     }
 
@@ -2566,15 +2566,17 @@ class MultimediaObject
      */
     public function isOnlyAudio()
     {
-      if(0 == count($this->tracks)) return false;
-
-      foreach($this->tracks as $track) {
-        if(!$track->getOnlyAudio()) {
-          return false;
+        if (0 == count($this->tracks)) {
+            return false;
         }
-      }
 
-      return true;
+        foreach ($this->tracks as $track) {
+            if (!$track->getOnlyAudio()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -2585,7 +2587,7 @@ class MultimediaObject
      */
     public function getProperties()
     {
-      return $this->properties;
+        return $this->properties;
     }
 
 
@@ -2596,7 +2598,7 @@ class MultimediaObject
      */
     public function setProperties($properties)
     {
-      $this->properties = $properties;
+        $this->properties = $properties;
     }
 
 
@@ -2609,10 +2611,10 @@ class MultimediaObject
      */
     public function getProperty($key)
     {
-      if (isset($this->properties[$key])) {
-          return $this->properties[$key];
-      }
-      return null;
+        if (isset($this->properties[$key])) {
+            return $this->properties[$key];
+        }
+        return null;
     }
 
 
@@ -2624,7 +2626,7 @@ class MultimediaObject
      */
     public function setProperty($key, $value)
     {
-      $this->properties[$key] = $value;
+        $this->properties[$key] = $value;
     }
 
     /**

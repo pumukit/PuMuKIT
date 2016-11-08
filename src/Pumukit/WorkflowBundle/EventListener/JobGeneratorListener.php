@@ -17,7 +17,7 @@ class JobGeneratorListener
     private $jobService;
     private $profileService;
 
-    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger) 
+    public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger)
     {
         $this->dm = $documentManager;
         $this->jobService = $jobService;
@@ -42,13 +42,14 @@ class JobGeneratorListener
 
         $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $tag = $repository->findOneByCod("PUBCHANNELS");
-        if(!$tag) return;
+        if (!$tag) {
+            return;
+        }
 
-        foreach($tag->getChildren() as $pubchannel) {
-            if(($multimediaObject->containsTag($pubchannel))
+        foreach ($tag->getChildren() as $pubchannel) {
+            if (($multimediaObject->containsTag($pubchannel))
                && ($master)) {
-
-              $this->generateJobs($multimediaObject, $pubchannel->getCod());
+                $this->generateJobs($multimediaObject, $pubchannel->getCod());
             }
         }
     }
@@ -60,20 +61,19 @@ class JobGeneratorListener
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
         $jobs = array();
-        foreach($this->profiles as $targetProfile => $profile) {
+        foreach ($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
             
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
                 $this->logger->info(sprintf("JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
-                                            "because it already contains a track created with this profile", 
+                                            "because it already contains a track created with this profile",
                                             $targetProfile, $multimediaObject->getId()));
                 continue;
             }
 
-            if((in_array($pubChannelCod, $targets['standard']))
-               && ($multimediaObject->isOnlyAudio() == $profile['audio'])){
-
+            if ((in_array($pubChannelCod, $targets['standard']))
+               && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
                 if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
                     $profileAspectRatio = $profile['resolution_hor']/$profile['resolution_ver'];
                     $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag("master")->getAspectRatio();
@@ -91,9 +91,8 @@ class JobGeneratorListener
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
             
-            if(in_array($pubChannelCod, $targets['force'])) {
-
-                if ($multimediaObject->isOnlyAudio() && !$profile['audio']){
+            if (in_array($pubChannelCod, $targets['force'])) {
+                if ($multimediaObject->isOnlyAudio() && !$profile['audio']) {
                     $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
                                                 $targetProfile, $multimediaObject->getId()));
                     continue;
@@ -103,7 +102,6 @@ class JobGeneratorListener
                 $this->logger->info(sprintf("JobGeneratorListener creates new job (%s) for multimedia object %s using forced target", $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
-            
         }
         return $jobs;
     }
@@ -112,16 +110,16 @@ class JobGeneratorListener
     /**
      * Process the target string (See test)
      * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC'))
-     * 
+     *
      * @return array
      */
     private function getTargets($targets)
     {
         $return = array('standard' => array(), 'force' => array());
 
-        foreach(array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
+        foreach (array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
             if (substr($target, -1) == '*') {
-                $return['force'][] = substr($target, 0 , -1);
+                $return['force'][] = substr($target, 0, -1);
             } else {
                 $return['standard'][] = $target;
             }
@@ -130,4 +128,3 @@ class JobGeneratorListener
         return $return;
     }
 }
-

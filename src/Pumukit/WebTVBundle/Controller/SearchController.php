@@ -102,7 +102,7 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
-        $queryBuilder = $queryBuilder->sort('record_date','desc');
+        $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         // --- END Create QueryBuilder ---
 
         // --- Execute QueryBuilder count --
@@ -167,7 +167,7 @@ class SearchController extends Controller implements WebTVController
 
         $searchByTagCod = $this->container->getParameter('search.parent_tag_2.cod');
         $parentTagOptional = null;
-        if($searchByTagCod) {
+        if ($searchByTagCod) {
             $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod);
         }
 
@@ -219,13 +219,12 @@ class SearchController extends Controller implements WebTVController
 
     private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
     {
-        if( $yearFound ) {
-            $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',$yearFound));
-            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01',($yearFound)+1));
+        if ($yearFound) {
+            $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', $yearFound));
+            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', ($yearFound)+1));
             $queryBuilder->field($dateField)->gte($start);
             $queryBuilder->field($dateField)->lt($end);
-        }
-        else {
+        } else {
             if ($startFound != '') {
                 $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
                 $queryBuilder->field($dateField)->gt($start);
@@ -280,7 +279,7 @@ class SearchController extends Controller implements WebTVController
         );
         $yearResults = $mmObjColl->aggregate($pipeline);
         $years = array();
-        foreach($yearResults as $year) {
+        foreach ($yearResults as $year) {
             $years[] = $year['_id'];
         }
         return $years;
@@ -295,7 +294,7 @@ class SearchController extends Controller implements WebTVController
         );
         $yearResults = $mmObjColl->aggregate($pipeline);
         $years = array();
-        foreach($yearResults as $year) {
+        foreach ($yearResults as $year) {
             $years[] = $year['_id'];
         }
         return $years;

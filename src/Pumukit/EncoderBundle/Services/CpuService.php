@@ -35,17 +35,17 @@ class CpuService
         $executingJobs = $this->jobRepo->findWithStatus(array(Job::STATUS_EXECUTING));
 
         $freeCpus = array();
-        foreach ($this->cpus as $name => $cpu){
-            if($this->isInMaintenance($name)) {
+        foreach ($this->cpus as $name => $cpu) {
+            if ($this->isInMaintenance($name)) {
                 continue;
             }
             $busy = 0;
-            foreach ($executingJobs as $job){
-                if ($name === $job->getCpu()){
+            foreach ($executingJobs as $job) {
+                if ($name === $job->getCpu()) {
                     $busy++;
                 }
             }
-            if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))){
+            if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))) {
                 $freeCpus[] = array(
                                     'name' => $name,
                                     'busy' => $busy,
@@ -62,7 +62,7 @@ class CpuService
      */
     public function getCpuByName($name)
     {
-        if (isset($this->cpus[$name])){
+        if (isset($this->cpus[$name])) {
             return $this->cpus[$name];
         }
 
@@ -111,7 +111,7 @@ class CpuService
     public function activateMaintenance($cpuName, $flush = true)
     {
         $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
-        if(!$cpuStatus) {
+        if (!$cpuStatus) {
             $cpuStatus = new CpuStatus();
             $cpuStatus->setName($cpuName);
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
@@ -119,19 +119,18 @@ class CpuService
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
         }
         $this->dm->persist($cpuStatus);
-        if($flush) {
+        if ($flush) {
             $this->dm->flush();
         }
-
     }
 
     public function deactivateMaintenance($cpuName, $flush = true)
     {
         $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
         //So far, if it exists in the db, it IS in maintenance mode. This may change in the future. Change this logic accordingly.
-        if($cpuStatus) {
+        if ($cpuStatus) {
             $this->dm->remove($cpuStatus);
-            if($flush) {
+            if ($flush) {
                 $this->dm->flush();
             }
         }
@@ -140,10 +139,9 @@ class CpuService
     public function isInMaintenance($cpuName)
     {
         $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
-        if($cpuStatus && $cpuStatus->getStatus() == CpuStatus::STATUS_MAINTENANCE){
+        if ($cpuStatus && $cpuStatus->getStatus() == CpuStatus::STATUS_MAINTENANCE) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -151,7 +149,9 @@ class CpuService
     public function getCpuNamesInMaintenanceMode()
     {
         $cpus = $this->cpuRepo->findBy(array('status' => CpuStatus::STATUS_MAINTENANCE));
-        $cpuNames = array_map(function($a){return $a->getName();}, $cpus);
+        $cpuNames = array_map(function ($a) {
+            return $a->getName();
+        }, $cpus);
         return $cpuNames;
     }
 }

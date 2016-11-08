@@ -18,7 +18,7 @@ class PumukitExtension extends \Twig_Extension
     protected $defaultPic;
 
     /**
-     * @var RequestContext 
+     * @var RequestContext
      */
     protected $context;
 
@@ -118,12 +118,16 @@ class PumukitExtension extends \Twig_Extension
         foreach ($multimediaObjects as $multimediaObject) {
             if ($first) {
                 $precinctTag = $this->getPrecinct($multimediaObject->getTags());
-                if (!$precinctTag) return false;
+                if (!$precinctTag) {
+                    return false;
+                }
                 $precinctCode = $precinctTag->getCod();
                 $first = false;
             } else {
                 $precinctTag = $this->getPrecinct($multimediaObject->getTags());
-                if (!$precinctTag) return false;
+                if (!$precinctTag) {
+                    return false;
+                }
                 if ($precinctCode != $precinctTag->getCod()) {
                     return false;
                 }
@@ -177,13 +181,15 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getDurationInMinutesSeconds($duration)
     {
-      $minutes = floor($duration / 60);
+        $minutes = floor($duration / 60);
 
-      $seconds = $duration % 60;
-      if ($seconds < 10 ) $seconds = '0' . $seconds;
+        $seconds = $duration % 60;
+        if ($seconds < 10) {
+            $seconds = '0' . $seconds;
+        }
 
-      return $minutes ."' ". $seconds . "''";
-   }
+        return $minutes ."' ". $seconds . "''";
+    }
 
     /**
      * Get captions

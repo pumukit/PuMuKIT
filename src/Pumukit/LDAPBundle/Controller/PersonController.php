@@ -64,9 +64,9 @@ class PersonController extends Controller
         $ldapService = $this->get('pumukit_ldap.ldap');
         $login = $request->get('term');
         $out = [];
-        try{
+        try {
             $people = $ldapService->getListUsers('*'.$login.'*', '*'.$login.'*');
-            foreach($people as $person){
+            foreach ($people as $person) {
                 $out[] = array(
                                "value" => $person['cn'],
                                "label" => $person['cn'],
@@ -94,18 +94,18 @@ class PersonController extends Controller
         $email = $request->get('mail');
         $personService = $this->get('pumukitschema.person');
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
-        try{
+        try {
             $person = $personService->findPersonByEmail($email);
             if (null == $person) {
                 $person = $this->createPersonFromLDAP($cn, $email);
             }
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-        }catch(\Excepction $e){
+        } catch (\Excepction $e) {
             return new Response($e->getMessage(), 400);
         }
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         
-        return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig', 
+        return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,

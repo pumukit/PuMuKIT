@@ -15,5 +15,4 @@ final class AnnotationsEvents
      */
     const UPDATE = 'annotations.update';
     const GET = 'annotations.get';
-
 }

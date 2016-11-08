@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class InspectionFfprobeService implements InspectionServiceInterface
 {
-
     private $logger;
     private $command;
 
@@ -109,7 +108,9 @@ class InspectionFfprobeService implements InspectionServiceInterface
         if (!$process->isSuccessful()) {
             $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
               $process->getExitCodeText().'. '.$process->getErrorOutput();
-            if($this->logger) $this->logger->error($message);
+            if ($this->logger) {
+                $this->logger->error($message);
+            }
             throw new \RuntimeException($message);
         }
 

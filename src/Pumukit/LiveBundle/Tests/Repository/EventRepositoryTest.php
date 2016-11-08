@@ -210,7 +210,6 @@ class EventRepositoryTest extends WebTestCase
 
         $events = $this->repo->findCurrentEvents(1);
         $this->assertEquals(1, count($events));
-
     }
 
 
@@ -241,8 +240,6 @@ class EventRepositoryTest extends WebTestCase
 
         $events = $this->repo->findCurrentEvents(null, 2, 1);
         $this->assertEquals(2, count($events));
-
-
     }
 
     private function createEvent($name, $datetime, $duration)

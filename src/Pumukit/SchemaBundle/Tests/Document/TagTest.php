@@ -128,44 +128,43 @@ class TagTest extends WebTestCase
 
     public function testChildren()
     {
-
         $tag_parent = new Tag("tag_parent");
         $tag_child = new Tag("tag_child");
         $tag_parent->setCod('Parent');
         $tag_child->setCod('ParentChild');
         $tag_grandchild = new Tag("tag_grandchild");
         $tag_grandchild->setCod('GrandChild');
-        $this->dm->persist( $tag_parent );
-        $this->dm->persist( $tag_child );
-        $this->dm->persist( $tag_grandchild );
+        $this->dm->persist($tag_parent);
+        $this->dm->persist($tag_child);
+        $this->dm->persist($tag_grandchild);
         $this->dm->flush();
 
         $this->assertEquals(null, $tag_parent->getParent());
-        $this->assertFalse( $tag_parent->isChildOf( $tag_child ) );
-        $this->assertFalse( $tag_child->isChildOf( $tag_child ) );
-        $this->assertFalse( $tag_parent->isDescendantOf( $tag_child ) );
-        $this->assertFalse( $tag_child->isDescendantOf( $tag_child ) );
-        $this->assertFalse( $tag_parent->isDescendantOfByCod( $tag_child->getCod() ) );
-        $this->assertFalse( $tag_child->isDescendantOfByCod( $tag_child->getCod() ) );
+        $this->assertFalse($tag_parent->isChildOf($tag_child));
+        $this->assertFalse($tag_child->isChildOf($tag_child));
+        $this->assertFalse($tag_parent->isDescendantOf($tag_child));
+        $this->assertFalse($tag_child->isDescendantOf($tag_child));
+        $this->assertFalse($tag_parent->isDescendantOfByCod($tag_child->getCod()));
+        $this->assertFalse($tag_child->isDescendantOfByCod($tag_child->getCod()));
 
 
-        $tag_child->setParent( $tag_parent );
-        $tag_grandchild->setParent( $tag_child );
-        $this->dm->persist( $tag_child );
-        $this->dm->persist( $tag_parent );
+        $tag_child->setParent($tag_parent);
+        $tag_grandchild->setParent($tag_child);
+        $this->dm->persist($tag_child);
+        $this->dm->persist($tag_parent);
         $this->dm->flush();
 
 
-        $this->assertEquals('Parent|ParentChild|GrandChild|', $tag_grandchild->getPath() );
-        $this->assertEquals( $tag_parent, $tag_child->getParent() );
-        $this->assertTrue( $tag_child->isChildOf( $tag_parent ) );
-        $this->assertTrue( $tag_grandchild->isDescendantOf( $tag_parent ) );
-        $this->assertTrue( $tag_child->isDescendantOfByCod( $tag_parent->getCod() ) );
-        $this->assertTrue( $tag_grandchild->isDescendantOfByCod( $tag_parent->getCod() ) );
+        $this->assertEquals('Parent|ParentChild|GrandChild|', $tag_grandchild->getPath());
+        $this->assertEquals($tag_parent, $tag_child->getParent());
+        $this->assertTrue($tag_child->isChildOf($tag_parent));
+        $this->assertTrue($tag_grandchild->isDescendantOf($tag_parent));
+        $this->assertTrue($tag_child->isDescendantOfByCod($tag_parent->getCod()));
+        $this->assertTrue($tag_grandchild->isDescendantOfByCod($tag_parent->getCod()));
 
-        $this->assertFalse( $tag_grandchild->isChildOf( $tag_parent ) );
-        $this->assertFalse( $tag_parent->isChildOf( $tag_child ) );
-        $this->assertFalse( $tag_parent->isDescendantOf( $tag_child ) );
-        $this->assertFalse( $tag_parent->isDescendantOfByCod( $tag_child->getCod() ) );
+        $this->assertFalse($tag_grandchild->isChildOf($tag_parent));
+        $this->assertFalse($tag_parent->isChildOf($tag_child));
+        $this->assertFalse($tag_parent->isDescendantOf($tag_child));
+        $this->assertFalse($tag_parent->isDescendantOfByCod($tag_child->getCod()));
     }
 }

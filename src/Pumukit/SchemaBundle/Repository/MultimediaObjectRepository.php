@@ -32,7 +32,7 @@ class MultimediaObjectRepository extends DocumentRepository
         ->field('status')->in($status)
         ->sort('rank', 1);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -209,7 +209,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         foreach ($aggregation as $element) {
             if (null !== $element['people']) {
-              if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
+                if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
                     if (0 === strpos($element['people']['cod'], $roleCode)) {
                         foreach ($element['people']['people'] as $person) {
                             if (!in_array($person['_id']->{'$id'}, $people)) {
@@ -247,12 +247,12 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $persons = array();
 
-        foreach($aggregation as $element) {
-            if(null !== $element['people']) {
+        foreach ($aggregation as $element) {
+            if (null !== $element['people']) {
                 if ((null !== $element['people']['cod']) && (null !== $element['people']['people'])) {
                     if ((0 === strpos($element['people']['cod'], $roleCode))) {
                         foreach ($element['people']['people'] as $person) {
-                            if($person['email'] === $email){
+                            if ($person['email'] === $email) {
                                 if (!in_array($person['_id']->{'$id'}, $persons)) {
                                     $persons[] = $person['_id']->{'$id'};
                                 }
@@ -293,7 +293,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('$text')->equals(array('$search' => $text))
             ->distinct('series');
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -314,7 +314,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->addOr($qb->expr()->field('_id')->equals($text));
         $qb->distinct('series');
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -437,7 +437,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -457,7 +457,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGeneralTag($tag, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -476,8 +476,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
         return $qb;
@@ -495,8 +495,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
         return $qb;
@@ -515,8 +515,8 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('series')->references($series)
           ->field('status')->in($status);
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
         return $qb;
@@ -534,8 +534,8 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('tags._id')->in(array(new \MongoId($tag->getId())))
             ->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()). '.*\|/')));
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
         return $qb;
@@ -570,11 +570,11 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->in($mongoIds);
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -596,11 +596,11 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -636,11 +636,11 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -676,11 +676,11 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb =  $this->createStandardQueryBuilder()
           ->field('tags._id')->notIn($mongoIds);
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -829,7 +829,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -854,7 +854,9 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('series')->references($series)
           ->field('tags.cod')->equals($tagCod);
 
-        if (0 !== count($status)) $qb->field('status')->in($status);
+        if (0 !== count($status)) {
+            $qb->field('status')->in($status);
+        }
 
         $qb->sort('rank', 'asc');
 
@@ -915,7 +917,9 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
-        if (0 !== count($sort)) $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
         return $qb;
     }
 
@@ -942,7 +946,7 @@ class MultimediaObjectRepository extends DocumentRepository
     private function getMongoIds($documents)
     {
         $mongoIds = array();
-        foreach($documents as $document){
+        foreach ($documents as $document) {
             $mongoIds[] = new \MongoId($document->getId());
         }
 
@@ -977,8 +981,8 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
     {
-      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
-      return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
+        $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+        return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
     }
 
     /**
@@ -989,8 +993,8 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findStandardOneBy(array $criteria)
     {
-      $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
-      return $this->getDocumentPersister()->load($criteria);
+        $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+        return $this->getDocumentPersister()->load($criteria);
     }
 
     /**
@@ -1042,7 +1046,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function count()
     {
-      return $this
+        return $this
         ->createStandardQueryBuilder()
         ->count()
         ->getQuery()
@@ -1056,15 +1060,15 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countDuration()
     {
-      $result = $this
+        $result = $this
         ->createStandardQueryBuilder()
         ->group(array(), array('count' => 0))
         ->reduce('function (obj, prev) { prev.count += obj.duration; }')
         ->getQuery()
         ->execute();
 
-      $singleResult = $result->getSingleResult();
-      return $singleResult["count"];
+        $singleResult = $result->getSingleResult();
+        return $singleResult["count"];
     }
 
     /**
@@ -1075,7 +1079,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countInSeries($series)
     {
-      return $this
+        return $this
         ->createStandardQueryBuilder()
         ->field('series')->references($series)
         ->count()
@@ -1177,10 +1181,11 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findAllAsIterable($filter_prototype = true)
     {
-        if($filter_prototype)
+        if ($filter_prototype) {
             $qb = $this->createStandardQueryBuilder();
-        else
+        } else {
             $qb = $this->createQueryBuilder();
+        }
         return $qb->getQuery()->execute();
     }
 
@@ -1196,8 +1201,8 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('groups')->in(array(new \MongoId($group->getId())));
 
-        if (0 !== count($sort) ){
-          $qb->sort($sort);
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
         }
 
         return $qb;
@@ -1216,7 +1221,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -1236,7 +1241,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -1255,7 +1260,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
 
-        if (0 !== count($sort) ){
+        if (0 !== count($sort)) {
             $qb->sort($sort);
         }
 
@@ -1275,7 +1280,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -1295,7 +1300,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
-        if ($limit > 0){
+        if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
 
@@ -1367,7 +1372,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countInSeriesWithPrototype($series)
     {
-      return $this
+        return $this
         ->createQueryBuilder()
         ->field('series')->references($series)
         ->count()

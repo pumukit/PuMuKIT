@@ -91,7 +91,9 @@ class PermissionProfileService
         $totalPermissions = count($this->permissionService->getAllPermissions());
         $default = $this->repo->findDefaultCandidate($totalPermissions);
 
-        if (null == $default) return false;
+        if (null == $default) {
+            return false;
+        }
 
         $default->setDefault(true);
         $this->dm->persist($default);
@@ -127,12 +129,13 @@ class PermissionProfileService
     {
         if (array_key_exists($permission, $this->permissionService->getAllPermissions())) {
             $permissionProfile->addPermission($permission);
-            foreach($this->permissionService->getDependenciesByScope($permission, $permissionProfile->getScope()) as $dependency) {
+            foreach ($this->permissionService->getDependenciesByScope($permission, $permissionProfile->getScope()) as $dependency) {
                 $permissionProfile->addPermission($dependency);
             }
             $this->dm->persist($permissionProfile);
-            if ($executeFlush)
+            if ($executeFlush) {
                 $this->dm->flush();
+            }
         }
 
         return $permissionProfile;
@@ -150,13 +153,15 @@ class PermissionProfileService
     {
         if ($permissionProfile->containsPermission($permission)) {
             $dependencies = $this->permissionService->getDependablesByScope($permission, $permissionProfile->getScope());
-            foreach($dependencies as $dependency) {
+            foreach ($dependencies as $dependency) {
                 if ($permissionProfile->containsPermission($dependency)) {
-                    throw new \InvalidArgumentException(sprintf('The permission %s cannot be deleted from \'%s\'. The permission %s is ALSO SET and is dependent on %1$s',$permission, $permissionProfile->getName(), $dependency));
+                    throw new \InvalidArgumentException(sprintf('The permission %s cannot be deleted from \'%s\'. The permission %s is ALSO SET and is dependent on %1$s', $permission, $permissionProfile->getName(), $dependency));
                 }
             }
             $permissionProfile->removePermission($permission);
-            if ($executeFlush) $this->dm->persist($permissionProfile);
+            if ($executeFlush) {
+                $this->dm->persist($permissionProfile);
+            }
             $this->dm->flush();
 
             $this->dispatcher->dispatchUpdate($permissionProfile);
@@ -178,7 +183,9 @@ class PermissionProfileService
         if (array_key_exists($scope, PermissionProfile::$scopeDescription)) {
             $permissionProfile->setScope($scope);
             $this->dm->persist($permissionProfile);
-            if ($executeFlush) $this->dm->flush();
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
             $this->dispatcher->dispatchUpdate($permissionProfile);
         }
 
@@ -195,12 +202,13 @@ class PermissionProfileService
     {
         //Clears all permissions for this permissionProfile.
         $permissionProfile->setPermissions(array());
-        foreach($permissionsList as $permission) {
+        foreach ($permissionsList as $permission) {
             $this->doAddPermission($permissionProfile, $permission, false);
         }
         $this->dm->persist($permissionProfile);
-        if($executeFlush)
+        if ($executeFlush) {
             $this->dm->flush();
+        }
 
         $this->dispatcher->dispatchUpdate($permissionProfile);
         return $permissionProfile;

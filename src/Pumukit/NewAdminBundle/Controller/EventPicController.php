@@ -42,15 +42,15 @@ class EventPicController extends Controller implements NewAdminController
      */
     public function uploadAction(Event $event, Request $request)
     {
-        try{
-            if (empty($_FILES) && empty($_POST)){
+        try {
+            if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has("file")) {
                 $picService = $this->get('pumukitlive.eventpic');
                 $media = $picService->addPicFile($event, $request->files->get("file"));
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return array(
                          'event' => $event,
                          'uploaded' => 'failed',

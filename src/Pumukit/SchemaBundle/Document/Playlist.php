@@ -65,8 +65,8 @@ class Playlist
      */
     public function removeAllMultimediaObjectsById($mmobjId)
     {
-        foreach($this->multimedia_objects as $key => $mmobj) {
-            if($mmobj->getId() == $mmobjId) {
+        foreach ($this->multimedia_objects as $key => $mmobj) {
+            if ($mmobj->getId() == $mmobjId) {
                 $this->multimedia_objects->remove($key);
             }
         }
@@ -100,7 +100,7 @@ class Playlist
     public function getMultimediaObjectsIdList()
     {
         $mmobjIds = array_map(
-            function($m){
+            function ($m) {
                 return new \MongoId($m->getId());
             }, $this->multimedia_objects->toArray()
         );
@@ -115,25 +115,25 @@ class Playlist
     public function moveMultimediaObject($posStart, $posEnd)
     {
         $maxPos = $this->multimedia_objects->count();
-        if($maxPos < 1)
+        if ($maxPos < 1) {
             return false;
-        if($posStart - $posEnd == 0
+        }
+        if ($posStart - $posEnd == 0
            || $posStart < 0 || $posStart > $maxPos) {
             return false; //If start is out of range or start/end is the same, do nothing.
         }
         $posEnd = $posEnd % $maxPos; //Out of bounds.
-        if($posEnd < 0) {
+        if ($posEnd < 0) {
             $posEnd = $maxPos + $posEnd;
         }
         $tempObject = $this->multimedia_objects->get($posStart);
-        if($posStart - $posEnd > 0) {
-            for($i = $posStart; $i > $posEnd; $i--) {
+        if ($posStart - $posEnd > 0) {
+            for ($i = $posStart; $i > $posEnd; $i--) {
                 $prevObject = $this->multimedia_objects->get($i-1);
                 $this->multimedia_objects->set($i, $prevObject);
             }
-        }
-        else {
-            for($i = $posStart; $i < $posEnd; $i++) {
+        } else {
+            for ($i = $posStart; $i < $posEnd; $i++) {
                 $nextObject = $this->multimedia_objects->get($i+1);
                 $this->multimedia_objects->set($i, $nextObject);
             }

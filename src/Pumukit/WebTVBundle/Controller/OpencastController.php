@@ -20,7 +20,8 @@ class OpencastController extends PlayerController implements WebTVController
     /**
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
-    public function magicAction( MultimediaObject $multimediaObject, Request $request ) {
+    public function magicAction(MultimediaObject $multimediaObject, Request $request)
+    {
         $array = $this->doAction($multimediaObject, $request);
         $array['magic_url'] = true;
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
@@ -31,21 +32,22 @@ class OpencastController extends PlayerController implements WebTVController
     /**
      * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
      */
-    public function indexAction( MultimediaObject $multimediaObject, Request $request ) {
+    public function indexAction(MultimediaObject $multimediaObject, Request $request)
+    {
         $array = $this->doAction($multimediaObject, $request);
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                              $array
         );
     }
 
-    public function doAction( MultimediaObject $multimediaObject, Request $request ){
-        if(!$opencasturl =  $multimediaObject->getProperty('opencasturl')){
+    public function doAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        if (!$opencasturl =  $multimediaObject->getProperty('opencasturl')) {
             throw $this->createNotFoundException('The multimedia Object has no Opencast url!');
         }
 
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($this->container->hasParameter('pumukit.opencast.use_redirect') && $this->container->getParameter('pumukit.opencast.use_redirect')) {
-
             $event = new ViewedEvent($multimediaObject, null);
             $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
             if ($invert = $multimediaObject->getProperty('opencastinvert')) {

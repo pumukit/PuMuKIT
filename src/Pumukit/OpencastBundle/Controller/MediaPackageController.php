@@ -39,8 +39,8 @@ class MediaPackageController extends Controller
             throw new AccessDeniedException('Not allowed. Configure your OpencastBundle to show the Importer Tab.');
         }
 
-        if(!$this->has('pumukit_opencast.client')) {
-          throw $this->createNotFoundException('PumukitOpencastBundle not configured.');
+        if (!$this->has('pumukit_opencast.client')) {
+            throw $this->createNotFoundException('PumukitOpencastBundle not configured.');
         }
 
         $opencastClient = $this->get('pumukit_opencast.client');
@@ -56,7 +56,7 @@ class MediaPackageController extends Controller
                 $limit,
                 ($page -1) * $limit);
         } catch (\Exception $e) {
-          return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', array('admin_url' => $opencastClient->getUrl() ,'message' => $e->getMessage())), 503);
+            return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', array('admin_url' => $opencastClient->getUrl(), 'message' => $e->getMessage())), 503);
         }
 
         $currentPageOpencastIds = array();

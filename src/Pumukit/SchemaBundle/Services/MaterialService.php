@@ -24,7 +24,7 @@ class MaterialService
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->targetPath = realpath($targetPath);
-        if (!$this->targetPath){
+        if (!$this->targetPath) {
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Materials does not exist.");
         }
         $this->targetUrl = $targetUrl;
@@ -68,9 +68,8 @@ class MaterialService
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
-
-        if(UPLOAD_ERR_OK != $materialFile->getError()) {
-           throw new \Exception($materialFile->getErrorMessage());
+        if (UPLOAD_ERR_OK != $materialFile->getError()) {
+            throw new \Exception($materialFile->getErrorMessage());
         }
 
         if (!is_file($materialFile->getPathname())) {
@@ -110,8 +109,9 @@ class MaterialService
         if ($this->forceDeleteOnDisk && $materialPath) {
             $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $otherMaterials = $mmobjRepo->findBy(array('materials.path' => $materialPath));
-            if(count($otherMaterials) == 0)
+            if (count($otherMaterials) == 0) {
                 $this->deleteFileOnDisk($materialPath);
+            }
         }
 
         $this->dispatcher->dispatchDelete($multimediaObject, $material);

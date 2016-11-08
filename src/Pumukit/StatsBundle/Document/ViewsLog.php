@@ -84,7 +84,7 @@ class ViewsLog
     public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track, $user = null)
     {
         $this->date = new \DateTime("now");
-        $this->url = $url;        
+        $this->url = $url;
         $this->ip = $ip;
         $this->userAgent = $userAgent;
         $this->referer = $referer;

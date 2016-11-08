@@ -133,7 +133,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->assertEquals(0, count($mm->getPics()));
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
             $mm = $this->repo->find($mm->getId());
@@ -156,7 +156,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
 
         $picPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'picCopy.png';
-        if (copy($this->originalPicPath, $picPath)){
+        if (copy($this->originalPicPath, $picPath)) {
             $picFile = new UploadedFile($picPath, 'pic.png', null, null, null, true);
             $mm = $this->mmsPicService->addPicFile($mm, $picFile);
 
@@ -184,14 +184,14 @@ class MultimediaObjectPicServiceTest extends WebTestCase
     {
         $mmobjs = $this->repo->findAll();
 
-        foreach($mmobjs as $mm){
+        foreach ($mmobjs as $mm) {
             $mmDir = $this->uploadsPath.DIRECTORY_SEPARATOR.$mm->getId().DIRECTORY_SEPARATOR;
 
-            if (is_dir($mmDir)){
+            if (is_dir($mmDir)) {
                 $files = glob($mmDir.'*', GLOB_MARK);
                 foreach ($files as $file) {
-                    if (is_writable($file)){
-                      unlink($file);
+                    if (is_writable($file)) {
+                        unlink($file);
                     }
                 }
 
