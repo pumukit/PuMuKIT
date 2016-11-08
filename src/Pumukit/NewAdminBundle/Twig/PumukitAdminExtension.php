@@ -124,7 +124,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function existsRoute($name)
     {
-        return (null !== $this->router->getRouteCollection()->get($name));
+        return null !== $this->router->getRouteCollection()->get($name);
     }
 
     /**

@@ -59,7 +59,7 @@ class AnnotationsAPIController extends Controller
             $annonQB->field('created')->gte($minDate)->lte($maxDate);
         }
 
-        $total = clone($annonQB);
+        $total = clone $annonQB;
         $total = $total->count()->getQuery()->execute();
 
         $annonQB->limit($limit)->skip($offset);

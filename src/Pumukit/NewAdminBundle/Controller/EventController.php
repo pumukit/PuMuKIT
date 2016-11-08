@@ -165,7 +165,7 @@ class EventController extends AdminController implements NewAdminController
 
         $calendar = $this->generateArray($m, $y);
 
-        return (array($m, $y, $calendar));
+        return array($m, $y, $calendar);
     }
 
     /**
@@ -298,6 +298,6 @@ class EventController extends AdminController implements NewAdminController
 
         list($m, $y, $calendar) = $this->getCalendar($config, $request);
 
-        return (array($resources, $m, $y, $calendar));
+        return array($resources, $m, $y, $calendar);
     }
 }

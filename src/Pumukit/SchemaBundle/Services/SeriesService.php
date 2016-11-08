@@ -82,6 +82,6 @@ class SeriesService
         }
         $total = $this->mmRepo->countInSeriesWithPrototype($series);
 
-        return ($total === $count);
+        return $total === $count;
     }
 }

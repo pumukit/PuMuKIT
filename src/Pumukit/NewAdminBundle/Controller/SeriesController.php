@@ -517,9 +517,9 @@ class SeriesController extends AdminController implements NewAdminController
         $numberMultimediaObjectsInSeries2 = $mmRepo->countInSeries($series2);
 
         if ('asc' === $type) {
-            return ($numberMultimediaObjectsInSeries1 < $numberMultimediaObjectsInSeries2);
+            return $numberMultimediaObjectsInSeries1 < $numberMultimediaObjectsInSeries2;
         } elseif ('desc' === $type) {
-            return ($numberMultimediaObjectsInSeries1 > $numberMultimediaObjectsInSeries2);
+            return $numberMultimediaObjectsInSeries1 > $numberMultimediaObjectsInSeries2;
         }
 
         return false;

@@ -204,7 +204,7 @@ class EmbeddedBroadcast
      */
     public function isPasswordValid()
     {
-        return ((self::TYPE_PUBLIC == $this->getType()) ||
-                ((self::TYPE_PASSWORD == $this->getType()) && ('' != $this->getPassword())));
+        return (self::TYPE_PUBLIC == $this->getType()) ||
+                ((self::TYPE_PASSWORD == $this->getType()) && ('' != $this->getPassword()));
     }
 }

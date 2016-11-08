@@ -164,7 +164,7 @@ class PicExtractorService
             return 0;
         }
 
-        return (1.0 * $track->getWidth() / $track->getHeight());
+        return 1.0 * $track->getWidth() / $track->getHeight();
     }
 
     /**

@@ -45,9 +45,9 @@ class ProfileService
         }
 
         return array_filter($this->profiles, function ($profile) use ($display, $wizard, $master) {
-            return ((is_null($display) || $profile['display'] === $display) &&
+            return (is_null($display) || $profile['display'] === $display) &&
                     (is_null($wizard) || $profile['wizard'] === $wizard) &&
-                    (is_null($master) || $profile['master'] === $master));
+                    (is_null($master) || $profile['master'] === $master);
         });
     }
 
@@ -89,7 +89,7 @@ class ProfileService
 
         $tags = array('copy');
         $masterNotCopyProfiles = array_filter($masterProfiles, function ($profile) use ($tags) {
-            return (0 != count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags'])))));
+            return 0 != count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags']))));
         });
 
         if ($masterNotCopyProfiles) {
