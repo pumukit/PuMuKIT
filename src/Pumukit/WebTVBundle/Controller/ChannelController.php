@@ -65,7 +65,7 @@ class ChannelController extends Controller implements WebTVController
 
     public function getChannelTitle($channelNumber)
     {
-        $title = isset($this->titles[$channelNumber])?$this->titles[$channelNumber]:'No title';
+        $title = isset($this->titles[$channelNumber]) ? $this->titles[$channelNumber] : 'No title';
         $title = $this->get('translator')->trans($title);
 
         return $title;
@@ -73,7 +73,7 @@ class ChannelController extends Controller implements WebTVController
 
     public function getTagsForChannel($channelNumber)
     {
-        $tagCods = isset($this->tags[$channelNumber])?$this->tags[$channelNumber]:array();
+        $tagCods = isset($this->tags[$channelNumber]) ? $this->tags[$channelNumber] : array();
         $tags = array();
         $repoTags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         foreach ($tagCods as $tagCod) {

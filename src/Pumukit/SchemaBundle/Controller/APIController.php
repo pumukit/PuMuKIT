@@ -52,15 +52,15 @@ class APIController extends Controller implements NewAdminController
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
-        $criteria = $request->get('criteria')?:array();
-        $sort = $request->get('sort')?:array();
-        $prototypes = $request->get('prototypes')?:false;
+        $criteria = $request->get('criteria') ?: array();
+        $sort = $request->get('sort') ?: array();
+        $prototypes = $request->get('prototypes') ?: false;
 
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
         if ($page && $page > 0) {
-            $limit = $limit?:10;
+            $limit = $limit ?: 10;
             $skip = $limit * ($page - 1);
         } else {
             $page = null;
@@ -106,15 +106,15 @@ class APIController extends Controller implements NewAdminController
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
-        $criteria = $request->get('criteria')?:array();
-        $sort = $request->get('sort')?:array();
-        $prototypes = $request->get('prototypes')?:false;
+        $criteria = $request->get('criteria') ?: array();
+        $sort = $request->get('sort') ?: array();
+        $prototypes = $request->get('prototypes') ?: false;
 
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
         if ($page && $page > 0) {
-            $limit = $limit?:10;
+            $limit = $limit ?: 10;
             $skip = $limit * ($page - 1);
         } else {
             $page = null;
@@ -159,8 +159,8 @@ class APIController extends Controller implements NewAdminController
             $limit = 100;
         }
 
-        $criteria = $request->get('criteria')?:array();
-        $sort = $request->get('sort')?:array();
+        $criteria = $request->get('criteria') ?: array();
+        $sort = $request->get('sort') ?: array();
 
         $qb = $liveRepo->createQueryBuilder();
 

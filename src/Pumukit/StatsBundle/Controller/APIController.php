@@ -239,8 +239,8 @@ class APIController extends Controller implements NewAdminController
         if (!strpos($toDate, 'T')) {
             $toDate .= 'T23:59:59';
         }
-        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate)?:null;
-        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate)?:null;
+        $fromDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $fromDate) ?: null;
+        $toDate = \DateTime::createFromFormat('Y-m-d\TH:i:s', $toDate) ?: null;
 
         return array($criteria, $sort, $fromDate, $toDate, $limit, $page);
     }

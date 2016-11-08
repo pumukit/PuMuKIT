@@ -52,7 +52,7 @@ class JobNotificationService
             $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
             $successMessage = $this->translator->trans("Job with id '".$job->getId()."' successfully finished");
-            $subject = ($this->platformName?$this->platformName.': ':'').$successMessage;
+            $subject = ($this->platformName ? $this->platformName.': ' : '').$successMessage;
             $template = 'PumukitNotificationBundle:Email:job.html.twig';
             $parameters = array(
                                 'subject' => $subject,
@@ -89,7 +89,7 @@ class JobNotificationService
             $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
             $errorMessage = $this->translator->trans("Job with id '".$job->getId()."' failed");
-            $subject = ($this->platformName?$this->platformName.': ':'').$errorMessage;
+            $subject = ($this->platformName ? $this->platformName.': ' : '').$errorMessage;
             $template = 'PumukitNotificationBundle:Email:job.html.twig';
             $parameters = array(
                                 'subject' => $subject,

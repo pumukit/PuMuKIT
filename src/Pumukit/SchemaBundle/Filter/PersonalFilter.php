@@ -32,7 +32,7 @@ class PersonalFilter extends SchemaFilter
         if ($criteria_portal && $criteria_backoffice) {
             $criteria['$or'] = array($criteria_portal, $criteria_backoffice);
         } else {
-            $criteria = $criteria_portal?:$criteria_backoffice;
+            $criteria = $criteria_portal ?: $criteria_backoffice;
         }
 
         return $criteria;

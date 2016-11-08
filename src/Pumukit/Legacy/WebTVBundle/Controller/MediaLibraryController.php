@@ -19,7 +19,7 @@ class MediaLibraryController extends Controller
 
         $sortField = 'alphabetically' == $sort ? 'title.'.$request->getLocale() : 'public_date';
         $criteria = $request->query->get('search', false) ?
-          array('title.'.$request->getLocale() => new \MongoRegex(sprintf('/%s/i', $request->query->get('search')))):
+          array('title.'.$request->getLocale() => new \MongoRegex(sprintf('/%s/i', $request->query->get('search')))) :
           array();
 
         $series = $repo->findBy($criteria, array($sortField => 1));

@@ -74,7 +74,7 @@ class SearchController extends Controller implements WebTVController
     public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
         //Add translated title to breadcrumbs.
-        $templateTitle = $this->container->getParameter('menu.search_title')?:'Multimedia objects search';
+        $templateTitle = $this->container->getParameter('menu.search_title') ?: 'Multimedia objects search';
         $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle, 'pumukit_webtv_search_multimediaobjects');
 

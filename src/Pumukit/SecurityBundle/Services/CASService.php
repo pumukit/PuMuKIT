@@ -29,7 +29,7 @@ class CASService
         \phpCAS::client(CAS_VERSION_2_0, $this->casUrl, $this->casPort, $this->casUri, true);
         \phpCAS::setNoCasServerValidation();
         if ('dev' == $this->env) {
-            \phpCAS::setDebug($this->cacheDir ?  ($this->cacheDir.'/cas.log') : '/tmp/cas.log');
+            \phpCAS::setDebug($this->cacheDir ? ($this->cacheDir.'/cas.log') : '/tmp/cas.log');
         }
         if ($this->casAllowedIpClients) {
             \phpCAS::handleLogoutRequests(true, $this->casAllowedIpClients);

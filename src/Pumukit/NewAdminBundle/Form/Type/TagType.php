@@ -48,7 +48,7 @@ class TagType extends AbstractType
                 $formOptions = array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($auxField[0]));
                 
                 try {
-                    $event->getForm()->add($auxField[0], isset($auxField[1])?$auxField[1]:'text', $formOptions);
+                    $event->getForm()->add($auxField[0], isset($auxField[1]) ? $auxField[1] : 'text', $formOptions);
                 } catch (\InvalidArgumentException $e) {
                     $event->getForm()->add($auxField[0], 'text', $formOptions);
                 }

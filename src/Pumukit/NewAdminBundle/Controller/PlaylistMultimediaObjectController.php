@@ -220,7 +220,7 @@ class PlaylistMultimediaObjectController extends Controller
         $queryBuilder->setQueryArray($criteria);
         $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $mmobjs = new Pagerfanta($adapter);
-        $mmobjs->setMaxPerPage($mmobjs->getNbResults()?:1);
+        $mmobjs->setMaxPerPage($mmobjs->getNbResults() ?: 1);
 
         return array('mmobjs' => $mmobjs);
     }

@@ -577,7 +577,7 @@ class JobService
 
     private function getPathEnd(array $profile, $dir, $file, $extension)
     {
-        $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
+        $finalExtension = isset($profile['extension']) ? $profile['extension'] : $extension;
 
         $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
 

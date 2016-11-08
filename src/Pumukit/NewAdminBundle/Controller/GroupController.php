@@ -403,7 +403,7 @@ class GroupController extends AdminController implements NewAdminController
         try {
             $groupService = $this->get('pumukitschema.group');
             $canBeDeleted = $groupService->canBeDeleted($group);
-            $value = $canBeDeleted ? 1:0;
+            $value = $canBeDeleted ? 1 : 0;
             $locale = $request->getLocale();
             $deleteMessage = $groupService->getDeleteMessage($group, $locale);
         } catch (\Exception $e) {

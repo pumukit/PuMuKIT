@@ -35,6 +35,6 @@ class LiveTwigExtension extends \Twig_Extension
     {
         $eventRepo = $this->dm->getRepository('PumukitLiveBundle:Event');
 
-        return $eventRepo->findFutureAndNotFinished($limit?$limit:null);
+        return $eventRepo->findFutureAndNotFinished($limit ? $limit : null);
     }
 }
