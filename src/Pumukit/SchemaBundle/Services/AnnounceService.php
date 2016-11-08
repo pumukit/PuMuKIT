@@ -24,6 +24,7 @@ class AnnounceService
             //Get recently added mmobjs
             $return = $this->mmobjRepo->findStandardBy(array(), array('public_date' => -1), $limit, 0);
         }
+
         return $return;
     }
 

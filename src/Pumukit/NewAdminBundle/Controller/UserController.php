@@ -313,6 +313,7 @@ class UserController extends AdminController implements NewAdminController
             if ($loggedInUser->isSuperAdmin()) {
                 return true;
             }
+
             return new Response("Can not delete the external user '".$userToDelete->getUsername()."'. ", 409);
         }
 

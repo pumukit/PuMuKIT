@@ -18,6 +18,7 @@ class TestCommand
         }
         $command = escapeshellcmd($command);
         exec($testCommand.$command.' 2>&1', $output, $code);
+
         return 0 === $code && count($output) > 0;
     }
 }

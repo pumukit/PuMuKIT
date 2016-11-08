@@ -243,6 +243,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             }
         }
         $dm->flush();
+
         return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
     }
 

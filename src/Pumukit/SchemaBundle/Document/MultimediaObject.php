@@ -276,6 +276,7 @@ class MultimediaObject
     public function resetSecret()
     {
         $this->secret = new \MongoId();
+
         return $this->secret;
     }
 
@@ -843,8 +844,10 @@ class MultimediaObject
         if (!($this->containsTag($tag))) {
             $embedTag = EmbeddedTag::getEmbeddedTag($this->tags, $tag);
             $this->tags[] = $embedTag;
+
             return true;
         }
+
         return false;
     }
 
@@ -2605,6 +2608,7 @@ class MultimediaObject
         if (isset($this->properties[$key])) {
             return $this->properties[$key];
         }
+
         return null;
     }
 

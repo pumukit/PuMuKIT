@@ -481,6 +481,7 @@ class GroupController extends AdminController implements NewAdminController
             '/all/i' == (string)$new_criteria['origin']) {
             unset($new_criteria['origin']);
         }
+
         return $new_criteria;
     }
 }

@@ -76,6 +76,7 @@ class DefaultController extends Controller
         $intro = $this->container->hasParameter('pumukit2.intro') ?
         $this->container->getParameter('pumukit2.intro') :
         null;
+
         return array('live' => $live, 'intro' => $intro);
     }
 }

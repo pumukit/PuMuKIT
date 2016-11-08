@@ -78,6 +78,7 @@ class UserAgentParserService
         if (($webExplorer == 'Opera' || $webExplorer == 'Safari') && preg_match('#(Version)[/ ]?([0-9.]*)#', $userAgent, $match)) {
             $version = floor($match[2]);
         }
+
         return $version;
     }
 }

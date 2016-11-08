@@ -334,6 +334,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
                                         );
+
         return $qb->distinct('series')
           ->getQuery()
           ->execute();
@@ -371,6 +372,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->expr()->field('people._id')->equals(new \MongoId($personId))
                 ->field('cod')->equals($roleCod)
         ));
+
         return $qb;
     }
 
@@ -387,6 +389,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
+
         return $qb->getQuery();
     }
 
@@ -402,6 +405,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
     {
         $query = $this->findByPersonIdAndRoleCodOrGroupsQuery($personId, $roleCod, $groups);
+
         return $query->execute();
     }
 
@@ -417,6 +421,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups);
+
         return $qb->distinct('series')
           ->getQuery()
           ->execute();
@@ -918,6 +923,7 @@ class MultimediaObjectRepository extends DocumentRepository
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }
+
         return $qb;
     }
 
@@ -931,6 +937,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findOrderedBy(Series $series, $sort = array())
     {
         $qb = $this->getQueryBuilderOrderedBy($series, $sort);
+
         return $qb->getQuery()->execute();
     }
 
@@ -979,6 +986,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
+
         return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
     }
 
@@ -991,6 +999,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findStandardOneBy(array $criteria)
     {
         $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
+
         return $this->getDocumentPersister()->load($criteria);
     }
 
@@ -1064,6 +1073,7 @@ class MultimediaObjectRepository extends DocumentRepository
         ->execute();
 
         $singleResult = $result->getSingleResult();
+
         return $singleResult['count'];
     }
 
@@ -1108,6 +1118,7 @@ class MultimediaObjectRepository extends DocumentRepository
         if ($sort) {
             $qb->sort($sort);
         }
+
         return $qb->getQuery();
     }
 
@@ -1149,6 +1160,7 @@ class MultimediaObjectRepository extends DocumentRepository
         if ($sort) {
             $qb->sort($sort);
         }
+
         return $qb->getQuery();
     }
 
@@ -1182,6 +1194,7 @@ class MultimediaObjectRepository extends DocumentRepository
         } else {
             $qb = $this->createQueryBuilder();
         }
+
         return $qb->getQuery()->execute();
     }
 

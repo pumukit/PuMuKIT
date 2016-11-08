@@ -103,6 +103,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
 
         $this->dispatchViewEvent($multimediaObject);
+
         return array('intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,

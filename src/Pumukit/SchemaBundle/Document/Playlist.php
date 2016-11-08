@@ -104,6 +104,7 @@ class Playlist
                 return new \MongoId($m->getId());
             }, $this->multimedia_objects->toArray()
         );
+
         return $mmobjIds;
     }
 

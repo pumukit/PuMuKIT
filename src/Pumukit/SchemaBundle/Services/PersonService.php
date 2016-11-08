@@ -446,6 +446,7 @@ class PersonService
     {
         $criteria = array();
         $sort = array('rank' => 1);
+
         return $this->repoRole->findBy($criteria, $sort);
     }
 

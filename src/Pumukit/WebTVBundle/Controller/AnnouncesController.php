@@ -21,6 +21,7 @@ class AnnouncesController extends Controller implements WebTVController
         $templateTitle = $this->container->getParameter('menu.announces_title');
         $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
+
         return array('template_title' => $templateTitle);
     }
     /**

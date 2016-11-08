@@ -24,6 +24,7 @@ class PlaylistController extends CollectionController
     public function showAction(Series $collection, Request $request)
     {
         $this->get('session')->set('admin/playlist/id', $collection->getId());
+
         return array('collection' => $collection);
     }
 
@@ -56,6 +57,7 @@ class PlaylistController extends CollectionController
     public function listAction(Request $request)
     {
         $resources = $this->getResources($request);
+
         return array('series' => $resources);
     }
 
@@ -67,6 +69,7 @@ class PlaylistController extends CollectionController
         $factory = $this->get('pumukitschema.factory');
         $collection = $factory->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->get('session')->set('admin/playlist/id', $collection->getId());
+
         return new JsonResponse(array('playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())));
     }
 
@@ -167,6 +170,7 @@ class PlaylistController extends CollectionController
         if (!$mm) {
             $this->get('session')->remove('admin/mms/id');
         }
+
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', array()));
     }
 
@@ -194,6 +198,7 @@ class PlaylistController extends CollectionController
         //Sort playlist
         $queryBuilder->sort($sorting);
         $resources = $this->createPager($queryBuilder, $request, 'admin/playlist');
+
         return $resources;
     }
 

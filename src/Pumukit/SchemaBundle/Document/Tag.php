@@ -532,6 +532,7 @@ class Tag
       if (strpos($this->getPath(), sprintf('%s|', $tagCod)) === 0) {
           return true;
       }
+
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
   }
 
@@ -567,6 +568,7 @@ class Tag
       if (isset($this->properties[$key])) {
           return $this->properties[$key];
       }
+
       return null;
   }
 

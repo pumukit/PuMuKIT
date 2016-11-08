@@ -92,8 +92,10 @@ class SenderService
               ->setTo($emailTo)
               ->setBody($this->templating->render($template, $parameters), 'text/html');
             $sent = $this->mailer->send($message);
+
             return $sent;
         }
+
         return false;
     }
 }

@@ -84,8 +84,10 @@ class MultimediaObjectPropertyJobService
             } else {
                 $multimediaObject->removeProperty($key);
             }
+
             return true;
         }
+
         return false;
     }
 }

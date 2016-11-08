@@ -82,6 +82,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
         $roles = $this->get('pumukitschema.person')->getRoles();
         $activeEditor = $this->checkHasEditor();
+
         return array(
             'mm' => $mmobj,
             'roles' => $roles,
@@ -126,6 +127,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $mms = $this->getPlaylistMmobjs($series, $request);
+
         return array(
             'playlist' => $series,
             'mms' => $mms,
@@ -170,6 +172,7 @@ class PlaylistMultimediaObjectController extends Controller
         //Get all multimedia objects. The filter will do the rest.
         $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
         $total = $mmobjs->count()->getQuery()->execute();
+
         return array(
             'my_mmobjs' => array(),
             'mmobjs_total' => $total,
@@ -218,6 +221,7 @@ class PlaylistMultimediaObjectController extends Controller
         $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $mmobjs = new Pagerfanta($adapter);
         $mmobjs->setMaxPerPage($mmobjs->getNbResults()?:1);
+
         return array('mmobjs' => $mmobjs);
     }
 
@@ -239,6 +243,7 @@ class PlaylistMultimediaObjectController extends Controller
         if ($mmobj && (!$canBePlayed || !$canUserPlay)) {
             $mmobj = null;
         }
+
         return array(
             'mmobj' => $mmobj,
             'mmobj_id' => $id,
@@ -337,6 +342,7 @@ class PlaylistMultimediaObjectController extends Controller
         $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
         $dm->persist($playlist);
         $dm->flush();
+
         return $actionResponse;
     }
 
@@ -344,6 +350,7 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $initPos = $request->query->get('mm_pos');
         $endPos = ($initPos < 1) ? 0 : $initPos - 1;
+
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
@@ -353,6 +360,7 @@ class PlaylistMultimediaObjectController extends Controller
         $numMmobjs = count($playlist->getPlaylist()->getMultimediaObjects());
         $lastPos = $numMmobjs - 1;
         $endPos = ($initPos >= $lastPos) ? $lastPos : $initPos + 1;
+
         return $this->moveAction($playlist, $initPos, $endPos);
     }
 
@@ -360,6 +368,7 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $initPos = $request->query->get('mm_pos');
         $firstPos = 0;
+
         return $this->moveAction($playlist, $initPos, $firstPos);
     }
 
@@ -367,6 +376,7 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $initPos = $request->query->get('mm_pos');
         $lastPos = -1;
+
         return $this->moveAction($playlist, $initPos, $lastPos);
     }
 

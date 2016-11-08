@@ -91,6 +91,7 @@ class TagService
         }
 
         $this->dispatcher->dispatchUpdate($mmobj);
+
         return $tagAdded;
     }
 
@@ -131,6 +132,7 @@ class TagService
         }
 
         $this->dispatcher->dispatchUpdate($mmobj);
+
         return $removeTags;
     }
 

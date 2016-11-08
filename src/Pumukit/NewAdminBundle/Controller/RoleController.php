@@ -42,6 +42,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
                 foreach ($errors as $error) {
                     $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
+
                 return new Response($textStatus, 409);
             }
         }

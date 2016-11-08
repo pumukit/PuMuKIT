@@ -46,6 +46,7 @@ class StatsServiceTest extends WebTestCase
         $this->dm->persist($log);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
+
         return $log;
     }
 

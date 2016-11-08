@@ -41,6 +41,7 @@ class CollectionController extends Controller implements NewAdminController
                 }
             }
         }
+
         return true;
     }
 

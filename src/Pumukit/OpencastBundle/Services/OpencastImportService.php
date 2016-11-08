@@ -209,6 +209,7 @@ class OpencastImportService
         if ($type && $url) {
             $opencastUrls[$type] = $url;
         }
+
         return $opencastUrls;
     }
 

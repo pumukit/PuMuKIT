@@ -473,6 +473,7 @@ class JobService
         if (($duration_in < $duration_end - $duration_conf) || ($duration_in > $duration_end + $duration_conf)) {
             throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $duration_in, $duration_end));
         }
+
         return true;
     }
 
@@ -700,6 +701,7 @@ class JobService
     {
         $localhost = array('localhost', '127.0.0.1');
         $executor = (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
+
         return $executor;
     }
 

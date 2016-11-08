@@ -221,6 +221,7 @@ class Series
     public function resetSecret()
     {
         $this->secret = new \MongoId();
+
         return $this->secret;
     }
 
@@ -1063,6 +1064,7 @@ class Series
         if (isset($this->properties[$key])) {
             return $this->properties[$key];
         }
+
         return null;
     }
 

@@ -25,6 +25,7 @@ class TrackUrlService
             'ext' => $ext,
         );
         $url = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
+
         return $url;
     }
 }

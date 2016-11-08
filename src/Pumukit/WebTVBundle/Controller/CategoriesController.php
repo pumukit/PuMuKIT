@@ -127,6 +127,7 @@ class CategoriesController extends Controller implements WebTVController
                 }
             }
         }
+
         return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam );
     }
 
@@ -155,6 +156,7 @@ class CategoriesController extends Controller implements WebTVController
         foreach ($aggregation as $a) {
             $mmobjCount[(string)$a['_id']] = $a['count'];
         }
+
         return $mmobjCount;
     }
 

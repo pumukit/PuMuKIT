@@ -89,6 +89,7 @@ class PicService
             if ($object->getType() == Series::TYPE_PLAYLIST) {
                 return $this->getDefaultPlaylistUrlPic($absolute);
             }
+
             return $this->getDefaultSeriesUrlPic($absolute);
         } elseif ($object instanceof MultimediaObject) {
             return $this->getDefaultMultimediaObjectUrlPic($absolute, $object->isOnlyAudio(), $hd);
@@ -111,6 +112,7 @@ class PicService
         if ($absolute) {
             return $this->getAbsoluteUrlPic($this->defaultSeriesPic);
         }
+
         return $this->defaultSeriesPic;
     }
 
@@ -128,6 +130,7 @@ class PicService
         if ($absolute) {
             return $this->getAbsoluteUrlPic($this->defaultPlaylistPic);
         }
+
         return $this->defaultPlaylistPic;
     }
 

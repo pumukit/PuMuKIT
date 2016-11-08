@@ -72,6 +72,7 @@ class PersonController extends AdminController implements NewAdminController
                 foreach ($errors as $error) {
                     $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
+
                 return new Response($textStatus, 409);
             }
         }
@@ -111,6 +112,7 @@ class PersonController extends AdminController implements NewAdminController
                 foreach ($errors as $error) {
                     $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
+
                 return new Response($textStatus, 409);
             }
         }
@@ -240,6 +242,7 @@ class PersonController extends AdminController implements NewAdminController
                 foreach ($errors as $error) {
                     $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
+
                 return new Response($textStatus, 409);
             }
             if ($owner === 'owner') {
@@ -323,6 +326,7 @@ class PersonController extends AdminController implements NewAdminController
                 foreach ($errors as $error) {
                     $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
                 }
+
                 return new Response($textStatus, 409);
             }
         }

@@ -48,6 +48,7 @@ class FilterListener
         if (null != $privateBroadcastIds) {
             return $privateBroadcastIds->toArray();
         }
+
         return array();
     }
 
@@ -57,6 +58,7 @@ class FilterListener
         if (null != $privateBroadcastIds) {
             return array('$nin' => $privateBroadcastIds);
         }
+
         return array();
     }
 }

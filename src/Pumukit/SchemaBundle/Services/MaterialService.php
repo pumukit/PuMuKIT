@@ -151,6 +151,7 @@ class MaterialService
     public function getCaptions(MultimediaObject $multimediaObject)
     {
         $mimeTypeCaptions = self::$mimeTypeCaptions;
+
         return $multimediaObject->getMaterials()->filter(function ($material) use ($mimeTypeCaptions) {
             return in_array($material->getMimeType(), $mimeTypeCaptions);
         });

@@ -101,6 +101,7 @@ class JobGeneratorListener
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
         }
+
         return $jobs;
     }
 

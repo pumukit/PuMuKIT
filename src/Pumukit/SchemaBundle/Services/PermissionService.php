@@ -147,6 +147,7 @@ class PermissionService
                 'dependencies' => $dependencies,
             );
         }
+
         return $allPermissions;
     }
 
@@ -161,6 +162,7 @@ class PermissionService
                 $allPermissions[$role]['dependencies'][$scope] = $this->buildDependenciesByScope($role, $scope, $allPermissions);
             }
         }
+
         return $allPermissions;
     }
 
@@ -194,6 +196,7 @@ class PermissionService
                 }
             }
         }
+
         return $dependencies;
     }
 

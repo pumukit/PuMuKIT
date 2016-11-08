@@ -453,6 +453,7 @@ class EmbeddedTag
       if (strpos($this->getPath(), sprintf('%s|', $tagCod)) === 0) {
           return true;
       }
+
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
   }
 

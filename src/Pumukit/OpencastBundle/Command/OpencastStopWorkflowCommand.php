@@ -37,6 +37,7 @@ EOT
             if (!$result) {
                 $output->writeln('<error>Error on stopping workflows</error>');
                 $logger->error('['.__CLASS__.']('.__FUNCTION__.') Error on stopping workflows');
+
                 return -1;
             }
             $output->writeln('<info>Successfully stopped workflows</info>');

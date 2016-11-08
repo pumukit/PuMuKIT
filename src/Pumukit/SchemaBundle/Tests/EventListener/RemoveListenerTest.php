@@ -289,6 +289,7 @@ class RemoveListenerTest extends WebTestCase
         $group->setName($name);
         $this->dm->persist($group);
         $this->dm->flush();
+
         return $group;
     }
 
@@ -301,6 +302,7 @@ class RemoveListenerTest extends WebTestCase
         $user->setEmail($email);
         $this->dm->persist($user);
         $this->dm->flush();
+
         return $user;
     }
 }

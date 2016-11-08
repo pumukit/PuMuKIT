@@ -479,6 +479,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         $json['prototype'] = $resource->isPrototype();
+
         return new JsonResponse($json);
     }
 
@@ -510,6 +511,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         $json['prototype'] = $resource->isPrototype();
+
         return new JsonResponse($json);
     }
 
@@ -668,6 +670,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $resource = $this->findOr404($request);
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         $response = $mmobjService->resetMagicUrl($resource);
+
         return new Response($response);
     }
 
@@ -898,6 +901,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 return false;
             }
         }
+
         return true;
     }
 
@@ -932,6 +936,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                       'redirect' => 1,
                                       'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)),
                                       );
+
                     return new JsonResponse($response, JsonResponse::HTTP_OK);
                 }
             } catch (\Exception $e) {
@@ -939,6 +944,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                   'redirect' => 1,
                                   'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)),
                                   );
+
                 return new JsonResponse($response, JsonResponse::HTTP_OK);
             }
         }
@@ -1020,6 +1026,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
             return new JsonResponse($jsonResponse);
         }
+
         return array(
                      'mm' => $multimediaObject,
                      'broadcasts' => $broadcasts,

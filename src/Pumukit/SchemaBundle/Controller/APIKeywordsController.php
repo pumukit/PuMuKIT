@@ -59,6 +59,7 @@ class APIKeywordsController extends Controller
 
         $kws = $coll->aggregate($pipeline);
         $data = $serializer->serialize($kws->toArray(), $format);
+
         return new Response($data);
     }
 }

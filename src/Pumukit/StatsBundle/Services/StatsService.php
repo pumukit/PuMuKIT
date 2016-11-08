@@ -393,6 +393,7 @@ class StatsService
     public function getPagedAggregation(array $aggregation, $page = 0, $limit = 10)
     {
         $offset = $page * $limit;
+
         return array_splice($aggregation, $offset, $limit);
     }
 }

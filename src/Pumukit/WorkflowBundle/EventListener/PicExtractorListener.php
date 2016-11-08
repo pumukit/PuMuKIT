@@ -57,6 +57,7 @@ class PicExtractorListener
                                     .'There was an error in extracting a pic for MultimediaObject "'
                                     .$multimediaObject->getId().'" from Track "'.$track->getId()
                                     .'". Error message: '.$e->getMessage());
+
                 return false;
             }
         }
@@ -103,6 +104,7 @@ class PicExtractorListener
     {
         if (copy($this->defaultAudioPic, $this->audioPicCopy)) {
             $picFile = new UploadedFile($this->audioPicCopy, $this->defaultAudioPicOriginalName, null, null, null, true);
+
             return $picFile;
         }
 

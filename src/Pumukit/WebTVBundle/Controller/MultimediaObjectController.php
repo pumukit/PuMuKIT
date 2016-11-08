@@ -89,6 +89,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         }
 
         $this->updateBreadcrumbs($multimediaObject);
+
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,

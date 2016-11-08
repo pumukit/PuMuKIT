@@ -58,6 +58,7 @@ class DefaultController extends Controller
         if (false === $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX)) {
             $formData['series']['id'] = $id;
             $formData['type']['option'] = 'single';
+
             return $this->redirect($this->generateUrl('pumukitwizard_default_option', array('pumukitwizard_form_data' => $formData)));
         }
 
@@ -245,6 +246,7 @@ class DefaultController extends Controller
             } catch (\Exception $e) {
                 // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
+
                 return array(
                              'uploaded' => 'failed',
                              'message' => $message,

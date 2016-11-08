@@ -157,6 +157,7 @@ class SearchController extends Controller implements WebTVController
         if (!isset($parentTag)) {
             throw new \Exception(sprintf('The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)', $searchByTagCod));
         }
+
         return $parentTag;
     }
 
@@ -281,6 +282,7 @@ class SearchController extends Controller implements WebTVController
         foreach ($yearResults as $year) {
             $years[] = $year['_id'];
         }
+
         return $years;
     }
 
@@ -296,6 +298,7 @@ class SearchController extends Controller implements WebTVController
         foreach ($yearResults as $year) {
             $years[] = $year['_id'];
         }
+
         return $years;
     }
 }

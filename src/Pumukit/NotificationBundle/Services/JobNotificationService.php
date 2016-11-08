@@ -63,6 +63,7 @@ class JobNotificationService
                                 'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
             $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, false);
+
             return $output;
         }
     }
@@ -99,6 +100,7 @@ class JobNotificationService
                                 'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
             $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, true);
+
             return $output;
         }
     }

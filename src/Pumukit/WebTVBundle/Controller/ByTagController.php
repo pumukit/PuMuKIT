@@ -39,6 +39,7 @@ class ByTagController extends Controller implements WebTVController
         $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
 
         $title = $this->get('translator')->trans('Multimedia objects with tag: %title%', array('%title%' => $title));
+
         return array('title' => $title,
                      'objects' => $pagerfanta,
                      'tag' => $tag,

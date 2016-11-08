@@ -108,6 +108,7 @@ class Annotation
     public function setMultimediaObject($multimediaObject)
     {
         $this->multimediaObject = $multimediaObject;
+
         return $this;
     }
 
@@ -130,6 +131,7 @@ class Annotation
     public function setCreated($created)
     {
         $this->created = $created;
+
         return $this;
     }
 
@@ -152,6 +154,7 @@ class Annotation
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -174,6 +177,7 @@ class Annotation
     public function setMediapackage($mediapackage)
     {
         $this->mediapackage = $mediapackage;
+
         return $this;
     }
 
@@ -196,6 +200,7 @@ class Annotation
     public function setUserId($userId)
     {
         $this->user_id = $userId;
+
         return $this;
     }
 
@@ -218,6 +223,7 @@ class Annotation
     public function setSession($session)
     {
         $this->session = $session;
+
         return $this;
     }
 
@@ -240,6 +246,7 @@ class Annotation
     public function setInpoint($inpoint)
     {
         $this->inpoint = $inpoint;
+
         return $this;
     }
 
@@ -262,6 +269,7 @@ class Annotation
     public function setOutpoint($outpoint)
     {
         $this->outpoint = $outpoint;
+
         return $this;
     }
 
@@ -284,6 +292,7 @@ class Annotation
     public function setLength($length)
     {
         $this->length = $length;
+
         return $this;
     }
 
@@ -306,6 +315,7 @@ class Annotation
     public function setValue($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
@@ -328,6 +338,7 @@ class Annotation
     public function setIsPrivate($isPrivate)
     {
         $this->is_private = $isPrivate;
+
         return $this;
     }
 

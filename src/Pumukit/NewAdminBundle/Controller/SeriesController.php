@@ -222,6 +222,7 @@ class SeriesController extends AdminController implements NewAdminController
         $resource = $this->findOr404($request);
         $mmobjService = $this->get('pumukitschema.series');
         $response = $mmobjService->resetMagicUrl($resource);
+
         return new Response($response);
     }
 
@@ -562,6 +563,7 @@ class SeriesController extends AdminController implements NewAdminController
                 }
             }
         }
+
         return true;
     }
 
@@ -613,6 +615,7 @@ class SeriesController extends AdminController implements NewAdminController
 
             return new JsonResponse(array('description' => (string)$embeddedBroadcast));
         }
+
         return array(
                      'series' => $series,
                      'broadcasts' => $broadcasts,

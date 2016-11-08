@@ -52,6 +52,7 @@ class SeriesRepository extends DocumentRepository
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }
+
         return $qb;
     }
 
@@ -360,6 +361,7 @@ class SeriesRepository extends DocumentRepository
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }
+
         return $qb;
     }
 

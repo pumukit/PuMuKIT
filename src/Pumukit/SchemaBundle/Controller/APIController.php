@@ -37,6 +37,7 @@ class APIController extends Controller implements NewAdminController
                         'live_channels' => $totalLiveChannels, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
+
         return new Response($data);
     }
 
@@ -91,6 +92,7 @@ class APIController extends Controller implements NewAdminController
                         'mmobjs' => $mmobjs, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
+
         return new Response($data);
     }
 
@@ -140,6 +142,7 @@ class APIController extends Controller implements NewAdminController
                         'series' => $series, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
+
         return new Response($data);
     }
 
@@ -181,6 +184,7 @@ class APIController extends Controller implements NewAdminController
                         'live' => $live, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
+
         return new Response($data);
     }
 }

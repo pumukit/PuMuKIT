@@ -57,6 +57,7 @@ class ChannelController extends Controller implements WebTVController
         }
 
         $this->updateBreadcrumbs($channelTitle, 'pumukit_webtv_channel_series', array('channelNumber' => $channelNumber));
+
         return array('title' => $channelTitle,
                      'results' => $results,
                      'number_cols' => $numberCols, );
@@ -66,6 +67,7 @@ class ChannelController extends Controller implements WebTVController
     {
         $title = isset($this->titles[$channelNumber])?$this->titles[$channelNumber]:'No title';
         $title = $this->get('translator')->trans($title);
+
         return $title;
     }
 
@@ -77,6 +79,7 @@ class ChannelController extends Controller implements WebTVController
         foreach ($tagCods as $tagCod) {
             $tags[] = $repoTags->findOneByCod($tagCod);
         }
+
         return $tags;
     }
 

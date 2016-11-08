@@ -34,6 +34,7 @@ class TrackFileController extends Controller
         if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
         }
+
         return $this->redirect($track->getUrl());
     }
 
@@ -50,6 +51,7 @@ class TrackFileController extends Controller
         if ($start !== null && $start == 0) {
             return true;
         }
+
         return false;
     }
 

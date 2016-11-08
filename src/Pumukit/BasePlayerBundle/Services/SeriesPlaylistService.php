@@ -34,6 +34,7 @@ class SeriesPlaylistService
         if ($criteria) {
             $qb->addAnd($criteria);
         }
+
         return $qb;
     }
 
@@ -52,6 +53,7 @@ class SeriesPlaylistService
             $qb->addAnd($criteria);
         }
         $qb->sort('rank', 'asc');
+
         return $qb;
     }
 
@@ -80,6 +82,7 @@ class SeriesPlaylistService
                 }
             }
         }
+
         return $playlist;
     }
 
@@ -103,6 +106,7 @@ class SeriesPlaylistService
 
         $playlist = $this->retrieveSortedPlaylistMmobjs($series, $criteria);
         $iterable->append(new \ArrayIterator($playlist));
+
         return $iterable;
     }
 
@@ -129,6 +133,7 @@ class SeriesPlaylistService
                 return reset($playlist);
             }
         }
+
         return $mmobj;
     }
 
@@ -156,6 +161,7 @@ class SeriesPlaylistService
                 }
             }
         }
+
         return $mmobj;
     }
 }

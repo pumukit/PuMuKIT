@@ -246,6 +246,7 @@ class TagController extends Controller implements NewAdminController
                 }
             }
         }
+
         return $tags;
     }
 }

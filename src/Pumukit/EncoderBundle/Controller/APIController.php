@@ -17,6 +17,7 @@ class APIController extends Controller
     public function profilesAction()
     {
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
+
         return new JsonResponse($profiles);
     }
 
@@ -26,6 +27,7 @@ class APIController extends Controller
     public function cpusAction()
     {
         $cpus = $this->get('pumukitencoder.cpu')->getCpus();
+
         return new JsonResponse($cpus);
     }
 
@@ -36,6 +38,7 @@ class APIController extends Controller
     {
         $jobService = $this->get('pumukitencoder.job');
         $stats = $jobService->getAllJobsStatus();
+
         return new JsonResponse($stats);
     }
 }

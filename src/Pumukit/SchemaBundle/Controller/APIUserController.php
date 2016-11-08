@@ -24,6 +24,7 @@ class APIUserController extends Controller
 
         $users = $repo->findAll();
         $data = $serializer->serialize($users, $request->getRequestFormat());
+
         return new Response($data);
     }
 }

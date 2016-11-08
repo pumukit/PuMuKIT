@@ -233,6 +233,7 @@ class User extends BaseUser
     {
         $roles = $this->roles;
         $roles[] = static::ROLE_DEFAULT;
+
         return array_unique($roles);
     }
 }

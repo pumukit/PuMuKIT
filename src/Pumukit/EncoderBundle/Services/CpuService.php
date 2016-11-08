@@ -53,6 +53,7 @@ class CpuService
                                     );
             }
         }
+
         return $this->getOptimalCpuName($freeCpus);
     }
 
@@ -105,6 +106,7 @@ class CpuService
         if (isset($optimalCpu['name'])) {
             return $optimalCpu['name'];
         }
+
         return null;
     }
 
@@ -152,6 +154,7 @@ class CpuService
         $cpuNames = array_map(function ($a) {
             return $a->getName();
         }, $cpus);
+
         return $cpuNames;
     }
 }

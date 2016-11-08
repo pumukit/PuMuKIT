@@ -227,6 +227,7 @@ class TrackController extends Controller implements NewAdminController
     public function infoJobAction(MultimediaObject $multimediaObject, Job $job, Request $request)
     {
         $command = $this->get('pumukitencoder.job')->renderBat($job);
+
         return array('multimediaObject' => $multimediaObject, 'job' => $job, 'command' => $command);
     }
 

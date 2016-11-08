@@ -141,6 +141,7 @@ class FilterListener
         if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $filter->setParameter('people', []);
             $filter->setParameter('groups', []);
+
             return;
         }
 

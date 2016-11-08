@@ -24,6 +24,7 @@ class OpencastController extends PlayerController implements WebTVController
     {
         $array = $this->doAction($multimediaObject, $request);
         $array['magic_url'] = true;
+
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                              $array
         );
@@ -35,6 +36,7 @@ class OpencastController extends PlayerController implements WebTVController
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $array = $this->doAction($multimediaObject, $request);
+
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                              $array
         );

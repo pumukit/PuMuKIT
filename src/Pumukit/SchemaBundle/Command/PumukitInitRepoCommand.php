@@ -222,6 +222,7 @@ EOT
             //Creates the csvTagHeaders (to be used later)
             if (($csvTagHeaders = fgetcsv($file, 300, ';', '"')) === false) {
                 $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
+
                 return -1;
             }
 
@@ -239,6 +240,7 @@ EOT
         $ending = substr($fileExtension, -1);
         if (('~' === $ending) || ('#' === $ending)) {
             $output->writeln('<comment>'.$repoName.': Ignoring file '.$file.'</comment>');
+
             return -1;
         }
         if ($verbose) {

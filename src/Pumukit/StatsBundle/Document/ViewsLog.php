@@ -113,6 +113,7 @@ class ViewsLog
     public function setDate($date)
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -135,6 +136,7 @@ class ViewsLog
     public function setUrl($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -157,6 +159,7 @@ class ViewsLog
     public function setIp($ip)
     {
         $this->ip = $ip;
+
         return $this;
     }
 
@@ -179,6 +182,7 @@ class ViewsLog
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
+
         return $this;
     }
 
@@ -201,6 +205,7 @@ class ViewsLog
     public function setReferer($referer)
     {
         $this->referer = $referer;
+
         return $this;
     }
 
@@ -223,6 +228,7 @@ class ViewsLog
     public function setMultimediaObject($multimediaObject)
     {
         $this->multimediaObject = $multimediaObject;
+
         return $this;
     }
 
@@ -245,6 +251,7 @@ class ViewsLog
     public function setSeries($series)
     {
         $this->series = $series;
+
         return $this;
     }
 
@@ -267,6 +274,7 @@ class ViewsLog
     public function setTrack($track)
     {
         $this->track = $track;
+
         return $this;
     }
 
@@ -289,6 +297,7 @@ class ViewsLog
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 

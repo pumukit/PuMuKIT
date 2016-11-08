@@ -84,6 +84,7 @@ class MultimediaObjectService
         $mm->resetSecret();
         $this->dm->persist($mm);
         $this->dm->flush();
+
         return $mm->getSecret();
     }
 
@@ -220,6 +221,7 @@ class MultimediaObjectService
             || !$this->hasPlayableResource($mmobj)) {
             return false;
         }
+
         return true;
     }
 }

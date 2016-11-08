@@ -16,6 +16,7 @@ class IndexController extends Controller implements WebTVController
     public function indexAction()
     {
         $this->get('pumukit_web_tv.breadcrumbs')->reset();
+
         return array();
     }
 
@@ -49,6 +50,7 @@ class IndexController extends Controller implements WebTVController
         } else {
             $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
         }
+
         return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview,
                      'show_last_month' => $showLastMonth,
         );

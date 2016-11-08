@@ -20,6 +20,7 @@ class PlaylistController extends BasePlaylistController
     {
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
         $mmobjs = $playlistService->getPlaylistMmobjs($series);
+
         return array(
             'playlist_mmobjs' => $mmobjs,
             'object' => $series,

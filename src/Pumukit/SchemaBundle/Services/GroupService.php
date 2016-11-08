@@ -290,6 +290,7 @@ class GroupService
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }
+
         return $qb->getQuery()
             ->execute();
     }

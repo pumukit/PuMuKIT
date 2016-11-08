@@ -567,6 +567,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $count = $qb->count()->getQuery()->execute();
 
         $this->countMmobjsWithTag[$series->getId()][$tagCod] = $count;
+
         return $count;
     }
 
@@ -606,6 +607,7 @@ class PumukitAdminExtension extends \Twig_Extension
         if (isset($env->getGlobals()['app'])) {
             return $env->getGlobals()['app']->getRequest()->attributes->get('nakedbackoffice', false);
         }
+
         return false;
     }
 }

@@ -56,6 +56,7 @@ class InfoController extends Controller
         $stats = $jobService->getAllJobsStatus();
         $cpuService = $this->get('pumukitencoder.cpu');
         $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
+
         return array('cpus' => $cpus,
                      'deactivated_cpus' => $deactivatedCpus,
                      'jobs' => array('pending' =>   array('total' => ($stats['paused'] + $stats['waiting']),
@@ -91,6 +92,7 @@ class InfoController extends Controller
             $command = $e->getMessage();
             $deletedMultimediaObject = true;
         }
+
         return array('job' => $job, 'command' => $command, 'deletedMultimediaObject' => $deletedMultimediaObject);
     }
 

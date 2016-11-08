@@ -155,6 +155,7 @@ class AnnotationsAPIController extends Controller
         $response = $serializer->serialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
+
         return new Response($response);
     }
 
@@ -188,6 +189,7 @@ class AnnotationsAPIController extends Controller
         $response = $serializer->serialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
+
         return new Response($response);
     }
 

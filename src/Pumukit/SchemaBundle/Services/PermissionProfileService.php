@@ -114,6 +114,7 @@ class PermissionProfileService
     {
         $this->doAddPermission($permissionProfile, $permission, $executeFlush);
         $this->dispatcher->dispatchUpdate($permissionProfile);
+
         return $permissionProfile;
     }
 
@@ -211,6 +212,7 @@ class PermissionProfileService
         }
 
         $this->dispatcher->dispatchUpdate($permissionProfile);
+
         return $permissionProfile;
     }
 

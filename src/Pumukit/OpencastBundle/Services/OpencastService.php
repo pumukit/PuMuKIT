@@ -155,6 +155,7 @@ class OpencastService
         }
 
         $multimediaObject = $this->multimediaObjectService->updateMultimediaObject($multimediaObject);
+
         return true;
     }
 }

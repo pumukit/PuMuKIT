@@ -163,6 +163,7 @@ class PicExtractorService
         if (0 == $track->getHeight()) {
             return 0;
         }
+
         return (1.0 * $track->getWidth() / $track->getHeight());
     }
 

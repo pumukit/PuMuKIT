@@ -37,6 +37,7 @@ class CPUsController extends Controller
         if (!$activateMaintenance) {
             throw $this->createNotFoundException("There is no required 'activate' or 'deactivate' parameter");
         }
+
         return $this->forward('PumukitEncoderBundle:CPUs:switchMaintenance', [
             'activateMaintenance' => $activateMaintenance,
             'cpuName' => $cpuName,
@@ -65,6 +66,7 @@ class CPUsController extends Controller
             }
             break;
         }
+
         return new Response();
     }
 }

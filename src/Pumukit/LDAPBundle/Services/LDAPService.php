@@ -45,13 +45,16 @@ class LDAPService
                 if ($linkIdentifier) {
                     $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
                     ldap_close($linkIdentifier);
+
                     return $result;
                 }
             } catch (\Exception $e) {
                 $this->logger->debug(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
+
                 return false;
             }
         }
+
         return false;
     }
 
