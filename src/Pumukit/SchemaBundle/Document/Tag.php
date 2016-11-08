@@ -31,7 +31,6 @@ class Tag
 
     /**
      * @var string
-     * //Translatable
      *
      * @MongoDB\Raw
      */
@@ -39,7 +38,6 @@ class Tag
 
     /**
      * @var string
-     * //Translatable
      *
      * @MongoDB\Raw
      */
@@ -154,7 +152,7 @@ class Tag
     /**
      * Set title.
      *
-     * @param string $title
+     * @param string      $title
      * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
@@ -207,7 +205,7 @@ class Tag
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)

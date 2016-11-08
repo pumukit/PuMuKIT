@@ -151,7 +151,7 @@ class Element
     /**
      * Remove tag.
      *
-     * @param  string  $tag
+     * @param string $tag
      *
      * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
      */
@@ -171,7 +171,7 @@ class Element
     /**
      * Contains tag.
      *
-     * @param  string  $tag
+     * @param string $tag
      *
      * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
      */
@@ -183,7 +183,7 @@ class Element
     /**
      * Contains all tags.
      *
-     * @param  array   $tags
+     * @param array $tags
      *
      * @return bool TRUE if this pic contained all tags, FALSE otherwise
      */
@@ -195,7 +195,7 @@ class Element
     /**
      * Contains any tags.
      *
-     * @param  array   $tags
+     * @param array $tags
      *
      * @return bool TRUE if this pic contained any tag of the list, FALSE otherwise
      */
@@ -307,7 +307,7 @@ class Element
     /**
      * Set description.
      *
-     * @param text $description
+     * @param text        $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)

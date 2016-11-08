@@ -21,7 +21,7 @@ class Link extends Element
     /**
      * Set name.
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $locale
      */
     public function setName($name, $locale = null)

@@ -76,7 +76,7 @@ class SeriesType
     /**
      * Set name.
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $locale
      */
     public function setName($name, $locale = null)
@@ -129,7 +129,7 @@ class SeriesType
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)

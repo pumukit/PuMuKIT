@@ -27,7 +27,6 @@ class EmbeddedTag
 
     /**
      * @var string
-     * //Translatable
      *
      * @MongoDB\Raw
      */
@@ -127,7 +126,7 @@ class EmbeddedTag
     /**
      * Set title.
      *
-     * @param string $title
+     * @param string      $title
      * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
@@ -180,7 +179,7 @@ class EmbeddedTag
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
