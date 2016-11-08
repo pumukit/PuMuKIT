@@ -34,7 +34,6 @@ class RemoteHTTPExecutor
             throw new ExecutorException(sprintf('An error occurred: %s.', $error));
         }
 
-
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $statusCode) {

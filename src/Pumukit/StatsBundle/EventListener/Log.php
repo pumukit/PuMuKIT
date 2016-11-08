@@ -22,7 +22,6 @@ class Log
         $this->tokenStorage = $tokenStorage;
     }
 
-
     public function onMultimediaObjectViewed(ViewedEvent $event)
     {
         $req = $this->requestStack->getMasterRequest();
@@ -43,7 +42,6 @@ class Log
         $this->dm->persist($log);
         $this->dm->flush();
     }
-
 
     private function getUser()
     {

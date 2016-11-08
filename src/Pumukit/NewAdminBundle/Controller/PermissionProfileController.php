@@ -70,7 +70,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
-
         return array(
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
@@ -357,7 +356,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
         return $resources;
     }
-
 
     private function getPermissions()
     {

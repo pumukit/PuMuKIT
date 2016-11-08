@@ -63,7 +63,6 @@ class BreadcrumbsService
         $this->add($title, $routeName, $routeParameters);
     }
 
-
     public function addSeries(Series $series)
     {
         if (1 == count($this->breadcrumbs)) {
@@ -75,13 +74,11 @@ class BreadcrumbsService
         $this->add($series->getTitle(), 'pumukit_webtv_series_index', array('id' => $series->getId()));
     }
 
-
     public function addMultimediaObject(MultimediaObject $multimediaObject)
     {
         $this->addSeries($multimediaObject->getSeries());
         $this->add($multimediaObject->getTitle(), 'pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
     }
-
 
     public function add($title, $routeName, array $routeParameters = array())
     {

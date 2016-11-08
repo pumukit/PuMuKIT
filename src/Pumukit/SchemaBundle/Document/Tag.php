@@ -535,7 +535,6 @@ class Tag
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
   }
 
-
   /**
    * Get properties, null if none.
    *
@@ -546,7 +545,6 @@ class Tag
       return $this->properties;
   }
 
-
   /**
    * Set properties
    *
@@ -556,7 +554,6 @@ class Tag
   {
       $this->properties = $properties;
   }
-
 
   /**
    * Get property, null if none.

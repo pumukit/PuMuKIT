@@ -36,8 +36,6 @@ class TagTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testGetterAndSetter()
     {
         $title = 'title';
@@ -147,13 +145,11 @@ class TagTest extends WebTestCase
         $this->assertFalse($tag_parent->isDescendantOfByCod($tag_child->getCod()));
         $this->assertFalse($tag_child->isDescendantOfByCod($tag_child->getCod()));
 
-
         $tag_child->setParent($tag_parent);
         $tag_grandchild->setParent($tag_child);
         $this->dm->persist($tag_child);
         $this->dm->persist($tag_parent);
         $this->dm->flush();
-
 
         $this->assertEquals('Parent|ParentChild|GrandChild|', $tag_grandchild->getPath());
         $this->assertEquals($tag_parent, $tag_child->getParent());

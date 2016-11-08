@@ -26,8 +26,6 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->logger = static::$kernel->getContainer()->get('logger');
 
-
-
         $streamserver = array('dir_out' => sys_get_temp_dir());
         $testProfiles = array('video' => array('target' => 'TAGA TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver),
                               'video2' => array('target' => 'TAGB*, TAGC', 'resolution_hor' => 0, 'resolution_ver' => 0, 'audio' => false, 'streamserver' => $streamserver),
@@ -44,14 +42,12 @@ class JobGeneratorListenerTest extends WebTestCase
                    ->method('addUniqueJob')
                    ->will($this->returnArgument(1));
 
-
         $logger = $this->getMockBuilder('Symfony\Component\HttpKernel\Log\LoggerInterface')
                        ->disableOriginalConstructor()
                        ->getMock();
 
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
     }
-
 
     public function tearDown()
     {
@@ -62,9 +58,6 @@ class JobGeneratorListenerTest extends WebTestCase
         gc_collect_cycles();
         parent::tearDown();
     }
-
-
-
 
     public function testGetTargets()
     {
@@ -85,7 +78,6 @@ class JobGeneratorListenerTest extends WebTestCase
             $this->assertEquals($d[1], $targets);
         }
     }
-
 
     public function testGenerateJobsForSDVideo()
     {
@@ -114,7 +106,6 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
 
-
     public function testGenerateJobsForHDVideo()
     {
         $track = new Track();
@@ -141,8 +132,6 @@ class JobGeneratorListenerTest extends WebTestCase
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
         $this->assertEquals(array('videoSD', 'videoHD'), $jobs);
     }
-
-
 
     public function testGenerateJobsForAudio()
     {

@@ -35,7 +35,6 @@ class GroupController extends AdminController implements NewAdminController
                 ->getQuery()
                 ->execute();
 
-
         return array('groups' => $groups, 'origins' => $origins->toArray());
     }
 
@@ -474,7 +473,6 @@ class GroupController extends AdminController implements NewAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
     }
-
 
     public function getCriteria($config)
     {

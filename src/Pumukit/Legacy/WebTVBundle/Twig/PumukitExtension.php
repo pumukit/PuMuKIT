@@ -172,7 +172,6 @@ class PumukitExtension extends \Twig_Extension
         return $fulltitle;
     }
 
-
     /**
      * Get duration in minutes and seconds
      *

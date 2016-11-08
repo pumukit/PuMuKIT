@@ -72,8 +72,6 @@ class TrackServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testAddTrackToMultimediaObject()
     {
         $series = $this->factoryService->createSeries();

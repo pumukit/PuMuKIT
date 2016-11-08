@@ -45,7 +45,6 @@ class UserService
         $this->genUserSalt = $genUserSalt;
     }
 
-
     /**
      * Add owner user to MultimediaObject
      *

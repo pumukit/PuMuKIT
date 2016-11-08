@@ -768,7 +768,6 @@ class MultimediaObject
         return $this->broadcast;
     }
 
-
     /**
      * Get broadcast
      *
@@ -983,7 +982,6 @@ class MultimediaObject
     }
 
     // End of tags section
-
 
     /**
      * Add pic
@@ -1516,7 +1514,6 @@ class MultimediaObject
         return null;
     }
 
-
     /**
      * Get audio/video track with tag display. Get an audio track if the object is an audio.
      *
@@ -1571,7 +1568,6 @@ class MultimediaObject
 
         return $r;
     }
-
 
     /**
      * Get filtered track with tags
@@ -1667,7 +1663,6 @@ class MultimediaObject
     {
         $this->reorderMaterialById($materialId, false);
     }
-
 
     /**
      * Reorder material by id
@@ -2299,7 +2294,6 @@ class MultimediaObject
         return $this->getPeopleByRoleCod($role ? $role->getCod() : null, $always);
     }
 
-
     /**
      * Get people in multimedia object by role
      *
@@ -2579,7 +2573,6 @@ class MultimediaObject
         return true;
     }
 
-
     /**
      * Get properties, null if none.
      *
@@ -2590,7 +2583,6 @@ class MultimediaObject
         return $this->properties;
     }
 
-
     /**
      * Set properties
      *
@@ -2600,7 +2592,6 @@ class MultimediaObject
     {
         $this->properties = $properties;
     }
-
 
     /**
      * Get property, null if none.
@@ -2616,7 +2607,6 @@ class MultimediaObject
         }
         return null;
     }
-
 
     /**
      * Set property

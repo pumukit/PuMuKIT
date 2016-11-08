@@ -33,7 +33,6 @@ class PicExtractorService
         $this->command = $command ?: 'avprobe -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
-
     /**
      * Extract pics on batch
      *
@@ -152,7 +151,6 @@ class PicExtractorService
         return true;
     }
 
-
     /**
      * Get aspect
      * Return aspect ratio. Check is not zero.
@@ -194,7 +192,6 @@ class PicExtractorService
 
         return $multimediaObject;
     }
-
 
     /**
      * Private method needed because MmsPicService::addPicUrl doesn't return

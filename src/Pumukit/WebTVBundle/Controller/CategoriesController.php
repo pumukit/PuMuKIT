@@ -130,7 +130,6 @@ class CategoriesController extends Controller implements WebTVController
         return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam );
     }
 
-
     //TODO Move this function into a service.
     private function countMmobjInTags($provider = null)
     {

@@ -68,7 +68,6 @@ class SenderService
         return $this->notificateErrorsToSender;
     }
 
-
     /**
      * Send notification
      *

@@ -208,7 +208,6 @@ class FilterListener
         $this->setParameters($filter, $routeParams);
     }
 
-
     private function setParameters($filter, $routeParams)
     {
         if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {

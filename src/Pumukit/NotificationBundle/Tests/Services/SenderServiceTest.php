@@ -58,8 +58,6 @@ class SenderServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testIsEnabled()
     {
         $this->assertEquals($this->enable, $this->senderService->isEnabled());

@@ -66,8 +66,6 @@ class RemoveListenerTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testPreRemove()
     {
         $series = $this->factoryService->createSeries();
@@ -106,7 +104,6 @@ class RemoveListenerTest extends WebTestCase
         $this->assertEquals(1, count($this->repoSeries->findAll()));
         $this->assertEquals(2, count($this->repoMmobj->findAll()));
         $this->assertEquals(1, count($this->repoJobs->findAll()));
-
 
         $this->deleteCreatedFiles();
     }

@@ -65,7 +65,6 @@ class Pic extends Element
       return $this->height;
   }
 
-
   /**
    * Get time from a tag with time_XXX format.
    *
@@ -84,10 +83,7 @@ class Pic extends Element
       return $time;
   }
 
-
-    
-
-  /**
+      /**
    * To string
    *
    * @return string

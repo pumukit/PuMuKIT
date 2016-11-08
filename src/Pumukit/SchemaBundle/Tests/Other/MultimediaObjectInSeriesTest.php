@@ -45,8 +45,6 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testCreateNewMultimediaObject()
     {
         $series = $this->factoryService->createSeries();

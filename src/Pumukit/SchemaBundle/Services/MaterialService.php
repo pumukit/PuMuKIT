@@ -105,7 +105,6 @@ class MaterialService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-
         if ($this->forceDeleteOnDisk && $materialPath) {
             $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $otherMaterials = $mmobjRepo->findBy(array('materials.path' => $materialPath));

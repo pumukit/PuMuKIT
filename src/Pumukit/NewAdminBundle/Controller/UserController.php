@@ -423,7 +423,6 @@ class UserController extends AdminController implements NewAdminController
             throw $this->createAccessDeniedException('Unable to promote user');
         }
 
-
         return new JsonResponse(array('ok'));
     }
 }

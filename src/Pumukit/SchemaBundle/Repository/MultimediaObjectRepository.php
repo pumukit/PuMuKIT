@@ -300,7 +300,6 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-
     /**
      * Search series using text index or the _id
      *
@@ -863,7 +862,6 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb->getQuery()->execute();
     }
 
-
     /**
      * Find by broadcast
      *
@@ -922,7 +920,6 @@ class MultimediaObjectRepository extends DocumentRepository
         }
         return $qb;
     }
-
 
     /**
      * Find ordered by fieldName: asc/desc
@@ -1037,7 +1034,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $aux;
     }
-
 
     /**
      * Count number of standard (not prototype) multimedia objects in the repo

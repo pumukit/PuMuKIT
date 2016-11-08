@@ -717,8 +717,6 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, $password));
     }
 
-
-
     public function testDeleteAllFromGroup()
     {
         $group = new Group();

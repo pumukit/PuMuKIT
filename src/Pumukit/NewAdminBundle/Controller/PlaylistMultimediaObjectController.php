@@ -245,7 +245,6 @@ class PlaylistMultimediaObjectController extends Controller
         );
     }
 
-
     public function addBatchAction(Series $playlist, Request $request)
     {
         $this->enableFilter();
@@ -371,7 +370,6 @@ class PlaylistMultimediaObjectController extends Controller
         return $this->moveAction($playlist, $initPos, $lastPos);
     }
 
-
     //Workaround function to check if the VideoEditorBundle is installed.
     protected function checkHasEditor()
     {
@@ -442,7 +440,6 @@ class PlaylistMultimediaObjectController extends Controller
         );
     }
 
-
     /**
      *
      * ids
@@ -473,7 +470,6 @@ class PlaylistMultimediaObjectController extends Controller
 
         return new JsonResponse(array());
     }
-
 
     /**
      * TODO

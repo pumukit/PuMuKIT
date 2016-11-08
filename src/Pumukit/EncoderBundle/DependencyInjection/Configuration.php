@@ -31,7 +31,6 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-
     /**
      * Adds `profiles` section.
      *
@@ -108,7 +107,6 @@ class Configuration implements ConfigurationInterface
             ->end()
           ;
     }
-
 
     /**
      * Adds `cpu` section.

@@ -42,7 +42,6 @@ class ClientServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
     public function testGetUserRoles()
     {
         $user = new User();

@@ -33,7 +33,6 @@ class PermissionProfileListenerTest extends WebTestCase
         $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
         $this->permissionProfileRepo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
 
-
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
         $permissionProfileDispatcher = new PermissionProfileEventDispatcherService($dispatcher);
@@ -73,8 +72,6 @@ class PermissionProfileListenerTest extends WebTestCase
         gc_collect_cycles();
         parent::tearDown();
     }
-
-
 
     public function testPostUpdate()
     {

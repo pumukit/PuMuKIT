@@ -78,7 +78,6 @@ class TrackService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-
         if ($this->forceDeleteOnDisk && $trackPath && $isNotOpencast) {
             $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $otherTracks = $mmobjRepo->findBy(array('tracks.path' => $trackPath));

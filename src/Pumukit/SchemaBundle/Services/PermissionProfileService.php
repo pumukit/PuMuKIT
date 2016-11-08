@@ -214,7 +214,6 @@ class PermissionProfileService
         return $permissionProfile;
     }
 
-
     /**
      * Get Default
      *
@@ -224,7 +223,6 @@ class PermissionProfileService
     {
         return $this->repo->findOneByDefault(true);
     }
-
 
     /**
      * Get by name

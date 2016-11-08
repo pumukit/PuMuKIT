@@ -34,7 +34,6 @@ class SeriesPicService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
-
     /**
      * Returns the target path for a series
      */

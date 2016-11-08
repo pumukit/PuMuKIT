@@ -43,8 +43,6 @@ class TagServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testAddTagToMultimediaObject()
     {
         $mmobj = $this->createMultimediaObject('titulo cualquiera');
@@ -241,7 +239,6 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(3, $tag1->getNumberMultimediaObjects());
         $this->assertEquals(3, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(3, $tag3->getNumberMultimediaObjects());
-
 
         $this->tagService->resetTags(array($mmobj1, $mmobj2, $mmobj3), array());
 

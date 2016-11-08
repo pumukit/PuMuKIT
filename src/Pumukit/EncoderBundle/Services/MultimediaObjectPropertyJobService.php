@@ -56,7 +56,6 @@ class MultimediaObjectPropertyJobService
         $this->save($multimediaObject);
     }
 
-
     private function save(MultimediaObject $multimediaObject)
     {
         $this->dm->persist($multimediaObject);

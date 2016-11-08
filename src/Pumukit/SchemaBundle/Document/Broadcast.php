@@ -329,7 +329,6 @@ class Broadcast
       return $this->getName();
   }
 
-
   /**
    * @Assert\True(message = "Password required if not public")
    */

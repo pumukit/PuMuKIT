@@ -59,7 +59,6 @@ class InspectionFfprobeService implements InspectionServiceInterface
                 "nor audio tracks\n".$track->getPath());
         }
 
-
         $track->setMimetype(mime_content_type($track->getPath()));
         $track->setBitrate(intval($json->format->bit_rate));
         $aux = intval((string)$json->format->duration);

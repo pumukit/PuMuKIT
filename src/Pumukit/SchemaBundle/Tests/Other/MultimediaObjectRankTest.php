@@ -40,8 +40,6 @@ class MultimediaObjectRankTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testRank()
     {
         $series = $this->createSeries("Stark's growing pains");

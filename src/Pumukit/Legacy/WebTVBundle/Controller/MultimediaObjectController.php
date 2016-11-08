@@ -55,7 +55,6 @@ class MultimediaObjectController extends Controller
                    'track' => $track);
     }
 
-
    /**
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      * @Template()
@@ -83,7 +82,6 @@ class MultimediaObjectController extends Controller
                      'multimediaObject' => $multimediaObject,
                      'track' => $track);
     }
-
 
     /**
      * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"filter": false})
@@ -127,7 +125,6 @@ class MultimediaObjectController extends Controller
                      'magic_url' => true);
     }
 
-
     /**
      * @Template()
      */
@@ -165,8 +162,6 @@ class MultimediaObjectController extends Controller
                    'unescoTag' => $unescoTag);
     }
 
-
-
     protected function getIntro($queryIntro=false)
     {
         $hasIntro = $this->container->hasParameter('pumukit2.intro');
@@ -202,7 +197,6 @@ class MultimediaObjectController extends Controller
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addMultimediaObject($multimediaObject);
     }
-
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {

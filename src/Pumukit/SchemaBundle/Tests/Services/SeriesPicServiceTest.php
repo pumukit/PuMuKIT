@@ -58,8 +58,6 @@ class SeriesPicServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testGetRecommendedPics()
     {
         $pic1 = new Pic();

@@ -39,7 +39,6 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
      * @expectedException BadMethodCallException
      */
 
-
     public function testGetDurationFileNotExists()
     {
         $is = new InspectionMediainfoService();
@@ -113,7 +112,6 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($size, $track->getSize());
         $this->assertTrue($track->getOnlyAudio());
     }
-
 
     public function testAutocompleteTrackWithAudioAndVideo()
     {

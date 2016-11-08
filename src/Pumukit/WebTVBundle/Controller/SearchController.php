@@ -148,7 +148,6 @@ class SearchController extends Controller implements WebTVController
         return $pagerfanta;
     }
 
-
     private function getParentTag()
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');

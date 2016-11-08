@@ -181,7 +181,6 @@ class PlaylistController extends CollectionController
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_index'));
     }
 
-
     /**
      * Helper to get all series of type playlist.
      */

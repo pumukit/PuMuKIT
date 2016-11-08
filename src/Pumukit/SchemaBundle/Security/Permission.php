@@ -195,7 +195,6 @@ class Permission
         ),
     );
 
-
     const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
 
     public static function isRoleTagDefaul($role)
@@ -211,7 +210,6 @@ class Permission
 
         return false;
     }
-
 
     const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
 

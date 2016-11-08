@@ -31,7 +31,6 @@ class MultimediaObjectPicService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
-
     /**
      * Returns the target path for a series
      */
@@ -114,7 +113,6 @@ class MultimediaObjectPicService
         $multimediaObject->removePicById($picId);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
 
         if ($this->forceDeleteOnDisk && $picPath) {
             $otherPics = $this->repo->findBy(array('pics.path' => $picPath));

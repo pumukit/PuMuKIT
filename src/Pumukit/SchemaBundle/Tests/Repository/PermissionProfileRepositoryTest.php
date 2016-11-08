@@ -34,8 +34,6 @@ class PermissionProfileRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testEmpty()
     {
         $this->assertEmpty($this->repo->findAll());

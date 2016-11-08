@@ -29,7 +29,6 @@ class APIController extends Controller
         return new JsonResponse($cpus);
     }
 
-
     /**
      * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
      */

@@ -111,7 +111,6 @@ class RoleController extends SortableAdminController implements NewAdminControll
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
     }
 
-
     public function batchDeleteAction(Request $request)
     {
         $ids = $this->getRequest()->get('ids');

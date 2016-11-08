@@ -45,7 +45,6 @@ class BatchPicExtractorListener
         return false;
     }
 
-
     private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track)
     {
         $outputMessage = $this->picExtractorService->extractPicOnBatch($multimediaObject, $track);

@@ -195,7 +195,6 @@ class DefaultController extends Controller
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
                     $multimediaObject->setDuration($duration);
 
-
                     if ('file' === $filetype) {
                         $selectedPath = $request->get('resource');
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description,
@@ -431,8 +430,6 @@ class DefaultController extends Controller
         $tagService = $this->get('pumukitschema.tag');
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
-
-
 
         $tag = $tagRepo->findOneByCod($tagCode);
         if ($tag) {

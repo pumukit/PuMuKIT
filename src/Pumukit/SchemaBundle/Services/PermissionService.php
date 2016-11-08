@@ -99,8 +99,6 @@ class PermissionService
         return $permissions;
     }
 
-
-
     /**
      * Get all dependencies
      */
@@ -111,7 +109,6 @@ class PermissionService
         }, $this->allPermissions);
     }
 
-
     /**
      * Check if exist a permission
      */
@@ -119,7 +116,6 @@ class PermissionService
     {
         return array_key_exists($permission, $this->allPermissions);
     }
-
 
     /**
      * Build all permissions

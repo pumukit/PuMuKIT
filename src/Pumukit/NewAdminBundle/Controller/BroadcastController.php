@@ -151,7 +151,6 @@ class BroadcastController extends AdminController implements NewAdminController
                      );
     }
 
-
     /**
      * Delete action
      * Overwrite to check Broadcast creation

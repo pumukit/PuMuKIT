@@ -456,7 +456,6 @@ class EmbeddedTag
       return strpos($this->getPath(), sprintf('|%s|', $tagCod)) === false ? false : true;
   }
 
-
   /**
    *
    * @param ArrayCollection $embeddedTags

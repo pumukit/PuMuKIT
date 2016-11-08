@@ -84,7 +84,6 @@ class MediaLibraryController extends Controller implements WebTVController
                     }
                     $series = $seriesQB->getQuery()->execute();
 
-
                     if (!$series) {
                         continue;
                     }

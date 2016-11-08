@@ -34,8 +34,6 @@ class RoleRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testRepository()
     {
         $cod = 123;

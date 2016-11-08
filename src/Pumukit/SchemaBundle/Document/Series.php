@@ -244,7 +244,6 @@ class Series
         return $this->series_type;
     }
 
-
     /**
      * Contains multimedia_object
      *
@@ -276,7 +275,6 @@ class Series
     {
         $this->multimedia_objects->removeElement($multimedia_object);
     }
-
 
     /**
      * Get multimedia_objects

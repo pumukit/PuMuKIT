@@ -46,8 +46,6 @@ class EventPicServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testAddPicUrl()
     {
         $live = $this->createLiveChannel();

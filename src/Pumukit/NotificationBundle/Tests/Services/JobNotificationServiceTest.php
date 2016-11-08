@@ -51,8 +51,6 @@ class JobNotificationServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testOnJobSuccess()
     {
         $multimediaObject= $this->createNewMultimediaObjectWithTrack();

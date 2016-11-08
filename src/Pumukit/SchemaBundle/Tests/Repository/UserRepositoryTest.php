@@ -47,8 +47,6 @@ class UserRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));

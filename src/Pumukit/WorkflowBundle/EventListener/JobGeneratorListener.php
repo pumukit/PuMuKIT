@@ -25,7 +25,6 @@ class JobGeneratorListener
         $this->profiles = $profileService->getProfiles();
     }
 
-
     public function onJobSuccess(JobEvent $event)
     {
         $this->checkMultimediaObject($event->getMultimediaObject());
@@ -53,7 +52,6 @@ class JobGeneratorListener
             }
         }
     }
-
 
     /**
      * TODO add doc
@@ -105,7 +103,6 @@ class JobGeneratorListener
         }
         return $jobs;
     }
-
 
     /**
      * Process the target string (See test)

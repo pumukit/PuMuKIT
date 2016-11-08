@@ -39,8 +39,6 @@ class TrackEventDispatcherServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testDispatchCreate()
     {
         $this->dispatcher->addListener(SchemaEvents::TRACK_CREATE, function ($event, $name) {

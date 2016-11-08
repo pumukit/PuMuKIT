@@ -33,8 +33,6 @@ class TagRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function createTestTree()
     {
         $tag = new Tag();

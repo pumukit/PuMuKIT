@@ -111,7 +111,6 @@ class StatsService
             }
         }
 
-
         //Add mmobj with zero views
         if (count($aggregation) < $options['limit']) {
             if (count($aggregation) == 0) {
@@ -157,7 +156,6 @@ class StatsService
         $seriesIds = $this->getSeriesIdsWithCriteria($criteria);
         $matchExtra['series'] = array('$in' => $seriesIds);
 
-
         $options = $this->parseOptions($options);
 
         $pipeline = array();
@@ -181,7 +179,6 @@ class StatsService
                 );
             }
         }
-
 
         //Add series with zero views
         if (count($aggregation) < $options['limit']) {
@@ -280,7 +277,6 @@ class StatsService
     {
 
       //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
-
 
         $date = array();
         if ($fromDate) {

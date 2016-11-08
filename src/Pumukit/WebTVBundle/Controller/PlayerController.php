@@ -46,7 +46,6 @@ class PlayerController extends Controller implements WebTVController
                       ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
                       ->getQuery()->getSingleResult();
 
-
         $editorChapters = array();
 
         if ($marks) {

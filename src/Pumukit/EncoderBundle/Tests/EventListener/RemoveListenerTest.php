@@ -64,8 +64,6 @@ class RemoveListenerTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testPostTrackRemove()
     {
         $series = $this->factoryService->createSeries();

@@ -84,8 +84,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testRepositoryEmpty()
     {
         $this->assertEquals(0, count($this->repo->findAll()));
@@ -1768,7 +1766,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(3, count($peopleRanger));
         $peopleHand = $this->repo->findPeopleWithRoleCode($role_hand->getCod());
         $this->assertEquals(2, count($peopleHand));
-
 
         $person = $this->repo->findPersonWithRoleCodeAndEmail($role_ranger->getCod(), $person_mark->getEmail());
         $this->assertEquals(1, count($person));

@@ -36,7 +36,6 @@ class IndexController extends Controller
         return array();
     }
 
-
     /**
      * @Template()
      */

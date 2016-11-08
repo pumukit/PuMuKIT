@@ -48,7 +48,6 @@ class ByTagController extends Controller
                  'tag' => $tag);
   }
 
-
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');

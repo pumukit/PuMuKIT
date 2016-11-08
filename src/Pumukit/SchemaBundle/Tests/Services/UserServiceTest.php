@@ -74,8 +74,6 @@ class UserServiceTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testCreateAndUpdate()
     {
         $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ROLES);
@@ -328,7 +326,6 @@ class UserServiceTest extends WebTestCase
         $this->assertNotEquals(PermissionProfile::SCOPE_NONE, $newUserScope);
         $this->assertCount(4, $user->getRoles());
     }
-
 
     public function testDelete()
     {

@@ -65,7 +65,6 @@ class StatsServiceTest extends WebTestCase
         }
         $this->dm->flush();
 
-
         $this->logView(new \DateTime('now'), $list[1]);
         $this->logView(new \DateTime('now'), $list[3]);
         $this->logView(new \DateTime('now'), $list[3]);
@@ -83,7 +82,6 @@ class StatsServiceTest extends WebTestCase
         $this->logView(new \DateTime('-20 days'), $list[5]);
         $this->logView(new \DateTime('-20 days'), $list[5]);
         $this->logView(new \DateTime('-20 days'), $list[5]);
-
 
         $list[1]->setTitle('OTHER MMOBJ');
 
@@ -122,8 +120,6 @@ class StatsServiceTest extends WebTestCase
         gc_collect_cycles();
         parent::tearDown();
     }
-
-
 
     public function testSimpleStatsService()
     {

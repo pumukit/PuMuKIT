@@ -25,7 +25,6 @@ class CustomLanguageType extends AbstractType
         $this->customLanguages = $customLanguages;
     }
 
-
     /**
      * {@inheritdoc}
      */

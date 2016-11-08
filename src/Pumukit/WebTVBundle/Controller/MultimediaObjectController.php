@@ -49,7 +49,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         'editor_chapters' => $editorChapters);
     }
 
-
     /**
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      * @Template()
@@ -89,7 +88,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             return $this->redirect($track->getUrl());
         }
 
-
         $this->updateBreadcrumbs($multimediaObject);
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
@@ -97,7 +95,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
                      'track' => $track,
                      'magic_url' => true);
     }
-
 
     /**
     * @Template()

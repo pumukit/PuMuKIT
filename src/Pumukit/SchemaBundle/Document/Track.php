@@ -220,7 +220,6 @@ class Track extends Element
       }
   }
 
-
   /**
    * Get instant in seg of a frame number.
    *
@@ -239,7 +238,6 @@ class Track extends Element
           return floatval($frame / $this->getFramerate());
       }
   }
-
 
   /**
    * Set only_audio

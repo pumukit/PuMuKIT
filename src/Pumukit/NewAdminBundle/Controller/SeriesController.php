@@ -354,7 +354,6 @@ class SeriesController extends AdminController implements NewAdminController
         return $new_criteria;
     }
 
-
     private function getSorting(Request $request)
     {
         $session = $this->get('session');
@@ -373,7 +372,6 @@ class SeriesController extends AdminController implements NewAdminController
 
         return  array($key => $value);
     }
-
 
     /**
      * Gets the list of resources according to a criteria

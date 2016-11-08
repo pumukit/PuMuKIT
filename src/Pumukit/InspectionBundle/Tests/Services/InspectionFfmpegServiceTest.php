@@ -111,7 +111,6 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($track->getOnlyAudio());
     }
 
-
     public function testAutocompleteTrackWithAudioAndVideo()
     {
         $file1  = $this->resources_dir.'CAMERA.mp4';

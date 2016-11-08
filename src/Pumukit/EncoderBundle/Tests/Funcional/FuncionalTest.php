@@ -30,7 +30,6 @@ class FuncionalTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
-
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
 
@@ -68,8 +67,6 @@ class FuncionalTest extends WebTestCase
         $this->assertEquals(1, count($mm->getTracks()));
         $this->assertEquals($job->getDuration(), $mm->getDuration());
     }
-
-
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {

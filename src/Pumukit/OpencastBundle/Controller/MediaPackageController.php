@@ -79,7 +79,6 @@ class MediaPackageController extends Controller
         return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl());
     }
 
-
     /**
      * @Route("/opencast/mediapackage/{id}", name="pumukitopencast_import")
      */
@@ -100,7 +99,6 @@ class MediaPackageController extends Controller
     public function getCriteria($request)
     {
         $criteria = $request->get('criteria', array());
-
 
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/opencast/criteria');

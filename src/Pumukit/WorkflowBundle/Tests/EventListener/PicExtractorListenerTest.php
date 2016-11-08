@@ -69,8 +69,6 @@ class PicExtractorListenerTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testGeneratePicFromVideo()
     {
         $series = $this->factoryService->createSeries();

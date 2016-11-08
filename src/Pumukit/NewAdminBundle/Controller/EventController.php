@@ -267,7 +267,6 @@ class EventController extends AdminController implements NewAdminController
         $y = '';
         $calendar = array();
 
-
         if ($config->isPaginated()) {
             $resources = $this
                 ->resourceResolver

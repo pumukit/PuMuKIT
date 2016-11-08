@@ -87,7 +87,6 @@ class SearchController extends Controller
         }
     }
 
-
       $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
 
     //Obtenemos todos los objetos multimedia del repositorio que su titulo coincida con <$search_found>
@@ -145,7 +144,6 @@ class SearchController extends Controller
          'type_found' => $type_found,
          'duration_found' => $duration_found);
   }
-
 
     private function createPager($objects, $page)
     {

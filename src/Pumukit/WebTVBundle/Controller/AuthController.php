@@ -24,7 +24,6 @@ class AuthController extends Controller implements WebTVController
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
-
         $targetUrl = $session->get('target_path');
         $session->remove('target_path');
 

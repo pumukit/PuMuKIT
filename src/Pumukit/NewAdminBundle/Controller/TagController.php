@@ -210,7 +210,6 @@ class TagController extends Controller implements NewAdminController
                                  array('mmId' => $mmId, 'parentId' => $parent->getId()));
         }
 
-
         foreach ($children->toArray() as $tag) {
             $result = $this->getAllParents($tag, $result, $parent->getId());
         }

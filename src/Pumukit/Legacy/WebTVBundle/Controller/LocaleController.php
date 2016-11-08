@@ -22,7 +22,6 @@ class LocaleController extends Controller
           return $this->redirect('/');
       }
 
-
       $paseReferer = parse_url($referer);
       $refererPath = $paseReferer['path'];
       $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);

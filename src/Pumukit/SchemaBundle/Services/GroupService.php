@@ -136,7 +136,6 @@ class GroupService
         return true;
     }
 
-
     /**
      * Get delete message
      *

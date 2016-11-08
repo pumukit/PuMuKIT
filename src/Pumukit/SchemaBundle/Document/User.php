@@ -222,7 +222,6 @@ class User extends BaseUser
         }, $this->groups->toArray());
     }
 
-
     /**
      * Returns the user roles
      *

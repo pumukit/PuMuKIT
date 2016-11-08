@@ -160,7 +160,6 @@ class LDAPService
         return $name;
     }
 
-
     /**
      * Get all the LDAP info from the user email
      *
@@ -172,7 +171,6 @@ class LDAPService
     {
         return $this->getInfoFrom('email', $email);
     }
-
 
     /**
      * Get all the LDAP info from the user email
@@ -202,7 +200,6 @@ class LDAPService
 
         return $return;
     }
-
 
     /**
      * Get list of users

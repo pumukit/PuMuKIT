@@ -29,7 +29,6 @@ EOT
           );
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
@@ -51,10 +50,8 @@ EOT
             }
         }
 
-
         $output->writeln('Done');
     }
-
 
     private function execRemoveQuery($userAgent)
     {

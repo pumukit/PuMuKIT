@@ -40,7 +40,6 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
         $this->dm->persist($otherJob);
         $this->dm->flush();
 
-
         $this->assertEquals(null, $mm->getProperty('pending_jobs'));
         $this->assertEquals(null, $mm->getProperty('executing_jobs'));
         $this->assertEquals(null, $mm->getProperty('finished_jobs'));
@@ -70,7 +69,6 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
         $this->assertEquals(array($job->getId()), $mm->getProperty('finished_jobs'));
         $this->assertEquals(null, $mm->getProperty('error_jobs'));
 
-
         $this->service->finishJob($mm, $otherJob); //Invalid step. No properties change.
         $this->assertEquals(array($otherJob->getId()), $mm->getProperty('pending_jobs'));
         $this->assertEquals(null, $mm->getProperty('executing_jobs'));
@@ -82,7 +80,6 @@ class MultimediaObjectPropertyJobServiceTest extends WebTestCase
         $this->assertEquals(array($otherJob->getId()), $mm->getProperty('executing_jobs'));
         $this->assertEquals(array($job->getId()), $mm->getProperty('finished_jobs'));
         $this->assertEquals(null, $mm->getProperty('error_jobs'));
-
 
         $this->service->errorJob($mm, $otherJob);
         $this->assertEquals(null, $mm->getProperty('pending_jobs'));

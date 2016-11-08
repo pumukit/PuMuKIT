@@ -21,7 +21,6 @@ class DefaultController extends Controller
         return $this->iframeAction($live);
     }
 
-
     /**
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitLiveBundle:Default:iframe.html.twig")
@@ -41,7 +40,6 @@ class DefaultController extends Controller
                      'versionIE' => $versionIE
                      );
     }
-
 
     /**
      * @Route("/live", name="pumukit_live")
@@ -63,13 +61,11 @@ class DefaultController extends Controller
         return $this->iframeAction($live);
     }
 
-
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
-
 
     /**
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})

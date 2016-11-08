@@ -156,7 +156,6 @@ EOT
             $tag->setTitle($csv_array[8], 'de');
         }
 
-
         $this->dm->persist($tag);
 
         return $tag;

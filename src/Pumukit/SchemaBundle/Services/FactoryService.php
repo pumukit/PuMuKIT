@@ -179,8 +179,6 @@ class FactoryService
             }
         }
 
-
-
         $mm->setSeries($series);
         $series->addMultimediaObject($mm);
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
@@ -364,7 +362,6 @@ class FactoryService
             $new = $this->embeddedBroadcastService->setByType($new, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
 
-
         foreach ($prototype->getTags() as $tag) {
             $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
@@ -381,7 +378,6 @@ class FactoryService
 
         return $new;
     }
-
 
     /**
      * Clone a multimedia object.

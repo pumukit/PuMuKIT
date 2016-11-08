@@ -55,7 +55,6 @@ class SeriesRepository extends DocumentRepository
         return $qb;
     }
 
-
     /**
      * Find one series with tag
      *

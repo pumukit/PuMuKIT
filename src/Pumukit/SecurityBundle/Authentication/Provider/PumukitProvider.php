@@ -25,7 +25,6 @@ class PumukitProvider implements AuthenticationProviderInterface
     const CAS_SURNAME_KEY = 'SURNAME';
     const CAS_GROUP_KEY = 'GROUP';
 
-
     private $userProvider;
     private $providerKey;
     private $userChecker;
@@ -125,7 +124,6 @@ class PumukitProvider implements AuthenticationProviderInterface
 
         throw new AuthenticationServiceException('Not UserService to create a new user');
     }
-
 
     private function getGroup($key)
     {

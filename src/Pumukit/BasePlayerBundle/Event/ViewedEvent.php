@@ -18,7 +18,6 @@ class ViewedEvent extends Event
      */
     protected $multimediaObject;
 
-
     /**
      * @param Track $track
      * @param MultimediaObject $multimediaObject

@@ -41,13 +41,11 @@ EOT
         }
     }
 
-
     protected function showList($all, OutputInterface $output)
     {
         $this->listCpus($output);
         $this->listJobs($output, $all);
     }
-
 
     private function listCpus(OutputInterface $output)
     {
@@ -129,7 +127,6 @@ EOT
         if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
             throw new \RuntimeException("Not job found with id $id.");
         }
-
 
         //$description[] = sprintf('<comment>Scope</comment>            %s', $definition->getScope());
         $output->writeln('<comment>Id</comment>                '.$job->getId());

@@ -223,7 +223,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      );
     }
 
-
     /**
      *
      * @Template
@@ -241,7 +240,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
              'warning_on_unpublished' => $warningOnUnpublished
         );
     }
-
 
     /**
      * Display the form for editing or update the resource.
@@ -675,7 +673,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return new Response($response);
     }
 
-
     /**
      * Clone action
      */
@@ -800,7 +797,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
-
 
     /**
      * Reorder multimedia objects
@@ -949,7 +945,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         }
 
-
         return new JsonResponse(array('success', 'redirect' => 0));
     }
 
@@ -1084,7 +1079,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function modalPreviewAction(Multimediaobject $multimediaObject)
     {
         $mmService = $this->get('pumukitschema.multimedia_object');
-
 
         return array(
              'multimediaObject' => $multimediaObject,

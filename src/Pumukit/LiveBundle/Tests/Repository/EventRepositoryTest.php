@@ -33,8 +33,6 @@ class EventRepositoryTest extends WebTestCase
         parent::tearDown();
     }
 
-
-
     public function testRepository()
     {
         $live = new Live();
@@ -172,12 +170,9 @@ class EventRepositoryTest extends WebTestCase
         $this->assertEquals($event4, $this->repo->findOneByHoursEvent(3, $date));
     }
 
-
-
     public function testFindCurrentEvents()
     {
         $this->assertEquals(0, count($this->repo->findCurrentEvents()));
-
 
         $this->createEvent('PAST', new \DateTime('-3 minute'), 2);
         $events = $this->repo->findCurrentEvents();
@@ -211,8 +206,6 @@ class EventRepositoryTest extends WebTestCase
         $events = $this->repo->findCurrentEvents(1);
         $this->assertEquals(1, count($events));
     }
-
-
 
     public function testFindCurrentEventsWithMargin()
     {

@@ -354,7 +354,6 @@ class JobService
         return $nextJobToExecute;
     }
 
-
     public function executeInBackground(Job $job)
     {
         $pb = new ProcessBuilder();
@@ -465,7 +464,6 @@ class JobService
         $this->executeNextJob();
     }
 
-
     /**
      * Throw a exception if error executing the job.
      */
@@ -530,7 +528,6 @@ class JobService
         return $commandLine;
     }
 
-
     /**
      * Change status of a given job
      */
@@ -542,7 +539,6 @@ class JobService
             $this->dm->flush();
         }
     }
-
 
     /**
      * Set path end auto
@@ -578,7 +574,6 @@ class JobService
         $this->dm->flush();
     }
 
-
     private function getPathEnd(array $profile, $dir, $file, $extension)
     {
         $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
@@ -589,7 +584,6 @@ class JobService
 
         return realpath($tempDir).'/'.$file.'.'.$finalExtension;
     }
-
 
     public function createTrackWithJob($job)
     {
@@ -735,7 +729,6 @@ class JobService
         return $multimediaObject;
     }
 
-
     /**
      * Emit an event to notifiy finised job.
      */
@@ -784,7 +777,6 @@ class JobService
 
         return null;
     }
-
 
     /**
      *
