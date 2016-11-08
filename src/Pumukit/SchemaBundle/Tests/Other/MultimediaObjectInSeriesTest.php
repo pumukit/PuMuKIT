@@ -7,6 +7,7 @@
  * -      $series->addMultimediaObject($mm);
  *
  */
+
 namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
