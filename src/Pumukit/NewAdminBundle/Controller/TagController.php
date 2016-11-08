@@ -25,7 +25,7 @@ class TagController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
-        $root_name = "ROOT";
+        $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
 
         if (null !== $root) {
@@ -58,10 +58,10 @@ class TagController extends Controller implements NewAdminController
             $dm->remove($tag);
             $dm->flush();
 
-            return new JsonResponse(array("status" => "Deleted"), 200);
+            return new JsonResponse(array('status' => 'Deleted'), 200);
         }
 
-        return new JsonResponse(array("status" => "Tag with children (".$num.")"), JsonResponse::HTTP_CONFLICT);
+        return new JsonResponse(array('status' => 'Tag with children ('.$num.')'), JsonResponse::HTTP_CONFLICT);
     }
 
     /**
@@ -79,7 +79,7 @@ class TagController extends Controller implements NewAdminController
             try {
                 $tag = $this->get('pumukitschema.tag')->updateTag($tag);
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
+                return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
@@ -110,7 +110,7 @@ class TagController extends Controller implements NewAdminController
                 $dm->persist($tag);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
+                return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_tag_list'));
@@ -128,7 +128,7 @@ class TagController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
-        $root_name = "ROOT";
+        $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
 
         if (null !== $root) {
@@ -168,10 +168,10 @@ class TagController extends Controller implements NewAdminController
         if (0 !== count($tagsWithChildren)) {
             $message = '';
             foreach ($tagsWithChildren as $tag) {
-                $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren())."). ";
+                $message .= "Tag '".$tag->getCod()."' with children (".count($tag->getChildren()).'). ';
             }
 
-            return new JsonResponse(array("status" => $message), JsonResponse::HTTP_CONFLICT);
+            return new JsonResponse(array('status' => $message), JsonResponse::HTTP_CONFLICT);
         } else {
             foreach ($tags as $tag) {
                 $dm->remove($tag);
@@ -194,12 +194,12 @@ class TagController extends Controller implements NewAdminController
         $mmId = $request->get('mmId');
 
         $parent = $repo->findOneById($request->get('parent'));
-        $parent_path = str_replace("|", "\|", $parent->getPath());
+        $parent_path = str_replace('|', "\|", $parent->getPath());
 
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
-        $children = $qb->addOr($qb->expr()->field("title.".$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-                  ->addOr($qb->expr()->field("cod")->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-                  ->addAnd($qb->expr()->field("path")->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
+        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
                   //->limit(20)
                   ->getQuery()
                   ->execute();

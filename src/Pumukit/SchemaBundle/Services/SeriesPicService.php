@@ -18,7 +18,7 @@ class SeriesPicService
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
-    private $defaultBanner = "<a href=\"#\"><img  style=\"width:100%\" src=\"___banner_url___\" border=\"0\"/></a>";
+    private $defaultBanner = '<a href="#"><img  style="width:100%" src="___banner_url___" border="0"/></a>';
 
     public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher, $locales=array(), $targetPath, $targetUrl, $forceDeleteOnDisk=true)
     {
@@ -40,7 +40,7 @@ class SeriesPicService
      */
     public function getTargetPath(Series $series)
     {
-        return $this->targetPath . "/" . $series->getId();
+        return $this->targetPath . '/' . $series->getId();
     }
 
     /**
@@ -48,7 +48,7 @@ class SeriesPicService
      */
     public function getTargetUrl(Series $series)
     {
-        return $this->targetUrl . "/" . $series->getId();
+        return $this->targetUrl . '/' . $series->getId();
     }
 
   /**
@@ -62,7 +62,7 @@ class SeriesPicService
   /**
    * Set a pic from an url into the series
    */
-  public function addPicUrl(Series $series, $picUrl, $isBanner=false, $bannerTargetUrl="")
+  public function addPicUrl(Series $series, $picUrl, $isBanner=false, $bannerTargetUrl='')
   {
       $pic = new Pic();
       $pic->setUrl($picUrl);
@@ -83,7 +83,7 @@ class SeriesPicService
   /**
    * Set a pic from an url into the series
    */
-  public function addPicFile(Series $series, UploadedFile $picFile, $isBanner=false, $bannerTargetUrl="")
+  public function addPicFile(Series $series, UploadedFile $picFile, $isBanner=false, $bannerTargetUrl='')
   {
       if (UPLOAD_ERR_OK != $picFile->getError()) {
           throw new \Exception($picFile->getErrorMessage());
@@ -163,7 +163,7 @@ class SeriesPicService
         }
     }
 
-    private function addBanner(Series $series, $picUrl="", $bannerTargetUrl="")
+    private function addBanner(Series $series, $picUrl='', $bannerTargetUrl='')
     {
         if ($picUrl) {
             $banner = str_replace('___banner_url___', $picUrl, $this->defaultBanner);

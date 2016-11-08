@@ -16,7 +16,7 @@ class SenderService
     private $environment;
     private $translator;
 
-    public function __construct($mailer, EngineInterface $templating, TranslatorInterface $translator, $enable, $senderEmail, $senderName, $notificateErrorsToSender, $environment="dev")
+    public function __construct($mailer, EngineInterface $templating, TranslatorInterface $translator, $enable, $senderEmail, $senderName, $notificateErrorsToSender, $environment='dev')
     {
         $this->mailer = $mailer;
         $this->templating = $templating;

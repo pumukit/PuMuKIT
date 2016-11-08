@@ -126,7 +126,7 @@ class MultimediaObjectRankTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
-        $description = "Description";
+        $description = 'Description';
         $duration = 123;
 
         $mm = $this->factoryService->createMultimediaObject($series);
@@ -150,7 +150,7 @@ class MultimediaObjectRankTest extends WebTestCase
     {
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
+        $test_date = new \DateTime('now');
 
         $series = $this->factoryService->createSeries();
 

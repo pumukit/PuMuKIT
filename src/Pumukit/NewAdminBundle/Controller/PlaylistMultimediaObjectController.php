@@ -390,8 +390,8 @@ class PlaylistMultimediaObjectController extends Controller
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
-        $dm->getFilterCollection()->disable("backoffice");
-        $filter = $dm->getFilterCollection()->enable("personal");
+        $dm->getFilterCollection()->disable('backoffice');
+        $filter = $dm->getFilterCollection()->enable('personal');
         $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
         $people = array();
         if ((null != $person) && (null != ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
@@ -404,7 +404,7 @@ class PlaylistMultimediaObjectController extends Controller
         $filter->setParameter('people', $people);
         $filter->setParameter('groups', $groups);
         $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
-        $filter->setParameter("display_track_tag", "display");
+        $filter->setParameter('display_track_tag', 'display');
     }
 
     /**

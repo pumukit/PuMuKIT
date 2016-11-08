@@ -19,8 +19,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->resources_dir = realpath(__DIR__.'/../Resources') . DIRECTORY_SEPARATOR;
-        $this->wrong_file1   = $this->resources_dir . "textfile.txt";
-        $this->wrong_file2   = $this->resources_dir . "zerosizefile.txt";
+        $this->wrong_file1   = $this->resources_dir . 'textfile.txt';
+        $this->wrong_file2   = $this->resources_dir . 'zerosizefile.txt';
         $this->vid_no_audio = $this->resources_dir . 'SCREEN.mp4';
     }
 
@@ -42,7 +42,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetDurationFileNotExists()
     {
         $is = new InspectionMediainfoService();
-        $is->getDuration("http://trololo.com");
+        $is->getDuration('http://trololo.com');
     }
 
     /**
@@ -56,8 +56,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDuration()
     {
-        $file1 = $this->resources_dir . "AUDIO.mp3";
-        $file2 = $this->resources_dir . "CAMERA.mp4";
+        $file1 = $this->resources_dir . 'AUDIO.mp3';
+        $file2 = $this->resources_dir . 'CAMERA.mp4';
         $is   = new InspectionMediainfoService(); //logger missing, it is not initialized here.
       $this->assertEquals(2, $is->getDuration($file1));
         $this->assertEquals(2, $is->getDuration($file2));
@@ -86,7 +86,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testAutocompleteTrackOnlyAudio()
     {
-        $file  = $this->resources_dir . "AUDIO.mp3";
+        $file  = $this->resources_dir . 'AUDIO.mp3';
         $track = new Track();
         $is    = new InspectionMediainfoService();
         $track->setPath($file);
@@ -116,8 +116,8 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testAutocompleteTrackWithAudioAndVideo()
     {
-        $file1  = $this->resources_dir . "CAMERA.mp4";
-        $file2  = $this->resources_dir . "SCREEN.mp4";
+        $file1  = $this->resources_dir . 'CAMERA.mp4';
+        $file2  = $this->resources_dir . 'SCREEN.mp4';
         $track1 = new Track();
         $track2 = new Track();
         $is     = new InspectionMediainfoService();

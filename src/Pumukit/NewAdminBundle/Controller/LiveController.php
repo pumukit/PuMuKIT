@@ -46,7 +46,7 @@ class LiveController extends AdminController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:Live:create.html.twig",
+        return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
                              array(
                                    'live' => $resource,
                                    'form' => $form->createView()

@@ -278,11 +278,11 @@ class PumukitAdminExtension extends \Twig_Extension
         $iconText = sprintf(
             "%d %s,\n%d %s,\n%d %s,\n",
             $mmobjsPublished,
-            $this->translator->trans("Published Multimedia Object(s)"),
+            $this->translator->trans('Published Multimedia Object(s)'),
             $mmobjsHidden,
-            $this->translator->trans("Hidden Multimedia Object(s)"),
+            $this->translator->trans('Hidden Multimedia Object(s)'),
             $mmobjsBlocked,
-            $this->translator->trans("Blocked Multimedia Object(s)")
+            $this->translator->trans('Blocked Multimedia Object(s)')
         );
 
         return $iconText;

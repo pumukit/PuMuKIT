@@ -75,11 +75,11 @@ class PlaylistPicController extends Controller implements NewAdminController
             if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has("file")) {
+            if ($request->files->has('file')) {
                 $picService = $this->get('pumukitschema.seriespic');
                 $isBanner =  $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $media = $picService->addPicFile($playlist, $request->files->get("file"), $isBanner, $bannerTargetUrl);
+                $media = $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return array(

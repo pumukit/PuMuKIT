@@ -62,7 +62,7 @@ class Tag
    *
    * TODO Unique Index #6098
    */
-  private $cod = "";
+  private $cod = '';
 
   /**
    * @var boolean $metatag
@@ -493,7 +493,7 @@ class Tag
   {
       if ($this->isDescendantOf($tag)) {
           $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
-          if (1 === substr_count($suffixPath, "|")) {
+          if (1 === substr_count($suffixPath, '|')) {
               return true;
           }
       }

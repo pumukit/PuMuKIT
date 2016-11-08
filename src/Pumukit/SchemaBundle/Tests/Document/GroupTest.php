@@ -11,7 +11,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = new Group();
 
         $key = 'GROUPA';
-        $name = "Group A";
+        $name = 'Group A';
         $comments = 'Group created to test setter and getter';
         $origin = Group::ORIGIN_LOCAL;
         $updatedAt = new \Datetime('now');
@@ -35,7 +35,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = new Group();
 
         $key = 'GROUPA';
-        $name = "Group A";
+        $name = 'Group A';
 
         $group->setKey($key);
         $group->setName($name);

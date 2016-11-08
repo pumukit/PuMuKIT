@@ -17,7 +17,7 @@ class LocaleController extends Controller
       //TODO validate if is a valid locale using conf file.
     $this->get('session')->set('_locale', $locale);
     
-      $referer = $request->headers->get("referer");
+      $referer = $request->headers->get('referer');
       if (!$referer) {
           return $this->redirect('/');
       }
@@ -25,21 +25,21 @@ class LocaleController extends Controller
 
       $paseReferer = parse_url($referer);
       $refererPath = $paseReferer['path'];
-      $lastPath = str_replace($request->getBaseUrl(), "", $refererPath);
+      $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);
       $route = $this->get('router')->getMatcher()->match($lastPath);
 
-      if (!isset($route["_route"])) {
+      if (!isset($route['_route'])) {
           return $this->redirect('/');
       }
 
     //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
     $params = array();
       foreach ($route as $k => $v) {
-          if ("_" != $k[0]) {
+          if ('_' != $k[0]) {
               $params[$k] = $v;
           }
       }
-      $url = $this->generateUrl($route["_route"], $params);
+      $url = $this->generateUrl($route['_route'], $params);
 
       if (isset($paseReferer['query'])) {
           $url .= '?' . $paseReferer['query'];

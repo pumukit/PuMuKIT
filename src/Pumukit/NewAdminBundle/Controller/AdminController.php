@@ -55,7 +55,7 @@ class AdminController extends ResourceController implements NewAdminController
                 $dm->persist($resource);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             if ($this->config->isApiRequest()) {
@@ -73,7 +73,7 @@ class AdminController extends ResourceController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:".ucfirst($resourceName).":create.html.twig",
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
                              array(
                                    $resourceName => $resource,
                                    'form' => $form->createView()
@@ -104,7 +104,7 @@ class AdminController extends ResourceController implements NewAdminController
                 $dm->persist($resource);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             if ($this->config->isApiRequest()) {
@@ -118,7 +118,7 @@ class AdminController extends ResourceController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:".ucfirst($resourceName).":update.html.twig",
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
                              array(
                                    $resourceName => $resource,
                                    'form' => $form->createView()
@@ -326,8 +326,8 @@ class AdminController extends ResourceController implements NewAdminController
     public function getForm($resource = null)
     {
         $formName = $this->config->getFormType();
-        $prefix = "pumukitnewadmin_";
-        $formType = "Pumukit\\NewAdminBundle\\Form\\Type\\".ucfirst(substr($formName, strlen($prefix)))."Type";
+        $prefix = 'pumukitnewadmin_';
+        $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst(substr($formName, strlen($prefix))).'Type';
 
         $translator = $this->get('translator');
         $locale = $this->getRequest()->getLocale();

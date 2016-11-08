@@ -8,7 +8,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetterAndSetter()
     {
-        $date = new \DateTime("now");
+        $date = new \DateTime('now');
         $text = 'description text';
         $multimedia_object_id = 1;
 

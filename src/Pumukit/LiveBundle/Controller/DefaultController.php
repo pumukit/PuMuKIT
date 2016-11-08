@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Live $live)
     {
-        $this->updateBreadcrumbs($live->getName(), "pumukit_live_id", array("id" => $live->getId()));
+        $this->updateBreadcrumbs($live->getName(), 'pumukit_live_id', array('id' => $live->getId()));
 
         return $this->iframeAction($live);
     }
@@ -58,7 +58,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('The live channel does not exist');
         }
 
-        $this->updateBreadcrumbs($live->getName(), "pumukit_live", array("id" => $live->getId()));
+        $this->updateBreadcrumbs($live->getName(), 'pumukit_live', array('id' => $live->getId()));
 
         return $this->iframeAction($live);
     }

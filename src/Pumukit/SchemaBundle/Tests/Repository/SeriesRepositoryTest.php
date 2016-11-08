@@ -878,9 +878,9 @@ class SeriesRepositoryTest extends WebTestCase
     public function testFindWithTagAndSeriesType()
     {
         $seriesType1 = new SeriesType();
-        $seriesType1->setName("Series Type 1");
+        $seriesType1->setName('Series Type 1');
         $seriesType2 = new SeriesType();
-        $seriesType2->setName("Series Type 2");
+        $seriesType2->setName('Series Type 2');
 
         $this->dm->persist($seriesType1);
         $this->dm->persist($seriesType2);
@@ -967,13 +967,13 @@ class SeriesRepositoryTest extends WebTestCase
     public function testFindOneBySeriesProperty()
     {
         $series1 = $this->createSeries('Series 1');
-        $series1->setProperty('dataexample', "title1");
+        $series1->setProperty('dataexample', 'title1');
 
         $series2 = $this->createSeries('Series 2');
-        $series2->setProperty('dataexample', "title2");
+        $series2->setProperty('dataexample', 'title2');
 
         $series3 = $this->createSeries('Series 3');
-        $series3->setProperty('dataexample', "title3");
+        $series3->setProperty('dataexample', 'title3');
 
         $this->dm->persist($series1);
         $this->dm->persist($series2);
@@ -1035,7 +1035,7 @@ class SeriesRepositoryTest extends WebTestCase
     {
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
+        $test_date = new \DateTime('now');
 
         $series = $this->factoryService->createSeries();
 
@@ -1055,7 +1055,7 @@ class SeriesRepositoryTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
-        $description = "Description";
+        $description = 'Description';
         $duration = 123;
 
         $mm = $this->factoryService->createMultimediaObject($series);

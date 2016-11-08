@@ -245,7 +245,7 @@ class DefaultController extends Controller
                 }
             } catch (\Exception $e) {
                 // TODO filter unknown errors
-                $message = preg_replace("/\r|\n/", "", $e->getMessage());
+                $message = preg_replace("/\r|\n/", '', $e->getMessage());
                 return array(
                              'uploaded' => 'failed',
                              'message' => $message,
@@ -502,9 +502,9 @@ class DefaultController extends Controller
      */
     private function getUpperFieldName($key='')
     {
-        $pattern = "/_[a-z]?/";
+        $pattern = '/_[a-z]?/';
         $aux = preg_replace_callback($pattern, function ($matches) {
-            return strtoupper(ltrim($matches[0], "_"));
+            return strtoupper(ltrim($matches[0], '_'));
         }, $key);
 
         return ucfirst($aux);

@@ -452,7 +452,7 @@ class SeriesController extends AdminController implements NewAdminController
             $mm = $repo->find($id);
             if ($mm) {
                 foreach ($value['channels'] as $channelId => $mustContainsTag) {
-                    $mustContainsTag = ("true" == $mustContainsTag);
+                    $mustContainsTag = ('true' == $mustContainsTag);
                     $tag = $repoTags->find($channelId);
                     if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tag->getCod())) {
                         if ($mustContainsTag && (!($mm->containsTag($tag)))) {

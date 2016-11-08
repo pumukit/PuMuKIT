@@ -90,8 +90,8 @@ class JobGeneratorListenerTest extends WebTestCase
     public function testGenerateJobsForSDVideo()
     {
         $track = new Track();
-        $track->addTag("master");
-        $track->setPath("path");
+        $track->addTag('master');
+        $track->setPath('path');
         $track->setOnlyAudio(false);
         $track->setWidth(640);
         $track->setHeight(480);
@@ -118,8 +118,8 @@ class JobGeneratorListenerTest extends WebTestCase
     public function testGenerateJobsForHDVideo()
     {
         $track = new Track();
-        $track->addTag("master");
-        $track->setPath("path");
+        $track->addTag('master');
+        $track->setPath('path');
         $track->setOnlyAudio(false);
         $track->setWidth(1280);
         $track->setHeight(720);
@@ -147,8 +147,8 @@ class JobGeneratorListenerTest extends WebTestCase
     public function testGenerateJobsForAudio()
     {
         $track = new Track();
-        $track->addTag("master");
-        $track->setPath("path");
+        $track->addTag('master');
+        $track->setPath('path');
         $track->setOnlyAudio(true);
         $mmobj = new MultimediaObject();
         $mmobj->addTrack($track);

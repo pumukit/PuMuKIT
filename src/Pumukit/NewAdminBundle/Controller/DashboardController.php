@@ -33,7 +33,7 @@ class DashboardController extends Controller implements NewAdminController
         $repo = $this->get('doctrine_mongodb')->getManager()->getRepository('PumukitSchemaBundle:Series');
         $series = $repo->findAll();
 
-        $XML = new \SimpleXMLElement("<data></data>");
+        $XML = new \SimpleXMLElement('<data></data>');
         $XML->addAttribute('wiki-url', $request->getUri());
         $XML->addAttribute('wiki-section', 'Pumukit2 time-line Feed');
 

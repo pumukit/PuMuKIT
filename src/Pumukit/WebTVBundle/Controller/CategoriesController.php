@@ -86,7 +86,7 @@ class CategoriesController extends Controller implements WebTVController
             //Add 'General' Tag
             if ($listGeneralParam) {
                 $allGrounds[$id]['children']['general'] = array();
-                $allGrounds[$id]['children']['general']['title'] = $this->get('translator')->trans("General %title%", array('%title%' => $parent['__object']->getTitle()));
+                $allGrounds[$id]['children']['general']['title'] = $this->get('translator')->trans('General %title%', array('%title%' => $parent['__object']->getTitle()));
                 $allGrounds[$id]['children']['general']['url'] = $linkService->generatePathToTag($parent['__object']->getCod(), true, array('tags[]' => $provider));
                 $numMmobjs = 0;
                 if (isset($counterGeneralMmobjs[$cod])) {

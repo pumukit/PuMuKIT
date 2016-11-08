@@ -47,12 +47,12 @@ class MediaPackageController extends Controller
         $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $limit = 10;
-        $page =  $request->get("page", 1);
+        $page =  $request->get('page', 1);
         $criteria = $this->getCriteria($request);
 
         try {
             list($total, $mediaPackages) = $opencastClient->getMediaPackages(
-                (isset($criteria["name"])) ? $criteria["name"]->regex : "",
+                (isset($criteria['name'])) ? $criteria['name']->regex : '',
                 $limit,
                 ($page -1) * $limit);
         } catch (\Exception $e) {
@@ -61,7 +61,7 @@ class MediaPackageController extends Controller
 
         $currentPageOpencastIds = array();
         foreach ($mediaPackages as $mediaPackage) {
-            $currentPageOpencastIds[] = $mediaPackage["id"];
+            $currentPageOpencastIds[] = $mediaPackage['id'];
         }
 
         $adapter = new FixedAdapter($total, $mediaPackages);
@@ -71,8 +71,8 @@ class MediaPackageController extends Controller
         $pagerfanta->setCurrentPage($page);
 
         $repo = $repository_multimediaobjects->createQueryBuilder()
-          ->field("properties.opencast")->exists(true)
-          ->field("properties.opencast")->in($currentPageOpencastIds)
+          ->field('properties.opencast')->exists(true)
+          ->field('properties.opencast')->in($currentPageOpencastIds)
           ->getQuery()
           ->execute();
 

@@ -114,7 +114,7 @@ class EventPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $eventPicService = new EventPicService($this->dm, "/non/existing/path", "/uploads/pic", true);
+        $eventPicService = new EventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
     }
 
     private function createLiveChannel()

@@ -25,18 +25,18 @@ class LegacyController extends Controller
      */
     public function seriesAction($pumukit1id)
     {
-        $dm = $this->get("doctrine_mongodb.odm.document_manager");
-        $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
 
         $series = $seriesRepo->createQueryBuilder()
-          ->field("properties.pumukit1id")->equals($pumukit1id)
+          ->field('properties.pumukit1id')->equals($pumukit1id)
           ->getQuery()->getSingleResult();
 
         if (!$series) {
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl("pumukit_webtv_series_index", array("id" => $series->getId())));
+        return $this->redirect($this->generateUrl('pumukit_webtv_series_index', array('id' => $series->getId())));
     }
 
     /**
@@ -54,21 +54,21 @@ class LegacyController extends Controller
      */
     public function multimediaObjectAction($pumukit1id)
     {
-        $dm = $this->get("doctrine_mongodb.odm.document_manager");
-        $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-          ->field("properties.pumukit1id")->equals($pumukit1id)
-          ->field("status")->gte(MultimediaObject::STATUS_PUBLISHED)
+          ->field('properties.pumukit1id')->equals($pumukit1id)
+          ->field('status')->gte(MultimediaObject::STATUS_PUBLISHED)
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
         if ($multimediaObject->getStatus() == MultimediaObject::STATUS_HIDE) {
-            return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_magicindex", array("secret" => $multimediaObject->getSecret())));
+            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_magicindex', array('secret' => $multimediaObject->getSecret())));
         } else {
-            return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
+            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
         }
     }
 
@@ -83,18 +83,18 @@ class LegacyController extends Controller
      */
     public function multimediaObjectIframeAction($pumukit1id)
     {
-        $dm = $this->get("doctrine_mongodb.odm.document_manager");
-        $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-          ->field("properties.pumukit1id")->equals($pumukit1id)
+          ->field('properties.pumukit1id')->equals($pumukit1id)
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_iframe", array("id" => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $multimediaObject->getId())));
     }
 
     /**
@@ -108,18 +108,18 @@ class LegacyController extends Controller
      */
     public function trackAction($pumukit1id)
     {
-        $dm = $this->get("doctrine_mongodb.odm.document_manager");
-        $mmobjRepo = $dm->getRepository("PumukitSchemaBundle:MultimediaObject");
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
-          ->field("tracks.tags")->equals(new \MongoRegex("/\bpumukit1id:".$pumukit1id."\b/i"))
+          ->field('tracks.tags')->equals(new \MongoRegex("/\bpumukit1id:".$pumukit1id."\b/i"))
           ->getQuery()->getSingleResult();
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl("pumukit_webtv_multimediaobject_index", array("id" => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
     }
 
     /**
@@ -130,8 +130,8 @@ class LegacyController extends Controller
      */
     public function magicAction($hash)
     {
-        $dm = $this->get("doctrine_mongodb.odm.document_manager");
-        $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
 
         $series = $seriesRepo->createQueryBuilder()
           ->field('properties.pumukit1magic')->equals($hash)
@@ -149,6 +149,6 @@ class LegacyController extends Controller
      */
     public function directoAction()
     {
-        return $this->redirect($this->generateUrl("pumukit_live", array()));
+        return $this->redirect($this->generateUrl('pumukit_live', array()));
     }
 }

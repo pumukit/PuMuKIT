@@ -68,11 +68,11 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindFutureAndNotFinished()
     {
-        $date = new \DateTime("15-12-2015 9:00:00");
-        $date1 = new \DateTime("18-12-2015 9:00:00");
-        $date2 = new \DateTime("30-12-2015 9:00:00");
-        $date3 = new \DateTime("25-12-2015 9:00:00");
-        $date4 = new \DateTime("15-12-2015 8:00:00");
+        $date = new \DateTime('15-12-2015 9:00:00');
+        $date1 = new \DateTime('18-12-2015 9:00:00');
+        $date2 = new \DateTime('30-12-2015 9:00:00');
+        $date3 = new \DateTime('25-12-2015 9:00:00');
+        $date4 = new \DateTime('15-12-2015 8:00:00');
 
         $date->setTime(9, 0, 0);
         $date1->setTime(9, 0, 0);
@@ -126,11 +126,11 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindByHoursEvent()
     {
-        $date = new \DateTime("15-12-2015 9:00:00");
-        $date1 = new \DateTime("18-12-2015 9:00:00");
-        $date2 = new \DateTime("30-12-2015 9:00:00");
-        $date3 = new \DateTime("25-12-2015 9:00:00");
-        $date4 = new \DateTime("15-12-2015 8:00:00");
+        $date = new \DateTime('15-12-2015 9:00:00');
+        $date1 = new \DateTime('18-12-2015 9:00:00');
+        $date2 = new \DateTime('30-12-2015 9:00:00');
+        $date3 = new \DateTime('25-12-2015 9:00:00');
+        $date4 = new \DateTime('15-12-2015 8:00:00');
 
         $date->setTime(9, 0, 0);
         $date1->setTime(9, 0, 0);

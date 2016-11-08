@@ -18,7 +18,7 @@ class DefaultControllerTest extends WebTestCase
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 
-        if (!array_key_exists("PumukitPodcastBundle", $this->container->getParameter('kernel.bundles'))) {
+        if (!array_key_exists('PumukitPodcastBundle', $this->container->getParameter('kernel.bundles'))) {
             $this->markTestSkipped('PodcastBundle is not installed');
         }
 

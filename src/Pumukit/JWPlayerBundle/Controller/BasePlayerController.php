@@ -39,7 +39,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getDisplayTrack();
 
-        if ($track && $track->containsTag("download")) {
+        if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
         }
 

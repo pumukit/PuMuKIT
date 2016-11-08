@@ -41,7 +41,7 @@ class PersonalFilter extends SchemaFilter
     {
         $criteria = array();
         if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
-            $criteria["_id"] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
+            $criteria['_id'] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
         }
         return $criteria;
     }

@@ -81,7 +81,7 @@ class BroadcastController extends AdminController implements NewAdminController
                 $dm->persist($broadcast);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             if ($this->config->isApiRequest()) {
@@ -131,7 +131,7 @@ class BroadcastController extends AdminController implements NewAdminController
                 $dm->persist($broadcast);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             if ($this->config->isApiRequest()) {

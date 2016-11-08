@@ -75,7 +75,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($record_date, $mm->getRecordDate());
         $this->assertEquals($public_date, $mm->getPublicDate());
         $this->assertEquals($title, $mm->getTitle());
-        $this->assertNotEquals($title."2", $mm->getTitle());
+        $this->assertNotEquals($title.'2', $mm->getTitle());
         $this->assertEquals($subtitle, $mm->getSubtitle());
         $this->assertEquals($description, $mm->getDescription());
         $this->assertEquals(count($mm_tags), count($mm->getTags()));
@@ -168,7 +168,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $pic3 = new Pic();
         $pic4 = new Pic();
 
-        $pic4->setUrl("/url/of/pic4");
+        $pic4->setUrl('/url/of/pic4');
 
         $this->assertEquals(0, count($mm->getPics()));
 
@@ -191,7 +191,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($pic1, $mm->getPic());
 
         $mm->addPic($pic4);
-        $this->assertEquals("/url/of/pic4", $mm->getFirstUrlPic());
+        $this->assertEquals('/url/of/pic4', $mm->getFirstUrlPic());
     }
 
     public function testMaterialsInMultimediaObject()
@@ -453,8 +453,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $slug = 'slug';
         $cod = 23;
         $metatag = true;
-        $created = new \DateTime("now");
-        $updated = new \DateTime("now");
+        $created = new \DateTime('now');
+        $updated = new \DateTime('now');
         $display = true;
 
         $tag = new Tag($title);
@@ -510,8 +510,8 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $slug = 'modified slug';
         $cod = 'modcod';
         $metatag = false;
-        $created = new \DateTime("now");
-        $updated = new \DateTime("now");
+        $created = new \DateTime('now');
+        $updated = new \DateTime('now');
         $display = false;
 
         $mm->getTags()[0]->setTitle($title);

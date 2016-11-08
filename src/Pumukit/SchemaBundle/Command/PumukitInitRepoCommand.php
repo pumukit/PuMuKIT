@@ -19,9 +19,9 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $tagsRepo = null;
     private $rolesRepo = null;
 
-    private $tagsPath = "../Resources/data/tags/";
-    private $rolesPath = "../Resources/data/roles/";
-    private $permissionProfilesPath = "../Resources/data/permissionprofiles/";
+    private $tagsPath = '../Resources/data/tags/';
+    private $rolesPath = '../Resources/data/roles/';
+    private $permissionProfilesPath = '../Resources/data/permissionprofiles/';
 
     private $allPermissions;
     private $tagRequiredFields = array('cod', 'tree_parent_cod', 'metatag', 'display', 'name_en');
@@ -53,7 +53,7 @@ EOT
 
         if ($input->getOption('force')) {
             switch ($repoName) {
-                case "all":
+                case 'all':
                   $errorExecuting = $this->executeTags($input, $output);
                     if (-1 === $errorExecuting) {
                         return -1;
@@ -67,19 +67,19 @@ EOT
                         return -1;
                     }
                     break;
-                case "tag":
+                case 'tag':
                     $errorExecuting = $this->executeTags($input, $output);
                     if (-1 === $errorExecuting) {
                         return -1;
                     }
                     break;
-                case "role":
+                case 'role':
                     $errorExecuting = $this->executeRoles($input, $output);
                     if (-1 === $errorExecuting) {
                         return -1;
                     }
                     break;
-                case "permissionprofile":
+                case 'permissionprofile':
                     $errorExecuting = $this->executePermissionProfiles($input, $output);
                     if (-1 === $errorExecuting) {
                         return -1;
@@ -104,12 +104,12 @@ EOT
 
     protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
     {
-        $this->tagsRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
+        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
 
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->tagsPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, "")) && (!$finder)) {
+        if ((0 == strcmp($file, '')) && (!$finder)) {
             $output->writeln("<error>Tags: There's no data to initialize</error>");
 
             return -1;
@@ -132,12 +132,12 @@ EOT
 
     protected function executeRoles(InputInterface $input, OutputInterface $output)
     {
-        $this->rolesRepo = $this->dm->getRepository("PumukitSchemaBundle:Role");
+        $this->rolesRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
 
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->rolesPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, "")) && (!$finder)) {
+        if ((0 == strcmp($file, '')) && (!$finder)) {
             $output->writeln("<error>Roles: There's no data to initialize</error>");
 
             return -1;
@@ -159,7 +159,7 @@ EOT
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->permissionProfilesPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, "")) && (!$finder)) {
+        if ((0 == strcmp($file, '')) && (!$finder)) {
             $output->writeln("<error>PermissionProfiles: There's no data to initialize</error>");
 
             return -1;
@@ -195,7 +195,7 @@ EOT
     {
         $root = $this->tagsRepo->findOneByCod('ROOT');
         if (!$root) {
-            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>"ROOT", 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0, 'name_en' =>"ROOT"));
+            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' =>'ROOT', 'tree_parent_cod' =>null, 'metatag' => 1, 'display' => 0, 'name_en' =>'ROOT'));
         }
         $this->dm->persist($root);
         $this->dm->flush();
@@ -238,24 +238,24 @@ EOT
         $fileExtension = pathinfo($file_route, PATHINFO_EXTENSION);
         $ending = substr($fileExtension, -1);
         if (('~' === $ending) || ('#' === $ending)) {
-            $output->writeln("<comment>".$repoName.": Ignoring file ".$file."</comment>");
+            $output->writeln('<comment>'.$repoName.': Ignoring file '.$file.'</comment>');
             return -1;
         }
         if ($verbose) {
-            $output->writeln("<info>Found file: ".realpath($file_route)."</info>");
+            $output->writeln('<info>Found file: '.realpath($file_route).'</info>');
         }
 
         $idCodMapping = array();
 
         $row = 1;
         $importedTags = array();
-        while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
+        while (($currentRow = fgetcsv($file, 300, ';')) !== false) {
             $number = count($currentRow);
             if (('tag' === $repoName) ||
                 (('role' === $repoName) && ($number == 7 || $number == 10)) ||
                 (('permissionprofile' === $repoName) && ($number == 6))) {
                 //Check header rows
-                if (trim($currentRow[0]) == "id") {
+                if (trim($currentRow[0]) == 'id') {
                     continue;
                 }
 
@@ -291,24 +291,24 @@ EOT
                         case 'role':
                             $role = $this->createRoleFromCsvArray($currentRow);
                             $idCodMapping[$currentRow[0]] = $role;
-                            $output->writeln("Role persisted - new id: ".$role->getId()." code: ".$role->getCod());
+                            $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
                             break;
                         case 'permissionprofile':
                             $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
                             $idCodMapping[$currentRow[0]] = $permissionProfile;
-                            $output->writeln("PermissionProfile persisted - new id: ".$permissionProfile->getId()." name: ".$permissionProfile->getName());
+                            $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
                             break;
                     }
                 } catch (\Exception $e) {
-                    $output->writeln("<error>".$repoName.': '.$e->getMessage()."</error>");
+                    $output->writeln('<error>'.$repoName.': '.$e->getMessage().'</error>');
                 }
             } else {
-                $output->writeln($repoName.": Last valid row = ...");
+                $output->writeln($repoName.': Last valid row = ...');
                 $output->writeln("Error: line $row has $number elements");
             }
 
             if ($verbose && $row % 100 == 0) {
-                echo "Row ".$row."\n";
+                echo 'Row '.$row."\n";
             }
 
             $previous_content = $currentRow;

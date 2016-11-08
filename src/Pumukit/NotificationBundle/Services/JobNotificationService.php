@@ -19,7 +19,7 @@ class JobNotificationService
     private $translator;
     private $router;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment="dev")
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment='dev')
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;

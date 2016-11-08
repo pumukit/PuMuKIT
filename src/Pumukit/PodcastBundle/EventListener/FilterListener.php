@@ -18,13 +18,13 @@ class FilterListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         $req = $event->getRequest();
-        $routeParams = $req->attributes->get("_route_params");
+        $routeParams = $req->attributes->get('_route_params');
 
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
-        && (false !== strpos($req->attributes->get("_controller"), 'PodcastBundle'))
-        && (!isset($routeParams["filter"]) || $routeParams["filter"])) {
-            $filter = $this->dm->getFilterCollection()->enable("frontend");
-            $filter->setParameter("pub_channel_tag", "PUCHPODCAST");
+        && (false !== strpos($req->attributes->get('_controller'), 'PodcastBundle'))
+        && (!isset($routeParams['filter']) || $routeParams['filter'])) {
+            $filter = $this->dm->getFilterCollection()->enable('frontend');
+            $filter->setParameter('pub_channel_tag', 'PUCHPODCAST');
         }
     }
 }

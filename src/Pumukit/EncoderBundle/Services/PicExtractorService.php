@@ -69,7 +69,7 @@ class PicExtractorService
     public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe)
     {
         if (!file_exists($track->getPath())) {
-            return "Error in data autocomplete of multimedia object.";
+            return 'Error in data autocomplete of multimedia object.';
         }
 
         $num_frames = $track->getNumFrames();
@@ -84,7 +84,7 @@ class PicExtractorService
 
         $this->createPic($multimediaObject, $track, $num);
 
-        return "Captured the FRAME ".$num." as image.";
+        return 'Captured the FRAME '.$num.' as image.';
     }
 
     /**
@@ -99,7 +99,7 @@ class PicExtractorService
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
     {
         $currentDir = 'series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
-        $absCurrentDir = $this->targetPath."/".$currentDir;
+        $absCurrentDir = $this->targetPath.'/'.$currentDir;
        
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
@@ -124,10 +124,10 @@ class PicExtractorService
         }
 
         $vars = array(
-            "{{ss}}" => $track->getTimeOfAFrame($frame),
-            "{{size}}" => $newWidth . "x" . $newHeight,
-            "{{input}}" => $track->getPath(),
-            "{{output}}" => $absCurrentDir.'/'.$picFileName
+            '{{ss}}' => $track->getTimeOfAFrame($frame),
+            '{{size}}' => $newWidth . 'x' . $newHeight,
+            '{{input}}' => $track->getPath(),
+            '{{output}}' => $absCurrentDir.'/'.$picFileName
         );
 
         

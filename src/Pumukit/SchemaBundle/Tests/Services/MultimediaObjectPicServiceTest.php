@@ -177,7 +177,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $mmspicService = new MultimediaObjectPicService($this->dm, $this->picDispatcher, "/non/existing/path", "/uploads/pic", true);
+        $mmspicService = new MultimediaObjectPicService($this->dm, $this->picDispatcher, '/non/existing/path', '/uploads/pic', true);
     }
 
     private function deleteCreatedFiles()

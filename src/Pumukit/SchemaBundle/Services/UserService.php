@@ -604,7 +604,7 @@ class UserService
                 return false;
             } elseif ($this->hasGlobalScope($userToRemove)) {
                 return false;
-            } elseif ($userToRemove->hasRole("ROLE_SUPER_ADMIN")) {
+            } elseif ($userToRemove->hasRole('ROLE_SUPER_ADMIN')) {
                 return false;
             } elseif ($loggedInUser === $userToRemove) {
                 return true;

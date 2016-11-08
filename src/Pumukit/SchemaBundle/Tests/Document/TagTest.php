@@ -45,10 +45,10 @@ class TagTest extends WebTestCase
         $slug = 'slug';
         $cod = 23;
         $metatag = true;
-        $created = new \DateTime("now");
-        $updated = new \DateTime("now");
+        $created = new \DateTime('now');
+        $updated = new \DateTime('now');
         $display = true;
-        $youtubeProperty = "w7dD-JJJytM&list=PLmXxqSJJq-yUfrjvKe5c5LX_1x7nGVF6c";
+        $youtubeProperty = 'w7dD-JJJytM&list=PLmXxqSJJq-yUfrjvKe5c5LX_1x7nGVF6c';
         $properties = array('youtube' => $youtubeProperty);
 
         $tag = new Tag($title);
@@ -63,7 +63,7 @@ class TagTest extends WebTestCase
         $tag->setDisplay($display);
         $tag->setProperties($properties);
 
-        $tag_parent = new Tag("parent");
+        $tag_parent = new Tag('parent');
         $tag->setParent($tag_parent);
 
         $this->assertEquals($title, $tag->getTitle());
@@ -128,11 +128,11 @@ class TagTest extends WebTestCase
 
     public function testChildren()
     {
-        $tag_parent = new Tag("tag_parent");
-        $tag_child = new Tag("tag_child");
+        $tag_parent = new Tag('tag_parent');
+        $tag_child = new Tag('tag_child');
         $tag_parent->setCod('Parent');
         $tag_child->setCod('ParentChild');
-        $tag_grandchild = new Tag("tag_grandchild");
+        $tag_grandchild = new Tag('tag_grandchild');
         $tag_grandchild->setCod('GrandChild');
         $this->dm->persist($tag_parent);
         $this->dm->persist($tag_child);

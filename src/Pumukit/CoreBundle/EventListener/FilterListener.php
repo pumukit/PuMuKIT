@@ -33,8 +33,8 @@ class FilterListener
     public function onKernelController(FilterControllerEvent $event)
     {
         $req = $event->getRequest();
-        $routeParams = $req->attributes->get("_route_params");
-        $isFilterActivated = (!isset($routeParams["filter"]) || $routeParams["filter"]);
+        $routeParams = $req->attributes->get('_route_params');
+        $isFilterActivated = (!isset($routeParams['filter']) || $routeParams['filter']);
 
         /*
          * $controller passed can be either a class or a Closure.
@@ -137,7 +137,7 @@ class FilterListener
             return;
         }
 
-        $filter = $this->dm->getFilterCollection()->enable("backoffice");
+        $filter = $this->dm->getFilterCollection()->enable('backoffice');
         //Returns empty results, since the user is anonimous or does not have SCOPE_PERSONAL
         if (!$loggedInUser || !$loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $filter->setParameter('people', []);
@@ -148,21 +148,21 @@ class FilterListener
         $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
         if (null != $people = $this->getPeopleMongoQuery($person)) {
-            $filter->setParameter("people", $people);
+            $filter->setParameter('people', $people);
         }
 
         if (null != $person) {
-            $filter->setParameter("person_id", $person->getId());
+            $filter->setParameter('person_id', $person->getId());
         }
 
         if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
-            $filter->setParameter("role_code", $roleCode);
+            $filter->setParameter('role_code', $roleCode);
         }
 
         if (null != $groups = $this->getGroupsMongoQuery($loggedInUser)) {
-            $filter->setParameter("groups", $groups);
+            $filter->setParameter('groups', $groups);
         }
-        $filter->setParameter("series_groups", $loggedInUser->getGroupsIds());
+        $filter->setParameter('series_groups', $loggedInUser->getGroupsIds());
     }
 
     /**
@@ -171,12 +171,12 @@ class FilterListener
      */
     private function enableWebTVFilter($routeParams)
     {
-        $filter = $this->dm->getFilterCollection()->enable("frontend");
+        $filter = $this->dm->getFilterCollection()->enable('frontend');
 
         $this->setParameters($filter, $routeParams);
 
-        if (!isset($routeParams["no_channels"]) || !$routeParams["no_channels"]) {
-            $filter->setParameter("pub_channel_tag", "PUCHWEBTV");
+        if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
+            $filter->setParameter('pub_channel_tag', 'PUCHWEBTV');
         }
     }
 
@@ -187,7 +187,7 @@ class FilterListener
         if ($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
             return;
         }
-        $filter = $this->dm->getFilterCollection()->enable("personal");
+        $filter = $this->dm->getFilterCollection()->enable('personal');
 
         $groups = array();
         if (null != $loggedInUser) {
@@ -211,13 +211,13 @@ class FilterListener
 
     private function setParameters($filter, $routeParams)
     {
-        if (isset($routeParams["show_hide"]) && $routeParams["show_hide"]) {
-            $filter->setParameter("status", array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
+        if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {
+            $filter->setParameter('status', array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
         } else {
-            $filter->setParameter("status", MultimediaObject::STATUS_PUBLISHED);
+            $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
         }
-        if (!isset($routeParams["track"]) || $routeParams["track"]) {
-            $filter->setParameter("display_track_tag", "display");
+        if (!isset($routeParams['track']) || $routeParams['track']) {
+            $filter->setParameter('display_track_tag', 'display');
         }
     }
 }

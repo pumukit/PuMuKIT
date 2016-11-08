@@ -145,44 +145,44 @@ class JobRepositoryTest extends WebTestCase
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video0';
         $job0 = $this->newJob($mm_id, $name);
-        $job0->setTimeini(new \DateTime("15-12-2015 9:00:00"));
+        $job0->setTimeini(new \DateTime('15-12-2015 9:00:00'));
         $job0->setPriority(3);
         $job0->setStatus(Job::STATUS_PAUSED);
 
         $mm_id = '54ad3f5e6e4cd68a278b4573';
         $name = 'video1';
         $job1 = $this->newJob($mm_id, $name);
-        $job1->setTimeini(new \DateTime("15-12-2015 9:00:01"));
+        $job1->setTimeini(new \DateTime('15-12-2015 9:00:01'));
         $job1->setPriority(2);
 
         $mm_id = '54ad3f5e6e4cd68a278b4574';
         $name = 'video2';
         $job2 = $this->newJob($mm_id, $name);
-        $job2->setTimeini(new \DateTime("15-12-2015 9:00:02"));
+        $job2->setTimeini(new \DateTime('15-12-2015 9:00:02'));
         $job2->setPriority(1);
 
         $mm_id = '54ad3f5e6e4cd68a278b4575';
         $name = 'video3';
         $job3 = $this->newJob($mm_id, $name);
-        $job3->setTimeini(new \DateTime("15-12-2015 9:00:03"));
+        $job3->setTimeini(new \DateTime('15-12-2015 9:00:03'));
         $job3->setPriority(3);
 
         $mm_id = '54ad3f5e6e4cd68a278b4576';
         $name = 'video4';
         $job4 = $this->newJob($mm_id, $name);
-        $job4->setTimeini(new \DateTime("15-12-2015 9:00:04"));
+        $job4->setTimeini(new \DateTime('15-12-2015 9:00:04'));
         $job4->setPriority(2);
 
         $mm_id = '54ad3f5e6e4cd68a278b4577';
         $name = 'video5';
         $job5 = $this->newJob($mm_id, $name);
-        $job5->setTimeini(new \DateTime("15-12-2015 9:00:05"));
+        $job5->setTimeini(new \DateTime('15-12-2015 9:00:05'));
         $job5->setPriority(1);
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video6';
         $job6 = $this->newJob($mm_id, $name);
-        $job6->setTimeini(new \DateTime("15-12-2015 9:00:06"));
+        $job6->setTimeini(new \DateTime('15-12-2015 9:00:06'));
         $job6->setPriority(2);
 
         $this->dm->persist($job0);
@@ -199,7 +199,7 @@ class JobRepositoryTest extends WebTestCase
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video7';
         $job7 = $this->newJob($mm_id, $name);
-        $job7->setTimeini(new \DateTime("15-12-2015 9:00:07"));
+        $job7->setTimeini(new \DateTime('15-12-2015 9:00:07'));
         $job7->setPriority(3);
 
         $this->dm->persist($job7);

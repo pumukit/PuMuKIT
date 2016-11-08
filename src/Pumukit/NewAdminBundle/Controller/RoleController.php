@@ -32,7 +32,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
                 try {
                     $person = $personService->updateRole($role);
                 } catch (\Exception $e) {
-                    return new JsonResponse(array("status" => $e->getMessage()), 409);
+                    return new JsonResponse(array('status' => $e->getMessage()), 409);
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));

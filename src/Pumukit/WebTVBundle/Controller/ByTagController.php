@@ -29,7 +29,7 @@ class ByTagController extends Controller implements WebTVController
       if ($request->get('useTagAsGeneral')) {
           //This should be included on SchemaBundle:MultimediaObjectRepository.
         $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => -1));
-          $title = $this->get('translator')->trans("General %title%", array('%title%' => $tag->getTitle()));
+          $title = $this->get('translator')->trans('General %title%', array('%title%' => $tag->getTitle()));
           $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'useTagAsGeneral' => true));
       } else {
           $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => -1));

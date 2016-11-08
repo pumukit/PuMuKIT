@@ -54,14 +54,14 @@ class FuncionalTest extends WebTestCase
         $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService,
                                            $this->inspectionService, $dispatcher, $logger,
                                            $this->trackService, $this->tokenStorage, $this->propService,
-                                           "test");
+                                           'test');
     }
 
     public function testSimpleEncoding()
     {
-        $series = $this->createSeries("series title");
-        $mm = $this->createMultimediaObjectAssignedToSeries("mm title", $series);
-        $job = $this->jobService->addJob($this->videoInputPath, "master_copy", 0, $mm);
+        $series = $this->createSeries('series title');
+        $mm = $this->createMultimediaObjectAssignedToSeries('mm title', $series);
+        $job = $this->jobService->addJob($this->videoInputPath, 'master_copy', 0, $mm);
 
         $this->jobService->execute($job);
 
@@ -78,7 +78,7 @@ class FuncionalTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
-        $description = "Description";
+        $description = 'Description';
         $duration = 0;
 
         $mm = new MultimediaObject();
@@ -104,7 +104,7 @@ class FuncionalTest extends WebTestCase
     {
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
+        $test_date = new \DateTime('now');
 
         $serie = new Series();
 

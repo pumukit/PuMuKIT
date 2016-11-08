@@ -101,7 +101,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             try {
                 $permissionProfile = $permissionProfileService->update($permissionProfile, true);
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
             if (null === $permissionProfile) {
                 return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
@@ -139,7 +139,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             try {
                 $permissionProfile = $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), 409);
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));

@@ -24,12 +24,12 @@ class InspectionMediainfoService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException("The file " . $file . " does not exist");
+            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
         }
 
         $xml = simplexml_load_string($this->getMediaInfo($file));
         if (!$this->xmlHasMediaContent($xml)) {
-            throw new \InvalidArgumentException("This file has no accesible video " .
+            throw new \InvalidArgumentException('This file has no accesible video ' .
                 "nor audio tracks\n" . $file);
         }
 
@@ -53,13 +53,13 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
         $xml = simplexml_load_string($this->getMediaInfo($track->getPath()));
         if (!$this->xmlHasMediaContent($xml)) {
-            throw new \InvalidArgumentException("This file has no accesible video " .
+            throw new \InvalidArgumentException('This file has no accesible video ' .
                 "nor audio tracks\n" . $track->getPath());
         }
 
         foreach ($xml->File->track as $xml_track) {
             switch ((string) $xml_track['type']) {
-                case "General":
+                case 'General':
                     $track->setMimetype($xml_track->Internet_media_type);
                     $track->setBitrate(intval($xml_track->Overall_bit_rate[0]));
                     $aux = intval((string)$xml_track->Duration[0]);
@@ -67,7 +67,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
                     $track->setSize((string)$xml_track->File_size[0]);
                     break;
 
-                case "Video":
+                case 'Video':
                     $track->setVcodec((string)$xml_track->Format[0]);
                     $track->setFramerate((string)$xml_track->Frame_rate[0]);
                     $track->setWidth(intval($xml_track->Width));
@@ -75,7 +75,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
                     $only_audio = false;
                     break;
 
-                case "Audio":
+                case 'Audio':
                     $track->setAcodec((string)$xml_track->Format[0]);
                     $track->setChannels(intval($xml_track->Channel_s_));
                     break;
@@ -88,7 +88,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
     {
         if ($xml->File->track != null) {
             foreach ($xml->File->track as $track) {
-                if ($track['type'] == "Audio" || $track['type'] == "Video") {
+                if ($track['type'] == 'Audio' || $track['type'] == 'Video') {
                     return true;
                 }
             }
@@ -101,7 +101,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
     {
         $command = 'mediainfo -f --Output=XML \'' . $file . '\'';
         $process = new Process($command);
-        $process->setEnv(array( "LANG" => "en_US.UTF-8" ));
+        $process->setEnv(array( 'LANG' => 'en_US.UTF-8' ));
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {

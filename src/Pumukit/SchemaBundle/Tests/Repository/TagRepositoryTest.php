@@ -38,33 +38,33 @@ class TagRepositoryTest extends WebTestCase
     public function createTestTree()
     {
         $tag = new Tag();
-        $tag->setCod("ROOT");
+        $tag->setCod('ROOT');
 
         $this->dm->persist($tag);
         $this->dm->flush();
 
         $tagA = new Tag();
-        $tagA->setCod("A");
+        $tagA->setCod('A');
         $tagA->setParent($tag);
         $this->dm->persist($tagA);
 
         $tagB = new Tag();
-        $tagB->setCod("B");
+        $tagB->setCod('B');
         $tagB->setParent($tag);
         $this->dm->persist($tagB);
 
         $tagB1 = new Tag();
-        $tagB1->setCod("B1");
+        $tagB1->setCod('B1');
         $tagB1->setParent($tagB);
         $this->dm->persist($tagB1);
 
         $tagB2 = new Tag();
-        $tagB2->setCod("B2");
+        $tagB2->setCod('B2');
         $tagB2->setParent($tagB);
         $this->dm->persist($tagB2);
 
         $tagB2A = new Tag();
-        $tagB2A->setCod("B2A");
+        $tagB2A->setCod('B2A');
         $tagB2A->setParent($tagB2);
         $this->dm->persist($tagB2A);
 
@@ -74,7 +74,7 @@ class TagRepositoryTest extends WebTestCase
     public function testCreate()
     {
         $tag = new Tag();
-        $tag->setCod("ROOT");
+        $tag->setCod('ROOT');
 
         $this->dm->persist($tag);
         $this->dm->flush();
@@ -87,7 +87,7 @@ class TagRepositoryTest extends WebTestCase
     {
         $this->createTestTree();
 
-        $tag = $this->repo->findOneByCod("ROOT");
+        $tag = $this->repo->findOneByCod('ROOT');
         $tree = $this->repo->getTree($tag);
         $this->assertEquals(6, count($tree));
         $children = $this->repo->getChildren($tag);
@@ -96,7 +96,7 @@ class TagRepositoryTest extends WebTestCase
         $directChildren = $this->repo->getChildren($tag, true);
         $this->assertEquals(2, count($directChildren));
 
-        $tag = $this->repo->findOneByCod("B");
+        $tag = $this->repo->findOneByCod('B');
         $tree = $this->repo->getTree($tag);
         $this->assertEquals(4, count($tree));
         $children = $this->repo->getChildren($tag);
@@ -118,11 +118,11 @@ class TagRepositoryTest extends WebTestCase
     {
         $this->createTestTree();
 
-        $root = $this->repo->findOneByCod("ROOT");
-        $tagA = $this->repo->findOneByCod("A");
-        $tagB = $this->repo->findOneByCod("B");
-        $tagB2 = $this->repo->findOneByCod("B2");
-        $tagB2A = $this->repo->findOneByCod("B2A");
+        $root = $this->repo->findOneByCod('ROOT');
+        $tagA = $this->repo->findOneByCod('A');
+        $tagB = $this->repo->findOneByCod('B');
+        $tagB2 = $this->repo->findOneByCod('B2');
+        $tagB2A = $this->repo->findOneByCod('B2A');
 
         $this->assertTrue($tagB2->isChildOf($tagB));
         $this->assertFalse($tagB->isChildOf($tagB2));
@@ -145,7 +145,7 @@ class TagRepositoryTest extends WebTestCase
         $this->createTestTree();
         $this->dm->clear();
 
-        $tag = $this->repo->findOneByCod("ROOT");
+        $tag = $this->repo->findOneByCod('ROOT');
         $this->assertEquals(2, count($tag->getChildren()));
     }
 
@@ -155,13 +155,13 @@ class TagRepositoryTest extends WebTestCase
 
         $this->assertEquals(6, count($this->repo->findAll()));
 
-        $tag = $this->repo->findOneByCod("ROOT");
-        $tagA = $this->repo->findOneByCod("A");
-        $tagB = $this->repo->findOneByCod("B");
-        $tagB2A = $this->repo->findOneByCod("B2A");
+        $tag = $this->repo->findOneByCod('ROOT');
+        $tagA = $this->repo->findOneByCod('A');
+        $tagB = $this->repo->findOneByCod('B');
+        $tagB2A = $this->repo->findOneByCod('B2A');
 
         //Test rename
-        $tag->setCod("ROOT2");
+        $tag->setCod('ROOT2');
         $this->dm->persist($tag);
         $this->dm->flush();
         $this->assertEquals(4, $tagB2A->getLevel());

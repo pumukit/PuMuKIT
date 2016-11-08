@@ -31,8 +31,8 @@ class FilterListener
     public function onKernelController(FilterControllerEvent $event)
     {
         $req = $event->getRequest();
-        $routeParams = $req->attributes->get("_route_params");
-        $isFilterActivated = (!isset($routeParams["filter"]) || $routeParams["filter"]);
+        $routeParams = $req->attributes->get('_route_params');
+        $isFilterActivated = (!isset($routeParams['filter']) || $routeParams['filter']);
 
         /*
          * $controller passed can be either a class or a Closure.
@@ -46,7 +46,7 @@ class FilterListener
         }
 
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
-        $deprecatedCheck = (false !== strpos($req->attributes->get("_controller"), 'pumukitnewadmin'));
+        $deprecatedCheck = (false !== strpos($req->attributes->get('_controller'), 'pumukitnewadmin'));
 
         if (($controller[0] instanceof NewAdminController /*deprecated*/|| $deprecatedCheck/**/)
             && $event->isMasterRequest()
@@ -54,26 +54,26 @@ class FilterListener
             if ($this->addUserAsPerson) {
                 $loggedInUser = $this->getLoggedInUser();
                 if ($loggedInUser->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-                    $filter = $this->dm->getFilterCollection()->enable("backoffice");
+                    $filter = $this->dm->getFilterCollection()->enable('backoffice');
 
                     $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
                     if (null != $people = $this->getPeopleMongoQuery($person)) {
-                        $filter->setParameter("people", $people);
+                        $filter->setParameter('people', $people);
                     }
 
                     if (null != $person) {
-                        $filter->setParameter("person_id", $person->getId());
+                        $filter->setParameter('person_id', $person->getId());
                     }
 
                     if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
-                        $filter->setParameter("role_code", $roleCode);
+                        $filter->setParameter('role_code', $roleCode);
                     }
 
                     if (null != $groups = $this->getGroupsMongoQuery($loggedInUser)) {
-                        $filter->setParameter("groups", $groups);
+                        $filter->setParameter('groups', $groups);
                     }
-                    $filter->setParameter("series_groups", $loggedInUser->getGroupsIds());
+                    $filter->setParameter('series_groups', $loggedInUser->getGroupsIds());
                 }
             }
         }

@@ -43,9 +43,9 @@ class TagType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $tag = $event->getData();
 
-            $fields = $tag->getProperty("customfield");
+            $fields = $tag->getProperty('customfield');
             foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
-                $auxField = explode(":", $field);
+                $auxField = explode(':', $field);
                 $formOptions = array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($auxField[0]));
                 
                 try {
@@ -60,9 +60,9 @@ class TagType extends AbstractType
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $tag = $event->getData();
 
-            $fields = $tag->getProperty("customfield");
+            $fields = $tag->getProperty('customfield');
             foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
-                $auxField = explode(":", $field);
+                $auxField = explode(':', $field);
                 $data = $event->getForm()->get($auxField[0])->getData();
                 $tag->setProperty($auxField[0], $data);
             }

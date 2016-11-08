@@ -82,7 +82,7 @@ class CpuService
      *
      * Returns true if given cpu is active
      */
-    public function isActive($cpu, $cmd = "")
+    public function isActive($cpu, $cmd = '')
     {
         // TODO
         return true;

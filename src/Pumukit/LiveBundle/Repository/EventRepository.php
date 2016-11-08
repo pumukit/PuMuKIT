@@ -17,7 +17,7 @@ class EventRepository extends DocumentRepository
      */
     public function findNextEvents()
     {
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
         return $this->createQueryBuilder()
             ->field('display')->equals(true)
@@ -31,7 +31,7 @@ class EventRepository extends DocumentRepository
      */
     public function findNextEvent()
     {
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
         return $this->createQueryBuilder()
             ->field('display')->equals(true)
@@ -50,7 +50,7 @@ class EventRepository extends DocumentRepository
     */
     public function findCurrentEvents($limit = null, $marginBefore = 0, $marginAfter = 0)
     {
-        $dmColl = $this->dm->getDocumentCollection("PumukitLiveBundle:Event");
+        $dmColl = $this->dm->getDocumentCollection('PumukitLiveBundle:Event');
 
         $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
         $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));
@@ -90,9 +90,9 @@ class EventRepository extends DocumentRepository
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
         if (!$date) {
-            $currentDatetime = new \DateTime("now");
-            $startDay = new \DateTime("now");
-            $finishDay = new \DateTime("now");
+            $currentDatetime = new \DateTime('now');
+            $startDay = new \DateTime('now');
+            $finishDay = new \DateTime('now');
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
@@ -110,7 +110,7 @@ class EventRepository extends DocumentRepository
 
         $duration = 0;
         foreach ($currentDayEvents as $event) {
-            $eventDate = new \DateTime($event->getDate()->format("Y-m-d H:i:s"));
+            $eventDate = new \DateTime($event->getDate()->format('Y-m-d H:i:s'));
             if (($eventDate < $currentDatetime) && ($currentDatetime < $eventDate->add(new \DateInterval('PT'.$event->getDuration().'M')))) {
                 $duration = $event->getDuration();
             }
@@ -119,9 +119,9 @@ class EventRepository extends DocumentRepository
 
         // Second: look for current and next events
         $qb = $this->createQueryBuilder()
-            ->field("display")->equals(true)
-            ->field("date")->gte($currentDatetime)
-            ->sort("date", 1);
+            ->field('display')->equals(true)
+            ->field('date')->gte($currentDatetime)
+            ->sort('date', 1);
 
         if ($limit) {
             $qb->limit($limit);
@@ -140,10 +140,10 @@ class EventRepository extends DocumentRepository
     public function findOneByHoursEvent($hours=null, $date=null)
     {
         if (!$date) {
-            $currentDatetime = new \DateTime("now");
-            $hoursDatetime = new \DateTime("now");
-            $startDay = new \DateTime("now");
-            $finishDay = new \DateTime("now");
+            $currentDatetime = new \DateTime('now');
+            $hoursDatetime = new \DateTime('now');
+            $startDay = new \DateTime('now');
+            $finishDay = new \DateTime('now');
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $hoursDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
@@ -163,7 +163,7 @@ class EventRepository extends DocumentRepository
 
         $duration = 0;
         foreach ($currentDayEvents as $event) {
-            $eventDate = new \DateTime($event->getDate()->format("Y-m-d H:i:s"));
+            $eventDate = new \DateTime($event->getDate()->format('Y-m-d H:i:s'));
             if (($eventDate <= $hoursDatetime) && ($currentDatetime <= $eventDate->add(new \DateInterval('PT'.$event->getDuration().'M')))) {
                 return $event;
             }

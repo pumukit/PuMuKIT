@@ -450,6 +450,6 @@ class Track extends Element
    */
   public function isMaster()
   {
-      return $this->containsTag("master");
+      return $this->containsTag('master');
   }
 }

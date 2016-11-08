@@ -20,8 +20,8 @@ class InboxController extends Controller implements NewAdminController
      */
     public function dirAction(Request $request)
     {
-        $dir = $request->query->get("dir", "");
-        $type = $request->query->get("type", "file");
+        $dir = $request->query->get('dir', '');
+        $type = $request->query->get('type', 'file');
         $baseDir = realpath($this->container->getParameter('pumukit2.inbox'));
 
         /*
@@ -34,7 +34,7 @@ class InboxController extends Controller implements NewAdminController
 
         $res = array();
 
-        if ("file" == $type) {
+        if ('file' == $type) {
             $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {

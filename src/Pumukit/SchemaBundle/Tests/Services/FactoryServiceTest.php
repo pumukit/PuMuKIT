@@ -143,15 +143,15 @@ class FactoryServiceTest extends WebTestCase
         $series_type2 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type2->getId());
 
         $series1 = $this->factory->createSeries();
-        $name1 = "Series 1";
+        $name1 = 'Series 1';
         $series1->setTitle($name1);
 
         $series2 = $this->factory->createSeries();
-        $name2 = "Series 2";
+        $name2 = 'Series 2';
         $series2->setTitle($name2);
 
         $series3 = $this->factory->createSeries();
-        $name3 = "Series 3";
+        $name3 = 'Series 3';
         $series3->setTitle($name3);
 
         $this->dm->persist($series1);
@@ -192,33 +192,33 @@ class FactoryServiceTest extends WebTestCase
     public function testGetParentTags()
     {
         $tag = new Tag();
-        $tag->setCod("ROOT");
+        $tag->setCod('ROOT');
 
         $this->dm->persist($tag);
         $this->dm->flush();
 
         $tagA = new Tag();
-        $tagA->setCod("A");
+        $tagA->setCod('A');
         $tagA->setParent($tag);
         $this->dm->persist($tagA);
 
         $tagB = new Tag();
-        $tagB->setCod("B");
+        $tagB->setCod('B');
         $tagB->setParent($tag);
         $this->dm->persist($tagB);
 
         $tagB1 = new Tag();
-        $tagB1->setCod("B1");
+        $tagB1->setCod('B1');
         $tagB1->setParent($tagB);
         $this->dm->persist($tagB1);
 
         $tagB2 = new Tag();
-        $tagB2->setCod("B2");
+        $tagB2->setCod('B2');
         $tagB2->setParent($tagB);
         $this->dm->persist($tagB2);
 
         $tagB2A = new Tag();
-        $tagB2A->setCod("B2A");
+        $tagB2A->setCod('B2A');
         $tagB2A->setParent($tagB2);
         $this->dm->persist($tagB2A);
 
@@ -237,17 +237,17 @@ class FactoryServiceTest extends WebTestCase
     public function testGetTagsByCod()
     {
         $tagA = new Tag();
-        $tagA->setCod("A");
+        $tagA->setCod('A');
         $this->dm->persist($tagA);
         $this->dm->flush();
 
         $tagB = new Tag();
-        $tagB->setCod("B");
+        $tagB->setCod('B');
         $this->dm->persist($tagB);
         $this->dm->flush();
 
         $tagC = new Tag();
-        $tagC->setCod("C");
+        $tagC->setCod('C');
         $this->dm->persist($tagC);
         $this->dm->flush();
 
@@ -306,12 +306,12 @@ class FactoryServiceTest extends WebTestCase
         $src = $this->factory->createMultimediaObject($series);
 
         $tagA = new Tag();
-        $tagA->setCod("A");
+        $tagA->setCod('A');
         $this->dm->persist($tagA);
         $this->dm->flush();
 
         $tagB = new Tag();
-        $tagB->setCod("B");
+        $tagB->setCod('B');
         $this->dm->persist($tagB);
         $this->dm->flush();
 

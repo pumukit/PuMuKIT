@@ -25,13 +25,13 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
     {
         $opencastId = $input->getArgument('id');
         if ($input->getOption('verbose')) {
-            $output->writeln("Importing opencast recording: " . $opencastId);
+            $output->writeln('Importing opencast recording: ' . $opencastId);
         }
         $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
         $mmobjRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        if ($mmobjRepo->findOneBy(array("properties.opencast" => $opencastId))) {
-            $output->writeln("Mediapackage " . $opencastId . " has already been imported, skipping to next mediapackage");
+        if ($mmobjRepo->findOneBy(array('properties.opencast' => $opencastId))) {
+            $output->writeln('Mediapackage ' . $opencastId . ' has already been imported, skipping to next mediapackage');
         } else {
             $opencastImportService->importRecording($opencastId, $input->getOption('invert'));
         }

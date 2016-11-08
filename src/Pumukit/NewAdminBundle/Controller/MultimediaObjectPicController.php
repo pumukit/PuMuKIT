@@ -70,9 +70,9 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
             if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has("file")) {
+            if ($request->files->has('file')) {
                 $picService = $this->get('pumukitschema.mmspic');
-                $media = $picService->addPicFile($multimediaObject, $request->files->get("file"));
+                $media = $picService->addPicFile($multimediaObject, $request->files->get('file'));
             }
         } catch (\Exception $e) {
             return array(

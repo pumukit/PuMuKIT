@@ -16,7 +16,7 @@ class LocalExecutorTest extends WebTestCase
     public function testSimple()
     {
         $executor = new LocalExecutor();
-        $out = $executor->execute("sleep 1 && echo a");
+        $out = $executor->execute('sleep 1 && echo a');
         $this->assertEquals("a\n\n", "$out");
     }
 }

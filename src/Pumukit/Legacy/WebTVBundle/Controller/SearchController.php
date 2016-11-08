@@ -33,23 +33,23 @@ class SearchController extends Controller
       $queryBuilder = $repository_series->createQueryBuilder();
 
     //Obtenemos todas las series del repositorio que su titulo coincida con <$search_found>
-    if ($search_found != "") {
+    if ($search_found != '') {
         $queryBuilder->field('$text')->equals(array('$search' => $search_found));
     }
 
     //Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-    if ($start_found != "All" && $start_found != "") {
-        $start = \DateTime::createFromFormat("d/m/Y", $start_found);
+    if ($start_found != 'All' && $start_found != '') {
+        $start = \DateTime::createFromFormat('d/m/Y', $start_found);
         $queryBuilder->field('public_date')->gt($start);
     }
 
     //Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-    if ($end_found != "All" && $end_found != "") {
-        $end = \DateTime::createFromFormat("d/m/Y", $end_found);
+    if ($end_found != 'All' && $end_found != '') {
+        $end = \DateTime::createFromFormat('d/m/Y', $end_found);
         $queryBuilder->field('public_date')->lt($end);
     }
 
-      $pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+      $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
       return array('type' => 'series',
          'objects' => $pagerfanta);
@@ -91,52 +91,52 @@ class SearchController extends Controller
       $queryBuilder = $repository_multimediaObjects->createStandardQueryBuilder();
 
     //Obtenemos todos los objetos multimedia del repositorio que su titulo coincida con <$search_found>
-    if ($search_found != "") {
+    if ($search_found != '') {
         $queryBuilder->field('$text')->equals(array('$search' => $search_found));
     }
 
     //Obtenemos todos los objetos multimedia del repositorio que contengan <$tag_found>
-    if ($tag_found != "All" && $tag_found != "") {
+    if ($tag_found != 'All' && $tag_found != '') {
         $queryBuilder->field('tags._id')->equals(new \MongoId($tag_search->getId()));
     }
 
     //Obtenemos todos los objetos multimedia del repositorio que contengan <$type_found>
-    if ($type_found != "All" && $type_found != "") {
-        $queryBuilder->field('tracks.only_audio')->equals($type_found == "Audio");
+    if ($type_found != 'All' && $type_found != '') {
+        $queryBuilder->field('tracks.only_audio')->equals($type_found == 'Audio');
     }
 
     //Obtenemos todos los objetos multimedia del repositorio que contengan <$duration_found>
-    if ($duration_found != "All" && $duration_found != "") {
-        if ($duration_found == "-5") {
+    if ($duration_found != 'All' && $duration_found != '') {
+        if ($duration_found == '-5') {
             $queryBuilder->field('tracks.duration')->lte(300);
         }
-        if ($duration_found == "-10") {
+        if ($duration_found == '-10') {
             $queryBuilder->field('tracks.duration')->lte(600);
         }
-        if ($duration_found == "-30") {
+        if ($duration_found == '-30') {
             $queryBuilder->field('tracks.duration')->lte(1800);
         }
-        if ($duration_found == "-60") {
+        if ($duration_found == '-60') {
             $queryBuilder->field('tracks.duration')->lte(3600);
         }
-        if ($duration_found == "+60") {
+        if ($duration_found == '+60') {
             $queryBuilder->field('tracks.duration')->gt(3600);
         }
     }
 
     //Obtenemos todos los objetos multimedia con fecha superior o igual a <$start_found>
-    if ($start_found != "All" && $start_found != "") {
-        $start = \DateTime::createFromFormat("d/m/Y", $start_found);
+    if ($start_found != 'All' && $start_found != '') {
+        $start = \DateTime::createFromFormat('d/m/Y', $start_found);
         $queryBuilder->field('record_date')->gt($start);
     }
 
     //Obtenemos todos los objetos multimedia con fecha inferior o igual a <$end_found>
-    if ($end_found != "All" && $end_found != "") {
-        $end = \DateTime::createFromFormat("d/m/Y", $end_found);
+    if ($end_found != 'All' && $end_found != '') {
+        $end = \DateTime::createFromFormat('d/m/Y', $end_found);
         $queryBuilder->field('record_date')->lt($end);
     }
 
-      $pagerfanta = $this->createPager($queryBuilder, $request->query->get("page", 1));
+      $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
         
       return array('type' => 'multimediaObject',
          'objects' => $pagerfanta,

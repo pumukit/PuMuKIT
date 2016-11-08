@@ -9,7 +9,7 @@ class SeriesTypeTest extends \PHPUnit_Framework_TestCase
     public function testGetterAndSetter()
     {
         $name = "Jules' sermon";
-        $description = "Ezekiel 25:17. The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.";
+        $description = 'Ezekiel 25:17. The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.';
         $cod = 'cod';
         $locale = 'en';
 

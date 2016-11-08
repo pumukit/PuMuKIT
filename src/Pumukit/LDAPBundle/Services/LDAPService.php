@@ -75,11 +75,11 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
-                    if (($info)&&($info["count"] != 0)) {
-                        $dn = $info[0]["dn"];
+                    if (($info)&&($info['count'] != 0)) {
+                        $dn = $info[0]['dn'];
                         $ret = @ldap_bind($linkIdentifier, $dn, $pass);
                     }
                 }
@@ -109,11 +109,11 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)) {
-                        $name = $info[0]["cn"][0];
+                        $name = $info[0]['cn'][0];
                     }
                 }
                 ldap_close($linkIdentifier);
@@ -143,11 +143,11 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, "uid=" . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)) {
-                        $name = $info[0]["mail"][0];
+                        $name = $info[0]['mail'][0];
                     }
                 }
                 ldap_close($linkIdentifier);
@@ -190,7 +190,7 @@ class LDAPService
         ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
         if ($linkIdentifier) {
             $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-            $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key . "=" . $value, array(), 0, 1);
+            $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key . '=' . $value, array(), 0, 1);
             if ($searchResult) {
                 $info = ldap_get_entries($linkIdentifier, $searchResult);
                 if (($info)&&(count($info) != 0)) {
@@ -234,12 +234,12 @@ class LDAPService
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)) {
                         foreach ($info as $k=>$i) {
-                            if ($k === "count") {
+                            if ($k === 'count') {
                                 continue;
                             }
                             $out[] = array(
-                                           'mail' => $i["mail"][0],
-                                           'cn' => $i["cn"][0]
+                                           'mail' => $i['mail'][0],
+                                           'cn' => $i['cn'][0]
                                            );
                         }
                     }
@@ -271,12 +271,12 @@ class LDAPService
      */
     private function getFilter($cn='', $mail='')
     {
-        $filter = ($cn ? "cn=".$cn : '');
+        $filter = ($cn ? 'cn='.$cn : '');
         if ($mail) {
             if ($filter) {
-                $filter = "(|(".$filter.")(mail=".$mail."))";
+                $filter = '(|('.$filter.')(mail='.$mail.'))';
             } else {
-                $filter = "mail=".$mail;
+                $filter = 'mail='.$mail;
             }
         }
 

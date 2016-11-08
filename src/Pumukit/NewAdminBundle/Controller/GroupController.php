@@ -97,7 +97,7 @@ class GroupController extends AdminController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:Group:create.html.twig",
+        return $this->render('PumukitNewAdminBundle:Group:create.html.twig',
                              array(
                                    'group' => $group,
                                    'form' => $form->createView()
@@ -120,7 +120,7 @@ class GroupController extends AdminController implements NewAdminController
         $config = $this->getConfiguration();
         $group = $this->findOr404($request);
         if (!$group->isLocal()) {
-            return new Response("Not allowed to update not local Group", Response::HTTP_METHOD_NOT_ALLOWED);
+            return new Response('Not allowed to update not local Group', Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         $form = $this->getForm($group);
@@ -129,7 +129,7 @@ class GroupController extends AdminController implements NewAdminController
             try {
                 $group = $this->get('pumukitschema.group')->update($group);
             } catch (\Exception $e) {
-                return new JsonResponse(array("status" => $e->getMessage()), Response::HTTP_BAD_REQUEST);
+                return new JsonResponse(array('status' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
             }
 
             if ($this->config->isApiRequest()) {
@@ -143,7 +143,7 @@ class GroupController extends AdminController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:Group:update.html.twig",
+        return $this->render('PumukitNewAdminBundle:Group:update.html.twig',
                              array(
                                    'group' => $group,
                                    'form' => $form->createView()
@@ -200,7 +200,7 @@ class GroupController extends AdminController implements NewAdminController
         }
         if ($notDeleted) {
             $code = Response::HTTP_BAD_REQUEST;
-            $message = $translator->trans("Not allowed to delete Groups:");
+            $message = $translator->trans('Not allowed to delete Groups:');
             foreach ($notDeleted as $key) {
                 if ($key === reset($notDeleted)) {
                     $message = $message . ' ';

@@ -49,7 +49,7 @@ class JobServiceTest extends WebTestCase
         $this->jobService = new JobService($this->dm, $profileService, $cpuService,
                                            $inspectionService, $dispatcher, $this->logger,
                                            $this->trackService, $this->tokenStorage, $this->propService,
-                                           "test", null);
+                                           'test', null);
     }
 
     public function tearDown()

@@ -58,7 +58,7 @@ class EventPicService
           throw new FileNotFoundException($picFile->getPathname());
       }
 
-      $path = $picFile->move($this->targetPath."/".$event->getId(), $picFile->getClientOriginalName());
+      $path = $picFile->move($this->targetPath.'/'.$event->getId(), $picFile->getClientOriginalName());
 
       $pic = new Pic();
       $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));

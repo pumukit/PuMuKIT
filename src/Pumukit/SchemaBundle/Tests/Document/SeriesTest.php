@@ -12,7 +12,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
     {
         $series_type = new SeriesType();
         $announce = true;
-        $publicDate = new \DateTime("now");
+        $publicDate = new \DateTime('now');
         $title = 'title';
         $subtitle = 'subtitle';
         $description = 'description';

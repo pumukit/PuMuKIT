@@ -12,7 +12,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
     public function __construct(LoggerInterface $logger = null)
     {
         if (!class_exists('ffmpeg_movie')) {
-            throw new \LogicException("ffmpeg_movie is not loaded");
+            throw new \LogicException('ffmpeg_movie is not loaded');
         }
         $this->logger = $logger;
     }
@@ -26,14 +26,14 @@ class InspectionFfmpegService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException("The file " . $file . " does not exist");
+            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
         }
 
         $movie = new \ffmpeg_movie($file, false);
         $finfo = new \finfo();
 
         if (!$this->fileHasMediaContent($finfo, $file)) {
-            throw new \InvalidArgumentException("This file has no video nor audio tracks");
+            throw new \InvalidArgumentException('This file has no video nor audio tracks');
         }
 
         return ceil($movie->getDuration());
@@ -53,7 +53,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
         $finfo = new \finfo();
 
         if (!$this->fileHasMediaContent($finfo, $file)) {
-            throw new \InvalidArgumentException("This file has no video nor audio tracks");
+            throw new \InvalidArgumentException('This file has no video nor audio tracks');
         }
 
         $only_audio = true;
@@ -83,7 +83,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
     private function fileHasMediaContent($finfo, $file)
     {
         $mime = substr($finfo->file($file, FILEINFO_MIME_TYPE), 0, 5);
-        if ($mime == "audio" || $mime == "video") {
+        if ($mime == 'audio' || $mime == 'video') {
             return true;
         }
 

@@ -83,7 +83,7 @@ class EventController extends AdminController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render("PumukitNewAdminBundle:Event:create.html.twig",
+        return $this->render('PumukitNewAdminBundle:Event:create.html.twig',
                              array(
                                    'event' => $resource,
                                    'form' => $form->createView()
@@ -147,17 +147,17 @@ class EventController extends AdminController implements NewAdminController
         $m = $this->get('session')->get('admin/event/month');
         $y = $this->get('session')->get('admin/event/year');
 
-        if ($request->query->get('month') == "next") {
+        if ($request->query->get('month') == 'next') {
             $changed_date = mktime(0, 0, 0, $m+1, 1, $y);
-            $this->get('session')->set('admin/event/year', date("Y", $changed_date));
-            $this->get('session')->set('admin/event/month', date("m", $changed_date));
-        } elseif ($request->query->get('month') == "previous") {
+            $this->get('session')->set('admin/event/year', date('Y', $changed_date));
+            $this->get('session')->set('admin/event/month', date('m', $changed_date));
+        } elseif ($request->query->get('month') == 'previous') {
             $changed_date = mktime(0, 0, 0, $m-1, 1, $y);
-            $this->get('session')->set('admin/event/year', date("Y", $changed_date));
-            $this->get('session')->set('admin/event/month', date("m", $changed_date));
-        } elseif ($request->query->get('month') == "today") {
-            $this->get('session')->set('admin/event/year', date("Y"));
-            $this->get('session')->set('admin/event/month', date("m"));
+            $this->get('session')->set('admin/event/year', date('Y', $changed_date));
+            $this->get('session')->set('admin/event/month', date('m', $changed_date));
+        } elseif ($request->query->get('month') == 'today') {
+            $this->get('session')->set('admin/event/year', date('Y'));
+            $this->get('session')->set('admin/event/month', date('m'));
         }
 
         $m = $this->get('session')->get('admin/event/month', date('m'));

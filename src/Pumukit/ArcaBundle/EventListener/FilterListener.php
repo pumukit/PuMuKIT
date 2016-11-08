@@ -19,9 +19,9 @@ class FilterListener
     {
         $req = $event->getRequest();
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST &&
-        "Pumukit\ArcaBundle" === substr($req->attributes->get("_controller"), 0, 18)) {
-            $filter = $this->dm->getFilterCollection()->enable("frontend");
-            $filter->setParameter("pub_channel_tag", "PUCHARCA");
+        "Pumukit\ArcaBundle" === substr($req->attributes->get('_controller'), 0, 18)) {
+            $filter = $this->dm->getFilterCollection()->enable('frontend');
+            $filter->setParameter('pub_channel_tag', 'PUCHARCA');
         }
     }
 }

@@ -63,9 +63,9 @@ class TrackController extends Controller implements NewAdminController
             if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if (($request->files->has('resource')) && ("file" == $request->get('file_type'))) {
+            if (($request->files->has('resource')) && ('file' == $request->get('file_type'))) {
                 $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description);
-            } elseif (($request->get('file', null)) && ("inbox" == $request->get('file_type'))) {
+            } elseif (($request->get('file', null)) && ('inbox' == $request->get('file_type'))) {
                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         } catch (\Exception $e) {
@@ -254,7 +254,7 @@ class TrackController extends Controller implements NewAdminController
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
         
-        return new JsonResponse(array("jobId" => $jobId, "priority" => $priority));
+        return new JsonResponse(array('jobId' => $jobId, 'priority' => $priority));
     }
 
     /**

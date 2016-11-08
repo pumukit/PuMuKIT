@@ -373,7 +373,7 @@ class TagServiceTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle paragraph';
-        $description = "Description text";
+        $description = 'Description text';
         $duration = 300;
 
         $mmobj = new MultimediaObject();

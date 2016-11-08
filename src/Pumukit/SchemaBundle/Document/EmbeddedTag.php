@@ -45,7 +45,7 @@ class EmbeddedTag
    *
    * @MongoDB\String
    */
-  private $cod = "";
+  private $cod = '';
 
   /**
    * @var boolean $metatag
@@ -149,7 +149,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->title[$locale])) {
-          return "";
+          return '';
       }
 
       return $this->title[$locale];
@@ -201,7 +201,7 @@ class EmbeddedTag
           $locale = $this->locale;
       }
       if (!isset($this->description[$locale])) {
-          return "";
+          return '';
       }
 
       return $this->description[$locale];
@@ -414,7 +414,7 @@ class EmbeddedTag
   {
       if ($this->isDescendantOf($tag)) {
           $suffixPath = substr($this->getPath(), strlen($tag->getPath()), strlen($this->getPath()));
-          if (1 === substr_count($suffixPath, "|")) {
+          if (1 === substr_count($suffixPath, '|')) {
               return true;
           }
       }

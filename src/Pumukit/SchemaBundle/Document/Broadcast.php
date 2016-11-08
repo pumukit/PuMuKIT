@@ -336,6 +336,6 @@ class Broadcast
   public function isPasswordValid()
   {
       return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
-            || ("" != $this->getPasswd()));
+            || ('' != $this->getPasswd()));
   }
 }

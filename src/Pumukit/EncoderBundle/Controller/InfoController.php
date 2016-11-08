@@ -103,7 +103,7 @@ class InfoController extends Controller
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
 
-        return new JsonResponse(array("jobId" => $jobId, "priority" => $priority));
+        return new JsonResponse(array('jobId' => $jobId, 'priority' => $priority));
     }
 
     /**
@@ -114,7 +114,7 @@ class InfoController extends Controller
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->deleteJob($jobId);
 
-        return new JsonResponse(array("jobId" => $jobId));
+        return new JsonResponse(array('jobId' => $jobId));
     }
 
     /**
@@ -124,7 +124,7 @@ class InfoController extends Controller
     {
         $flashMessage = $this->get('pumukitencoder.job')->retryJob($job);
 
-        return new JsonResponse(array("jobId" => $job->getId(), 'mesage' => $flashMessage));
+        return new JsonResponse(array('jobId' => $job->getId(), 'mesage' => $flashMessage));
     }
 
     /**

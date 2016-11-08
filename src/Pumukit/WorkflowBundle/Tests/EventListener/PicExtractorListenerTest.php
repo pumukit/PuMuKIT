@@ -77,7 +77,7 @@ class PicExtractorListenerTest extends WebTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
 
         $track = new Track();
-        $track->addTag("master");
+        $track->addTag('master');
         $track->setPath($this->videoPath);
         $track->setOnlyAudio(false);
         $track->setWidth(640);
@@ -112,7 +112,7 @@ class PicExtractorListenerTest extends WebTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
 
         $track = new Track();
-        $track->addTag("master");
+        $track->addTag('master');
         $track->setPath($this->videoPath);
         $track->setOnlyAudio(true);
         $track->setWidth(640);
@@ -159,7 +159,7 @@ class PicExtractorListenerTest extends WebTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
 
         $track = new Track();
-        $track->addTag("master");
+        $track->addTag('master');
         $track->setPath($this->videoPath);
         $track->setOnlyAudio(false);
         $track->setWidth(640);
@@ -198,7 +198,7 @@ class PicExtractorListenerTest extends WebTestCase
         $mm = $this->factoryService->createMultimediaObject($series);
 
         $track = new Track();
-        $track->addTag("master");
+        $track->addTag('master');
         $track->setPath($this->videoPath);
         $track->setOnlyAudio(true);
         $track->setWidth(640);

@@ -72,8 +72,8 @@ class WorkflowService
         $statistics = $this->clientService->getWorkflowStatistics();
 
         $total = 0;
-        if (isset($statistics["statistics"]["total"])) {
-            $total = $statistics["statistics"]["total"];
+        if (isset($statistics['statistics']['total'])) {
+            $total = $statistics['statistics']['total'];
         }
 
         if ($total == 0) {
@@ -83,8 +83,8 @@ class WorkflowService
         $decode = $this->clientService->getCountedWorkflowInstances($id, $total, $workflowName);
 
         $instances = array();
-        if (isset($decode["workflows"]["workflow"])) {
-            $instances = $decode["workflows"]["workflow"];
+        if (isset($decode['workflows']['workflow'])) {
+            $instances = $decode['workflows']['workflow'];
         }
         if (isset($instances['state'])) {
             $instances = array('0' => $instances);

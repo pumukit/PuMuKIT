@@ -82,8 +82,8 @@ class PersonRepositoryTest extends WebTestCase
     public function testFindByRoleCodAndEmail()
     {
         $series_main = $this->createSeries("Stark's growing pains");
-        $series_wall = $this->createSeries("The Wall");
-        $series_lhazar = $this->createSeries("A quiet life");
+        $series_wall = $this->createSeries('The Wall');
+        $series_lhazar = $this->createSeries('A quiet life');
 
         $this->dm->persist($series_main);
         $this->dm->persist($series_wall);
@@ -97,9 +97,9 @@ class PersonRepositoryTest extends WebTestCase
         $email_mark = 'mark@email.com';
         $person_mark = $this->createNewPerson('Mark', $email_mark);
 
-        $role_lord = $this->createRole("Lord");
-        $role_ranger = $this->createRole("Ranger");
-        $role_hand = $this->createRole("Hand");
+        $role_lord = $this->createRole('Lord');
+        $role_ranger = $this->createRole('Ranger');
+        $role_hand = $this->createRole('Hand');
 
         $mm1 = $this->factoryService->createMultimediaObject($series_main);
         $mm2 = $this->factoryService->createMultimediaObject($series_wall);
@@ -166,7 +166,7 @@ class PersonRepositoryTest extends WebTestCase
     {
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
+        $test_date = new \DateTime('now');
 
         $series = $this->factoryService->createSeries();
 

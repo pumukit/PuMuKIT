@@ -231,7 +231,7 @@ class SearchController extends Controller implements WebTVController
             }
             if ($endFound != '') {
                 $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
-                $end->modify("+1 day");
+                $end->modify('+1 day');
                 $queryBuilder->field($dateField)->lt($end);
             }
         }

@@ -96,11 +96,11 @@ class AnnounceServiceTest extends WebTestCase
     public function testNextLatestUploads()
     {
         $tagPudenew = new Tag();
-        $tagPudenew->setCod("PUDENEW");//This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
+        $tagPudenew->setCod('PUDENEW');//This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
 
         //We create a serie to hold our mmobjs
         $series2 = $this->factoryService->createSeries();
-        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', "31/05/1999"));
+        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '31/05/1999'));
         $series2->setAnnounce(true);
         $this->dm->persist($series2);
         $this->dm->flush();
@@ -109,9 +109,9 @@ class AnnounceServiceTest extends WebTestCase
         $mm11 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
         $mm33 = $this->factoryService->createMultimediaObject($series2);
-        $mm11->setPublicDate(\DateTime::createFromFormat('d/m/Y', "01/05/1999"));
-        $mm22->setPublicDate(\DateTime::createFromFormat('d/m/Y', "05/04/1999"));
-        $mm33->setPublicDate(\DateTime::createFromFormat('d/m/Y', "03/05/1999"));
+        $mm11->setPublicDate(\DateTime::createFromFormat('d/m/Y', '01/05/1999'));
+        $mm22->setPublicDate(\DateTime::createFromFormat('d/m/Y', '05/04/1999'));
+        $mm33->setPublicDate(\DateTime::createFromFormat('d/m/Y', '03/05/1999'));
         $mm11->addTag($tagPudenew);
         $mm22->addTag($tagPudenew);
         $this->dm->persist($mm11);
@@ -120,11 +120,11 @@ class AnnounceServiceTest extends WebTestCase
         $this->dm->flush();
 
         //We create initial date to request
-        $date = \DateTime::createFromFormat('d/m/Y', "01/08/1999");
+        $date = \DateTime::createFromFormat('d/m/Y', '01/08/1999');
 
         //We check the response is correct (returns objects within the same month)
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date);
-        $this->assertEquals("05/1999", $dateEnd->format("m/Y"));
+        $this->assertEquals('05/1999', $dateEnd->format('m/Y'));
         $this->assertEquals(array($series2, $mm11), $last);
 
         //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
@@ -132,7 +132,7 @@ class AnnounceServiceTest extends WebTestCase
         $this->assertEquals(array($mm33->getId() => $mm33, $mm11->getId() => $mm11), $last);
 
         //We reuse the series and change the date
-        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', "05/04/1999"));
+        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '05/04/1999'));
         $series2->setAnnounce(false);
         $this->dm->persist($series2);
         $this->dm->flush();
@@ -147,14 +147,14 @@ class AnnounceServiceTest extends WebTestCase
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals(array(), $last);
-        $this->assertEquals("04/1997", $dateEnd->format("m/Y"));
+        $this->assertEquals('04/1997', $dateEnd->format('m/Y'));
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals(array(), $last);
-        $this->assertEquals("04/1995", $dateEnd->format("m/Y"));
+        $this->assertEquals('04/1995', $dateEnd->format('m/Y'));
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd, false);
         $this->assertEquals(array(), $last);
-        $this->assertEquals("04/1993", $dateEnd->format("m/Y"));
+        $this->assertEquals('04/1993', $dateEnd->format('m/Y'));
     }
 }

@@ -981,7 +981,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findStandardBy(array $criteria, array $sort = null, $limit = null, $skip = null)
     {
-        $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+        $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
         return $this->getDocumentPersister()->loadAll($criteria, $sort, $limit, $skip)->toArray(false);
     }
 
@@ -993,7 +993,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findStandardOneBy(array $criteria)
     {
-        $criteria["status"] = MultimediaObject::STATUS_PUBLISHED;
+        $criteria['status'] = MultimediaObject::STATUS_PUBLISHED;
         return $this->getDocumentPersister()->load($criteria);
     }
 
@@ -1068,7 +1068,7 @@ class MultimediaObjectRepository extends DocumentRepository
         ->execute();
 
         $singleResult = $result->getSingleResult();
-        return $singleResult["count"];
+        return $singleResult['count'];
     }
 
     /**

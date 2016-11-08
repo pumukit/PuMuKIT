@@ -48,9 +48,9 @@ class SeriesTypeRepositoryTest extends WebTestCase
     {
         $seriesType = new SeriesType();
 
-        $name = "Series Type 1";
-        $description = "Series Type description";
-        $cod = "Cod_1";
+        $name = 'Series Type 1';
+        $description = 'Series Type description';
+        $cod = 'Cod_1';
 
         $seriesType->setName($name);
         $seriesType->setDescription($description);

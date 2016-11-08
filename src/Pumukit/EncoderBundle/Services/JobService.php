@@ -47,7 +47,7 @@ class JobService
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
                                 TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService,
-                                $environment="dev", $tmpPath=null)
+                                $environment='dev', $tmpPath=null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -84,7 +84,7 @@ class JobService
             throw new FileNotFoundException($trackFile->getPathname());
         }
 
-        $pathFile = $trackFile->move($this->tmpPath."/".$multimediaObject->getId(), $trackFile->getClientOriginalName());
+        $pathFile = $trackFile->move($this->tmpPath.'/'.$multimediaObject->getId(), $trackFile->getClientOriginalName());
 
         $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, $duration, $flags);
 
@@ -141,7 +141,7 @@ class JobService
     public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
     {
         if (self::ADD_JOB_UNIQUE & $flags) {
-            $job = $this->repo->findOneBy(array("profile" => $profile, "mm_id" => $multimediaObject->getId()));
+            $job = $this->repo->findOneBy(array('profile' => $profile, 'mm_id' => $multimediaObject->getId()));
 
             if ($job) {
                 return $job;
@@ -157,7 +157,7 @@ class JobService
 
         if (null === $multimediaObject) {
             $this->logger->addError('[addJob] Given null multimedia object');
-            throw new \Exception("Given null multimedia object");
+            throw new \Exception('Given null multimedia object');
         }
 
         if (!(self::ADD_JOB_NOT_CHECKS & $flags)) {
@@ -260,7 +260,7 @@ class JobService
         }
         if ((Job::STATUS_WAITING !== $job->getStatus()) && (Job::STATUS_PAUSED !== $job->getStatus())) {
             $this->logger->addError('[cancelJob] Trying to cancel job "'.$id.'" that is not paused or waiting');
-            throw new \Exception("Trying to cancel job ".$id." that is not paused or waiting");
+            throw new \Exception('Trying to cancel job '.$id.' that is not paused or waiting');
         }
         $this->dm->remove($job);
         $this->dm->flush();
@@ -326,7 +326,7 @@ class JobService
      */
     public function executeNextJob()
     {
-        if ("test" == $this->environment) {
+        if ('test' == $this->environment) {
             return null;
         }
 
@@ -473,7 +473,7 @@ class JobService
     {
         $duration_conf = 25;
         if (($duration_in < $duration_end - $duration_conf) || ($duration_in > $duration_end + $duration_conf)) {
-            throw new \Exception(sprintf("Final duration (%s) and initial duration (%s) are differents", $duration_in, $duration_end));
+            throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $duration_in, $duration_end));
         }
         return true;
     }
@@ -608,7 +608,7 @@ class JobService
                                      pathinfo($pathFile, PATHINFO_EXTENSION));
 
         if (!copy($pathFile, $pathEnd)) {
-            throw new \Exception("Error to copy file");
+            throw new \Exception('Error to copy file');
         }
 
         return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
@@ -714,7 +714,7 @@ class JobService
         $profile = $this->profileService->getProfile($job->getProfile());
 
         if (!$profile) {
-            $errorMsg = sprintf("[createTrackWithJob] Profile %s not found when the job %s creates the track", $job->getProfile(), $job->getId());
+            $errorMsg = sprintf('[createTrackWithJob] Profile %s not found when the job %s creates the track', $job->getProfile(), $job->getId());
             $this->logger->addError($errorMsg);
             throw new \Exception($errorMsg);
         }
@@ -727,7 +727,7 @@ class JobService
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         if (!$multimediaObject) {
-            $errorMsg = sprintf("[createTrackWithJob] Multimedia object %s not found when the job %s creates the track", $job->getMmId(), $job->getId());
+            $errorMsg = sprintf('[createTrackWithJob] Multimedia object %s not found when the job %s creates the track', $job->getMmId(), $job->getId());
             $this->logger->addError($errorMsg);
             throw new \Exception($errorMsg);
         }

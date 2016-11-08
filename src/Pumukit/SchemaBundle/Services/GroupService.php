@@ -165,7 +165,7 @@ class GroupService
                 $enMessage = 'Group cannot be deleted because there is 1 user related. Please, delete this relation first.';
                 $message = $this->translator->trans($enMessage, array(), null, $locale);
             } else {
-                $enMessage = "Group cannot be deleted because there are %s users related. Please, delete these relations first.";
+                $enMessage = 'Group cannot be deleted because there are %s users related. Please, delete these relations first.';
                 $message = $this->translator->trans($enMessage, array(), null, $locale);
                 $message = sprintf($message, $users);
             }
@@ -188,19 +188,19 @@ class GroupService
                 $message = sprintf($message, $play);
             }
         } elseif ((0 < $users) && (0 < $admin) && (0 === $play)) {
-            $enMessage = "Group cannot be deleted because there are %s user(s) and %s admin MultimediaObject(s) related. Please, delete these relations first.";
+            $enMessage = 'Group cannot be deleted because there are %s user(s) and %s admin MultimediaObject(s) related. Please, delete these relations first.';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
             $message = sprintf($message, $users, $admin);
         } elseif ((0 < $users) && (0 === $admin) && (0 < $play)) {
-            $enMessage = "Group cannot be deleted because there are %s user(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $enMessage = 'Group cannot be deleted because there are %s user(s) and %s play MultimediaObject(s) related. Please, delete these relations first.';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
             $message = sprintf($message, $users, $play);
         } elseif ((0 === $users) && (0 < $admin) && (0 < $play)) {
-            $enMessage = "Group cannot be deleted because there are %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $enMessage = 'Group cannot be deleted because there are %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
             $message = sprintf($message, $admin, $play);
         } elseif ((0 < $users) && (0 < $admin) && (0 < $play)) {
-            $enMessage = "Group cannot be deleted because there are %s user(s), %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.";
+            $enMessage = 'Group cannot be deleted because there are %s user(s), %s admin MultimediaObject(s) and %s play MultimediaObject(s) related. Please, delete these relations first.';
             $message = $this->translator->trans($enMessage, array(), null, $locale);
             $message = sprintf($message, $users, $admin, $play);
         }

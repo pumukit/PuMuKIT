@@ -99,7 +99,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $public_date = new \DateTime();
         $title = 'titulo cualquiera';
         $subtitle = 'Subtitle paragraph';
-        $description = "Description text";
+        $description = 'Description text';
         $duration = 300;
         $broadcast = $this->createBroadcast(Broadcast::BROADCAST_TYPE_PRI);
 
@@ -192,11 +192,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
+        $series_type = $this->createSeriesType('Medieval Fantasy Sitcom');
 
         $series_main = $this->createSeries("Stark's growing pains");
-        $series_wall = $this->createSeries("The Wall");
-        $series_lhazar = $this->createSeries("A quiet life");
+        $series_wall = $this->createSeries('The Wall');
+        $series_lhazar = $this->createSeries('A quiet life');
 
         $series_main->setSeriesType($series_type);
         $series_wall->setSeriesType($series_type);
@@ -211,9 +211,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $person_ned = $this->createPerson('Ned');
         $person_benjen = $this->createPerson('Benjen');
 
-        $role_lord = $this->createRole("Lord");
-        $role_ranger = $this->createRole("Ranger");
-        $role_hand = $this->createRole("Hand");
+        $role_lord = $this->createRole('Lord');
+        $role_ranger = $this->createRole('Ranger');
+        $role_hand = $this->createRole('Hand');
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
@@ -1712,11 +1712,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function testCountPeopleWithRoleCode()
     {
-        $series_type = $this->createSeriesType("Medieval Fantasy Sitcom");
+        $series_type = $this->createSeriesType('Medieval Fantasy Sitcom');
 
         $series_main = $this->createSeries("Stark's growing pains");
-        $series_wall = $this->createSeries("The Wall");
-        $series_lhazar = $this->createSeries("A quiet life");
+        $series_wall = $this->createSeries('The Wall');
+        $series_lhazar = $this->createSeries('A quiet life');
 
         $series_main->setSeriesType($series_type);
         $series_wall->setSeriesType($series_type);
@@ -1733,9 +1733,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $person_mark = $this->createPerson('Mark');
         $person_catherin = $this->createPerson('Ned');
 
-        $role_lord = $this->createRole("Lord");
-        $role_ranger = $this->createRole("Ranger");
-        $role_hand = $this->createRole("Hand");
+        $role_lord = $this->createRole('Lord');
+        $role_ranger = $this->createRole('Ranger');
+        $role_hand = $this->createRole('Hand');
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series_main);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series_wall);
@@ -2217,9 +2217,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series1 = $this->createSeries("Series 1");
-        $series2 = $this->createSeries("Series 2");
-        $series3 = $this->createSeries("Series 3");
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
 
         $this->dm->persist($series1);
         $this->dm->persist($series2);
@@ -2229,9 +2229,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $person1 = $this->createPerson('Person 1');
         $person2 = $this->createPerson('Person 2');
 
-        $role1 = $this->createRole("Role1");
-        $role2 = $this->createRole("Role2");
-        $role3 = $this->createRole("Role3");
+        $role1 = $this->createRole('Role1');
+        $role2 = $this->createRole('Role2');
+        $role3 = $this->createRole('Role3');
 
         $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series1);
         $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series2);
@@ -2537,7 +2537,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series = $this->createSeries("Series");
+        $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
         $this->dm->flush();
@@ -2587,7 +2587,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series = $this->createSeries("Series");
+        $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
         $this->dm->flush();
@@ -2649,7 +2649,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series = $this->createSeries("Series");
+        $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
         $this->dm->flush();
@@ -2685,7 +2685,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($broadcast);
         $this->dm->flush();
 
-        $series = $this->createSeries("Series");
+        $series = $this->createSeries('Series');
 
         $this->dm->persist($series);
         $this->dm->flush();
@@ -3096,7 +3096,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $record_date = new \DateTime();
         $public_date = new \DateTime();
         $subtitle = 'Subtitle';
-        $description = "Description";
+        $description = 'Description';
         $duration = 123;
 
         $mm = $this->factoryService->createMultimediaObject($series);
@@ -3120,7 +3120,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
     {
         $subtitle = 'subtitle';
         $description = 'description';
-        $test_date = new \DateTime("now");
+        $test_date = new \DateTime('now');
 
         $series = $this->factoryService->createSeries();
 

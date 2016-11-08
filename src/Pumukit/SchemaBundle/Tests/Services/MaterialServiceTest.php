@@ -236,7 +236,7 @@ class MaterialServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $materialService = new MaterialService($this->dm, $this->materialDispatcher, "/non/existing/path", "/uploads/material", true);
+        $materialService = new MaterialService($this->dm, $this->materialDispatcher, '/non/existing/path', '/uploads/material', true);
     }
 
     public function testGetCaptions()

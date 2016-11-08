@@ -38,10 +38,10 @@ class JobGeneratorListener
 
     private function checkMultimediaObject(MultimediaObject $multimediaObject)
     {
-        $master = $multimediaObject->getTrackWithTag("master");
+        $master = $multimediaObject->getTrackWithTag('master');
 
         $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $tag = $repository->findOneByCod("PUBCHANNELS");
+        $tag = $repository->findOneByCod('PUBCHANNELS');
         if (!$tag) {
             return;
         }
@@ -67,7 +67,7 @@ class JobGeneratorListener
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
                 $this->logger->info(sprintf("JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
-                                            "because it already contains a track created with this profile",
+                                            'because it already contains a track created with this profile',
                                             $targetProfile, $multimediaObject->getId()));
                 continue;
             }
@@ -76,18 +76,18 @@ class JobGeneratorListener
                && ($multimediaObject->isOnlyAudio() == $profile['audio'])) {
                 if (!$multimediaObject->isOnlyAudio() && 0 != $profile['resolution_ver']) {
                     $profileAspectRatio = $profile['resolution_hor']/$profile['resolution_ver'];
-                    $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag("master")->getAspectRatio();
+                    $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag('master')->getAspectRatio();
                     if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
                         $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
-                                                    "because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)",
+                                                    'because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)',
                                                     $targetProfile, $multimediaObject->getId(), $profileAspectRatio, $multimediaObjectAspectRatio));
 
                         continue;
                     }
                 }
                 
-                $master = $multimediaObject->getTrackWithTag("master");
-                $this->logger->info(sprintf("JobGeneratorListener creates new job (%s) for multimedia object %s using standard target", $targetProfile, $multimediaObject->getId()));
+                $master = $multimediaObject->getTrackWithTag('master');
+                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
             
@@ -98,8 +98,8 @@ class JobGeneratorListener
                     continue;
                 }
             
-                $master = $multimediaObject->getTrackWithTag("master");
-                $this->logger->info(sprintf("JobGeneratorListener creates new job (%s) for multimedia object %s using forced target", $targetProfile, $multimediaObject->getId()));
+                $master = $multimediaObject->getTrackWithTag('master');
+                $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
         }

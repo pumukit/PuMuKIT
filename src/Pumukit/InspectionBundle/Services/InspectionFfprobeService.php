@@ -26,12 +26,12 @@ class InspectionFfprobeService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException("The file " . $file . " does not exist");
+            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
         }
 
         $json = json_decode($this->getMediaInfo($file));
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException("This file has no accesible video " .
+            throw new \InvalidArgumentException('This file has no accesible video ' .
                 "nor audio tracks\n" . $file);
         }
 
@@ -55,7 +55,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $json = json_decode($this->getMediaInfo($track->getPath()));
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException("This file has no accesible video " .
+            throw new \InvalidArgumentException('This file has no accesible video ' .
                 "nor audio tracks\n" . $track->getPath());
         }
 
@@ -68,7 +68,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         foreach ($json->streams as $stream) {
             switch ((string) $stream->codec_type) {
-                case "video":
+                case 'video':
                     $track->setVcodec((string)$stream->codec_name);
                     $track->setFramerate((string)$stream->avg_frame_rate);
                     $track->setWidth(intval($stream->width));
@@ -76,7 +76,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
                     $only_audio = false;
                     break;
 
-                case "audio":
+                case 'audio':
                     $track->setAcodec((string)$stream->codec_name);
                     $track->setChannels(intval($stream->channels));
                     break;
@@ -90,7 +90,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     {
         if ($json->streams != null) {
             foreach ($json->streams as $stream) {
-                if ($stream->codec_type == "audio" || $stream->codec_type == "video") {
+                if ($stream->codec_type == 'audio' || $stream->codec_type == 'video') {
                     return true;
                 }
             }

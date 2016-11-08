@@ -68,10 +68,10 @@ class PersonController extends Controller
             $people = $ldapService->getListUsers('*'.$login.'*', '*'.$login.'*');
             foreach ($people as $person) {
                 $out[] = array(
-                               "value" => $person['cn'],
-                               "label" => $person['cn'],
-                               "mail"  => $person['mail'],
-                               "cn"    => $person['cn']
+                               'value' => $person['cn'],
+                               'label' => $person['cn'],
+                               'mail'  => $person['mail'],
+                               'cn'    => $person['cn']
                                );
             }
         } catch (\Exception $e) {

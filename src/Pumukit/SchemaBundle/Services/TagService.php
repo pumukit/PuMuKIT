@@ -34,7 +34,7 @@ class TagService
     {
         $tag = $this->repository->find($tagId);
         if (!$tag) {
-            throw new \Exception("Tag with id ".$tagId." not found.");
+            throw new \Exception('Tag with id '.$tagId.' not found.');
         }
 
         return $this->addTag($mmobj, $tag, $executeFlush);
@@ -52,7 +52,7 @@ class TagService
     {
         $tag = $this->repository->findOneByCod($tagCod);
         if (!$tag) {
-            throw new \Exception("Tag with id ".$tagId." not found.");
+            throw new \Exception('Tag with id '.$tagId.' not found.');
         }
 
         return $this->addTag($mmobj, $tag, $executeFlush);
@@ -108,7 +108,7 @@ class TagService
 
         $tag = $this->repository->find($tagId);
         if (!$tag) {
-            throw new \Exception("Tag with id ".$tagId." not found.");
+            throw new \Exception('Tag with id '.$tagId.' not found.');
         }
 
         do {

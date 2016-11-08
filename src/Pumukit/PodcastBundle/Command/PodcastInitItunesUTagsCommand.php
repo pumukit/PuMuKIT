@@ -14,7 +14,7 @@ class PodcastInitItunesUTagsCommand extends ContainerAwareCommand
 {
     private $dm = null;
     private $tagRepo = null;
-    private $tagsPath = "../Resources/data/tags/";
+    private $tagsPath = '../Resources/data/tags/';
 
     protected function configure()
     {
@@ -35,7 +35,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
+        $this->tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
 
         if ($input->getOption('force')) {
             return $this->executeTags($input, $output);
@@ -52,12 +52,12 @@ EOT
 
     protected function executeTags(InputInterface $input, OutputInterface $output)
     {
-        $this->tagsRepo = $this->dm->getRepository("PumukitSchemaBundle:Tag");
+        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
 
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->tagsPath);
         $file = $input->getArgument('file');
-        if ((0 == strcmp($file, "")) && (!$finder)) {
+        if ((0 == strcmp($file, '')) && (!$finder)) {
             $output->writeln("<error>Tags: There's no data to initialize</error>");
 
             return -1;
@@ -83,7 +83,7 @@ EOT
     protected function createFromFile($file, $root, OutputInterface $output, $repoName)
     {
         if (!file_exists($file)) {
-            $output->writeln("<error>".$repoName.": Error stating ".$file."</error>");
+            $output->writeln('<error>'.$repoName.': Error stating '.$file.'</error>');
 
             return -1;
         }
@@ -91,12 +91,12 @@ EOT
         $idCodMapping = array();
 
         $row = 1;
-        if (($file = fopen($file, "r")) !== false) {
-            while (($currentRow = fgetcsv($file, 300, ";")) !== false) {
+        if (($file = fopen($file, 'r')) !== false) {
+            while (($currentRow = fgetcsv($file, 300, ';')) !== false) {
                 $number = count($currentRow);
                 if (('tag' === $repoName) && ($number == 6 || $number == 9)) {
                     //Check header rows
-                    if (trim($currentRow[0]) == "id") {
+                    if (trim($currentRow[0]) == 'id') {
                         continue;
                     }
                     $parent = isset($idCodMapping[$currentRow[2]])
@@ -105,17 +105,17 @@ EOT
                     try {
                         $tag = $this->createTagFromCsvArray($currentRow, $parent);
                         $idCodMapping[$currentRow[0]] = $tag;
-                        $output->writeln("Tag persisted - new id: ".$tag->getId()." cod: ".$tag->getCod());
+                        $output->writeln('Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod());
                     } catch (\Exception $e) {
-                        $output->writeln("<error>".$repoName.': '.$e->getMessage()."</error>");
+                        $output->writeln('<error>'.$repoName.': '.$e->getMessage().'</error>');
                     }
                 } else {
-                    $output->writeln($repoName.": Last valid row = ...");
+                    $output->writeln($repoName.': Last valid row = ...');
                     $output->writeln("Error: line $row has $number elements");
                 }
 
                 if ($row % 100 == 0) {
-                    echo "Row ".$row."\n";
+                    echo 'Row '.$row."\n";
                 }
                 $previous_content = $currentRow;
                 $row++;
@@ -123,7 +123,7 @@ EOT
             fclose($file);
             $this->dm->flush();
         } else {
-            $output->writeln("<error>Error opening ".$file."</error>");
+            $output->writeln('<error>Error opening '.$file.'</error>');
 
             return -1;
         }
@@ -132,7 +132,7 @@ EOT
     private function createTagFromCsvArray($csv_array, $tag_parent = null)
     {
         if ($tag = $this->tagsRepo->findOneByCod($csv_array[1])) {
-            throw new \LengthException("Nothing done - Tag retrieved from DB id: ".$tag->getId()." cod: ".$tag->getCod());
+            throw new \LengthException('Nothing done - Tag retrieved from DB id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 
         $tag = new Tag();

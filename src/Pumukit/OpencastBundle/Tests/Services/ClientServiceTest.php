@@ -29,7 +29,7 @@ class ClientServiceTest extends WebTestCase
         static::bootKernel($options);
 
         if (!static::$kernel->getContainer()->has('pumukitopencast.client')) {
-            $this->markTestSkipped("Opencast is not propertly configured.");
+            $this->markTestSkipped('Opencast is not propertly configured.');
         }
 
         $this->clientService = static::$kernel->getContainer()->get('pumukitopencast.client');

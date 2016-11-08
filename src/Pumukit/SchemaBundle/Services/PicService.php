@@ -171,7 +171,7 @@ class PicService
     private function getAbsoluteUrlPic($picUrl='')
     {
         if ($picUrl) {
-            if ("/" == $picUrl[0]) {
+            if ('/' == $picUrl[0]) {
                 $scheme = $this->context->getScheme();
                 $host = $this->context->getHost();
                 $port = '';
@@ -181,7 +181,7 @@ class PicService
                     $port = ':'.$this->context->getHttpsPort();
                 }
 
-                return $scheme."://".$host.$port.$picUrl;
+                return $scheme.'://'.$host.$port.$picUrl;
             }
         }
 
@@ -290,7 +290,7 @@ class PicService
     private function getAbsolutePathPic($picPath='')
     {
         if ($picPath) {
-            if ("/" == $picPath[0]) {
+            if ('/' == $picPath[0]) {
                 return $this->webDir.$picPath;
             } else {
                 return $this->webDir.'/'.$picPath;

@@ -29,7 +29,7 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = "", $defaultLicense = "")
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson=true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -87,7 +87,7 @@ class FactoryService
         $series = new Series();
         $series->setLocale($this->locales[0]);
 
-        $series->setPublicDate(new \DateTime("now"));
+        $series->setPublicDate(new \DateTime('now'));
         $series->setCopyright($this->defaultCopyright);
         $series->setLicense($this->defaultLicense);
         $series->setType($collectionType);
@@ -126,7 +126,7 @@ class FactoryService
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
         $embeddedBroadcast = $this->embeddedBroadcastService->createPublicEmbeddedBroadcast();
         $mm->setEmbeddedBroadcast($embeddedBroadcast);
-        $mm->setPublicDate(new \DateTime("now"));
+        $mm->setPublicDate(new \DateTime('now'));
         $mm->setRecordDate($mm->getPublicDate());
         $mm->setCopyright($this->defaultCopyright);
         $mm->setLicense($this->defaultLicense);
@@ -164,7 +164,7 @@ class FactoryService
             }
             $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
-        $mm->setPublicDate(new \DateTime("now"));
+        $mm->setPublicDate(new \DateTime('now'));
         $mm->setRecordDate($mm->getPublicDate());
 
         $mm->setStatus(MultimediaObject::STATUS_BLOQ);
@@ -407,11 +407,11 @@ class FactoryService
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
         // NOTE: #7408 Specify which properties are clonable
-        $new->setProperty("subseries", $src->getProperty("subseries"));
-        $new->setProperty("subseriestitle", $src->getProperty("subseriestitle"));
-        $new->setProperty("owners", $src->getProperty("owners"));
+        $new->setProperty('subseries', $src->getProperty('subseries'));
+        $new->setProperty('subseriestitle', $src->getProperty('subseriestitle'));
+        $new->setProperty('owners', $src->getProperty('owners'));
 
-        $new->setProperty("clonedfrom", $src->getId());
+        $new->setProperty('clonedfrom', $src->getId());
 
         foreach ($src->getTags() as $tag) {
             $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);

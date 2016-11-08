@@ -33,7 +33,7 @@ class PermissionProfile
      * @MongoDB\String
      * @MongoDB\UniqueIndex(order="asc")
      */
-    private $name = "";
+    private $name = '';
 
     /**
      * @var array $permissions

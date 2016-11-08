@@ -31,154 +31,154 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists(Permission::ACCESS_INBOX, Permission::$permissionDescription));
 
         $accessDashboard = array(
-            'description' => "Access Dashboard",
+            'description' => 'Access Dashboard',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessMultimediaSeries = array(
-            'description' => "Access Media Manager",
+            'description' => 'Access Media Manager',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessLiveChannels = array(
-            'description' => "Access Live Channels",
+            'description' => 'Access Live Channels',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessLiveEvents = array(
-            'description' => "Access Live Events",
+            'description' => 'Access Live Events',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessJobs = array(
-            'description' => "Access Jobs",
+            'description' => 'Access Jobs',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessPeople = array(
-            'description' => "Access People",
+            'description' => 'Access People',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessTags = array(
-            'description' => "Access Tags",
+            'description' => 'Access Tags',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessBroadcasts = array(
-            'description' => "Access Broadcasts",
+            'description' => 'Access Broadcasts',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessSeriesTypes = array(
-            'description' => "Access Series Types",
+            'description' => 'Access Series Types',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessAdminUsers = array(
-            'description' => "Access Admin Users",
+            'description' => 'Access Admin Users',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessGroups = array(
-            'description' => "Access Groups",
+            'description' => 'Access Groups',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessPermissionProfiles = array(
-            'description' => "Access Permission Profiles",
+            'description' => 'Access Permission Profiles',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessRoles = array(
-            'description' => "Access Roles",
+            'description' => 'Access Roles',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessImporter = array(
-            'description' => "Access Importer",
+            'description' => 'Access Importer',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $changeMmObjectStatus = array(
-            'description' => "Change Multimedia Object Status",
+            'description' => 'Change Multimedia Object Status',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $changeMmObjectPubChannel = array(
-            'description' => "Change Multimedia Object Publication Channel",
+            'description' => 'Change Multimedia Object Publication Channel',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessPublicationTab = array(
-            'description' => "Access Publication Tab",
+            'description' => 'Access Publication Tab',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessAdvancedUpload = array(
-            'description' => "Access Advanced Upload",
+            'description' => 'Access Advanced Upload',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessWizardUpload = array(
-            'description' => "Access Wizard Upload",
+            'description' => 'Access Wizard Upload',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessApi = array(
-            'description' => "Access API",
+            'description' => 'Access API',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $accessInbox = array(
-            'description' => "Access Inbox",
+            'description' => 'Access Inbox',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()
             )
         );
         $modifyOwner = array(
-            'description' => "Modify Owners & Groups",
+            'description' => 'Modify Owners & Groups',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array()

@@ -375,9 +375,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             if (!$notChangePubChannel) {
-                $resource = $this->updateTags($request->get('pub_channels', null), "PUCH", $resource);
+                $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
             }
-            $resource = $this->updateTags($request->get('pub_decisions', null), "PUDE", $resource);
+            $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
 
             $this->domainManager->update($resource);
 
@@ -559,7 +559,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = array("rank" => "asc");
+        $sorting = array('rank' => 'asc');
         $mmsQueryBuilder = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject')
@@ -811,7 +811,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
 
-        $sorting = array($request->get("fieldName", "rank") => $request->get("order", 1));
+        $sorting = array($request->get('fieldName', 'rank') => $request->get('order', 1));
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mms = $dm
@@ -842,14 +842,14 @@ class MultimediaObjectController extends SortableAdminController implements NewA
           ->find($request->query->get('id'));
 
         if (!$multimediaObject) {
-            return new JsonResponse("Not Found", 404);
+            return new JsonResponse('Not Found', 404);
         }
 
         $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
         $tags = $multimediaObject->getTags()->toArray();
         $this->get('pumukitschema.tag')->resetCategories($mms, $tags);
 
-        return new JsonResponse("");
+        return new JsonResponse('');
     }
 
     /**
@@ -861,7 +861,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
         $mmId = $request->get('mmId');
-        $parent = $repo->findOneById("".$request->get('parentId'));
+        $parent = $repo->findOneById(''.$request->get('parentId'));
 
         return $this->render(
             'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
@@ -1194,7 +1194,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     private function isUserStillRelated(MultimediaObject $multimediaObject)
     {
         $loggedInUser = $this->getUser();
-        $superAdmin = $loggedInUser->hasRole("ROLE_SUPER_ADMIN");
+        $superAdmin = $loggedInUser->hasRole('ROLE_SUPER_ADMIN');
         if ($superAdmin) {
             return true;
         }
