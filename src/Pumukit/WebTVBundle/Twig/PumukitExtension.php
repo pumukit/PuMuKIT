@@ -13,7 +13,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 class PumukitExtension extends \Twig_Extension
 {
-
     /**
      * @var string
      */

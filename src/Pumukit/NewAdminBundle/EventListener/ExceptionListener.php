@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
-
     /**
      * Handles security related exceptions.
      *

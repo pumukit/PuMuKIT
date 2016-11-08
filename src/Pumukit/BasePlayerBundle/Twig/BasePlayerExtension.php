@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BasePlayerExtension extends \Twig_Extension
 {
-
     /**
      * @var RequestContext
      */
