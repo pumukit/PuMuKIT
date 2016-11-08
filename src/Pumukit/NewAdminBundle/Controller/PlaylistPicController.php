@@ -49,7 +49,7 @@ class PlaylistPicController extends Controller implements NewAdminController
         $isBanner = false;
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
             $picService = $this->get('pumukitschema.seriespic');
-            $isBanner =  $request->query->get('banner', false);
+            $isBanner = $request->query->get('banner', false);
             $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
             $playlist = $picService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
         }
@@ -77,7 +77,7 @@ class PlaylistPicController extends Controller implements NewAdminController
             }
             if ($request->files->has('file')) {
                 $picService = $this->get('pumukitschema.seriespic');
-                $isBanner =  $request->query->get('banner', false);
+                $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
                 $media = $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }

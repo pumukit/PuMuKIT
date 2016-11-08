@@ -132,7 +132,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $config = $this->getConfiguration();
 
         $permissionProfile = $this->findOr404($request);
-        $form     = $this->getForm($permissionProfile);
+        $form = $this->getForm($permissionProfile);
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {

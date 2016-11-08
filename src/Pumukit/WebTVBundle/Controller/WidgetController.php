@@ -19,7 +19,7 @@ class WidgetController extends Controller implements WebTVController
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
 
         $menuStats = $this->container->getParameter('menu.show_stats');
-        $homeTitle =  $this->container->getParameter('menu.home_title');
+        $homeTitle = $this->container->getParameter('menu.home_title');
         $announcesTitle = $this->container->getParameter('menu.announces_title');
         $searchTitle = $this->container->getParameter('menu.search_title');
         $mediatecaTitle = $this->container->getParameter('menu.mediateca_title');

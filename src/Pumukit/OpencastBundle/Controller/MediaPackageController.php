@@ -46,7 +46,7 @@ class MediaPackageController extends Controller
         $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $limit = 10;
-        $page =  $request->get('page', 1);
+        $page = $request->get('page', 1);
         $criteria = $this->getCriteria($request);
 
         try {

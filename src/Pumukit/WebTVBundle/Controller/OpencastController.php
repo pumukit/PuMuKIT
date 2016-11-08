@@ -44,7 +44,7 @@ class OpencastController extends PlayerController implements WebTVController
 
     public function doAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if (!$opencasturl =  $multimediaObject->getProperty('opencasturl')) {
+        if (!$opencasturl = $multimediaObject->getProperty('opencasturl')) {
             throw $this->createNotFoundException('The multimedia Object has no Opencast url!');
         }
 

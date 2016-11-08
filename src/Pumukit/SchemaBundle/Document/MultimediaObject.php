@@ -666,7 +666,7 @@ class MultimediaObject
     public function getDurationString()
     {
         if ($this->duration > 0) {
-            $min =  floor($this->duration / 60);
+            $min = floor($this->duration / 60);
             $seg = $this->duration % 60;
 
             if ($seg < 10) {

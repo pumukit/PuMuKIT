@@ -31,8 +31,8 @@ class JobEvent extends Event
      */
     public function __construct(Job $job, Track $track = null, MultimediaObject $multimediaObject = null)
     {
-        $this->job              = $job;
-        $this->track            = $track;
+        $this->job = $job;
+        $this->track = $track;
         $this->multimediaObject = $multimediaObject;
     }
 

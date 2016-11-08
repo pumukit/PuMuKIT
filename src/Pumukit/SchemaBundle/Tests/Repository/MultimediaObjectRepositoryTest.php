@@ -1156,7 +1156,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         // SORT
         $sort = array();
-        $sortAsc =  array('public_date' => 1);
+        $sortAsc = array('public_date' => 1);
         $sortDesc = array('public_date' => -1);
 
         // FIND WITH TAG
@@ -1583,9 +1583,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $sort = array();
-        $sortPubDateAsc =  array('public_date' => 'asc');
+        $sortPubDateAsc = array('public_date' => 'asc');
         $sortPubDateDesc = array('public_date' => 'desc');
-        $sortRecDateAsc =  array('record_date' => 'asc');
+        $sortRecDateAsc = array('record_date' => 'asc');
         $sortRecDateDesc = array('record_date' => 'desc');
 
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sort)->count(true));

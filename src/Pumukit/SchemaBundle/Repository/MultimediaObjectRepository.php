@@ -571,7 +571,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
-        $qb =  $this->createStandardQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->in($mongoIds);
 
         if (0 !== count($sort)) {
@@ -597,7 +597,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
-        $qb =  $this->createStandardQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
 
         if (0 !== count($sort)) {
@@ -620,7 +620,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findOneWithAllTags($tags)
     {
         $mongoIds = $this->getMongoIds($tags);
-        $qb =  $this->createStandardQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
 
         return $qb->getQuery()->getSingleResult();
@@ -637,7 +637,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findWithoutTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
     {
-        $qb =  $this->createStandardQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
 
         if (0 !== count($sort)) {
@@ -677,7 +677,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
-        $qb =  $this->createStandardQueryBuilder()
+        $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->notIn($mongoIds);
 
         if (0 !== count($sort)) {
