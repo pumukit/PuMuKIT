@@ -432,9 +432,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                              );
     }
 
-    /**
-     *
-     */
+    
     public function getChildrenTagAction(Tag $tag, Request $request)
     {
         $config = $this->getConfiguration();

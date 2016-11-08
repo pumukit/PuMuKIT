@@ -41,7 +41,7 @@ Command to load a controlled set of data into a database. Useful for init Pumuki
 The --force parameter has to be used to actually drop the database.
 
 EOT
-          );
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -53,38 +53,38 @@ EOT
 
         if ($input->getOption('force')) {
             switch ($repoName) {
-                case 'all':
-                  $errorExecuting = $this->executeTags($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    $errorExecuting = $this->executeRoles($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    $errorExecuting = $this->executePermissionProfiles($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    break;
-                case 'tag':
-                    $errorExecuting = $this->executeTags($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    break;
-                case 'role':
-                    $errorExecuting = $this->executeRoles($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    break;
-                case 'permissionprofile':
-                    $errorExecuting = $this->executePermissionProfiles($input, $output);
-                    if (-1 === $errorExecuting) {
-                        return -1;
-                    }
-                    break;
+            case 'all':
+                $errorExecuting = $this->executeTags($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                $errorExecuting = $this->executeRoles($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                $errorExecuting = $this->executePermissionProfiles($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                break;
+            case 'tag':
+                $errorExecuting = $this->executeTags($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                break;
+            case 'role':
+                $errorExecuting = $this->executeRoles($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                break;
+            case 'permissionprofile':
+                $errorExecuting = $this->executePermissionProfiles($input, $output);
+                if (-1 === $errorExecuting) {
+                    return -1;
+                }
+                break;
             }
         } elseif ($repoName == 'tag') {
             $errorExecuting = $this->executeTags($input, $output, false);
@@ -261,43 +261,43 @@ EOT
 
                 try {
                     switch ($repoName) {
-                        case 'tag':
-                            $csvTagsArray = array();
-                            for ($i = 0; $i < count($currentRow); $i++) {
-                                $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
-                                $csvTagsArray[ $key ] = $currentRow[ $i ];
-                            }
+                    case 'tag':
+                        $csvTagsArray = array();
+                        for ($i = 0; $i < count($currentRow); $i++) {
+                            $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
+                            $csvTagsArray[ $key ] = $currentRow[ $i ];
+                        }
 
-                            if (isset($importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ])) {
-                                $parent = $importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ];
-                            } else {
-                                $parent = $this->tagsRepo->findOneByCod($csvTagsArray[ 'tree_parent_cod' ]);
-                            }
+                        if (isset($importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ])) {
+                            $parent = $importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ];
+                        } else {
+                            $parent = $this->tagsRepo->findOneByCod($csvTagsArray[ 'tree_parent_cod' ]);
+                        }
 
-                            if (!isset($parent)) {
-                                $parent = $root;
+                        if (!isset($parent)) {
+                            $parent = $root;
+                        }
+                        try {
+                            $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
+                            $importedTags[ $tag->getCod() ] = $tag;
+                        } catch (\LengthException $e) {
+                            if ($verbose) {
+                                $output->writeln('<comment>'.$e->getMessage().'</comment>');
                             }
-                            try {
-                                $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
-                                $importedTags[ $tag->getCod() ] = $tag;
-                            } catch (\LengthException $e) {
-                                if ($verbose) {
-                                    $output->writeln('<comment>'.$e->getMessage().'</comment>');
-                                }
-                                continue;
-                            }
-                            $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
-                            break;
-                        case 'role':
-                            $role = $this->createRoleFromCsvArray($currentRow);
-                            $idCodMapping[$currentRow[0]] = $role;
-                            $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
-                            break;
-                        case 'permissionprofile':
-                            $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
-                            $idCodMapping[$currentRow[0]] = $permissionProfile;
-                            $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
-                            break;
+                            continue;
+                        }
+                        $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
+                        break;
+                    case 'role':
+                        $role = $this->createRoleFromCsvArray($currentRow);
+                        $idCodMapping[$currentRow[0]] = $role;
+                        $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
+                        break;
+                    case 'permissionprofile':
+                        $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
+                        $idCodMapping[$currentRow[0]] = $permissionProfile;
+                        $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
+                        break;
                     }
                 } catch (\Exception $e) {
                     $output->writeln('<error>'.$repoName.': '.$e->getMessage().'</error>');
@@ -318,9 +318,7 @@ EOT
         $this->dm->flush();
     }
 
-    /**
-     *
-     */
+
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
         if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {

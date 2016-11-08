@@ -20,321 +20,319 @@ class Broadcast
     const BROADCAST_TYPE_PRI = 'private';
     const BROADCAST_TYPE_COR = 'corporative';
 
-  /**
-   * @var int $id
-   *
-   * @MongoDB\Id
-   */
-  private $id;
+    /**
+     * @var int $id
+     *
+     * @MongoDB\Id
+     */
+    private $id;
 
-  /**
-   * @var ArrayCollection $multimedia_objects
-   *
-   * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
-   * @Serializer\Exclude
-   */
-  private $multimedia_objects;
+    /**
+     * @var ArrayCollection $multimedia_objects
+     *
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
+     * @Serializer\Exclude
+     */
+    private $multimedia_objects;
 
-  /**
-   * @var int $number_multimedia_objects
-   *
-   * @MongoDB\Int
-   * @MongoDB\Increment
-   */
-  private $number_multimedia_objects = 0;
+    /**
+     * @var int $number_multimedia_objects
+     *
+     * @MongoDB\Int
+     * @MongoDB\Increment
+     */
+    private $number_multimedia_objects = 0;
 
-  /**
-   * @var string $name
-   *
-   * @MongoDB\String
-   * @MongoDB\UniqueIndex(safe=1)
-   */
-  private $name;
+    /**
+     * @var string $name
+     *
+     * @MongoDB\String
+     * @MongoDB\UniqueIndex(safe=1)
+     */
+    private $name;
 
-  /**
-   * @var string $broadcast_type_id
-   *
-   * @MongoDB\String
-   */
-  private $broadcast_type_id = self::BROADCAST_TYPE_PUB;
+    /**
+     * @var string $broadcast_type_id
+     *
+     * @MongoDB\String
+     */
+    private $broadcast_type_id = self::BROADCAST_TYPE_PUB;
 
-  /**
-   * @var string $passwd
-   *
-   * @MongoDB\String
-   */
-  private $passwd;
+    /**
+     * @var string $passwd
+     *
+     * @MongoDB\String
+     */
+    private $passwd;
 
-  /**
-   * @var boolean $default_sel
-   *
-   * @MongoDB\Boolean
-   */
-  private $default_sel = false;
+    /**
+     * @var boolean $default_sel
+     *
+     * @MongoDB\Boolean
+     */
+    private $default_sel = false;
 
-  /**
-   * @var string $description
-   *
-   * @MongoDB\Raw
-   */
-  private $description = array('en' => '');
+    /**
+     * @var string $description
+     *
+     * @MongoDB\Raw
+     */
+    private $description = array('en' => '');
 
-  /**
-   * @var locale $locale
-   */
-  private $locale = 'en';
+    /**
+     * @var locale $locale
+     */
+    private $locale = 'en';
 
-  /**
-   *
-   */
-  public function __construct()
-  {
-      $this->multimedia_objects = new ArrayCollection();
-  }
 
-  /**
-   * Get id
-   *
-   * @return int
-   */
-  public function getId()
-  {
-      return $this->id;
-  }
+    public function __construct()
+    {
+        $this->multimedia_objects = new ArrayCollection();
+    }
 
-  /**
-   * Contains multimedia_object
-   *
-   * @param MultimediaObject $multimedia_object
-   *
-   * @return boolean
-   */
-  public function containsMultimediaObject(MultimediaObject $multimedia_object)
-  {
-      return $this->multimedia_objects->contains($multimedia_object);
-  }
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Get multimedia_objects
-   *
-   * @return ArrayCollection
-   */
-  public function getMultimediaObjects()
-  {
-      return $this->multimedia_objects;
-  }
+    /**
+     * Contains multimedia_object
+     *
+     * @param MultimediaObject $multimedia_object
+     *
+     * @return boolean
+     */
+    public function containsMultimediaObject(MultimediaObject $multimedia_object)
+    {
+        return $this->multimedia_objects->contains($multimedia_object);
+    }
 
-  /**
-   * Increase number_multimedia_objects
-   */
-  public function increaseNumberMultimediaObjects()
-  {
-      ++$this->number_multimedia_objects;
-  }
+    /**
+     * Get multimedia_objects
+     *
+     * @return ArrayCollection
+     */
+    public function getMultimediaObjects()
+    {
+        return $this->multimedia_objects;
+    }
 
-  /**
-   * Decrease number_multimedia_objects
-   */
-  public function decreaseNumberMultimediaObjects()
-  {
-      --$this->number_multimedia_objects;
-  }
+    /**
+     * Increase number_multimedia_objects
+     */
+    public function increaseNumberMultimediaObjects()
+    {
+        ++$this->number_multimedia_objects;
+    }
 
-  /**
-   * Get number_multimedia_objects
-   */
-  public function getNumberMultimediaObjects()
-  {
-      return $this->number_multimedia_objects;
-  }
+    /**
+     * Decrease number_multimedia_objects
+     */
+    public function decreaseNumberMultimediaObjects()
+    {
+        --$this->number_multimedia_objects;
+    }
 
-  /**
-   * Set number_multimedia_objects
-   */
-  public function setNumberMultimediaObjects($count)
-  {
-      return $this->number_multimedia_objects = $count;
-  }
+    /**
+     * Get number_multimedia_objects
+     */
+    public function getNumberMultimediaObjects()
+    {
+        return $this->number_multimedia_objects;
+    }
 
-  /**
-   * Set name
-   *
-   * @param string $name
-   */
-  public function setName($name)
-  {
-      $this->name = $name;
-  }
+    /**
+     * Set number_multimedia_objects
+     */
+    public function setNumberMultimediaObjects($count)
+    {
+        return $this->number_multimedia_objects = $count;
+    }
 
-  /**
-   * Get name
-   *
-   * @return string
-   */
-  public function getName()
-  {
-      return $this->name;
-  }
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
-  /**
-   * Set broadcast_type_id
-   *
-   * @param string $broadcast_type_id
-   */
-  public function setBroadcastTypeId($broadcast_type_id)
-  {
-      $this->broadcast_type_id = $broadcast_type_id;
-  }
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-  /**
-   * Get broadcast_type_id
-   *
-   * @return string
-   */
-  public function getBroadcastTypeId()
-  {
-      return $this->broadcast_type_id;
-  }
+    /**
+     * Set broadcast_type_id
+     *
+     * @param string $broadcast_type_id
+     */
+    public function setBroadcastTypeId($broadcast_type_id)
+    {
+        $this->broadcast_type_id = $broadcast_type_id;
+    }
 
-  /**
-   * Set passwd
-   *
-   * @param string $passwd
-   */
-  public function setPasswd($passwd)
-  {
-      $this->passwd = $passwd;
-  }
+    /**
+     * Get broadcast_type_id
+     *
+     * @return string
+     */
+    public function getBroadcastTypeId()
+    {
+        return $this->broadcast_type_id;
+    }
 
-  /**
-   * Get passwd
-   *
-   * @return string
-   */
-  public function getPasswd()
-  {
-      return $this->passwd;
-  }
+    /**
+     * Set passwd
+     *
+     * @param string $passwd
+     */
+    public function setPasswd($passwd)
+    {
+        $this->passwd = $passwd;
+    }
 
-  /**
-   * Set default_sel
-   *
-   * @param boolean $defatul_sel
-   */
-  public function setDefaultSel($default_sel)
-  {
-      $this->default_sel = $default_sel;
-  }
+    /**
+     * Get passwd
+     *
+     * @return string
+     */
+    public function getPasswd()
+    {
+        return $this->passwd;
+    }
 
-  /**
-   * Get default_sel
-   *
-   * @return boolean
-   */
-  public function getDefaultSel()
-  {
-      return $this->default_sel;
-  }
+    /**
+     * Set default_sel
+     *
+     * @param boolean $defatul_sel
+     */
+    public function setDefaultSel($default_sel)
+    {
+        $this->default_sel = $default_sel;
+    }
 
-  /**
-   * Set description
-   *
-   * @param string $description
-   * @param string|null $locale
-   */
-  public function setDescription($description, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->description[$locale] = $description;
-  }
+    /**
+     * Get default_sel
+     *
+     * @return boolean
+     */
+    public function getDefaultSel()
+    {
+        return $this->default_sel;
+    }
 
-  /**
-   * Get description
-   *
-   * @param string|null $locale
-   * @return string
-   */
-  public function getDescription($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->description[$locale])) {
-          return '';
-      }
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @param string|null $locale
+     */
+    public function setDescription($description, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->description[$locale] = $description;
+    }
 
-      return $this->description[$locale];
-  }
+    /**
+     * Get description
+     *
+     * @param string|null $locale
+     * @return string
+     */
+    public function getDescription($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->description[$locale])) {
+            return '';
+        }
 
-  /**
-   * Set I18n description
-   *
-   * @param array $description
-   */
-  public function setI18nDescription(array $description)
-  {
-      $this->description = $description;
-  }
+        return $this->description[$locale];
+    }
 
-  /**
-   * Get i18n description
-   *
-   * @return array
-   */
-  public function getI18nDescription()
-  {
-      return $this->description;
-  }
+    /**
+     * Set I18n description
+     *
+     * @param array $description
+     */
+    public function setI18nDescription(array $description)
+    {
+        $this->description = $description;
+    }
 
-  /**
-   * Set locale
-   *
-   * @param string $locale
-   */
-  public function setLocale($locale)
-  {
-      $this->locale = $locale;
-  }
+    /**
+     * Get i18n description
+     *
+     * @return array
+     */
+    public function getI18nDescription()
+    {
+        return $this->description;
+    }
 
-  /**
-   * Get locale
-   *
-   * @return string
-   */
-  public function getLocale()
-  {
-      return $this->locale;
-  }
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
-  /**
-   * Clone Broadcast
-   *
-   * @return Broadcast
-   */
-  public function cloneResource()
-  {
-      $aux = clone $this;
-      $aux->id = null;
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 
-      return $aux;
-  }
+    /**
+     * Clone Broadcast
+     *
+     * @return Broadcast
+     */
+    public function cloneResource()
+    {
+        $aux = clone $this;
+        $aux->id = null;
 
-  /**
-   * to String
-   */
-  public function __toString()
-  {
-      return $this->getName();
-  }
+        return $aux;
+    }
 
-  /**
-   * @Assert\True(message = "Password required if not public")
-   */
-  public function isPasswordValid()
-  {
-      return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
-            || ('' != $this->getPasswd()));
-  }
+    /**
+     * to String
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @Assert\True(message = "Password required if not public")
+     */
+    public function isPasswordValid()
+    {
+        return ((self::BROADCAST_TYPE_PUB == $this->getBroadcastTypeId())
+                || ('' != $this->getPasswd()));
+    }
 }
