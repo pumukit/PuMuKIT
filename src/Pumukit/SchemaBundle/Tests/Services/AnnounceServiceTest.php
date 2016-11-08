@@ -96,7 +96,7 @@ class AnnounceServiceTest extends WebTestCase
     public function testNextLatestUploads()
     {
         $tagPudenew = new Tag();
-        $tagPudenew->setCod('PUDENEW');//This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
+        $tagPudenew->setCod('PUDENEW'); //This tag must be added to mmobjs in order for them to appear on 'Latests Uploads'
 
         //We create a serie to hold our mmobjs
         $series2 = $this->factoryService->createSeries();

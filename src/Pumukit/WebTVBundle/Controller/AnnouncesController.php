@@ -33,7 +33,7 @@ class AnnouncesController extends Controller implements WebTVController
 
         $announcesService = $this->get('pumukitschema.announce');
 
-        $dateRequest = $request->query->get('date', 0);//Use to queries for month and year to reduce formatting and unformatting.
+        $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
         list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew);
         if (empty($last)) {

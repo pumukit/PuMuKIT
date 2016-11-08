@@ -239,7 +239,7 @@ class TagController extends Controller implements NewAdminController
             }
 
             if ($parentMissing) {
-                $parent = $element->getParent();//"retrieveByPKWithI18n");
+                $parent = $element->getParent(); //"retrieveByPKWithI18n");
                 if ($parent->getId() != $top_parent) {
                     $tags[] = $parent;
                     $tags = $this->getAllParents($parent, $tags, $top_parent);

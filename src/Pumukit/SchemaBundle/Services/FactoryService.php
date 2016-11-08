@@ -461,7 +461,7 @@ class FactoryService
             $clonedAnnot = clone $annot;
             $clonedAnnot->setMultimediaObject($new->getId());
             $this->dm->persist($clonedAnnot);
-            $this->dm->flush();//necessary?
+            $this->dm->flush(); //necessary?
         }
 
         if ($embeddedBroadcast = $src->getEmbeddedBroadcast()) {

@@ -54,7 +54,6 @@ class ByTagController extends Controller
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
-
     private function createPager($objects, $page)
     {
         $adapter = new DoctrineODMMongoDBAdapter($objects);

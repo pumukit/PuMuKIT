@@ -128,10 +128,10 @@ class AnnotationsAPIController extends Controller
         $annotation->setInPoint($inPoint);
         $annotation->setOutPoint($outPoint);
         $annotation->setIsPrivate($isPrivate);
-        $annotation->setLength(0);//This field is not very useful.
+        $annotation->setLength(0); //This field is not very useful.
         $annotation->setCreated(new \DateTime());
         $userId = $this->getUser() ? $this->getUser()->getId() : 'anonymous';
-        $annotation->setUserId($userId);//TODO: How do we get the user_id?
+        $annotation->setUserId($userId); //TODO: How do we get the user_id?
         $session = new Session(); //Using symfony sessions instead of php session_id()
         $session = $session->getId();
         $annotation->setSession($session);

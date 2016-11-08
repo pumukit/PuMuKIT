@@ -84,7 +84,6 @@ class Broadcast
      */
     private $locale = 'en';
 
-
     public function __construct()
     {
         $this->multimedia_objects = new ArrayCollection();

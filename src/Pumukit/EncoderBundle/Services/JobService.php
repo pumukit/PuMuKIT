@@ -780,7 +780,6 @@ class JobService
         return null;
     }
 
-
     private function mkdir($path)
     {
         $fs = new Filesystem();

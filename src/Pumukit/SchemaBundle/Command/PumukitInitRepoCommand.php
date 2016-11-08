@@ -320,7 +320,6 @@ EOT
         $this->dm->flush();
     }
 
-
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
         if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {

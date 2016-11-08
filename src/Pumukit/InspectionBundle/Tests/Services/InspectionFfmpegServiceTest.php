@@ -129,7 +129,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
         $duration1 = '2';
         $size1 = '551784';
 
-        $vcodec1 = 'h264';// mediainfo = 'AVC';
+        $vcodec1 = 'h264'; // mediainfo = 'AVC';
         $framerate1 = '25.000'; // Also works with $framerate = '25';
         $width1 = '960';
         $height1 = '720';

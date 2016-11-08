@@ -55,7 +55,6 @@ class TagType extends AbstractType
             }
         });
 
-
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $tag = $event->getData();
 

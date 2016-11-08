@@ -543,7 +543,6 @@ class ClientService
             $roles = $user->getRoles();
         }
 
-
         return '["'.implode('","', $roles).'"]';
     }
 }

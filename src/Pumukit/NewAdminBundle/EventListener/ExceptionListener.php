@@ -23,7 +23,6 @@ class ExceptionListener
         } while (null !== $exception = $exception->getPrevious());
     }
 
-
     private function handleAccessDeniedException(GetResponseForExceptionEvent $event, AccessDeniedException $exception)
     {
         $req = $event->getRequest();
