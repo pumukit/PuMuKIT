@@ -85,7 +85,7 @@ class APIController extends Controller implements NewAdminController
 
         $counts = array('total' => $total,
                         'limit' => $limit,
-                        'page' => $page ,
+                        'page' => $page,
                         'criteria' => $criteria,
                         'sort'  => $sort,
                         'mmobjs' => $mmobjs);
@@ -134,7 +134,7 @@ class APIController extends Controller implements NewAdminController
 
         $counts = array('total' => $total,
                         'limit' => $limit,
-                        'page' => $page ,
+                        'page' => $page,
                         'criteria' => $criteria,
                         'sort'  => $sort,
                         'series' => $series,);
