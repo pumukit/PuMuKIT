@@ -42,7 +42,7 @@ class CpuService
             $busy = 0;
             foreach ($executingJobs as $job) {
                 if ($name === $job->getCpu()) {
-                    $busy++;
+                    ++$busy;
                 }
             }
             if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))) {

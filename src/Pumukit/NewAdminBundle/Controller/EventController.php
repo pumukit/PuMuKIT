@@ -204,7 +204,7 @@ class EventController extends AdminController implements NewAdminController
         $dweek = date('N', mktime(0, 0, 0, $month, 1, $year)) - 1;
         foreach (range(1, self::getDaysInMonth($month, $year)) as $i) {
             $aux[intval($dweek / 7)][($dweek % 7)] = $i;
-            $dweek++;
+            ++$dweek;
         }
 
         return $aux;

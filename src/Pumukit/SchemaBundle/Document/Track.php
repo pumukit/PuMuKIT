@@ -367,7 +367,7 @@ class Track extends Element
    */
   public function incNumview()
   {
-      $this->numview++;
+      ++$this->numview;
   }
 
   /**

@@ -263,7 +263,7 @@ EOT
                     switch ($repoName) {
                     case 'tag':
                         $csvTagsArray = array();
-                        for ($i = 0; $i < count($currentRow); $i++) {
+                        for ($i = 0; $i < count($currentRow); ++$i) {
                             $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
                             $csvTagsArray[ $key ] = $currentRow[ $i ];
                         }
@@ -312,7 +312,7 @@ EOT
             }
 
             $previous_content = $currentRow;
-            $row++;
+            ++$row;
         }
         fclose($file);
         $this->dm->flush();

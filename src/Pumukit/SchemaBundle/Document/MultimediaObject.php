@@ -700,7 +700,7 @@ class MultimediaObject
      */
     public function incNumview()
     {
-        $this->numview++;
+        ++$this->numview;
     }
 
     /**

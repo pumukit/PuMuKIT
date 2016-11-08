@@ -115,7 +115,7 @@ class StatsService
         if (count($aggregation) < $options['limit']) {
             if (count($aggregation) == 0) {
                 $max = min((1 + $options['page']) * $options['limit'], $total);
-                for ($i = ($options['page'] * $options['limit']); $i < $max; $i++) {
+                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
                     $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
                     if ($multimediaObject) {
                         $mostViewed[] = array('mmobj' => $multimediaObject,
@@ -184,7 +184,7 @@ class StatsService
         if (count($aggregation) < $options['limit']) {
             if (count($aggregation) == 0) {
                 $max = min((1 + $options['page']) * $options['limit'], $total);
-                for ($i = ($options['page'] * $options['limit']); $i < $max; $i++) {
+                for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
                     $series = $this->repoSeries->find($seriesIds[$i - $totalInAggegation]);
                     if ($series) {
                         $mostViewed[] = array('series' => $series,

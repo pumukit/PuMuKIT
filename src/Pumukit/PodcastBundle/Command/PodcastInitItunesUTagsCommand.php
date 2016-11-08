@@ -118,7 +118,7 @@ EOT
                     echo 'Row '.$row."\n";
                 }
                 $previous_content = $currentRow;
-                $row++;
+                ++$row;
             }
             fclose($file);
             $this->dm->flush();
