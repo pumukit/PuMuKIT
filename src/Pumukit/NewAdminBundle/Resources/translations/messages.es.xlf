@@ -1170,16 +1170,7 @@
       </trans-unit>
       <trans-unit id="98d3e521741790e0895166ca674c9ad8" resname="Published: is listed in the Series and can be played with published URL">
         <source>Published: is listed in the Series and can be played with published URL</source>
-        <target xml:lang="es-ES" state="translated">Publicado: se lista en el catálogo de Series y puede ser reproducido con la ULR de publicación</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Publicado: se lista en el catálogo de Series y puede ser reproducida con la ULR de publicación</target>
-        </alt-trans>
-        <alt-trans>
-          <target xml:lang="es-ES">Publicada: se lista en el catálogo de Series y puede ser reproducida con la ULR de publicación</target>
-        </alt-trans>
-        <alt-trans>
-          <target xml:lang="es-ES">Publicada: se lista en el listado de Series y puede ser reproducida con la ULR de publicación</target>
-        </alt-trans>
+        <target xml:lang="es-ES" state="translated">Publicado: se lista en el catálogo de Series y puede ser reproducido con la URL de publicación</target>
       </trans-unit>
       <trans-unit id="c6b7e9af7d5f66f937d19b1583827225" resname="Hidden: is not listed in the Series but can be played with magic URL">
         <source>Hidden: is not listed in the Series but can be played with magic URL</source>
