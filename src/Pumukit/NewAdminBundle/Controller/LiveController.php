@@ -14,7 +14,7 @@ class LiveController extends AdminController implements NewAdminController
     /**
      * Create Action
      * Overwrite to return json response
-     * and update page
+     * and update page.
      *
      * @param Request $request
      *
@@ -54,7 +54,7 @@ class LiveController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria)
     {

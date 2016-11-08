@@ -10,7 +10,7 @@ class LicenseType extends AbstractType
     private $licenses = array();
 
     /**
-     * @param array $licenses: list of licenses, if is a sequential array use text as value and label.
+     * @param array $licenses: list of licenses, if is a sequential array use text as value and label
      */
     public function __construct(array $licenses = array())
     {

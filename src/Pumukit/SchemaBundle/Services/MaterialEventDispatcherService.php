@@ -16,7 +16,7 @@ class MaterialEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -26,14 +26,14 @@ class MaterialEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event MATERIAL_CREATE
      * 'material.create' passing
      * the multimedia object and the material
      *
      * @param MultimediaObject $multimediaObject
-     * @param Material $material
+     * @param Material         $material
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Material $material)
     {
@@ -42,14 +42,14 @@ class MaterialEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event MATERIAL_UPDATE
      * 'material.update' passing
      * the multimedia object and the material
      *
      * @param MultimediaObject $multimediaObject
-     * @param Material $material
+     * @param Material         $material
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Material $material)
     {
@@ -58,14 +58,14 @@ class MaterialEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event MATERIAL_DELETE
      * 'material.delete' passing
      * the multimedia object and the material
      *
      * @param MultimediaObject $multimediaObject
-     * @param Material $material
+     * @param Material         $material
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Material $material)
     {

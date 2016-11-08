@@ -87,7 +87,7 @@ class MediaPackageController extends Controller
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria($request)
     {

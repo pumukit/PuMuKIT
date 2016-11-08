@@ -19,7 +19,8 @@ class EventController extends AdminController implements NewAdminController
     public static $daysInMonth = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
     /**
-     * Overwrite to get the calendar
+     * Overwrite to get the calendar.
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -51,7 +52,7 @@ class EventController extends AdminController implements NewAdminController
     /**
      * Create Action
      * Overwrite to return json response
-     * and update page
+     * and update page.
      *
      * @param Request $request
      *
@@ -91,7 +92,8 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * List action
+     * List action.
+     *
      * @Template
      */
     public function listAction(Request $request)
@@ -112,7 +114,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update session with active tab
+     * Update session with active tab.
      */
     public function updateSessionAction(Request $request)
     {
@@ -130,7 +132,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Get calendar
+     * Get calendar.
      */
     private function getCalendar($config, $request)
     {
@@ -169,7 +171,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Get days in month
+     * Get days in month.
      */
     private static function getDaysInMonth($month, $year)
     {
@@ -195,7 +197,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Generate array
+     * Generate array.
      */
     private static function generateArray($month, $year)
     {
@@ -211,7 +213,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria($config)
     {
@@ -251,7 +253,7 @@ class EventController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria)
     {

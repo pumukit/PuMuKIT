@@ -29,11 +29,12 @@ class TrackService
     }
 
     /**
-     * Add track to multimedia object
+     * Add track to multimedia object.
      *
-     * @param  MultimediaObject $multimediaObject
-     * @param  Track            $track
-     * @param  boolean          $executeFlush
+     * @param MultimediaObject $multimediaObject
+     * @param Track            $track
+     * @param bool             $executeFlush
+     *
      * @return MultimediaObject
      */
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, Track $track, $executeFlush = true)
@@ -51,7 +52,7 @@ class TrackService
     }
 
     /**
-     * Update Track in Multimedia Object
+     * Update Track in Multimedia Object.
      */
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track)
     {
@@ -64,7 +65,7 @@ class TrackService
     }
 
     /**
-     * Remove Track from Multimedia Object
+     * Remove Track from Multimedia Object.
      */
     public function removeTrackFromMultimediaObject(MultimediaObject $multimediaObject, $trackId)
     {
@@ -91,7 +92,7 @@ class TrackService
     }
 
     /**
-     * Up Track in Multimedia Object
+     * Up Track in Multimedia Object.
      */
     public function upTrackInMultimediaObject(MultimediaObject $multimediaObject, $trackId)
     {
@@ -103,7 +104,7 @@ class TrackService
     }
 
     /**
-     * Down Track in Multimedia Object
+     * Down Track in Multimedia Object.
      */
     public function downTrackInMultimediaObject(MultimediaObject $multimediaObject, $trackId)
     {
@@ -115,7 +116,7 @@ class TrackService
     }
 
     /**
-     * Get temp directories
+     * Get temp directories.
      */
     public function getTempDirs()
     {

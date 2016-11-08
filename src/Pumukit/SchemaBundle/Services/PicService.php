@@ -15,7 +15,7 @@ class PicService
     private $webDir;
 
     /**
-     * @var RequestContext $context
+     * @var RequestContext
      */
     protected $context;
 
@@ -31,7 +31,7 @@ class PicService
     }
 
     /**
-     * Get first url pic
+     * Get first url pic.
      *
      * Get the first url pic of a document,
      * if none is found, returns the default
@@ -40,8 +40,8 @@ class PicService
      * video or audio
      *
      * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
-     * @param boolean                 $absolute Returns absolute path
-     * @param boolean                 $hd       Returns pic in HD
+     * @param bool                    $absolute Returns absolute path
+     * @param bool                    $hd       Returns pic in HD
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class PicService
     }
 
     /**
-     * Get default url pic
+     * Get default url pic.
      *
      * Get the default url pic
      * for a given resource checking if
@@ -78,8 +78,8 @@ class PicService
      * video or audio
      *
      * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
-     * @param boolean                 $absolute Returns absolute path
-     * @param boolean                 $hd       Returns pic in HD
+     * @param bool                    $absolute Returns absolute path
+     * @param bool                    $hd       Returns pic in HD
      *
      * @return string
      */
@@ -99,12 +99,12 @@ class PicService
     }
 
     /**
-     * Get default series url pic
+     * Get default series url pic.
      *
      * Returns the default url pic
      * according to absolute url parameter
      *
-     * @param boolean $absolute Returns absolute path
+     * @param bool $absolute Returns absolute path
      * @returns string
      */
     public function getDefaultSeriesUrlPic($absolute = false)
@@ -117,12 +117,12 @@ class PicService
     }
 
     /**
-     * Get default playlist url pic
+     * Get default playlist url pic.
      *
      * Returns the default url pic
      * according to absolute url parameter
      *
-     * @param boolean $absolute Returns absolute path
+     * @param bool $absolute Returns absolute path
      * @returns string
      */
     public function getDefaultPlaylistUrlPic($absolute = false)
@@ -135,15 +135,15 @@ class PicService
     }
 
     /**
-     * Get default multimedia object url pic
+     * Get default multimedia object url pic.
      *
      * Returns the default url pic
      * according to absolute url parameter
      * and hd in case of audio
      *
-     * @param boolean $audio    Video is only audio
-     * @param boolean $hd       Returns pic in HD
-     * @param boolean $absolute Returns absolute path
+     * @param bool $audio    Video is only audio
+     * @param bool $hd       Returns pic in HD
+     * @param bool $absolute Returns absolute path
      * @returns string
      */
     public function getDefaultMultimediaObjectUrlPic($absolute = false, $audio = false, $hd = true)
@@ -166,9 +166,10 @@ class PicService
     }
 
     /**
-     * Get absolute path of a given pic url
+     * Get absolute path of a given pic url.
      *
      * @param string $picUrl
+     *
      * @return string
      */
     private function getAbsoluteUrlPic($picUrl = '')
@@ -192,7 +193,7 @@ class PicService
     }
 
     /**
-     * Get first path pic
+     * Get first path pic.
      *
      * Get the first path pic of a document,
      * if none is found, returns the default
@@ -200,8 +201,8 @@ class PicService
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object   Object to get the path (using $object->getPics())
-     * @param boolean                 $hd       Returns pic in HD
+     * @param Series|MultimediaObject $object Object to get the path (using $object->getPics())
+     * @param bool                    $hd     Returns pic in HD
      *
      * @return string
      */
@@ -226,15 +227,15 @@ class PicService
     }
 
     /**
-     * Get default path pic
+     * Get default path pic.
      *
      * Get the default path pic
      * for a given resource checking if
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object   Object to get the path (using $object->getPics())
-     * @param boolean                 $hd       Returns pic in HD
+     * @param Series|MultimediaObject $object Object to get the path (using $object->getPics())
+     * @param bool                    $hd     Returns pic in HD
      *
      * @return string
      */
@@ -250,7 +251,7 @@ class PicService
     }
 
     /**
-     * Get default series path pic
+     * Get default series path pic.
      *
      * @returns string
      */
@@ -260,13 +261,13 @@ class PicService
     }
 
     /**
-     * Get default multimedia object path pic
+     * Get default multimedia object path pic.
      *
      * Returns the default path pic
      * according to hd parameter and in case of audio
      *
-     * @param boolean $audio    Video is only audio
-     * @param boolean $hd       Returns pic in HD
+     * @param bool $audio Video is only audio
+     * @param bool $hd    Returns pic in HD
      * @returns string
      */
     public function getDefaultMultimediaObjectPathPic($audio = false, $hd = true)
@@ -285,9 +286,10 @@ class PicService
     }
 
     /**
-     * Get absolute path of a given pic path
+     * Get absolute path of a given pic path.
      *
      * @param string $picPath
+     *
      * @return string
      */
     private function getAbsolutePathPic($picPath = '')

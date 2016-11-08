@@ -23,13 +23,13 @@ class PersonService
     private $repoRole;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param DocumentManager $documentManager
+     * @param DocumentManager                      $documentManager
      * @param PersonWithRoleEventDispatcherService $dispatcher
-     * @param UserService     $userService
-     * @param boolean         $addUserAsPerson
-     * @param string          $personalScopeRoleCode
+     * @param UserService                          $userService
+     * @param bool                                 $addUserAsPerson
+     * @param string                               $personalScopeRoleCode
      */
     public function __construct(DocumentManager $documentManager, PersonWithRoleEventDispatcherService $dispatcher, UserService $userService, $addUserAsPerson = true, $personalScopeRoleCode = 'owner')
     {
@@ -44,9 +44,10 @@ class PersonService
     }
 
     /**
-     * Save Person
+     * Save Person.
      *
-     * @param  Person $person
+     * @param Person $person
+     *
      * @return Person
      */
     public function savePerson(Person $person)
@@ -58,9 +59,10 @@ class PersonService
     }
 
     /**
-     * Save Role
+     * Save Role.
      *
-     * @param  Role $role
+     * @param Role $role
+     *
      * @return Role
      */
     public function saveRole(Role $role)
@@ -72,9 +74,10 @@ class PersonService
     }
 
     /**
-     * Find person by id
+     * Find person by id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return Person
      */
     public function findPersonById($id)
@@ -83,9 +86,10 @@ class PersonService
     }
 
     /**
-     * Find role by id
+     * Find role by id.
      *
-     * @param  string $id
+     * @param string $id
+     *
      * @return Role
      */
     public function findRoleById($id)
@@ -94,9 +98,10 @@ class PersonService
     }
 
     /**
-     * Find person by email
+     * Find person by email.
      *
-     * @param  string $email
+     * @param string $email
+     *
      * @return Person
      */
     public function findPersonByEmail($email)
@@ -105,9 +110,10 @@ class PersonService
     }
 
     /**
-     * Update update person
+     * Update update person.
      *
-     * @param  Person $person
+     * @param Person $person
+     *
      * @return Person
      */
     public function updatePerson(Person $person)
@@ -130,9 +136,10 @@ class PersonService
     }
 
     /**
-     * Update update role
+     * Update update role.
      *
-     * @param  Role $role
+     * @param Role $role
+     *
      * @return Role
      */
     public function updateRole(Role $role)
@@ -156,10 +163,11 @@ class PersonService
     }
 
     /**
-     * Find series with person
+     * Find series with person.
      *
-     * @param  Person $person
-     * @param  int    $limit  Number of series, all by default
+     * @param Person $person
+     * @param int    $limit  Number of series, all by default
+     *
      * @return array
      */
     public function findSeriesWithPerson(Person $person, $limit = 0)
@@ -185,11 +193,12 @@ class PersonService
     }
 
     /**
-     * Create relation person
+     * Create relation person.
      *
-     * @param  Person           $person
-     * @param  Role             $role
-     * @param  MultimediaObject $multimediaObject
+     * @param Person           $person
+     * @param Role             $role
+     * @param MultimediaObject $multimediaObject
+     *
      * @return MultimediaObject
      */
     public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true)
@@ -213,11 +222,12 @@ class PersonService
     }
 
     /**
-     * Auto complete
+     * Auto complete.
      *
      * Returns people with partial name in it
      *
-     * @param  string          $name
+     * @param string $name
+     *
      * @return ArrayCollection
      */
     public function autoCompletePeopleByName($name)
@@ -226,11 +236,12 @@ class PersonService
     }
 
     /**
-     * Up person with role
+     * Up person with role.
      *
-     * @param  Person           $person
-     * @param  Role             $role
-     * @param  MultimediaObject $multimediaObject
+     * @param Person           $person
+     * @param Role             $role
+     * @param MultimediaObject $multimediaObject
+     *
      * @return MultimediaObject
      */
     public function upPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -243,11 +254,12 @@ class PersonService
     }
 
     /**
-     * Down person with role
+     * Down person with role.
      *
-     * @param  Person           $person
-     * @param  Role             $role
-     * @param  MultimediaObject $multimediaObject
+     * @param Person           $person
+     * @param Role             $role
+     * @param MultimediaObject $multimediaObject
+     *
      * @return MultimediaObject
      */
     public function downPersonWithRole(Person $person, Role $role, MultimediaObject $multimediaObject)
@@ -260,12 +272,13 @@ class PersonService
     }
 
     /**
-     * Delete relation of embedded person with role in multimedia object
+     * Delete relation of embedded person with role in multimedia object.
      *
-     * @param  Person           $person
-     * @param  Role             $role
-     * @param  MultimediaObject $multimediaObject
-     * @return boolean          TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise.
+     * @param Person           $person
+     * @param Role             $role
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return bool TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise
      */
     public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject)
     {
@@ -286,7 +299,7 @@ class PersonService
     }
 
     /**
-     * Delete Person
+     * Delete Person.
      */
     public function deletePerson(Person $person, $deleteFromUser = false)
     {
@@ -303,7 +316,7 @@ class PersonService
     }
 
     /**
-     * Batch delete person
+     * Batch delete person.
      *
      * @param Person
      */
@@ -326,9 +339,10 @@ class PersonService
     }
 
     /**
-     * Count multimedia objects with person
+     * Count multimedia objects with person.
      *
-     * @param  Person $person
+     * @param Person $person
+     *
      * @return array
      */
     public function countMultimediaObjectsWithPerson($person)
@@ -337,9 +351,10 @@ class PersonService
     }
 
     /**
-     * Reference Person into User
+     * Reference Person into User.
      *
      * @param User $user
+     *
      * @return User
      */
     public function referencePersonIntoUser(User $user)
@@ -359,13 +374,14 @@ class PersonService
     }
 
     /**
-     * Get Person from logged in User
+     * Get Person from logged in User.
      *
      * Get the Person referenced
      * in the logged in User
      * It there is none, it creates it
      *
-     * @param  User|null  $loggedInUser
+     * @param User|null $loggedInUser
+     *
      * @return Person|null
      */
     public function getPersonFromLoggedInUser(User $loggedInUser = null)
@@ -383,7 +399,7 @@ class PersonService
     }
 
     /**
-     * Get Personal Scope Role
+     * Get Personal Scope Role.
      *
      * Gets the default role
      * to add the User as Person
@@ -406,7 +422,7 @@ class PersonService
     }
 
     /**
-     * Get Personal Scope Role
+     * Get Personal Scope Role.
      *
      * Gets the default role code
      * to add the User as Person
@@ -420,9 +436,10 @@ class PersonService
     }
 
     /**
-     * Create from User
+     * Create from User.
      *
      * @param User $user
+     *
      * @return Person
      */
     private function createFromUser(User $user)
@@ -439,7 +456,7 @@ class PersonService
     }
 
     /**
-     * Get all roles
+     * Get all roles.
      */
     public function getRoles()
     {
@@ -450,11 +467,11 @@ class PersonService
     }
 
     /**
-     * Remove User from Person
+     * Remove User from Person.
      *
-     * @param User    $user
-     * @param Person  $person
-     * @param boolean $executeFlush
+     * @param User   $user
+     * @param Person $person
+     * @param bool   $executeFlush
      */
     public function removeUserFromPerson(User $user, Person $person, $executeFlush = true)
     {
@@ -466,10 +483,11 @@ class PersonService
     }
 
     /**
-     * Update embedded person
+     * Update embedded person.
      *
-     * @param  Person         $person
-     * @param  EmbeddedPerson $embeddedPerson
+     * @param Person         $person
+     * @param EmbeddedPerson $embeddedPerson
+     *
      * @return EmbeddedPerson
      */
     private function updateEmbeddedPerson(Person $person, EmbeddedPerson $embeddedPerson)
@@ -489,10 +507,11 @@ class PersonService
     }
 
     /**
-     * Update embedded role
+     * Update embedded role.
      *
-     * @param  Role         $role
-     * @param  EmbeddedRole $embeddedRole
+     * @param Role         $role
+     * @param EmbeddedRole $embeddedRole
+     *
      * @return EmbeddedRole
      */
     private function updateEmbeddedRole(Role $role, EmbeddedRole $embeddedRole)

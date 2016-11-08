@@ -17,7 +17,7 @@ class CpuService
     const TYPE_GSTREAMER = 'gstreamer';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(array $cpus, DocumentManager $documentManager)
     {
@@ -28,7 +28,7 @@ class CpuService
     }
 
     /**
-     * Get available free cpus
+     * Get available free cpus.
      */
     public function getFreeCpu($type = null)
     {
@@ -58,7 +58,8 @@ class CpuService
     }
 
     /**
-     * Get Cpu by name
+     * Get Cpu by name.
+     *
      * @param string the cpu name (case sensitive)
      */
     public function getCpuByName($name)
@@ -71,7 +72,7 @@ class CpuService
     }
 
     /**
-     * Get Cpus
+     * Get Cpus.
      */
     public function getCpus()
     {
@@ -79,7 +80,7 @@ class CpuService
     }
 
     /**
-     * Is active
+     * Is active.
      *
      * Returns true if given cpu is active
      */

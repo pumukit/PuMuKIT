@@ -15,7 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class DashboardController extends Controller implements NewAdminController
 {
     /**
-     *
      * @Route("/dashboard")
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
      * @Template
@@ -25,7 +24,6 @@ class DashboardController extends Controller implements NewAdminController
     }
 
     /**
-     *
      * @Route("/dashboard/series/timeline.xml")
      */
     public function seriesTimelineAction(Request $request)

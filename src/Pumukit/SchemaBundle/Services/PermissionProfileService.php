@@ -13,11 +13,11 @@ class PermissionProfileService
     private $permissionService;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param DocumentManager $documentManager
+     * @param DocumentManager                         $documentManager
      * @param PermissionProfileEventDispatcherService $dispatcher
-     * @param PermissionService $permissionService
+     * @param PermissionService                       $permissionService
      */
     public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher, PermissionService $permissionService)
     {
@@ -28,10 +28,10 @@ class PermissionProfileService
     }
 
     /**
-     * Update User Permission
+     * Update User Permission.
      *
      * @param PermissionProfile $permissionProfile
-     * @param boolean $dispatchCreate
+     * @param bool              $dispatchCreate
      */
     public function update(PermissionProfile $permissionProfile, $dispatchCreate = false)
     {
@@ -50,13 +50,14 @@ class PermissionProfileService
     }
 
     /**
-     * Check default user permission
+     * Check default user permission.
      *
      * Checks if there is any change in 'default' property
      * If there is no PermissionProfile as default,
      * calls setDefaultPermissionProfile.
      *
      * @param PermissionProfile $permissionProfile
+     *
      * @return PermissionProfile
      */
     public function checkDefault(PermissionProfile $permissionProfile)
@@ -79,7 +80,7 @@ class PermissionProfileService
     }
 
     /**
-     * Set default user permission
+     * Set default user permission.
      *
      * Set as default user permission
      * the one with less permissions
@@ -103,11 +104,12 @@ class PermissionProfileService
     }
 
     /**
-     * Calls doAddPermission  and the dispatchUpdate event
+     * Calls doAddPermission  and the dispatchUpdate event.
      *
      * @param PermissionProfile $permissionProfile
-     * @param string $permission
-     * @param boolean $executeFlush
+     * @param string            $permission
+     * @param bool              $executeFlush
+     *
      * @return PermissionProfile
      */
     public function addPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
@@ -119,11 +121,12 @@ class PermissionProfileService
     }
 
     /**
-     * Adds a permission
+     * Adds a permission.
      *
      * @param PermissionProfile $permissionProfile
-     * @param string $permission
-     * @param boolean $executeFlush
+     * @param string            $permission
+     * @param bool              $executeFlush
+     *
      * @return PermissionProfile
      */
     public function doAddPermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
@@ -143,11 +146,12 @@ class PermissionProfileService
     }
 
     /**
-     * Remove permission
+     * Remove permission.
      *
      * @param PermissionProfile $permissionProfile
-     * @param string $permission
-     * @param boolean $executeFlush
+     * @param string            $permission
+     * @param bool              $executeFlush
+     *
      * @return PermissionProfile
      */
     public function removePermission(PermissionProfile $permissionProfile, $permission, $executeFlush = true)
@@ -172,11 +176,12 @@ class PermissionProfileService
     }
 
     /**
-     * Set scope
+     * Set scope.
      *
      * @param PermissionProfile $permissionProfile
-     * @param string $scope
-     * @param boolean $executeFlush
+     * @param string            $scope
+     * @param bool              $executeFlush
+     *
      * @return PermissionProfile
      */
     public function setScope(PermissionProfile $permissionProfile, $scope, $executeFlush = true)
@@ -194,10 +199,10 @@ class PermissionProfileService
     }
 
     /**
-     * Updates all permissions for a given permissionProfile
+     * Updates all permissions for a given permissionProfile.
      *
      * @param PermissionProfile $permissionProfile
-     * @param boolean $dispatchCreate
+     * @param bool              $dispatchCreate
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
@@ -217,7 +222,7 @@ class PermissionProfileService
     }
 
     /**
-     * Get Default
+     * Get Default.
      *
      * @return PermissionProfile
      */
@@ -227,7 +232,7 @@ class PermissionProfileService
     }
 
     /**
-     * Get by name
+     * Get by name.
      *
      * @return PermissionProfile
      */

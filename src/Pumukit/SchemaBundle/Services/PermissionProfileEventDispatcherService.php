@@ -15,7 +15,7 @@ class PermissionProfileEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class PermissionProfileEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event PERMISSIONPROFILE_CREATE
      * 'permissionprofile.create' passing
@@ -40,7 +40,7 @@ class PermissionProfileEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event PERMISSIONPROFILE_UPDATE
      * 'permissionprofile.update' passing
@@ -55,7 +55,7 @@ class PermissionProfileEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event PERMISSIONPROFILE_DELETE
      * 'permissionprofile.delete' passing

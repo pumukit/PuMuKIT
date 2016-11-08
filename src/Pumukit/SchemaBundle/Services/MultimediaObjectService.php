@@ -23,9 +23,11 @@ class MultimediaObjectService
     }
 
     /**
-     * Returns true if the $mm is published. ( Keep updated with SchemaFilter->getCriteria() )
+     * Returns true if the $mm is published. ( Keep updated with SchemaFilter->getCriteria() ).
+     *
      * @param MultimediaObject
-     * @return boolean
+     *
+     * @return bool
      */
     public function isPublished($mm, $pubChannelCod)
     {
@@ -36,10 +38,12 @@ class MultimediaObjectService
     }
 
     /**
-     * Returns true if the $mm is hidden. Not 404 on its magic url. ( Keep updated with MultimediaObjectController:magicIndexAction )
+     * Returns true if the $mm is hidden. Not 404 on its magic url. ( Keep updated with MultimediaObjectController:magicIndexAction ).
+     *
      * @param MultimediaObject
      * @param Publication channel code
-     * @return boolean
+     *
+     * @return bool
      */
     public function isHidden($mm, $pubChannelCod)
     {
@@ -50,9 +54,11 @@ class MultimediaObjectService
     }
 
     /**
-     * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() )
+     * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() ).
+     *
      * @param MultimediaObject
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasPlayableResource($mm)
     {
@@ -60,10 +66,12 @@ class MultimediaObjectService
     }
 
     /**
-     * Returns true if the $mm is being displayed on the baseplayer. ( Keep updated with SchemaFilter->getCriteria() )
+     * Returns true if the $mm is being displayed on the baseplayer. ( Keep updated with SchemaFilter->getCriteria() ).
+     *
      * @param MultimediaObject
-     * @param String
-     * @return boolean
+     * @param string
+     *
+     * @return bool
      */
     public function canBeDisplayed($mm, $pubChannelCod)
     {
@@ -74,7 +82,8 @@ class MultimediaObjectService
      * Resets the magic url for a given multimedia object. Returns the secret id.
      *
      * @param MultimediaObject
-     * @return String
+     *
+     * @return string
      */
     public function resetMagicUrl($mm)
     {
@@ -86,9 +95,10 @@ class MultimediaObjectService
     }
 
     /**
-     * Update multimedia object
+     * Update multimedia object.
      *
      * @param MultimediaObject $multimediaObject
+     *
      * @return MultimediaObject
      */
     public function updateMultimediaObject(MultimediaObject $multimediaObject)
@@ -102,7 +112,7 @@ class MultimediaObjectService
     }
 
     /**
-     * Inc num view of multimedia object
+     * Inc num view of multimedia object.
      *
      * @param MultimediaObject $multimediaObject
      */
@@ -113,11 +123,11 @@ class MultimediaObjectService
     }
 
     /**
-     * Add  group to multimediaObject
+     * Add  group to multimediaObject.
      *
-     * @param Group $group
+     * @param Group            $group
      * @param MultimediaObject $multimediaObject
-     * @param boolean $executeFlush
+     * @param bool             $executeFlush
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -132,11 +142,11 @@ class MultimediaObjectService
     }
 
     /**
-     * Delete  group to multimediaObject
+     * Delete  group to multimediaObject.
      *
-     * @param Group $group
+     * @param Group            $group
      * @param MultimediaObject $multimediaObject
-     * @param boolean $executeFlush
+     * @param bool             $executeFlush
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -151,11 +161,12 @@ class MultimediaObjectService
     }
 
     /**
-     * Is user owner
+     * Is user owner.
      *
-     * @param  User             $user
-     * @param  MultimediaObject $multimediaObject
-     * @return boolean
+     * @param User             $user
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return bool
      */
     public function isUserOwner(User $user, MultimediaObject $multimediaObject)
     {
@@ -172,7 +183,7 @@ class MultimediaObjectService
     }
 
     /**
-     * Delete all multimedia objects from group
+     * Delete all multimedia objects from group.
      *
      * @param Group
      */
@@ -208,7 +219,7 @@ class MultimediaObjectService
      *
      * @param MultimediaObject $mmobj
      *
-     * @return boolean
+     * @return bool
      */
     public function isPlayableOnPlaylist($mmobj)
     {

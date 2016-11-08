@@ -16,11 +16,11 @@ class GroupService
     private $translator;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param DocumentManager $documentManager
+     * @param DocumentManager             $documentManager
      * @param GroupEventDispatcherService $dispatcher
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface         $translator
      */
     public function __construct(DocumentManager $documentManager, GroupEventDispatcherService $dispatcher, TranslatorInterface $translator)
     {
@@ -33,9 +33,10 @@ class GroupService
     }
 
     /**
-     * Create group
+     * Create group.
      *
      * @param Group $group
+     *
      * @return Group
      */
     public function create(Group $group)
@@ -60,10 +61,11 @@ class GroupService
     }
 
     /**
-     * Update group
+     * Update group.
      *
      * @param Group $group
-     * @param boolean $executeFlush
+     * @param bool  $executeFlush
+     *
      * @return Group
      */
     public function update(Group $group, $executeFlush = true)
@@ -94,10 +96,10 @@ class GroupService
     }
 
     /**
-     * Delete group
+     * Delete group.
      *
      * @param Group $group
-     * @param boolean $executeFlush
+     * @param bool  $executeFlush
      */
     public function delete(Group $group, $executeFlush = true)
     {
@@ -113,10 +115,11 @@ class GroupService
     }
 
     /**
-     * Can be deleted
+     * Can be deleted.
      *
-     * @param  Group $group
-     * @return boolean
+     * @param Group $group
+     *
+     * @return bool
      */
     public function canBeDeleted(Group $group)
     {
@@ -137,10 +140,11 @@ class GroupService
     }
 
     /**
-     * Get delete message
+     * Get delete message.
      *
-     * @param  Group  $group
-     * @param  string $locale
+     * @param Group  $group
+     * @param string $locale
+     *
      * @return string
      */
     public function getDeleteMessage(Group $group, $locale)
@@ -208,9 +212,10 @@ class GroupService
     }
 
     /**
-     * Count resources
+     * Count resources.
      *
      * @param array $groups
+     *
      * @return array
      */
     public function countResources($groups)
@@ -224,9 +229,10 @@ class GroupService
     }
 
     /**
-     * Count resources in group
+     * Count resources in group.
      *
      * @param Group $group
+     *
      * @return array
      */
     public function countResourcesInGroup(Group $group)
@@ -240,10 +246,11 @@ class GroupService
     }
 
     /**
-     * Count admin multimediaObjects in group
+     * Count admin multimediaObjects in group.
      *
      * @param Group $group
-     * @return integer
+     *
+     * @return int
      */
     public function countAdminMultimediaObjectsInGroup(Group $group)
     {
@@ -251,10 +258,11 @@ class GroupService
     }
 
     /**
-     * Count play multimediaObjects in group
+     * Count play multimediaObjects in group.
      *
      * @param Group $group
-     * @return integer
+     *
+     * @return int
      */
     public function countPlayMultimediaObjectsInGroup(Group $group)
     {
@@ -262,10 +270,11 @@ class GroupService
     }
 
     /**
-     * Count users in group
+     * Count users in group.
      *
      * @param Group $group
-     * @return integer
+     *
+     * @return int
      */
     public function countUsersInGroup(Group $group)
     {
@@ -277,10 +286,11 @@ class GroupService
     }
 
     /**
-     * Find users in group
+     * Find users in group.
      *
      * @param Group $group
      * @param array $sort
+     *
      * @return Cursor
      */
     public function findUsersInGroup(Group $group, $sort = array())
@@ -296,9 +306,10 @@ class GroupService
     }
 
     /**
-     * Find group by id
+     * Find group by id.
      *
      * @param string $id
+     *
      * @return Group
      */
     public function findById($id)
@@ -307,7 +318,7 @@ class GroupService
     }
 
     /**
-     * Find all
+     * Find all.
      *
      * @return ArrayCollection
      */
@@ -318,9 +329,10 @@ class GroupService
 
     /**
      * Find groups not in
-     * the given array
+     * the given array.
      *
      * @param array $ids
+     *
      * @return Cursor
      */
     public function findByIdNotIn($ids = array())

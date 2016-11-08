@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\GroupInterface;
 
 /**
- * Pumukit\SchemaBundle\Document\Group
+ * Pumukit\SchemaBundle\Document\Group.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\GroupRepository")
  */
@@ -16,14 +16,14 @@ class Group implements GroupInterface
     const ORIGIN_LOCAL = 'local';
 
     /**
-     * @var string $id
+     * @var string
      *
      * @MongoDB\Id(strategy="auto")
      */
     protected $id;
 
     /**
-     * @var string $key
+     * @var string
      *
      * @MongoDB\String
      * @MongoDB\UniqueIndex(order="asc")
@@ -32,7 +32,7 @@ class Group implements GroupInterface
     protected $key;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      * @MongoDB\UniqueIndex(order="asc")
@@ -40,28 +40,28 @@ class Group implements GroupInterface
     protected $name;
 
     /**
-     * @var string $comments
+     * @var string
      *
      * @MongoDB\String
      */
     protected $comments;
 
     /**
-     * @var string $origin
+     * @var string
      *
      * @MongoDB\String
      */
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var date $createdAt
+     * @var date
      *
      * @MongoDB\Date
      */
     private $createdAt;
 
     /**
-     * @var date $updatedAt
+     * @var date
      *
      * @MongoDB\Date
      */
@@ -69,13 +69,14 @@ class Group implements GroupInterface
 
     /**
      * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     * @var locale $locale
+     * this is not a mapped field of entity metadata, just a simple property.
+     *
+     * @var locale
      */
     private $locale = 'en';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -84,7 +85,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -94,7 +95,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -104,7 +105,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -114,7 +115,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Set key
+     * Set key.
      *
      * @param string $key
      */
@@ -124,7 +125,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get key
+     * Get key.
      *
      * @return string
      */
@@ -134,7 +135,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Set comments
+     * Set comments.
      *
      * @param string $comments
      */
@@ -144,7 +145,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get comments
+     * Get comments.
      *
      * @return string
      */
@@ -154,7 +155,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Set origin
+     * Set origin.
      *
      * @param string $origin
      */
@@ -164,7 +165,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get origin
+     * Get origin.
      *
      * @return string
      */
@@ -174,7 +175,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Is the origin local
+     * Is the origin local.
      *
      * @return bool
      */
@@ -184,7 +185,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return string
      */
@@ -194,7 +195,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param string $updatedAt
      */
@@ -204,7 +205,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return string
      */
@@ -214,7 +215,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Defined to implement GroupInterface
+     * Defined to implement GroupInterface.
      *
      * @param string $role
      *
@@ -226,11 +227,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * Defined to implement GroupInterface
+     * Defined to implement GroupInterface.
      *
      * @param string $role
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRole($role)
     {
@@ -238,7 +239,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Defined to implement GroupInterface
+     * Defined to implement GroupInterface.
      *
      * Note: If implementation changes User::getRoles must be updated
      *
@@ -250,7 +251,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Defined to implement GroupInterface
+     * Defined to implement GroupInterface.
      *
      * @param string $role
      *
@@ -262,7 +263,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * Defined to implement GroupInterface
+     * Defined to implement GroupInterface.
      *
      * @param array $roles
      *
@@ -274,7 +275,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * To string
+     * To string.
      *
      * @return string
      */

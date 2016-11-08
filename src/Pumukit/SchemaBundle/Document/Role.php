@@ -16,7 +16,7 @@ class Role
     protected $id;
 
     /**
-     * @var string $cod
+     * @var string
      *
      * @MongoDB\String
      * @MongoDB\UniqueIndex(safe=1)
@@ -24,7 +24,7 @@ class Role
     private $cod = '0';
 
     /**
-     * @var integer $rank
+     * @var int
      *
      * @MongoDB\Int
      * @Gedmo\SortablePosition
@@ -32,7 +32,7 @@ class Role
     private $rank;
 
     /**
-     * @var int $number_people_in_multimedia_object
+     * @var int
      *
      * @MongoDB\Int
      * @MongoDB\Increment
@@ -40,43 +40,44 @@ class Role
     private $number_people_in_multimedia_object = 0;
 
     /**
-     * See European Broadcasting Union Role Codes
-     * @var string $xml
+     * See European Broadcasting Union Role Codes.
+     *
+     * @var string
      *
      * @MongoDB\String
      */
     private $xml;
 
     /**
-     * @var boolean $display
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $display = true;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
 
     /**
-     * @var string $text
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $text = array('en' => '');
 
     /**
-     * @var locale $locale
+     * @var locale
      */
     private $locale = 'en';
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -84,7 +85,7 @@ class Role
     }
 
     /**
-     * Set cod
+     * Set cod.
      *
      * @param string $cod
      */
@@ -94,7 +95,7 @@ class Role
     }
 
     /**
-     * Get cod
+     * Get cod.
      *
      * @return string
      */
@@ -104,9 +105,9 @@ class Role
     }
 
     /**
-     * Set rank
+     * Set rank.
      *
-     * @param integer $rank
+     * @param int $rank
      */
     public function setRank($rank)
     {
@@ -114,9 +115,9 @@ class Role
     }
 
     /**
-     * Get rank
+     * Get rank.
      *
-     * @return integer
+     * @return int
      */
     public function getRank()
     {
@@ -124,7 +125,7 @@ class Role
     }
 
     /**
-     * Set xml
+     * Set xml.
      *
      * @param string $xml
      */
@@ -134,7 +135,7 @@ class Role
     }
 
     /**
-     * Get xml
+     * Get xml.
      *
      * @return string
      */
@@ -144,9 +145,9 @@ class Role
     }
 
     /**
-     * Set display
+     * Set display.
      *
-     * @param boolean $display
+     * @param bool $display
      */
     public function setDisplay($display)
     {
@@ -154,9 +155,9 @@ class Role
     }
 
     /**
-     * Get display
+     * Get display.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisplay()
     {
@@ -164,9 +165,9 @@ class Role
     }
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $locale
      */
     public function setName($name, $locale = null)
@@ -178,9 +179,10 @@ class Role
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getName($locale = null)
@@ -196,7 +198,7 @@ class Role
     }
 
     /**
-     * Set I18n name
+     * Set I18n name.
      *
      * @param array $name
      */
@@ -206,7 +208,7 @@ class Role
     }
 
     /**
-     * Get i18n name
+     * Get i18n name.
      *
      * @return array
      */
@@ -216,9 +218,9 @@ class Role
     }
 
     /**
-     * Set text
+     * Set text.
      *
-     * @param string $text
+     * @param string      $text
      * @param string|null $locale
      */
     public function setText($text, $locale = null)
@@ -230,9 +232,10 @@ class Role
     }
 
     /**
-     * Get text
+     * Get text.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getText($locale = null)
@@ -248,7 +251,7 @@ class Role
     }
 
     /**
-     * Set I18n text
+     * Set I18n text.
      *
      * @param array $text
      */
@@ -258,7 +261,7 @@ class Role
     }
 
     /**
-     * Get i18n text
+     * Get i18n text.
      *
      * @return array
      */
@@ -268,7 +271,7 @@ class Role
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      */
@@ -278,7 +281,7 @@ class Role
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -288,7 +291,7 @@ class Role
     }
 
     /**
-     * Increase number_people_in_multimedia_object
+     * Increase number_people_in_multimedia_object.
      */
     public function increaseNumberPeopleInMultimediaObject()
     {
@@ -296,7 +299,7 @@ class Role
     }
 
     /**
-     * Decrease number_people_in_multimedia_object
+     * Decrease number_people_in_multimedia_object.
      */
     public function decreaseNumberPeopleInMultimediaObject()
     {
@@ -304,7 +307,7 @@ class Role
     }
 
     /**
-     * Get number_people_in_multimedia_object
+     * Get number_people_in_multimedia_object.
      */
     public function getNumberPeopleInMultimediaObject()
     {
@@ -312,7 +315,7 @@ class Role
     }
 
     /**
-     * Set number_people_in_multimedia_object
+     * Set number_people_in_multimedia_object.
      */
     public function setNumberPeopleInMultimediaObject($number_people_in_multimedia_object)
     {
@@ -320,7 +323,7 @@ class Role
     }
 
     /**
-     * Clone Role
+     * Clone Role.
      *
      * @return Role
      */

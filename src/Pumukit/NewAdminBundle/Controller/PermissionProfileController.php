@@ -17,7 +17,8 @@ use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 class PermissionProfileController extends AdminController implements NewAdminController
 {
     /**
-     * Overwrite to update the criteria with MongoRegex, and save it in the session
+     * Overwrite to update the criteria with MongoRegex, and save it in the session.
+     *
      * @Template()
      */
     public function indexAction(Request $request)
@@ -44,9 +45,10 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
-     * List action
+     * List action.
      *
      * Overwrite to have permissions list
+     *
      * @Template()
      */
     public function listAction(Request $request)
@@ -80,7 +82,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
     /**
      * Create Action
-     * Overwrite to give PermissionProfileType name correctly
+     * Overwrite to give PermissionProfileType name correctly.
+     *
      * @Template()
      *
      * @param Request $request
@@ -118,7 +121,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     /**
      * Update Action
      * Overwrite to return list and not index
-     * and show toast message
+     * and show toast message.
+     *
      * @Template()
      *
      * @param Request $request
@@ -151,7 +155,8 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
-     * Overwrite to get form with translations
+     * Overwrite to get form with translations.
+     *
      * @param object|null $permissionProfile
      *
      * @return FormInterface
@@ -167,7 +172,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
-     * Delete action
+     * Delete action.
      *
      * Overwrite to change default user permission
      * if the default one is being deleted
@@ -199,7 +204,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
-     * Batch update action
+     * Batch update action.
      */
     public function batchUpdateAction(Request $request)
     {
@@ -318,7 +323,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      *
      * Override to get 9 resources per page
      */

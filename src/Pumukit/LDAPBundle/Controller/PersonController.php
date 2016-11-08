@@ -56,7 +56,8 @@ class PersonController extends Controller
     }
 
     /**
-     * Auto complete
+     * Auto complete.
+     *
      * @Route("/autocomplete", name="pumukit_ldap_person_autocomplete")
      */
     public function autocompleteAction(Request $request)
@@ -82,11 +83,11 @@ class PersonController extends Controller
     }
 
     /**
-     * Link person to multimedia object with role
+     * Link person to multimedia object with role.
+     *
      * @Route("/link/{mmId}/{roleId}", name="pumukit_ldap_person_link")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     *
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {

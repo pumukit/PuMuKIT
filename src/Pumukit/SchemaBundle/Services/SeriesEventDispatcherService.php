@@ -15,7 +15,7 @@ class SeriesEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class SeriesEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event SERIES_CREATE
      * 'series.create' passing
@@ -40,7 +40,7 @@ class SeriesEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event SERIES_UPDATE
      * 'series.update' passing
@@ -55,7 +55,7 @@ class SeriesEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event SERIES_DELETE
      * 'series.delete' passing

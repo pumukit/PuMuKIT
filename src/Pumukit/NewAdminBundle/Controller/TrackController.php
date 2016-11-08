@@ -85,7 +85,6 @@ class TrackController extends Controller implements NewAdminController
 
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
-     *
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -204,7 +203,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
@@ -218,7 +217,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
@@ -232,7 +231,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
@@ -246,8 +245,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::updateJobPriorityAction
-     *
+     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::updateJobPriorityAction.
      */
     public function updateJobPriorityAction(Request $request)
     {
@@ -326,7 +324,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * Get data in array or default values
+     * Get data in array or default values.
      */
     private function getArrayData($formData)
     {

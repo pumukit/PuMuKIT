@@ -6,89 +6,89 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Pumukit\SchemaBundle\Document\Pic;
 
 /**
- * Pumukit\LiveBundle\Document\Event
+ * Pumukit\LiveBundle\Document\Event.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\LiveBundle\Repository\EventRepository")
  */
 class Event
 {
     /**
-   * @var string $id
+   * @var string
    *
    * @MongoDB\Id
    */
   private $id;
 
   /**
-   * @var Live $live
+   * @var Live
    *
    * @MongoDB\ReferenceOne(targetDocument="Live")
    */
   private $live;
 
   /**
-   * @var string $name
+   * @var string
    *
    * @MongoDB\String
    */
   private $name;
 
   /**
-   * @var string $description
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $description = array('en' => '');
 
   /**
-   * @var string $place
+   * @var string
    *
    * @MongoDB\String
    */
   private $place;
 
   /**
-   * @var datetime $date
+   * @var datetime
    *
    * @MongoDB\Date
    */
   private $date;
 
   /**
-   * @var int $duration
+   * @var int
    *
    * @MongoDB\Int
    */
   private $duration = 60;
 
   /**
-   * @var boolean $display
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $display = true;
 
   /**
-   * @var boolean $create_serial
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $create_serial = true;
 
   /**
-   * @var Pic $pic
+   * @var Pic
    *
    * @MongoDB\EmbedOne(targetDocument="Pumukit\SchemaBundle\Document\Pic")
    */
   private $pic;
 
   /**
-   * @var locale $locale
+   * @var locale
    */
   private $locale = 'en';
 
   /**
-   * Constructor
+   * Constructor.
    */
   public function __construct()
   {
@@ -96,7 +96,7 @@ class Event
   }
 
   /**
-   * Get id
+   * Get id.
    *
    * @return int
    */
@@ -106,7 +106,7 @@ class Event
   }
 
   /**
-   * Set live
+   * Set live.
    *
    * @param string $live
    */
@@ -116,7 +116,7 @@ class Event
   }
 
   /**
-   * Get live
+   * Get live.
    *
    * @return string
    */
@@ -126,7 +126,7 @@ class Event
   }
 
   /**
-   * Set name
+   * Set name.
    *
    * @param string $name
    */
@@ -136,7 +136,7 @@ class Event
   }
 
   /**
-   * Get name
+   * Get name.
    *
    * @return string
    */
@@ -146,7 +146,7 @@ class Event
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param string $description
    */
@@ -159,7 +159,7 @@ class Event
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @return string
    */
@@ -176,7 +176,7 @@ class Event
   }
 
   /**
-   * Set I18n description
+   * Set I18n description.
    *
    * @param array $description
    */
@@ -186,7 +186,7 @@ class Event
   }
 
   /**
-   * Get I18n description
+   * Get I18n description.
    *
    * @return array
    */
@@ -196,7 +196,7 @@ class Event
   }
 
   /**
-   * Set place
+   * Set place.
    *
    * @param string $place
    */
@@ -206,7 +206,7 @@ class Event
   }
 
   /**
-   * Get place
+   * Get place.
    *
    * @return string
    */
@@ -216,7 +216,7 @@ class Event
   }
 
   /**
-   * Set date
+   * Set date.
    *
    * @param Date $date
    */
@@ -226,7 +226,7 @@ class Event
   }
 
   /**
-   * Get date
+   * Get date.
    *
    * @return Date
    */
@@ -236,7 +236,7 @@ class Event
   }
 
   /**
-   * Set duration
+   * Set duration.
    *
    * @param int $duration
    */
@@ -246,7 +246,7 @@ class Event
   }
 
   /**
-   * Get duration
+   * Get duration.
    *
    * @return int
    */
@@ -256,9 +256,9 @@ class Event
   }
 
   /**
-   * Set display
+   * Set display.
    *
-   * @param boolean $display
+   * @param bool $display
    */
   public function setDisplay($display)
   {
@@ -266,9 +266,9 @@ class Event
   }
 
   /**
-   * Get display
+   * Get display.
    *
-   * @return boolean
+   * @return bool
    */
   public function getDisplay()
   {
@@ -276,7 +276,7 @@ class Event
   }
 
   /**
-   * Set create_serial
+   * Set create_serial.
    *
    * @param string $create_serial
    */
@@ -286,9 +286,9 @@ class Event
   }
 
   /**
-   * Get create_serial
+   * Get create_serial.
    *
-   * @return boolean
+   * @return bool
    */
   public function getCreateSerial()
   {
@@ -296,7 +296,7 @@ class Event
   }
 
   /**
-   * Set locale
+   * Set locale.
    *
    * @param string $locale
    */
@@ -306,7 +306,7 @@ class Event
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */
@@ -316,7 +316,7 @@ class Event
   }
 
   /**
-   * Set Schedule
+   * Set Schedule.
    *
    * @return array
    */
@@ -327,7 +327,7 @@ class Event
   }
 
   /**
-   * Get Schedule
+   * Get Schedule.
    *
    * @param array
    */
@@ -340,7 +340,7 @@ class Event
   }
 
     /**
-     * Set pic
+     * Set pic.
      *
      * @param Pic $pic
      */
@@ -350,7 +350,7 @@ class Event
     }
 
     /**
-     * Remove pic
+     * Remove pic.
      *
      * @param Pic $pic
      */
@@ -360,7 +360,7 @@ class Event
     }
 
     /**
-     * Get pic
+     * Get pic.
      *
      * @return Pic
      */

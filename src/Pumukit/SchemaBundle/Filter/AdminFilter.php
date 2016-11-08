@@ -44,7 +44,7 @@ class AdminFilter extends BsonFilter
     /**
      * Get series mongo query
      * Match the Series
-     * with given ids
+     * with given ids.
      *
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
@@ -52,6 +52,7 @@ class AdminFilter extends BsonFilter
      * @param MongoId $personId
      * @param string  $roleCode
      * @param array   $groups
+     *
      * @return array
      */
     private function getSeriesMongoQuery($personId, $roleCode, $groups)

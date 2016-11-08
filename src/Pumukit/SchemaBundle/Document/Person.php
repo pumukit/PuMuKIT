@@ -6,14 +6,14 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Person
+ * Pumukit\SchemaBundle\Document\Person.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
  */
 class Person
 {
     /**
-     * @var string $id
+     * @var string
      *
      * @MongoDB\Id
      */
@@ -25,14 +25,14 @@ class Person
     private $user;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      */
     protected $name;
 
     /**
-     * @var string $email
+     * @var string
      *
      * @MongoDB\String
      * @Assert\Email
@@ -40,7 +40,7 @@ class Person
     protected $email;
 
     /**
-     * @var string $web
+     * @var string
      *
      * @MongoDB\String
      * //@Assert\Url('http', 'https', 'ftp')
@@ -48,50 +48,51 @@ class Person
     protected $web;
 
     /**
-     * @var string $phone
+     * @var string
      *
      * @MongoDB\String
      */
     protected $phone;
 
     /**
-     * @var string $honorific
+     * @var string
      *
      * @MongoDB\Raw
      */
     protected $honorific = array('en' => '');
 
     /**
-     * @var string $firm
+     * @var string
      *
      * @MongoDB\Raw
      */
     protected $firm = array('en' => '');
 
     /**
-     * @var string $post
+     * @var string
      *
      * @MongoDB\Raw
      */
     protected $post = array('en' => '');
 
     /**
-     * @var string $bio
+     * @var string
      *
      * @MongoDB\Raw
      */
     protected $bio = array('en' => '');
 
     /**
-     * Locale
-     * @var locale $locale
+     * Locale.
+     *
+     * @var locale
      */
     protected $locale = 'en';
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -99,7 +100,7 @@ class Person
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
      */
@@ -109,7 +110,7 @@ class Person
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -119,7 +120,7 @@ class Person
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -129,7 +130,7 @@ class Person
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -139,7 +140,7 @@ class Person
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      */
@@ -149,7 +150,7 @@ class Person
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -159,7 +160,7 @@ class Person
     }
 
     /**
-     * Set web
+     * Set web.
      *
      * @param string $web
      */
@@ -169,7 +170,7 @@ class Person
     }
 
     /**
-     * Get web
+     * Get web.
      *
      * @return string
      */
@@ -179,7 +180,7 @@ class Person
     }
 
     /**
-     * Set phone
+     * Set phone.
      *
      * @param string $phone
      */
@@ -189,7 +190,7 @@ class Person
     }
 
     /**
-     * Get phone
+     * Get phone.
      *
      * @return string
      */
@@ -199,9 +200,9 @@ class Person
     }
 
     /**
-     * Set honorific
+     * Set honorific.
      *
-     * @param string $honorific
+     * @param string      $honorific
      * @param string|null $locale
      */
     public function setHonorific($honorific, $locale = null)
@@ -213,9 +214,10 @@ class Person
     }
 
     /**
-     * Get honorific
+     * Get honorific.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getHonorific($locale = null)
@@ -231,7 +233,7 @@ class Person
     }
 
     /**
-     * Set i18n honorific
+     * Set i18n honorific.
      */
     public function setI18nHonorific(array $honorific)
     {
@@ -239,7 +241,7 @@ class Person
     }
 
     /**
-     * Get i18n honorific
+     * Get i18n honorific.
      */
     public function getI18nHonorific()
     {
@@ -247,9 +249,9 @@ class Person
     }
 
     /**
-     * Set firm
+     * Set firm.
      *
-     * @param string $firm
+     * @param string      $firm
      * @param string|null $locale
      */
     public function setFirm($firm, $locale = null)
@@ -261,9 +263,10 @@ class Person
     }
 
     /**
-     * Get firm
+     * Get firm.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getFirm($locale = null)
@@ -279,7 +282,7 @@ class Person
     }
 
     /**
-     * Set i18n firm
+     * Set i18n firm.
      */
     public function setI18nFirm(array $firm)
     {
@@ -287,7 +290,7 @@ class Person
     }
 
     /**
-     * Get i18n firm
+     * Get i18n firm.
      */
     public function getI18nFirm()
     {
@@ -295,9 +298,9 @@ class Person
     }
 
     /**
-     * Set post
+     * Set post.
      *
-     * @param string $post
+     * @param string      $post
      * @param string|null $locale
      */
     public function setPost($post, $locale = null)
@@ -309,9 +312,10 @@ class Person
     }
 
     /**
-     * Get post
+     * Get post.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getPost($locale = null)
@@ -327,7 +331,7 @@ class Person
     }
 
     /**
-     * Set i18n post
+     * Set i18n post.
      */
     public function setI18nPost(array $post)
     {
@@ -335,7 +339,7 @@ class Person
     }
 
     /**
-     * Get i18n post
+     * Get i18n post.
      */
     public function getI18nPost()
     {
@@ -343,9 +347,9 @@ class Person
     }
 
     /**
-     * Set bio
+     * Set bio.
      *
-     * @param string $bio
+     * @param string      $bio
      * @param string|null $locale
      */
     public function setBio($bio, $locale = null)
@@ -357,9 +361,10 @@ class Person
     }
 
     /**
-     * Get bio
+     * Get bio.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getBio($locale = null)
@@ -375,7 +380,7 @@ class Person
     }
 
     /**
-     * Set i18n bio
+     * Set i18n bio.
      */
     public function setI18nBio(array $bio)
     {
@@ -383,7 +388,7 @@ class Person
     }
 
     /**
-     * Get i18n bio
+     * Get i18n bio.
      */
     public function getI18nBio()
     {
@@ -391,7 +396,7 @@ class Person
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      */
@@ -401,7 +406,7 @@ class Person
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -411,7 +416,7 @@ class Person
     }
 
     /**
-     * Get honorific name
+     * Get honorific name.
      *
      * Returns person name with his/her honorific
      *
@@ -423,7 +428,7 @@ class Person
     }
 
     /**
-     * Get Other
+     * Get Other.
      *
      * Returns strings with person position
      *
@@ -435,7 +440,7 @@ class Person
     }
 
     /**
-     * Get info
+     * Get info.
      *
      * Returns strings with person info:
      * Firm, Post and Bio separated by commas
@@ -451,7 +456,7 @@ class Person
     }
 
     /**
-     * Clone Person
+     * Clone Person.
      *
      * @return Person
      */

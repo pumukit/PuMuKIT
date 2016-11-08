@@ -13,7 +13,7 @@ class PermissionService
     private $allPermissions;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $externalPermissions
      */
@@ -25,7 +25,7 @@ class PermissionService
     }
 
     /**
-     * Get external permissions
+     * Get external permissions.
      */
     public function getExternalPermissions()
     {
@@ -33,7 +33,7 @@ class PermissionService
     }
 
     /**
-     * Get local permissions
+     * Get local permissions.
      */
     public function getLocalPermissions()
     {
@@ -41,7 +41,7 @@ class PermissionService
     }
 
     /**
-     * Get local permissions
+     * Get local permissions.
      */
     public function getPubTagsPermissions()
     {
@@ -73,7 +73,7 @@ class PermissionService
     }
 
     /**
-     * Get all permissions
+     * Get all permissions.
      */
     public function getAllPermissions()
     {
@@ -83,7 +83,7 @@ class PermissionService
     }
 
     /**
-     * Get permissions for super admin (see RoleHierarchy)
+     * Get permissions for super admin (see RoleHierarchy).
      */
     public function getPermissionsForSuperAdmin()
     {
@@ -100,7 +100,7 @@ class PermissionService
     }
 
     /**
-     * Get all dependencies
+     * Get all dependencies.
      */
     public function getAllDependencies()
     {
@@ -110,7 +110,7 @@ class PermissionService
     }
 
     /**
-     * Check if exist a permission
+     * Check if exist a permission.
      */
     public function exists($permission)
     {
@@ -118,7 +118,7 @@ class PermissionService
     }
 
     /**
-     * Build all permissions
+     * Build all permissions.
      */
     private function buildAllPermissions()
     {
@@ -152,7 +152,7 @@ class PermissionService
     }
 
     /**
-     * Build all dependencies
+     * Build all dependencies.
      */
     private function buildAllDependencies()
     {
@@ -171,7 +171,7 @@ class PermissionService
      *
      * @param string $permission
      * @param string $scope
-     * @param array $allPermissions
+     * @param array  $allPermissions
      */
     private function buildDependenciesByScope($permission, $scope, array $allPermissions)
     {

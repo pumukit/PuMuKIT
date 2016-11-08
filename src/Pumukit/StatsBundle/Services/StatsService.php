@@ -387,8 +387,8 @@ class StatsService
      * @param aggregation The aggregation array to be paged
      * @param page The page to be returned
      * @param limit The number of elements to be returned
-     * @return array aggregation
      *
+     * @return array aggregation
      */
     public function getPagedAggregation(array $aggregation, $page = 0, $limit = 10)
     {

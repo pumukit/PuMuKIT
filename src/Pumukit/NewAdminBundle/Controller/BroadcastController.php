@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class BroadcastController extends AdminController implements NewAdminController
 {
     /**
-     * Change the default broadcast type
+     * Change the default broadcast type.
      */
     public function defaultAction(Request $request)
     {
@@ -40,7 +40,7 @@ class BroadcastController extends AdminController implements NewAdminController
     }
 
     /**
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      *
      * @Template()
      */
@@ -58,7 +58,7 @@ class BroadcastController extends AdminController implements NewAdminController
 
     /**
      * Create Action
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      *
      * @Template()
      *
@@ -107,7 +107,7 @@ class BroadcastController extends AdminController implements NewAdminController
 
     /**
      * Update Action
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      *
      * @Template()
      *
@@ -153,7 +153,7 @@ class BroadcastController extends AdminController implements NewAdminController
 
     /**
      * Delete action
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      */
     public function deleteAction(Request $request)
     {
@@ -176,10 +176,9 @@ class BroadcastController extends AdminController implements NewAdminController
 
     /**
      * List action
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      *
      * @Template()
-     *
      */
     public function listAction(Request $request)
     {
@@ -197,7 +196,7 @@ class BroadcastController extends AdminController implements NewAdminController
     }
 
     /**
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      */
     public function delete($broadcast)
     {
@@ -213,7 +212,7 @@ class BroadcastController extends AdminController implements NewAdminController
     }
 
     /**
-     * Overwrite to check Broadcast creation
+     * Overwrite to check Broadcast creation.
      */
     public function batchDeleteAction(Request $request)
     {

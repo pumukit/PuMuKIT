@@ -486,7 +486,7 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get Broadcast description
+     * Get Broadcast description.
      *
      * @param string $broadcastType
      * @param string $template
@@ -576,7 +576,7 @@ class PumukitAdminExtension extends \Twig_Extension
      *
      * @param MultimediaObject $mmobj
      *
-     * @return boolean
+     * @return bool
      */
     public function isPlayableOnPlaylist($mmobj)
     {
@@ -584,12 +584,12 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Returns a boolean is user is owner
+     * Returns a boolean is user is owner.
      *
-     * @param User $user
+     * @param User             $user
      * @param MultimediaObject $mmobj
      *
-     * @return boolean
+     * @return bool
      */
     public function isUserOwner($user, $mmobj)
     {
@@ -597,10 +597,10 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Returns a boolean is request a naked backoffice
+     * Returns a boolean is request a naked backoffice.
      *
      *
-     * @return boolean
+     * @return bool
      */
     public function isNaked(\Twig_Environment $env)
     {

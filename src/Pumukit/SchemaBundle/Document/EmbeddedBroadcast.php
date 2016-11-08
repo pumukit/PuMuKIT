@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\EmbeddedBroadcast
+ * Pumukit\SchemaBundle\Document\EmbeddedBroadcast.
  *
  * @MongoDB\EmbeddedDocument
  */
@@ -24,42 +24,42 @@ class EmbeddedBroadcast
     const NAME_GROUPS = 'Only Users in Groups';
 
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      */
     private $name = self::NAME_PUBLIC;
 
     /**
-     * @var string $type
+     * @var string
      *
      * @MongoDB\String
      */
     private $type = self::TYPE_PUBLIC;
 
     /**
-     * @var string $password
+     * @var string
      *
      * @MongoDB\String
      */
     private $password;
 
     /**
-     * @var ArrayCollection $groups
+     * @var ArrayCollection
      *
      * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     private $groups;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -67,7 +67,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -77,7 +77,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -87,7 +87,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -97,7 +97,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
      */
@@ -107,7 +107,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -117,7 +117,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
      */
@@ -127,7 +127,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -137,11 +137,11 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Contains group
+     * Contains group.
      *
      * @param Group $group
      *
-     * @return boolean
+     * @return bool
      */
     public function containsGroup(Group $group)
     {
@@ -149,7 +149,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Add admin group
+     * Add admin group.
      *
      * @param Group $group
      */
@@ -159,7 +159,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Remove admin group
+     * Remove admin group.
      *
      * @param Group $group
      */
@@ -169,7 +169,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * Get groups
+     * Get groups.
      *
      * @return ArrayCollection
      */
@@ -179,7 +179,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * to String
+     * to String.
      */
     public function __toString()
     {

@@ -16,7 +16,6 @@ use Pumukit\SchemaBundle\Document\Series;
 class SeriesPicController extends Controller implements NewAdminController
 {
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
     public function createAction(Series $series, Request $request)
@@ -28,7 +27,6 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
     public function listAction(Series $series)
@@ -40,7 +38,7 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the series
+     * Assign a picture from an url or from an existing one to the series.
      *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
@@ -65,7 +63,6 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
      */
     public function uploadAction(Series $series, Request $request)
@@ -101,7 +98,7 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Delete pic
+     * Delete pic.
      */
     public function deleteAction(Request $request)
     {
@@ -120,7 +117,7 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Up pic
+     * Up pic.
      */
     public function upAction(Request $request)
     {
@@ -143,7 +140,7 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Down pic
+     * Down pic.
      */
     public function downAction(Request $request)
     {
@@ -195,7 +192,6 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
      */
     public function bannerAction(Series $series, Request $request)
@@ -207,11 +203,12 @@ class SeriesPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Get paginated pics
+     * Get paginated pics.
      *
      * @param array $urlPics
-     * @param int $limit
-     * @param int $page
+     * @param int   $limit
+     * @param int   $page
+     *
      * @return Pagerfanta
      */
     private function getPaginatedPics($urlPics, $limit, $page)

@@ -45,7 +45,7 @@ class FactoryService
     }
 
     /**
-     * Get locales
+     * Get locales.
      */
     public function getLocales()
     {
@@ -55,7 +55,8 @@ class FactoryService
     /**
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
-     * @param  User   $loggedInUser
+     * @param User $loggedInUser
+     *
      * @return Series
      */
     public function createSeries(User $loggedInUser = null, array $title = null)
@@ -66,7 +67,8 @@ class FactoryService
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
      *
-     * @param  User   $loggedInUser
+     * @param User $loggedInUser
+     *
      * @return Series
      */
     public function createPlaylist(User $loggedInUser = null, array $title = null)
@@ -75,10 +77,11 @@ class FactoryService
     }
 
     /**
-     * Create a new collection (series or playlist) with default values
+     * Create a new collection (series or playlist) with default values.
      *
-     * @param Integer $collectionType
-     * @param  User   $loggedInUser
+     * @param int  $collectionType
+     * @param User $loggedInUser
+     *
      * @return Series
      */
     public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
@@ -111,10 +114,11 @@ class FactoryService
     }
 
     /**
-     * Create a new Multimedia Object Template
+     * Create a new Multimedia Object Template.
      *
-     * @param  Series           $series
-     * @param  User             $loggedInUser
+     * @param Series $series
+     * @param User   $loggedInUser
+     *
      * @return MultimediaObject
      */
     private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
@@ -141,11 +145,12 @@ class FactoryService
     }
 
     /**
-     * Create a new Multimedia Object from Template
+     * Create a new Multimedia Object from Template.
      *
-     * @param  Series           $series
-     * @param  boolean          $flush
-     * @param  User             $loggedInUser
+     * @param Series $series
+     * @param bool   $flush
+     * @param User   $loggedInUser
+     *
      * @return MultimediaObject
      */
     public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
@@ -195,10 +200,11 @@ class FactoryService
     }
 
     /**
-     * Get series by id
+     * Get series by id.
      *
      * @param string $id
      * @param string $sessionId
+     *
      * @return Series
      */
     public function findSeriesById($id, $sessionId = null)
@@ -217,9 +223,10 @@ class FactoryService
     }
 
     /**
-     * Get multimediaObject by id
+     * Get multimediaObject by id.
      *
      * @param string $id
+     *
      * @return Multimedia Object
      */
     public function findMultimediaObjectById($id)
@@ -230,7 +237,7 @@ class FactoryService
     }
 
     /**
-     * Get parent tags
+     * Get parent tags.
      */
     public function getParentTags()
     {
@@ -240,9 +247,10 @@ class FactoryService
     }
 
     /**
-     * Get multimedia object template
+     * Get multimedia object template.
      *
      * @param Series $series
+     *
      * @return MultimediaObject
      */
     public function getMultimediaObjectPrototype(Series $series = null)
@@ -253,10 +261,11 @@ class FactoryService
     }
 
     /**
-     * Get tags by cod
+     * Get tags by cod.
      *
      * @param string $cod
-     * @param boolean $getChildren
+     * @param bool   $getChildren
+     *
      * @return ArrayCollection $tags
      */
     public function getTagsByCod($cod, $getChildren)
@@ -273,7 +282,7 @@ class FactoryService
     }
 
     /**
-     * Delete Series
+     * Delete Series.
      *
      * @param Series $series
      */
@@ -296,7 +305,7 @@ class FactoryService
     }
 
     /**
-     * Delete MultimediaObject
+     * Delete MultimediaObject.
      *
      * @param MultimediaObject $multimediaObject
      */
@@ -321,9 +330,9 @@ class FactoryService
     }
 
     /**
-     * Delete resource
+     * Delete resource.
      *
-     * @param Object $resource
+     * @param object $resource
      */
     public function deleteResource($resource)
     {
@@ -336,9 +345,10 @@ class FactoryService
     }
 
     /**
-     * Create multimedia object from prototype
+     * Create multimedia object from prototype.
      *
-     * @param  MultimediaObject $prototype
+     * @param MultimediaObject $prototype
+     *
      * @return MultimediaObject
      */
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
@@ -381,7 +391,8 @@ class FactoryService
     /**
      * Clone a multimedia object.
      *
-     * @param  MultimediaObject $src
+     * @param MultimediaObject $src
+     *
      * @return MultimediaObject
      */
     public function cloneMultimediaObject(MultimediaObject $src)

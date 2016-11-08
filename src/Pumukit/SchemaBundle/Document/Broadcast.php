@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\SchemaBundle\Document\Broadcast
+ * Pumukit\SchemaBundle\Document\Broadcast.
  *
  * @deprecated in version 2.3
  *
@@ -21,14 +21,14 @@ class Broadcast
     const BROADCAST_TYPE_COR = 'corporative';
 
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var ArrayCollection $multimedia_objects
+     * @var ArrayCollection
      *
      * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="broadcast", simple=true, orphanRemoval=false)
      * @Serializer\Exclude
@@ -36,7 +36,7 @@ class Broadcast
     private $multimedia_objects;
 
     /**
-     * @var int $number_multimedia_objects
+     * @var int
      *
      * @MongoDB\Int
      * @MongoDB\Increment
@@ -44,7 +44,7 @@ class Broadcast
     private $number_multimedia_objects = 0;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      * @MongoDB\UniqueIndex(safe=1)
@@ -52,35 +52,35 @@ class Broadcast
     private $name;
 
     /**
-     * @var string $broadcast_type_id
+     * @var string
      *
      * @MongoDB\String
      */
     private $broadcast_type_id = self::BROADCAST_TYPE_PUB;
 
     /**
-     * @var string $passwd
+     * @var string
      *
      * @MongoDB\String
      */
     private $passwd;
 
     /**
-     * @var boolean $default_sel
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $default_sel = false;
 
     /**
-     * @var string $description
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
 
     /**
-     * @var locale $locale
+     * @var locale
      */
     private $locale = 'en';
 
@@ -91,7 +91,7 @@ class Broadcast
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -101,11 +101,11 @@ class Broadcast
     }
 
     /**
-     * Contains multimedia_object
+     * Contains multimedia_object.
      *
      * @param MultimediaObject $multimedia_object
      *
-     * @return boolean
+     * @return bool
      */
     public function containsMultimediaObject(MultimediaObject $multimedia_object)
     {
@@ -113,7 +113,7 @@ class Broadcast
     }
 
     /**
-     * Get multimedia_objects
+     * Get multimedia_objects.
      *
      * @return ArrayCollection
      */
@@ -123,7 +123,7 @@ class Broadcast
     }
 
     /**
-     * Increase number_multimedia_objects
+     * Increase number_multimedia_objects.
      */
     public function increaseNumberMultimediaObjects()
     {
@@ -131,7 +131,7 @@ class Broadcast
     }
 
     /**
-     * Decrease number_multimedia_objects
+     * Decrease number_multimedia_objects.
      */
     public function decreaseNumberMultimediaObjects()
     {
@@ -139,7 +139,7 @@ class Broadcast
     }
 
     /**
-     * Get number_multimedia_objects
+     * Get number_multimedia_objects.
      */
     public function getNumberMultimediaObjects()
     {
@@ -147,7 +147,7 @@ class Broadcast
     }
 
     /**
-     * Set number_multimedia_objects
+     * Set number_multimedia_objects.
      */
     public function setNumberMultimediaObjects($count)
     {
@@ -155,7 +155,7 @@ class Broadcast
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -165,7 +165,7 @@ class Broadcast
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -175,7 +175,7 @@ class Broadcast
     }
 
     /**
-     * Set broadcast_type_id
+     * Set broadcast_type_id.
      *
      * @param string $broadcast_type_id
      */
@@ -185,7 +185,7 @@ class Broadcast
     }
 
     /**
-     * Get broadcast_type_id
+     * Get broadcast_type_id.
      *
      * @return string
      */
@@ -195,7 +195,7 @@ class Broadcast
     }
 
     /**
-     * Set passwd
+     * Set passwd.
      *
      * @param string $passwd
      */
@@ -205,7 +205,7 @@ class Broadcast
     }
 
     /**
-     * Get passwd
+     * Get passwd.
      *
      * @return string
      */
@@ -215,9 +215,9 @@ class Broadcast
     }
 
     /**
-     * Set default_sel
+     * Set default_sel.
      *
-     * @param boolean $defatul_sel
+     * @param bool $defatul_sel
      */
     public function setDefaultSel($default_sel)
     {
@@ -225,9 +225,9 @@ class Broadcast
     }
 
     /**
-     * Get default_sel
+     * Get default_sel.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDefaultSel()
     {
@@ -235,9 +235,9 @@ class Broadcast
     }
 
     /**
-     * Set description
+     * Set description.
      *
-     * @param string $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
@@ -249,9 +249,10 @@ class Broadcast
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getDescription($locale = null)
@@ -267,7 +268,7 @@ class Broadcast
     }
 
     /**
-     * Set I18n description
+     * Set I18n description.
      *
      * @param array $description
      */
@@ -277,7 +278,7 @@ class Broadcast
     }
 
     /**
-     * Get i18n description
+     * Get i18n description.
      *
      * @return array
      */
@@ -287,7 +288,7 @@ class Broadcast
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      */
@@ -297,7 +298,7 @@ class Broadcast
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -307,7 +308,7 @@ class Broadcast
     }
 
     /**
-     * Clone Broadcast
+     * Clone Broadcast.
      *
      * @return Broadcast
      */
@@ -320,7 +321,7 @@ class Broadcast
     }
 
     /**
-     * to String
+     * to String.
      */
     public function __toString()
     {

@@ -24,7 +24,7 @@ class EmbeddedBroadcastService
     private $templating;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, $disabledBroadcast)
     {
@@ -39,11 +39,12 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Set public embedded broadcast
+     * Set public embedded broadcast.
      *
-     * @param  MultimediaObject $multimediaObject
-     * @param  string           $type
-     * @param  boolean          $executeFlush
+     * @param MultimediaObject $multimediaObject
+     * @param string           $type
+     * @param bool             $executeFlush
+     *
      * @return MultimediaObject
      */
     public function setByType(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $executeFlush = true)
@@ -59,9 +60,10 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Create embedded broadcast by type
+     * Create embedded broadcast by type.
      *
-     * @param  string            $type
+     * @param string $type
+     *
      * @return EmbeddedBroadcast
      */
     public function createEmbeddedBroadcastByType($type = null)
@@ -90,7 +92,7 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Create public embedded broadcast
+     * Create public embedded broadcast.
      *
      * @return EmbeddedBroadcast
      */
@@ -100,9 +102,10 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Clone resource
+     * Clone resource.
      *
-     * @param  EmbeddedBroadcast $embeddedBroadcast
+     * @param EmbeddedBroadcast $embeddedBroadcast
+     *
      * @return EmbeddedBroadcast
      */
     public function cloneResource(EmbeddedBroadcast $embeddedBroadcast)
@@ -123,7 +126,7 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Get all broadcast types
+     * Get all broadcast types.
      *
      * @return array
      */
@@ -146,11 +149,11 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Update type and name
+     * Update type and name.
      *
      * @param MultimediaObject $multimediaObject
      * @param string           $type
-     * @param boolean          $executeFlush
+     * @param bool             $executeFlush
      */
     public function updateTypeAndName($type, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -172,11 +175,11 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Update password
+     * Update password.
      *
      * @param string           $password
      * @param MultimediaObject $multimediaObject
-     * @param boolean          $executeFlush
+     * @param bool             $executeFlush
      */
     public function updatePassword($password, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -194,11 +197,11 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Add group to embeddedBroadcast
+     * Add group to embeddedBroadcast.
      *
-     * @param Group $group
+     * @param Group            $group
      * @param MultimediaObject $multimediaObject
-     * @param boolean $executeFlush
+     * @param bool             $executeFlush
      */
     public function addGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -216,11 +219,11 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Delete group from embedded Broadcasr
+     * Delete group from embedded Broadcasr.
      *
-     * @param Group $group
+     * @param Group            $group
      * @param MultimediaObject $multimediaObject
-     * @param boolean $executeFlush
+     * @param bool             $executeFlush
      */
     public function deleteGroup(Group $group, MultimediaObject $multimediaObject, $executeFlush = true)
     {
@@ -238,11 +241,12 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Can User play multimediaObject
+     * Can User play multimediaObject.
      *
-     * @param  MultimediaObject $multimediaObject
-     * @param  User             $user
-     * @param  string           $password
+     * @param MultimediaObject $multimediaObject
+     * @param User             $user
+     * @param string           $password
+     *
      * @return
      */
     public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null)
@@ -268,11 +272,12 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Is user related to multimedia object
+     * Is user related to multimedia object.
      *
-     * @param  MultimediaObject $multimediaObject
-     * @param  User             $user
-     * @return boolean
+     * @param MultimediaObject $multimediaObject
+     * @param User             $user
+     *
+     * @return bool
      */
     public function isUserRelatedToMultimediaObject(MultimediaObject $multimediaObject, User $user = null)
     {
@@ -355,7 +360,7 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Delete all embedded broadcasts from group
+     * Delete all embedded broadcasts from group.
      *
      * @param Group
      */

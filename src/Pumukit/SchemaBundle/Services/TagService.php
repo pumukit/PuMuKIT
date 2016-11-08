@@ -23,12 +23,13 @@ class TagService
     }
 
     /**
-     * Add Tag to Multimedia Object
+     * Add Tag to Multimedia Object.
      *
-     * @param  MultimediaObject $mmobj
-     * @param  string           $tagId
-     * @param  boolean          $executeFlush
-     * @return Array[Tag]       addded tags
+     * @param MultimediaObject $mmobj
+     * @param string           $tagId
+     * @param bool             $executeFlush
+     *
+     * @return Array[Tag] addded tags
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -41,12 +42,13 @@ class TagService
     }
 
     /**
-     * Add Tag to Multimedia Object
+     * Add Tag to Multimedia Object.
      *
-     * @param  MultimediaObject $mmobj
-     * @param  string           $tagCod
-     * @param  boolean          $executeFlush
-     * @return Array[Tag]       addded tags
+     * @param MultimediaObject $mmobj
+     * @param string           $tagCod
+     * @param bool             $executeFlush
+     *
+     * @return Array[Tag] addded tags
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
@@ -59,12 +61,13 @@ class TagService
     }
 
     /**
-     * Add Tag to Multimedia Object
+     * Add Tag to Multimedia Object.
      *
-     * @param  MultimediaObject $mmobj
-     * @param  Tag              $tag
-     * @param  boolean          $executeFlush
-     * @return Array[Tag]       addded tags
+     * @param MultimediaObject $mmobj
+     * @param Tag              $tag
+     * @param bool             $executeFlush
+     *
+     * @return Array[Tag] addded tags
      */
     public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
     {
@@ -96,11 +99,12 @@ class TagService
     }
 
     /**
-     * Remove Tag from Multimedia Object
+     * Remove Tag from Multimedia Object.
      *
      * @param MultimediaObject $mmobj
-     * @param string $tagId
-     * @param  boolean          $executeFlush
+     * @param string           $tagId
+     * @param bool             $executeFlush
+     *
      * @return Array[Tag] removed tags
      */
     public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
@@ -137,10 +141,11 @@ class TagService
     }
 
     /**
-     * Reset the tags of an array of MultimediaObjects
+     * Reset the tags of an array of MultimediaObjects.
      *
      * @param array[MultimediaObject] $mmobjs
-     * @param array[string] $tags
+     * @param array[string]           $tags
+     *
      * @return array[Tag] removed tags
      */
     public function resetTags(array $mmobjs, array $tags)
@@ -169,9 +174,10 @@ class TagService
     }
 
     /**
-     * Update Tag
+     * Update Tag.
      *
      * @param Tag $tag
+     *
      * @return Tag
      */
     public function updateTag(Tag $tag)
@@ -192,9 +198,10 @@ class TagService
     }
 
     /**
-     * Save Tag
+     * Save Tag.
      *
      * @param Tag $tag
+     *
      * @return Tag
      */
     public function saveTag(Tag $tag)
@@ -208,10 +215,11 @@ class TagService
     }
 
     /**
-     * Update embedded tag
+     * Update embedded tag.
      *
-     * @param  Tag         $tag
-     * @param  EmbeddedTag $embeddedTag
+     * @param Tag         $tag
+     * @param EmbeddedTag $embeddedTag
+     *
      * @return EmbeddedTag
      */
     private function updateEmbeddedTag(Tag $tag, EmbeddedTag $embeddedTag)
@@ -233,10 +241,10 @@ class TagService
     }
 
     /**
-     * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags
+     * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
      * @param array[MultimediaObject] $mmobjs
-     * @param array[string] $tags
+     * @param array[string]           $tags
      */
     public function resetCategories(array $mmobjs, array $newTags)
     {

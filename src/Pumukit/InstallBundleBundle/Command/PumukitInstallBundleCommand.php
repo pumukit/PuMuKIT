@@ -188,7 +188,7 @@ EOT
      * @param string $prefix
      * @param string $path
      *
-     * @return Boolean true if it worked, false otherwise
+     * @return bool true if it worked, false otherwise
      *
      * @throws \RuntimeException If bundle is not found on file
      */

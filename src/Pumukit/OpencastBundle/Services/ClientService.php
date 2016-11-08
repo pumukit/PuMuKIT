@@ -26,13 +26,13 @@ class ClientService
     /**
      * Constructor.
      *
-     * @param string $url
-     * @param string $user
-     * @param string $passwd
-     * @param string $player
-     * @param bool   $deleteArchiveMediaPackage
-     * @param string $deletionWorkflowName
-     * @param bool   $manageOpencastUsers
+     * @param string          $url
+     * @param string          $user
+     * @param string          $passwd
+     * @param string          $player
+     * @param bool            $deleteArchiveMediaPackage
+     * @param string          $deletionWorkflowName
+     * @param bool            $manageOpencastUsers
      * @param LoggerInterface $logger
      */
     public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
@@ -332,10 +332,11 @@ class ClientService
     }
 
     /**
-     * Create User
+     * Create User.
      *
-     * @param  User $user
-     * @return boolean
+     * @param User $user
+     *
+     * @return bool
      */
     public function createUser(User $user)
     {
@@ -363,10 +364,11 @@ class ClientService
     }
 
     /**
-     * Update User
+     * Update User.
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function updateUser(User $user)
     {
@@ -394,10 +396,11 @@ class ClientService
     }
 
     /**
-     * Delete User
+     * Delete User.
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function deleteUser(User $user)
     {
@@ -426,10 +429,10 @@ class ClientService
      * to the Opencast server
      * using or not the admin url
      *
-     * @param string        $path
-     * @param array|string  $params
-     * @param string        $method
-     * @param bool          $useAdminUrl
+     * @param string       $path
+     * @param array|string $params
+     * @param string       $method
+     * @param bool         $useAdminUrl
      *
      * @return array
      */
@@ -510,10 +513,11 @@ class ClientService
     }
 
     /**
-     * Decode json string
+     * Decode json string.
      *
-     * @param  string $jsonString
-     * @return array  $decode
+     * @param string $jsonString
+     *
+     * @return array $decode
      */
     private function decodeJson($jsonString = '')
     {

@@ -18,7 +18,7 @@ class ProfileService
     const STREAMSERVER_RED5 = 'red5';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(array $profiles, DocumentManager $documentManager)
     {
@@ -31,11 +31,12 @@ class ProfileService
 
     /**
      * Get available profiles
-     * See #7482
+     * See #7482.
      *
-     * @param boolean|null $display if not null used to filter.
-     * @param boolean|null $wizard if not null used to filter.
-     * @param boolean|null $master if not null used to filter.
+     * @param bool|null $display if not null used to filter
+     * @param bool|null $wizard  if not null used to filter
+     * @param bool|null $master  if not null used to filter
+     *
      * @return array filtered profiles
      */
     public function getProfiles($display = null, $wizard = null, $master = null)
@@ -53,9 +54,10 @@ class ProfileService
 
     /**
      * Get available profiles
-     * See #7482
+     * See #7482.
      *
      * @param string|array $tags Tags used to filter profiles
+     *
      * @return array filtered profiles
      */
     public function getProfilesByTags($tags)
@@ -68,9 +70,10 @@ class ProfileService
     }
 
     /**
-     * Get master profiles
+     * Get master profiles.
      *
-     * @param boolean $master
+     * @param bool $master
+     *
      * @return array $profiles only master if true, only not master if false
      */
     public function getMasterProfiles($master)
@@ -80,8 +83,7 @@ class ProfileService
 
     /**
      * Get the default master profile.
-     * See #7482
-     *
+     * See #7482.
      */
     public function getDefaultMasterProfile()
     {
@@ -105,7 +107,8 @@ class ProfileService
     }
 
     /**
-     * Get given profile
+     * Get given profile.
+     *
      * @param string the profile name (case sensitive)
      */
     public function getProfile($profile)
@@ -118,7 +121,7 @@ class ProfileService
     }
 
     /**
-     * Get dir out info from streamserver of profiles
+     * Get dir out info from streamserver of profiles.
      */
     public function getDirOutInfo()
     {
@@ -136,7 +139,7 @@ class ProfileService
     }
 
     /**
-     * Validate Profiles directories out
+     * Validate Profiles directories out.
      */
     private function validateProfilesDirOut()
     {

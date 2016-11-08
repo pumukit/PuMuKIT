@@ -20,7 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PlaylistMultimediaObjectController extends Controller
 {
     /**
-     * Overwrite to search criteria with date
+     * Overwrite to search criteria with date.
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -62,6 +63,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     /**
      * Displays the preview.
+     *
      * @Template("PumukitNewAdminBundle:MultimediaObject:show.html.twig")
      */
     public function showAction(MultimediaObject $mmobj, Request $request)
@@ -82,6 +84,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     /**
      * Displays the 'info' tab.
+     *
      * @Template
      */
     public function infoAction(MultimediaObject $mmobj, Request $request)
@@ -153,6 +156,7 @@ class PlaylistMultimediaObjectController extends Controller
      * Returns a modal window where to add mmobjs to a playlist.
      *
      * It is meant to be used through ajax.
+     *
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal.html.twig")
      */
     public function modalAction(Series $playlist, Request $request)
@@ -175,6 +179,7 @@ class PlaylistMultimediaObjectController extends Controller
      * Returns the user mmobjs.
      *
      * It is meant to be used through ajax.
+     *
      * @Template("PumukitNewAdminBundle:PlaylistMultimediaObject:modal_myvideos_list.html.twig")
      */
     public function modalMyMmobjsAction(Series $playlist, Request $request)
@@ -323,7 +328,7 @@ class PlaylistMultimediaObjectController extends Controller
     }
 
     /**
-     * Moves the mmobj in $initPos to $endPos
+     * Moves the mmobj in $initPos to $endPos.
      */
     protected function moveAction(Series $playlist, $initPos, $endPos)
     {
@@ -407,6 +412,7 @@ class PlaylistMultimediaObjectController extends Controller
 
     /**
      * Show modal to add one or more mmobjs to a playlist.
+     *
      * @Template
      */
     public function addModalAction(Request $request)
@@ -441,9 +447,8 @@ class PlaylistMultimediaObjectController extends Controller
     }
 
     /**
-     *
      * ids
-     * id
+     * id.
      *
      * series_id
      * series_ids
@@ -472,7 +477,7 @@ class PlaylistMultimediaObjectController extends Controller
     }
 
     /**
-     * TODO
+     * TODO.
      */
     private function getIds(Request $request, $idsKey = 'ids')
     {

@@ -56,9 +56,9 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     }
 
     /**
-    * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide": true})
-    * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
-    */
+     * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide": true})
+     * @Template("PumukitWebTVBundle:MultimediaObject:index.html.twig")
+     */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
@@ -95,8 +95,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     }
 
     /**
-    * @Template()
-    */
+     * @Template()
+     */
     public function seriesAction(MultimediaObject $multimediaObject)
     {
         $series = $multimediaObject->getSeries();
@@ -115,8 +115,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     }
 
     /**
-    * @Template()
-    */
+     * @Template()
+     */
     public function relatedAction(MultimediaObject $multimediaObject)
     {
         $mmobjRepo = $this

@@ -20,7 +20,7 @@ class TrackEvent extends Event
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Track $track
+     * @param Track            $track
      */
     public function __construct(MultimediaObject $multimediaObject, Track $track)
     {

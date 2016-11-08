@@ -32,7 +32,7 @@ class MaterialService
     }
 
     /**
-     * Update Material in Multimedia Object
+     * Update Material in Multimedia Object.
      */
     public function updateMaterialInMultimediaObject(MultimediaObject $multimediaObject, Material $material)
     {
@@ -45,7 +45,7 @@ class MaterialService
     }
 
     /**
-     * Set a material from an url into the multimediaObject
+     * Set a material from an url into the multimediaObject.
      */
     public function addMaterialUrl(MultimediaObject $multimediaObject, $url, $formData)
     {
@@ -64,7 +64,7 @@ class MaterialService
     }
 
     /**
-     * Add a material from a file into the multimediaObject
+     * Add a material from a file into the multimediaObject.
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
@@ -94,7 +94,7 @@ class MaterialService
     }
 
     /**
-     * Remove Material from Multimedia Object
+     * Remove Material from Multimedia Object.
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -119,7 +119,7 @@ class MaterialService
     }
 
     /**
-     * Up Material in Multimedia Object
+     * Up Material in Multimedia Object.
      */
     public function upMaterialInMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -131,7 +131,7 @@ class MaterialService
     }
 
     /**
-     * Down Material in Multimedia Object
+     * Down Material in Multimedia Object.
      */
     public function downMaterialInMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -143,9 +143,10 @@ class MaterialService
     }
 
     /**
-     * Get VTT captions
+     * Get VTT captions.
      *
      * @param MultimediaObject $multimediaObjet
+     *
      * @return array
      */
     public function getCaptions(MultimediaObject $multimediaObject)
@@ -158,7 +159,7 @@ class MaterialService
     }
 
     /**
-     * Save form data of Material
+     * Save form data of Material.
      *
      * @return Material $material
      */

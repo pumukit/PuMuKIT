@@ -54,7 +54,7 @@ class JobGeneratorListener
     }
 
     /**
-     * TODO add doc
+     * TODO add doc.
      */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
@@ -107,7 +107,7 @@ class JobGeneratorListener
 
     /**
      * Process the target string (See test)
-     * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC'))
+     * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC')).
      *
      * @return array
      */

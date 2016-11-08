@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class MultimediaObjectPicController extends Controller implements NewAdminController
 {
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
@@ -30,7 +29,6 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
     public function listAction(MultimediaObject $multimediaObject)
@@ -42,7 +40,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     * Assign a picture from an url or from an existing one to the multimedia object
+     * Assign a picture from an url or from an existing one to the multimedia object.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
@@ -94,7 +92,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     * Delete pic
+     * Delete pic.
      */
     public function deleteAction(Request $request)
     {
@@ -113,7 +111,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     * Up pic
+     * Up pic.
      */
     public function upAction(Request $request)
     {
@@ -136,7 +134,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     * Down pic
+     * Down pic.
      */
     public function downAction(Request $request)
     {
@@ -190,11 +188,12 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     }
 
     /**
-     * Get paginated pics
+     * Get paginated pics.
      *
      * @param array $urlPics
-     * @param int $limit
-     * @param int $page
+     * @param int   $limit
+     * @param int   $page
+     *
      * @return Pagerfanta
      */
     private function getPaginatedPics($urlPics, $limit, $page)

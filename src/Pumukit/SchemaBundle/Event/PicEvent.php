@@ -20,7 +20,7 @@ class PicEvent extends Event
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Pic $pic
+     * @param Pic              $pic
      */
     public function __construct(MultimediaObject $multimediaObject, Pic $pic)
     {

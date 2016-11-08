@@ -16,7 +16,7 @@ class PicEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -26,14 +26,14 @@ class PicEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event PIC_CREATE
      * 'pic.create' passing
      * the multimedia object and the pic
      *
      * @param MultimediaObject $multimediaObject
-     * @param Pic $pic
+     * @param Pic              $pic
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, Pic $pic)
     {
@@ -42,14 +42,14 @@ class PicEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event PIC_UPDATE
      * 'pic.update' passing
      * the multimedia object and the pic
      *
      * @param MultimediaObject $multimediaObject
-     * @param Pic $pic
+     * @param Pic              $pic
      */
     public function dispatchUpdate(MultimediaObject $multimediaObject, Pic $pic)
     {
@@ -58,14 +58,14 @@ class PicEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event PIC_DELETE
      * 'pic.delete' passing
      * the multimedia object and the pic
      *
      * @param MultimediaObject $multimediaObject
-     * @param Pic $pic
+     * @param Pic              $pic
      */
     public function dispatchDelete(MultimediaObject $multimediaObject, Pic $pic)
     {

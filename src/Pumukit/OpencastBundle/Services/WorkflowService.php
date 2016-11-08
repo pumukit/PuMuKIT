@@ -9,10 +9,10 @@ class WorkflowService
     private $deleteArchiveMediaPackage;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param ClientService $clientService
-     * @param boolean       $deleteArchiveMediaPackage
+     * @param bool          $deleteArchiveMediaPackage
      * @param string        $deletionWorkflowName
      */
     public function __construct(ClientService $clientService, $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive')
@@ -23,10 +23,11 @@ class WorkflowService
     }
 
     /**
-     * Check workflow ended
+     * Check workflow ended.
      *
      * @param string $mediaPackageId
-     * @return boolean
+     *
+     * @return bool
      */
     public function stopSucceededWorkflows($mediaPackageId = '')
     {
@@ -62,9 +63,10 @@ class WorkflowService
 
     /**
      * Get all workflow instances
-     * with given mediapackage id
+     * with given mediapackage id.
      *
      * @param string $id
+     *
      * @return array
      */
     private function getAllWorkflowInstances($id = '', $workflowName = '')
@@ -94,10 +96,11 @@ class WorkflowService
     }
 
     /**
-     * Get workflows template
+     * Get workflows template.
      *
-     * @param array $workflows
+     * @param array  $workflows
      * @param string $template
+     *
      * @return array
      */
     private function getWorkflowsWithTemplate(array $workflows = array(), $template = '')
@@ -115,10 +118,11 @@ class WorkflowService
     }
 
     /**
-     * Is workflow succeeded
+     * Is workflow succeeded.
      *
      * @param array $workflow
-     * @return boolean
+     *
+     * @return bool
      */
     private function isWorkflowSucceeded(array $workflow = array())
     {
@@ -132,9 +136,10 @@ class WorkflowService
     }
 
     /**
-     * Get mediapackage id from workflow
+     * Get mediapackage id from workflow.
      *
-     * @param  array  $workflow
+     * @param array $workflow
+     *
      * @return string $mediaPackageId
      */
     private function getMediaPackageIdFromWorkflow(array $workflow = array())
@@ -148,11 +153,12 @@ class WorkflowService
 
     /**
      * Delete workflow if succeeded
-     * and get the errors
+     * and get the errors.
      *
-     * @param  array   $workflow
-     * @param  integer $errors
-     * @return integer $errors
+     * @param array $workflow
+     * @param int   $errors
+     *
+     * @return int $errors
      */
     private function stopSucceededWorkflow(array $workflow = array(), $errors = 0)
     {
@@ -170,10 +176,11 @@ class WorkflowService
     }
 
     /**
-     * Get workflows with mediapackage id
+     * Get workflows with mediapackage id.
      *
-     * @param array $workflows
+     * @param array  $workflows
      * @param string $mediaPackageId
+     *
      * @return array
      */
     private function getWorkflowsWithMediaPackageId(array $workflows = array(), $mediaPackageId = '')

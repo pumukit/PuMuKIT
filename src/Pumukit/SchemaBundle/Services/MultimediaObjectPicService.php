@@ -32,7 +32,7 @@ class MultimediaObjectPicService
     }
 
     /**
-     * Returns the target path for a series
+     * Returns the target path for a series.
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
     {
@@ -40,7 +40,7 @@ class MultimediaObjectPicService
     }
 
     /**
-     * Returns the target url for a series
+     * Returns the target url for a series.
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
     {
@@ -48,7 +48,7 @@ class MultimediaObjectPicService
     }
 
   /**
-   * Get pics from series or multimedia object
+   * Get pics from series or multimedia object.
    */
   public function getRecommendedPics($series)
   {
@@ -56,7 +56,7 @@ class MultimediaObjectPicService
   }
 
   /**
-   * Set a pic from an url into the multimediaObject
+   * Set a pic from an url into the multimediaObject.
    */
   public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
   {
@@ -75,7 +75,7 @@ class MultimediaObjectPicService
   }
 
   /**
-   * Set a pic from an url into the multimediaObject
+   * Set a pic from an url into the multimediaObject.
    */
   public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
   {
@@ -103,7 +103,7 @@ class MultimediaObjectPicService
   }
 
     /**
-     * Remove Pic from Multimedia Object
+     * Remove Pic from Multimedia Object.
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)
     {

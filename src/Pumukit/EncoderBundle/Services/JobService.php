@@ -64,11 +64,12 @@ class JobService
      * Create track from local hard drive with job service. AddJob method wrapper.
      *
      * @param MultimediaObject $multimediaObject
-     * @param UploadedFile $file
-     * @param string $profile
-     * @param int $priority
-     * @param string $language
-     * @param array $description
+     * @param UploadedFile     $file
+     * @param string           $profile
+     * @param int              $priority
+     * @param string           $language
+     * @param array            $description
+     *
      * @return MultimediaObject
      */
     public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
@@ -92,11 +93,12 @@ class JobService
      * Create track from inbox on server with job service. AddJob method wrapper.
      *
      * @param MultimediaObject $multimediaObject
-     * @param string $trackUrl
-     * @param string $profile
-     * @param int $priority
-     * @param string $language
-     * @param array $description
+     * @param string           $trackUrl
+     * @param string           $profile
+     * @param int              $priority
+     * @param string           $language
+     * @param array            $description
+     *
      * @return MultimediaObject
      */
     public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
@@ -121,17 +123,17 @@ class JobService
     }
 
     /**
-     * Add a encoder job
+     * Add a encoder job.
      *
-     * @param string $pathFile Absolute path of the multimedia object
-     * @param string $profile Encoder profile name
-     * @param int $priority Priority of the new job
+     * @param string           $pathFile         Absolute path of the multimedia object
+     * @param string           $profile          Encoder profile name
+     * @param int              $priority         Priority of the new job
      * @param MultimediaObject $multimediaObject
-     * @param string $language
-     * @param array $description
-     * @param array $initVars Init values of the Job
-     * @param int $duration Only necesary in JobService::ADD_JOB_NOT_CHECKS
-     * @param int $flags A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
+     * @param string           $language
+     * @param array            $description
+     * @param array            $initVars         Init values of the Job
+     * @param int              $duration         Only necesary in JobService::ADD_JOB_NOT_CHECKS
+     * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
      * @return Job
      */
@@ -211,7 +213,7 @@ class JobService
     }
 
     /**
-     * Pause job
+     * Pause job.
      *
      * Given an id, pauses the job only if it's waiting
      */
@@ -227,7 +229,7 @@ class JobService
     }
 
     /**
-     * Resume Job
+     * Resume Job.
      *
      * Given an id, if the job status is waiting, pauses it
      */
@@ -243,7 +245,7 @@ class JobService
     }
 
     /**
-     * Cancel job
+     * Cancel job.
      *
      * Given an id, if the job status is paused or waiting, delete it. Throw exception otherwise
      */
@@ -295,7 +297,7 @@ class JobService
     }
 
     /**
-     * Get all jobs status
+     * Get all jobs status.
      */
     public function getAllJobsStatus()
     {
@@ -309,7 +311,7 @@ class JobService
     }
 
     /**
-     * Get next job
+     * Get next job.
      *
      * Returns the job in waiting status with higher priority (tie: timeini older)
      */
@@ -319,7 +321,7 @@ class JobService
     }
 
     /**
-     * Exec next job
+     * Exec next job.
      */
     public function executeNextJob()
     {
@@ -475,7 +477,7 @@ class JobService
     }
 
     /**
-     * Get bat auto
+     * Get bat auto.
      *
      * Generates execution line replacing %1 %2 %3 by
      * in, out and cfg files
@@ -527,7 +529,7 @@ class JobService
     }
 
     /**
-     * Change status of a given job
+     * Change status of a given job.
      */
     private function changeStatus(Job $job, $actualStatus, $newStatus)
     {
@@ -539,7 +541,7 @@ class JobService
     }
 
     /**
-     * Set path end auto
+     * Set path end auto.
      */
     public function setPathEndAndExtensions($job)
     {
@@ -645,9 +647,10 @@ class JobService
     }
 
     /**
-     * Get not finished jobs with multimedia object id
+     * Get not finished jobs with multimedia object id.
      *
      * @param string $mmId
+     *
      * @return ArrayCollection $jobs with mmId
      */
     public function getNotFinishedJobsByMultimediaObjectId($mmId)
@@ -656,9 +659,9 @@ class JobService
     }
 
     /**
-     * Get status error
+     * Get status error.
      *
-     * @return integer Job status error
+     * @return int Job status error
      */
     public function getStatusError()
     {
@@ -666,7 +669,7 @@ class JobService
     }
 
     /**
-     * Retry job
+     * Retry job.
      */
     public function retryJob($job)
     {
@@ -755,7 +758,7 @@ class JobService
     }
 
     /**
-     * Get user email
+     * Get user email.
      *
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      */

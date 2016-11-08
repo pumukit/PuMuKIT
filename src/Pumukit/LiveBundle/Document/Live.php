@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Pumukit\LiveBundle\Document\Live
+ * Pumukit\LiveBundle\Document\Live.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\LiveBundle\Repository\LiveRepository")
  */
@@ -16,14 +16,14 @@ class Live
     const LIVE_TYPE_WMS = 'WMS';
 
   /**
-   * @var int $id
+   * @var int
    *
    * @MongoDB\Id
    */
   private $id;
 
   /**
-   * @var string $url
+   * @var string
    *
    * @MongoDB\String
    * @Assert\NotBlank()
@@ -32,49 +32,49 @@ class Live
   private $url;
 
   /**
-   * @var string $passwd
+   * @var string
    *
    * @MongoDB\String
    */
   private $passwd;
 
   /**
-   * @var int $live_type
+   * @var int
    *
    * @MongoDB\String
    */
   private $live_type = self::LIVE_TYPE_FMS;
 
   /**
-   * @var int $width
+   * @var int
    *
    * @MongoDB\Int
    */
   private $width = 720;
 
   /**
-   * @var int $height
+   * @var int
    *
    * @MongoDB\Int
    */
   private $height = 576;
 
   /**
-   * @var string $qualities
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $qualities;
 
   /**
-   * @var string $ip_source
+   * @var string
    *
    * @MongoDB\String
    */
   private $ip_source;
 
   /**
-   * @var string $source_name
+   * @var string
    *
    * @MongoDB\String
    * @Assert\NotBlank()
@@ -82,28 +82,28 @@ class Live
   private $source_name;
 
   /**
-   * @var boolean $index_play
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $index_play = false;
 
   /**
-   * @var boolean $broadcasting
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $broadcasting = false;
 
   /**
-   * @var boolean $debug
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $debug = false;
 
   /**
-   * @var string $name
+   * @var string
    *
    * @MongoDB\Raw
    * @Assert\NotBlank()
@@ -111,19 +111,19 @@ class Live
   private $name = array('en' => '');
 
   /**
-   * @var string $description
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $description = array('en' => '');
 
   /**
-   * @var locale $locale
+   * @var locale
    */
   private $locale = 'en';
 
   /**
-   * Constructor
+   * Constructor.
    */
   protected static $instances = array();
 
@@ -133,7 +133,7 @@ class Live
     }
 
   /**
-   * Get id
+   * Get id.
    *
    * @return int
    */
@@ -143,7 +143,7 @@ class Live
   }
 
   /**
-   * Set url
+   * Set url.
    *
    * @param string $url
    */
@@ -153,7 +153,7 @@ class Live
   }
 
   /**
-   * Get url
+   * Get url.
    *
    * @return string
    */
@@ -163,7 +163,7 @@ class Live
   }
 
   /**
-   * Set passwd
+   * Set passwd.
    *
    * @param string $passwd
    */
@@ -173,7 +173,7 @@ class Live
   }
 
   /**
-   * Get passwd
+   * Get passwd.
    *
    * @return string
    */
@@ -183,7 +183,7 @@ class Live
   }
 
   /**
-   * Set live_type
+   * Set live_type.
    *
    * @param string $live_type
    */
@@ -193,7 +193,7 @@ class Live
   }
 
   /**
-   * Get live_type
+   * Get live_type.
    *
    * @return string
    */
@@ -211,7 +211,7 @@ class Live
   }
 
   /**
-   * Set width
+   * Set width.
    *
    * @param int $width
    */
@@ -221,7 +221,7 @@ class Live
   }
 
   /**
-   * Get width
+   * Get width.
    *
    * @return int
    */
@@ -231,7 +231,7 @@ class Live
   }
 
   /**
-   * Set height
+   * Set height.
    *
    * @param int $height
    */
@@ -241,7 +241,7 @@ class Live
   }
 
   /**
-   * Get height
+   * Get height.
    *
    * @return int
    */
@@ -251,7 +251,7 @@ class Live
   }
 
   /**
-   * Set qualities
+   * Set qualities.
    *
    * @param string $qualities
    */
@@ -261,7 +261,7 @@ class Live
   }
 
   /**
-   * Get qualities
+   * Get qualities.
    *
    * @return string
    */
@@ -271,7 +271,7 @@ class Live
   }
 
   /**
-   * Set ip_source
+   * Set ip_source.
    *
    * @param string $ip_source
    */
@@ -281,7 +281,7 @@ class Live
   }
 
   /**
-   * Get ip_source
+   * Get ip_source.
    *
    * @return string
    */
@@ -291,7 +291,7 @@ class Live
   }
 
   /**
-   * Set source_name
+   * Set source_name.
    *
    * @param string $source_name
    */
@@ -301,7 +301,7 @@ class Live
   }
 
   /**
-   * Get source_name
+   * Get source_name.
    *
    * @return string
    */
@@ -311,9 +311,9 @@ class Live
   }
 
   /**
-   * Set index_play
+   * Set index_play.
    *
-   * @param boolean $index_play
+   * @param bool $index_play
    */
   public function setIndexPlay($index_play)
   {
@@ -321,9 +321,9 @@ class Live
   }
 
   /**
-   * Get index_play
+   * Get index_play.
    *
-   * @return boolean
+   * @return bool
    */
   public function getIndexPlay()
   {
@@ -331,9 +331,9 @@ class Live
   }
 
   /**
-   * Set broadcasting
+   * Set broadcasting.
    *
-   * @param boolean $broadcasting
+   * @param bool $broadcasting
    */
   public function setBroadcasting($broadcasting)
   {
@@ -341,9 +341,9 @@ class Live
   }
 
   /**
-   * Get broadcasting
+   * Get broadcasting.
    *
-   * @return boolean
+   * @return bool
    */
   public function getBroadcasting()
   {
@@ -351,9 +351,9 @@ class Live
   }
 
   /**
-   * Set debug
+   * Set debug.
    *
-   * @param boolean $debug
+   * @param bool $debug
    */
   public function setDebug($debug)
   {
@@ -361,9 +361,9 @@ class Live
   }
 
   /**
-   * Get debug
+   * Get debug.
    *
-   * @return boolean
+   * @return bool
    */
   public function getDebug()
   {
@@ -371,7 +371,7 @@ class Live
   }
 
   /**
-   * Set name
+   * Set name.
    *
    * @param string $name
    */
@@ -384,7 +384,7 @@ class Live
   }
 
   /**
-   * Get name
+   * Get name.
    *
    * @return string
    */
@@ -401,7 +401,7 @@ class Live
   }
 
   /**
-   * Set I18n name
+   * Set I18n name.
    *
    * @param array $name
    */
@@ -411,7 +411,7 @@ class Live
   }
 
   /**
-   * Get i18n name
+   * Get i18n name.
    *
    * @return array
    */
@@ -421,7 +421,7 @@ class Live
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param string $description
    */
@@ -434,7 +434,7 @@ class Live
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @return string
    */
@@ -451,7 +451,7 @@ class Live
   }
 
   /**
-   * Set I18n description
+   * Set I18n description.
    *
    * @param array $description
    */
@@ -461,7 +461,7 @@ class Live
   }
 
   /**
-   * Get I18n description
+   * Get I18n description.
    *
    * @return array
    */
@@ -471,7 +471,7 @@ class Live
   }
 
   /**
-   * Set locale
+   * Set locale.
    *
    * @param string $locale
    */
@@ -481,7 +481,7 @@ class Live
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */
@@ -491,7 +491,7 @@ class Live
   }
 
   /**
-   * Clone Live
+   * Clone Live.
    *
    * @return Live
    */
@@ -504,7 +504,7 @@ class Live
   }
 
   /**
-   * Get Resolution
+   * Get Resolution.
    *
    * @return array
    */
@@ -515,7 +515,7 @@ class Live
   }
 
   /**
-   * Set Resolution
+   * Set Resolution.
    *
    * @param array
    */

@@ -51,11 +51,12 @@ class OpencastService
     }
 
     /**
-     * Gen SBS according to configuration in parameters
+     * Gen SBS according to configuration in parameters.
      *
      * @param MultimediaObject $multimediaObject
      * @param array            $opencastUrls
-     * @return boolean
+     *
+     * @return bool
      */
     public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls = array())
     {
@@ -81,9 +82,10 @@ class OpencastService
     }
 
     /**
-     * Get path
+     * Get path.
      *
      * @param string $url
+     *
      * @return string
      */
     public function getPath($url)
@@ -99,7 +101,7 @@ class OpencastService
     }
 
     /**
-     * Generate SBS Track
+     * Generate SBS Track.
      *
      * @param MultimediaObject $multimediaObject
      * @param array            $opencastUrls

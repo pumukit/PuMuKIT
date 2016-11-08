@@ -27,7 +27,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class MultimediaObjectController extends SortableAdminController implements NewAdminController
 {
     /**
-     * Overwrite to search criteria with date
+     * Overwrite to search criteria with date.
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -89,7 +90,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Create new resource
+     * Create new resource.
      */
     public function createAction(Request $request)
     {
@@ -114,6 +115,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Overwrite to update the session.
+     *
      * @Template
      */
     public function showAction(Request $request)
@@ -136,6 +138,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Display the form for editing or update the resource.
+     *
      * @Template
      */
     public function editAction(Request $request)
@@ -224,7 +227,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     *
      * @Template
      */
     public function linksAction(MultimediaObject $resource)
@@ -452,7 +454,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Add Tag
+     * Add Tag.
      */
     public function addTagAction(Request $request)
     {
@@ -484,7 +486,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Delete Tag
+     * Delete Tag.
      */
     public function deleteTagAction(Request $request)
     {
@@ -516,7 +518,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Update Tags in Multimedia Object from form
+     * Update Tags in Multimedia Object from form.
      */
     protected function updateTags($checkedTags, $codStart, $resource)
     {
@@ -549,7 +551,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Get the view list of multimedia objects
-     * belonging to a series
+     * belonging to a series.
      */
     protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId = null)
     {
@@ -609,7 +611,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Delete action
-     * Overwrite to pass series parameter
+     * Overwrite to pass series parameter.
      */
     public function deleteAction(Request $request)
     {
@@ -663,7 +665,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Generate Magic Url action
+     * Generate Magic Url action.
      */
     public function generateMagicUrlAction(Request $request)
     {
@@ -675,7 +677,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Clone action
+     * Clone action.
      */
     public function cloneAction(Request $request)
     {
@@ -690,7 +692,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Batch invert announce selected
+     * Batch invert announce selected.
      */
     public function invertAnnounceAction(Request $request)
     {
@@ -717,7 +719,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * List action
-     * Overwrite to pass series parameter
+     * Overwrite to pass series parameter.
      */
     public function listAction(Request $request)
     {
@@ -751,7 +753,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Cut multimedia objects
+     * Cut multimedia objects.
      */
     public function cutAction(Request $request)
     {
@@ -765,7 +767,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Paste multimedia objects
+     * Paste multimedia objects.
      */
     public function pasteAction(Request $request)
     {
@@ -800,7 +802,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Reorder multimedia objects
+     * Reorder multimedia objects.
      */
     public function reorderAction(Request $request)
     {
@@ -829,7 +831,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Sync tags for all multimedia objects of a series
+     * Sync tags for all multimedia objects of a series.
      */
     public function syncTagsAction(Request $request)
     {
@@ -883,7 +885,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Returns true if the user has enough permissions to delete the $resource passed
+     * Returns true if the user has enough permissions to delete the $resource passed.
      *
      * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
      * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
@@ -906,7 +908,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Update groups action
+     * Update groups action.
      *
      * @Security("is_granted('ROLE_MODIFY_OWNER')")
      */
@@ -953,7 +955,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Get groups
+     * Get groups.
      */
     public function getGroupsAction(Request $request)
     {
@@ -964,7 +966,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Get embedded Broadcast groups
+     * Get embedded Broadcast groups.
      */
     public function getBroadcastInfoAction(Request $request)
     {
@@ -989,7 +991,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Update Broadcast Action
+     * Update Broadcast Action.
+     *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
      * @Template("PumukitNewAdminBundle:MultimediaObject:updatebroadcast.html.twig")
      */
@@ -1036,7 +1039,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * User last relation
+     * User last relation.
      */
     public function userLastRelationAction(Request $request)
     {
@@ -1067,7 +1070,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * List the properties of a multimedia object in a modal
+     * List the properties of a multimedia object in a modal.
      *
      * @Template
      */
@@ -1077,7 +1080,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Show a player of a multimedia object in a modal
+     * Show a player of a multimedia object in a modal.
      *
      * @Template
      */
@@ -1092,7 +1095,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Used to update table_mms_status_wrapper via AJAX
+     * Used to update table_mms_status_wrapper via AJAX.
      *
      * @Template
      */
@@ -1102,7 +1105,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Modify MultimediaObject Groups
+     * Modify MultimediaObject Groups.
      */
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
     {
@@ -1132,7 +1135,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * Modify EmbeddedBroadcast Groups
+     * Modify EmbeddedBroadcast Groups.
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array())
     {

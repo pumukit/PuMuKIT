@@ -31,7 +31,7 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     * Get functions
+     * Get functions.
      */
     public function getFunctions()
     {
@@ -48,9 +48,8 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     *
-     * @param Track $track            Track to get an url for.
-     * @param boolean                 $absolute  return absolute path.
+     * @param Track $track    Track to get an url for
+     * @param bool  $absolute return absolute path
      *
      * @return string
      */
@@ -60,7 +59,6 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     *
      * @param MultimediaObject $mmobj
      *
      * @return Track

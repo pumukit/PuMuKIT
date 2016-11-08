@@ -5,92 +5,92 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Annotation
+ * Pumukit\SchemaBundle\Document\Annotation.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\AnnotationRepository")
  */
 class Annotation
 {
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id
      */
     private $id;
 
-    /**
-     * @var object_id $multimediaObject
-     *
-     * @MongoDB\ObjectId
-     */
+/**
+ * @var object_id
+ *
+ * @MongoDB\ObjectId
+ */
     //This field would be the equivalent to 'mediapackage_id' on opencast.
     private $multimediaObject;
 
     /**
-     * @var date $created
+     * @var date
      *
      * @MongoDB\Date
      */
     private $created;
 
     /**
-     * @var string $type
+     * @var string
      *
      * @MongoDB\String
      */
     private $type;
 
     /**
-     * @var string $user_id
+     * @var string
      *
      * @MongoDB\String
      */
     private $user_id;
 
     /**
-     * @var string $session
+     * @var string
      *
      * @MongoDB\String
      */
     private $session;
 
     /**
-     * @var int $inpoint
+     * @var int
      *
      * @MongoDB\Int
      */
     private $inpoint;
 
     /**
-     * @var int $outpoint
+     * @var int
      *
      * @MongoDB\Int
      */
     private $outpoint;
 
     /**
-     * @var int $outpoint
+     * @var int
      *
      * @MongoDB\Int
      */
     private $length;
 
     /**
-     * @var string $outpoint
+     * @var string
      *
      * @MongoDB\String
      */
     private $value;
 
     /**
-     * @var boolean $is_private
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $is_private;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -100,9 +100,10 @@ class Annotation
     }
 
     /**
-     * Set multimediaObject
+     * Set multimediaObject.
      *
      * @param object_id $multimediaObject
+     *
      * @return self
      */
     public function setMultimediaObject($multimediaObject)
@@ -113,7 +114,7 @@ class Annotation
     }
 
     /**
-     * Get multimediaObject
+     * Get multimediaObject.
      *
      * @return object_id $multimediaObject
      */
@@ -123,9 +124,10 @@ class Annotation
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param date $created
+     *
      * @return self
      */
     public function setCreated($created)
@@ -136,7 +138,7 @@ class Annotation
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return date $created
      */
@@ -146,9 +148,10 @@ class Annotation
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return self
      */
     public function setType($type)
@@ -159,7 +162,7 @@ class Annotation
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string $type
      */
@@ -169,9 +172,10 @@ class Annotation
     }
 
     /**
-     * Set mediapackage
+     * Set mediapackage.
      *
      * @param string $mediapackage
+     *
      * @return self
      */
     public function setMediapackage($mediapackage)
@@ -182,7 +186,7 @@ class Annotation
     }
 
     /**
-     * Get mediapackage
+     * Get mediapackage.
      *
      * @return string $mediapackage
      */
@@ -192,9 +196,10 @@ class Annotation
     }
 
     /**
-     * Set userId
+     * Set userId.
      *
      * @param string $userId
+     *
      * @return self
      */
     public function setUserId($userId)
@@ -205,7 +210,7 @@ class Annotation
     }
 
     /**
-     * Get userId
+     * Get userId.
      *
      * @return string $userId
      */
@@ -215,9 +220,10 @@ class Annotation
     }
 
     /**
-     * Set session
+     * Set session.
      *
      * @param string $session
+     *
      * @return self
      */
     public function setSession($session)
@@ -228,7 +234,7 @@ class Annotation
     }
 
     /**
-     * Get session
+     * Get session.
      *
      * @return string $session
      */
@@ -238,9 +244,10 @@ class Annotation
     }
 
     /**
-     * Set inpoint
+     * Set inpoint.
      *
      * @param int $inpoint
+     *
      * @return self
      */
     public function setInpoint($inpoint)
@@ -251,7 +258,7 @@ class Annotation
     }
 
     /**
-     * Get inpoint
+     * Get inpoint.
      *
      * @return int $inpoint
      */
@@ -261,9 +268,10 @@ class Annotation
     }
 
     /**
-     * Set outpoint
+     * Set outpoint.
      *
      * @param int $outpoint
+     *
      * @return self
      */
     public function setOutpoint($outpoint)
@@ -274,7 +282,7 @@ class Annotation
     }
 
     /**
-     * Get outpoint
+     * Get outpoint.
      *
      * @return int $outpoint
      */
@@ -284,9 +292,10 @@ class Annotation
     }
 
     /**
-     * Set length
+     * Set length.
      *
      * @param int $length
+     *
      * @return self
      */
     public function setLength($length)
@@ -297,7 +306,7 @@ class Annotation
     }
 
     /**
-     * Get length
+     * Get length.
      *
      * @return int $length
      */
@@ -307,9 +316,10 @@ class Annotation
     }
 
     /**
-     * Set value
+     * Set value.
      *
      * @param string $value
+     *
      * @return self
      */
     public function setValue($value)
@@ -320,7 +330,7 @@ class Annotation
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return string $value
      */
@@ -330,9 +340,10 @@ class Annotation
     }
 
     /**
-     * Set isPrivate
+     * Set isPrivate.
      *
-     * @param boolean $isPrivate
+     * @param bool $isPrivate
+     *
      * @return self
      */
     public function setIsPrivate($isPrivate)
@@ -343,9 +354,9 @@ class Annotation
     }
 
     /**
-     * Get isPrivate
+     * Get isPrivate.
      *
-     * @return boolean $isPrivate
+     * @return bool $isPrivate
      */
     public function getIsPrivate()
     {

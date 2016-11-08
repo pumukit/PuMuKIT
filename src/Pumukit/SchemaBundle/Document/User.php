@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\GroupInterface;
 
 /**
- * Pumukit\SchemaBundle\Document\User
+ * Pumukit\SchemaBundle\Document\User.
  *
  * @MongoDB\Document
  */
@@ -17,7 +17,7 @@ class User extends BaseUser
     const ORIGIN_LOCAL = 'local';
 
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id(strategy="auto")
      */
@@ -34,28 +34,28 @@ class User extends BaseUser
     private $person;
 
     /**
-     * @var string $fullname
+     * @var string
      *
      * @MongoDB\String
      */
     protected $fullname;
 
     /**
-     * @var string $origin
+     * @var string
      *
      * @MongoDB\String
      */
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var ArrayCollection $groups
+     * @var ArrayCollection
      *
      * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     protected $groups;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($genUserSalt = false)
     {
@@ -67,7 +67,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set permission profile
+     * Set permission profile.
      *
      * @param PermissionProfile $permissionProfile
      */
@@ -77,7 +77,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get permission profile
+     * Get permission profile.
      *
      * @return PermissionProfile $permissionProfile
      */
@@ -87,7 +87,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set person
+     * Set person.
      *
      * @param Person $person
      */
@@ -97,7 +97,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get person
+     * Get person.
      *
      * @return Person
      */
@@ -107,7 +107,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set fullname
+     * Set fullname.
      *
      * @param string $fullname
      */
@@ -117,7 +117,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get fullname
+     * Get fullname.
      *
      * @return string
      */
@@ -127,7 +127,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set origin
+     * Set origin.
      *
      * @param string $origin
      */
@@ -137,7 +137,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get origin
+     * Get origin.
      *
      * @return string
      */
@@ -147,7 +147,7 @@ class User extends BaseUser
     }
 
     /**
-     * Is the origin local
+     * Is the origin local.
      *
      * @return bool
      */
@@ -157,11 +157,11 @@ class User extends BaseUser
     }
 
     /**
-     * Contains Group
+     * Contains Group.
      *
      * @param GroupInterface $group
      *
-     * @return boolean
+     * @return bool
      */
     public function containsGroup(GroupInterface $group)
     {
@@ -169,7 +169,7 @@ class User extends BaseUser
     }
 
     /**
-     * Add  group
+     * Add  group.
      *
      * @param GroupInterface $group
      */
@@ -179,7 +179,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove  group
+     * Remove  group.
      *
      * @param GroupInterface $group
      */
@@ -189,7 +189,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get Groups
+     * Get Groups.
      *
      * @return ArrayCollection
      */
@@ -199,7 +199,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get groups ids
+     * Get groups ids.
      *
      * @return array
      */
@@ -223,7 +223,7 @@ class User extends BaseUser
     }
 
     /**
-     * Returns the user roles
+     * Returns the user roles.
      *
      * Note: Override BaseUser::getRole to avoid call User::getGroups and avoid a query.
      *

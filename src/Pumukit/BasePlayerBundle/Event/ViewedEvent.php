@@ -19,7 +19,7 @@ class ViewedEvent extends Event
     protected $multimediaObject;
 
     /**
-     * @param Track $track
+     * @param Track            $track
      * @param MultimediaObject $multimediaObject
      */
     public function __construct(MultimediaObject $multimediaObject, Track $track = null)

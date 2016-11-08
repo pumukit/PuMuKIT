@@ -8,42 +8,42 @@ use JMS\Serializer\Annotation as Serializer;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Pumukit\SchemaBundle\Document\SeriesType
+ * Pumukit\SchemaBundle\Document\SeriesType.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesTypeRepository")
  */
 class SeriesType
 {
     /**
-   * @var int $id
+   * @var int
    *
    * @MongoDB\Id
    */
   private $id;
 
   /**
-   * @var string $name
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $name = array('en' => '');
 
   /**
-   * @var string $description
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $description = array('en' => '');
 
   /**
-   * @var string $cod
+   * @var string
    *
    * @MongoDB\String
    */
   private $cod = 0;
 
   /**
-   * @var ArrayCollection $series
+   * @var ArrayCollection
    *
    * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
    * @Serializer\Exclude
@@ -52,8 +52,9 @@ class SeriesType
 
   /**
    * Used locale to override Translation listener`s locale
-   * this is not a mapped field of entity metadata, just a simple property
-   * @var locale $locale
+   * this is not a mapped field of entity metadata, just a simple property.
+   *
+   * @var locale
    */
   private $locale = 'en';
 
@@ -63,7 +64,7 @@ class SeriesType
     }
 
   /**
-   * Get id
+   * Get id.
    *
    * @return int
    */
@@ -73,7 +74,7 @@ class SeriesType
   }
 
   /**
-   * Set name
+   * Set name.
    *
    * @param string $name
    * @param string|null $locale
@@ -87,9 +88,10 @@ class SeriesType
   }
 
   /**
-   * Get name
+   * Get name.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getName($locale = null)
@@ -105,7 +107,7 @@ class SeriesType
   }
 
   /**
-   * Set I18n name
+   * Set I18n name.
    *
    * @param array $name
    */
@@ -115,7 +117,7 @@ class SeriesType
   }
 
   /**
-   * Get i18n name
+   * Get i18n name.
    *
    * @return array
    */
@@ -125,7 +127,7 @@ class SeriesType
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param string $description
    * @param string|null $locale
@@ -139,9 +141,10 @@ class SeriesType
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getDescription($locale = null)
@@ -157,7 +160,7 @@ class SeriesType
   }
 
   /**
-   * Set I18n description
+   * Set I18n description.
    *
    * @param array $description
    */
@@ -167,7 +170,7 @@ class SeriesType
   }
 
   /**
-   * Get i18n description
+   * Get i18n description.
    *
    * @return array
    */
@@ -177,7 +180,7 @@ class SeriesType
   }
 
   /**
-   * Set cod
+   * Set cod.
    *
    * @param string $cod
    */
@@ -187,7 +190,7 @@ class SeriesType
   }
 
   /**
-   * Get cod
+   * Get cod.
    *
    * @return string
    */
@@ -197,7 +200,7 @@ class SeriesType
   }
 
   /**
-   * Set locale
+   * Set locale.
    *
    * @param string $locale
    */
@@ -207,7 +210,7 @@ class SeriesType
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */
@@ -217,11 +220,11 @@ class SeriesType
   }
 
   /**
-   * Contains series
+   * Contains series.
    *
    * @param Series $series
    *
-   * @return boolean
+   * @return bool
    */
   public function containsSeries(Series $series)
   {
@@ -229,7 +232,7 @@ class SeriesType
   }
 
   /**
-   * Get series
+   * Get series.
    *
    * @return ArrayCollection
    */
@@ -239,7 +242,7 @@ class SeriesType
   }
 
   /**
-   * To string
+   * To string.
    *
    * @return string
    */

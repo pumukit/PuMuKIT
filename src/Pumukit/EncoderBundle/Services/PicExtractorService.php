@@ -34,11 +34,12 @@ class PicExtractorService
     }
 
     /**
-     * Extract pics on batch
+     * Extract pics on batch.
      *
      * @param MultimediaObject $multimediaObject
-     * @param Track $track
-     * @param array $marks
+     * @param Track            $track
+     * @param array            $marks
+     *
      * @return string $message
      */
     public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null)
@@ -58,11 +59,12 @@ class PicExtractorService
     }
 
     /**
-     * Extract Pic
+     * Extract Pic.
      *
      * @param MultimediaObject $multimediaObject
-     * @param Track $track
-     * @param integer $numframe
+     * @param Track            $track
+     * @param int              $numframe
+     *
      * @return string $message
      */
     public function extractPic(MultimediaObject $multimediaObject, Track $track, $numframe)
@@ -91,8 +93,9 @@ class PicExtractorService
      * multimedia al que pertenece el archivo.
      *
      * @param MultimediaObject $multimediaObject
-     * @param Track $track
-     * @param integer $frame numero del frame donde se realiza la captura.
+     * @param Track            $track
+     * @param int              $frame            numero del frame donde se realiza la captura
+     *
      * @return PIC o null si mal
      */
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
@@ -156,6 +159,7 @@ class PicExtractorService
      * Return aspect ratio. Check is not zero.
      *
      * @param Track $track
+     *
      * @return float aspect ratio
      */
     private function getAspect(Track $track)
@@ -168,15 +172,16 @@ class PicExtractorService
     }
 
     /**
-     * Complete pic metadata
+     * Complete pic metadata.
      *
      * Pic service addPicUrl doesn't add the path
      *
      * @param MultimediaObject $multimediaObject
-     * @param string $picUrl
-     * @param string $picPath
-     * @param int    $width
-     * @param int    $height
+     * @param string           $picUrl
+     * @param string           $picPath
+     * @param int              $width
+     * @param int              $height
+     *
      * @return MultimediaObject $multimediaObject
      */
     private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath = '', $width = 0, $height = 0, array $tags = array())
@@ -196,10 +201,11 @@ class PicExtractorService
 
     /**
      * Private method needed because MmsPicService::addPicUrl doesn't return
-     * the Pic instance (#9065)
+     * the Pic instance (#9065).
      *
      * @param MultimediaObject $multimediaObject
-     * @param string $picUrl
+     * @param string           $picUrl
+     *
      * @return Pic|null
      */
     private function getPicByUrl(MultimediaObject $multimediaObject, $picUrl)

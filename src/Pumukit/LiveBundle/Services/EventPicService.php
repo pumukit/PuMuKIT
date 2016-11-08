@@ -30,7 +30,7 @@ class EventPicService
     }
 
   /**
-   * Set a pic from an url into the event
+   * Set a pic from an url into the event.
    */
   public function addPicUrl(Event $event, $picUrl)
   {
@@ -45,7 +45,7 @@ class EventPicService
   }
 
   /**
-   * Set a pic from an url into the event
+   * Set a pic from an url into the event.
    */
   public function addPicFile(Event $event, UploadedFile $picFile)
   {
@@ -71,7 +71,7 @@ class EventPicService
   }
 
     /**
-     * Remove Pic from Event
+     * Remove Pic from Event.
      */
     public function removePicFromEvent(Event $event)
     {

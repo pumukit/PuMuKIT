@@ -20,8 +20,10 @@ class InspectionFfmpegService implements InspectionServiceInterface
     // TO DO check if the duration is rounded up
     /**
      * Gets file duration in s.
+     *
      * @param $file
-     * @return integer $duration file duration in s rounded up.
+     *
+     * @return int $duration file duration in s rounded up
      */
     public function getDuration($file)
     {
@@ -41,6 +43,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
 
     /**
      * Completes track information from a given path using ffmpeg.
+     *
      * @param Track $track
      */
     public function autocompleteTrack(Track $track)

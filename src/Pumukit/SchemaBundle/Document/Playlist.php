@@ -7,14 +7,14 @@ use JMS\Serializer\Annotation as Serializer;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Pumukit\SchemaBundle\Document\Playlist
+ * Pumukit\SchemaBundle\Document\Playlist.
  *
  * @MongoDB\EmbeddedDocument
  */
 class Playlist
 {
     /**
-     * @var ArrayCollection $multimedia_objects
+     * @var ArrayCollection
      *
      * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", simple=true, strategy="setArray")
      * @Serializer\Exclude
@@ -27,11 +27,11 @@ class Playlist
     }
 
     /**
-     * Contains multimedia_object
+     * Contains multimedia_object.
      *
      * @param MultimediaObject $multimedia_object
      *
-     * @return boolean
+     * @return bool
      */
     public function containsMultimediaObject(MultimediaObject $multimedia_object)
     {
@@ -39,7 +39,7 @@ class Playlist
     }
 
     /**
-     * Add multimedia object
+     * Add multimedia object.
      *
      * @param MultimediaObject $multimedia_object
      */
@@ -49,7 +49,7 @@ class Playlist
     }
 
     /**
-     * Remove multimedia object
+     * Remove multimedia object.
      *
      * @param MultimediaObject $multimedia_object
      */
@@ -59,7 +59,7 @@ class Playlist
     }
 
     /**
-     * Removes all references to the multimedia objects with the given id
+     * Removes all references to the multimedia objects with the given id.
      *
      * @param MultimediaObject $multimedia_object
      */
@@ -75,7 +75,7 @@ class Playlist
     /**
      * Remove multimedia object by its position in the playlist.
      *
-     * @param integer $pos Position (starting from 0) of the mmobj in the playlist.
+     * @param int $pos Position (starting from 0) of the mmobj in the playlist
      */
     public function removeMultimediaObjectByPos($pos)
     {
@@ -83,7 +83,7 @@ class Playlist
     }
 
     /**
-     * Get multimedia_objects
+     * Get multimedia_objects.
      *
      * @return ArrayCollection
      */
@@ -93,7 +93,7 @@ class Playlist
     }
 
     /**
-     * Get the mongo id list of multimedia objects
+     * Get the mongo id list of multimedia objects.
      *
      * @return ArrayCollection
      */
@@ -109,7 +109,7 @@ class Playlist
     }
 
     /**
-     * Move multimedia_objects
+     * Move multimedia_objects.
      *
      * @return ArrayCollection
      */

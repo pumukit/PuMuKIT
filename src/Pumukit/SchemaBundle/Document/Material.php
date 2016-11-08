@@ -5,30 +5,30 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Material
+ * Pumukit\SchemaBundle\Document\Material.
  *
  * @MongoDB\EmbeddedDocument
  */
 class Material extends Element
 {
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
 
     /**
-     * @var string $language
+     * @var string
      *
      * @MongoDB\String
      */
     private $language;
 
     /**
-     * Set name
+     * Set name.
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $locale
      */
     public function setName($name, $locale = null)
@@ -40,9 +40,10 @@ class Material extends Element
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getName($locale = null)
@@ -58,7 +59,7 @@ class Material extends Element
     }
 
     /**
-     * Set I18n name
+     * Set I18n name.
      *
      * @param array $name
      */
@@ -68,7 +69,7 @@ class Material extends Element
     }
 
     /**
-     * Get I18n name
+     * Get I18n name.
      *
      * @return array
      */
@@ -78,7 +79,7 @@ class Material extends Element
     }
 
     /**
-     * Set language
+     * Set language.
      *
      * @param string $language
      */
@@ -88,7 +89,7 @@ class Material extends Element
     }
 
     /**
-     * Get language
+     * Get language.
      *
      * @return string
      */

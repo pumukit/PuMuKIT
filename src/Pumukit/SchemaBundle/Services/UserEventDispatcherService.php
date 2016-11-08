@@ -15,7 +15,7 @@ class UserEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class UserEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event USER_CREATE
      * 'user.create' passing
@@ -40,7 +40,7 @@ class UserEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event USER_UPDATE
      * 'user.update' passing
@@ -55,7 +55,7 @@ class UserEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event USER_DELETE
      * 'user.delete' passing

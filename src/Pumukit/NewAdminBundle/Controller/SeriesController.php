@@ -23,7 +23,8 @@ use Pagerfanta\Pagerfanta;
 class SeriesController extends AdminController implements NewAdminController
 {
     /**
-     * Overwrite to search criteria with date
+     * Overwrite to search criteria with date.
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -50,7 +51,8 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * List action
+     * List action.
+     *
      * @Template
      */
     public function listAction(Request $request)
@@ -64,7 +66,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Create new resource
+     * Create new resource.
      */
     public function createAction(Request $request)
     {
@@ -214,7 +216,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Generate Magic Url action
+     * Generate Magic Url action.
      */
     public function generateMagicUrlAction(Request $request)
     {
@@ -227,7 +229,7 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Batch delete action
-     * Overwrite to delete multimedia objects inside series
+     * Overwrite to delete multimedia objects inside series.
      */
     public function batchDeleteAction(Request $request)
     {
@@ -270,7 +272,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Batch invert announce selected
+     * Batch invert announce selected.
      */
     public function invertAnnounceAction(Request $request)
     {
@@ -296,7 +298,8 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Change publication form
+     * Change publication form.
+     *
      * @Template("PumukitNewAdminBundle:Series:changepub.html.twig")
      */
     public function changePubAction(Request $request)
@@ -319,7 +322,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update publication form
+     * Update publication form.
      */
     public function updatePubAction(Request $request)
     {
@@ -336,7 +339,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria($config)
     {
@@ -374,7 +377,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria, $selectedSeriesId = null)
     {
@@ -437,7 +440,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Modify Multimedia Objects status
+     * Modify Multimedia Objects status.
      */
     private function modifyMultimediaObjectsStatus($values)
     {
@@ -469,10 +472,11 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Used in AdminController to
-     * reorder series when sort is multimedia_objects
+     * reorder series when sort is multimedia_objects.
      *
      * @param ArrayCollection $resources
-     * @param string $type 'asc'|'desc'
+     * @param string          $type      'asc'|'desc'
+     *
      * @return array $series
      */
     private function reorderResources($resources)
@@ -500,11 +504,12 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Compare Series
      * Compare the number of multimedia objects
-     * according to type (greater or lower than)
+     * according to type (greater or lower than).
      *
      * @param Series $series1
      * @param Series $series2
-     * @return boolean
+     *
+     * @return bool
      */
     private function compareSeries($series1, $series2)
     {
@@ -525,7 +530,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Helper for the menu search form
+     * Helper for the menu search form.
      */
     public function searchAction(Request $req)
     {
@@ -536,7 +541,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Returns true if the user has enough permissions to delete the $resource passed
+     * Returns true if the user has enough permissions to delete the $resource passed.
      *
      * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
      * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
@@ -567,7 +572,8 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update Broadcast Action
+     * Update Broadcast Action.
+     *
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
      * @Template("PumukitNewAdminBundle:Series:updatebroadcast.html.twig")
      */
@@ -625,7 +631,7 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * List the properties of a series in a modal
+     * List the properties of a series in a modal.
      *
      * @Template
      */
@@ -635,14 +641,14 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
-     * Modify EmbeddedBroadcast Groups
+     * Modify EmbeddedBroadcast Groups.
      *
      * @param MultimediaObject $multimediaObject
      * @param string           $type
      * @param string           $password
      * @param array            $addGroups
      * @param array            $deleteGroups
-     * @param boolean          $executeFlush
+     * @param bool             $executeFlush
      */
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array(), $executeFlush = true)
     {

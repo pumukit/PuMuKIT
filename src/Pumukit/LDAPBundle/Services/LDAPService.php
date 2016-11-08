@@ -22,7 +22,7 @@ class LDAPService
     }
 
     /**
-     * Is Configured
+     * Is Configured.
      *
      * Checks if all the parameters are defined
      */
@@ -32,9 +32,9 @@ class LDAPService
     }
 
     /**
-     * Check connection
+     * Check connection.
      *
-     * @return boolean true if connects, false otherwise
+     * @return bool true if connects, false otherwise
      */
     public function checkConnection()
     {
@@ -61,11 +61,12 @@ class LDAPService
     /**
      * Is user
      * Checks if user with given password
-     * exists in LDAP Server
+     * exists in LDAP Server.
      *
      * @param string $user User name
      * @param string $pass Password to verify
-     * @return boolean true if user exists, false otherwise
+     *
+     * @return bool true if user exists, false otherwise
      */
     public function isUser($user = false, $pass = '')
     {
@@ -100,8 +101,8 @@ class LDAPService
      * Obtiene el nombre completo de usuario del
      * servidor ldap.
      *
-     * @access public
      * @return string nombre completo del usuario
+     *
      * @param string $user nombre del usuario
      */
     public function getName($user)
@@ -134,8 +135,9 @@ class LDAPService
      * servidor ldap.
      *
      * @public
-     * @access public
+     *
      * @return string correo del usuario
+     *
      * @param string $user nombre del usuario
      */
     public function getMail($user)
@@ -164,10 +166,11 @@ class LDAPService
     }
 
     /**
-     * Get all the LDAP info from the user email
+     * Get all the LDAP info from the user email.
      *
      * @public
      * @pararm string $email
+     *
      * @return array|false
      */
     public function getInfoFromEmail($email)
@@ -176,11 +179,12 @@ class LDAPService
     }
 
     /**
-     * Get all the LDAP info from the user email
+     * Get all the LDAP info from the user email.
      *
      * @public
      * @pararm string $key
      * @pararm string $value
+     *
      * @return array|false
      */
     public function getInfoFrom($key, $value)
@@ -205,7 +209,7 @@ class LDAPService
     }
 
     /**
-     * Get list of users
+     * Get list of users.
      *
      * Searches LDAP users by CN or MAIL
      * If CN is an empty string or null and MAIL a given string:
@@ -217,6 +221,7 @@ class LDAPService
      *
      * @param string $cn
      * @param string $mail
+     *
      * @return array
      */
     public function getListUsers($cn = '', $mail = '')
@@ -255,7 +260,7 @@ class LDAPService
     }
 
     /**
-     * Get filter
+     * Get filter.
      *
      * Builds LDAP filter by CN or MAIL
      * If CN is an empty string or null and MAIL a given string:
@@ -267,6 +272,7 @@ class LDAPService
      *
      * @param string $cn
      * @param string $mail
+     *
      * @return string
      */
     private function getFilter($cn = '', $mail = '')

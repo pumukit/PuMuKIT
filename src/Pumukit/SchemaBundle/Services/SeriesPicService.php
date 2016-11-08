@@ -35,7 +35,7 @@ class SeriesPicService
     }
 
     /**
-     * Returns the target path for a series
+     * Returns the target path for a series.
      */
     public function getTargetPath(Series $series)
     {
@@ -43,7 +43,7 @@ class SeriesPicService
     }
 
     /**
-     * Returns the target url for a series
+     * Returns the target url for a series.
      */
     public function getTargetUrl(Series $series)
     {
@@ -51,7 +51,7 @@ class SeriesPicService
     }
 
   /**
-   * Get pics from series or multimedia object
+   * Get pics from series or multimedia object.
    */
   public function getRecommendedPics($series)
   {
@@ -59,7 +59,7 @@ class SeriesPicService
   }
 
   /**
-   * Set a pic from an url into the series
+   * Set a pic from an url into the series.
    */
   public function addPicUrl(Series $series, $picUrl, $isBanner = false, $bannerTargetUrl = '')
   {
@@ -80,7 +80,7 @@ class SeriesPicService
   }
 
   /**
-   * Set a pic from an url into the series
+   * Set a pic from an url into the series.
    */
   public function addPicFile(Series $series, UploadedFile $picFile, $isBanner = false, $bannerTargetUrl = '')
   {
@@ -112,7 +112,7 @@ class SeriesPicService
   }
 
     /**
-     * Remove Pic from Series
+     * Remove Pic from Series.
      */
     public function removePicFromSeries(Series $series, $picId)
     {

@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class CollectionController extends Controller implements NewAdminController
 {
     /**
-     * Returns true if the user has enough permissions to delete the $resource passed
+     * Returns true if the user has enough permissions to delete the $resource passed.
      *
      * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
      * it checks if it is the owner of the object (and there are no other owners) and returns false if not.

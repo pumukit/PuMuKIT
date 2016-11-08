@@ -24,7 +24,7 @@ class Series
     protected $id;
 
     /**
-     * @var string $secret
+     * @var string
      *
      * @MongoDB\String
      */
@@ -32,7 +32,8 @@ class Series
 
     /**
      * Flag with TYPE_SERIES or TYPE_PLAYLIST to determine the collection type.
-     * @var int $type
+     *
+     * @var int
      *
      * @MongoDB\Integer
      */
@@ -45,7 +46,8 @@ class Series
 
     /**
      * Legacy: It is kept for compatibility issues.
-     * @var ArrayCollection $multimedia_objects
+     *
+     * @var ArrayCollection
      *
      * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade="ALL")
      * @Serializer\Exclude
@@ -53,7 +55,7 @@ class Series
     private $multimedia_objects;
 
     /**
-     * @var ArrayCollection $playlist
+     * @var ArrayCollection
      *
      * @MongoDB\EmbedOne(targetDocument="Playlist")
      * @Serializer\Exclude
@@ -61,84 +63,84 @@ class Series
     private $playlist;
 
     /**
-     * @var ArrayCollection $pics
+     * @var ArrayCollection
      *
      * @MongoDB\EmbedMany(targetDocument="Pic")
      */
     private $pics;
 
     /**
-     * @var boolean $announce
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $announce = false;
 
     /**
-     * @var datetime $public_date
+     * @var datetime
      *
      * @MongoDB\Date
      */
     private $public_date;
 
     /**
-     * @var string $title
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $title = array('en' => '');
 
     /**
-     * @var string $subtitle
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $subtitle = array('en' => '');
 
     /**
-     * @var text $description
+     * @var text
      *
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
 
     /**
-     * @var text $header
+     * @var text
      *
      * @MongoDB\Raw
      */
     private $header = array('en' => '');
 
     /**
-     * @var text $footer
+     * @var text
      *
      * @MongoDB\Raw
      */
     private $footer = array('en' => '');
 
     /**
-     * @var string $copyright
+     * @var string
      *
      * @MongoDB\String
      */
     private $copyright;
 
     /**
-     * @var string $license
+     * @var string
      *
      * @MongoDB\String
      */
     private $license;
 
     /**
-     * @var string $line2
+     * @var string
      *
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
 
     /**
-     * @var array $properties
+     * @var array
      *
      * @MongoDB\Raw
      */
@@ -146,8 +148,9 @@ class Series
 
     /**
      * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     * @var locale $locale
+     * this is not a mapped field of entity metadata, just a simple property.
+     *
+     * @var locale
      */
     private $locale = 'en';
 
@@ -165,8 +168,7 @@ class Series
     }
 
     /**
-     *
-     * @return boolean
+     * @return bool
      */
     public function isCollection()
     {
@@ -174,7 +176,7 @@ class Series
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id
      */
@@ -184,7 +186,7 @@ class Series
     }
 
     /**
-     * Get secret
+     * Get secret.
      *
      * @return string
      */
@@ -194,9 +196,9 @@ class Series
     }
 
     /**
-     * Get type
+     * Get type.
      *
-     * @return Integer
+     * @return int
      */
     public function getType()
     {
@@ -204,9 +206,9 @@ class Series
     }
 
     /**
-     * Set type
+     * Set type.
      *
-     * @return Integer
+     * @return int
      */
     public function setType($type)
     {
@@ -214,7 +216,7 @@ class Series
     }
 
     /**
-     * Resets secret
+     * Resets secret.
      *
      * @return string
      */
@@ -226,7 +228,7 @@ class Series
     }
 
     /**
-     * Set series_type
+     * Set series_type.
      *
      * @param SeriesType $series_type
      */
@@ -236,7 +238,7 @@ class Series
     }
 
     /**
-     * Get series_type
+     * Get series_type.
      *
      * @return SeriesType
      */
@@ -246,11 +248,11 @@ class Series
     }
 
     /**
-     * Contains multimedia_object
+     * Contains multimedia_object.
      *
      * @param MultimediaObject $multimedia_object
      *
-     * @return boolean
+     * @return bool
      */
     public function containsMultimediaObject(MultimediaObject $multimedia_object)
     {
@@ -258,7 +260,7 @@ class Series
     }
 
     /**
-     * Add multimedia object
+     * Add multimedia object.
      *
      * @param MultimediaObject $multimedia_object
      */
@@ -268,7 +270,7 @@ class Series
     }
 
     /**
-     * Remove multimedia object
+     * Remove multimedia object.
      *
      * @param MultimediaObject $multimedia_object
      */
@@ -278,7 +280,7 @@ class Series
     }
 
     /**
-     * Get multimedia_objects
+     * Get multimedia_objects.
      *
      * @return ArrayCollection
      */
@@ -288,7 +290,7 @@ class Series
     }
 
     /**
-     * Set playlist
+     * Set playlist.
      *
      * @return Playlist
      */
@@ -298,7 +300,7 @@ class Series
     }
 
     /**
-     * Get playlist
+     * Get playlist.
      *
      * @return Playlist
      */
@@ -308,9 +310,9 @@ class Series
     }
 
     /**
-     * Set announce
+     * Set announce.
      *
-     * @param boolean $announce
+     * @param bool $announce
      */
     public function setAnnounce($announce)
     {
@@ -318,9 +320,9 @@ class Series
     }
 
     /**
-     * Get announce
+     * Get announce.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAnnounce()
     {
@@ -328,7 +330,7 @@ class Series
     }
 
     /**
-     * Set public_date
+     * Set public_date.
      *
      * @param datetime $public_date
      */
@@ -338,7 +340,7 @@ class Series
     }
 
     /**
-     * Get public_date
+     * Get public_date.
      *
      * @return datetime
      */
@@ -348,9 +350,9 @@ class Series
     }
 
     /**
-     * Set title
+     * Set title.
      *
-     * @param string $title
+     * @param string      $title
      * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
@@ -362,9 +364,10 @@ class Series
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getTitle($locale = null)
@@ -380,7 +383,7 @@ class Series
     }
 
     /**
-     * Set I18n title
+     * Set I18n title.
      *
      * @param array $title
      */
@@ -390,7 +393,7 @@ class Series
     }
 
     /**
-     * Get i18n title
+     * Get i18n title.
      *
      * @return array
      */
@@ -400,9 +403,9 @@ class Series
     }
 
     /**
-     * Set subtitle
+     * Set subtitle.
      *
-     * @param string $subtitle
+     * @param string      $subtitle
      * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
@@ -414,9 +417,10 @@ class Series
     }
 
     /**
-     * Get subtitle
+     * Get subtitle.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getSubtitle($locale = null)
@@ -432,7 +436,7 @@ class Series
     }
 
     /**
-     * Set I18n subtitle
+     * Set I18n subtitle.
      *
      * @param array $subtitle
      */
@@ -442,7 +446,7 @@ class Series
     }
 
     /**
-     * Get i18n subtitle
+     * Get i18n subtitle.
      *
      * @return array
      */
@@ -452,9 +456,9 @@ class Series
     }
 
     /**
-     * Set description
+     * Set description.
      *
-     * @param text $description
+     * @param text        $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
@@ -466,9 +470,10 @@ class Series
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @param string|null $locale
+     *
      * @return text
      */
     public function getDescription($locale = null)
@@ -484,7 +489,7 @@ class Series
     }
 
     /**
-     * Set I18n description
+     * Set I18n description.
      *
      * @param array $description
      */
@@ -494,7 +499,7 @@ class Series
     }
 
     /**
-     * Get i18n description
+     * Get i18n description.
      *
      * @return array
      */
@@ -504,9 +509,9 @@ class Series
     }
 
     /**
-     * Set header
+     * Set header.
      *
-     * @param text $header
+     * @param text        $header
      * @param string|null $locale
      */
     public function setHeader($header, $locale = null)
@@ -518,9 +523,10 @@ class Series
     }
 
     /**
-     * Get header
+     * Get header.
      *
      * @param string|null $locale
+     *
      * @return text
      */
     public function getHeader($locale = null)
@@ -536,7 +542,7 @@ class Series
     }
 
     /**
-     * Set I18n header
+     * Set I18n header.
      *
      * @param array $header
      */
@@ -546,7 +552,7 @@ class Series
     }
 
     /**
-     * Get i18n header
+     * Get i18n header.
      *
      * @return array
      */
@@ -556,9 +562,9 @@ class Series
     }
 
     /**
-     * Set footer
+     * Set footer.
      *
-     * @param text $footer
+     * @param text        $footer
      * @param string|null $locale
      */
     public function setFooter($footer, $locale = null)
@@ -570,9 +576,10 @@ class Series
     }
 
     /**
-     * Get footer
+     * Get footer.
      *
      * @param string|null $locale
+     *
      * @return text
      */
     public function getFooter($locale = null)
@@ -588,7 +595,7 @@ class Series
     }
 
     /**
-     * Set I18n footer
+     * Set I18n footer.
      *
      * @param array $footer
      */
@@ -598,7 +605,7 @@ class Series
     }
 
     /**
-     * Get i18n footer
+     * Get i18n footer.
      *
      * @return array
      */
@@ -608,7 +615,7 @@ class Series
     }
 
     /**
-     * Set copyright
+     * Set copyright.
      *
      * @param string $copyright
      */
@@ -618,7 +625,7 @@ class Series
     }
 
     /**
-     * Get copyright
+     * Get copyright.
      *
      * @return array
      */
@@ -628,7 +635,7 @@ class Series
     }
 
     /**
-     * Set license
+     * Set license.
      *
      * @param string $license
      */
@@ -638,7 +645,7 @@ class Series
     }
 
     /**
-     * Get license
+     * Get license.
      *
      * @return array
      */
@@ -648,9 +655,9 @@ class Series
     }
 
     /**
-     * Set line2
+     * Set line2.
      *
-     * @param string $line2
+     * @param string      $line2
      * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
@@ -662,9 +669,10 @@ class Series
     }
 
     /**
-     * Get line2
+     * Get line2.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     public function getLine2($locale = null)
@@ -680,7 +688,7 @@ class Series
     }
 
     /**
-     * Set I18n line2
+     * Set I18n line2.
      *
      * @param array $line2
      */
@@ -690,7 +698,7 @@ class Series
     }
 
     /**
-     * Get i18n line2
+     * Get i18n line2.
      *
      * @return array
      */
@@ -700,7 +708,7 @@ class Series
     }
 
     /**
-     * Set locale
+     * Set locale.
      *
      * @param string $locale
      */
@@ -710,7 +718,7 @@ class Series
     }
 
     /**
-     * Get locale
+     * Get locale.
      *
      * @return string
      */
@@ -720,10 +728,11 @@ class Series
     }
 
     /**
-     * Contains multimediaobject with tags
+     * Contains multimediaobject with tags.
      *
      * @param Tag $tag
-     * @return boolean
+     *
+     * @return bool
      */
     public function containsMultimediaObjectWithTag(Tag $tag)
     {
@@ -737,9 +746,10 @@ class Series
     }
 
     /**
-     * Get multimediaobjects with a tag
+     * Get multimediaobjects with a tag.
      *
      * @param Tag $tag
+     *
      * @return ArrayCollection
      */
     public function getMultimediaObjectsWithTag(Tag $tag)
@@ -756,9 +766,10 @@ class Series
     }
 
     /**
-     * Get one multimedia object with tag
+     * Get one multimedia object with tag.
      *
      * @param Tag $tag
+     *
      * @return MultimediaObject|null
      */
     public function getMultimediaObjectWithTag(Tag $tag)
@@ -775,9 +786,10 @@ class Series
     }
 
     /**
-     * Get multimediaobjects with all tags
+     * Get multimediaobjects with all tags.
      *
      * @param array $tags
+     *
      * @return ArrayCollection
      */
     public function getMultimediaObjectsWithAllTags(array $tags)
@@ -793,9 +805,10 @@ class Series
     }
 
     /**
-     * Get multimediaobject with all tags
+     * Get multimediaobject with all tags.
      *
      * @param array $tags
+     *
      * @return multimedia_object|null
      */
     public function getMultimediaObjectWithAllTags(array $tags)
@@ -810,9 +823,10 @@ class Series
     }
 
     /**
-     * Get multimediaobjects with any tag
+     * Get multimediaobjects with any tag.
      *
      * @param array $tags
+     *
      * @return ArrayCollection
      */
     public function getMultimediaObjectsWithAnyTag(array $tags)
@@ -829,9 +843,10 @@ class Series
     }
 
     /**
-     * Get multimediaobject with any tag
+     * Get multimediaobject with any tag.
      *
      * @param array $tags
+     *
      * @return MultimediaObject|null
      */
     public function getMultimediaObjectWithAnyTag(array $tags)
@@ -846,12 +861,13 @@ class Series
     }
 
     /**
-     * Get filtered multimedia objects with tags
+     * Get filtered multimedia objects with tags.
      *
      * @param array $any_tags
      * @param array $all_tags
      * @param array $not_any_tags
      * @param array $not_all_tags
+     *
      * @return ArrayCollection
      */
     public function getFilteredMultimediaObjectsWithTags(
@@ -883,7 +899,7 @@ class Series
     }
 
     /**
-     * Add pic
+     * Add pic.
      *
      * @param Pic $pic
      */
@@ -893,7 +909,7 @@ class Series
     }
 
     /**
-     * Remove pic
+     * Remove pic.
      *
      * @param Pic $pic
      */
@@ -903,7 +919,7 @@ class Series
     }
 
     /**
-     * Remove pic by id
+     * Remove pic by id.
      *
      * @param string $picId
      */
@@ -915,7 +931,7 @@ class Series
     }
 
     /**
-     * Up pic by id
+     * Up pic by id.
      *
      * @param string $picId
      */
@@ -925,7 +941,7 @@ class Series
     }
 
     /**
-     * Down pic by id
+     * Down pic by id.
      *
      * @param string $picId
      */
@@ -935,10 +951,10 @@ class Series
     }
 
     /**
-     * Reorder pic by id
+     * Reorder pic by id.
      *
      * @param string $picId
-     * @param boolean $up
+     * @param bool   $up
      */
     private function reorderPicById($picId, $up = true)
     {
@@ -961,11 +977,11 @@ class Series
     }
 
     /**
-     * Contains pic
+     * Contains pic.
      *
      * @param Pic $pic
      *
-     * @return boolean
+     * @return bool
      */
     public function containsPic(Pic $pic)
     {
@@ -973,7 +989,7 @@ class Series
     }
 
     /**
-     * Get pics
+     * Get pics.
      *
      * @return ArrayCollection
      */
@@ -993,7 +1009,7 @@ class Series
     }
 
     /**
-     * Get pic by id
+     * Get pic by id.
      *
      * @param $picId
      *
@@ -1011,11 +1027,11 @@ class Series
     }
 
     /**
-     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
+     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd).
      *
      * Get first pic url
      *
-     * @param $default string url returned if series without pics.
+     * @param $default string url returned if series without pics
      *
      * @return string
      */
@@ -1043,7 +1059,7 @@ class Series
     }
 
     /**
-     * Set properties
+     * Set properties.
      *
      * @param array $properties
      */
@@ -1069,7 +1085,7 @@ class Series
     }
 
     /**
-     * Set property
+     * Set property.
      *
      * @param string $key
      * @param string $value

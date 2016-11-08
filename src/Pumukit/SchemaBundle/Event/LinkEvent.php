@@ -20,7 +20,7 @@ class LinkEvent extends Event
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Link $link
+     * @param Link             $link
      */
     public function __construct(MultimediaObject $multimediaObject, Link $link)
     {

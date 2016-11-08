@@ -27,7 +27,8 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * Overwrite to search criteria with date
+     * Overwrite to search criteria with date.
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -49,7 +50,8 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * List action
+     * List action.
+     *
      * @Template
      */
     public function listAction(Request $request)
@@ -60,7 +62,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * Create new resource
+     * Create new resource.
      */
     public function createAction(Request $request)
     {
@@ -142,7 +144,7 @@ class PlaylistController extends CollectionController
 
     /**
      * Batch delete action
-     * Overwrite to delete multimedia objects inside playlist
+     * Overwrite to delete multimedia objects inside playlist.
      */
     public function batchDeleteAction(Request $request)
     {
@@ -173,7 +175,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * Helper for the menu search form
+     * Helper for the menu search form.
      */
     public function searchAction(Request $req)
     {
@@ -201,7 +203,7 @@ class PlaylistController extends CollectionController
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria(Request $request)
     {
@@ -221,7 +223,6 @@ class PlaylistController extends CollectionController
 
     /**
      * Gets the sorting values from the request and initialize session vars accordingly if necessary.
-     *
      */
     private function getSorting(Request $request)
     {

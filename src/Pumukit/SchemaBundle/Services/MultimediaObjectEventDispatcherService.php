@@ -15,7 +15,7 @@ class MultimediaObjectEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class MultimediaObjectEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event MULTIMEDIAOBJECT_CREATE
      * 'multimediaobject.create' passing
@@ -40,7 +40,7 @@ class MultimediaObjectEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event MULTIMEDIAOBJECT_UPDATE
      * 'multimediaobject.update' passing
@@ -55,7 +55,7 @@ class MultimediaObjectEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event MULTIMEDIAOBJECT_DELETE
      * 'multimediaobject.delete' passing

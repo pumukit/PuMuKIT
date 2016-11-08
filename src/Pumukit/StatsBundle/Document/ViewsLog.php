@@ -5,7 +5,7 @@ namespace Pumukit\StatsBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\StatsBundle\Document\ViewsLog
+ * Pumukit\StatsBundle\Document\ViewsLog.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\StatsBundle\Repository\ViewsLogRepository")
  */
@@ -26,56 +26,56 @@ class ViewsLog
     private $date;
 
     /**
-     * @var string $url
+     * @var string
      *
      * @MongoDB\String
      */
     private $url;
 
     /**
-     * @var string $ip
+     * @var string
      *
      * @MongoDB\String
      */
     private $ip;
 
     /**
-     * @var string $userAgent
+     * @var string
      *
      * @MongoDB\String
      */
     private $userAgent;
 
     /**
-     * @var string $referer
+     * @var string
      *
      * @MongoDB\String
      */
     private $referer;
 
     /**
-     * @var string $multimediaObject
+     * @var string
      *
      * @MongoDB\ObjectId
      */
     private $multimediaObject;
 
     /**
-     * @var string $series
+     * @var string
      *
      * @MongoDB\ObjectId
      */
     private $series;
 
     /**
-     * @var string $track
+     * @var string
      *
      * @MongoDB\String
      */
     private $track;
 
     /**
-     * @var string $user
+     * @var string
      *
      * @MongoDB\String
      */
@@ -95,7 +95,7 @@ class ViewsLog
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -105,9 +105,10 @@ class ViewsLog
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param date $date
+     *
      * @return self
      */
     public function setDate($date)
@@ -118,7 +119,7 @@ class ViewsLog
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return date $date
      */
@@ -128,9 +129,10 @@ class ViewsLog
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
+     *
      * @return self
      */
     public function setUrl($url)
@@ -141,7 +143,7 @@ class ViewsLog
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string $url
      */
@@ -151,9 +153,10 @@ class ViewsLog
     }
 
     /**
-     * Set ip
+     * Set ip.
      *
      * @param string $ip
+     *
      * @return self
      */
     public function setIp($ip)
@@ -164,7 +167,7 @@ class ViewsLog
     }
 
     /**
-     * Get ip
+     * Get ip.
      *
      * @return string $ip
      */
@@ -174,9 +177,10 @@ class ViewsLog
     }
 
     /**
-     * Set userAgent
+     * Set userAgent.
      *
      * @param string $userAgent
+     *
      * @return self
      */
     public function setUserAgent($userAgent)
@@ -187,7 +191,7 @@ class ViewsLog
     }
 
     /**
-     * Get userAgent
+     * Get userAgent.
      *
      * @return string $userAgent
      */
@@ -197,9 +201,10 @@ class ViewsLog
     }
 
     /**
-     * Set referer
+     * Set referer.
      *
      * @param string $referer
+     *
      * @return self
      */
     public function setReferer($referer)
@@ -210,7 +215,7 @@ class ViewsLog
     }
 
     /**
-     * Get referer
+     * Get referer.
      *
      * @return string $referer
      */
@@ -220,9 +225,10 @@ class ViewsLog
     }
 
     /**
-     * Set multimediaObject
+     * Set multimediaObject.
      *
      * @param string $multimediaObject
+     *
      * @return self
      */
     public function setMultimediaObject($multimediaObject)
@@ -233,7 +239,7 @@ class ViewsLog
     }
 
     /**
-     * Get multimediaObject
+     * Get multimediaObject.
      *
      * @return int $multimediaObject
      */
@@ -243,9 +249,10 @@ class ViewsLog
     }
 
     /**
-     * Set series
+     * Set series.
      *
      * @param int $series
+     *
      * @return self
      */
     public function setSeries($series)
@@ -256,7 +263,7 @@ class ViewsLog
     }
 
     /**
-     * Get series
+     * Get series.
      *
      * @return int $series
      */
@@ -266,9 +273,10 @@ class ViewsLog
     }
 
     /**
-     * Set track
+     * Set track.
      *
      * @param string $track
+     *
      * @return self
      */
     public function setTrack($track)
@@ -279,7 +287,7 @@ class ViewsLog
     }
 
     /**
-     * Get track
+     * Get track.
      *
      * @return string $track
      */
@@ -289,9 +297,10 @@ class ViewsLog
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param string $user
+     *
      * @return self
      */
     public function setUser($user)
@@ -302,7 +311,7 @@ class ViewsLog
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return string $user
      */

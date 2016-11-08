@@ -20,7 +20,7 @@ class MaterialEvent extends Event
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Material $material
+     * @param Material         $material
      */
     public function __construct(MultimediaObject $multimediaObject, Material $material)
     {

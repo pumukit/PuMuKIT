@@ -15,7 +15,8 @@ use Pumukit\NewAdminBundle\Form\Type\RoleType;
 class RoleController extends SortableAdminController implements NewAdminController
 {
     /**
-     * Update role
+     * Update role.
+     *
      * @Template("PumukitNewAdminBundle:Role:update.html.twig")
      */
     public function updateAction(Request $request)
@@ -54,7 +55,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria)
     {
@@ -91,7 +92,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
     }
 
     /**
-     * Delete action
+     * Delete action.
      */
     public function deleteAction(Request $request)
     {

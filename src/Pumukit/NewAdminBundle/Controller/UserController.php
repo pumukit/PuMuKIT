@@ -179,7 +179,8 @@ class UserController extends AdminController implements NewAdminController
     }
 
     /**
-     * Edit groups form
+     * Edit groups form.
+     *
      * @Template("PumukitNewAdminBundle:User:editgroups.html.twig")
      */
     public function editGroupsAction(Request $request)
@@ -194,7 +195,7 @@ class UserController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update groups action
+     * Update groups action.
      */
     public function updateGroupsAction(Request $request)
     {
@@ -219,7 +220,7 @@ class UserController extends AdminController implements NewAdminController
     }
 
     /**
-     * Get user groups
+     * Get user groups.
      */
     public function getGroupsAction(Request $request)
     {
@@ -254,7 +255,7 @@ class UserController extends AdminController implements NewAdminController
     }
 
     /**
-     * Modify User Groups
+     * Modify User Groups.
      */
     private function modifyUserGroups(User $user, $addGroups = array(), $deleteGroups = array())
     {

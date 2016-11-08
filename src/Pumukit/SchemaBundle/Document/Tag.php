@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Pumukit\SchemaBundle\Document\Tag
+ * Pumukit\SchemaBundle\Document\Tag.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\TagRepository")
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
@@ -15,14 +15,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Tag
 {
     /**
-   * @var integer $id
+   * @var int
    *
    * @MongoDB\Id
    */
   private $id;
 
   /**
-   * @var int $number_multimedia_objects
+   * @var int
    *
    * @MongoDB\Int
    * @MongoDB\Increment
@@ -30,7 +30,7 @@ class Tag
   private $number_multimedia_objects = 0;
 
   /**
-   * @var string $title
+   * @var string
    * //Translatable
    *
    * @MongoDB\Raw
@@ -38,7 +38,7 @@ class Tag
   private $title = array('en' => '');
 
   /**
-   * @var string $description
+   * @var string
    * //Translatable
    *
    * @MongoDB\Raw
@@ -46,14 +46,14 @@ class Tag
   private $description = array('en' => '');
 
   /**
-   * @var string $slug
+   * @var string
    *
    * @MongoDB\String
    */
   private $slug;
 
   /**
-   * @var string $cod
+   * @var string
    *
    * @MongoDB\String
    * @MongoDB\UniqueIndex(order="asc")
@@ -65,14 +65,14 @@ class Tag
   private $cod = '';
 
   /**
-   * @var boolean $metatag
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $metatag = false;
 
   /**
-   * @var boolean $display
+   * @var bool
    *
    * @MongoDB\Boolean
    */
@@ -80,20 +80,21 @@ class Tag
 
   /**
    * Used locale to override Translation listener`s locale
-   * this is not a mapped field of entity metadata, just a simple property
-   * @var locale $locale
+   * this is not a mapped field of entity metadata, just a simple property.
+   *
+   * @var locale
    */
   private $locale = 'en';
 
   /**
-   * @var date $created
+   * @var date
    *
    * @MongoDB\Date
    */
   private $created;
 
   /**
-   * @var date $updated
+   * @var date
    *
    * @MongoDB\Date
    */
@@ -129,7 +130,7 @@ class Tag
   private $lockTime;
 
   /**
-   * @var string $properties
+   * @var string
    *
    * @MongoDB\Raw
    */
@@ -141,9 +142,9 @@ class Tag
     }
 
   /**
-   * Get id
+   * Get id.
    *
-   * @return integer
+   * @return int
    */
   public function getId()
   {
@@ -151,7 +152,7 @@ class Tag
   }
 
   /**
-   * Set title
+   * Set title.
    *
    * @param string $title
    * @param string|null $locale
@@ -165,9 +166,10 @@ class Tag
   }
 
   /**
-   * Get title
+   * Get title.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getTitle($locale = null)
@@ -183,7 +185,7 @@ class Tag
   }
 
   /**
-   * Get i18n title
+   * Get i18n title.
    *
    * @return array
    */
@@ -193,7 +195,7 @@ class Tag
   }
 
   /**
-   * Set i18n title
+   * Set i18n title.
    *
    * @param array $title
    */
@@ -203,7 +205,7 @@ class Tag
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param string $description
    * @param string|null $locale
@@ -217,9 +219,10 @@ class Tag
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getDescription($locale = null)
@@ -235,7 +238,7 @@ class Tag
   }
 
   /**
-   * Set i18n description
+   * Set i18n description.
    *
    * @param array $description
    */
@@ -245,7 +248,7 @@ class Tag
   }
 
   /**
-   * Get i18n description
+   * Get i18n description.
    *
    * @return array
    */
@@ -255,9 +258,10 @@ class Tag
   }
 
   /**
-   * Set slug
+   * Set slug.
    *
    * @param string $slug
+   *
    * @return Tag
    */
   public function setSlug($slug)
@@ -268,7 +272,7 @@ class Tag
   }
 
   /**
-   * Get slug
+   * Get slug.
    *
    * @return string
    */
@@ -278,7 +282,7 @@ class Tag
   }
 
   /**
-   * Set cod
+   * Set cod.
    *
    * @param string $cod
    */
@@ -288,7 +292,7 @@ class Tag
   }
 
   /**
-   * Get cod
+   * Get cod.
    *
    * @return string
    */
@@ -298,9 +302,9 @@ class Tag
   }
 
   /**
-   * Set metatag
+   * Set metatag.
    *
-   * @param boolean $metatag
+   * @param bool $metatag
    */
   public function setMetatag($metatag)
   {
@@ -308,9 +312,9 @@ class Tag
   }
 
   /**
-   * Get metatag
+   * Get metatag.
    *
-   * @return boolean
+   * @return bool
    */
   public function getMetatag()
   {
@@ -318,9 +322,9 @@ class Tag
   }
 
   /**
-   * Set display
+   * Set display.
    *
-   * @param boolean $display
+   * @param bool $display
    */
   public function setDisplay($display)
   {
@@ -328,9 +332,9 @@ class Tag
   }
 
   /**
-   * Get display
+   * Get display.
    *
-   * @return boolean
+   * @return bool
    */
   public function getDisplay()
   {
@@ -338,9 +342,10 @@ class Tag
   }
 
   /**
-   * Set created
+   * Set created.
    *
    * @param \Date $created
+   *
    * @return Tag
    */
   public function setCreated($created)
@@ -351,10 +356,9 @@ class Tag
   }
 
   /**
-   * Get created
+   * Get created.
    *
    * @return Date
-   *
    */
   public function getCreated()
   {
@@ -362,9 +366,10 @@ class Tag
   }
 
   /**
-   * Set updated
+   * Set updated.
    *
    * @param \Date $updated
+   *
    * @return Tag
    */
   public function setUpdated($updated)
@@ -375,7 +380,7 @@ class Tag
   }
 
   /**
-   * Get updated
+   * Get updated.
    *
    * @return Date
    */
@@ -385,7 +390,7 @@ class Tag
   }
 
   /**
-   * Set translatable locale
+   * Set translatable locale.
    *
    * @param locale $locale
    */
@@ -395,7 +400,7 @@ class Tag
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */
@@ -405,7 +410,7 @@ class Tag
   }
 
   /**
-   * to string
+   * to string.
    *
    * @return string
    */
@@ -415,7 +420,7 @@ class Tag
   }
 
   /**
-   * Increase number_multimedia_objects
+   * Increase number_multimedia_objects.
    */
   public function increaseNumberMultimediaObjects()
   {
@@ -423,7 +428,7 @@ class Tag
   }
 
   /**
-   * Decrease number_multimedia_objects
+   * Decrease number_multimedia_objects.
    */
   public function decreaseNumberMultimediaObjects()
   {
@@ -431,7 +436,7 @@ class Tag
   }
 
   /**
-   * Get number_multimedia_objects
+   * Get number_multimedia_objects.
    */
   public function getNumberMultimediaObjects()
   {
@@ -439,7 +444,7 @@ class Tag
   }
 
   /**
-   * Set number_multimedia_objects
+   * Set number_multimedia_objects.
    */
   public function setNumberMultimediaObjects($count)
   {
@@ -483,7 +488,7 @@ class Tag
     }
 
   /**
-   * Returns true if given node is children of tag
+   * Returns true if given node is children of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -502,7 +507,7 @@ class Tag
   }
 
   /**
-   * Returns true if given node is descendant of tag
+   * Returns true if given node is descendant of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -518,7 +523,7 @@ class Tag
   }
 
   /**
-   * Returns true if given node cod is descendant of tag
+   * Returns true if given node cod is descendant of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -547,7 +552,7 @@ class Tag
   }
 
   /**
-   * Set properties
+   * Set properties.
    *
    * @param array $properties
    */
@@ -573,7 +578,7 @@ class Tag
   }
 
   /**
-   * Set property
+   * Set property.
    *
    * @param string $key
    * @param string $value
@@ -584,7 +589,7 @@ class Tag
   }
 
   /**
-   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office)
+   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office).
    */
   public function isPubTag()
   {

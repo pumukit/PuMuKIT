@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AdminController extends ResourceController implements NewAdminController
 {
     /**
-     * Overwrite to update the criteria with MongoRegex, and save it in the session
+     * Overwrite to update the criteria with MongoRegex, and save it in the session.
      */
     public function indexAction(Request $request)
     {
@@ -34,7 +34,7 @@ class AdminController extends ResourceController implements NewAdminController
     /**
      * Create Action
      * Overwrite to return list and not index
-     * and show toast message
+     * and show toast message.
      *
      * @param Request $request
      *
@@ -82,7 +82,7 @@ class AdminController extends ResourceController implements NewAdminController
     /**
      * Update Action
      * Overwrite to return list and not index
-     * and show toast message
+     * and show toast message.
      *
      * @param Request $request
      *
@@ -125,7 +125,7 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * Clone the given resource
+     * Clone the given resource.
      */
     public function copyAction(Request $request)
     {
@@ -166,7 +166,7 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * Delete action
+     * Delete action.
      */
     public function deleteAction(Request $request)
     {
@@ -184,7 +184,7 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * List action
+     * List action.
      */
     public function listAction(Request $request)
     {
@@ -256,7 +256,7 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria($config)
     {
@@ -281,7 +281,7 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria)
     {
@@ -317,7 +317,8 @@ class AdminController extends ResourceController implements NewAdminController
     }
 
     /**
-     * Overwrite to get form with translations
+     * Overwrite to get form with translations.
+     *
      * @param object|null $resource
      *
      * @return FormInterface

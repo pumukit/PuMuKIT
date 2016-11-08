@@ -17,7 +17,6 @@ use Pumukit\NewAdminBundle\Form\Type\TagType;
 class TagController extends Controller implements NewAdminController
 {
     /**
-     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -120,7 +119,8 @@ class TagController extends Controller implements NewAdminController
     }
 
     /**
-     * List action
+     * List action.
+     *
      * @Template
      */
     public function listAction(Request $request)

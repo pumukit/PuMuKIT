@@ -18,8 +18,10 @@ class InspectionMediainfoService implements InspectionServiceInterface
     /**
      * Gets file duration in s.
      * Check "mediainfo -f file" output.
+     *
      * @param $file
-     * @return integer $duration file duration in s rounded up.
+     *
+     * @return int $duration file duration in s rounded up
      */
     public function getDuration($file)
     {
@@ -42,6 +44,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
     // Now we choose FORMAT.
     /**
      * Completes track information from a given path using mediainfo.
+     *
      * @param Track $track
      */
     public function autocompleteTrack(Track $track)

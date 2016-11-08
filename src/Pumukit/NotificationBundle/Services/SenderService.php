@@ -29,9 +29,9 @@ class SenderService
     }
 
     /**
-     * IsEnabled
+     * IsEnabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -39,7 +39,7 @@ class SenderService
     }
 
     /**
-     * Get Sender email
+     * Get Sender email.
      *
      * @return string
      */
@@ -49,7 +49,7 @@ class SenderService
     }
 
     /**
-     * Get Sender name
+     * Get Sender name.
      *
      * @return string
      */
@@ -59,9 +59,9 @@ class SenderService
     }
 
     /**
-     * Do notificate errors to sender
+     * Do notificate errors to sender.
      *
-     * @return boolean
+     * @return bool
      */
     public function doNotificateErrorsToSender()
     {
@@ -69,13 +69,13 @@ class SenderService
     }
 
     /**
-     * Send notification
+     * Send notification.
      *
      * @param string $emailTo
      * @param string $subject
      * @param string $template
-     * @param array $parameters
-     * @param boolean $error
+     * @param array  $parameters
+     * @param bool   $error
      */
     public function sendNotification($emailTo, $subject = 'Pumukit2 Notification', $template, $parameters = array(), $error = true)
     {

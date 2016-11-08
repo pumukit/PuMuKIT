@@ -5,14 +5,14 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Element
+ * Pumukit\SchemaBundle\Document\Element.
  *
  * @MongoDB\MappedSuperclass
  */
 class Element
 {
     /**
-   * @var int $id
+   * @var int
    *
    * @MongoDB\Id
    */
@@ -25,49 +25,49 @@ class Element
   //private $ref = null;
 
   /**
-   * @var array $tags
+   * @var array
    *
    * @MongoDB\Collection
    */
   private $tags;
 
   /**
-   * @var string $url
+   * @var string
    *
    * @MongoDB\String
    */
   private $url;
 
   /**
-   * @var string $path
+   * @var string
    *
    * @MongoDB\String
    */
   private $path;
 
   /**
-   * @var string $mime_type
+   * @var string
    *
    * @MongoDB\String
    */
   private $mime_type;
 
   /**
-   * @var int $size
+   * @var int
    *
    * @MongoDB\Int
    */
   private $size;
 
   /**
-   * @var boolean $hide
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $hide = false;
 
   /**
-   * @var string $description
+   * @var string
    *
    * @MongoDB\Raw
    */
@@ -75,8 +75,9 @@ class Element
 
   /**
    * Used locale to override Translation listener`s locale
-   * this is not a mapped field of entity metadata, just a simple property
-   * @var locale $locale
+   * this is not a mapped field of entity metadata, just a simple property.
+   *
+   * @var locale
    */
   private $locale = 'en';
 
@@ -86,7 +87,7 @@ class Element
     }
 
   /**
-   * Get id
+   * Get id.
    *
    * @return int
    */
@@ -96,7 +97,7 @@ class Element
   }
 
   /**
-   * Set ref
+   * Set ref.
    *
    * @param Pic $ref
    */
@@ -106,7 +107,7 @@ class Element
     }*/
 
   /**
-   * Get ref
+   * Get ref.
    *
    * @return Pic
    */
@@ -116,7 +117,7 @@ class Element
     }*/
 
   /**
-   * Set tags
+   * Set tags.
    *
    * @param array $tags
    */
@@ -126,7 +127,7 @@ class Element
   }
 
   /**
-   * Get tags
+   * Get tags.
    *
    * @return array
    */
@@ -136,7 +137,7 @@ class Element
   }
 
   /**
-   * Add tag
+   * Add tag.
    *
    * @param string $tag
    */
@@ -148,10 +149,11 @@ class Element
   }
 
   /**
-   * Remove tag
+   * Remove tag.
    *
    * @param  string  $tag
-   * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
+   *
+   * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
    */
   public function removeTag($tag)
   {
@@ -167,10 +169,11 @@ class Element
   }
 
   /**
-   * Contains tag
+   * Contains tag.
    *
    * @param  string  $tag
-   * @return boolean TRUE if this pic contained the specified tag, FALSE otherwise.
+   *
+   * @return bool TRUE if this pic contained the specified tag, FALSE otherwise
    */
   public function containsTag($tag)
   {
@@ -178,10 +181,11 @@ class Element
   }
 
   /**
-   * Contains all tags
+   * Contains all tags.
    *
    * @param  array   $tags
-   * @return boolean TRUE if this pic contained all tags, FALSE otherwise.
+   *
+   * @return bool TRUE if this pic contained all tags, FALSE otherwise
    */
   public function containsAllTags(array $tags)
   {
@@ -189,10 +193,11 @@ class Element
   }
 
   /**
-   * Contains any tags
+   * Contains any tags.
    *
    * @param  array   $tags
-   * @return boolean TRUE if this pic contained any tag of the list, FALSE otherwise.
+   *
+   * @return bool TRUE if this pic contained any tag of the list, FALSE otherwise
    */
   public function containsAnyTag(array $tags)
   {
@@ -200,7 +205,7 @@ class Element
   }
 
   /**
-   * Set url
+   * Set url.
    *
    * @param string $url
    */
@@ -210,7 +215,7 @@ class Element
   }
 
   /**
-   * Get url
+   * Get url.
    *
    * @return string
    */
@@ -220,7 +225,7 @@ class Element
   }
 
   /**
-   * Set path
+   * Set path.
    *
    * @param string $path
    */
@@ -230,7 +235,7 @@ class Element
   }
 
   /**
-   * Get path
+   * Get path.
    *
    * @return string
    */
@@ -240,7 +245,7 @@ class Element
   }
 
   /**
-   * Set mime_type
+   * Set mime_type.
    *
    * @param string $mime_type
    */
@@ -250,7 +255,7 @@ class Element
   }
 
   /**
-   * Get mime_type
+   * Get mime_type.
    *
    * @return string
    */
@@ -260,7 +265,7 @@ class Element
   }
 
   /**
-   * Set size
+   * Set size.
    *
    * @param int $size
    */
@@ -270,7 +275,7 @@ class Element
   }
 
   /**
-   * Get size
+   * Get size.
    *
    * @return int
    */
@@ -280,9 +285,9 @@ class Element
   }
 
   /**
-   * Set hide
+   * Set hide.
    *
-   * @param boolean $hide
+   * @param bool $hide
    */
   public function setHide($hide)
   {
@@ -290,9 +295,9 @@ class Element
   }
 
   /**
-   * Get hide
+   * Get hide.
    *
-   * @return boolean
+   * @return bool
    */
   public function getHide()
   {
@@ -300,7 +305,7 @@ class Element
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param text $description
    * @param string|null $locale
@@ -314,9 +319,10 @@ class Element
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @param string|null $locale
+   *
    * @return text
    */
   public function getDescription($locale = null)
@@ -332,7 +338,7 @@ class Element
   }
 
   /**
-   * Set I18n description
+   * Set I18n description.
    *
    * @param array $description
    */
@@ -342,7 +348,7 @@ class Element
   }
 
   /**
-   * Get I18n description
+   * Get I18n description.
    *
    * @return array
    */
@@ -352,7 +358,7 @@ class Element
   }
 
   /**
-   * Set locale
+   * Set locale.
    *
    * @param string $locale
    */
@@ -362,7 +368,7 @@ class Element
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */

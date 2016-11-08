@@ -5,21 +5,21 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Link
+ * Pumukit\SchemaBundle\Document\Link.
  *
  * @MongoDB\EmbeddedDocument
  */
 class Link extends Element
 {
     /**
-   * @var string $name
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $name = array('en' => '');
 
   /**
-   * Set name
+   * Set name.
    *
    * @param string $name
    * @param string|null $locale
@@ -33,9 +33,10 @@ class Link extends Element
   }
 
   /**
-   * Get name
+   * Get name.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getName($locale = null)
@@ -51,7 +52,7 @@ class Link extends Element
   }
 
   /**
-   * Set I18n name
+   * Set I18n name.
    *
    * @param array $name
    */
@@ -61,7 +62,7 @@ class Link extends Element
   }
 
   /**
-   * Get I18n name
+   * Get I18n name.
    *
    * @return array
    */

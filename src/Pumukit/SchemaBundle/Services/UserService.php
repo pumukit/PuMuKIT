@@ -24,12 +24,12 @@ class UserService
     private $genUserSalt;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param DocumentManager $documentManager
+     * @param DocumentManager            $documentManager
      * @param UserEventDispatcherService $dispatcher
-     * @param PermissionService $permissionService
-     * @param PermissionProfileService $permissionProfileService
+     * @param PermissionService          $permissionService
+     * @param PermissionProfileService   $permissionProfileService
      */
     public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false, $genUserSalt = false)
     {
@@ -46,14 +46,15 @@ class UserService
     }
 
     /**
-     * Add owner user to MultimediaObject
+     * Add owner user to MultimediaObject.
      *
      * Add user id of the creator of the
      * Multimedia Object as property
      *
      * @param MultimediaObject $multimediaObject
      * @param User             $user
-     * @param boolean          $executeFlush
+     * @param bool             $executeFlush
+     *
      * @return MultimediaObject
      */
     public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
@@ -68,14 +69,15 @@ class UserService
     }
 
     /**
-     * Add owner user to object
+     * Add owner user to object.
      *
      * Add user id of the creator of the
      * Multimedia Object or Series as property
      *
      * @param MultimediaObject|Series $object
      * @param User                    $user
-     * @param boolean                 $executeFlush
+     * @param bool                    $executeFlush
+     *
      * @return MultimediaObject
      */
     private function addOwnerUserToObject($object, User $user, $executeFlush = true)
@@ -99,7 +101,7 @@ class UserService
     }
 
     /**
-     * Remove owner user from MultimediaObject
+     * Remove owner user from MultimediaObject.
      *
      * Remove user id of the
      * Multimedia Object as property if
@@ -107,7 +109,8 @@ class UserService
      *
      * @param MultimediaObject $multimediaObject
      * @param User             $user
-     * @param boolean          $executeFlush
+     * @param bool             $executeFlush
+     *
      * @return MultimediaObject
      */
     public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
@@ -166,9 +169,10 @@ class UserService
     }
 
     /**
-     * Create user
+     * Create user.
      *
      * @param User $user
+     *
      * @return User
      */
     public function create(User $user)
@@ -186,10 +190,11 @@ class UserService
     }
 
     /**
-     * Update user
+     * Update user.
      *
      * @param User $user
-     * @param boolean $executeFlush
+     * @param bool $executeFlush
+     *
      * @return User
      */
     public function update(User $user, $executeFlush = true, $checkOrigin = true)
@@ -203,10 +208,8 @@ class UserService
                 throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
             }
             /** NOTE: User roles have:
-                - ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER
-                - permission profile roles
-                - permission profile scope
-            */
+             - permission profile scope
+             */
             $userScope = $this->getUserScope($user->getRoles());
             if ($userScope !== $permissionProfile->getScope()) {
                 $user = $this->setUserScope($user, $userScope, $permissionProfile->getScope());
@@ -228,10 +231,10 @@ class UserService
     }
 
     /**
-     * Delete user
+     * Delete user.
      *
      * @param User $user
-     * @param boolean $executeFlush
+     * @param bool $executeFlush
      */
     public function delete(User $user, $executeFlush = true)
     {
@@ -244,11 +247,13 @@ class UserService
     }
 
     /**
-     * Add roles
+     * Add roles.
      *
      * @param User $user
      * @paran array $permissions
-     * @param boolean $executeFlush
+     *
+     * @param bool $executeFlush
+     *
      * @return User
      */
     public function addRoles(User $user, $permissions = array(), $executeFlush = true)
@@ -267,11 +272,13 @@ class UserService
     }
 
     /**
-     * Remove roles
+     * Remove roles.
      *
      * @param User $user
      * @paran array $permissions
-     * @param boolean $executeFlush
+     *
+     * @param bool $executeFlush
+     *
      * @return User
      */
     public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
@@ -290,10 +297,11 @@ class UserService
     }
 
     /**
-     * Count Users with given permission profile
+     * Count Users with given permission profile.
      *
      * @param PermissionProfile $permissionProfile
-     * @return integer
+     *
+     * @return int
      */
     public function countUsersWithPermissionProfile(PermissionProfile $permissionProfile)
     {
@@ -305,9 +313,10 @@ class UserService
     }
 
     /**
-     * Get Users with given permission profile
+     * Get Users with given permission profile.
      *
      * @param PermissionProfile $permissionProfile
+     *
      * @return Cursor
      */
     public function getUsersWithPermissionProfile(PermissionProfile $permissionProfile)
@@ -319,9 +328,10 @@ class UserService
     }
 
     /**
-     * Get user permissions
+     * Get user permissions.
      *
      * @param array $userRoles
+     *
      * @return array $userPermissions
      */
     public function getUserPermissions($userRoles = array())
@@ -337,11 +347,12 @@ class UserService
     }
 
     /**
-     * Set user scope
+     * Set user scope.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $oldScope
      * @param string $newScope
+     *
      * @return User
      */
     public function setUserScope(User $user, $oldScope = '', $newScope = '')
@@ -355,9 +366,10 @@ class UserService
     }
 
     /**
-     * Get user scope
+     * Get user scope.
      *
      * @param array $userRoles
+     *
      * @return string $userScope
      */
     public function getUserScope($userRoles = array())
@@ -372,9 +384,10 @@ class UserService
     }
 
     /**
-     * Add user scope
+     * Add user scope.
      *
      * @param User $user
+     *
      * @return User
      */
     public function addUserScope(User $user, $scope = '')
@@ -390,11 +403,12 @@ class UserService
     }
 
     /**
-     * Instantiate User
+     * Instantiate User.
      *
-     * @param  string  $userName
-     * @param  string  $email
-     * @param  boolean $enabled
+     * @param string $userName
+     * @param string $email
+     * @param bool   $enabled
+     *
      * @return User
      */
     public function instantiate($userName = '', $email = '', $enabled = true)
@@ -418,13 +432,14 @@ class UserService
     }
 
     /**
-     * Has Global Scope
+     * Has Global Scope.
      *
      * Checks if the PermissionProfile
      * of the User has Global Scope
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasGlobalScope(User $user)
     {
@@ -436,13 +451,14 @@ class UserService
     }
 
     /**
-     * Has Personal Scope
+     * Has Personal Scope.
      *
      * Checks if the PermissionProfile
      * of the User has Personal Scope
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasPersonalScope(User $user)
     {
@@ -454,13 +470,14 @@ class UserService
     }
 
     /**
-     * Has None Scope
+     * Has None Scope.
      *
      * Checks if the PermissionProfile
      * of the User has None Scope
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasNoneScope(User $user)
     {
@@ -472,12 +489,12 @@ class UserService
     }
 
     /**
-     * Add group to user
+     * Add group to user.
      *
      * @param Group $group
-     * @param User $user
-     * @param boolean $executeFlush
-     * @param boolean $checkOrigin
+     * @param User  $user
+     * @param bool  $executeFlush
+     * @param bool  $checkOrigin
      */
     public function addGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
@@ -497,12 +514,12 @@ class UserService
     }
 
     /**
-     * Delete group from user
+     * Delete group from user.
      *
      * @param Group $group
-     * @param User $user
-     * @param boolean $executeFlush
-     * @param boolean $checkOrigin
+     * @param User  $user
+     * @param bool  $executeFlush
+     * @param bool  $checkOrigin
      */
     public function deleteGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
@@ -522,11 +539,12 @@ class UserService
     }
 
     /**
-     * Is allowed to modify group
+     * Is allowed to modify group.
      *
-     * @param User $user
+     * @param User  $user
      * @param Group $group
-     * @return boolean
+     *
+     * @return bool
      */
     public function isAllowedToModifyUserGroup(User $user, Group $group)
     {
@@ -534,9 +552,10 @@ class UserService
     }
 
     /**
-     * Find with group
+     * Find with group.
      *
      * @param Group
+     *
      * @return Cursor
      */
     public function findWithGroup(Group $group)
@@ -548,7 +567,7 @@ class UserService
     }
 
     /**
-     * Delete all users from group
+     * Delete all users from group.
      *
      * @param  Group
      */
@@ -562,14 +581,15 @@ class UserService
     }
 
     /**
-     * Is User last relation
+     * Is User last relation.
      *
-     * @param  User    $user
-     * @param  string  $mmId
-     * @param  string  $personId
-     * @param  array   $owners
-     * @param  array   $addGroups
-     * @return boolean TRUE if the user is no longer related to multimedia object, FALSE otherwise
+     * @param User   $user
+     * @param string $mmId
+     * @param string $personId
+     * @param array  $owners
+     * @param array  $addGroups
+     *
+     * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
      */
     public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = array(), $addGroups = array())
     {
@@ -588,11 +608,12 @@ class UserService
     }
 
     /**
-     * Is logged in the person to be removed from owner of a multimedia object
+     * Is logged in the person to be removed from owner of a multimedia object.
      *
-     * @param  User    $loggedInUser
-     * @param  string  $personId
-     * @return boolean TRUE if person to remove from owner is logged in, FALSE otherwise
+     * @param User   $loggedInUser
+     * @param string $personId
+     *
+     * @return bool TRUE if person to remove from owner is logged in, FALSE otherwise
      */
     public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, $personId)
     {
@@ -614,11 +635,12 @@ class UserService
     }
 
     /**
-     * Is user in owners array
+     * Is user in owners array.
      *
-     * @param  User    $user
-     * @param  array   $owners
-     * @return boolean TRUE if user is in owners array, FALSE otherwise
+     * @param User  $user
+     * @param array $owners
+     *
+     * @return bool TRUE if user is in owners array, FALSE otherwise
      */
     public function isUserInOwners(User $loggedInUser, $owners = array())
     {
@@ -639,13 +661,15 @@ class UserService
     }
 
     /**
-     * User has group in common with given groups array
+     * User has group in common with given groups array.
      *
-     * @param  User    $loggedInUser
+     * @param User $loggedInUser
      * @para   string  $mmId
      * @para   string  $personId
-     * @param  array   $groups
-     * @return boolean TRUE if user has a group in common with the given groups array, FALSE otherwise
+     *
+     * @param array $groups
+     *
+     * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
      */
     public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = array())
     {

@@ -23,9 +23,9 @@ class PersonWithRoleEvent extends Event
     protected $role;
 
     /**
-     * @param MultimediaObject $multimediaObject
+     * @param MultimediaObject      $multimediaObject
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      */
     public function __construct(MultimediaObject $multimediaObject, $person, $role)
     {

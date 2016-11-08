@@ -5,84 +5,84 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Track
+ * Pumukit\SchemaBundle\Document\Track.
  *
  * @MongoDB\EmbeddedDocument
  */
 class Track extends Element
 {
     /**
-   * @var string $language
+   * @var string
    *
    * @MongoDB\String
    */
   private $language;
 
   /**
-   * @var string $acodec
+   * @var string
    *
    * @MongoDB\String
    */
   private $acodec;
 
   /**
-   * @var string $vcodec
+   * @var string
    *
    * @MongoDB\String
    */
   private $vcodec;
 
   /**
-   * @var int $bitrate
+   * @var int
    *
    * @MongoDB\Int
    */
   private $bitrate;
 
   /**
-   * @var string $framerate
+   * @var string
    *
    * @MongoDB\String
    */
   private $framerate;
 
   /**
-   * @var boolean $only_audio
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $only_audio;
 
   /**
-   * @var int $channels
+   * @var int
    *
    * @MongoDB\Int
    */
   private $channels;
 
   /**
-   * @var int $duration
+   * @var int
    *
    * @MongoDB\Int
    */
   private $duration = 0;
 
   /**
-   * @var int $width
+   * @var int
    *
    * @MongoDB\Int
    */
   private $width;
 
   /**
-   * @var int $height
+   * @var int
    *
    * @MongoDB\Int
    */
   private $height;
 
   /**
-   * @var int $numview
+   * @var int
    *
    * @MongoDB\Int
    * @MongoDB\Increment
@@ -96,7 +96,7 @@ class Track extends Element
     }
 
   /**
-   * Set language
+   * Set language.
    *
    * @param string $language
    */
@@ -106,7 +106,7 @@ class Track extends Element
   }
 
   /**
-   * Get language
+   * Get language.
    *
    * @return string
    */
@@ -116,7 +116,7 @@ class Track extends Element
   }
 
   /**
-   * Set acodec
+   * Set acodec.
    *
    * @param string $acodec
    */
@@ -126,7 +126,7 @@ class Track extends Element
   }
 
   /**
-   * Get acodec
+   * Get acodec.
    *
    * @return string
    */
@@ -136,7 +136,7 @@ class Track extends Element
   }
 
   /**
-   * Set vcodec
+   * Set vcodec.
    *
    * @param string $vcodec
    */
@@ -146,7 +146,7 @@ class Track extends Element
   }
 
   /**
-   * Get vcodec
+   * Get vcodec.
    *
    * @return string
    */
@@ -156,9 +156,9 @@ class Track extends Element
   }
 
   /**
-   * Set bitrate
+   * Set bitrate.
    *
-   * @param integer $bitrate
+   * @param int $bitrate
    */
   public function setBitrate($bitrate)
   {
@@ -166,9 +166,9 @@ class Track extends Element
   }
 
   /**
-   * Get bitrate
+   * Get bitrate.
    *
-   * @return integer
+   * @return int
    */
   public function getBitrate()
   {
@@ -176,7 +176,7 @@ class Track extends Element
   }
 
   /**
-   * Set framerate
+   * Set framerate.
    *
    * @param string $framerate
    */
@@ -186,7 +186,7 @@ class Track extends Element
   }
 
   /**
-   * Get framerate
+   * Get framerate.
    *
    * @return string
    */
@@ -196,7 +196,7 @@ class Track extends Element
   }
 
   /**
-   * Get total number of frames
+   * Get total number of frames.
    *
    * @return int
    */
@@ -242,9 +242,9 @@ class Track extends Element
   }
 
   /**
-   * Set only_audio
+   * Set only_audio.
    *
-   * @param boolean $onlyAudio
+   * @param bool $onlyAudio
    */
   public function setOnlyAudio($onlyAudio)
   {
@@ -252,9 +252,9 @@ class Track extends Element
   }
 
   /**
-   * Get only_audio
+   * Get only_audio.
    *
-   * @return boolean
+   * @return bool
    */
   public function getOnlyAudio()
   {
@@ -266,7 +266,7 @@ class Track extends Element
    *
    * getOnlyAudio proxy. Same API as MultimediaObject
    *
-   * @return boolean
+   * @return bool
    */
   public function isOnlyAudio()
   {
@@ -274,9 +274,9 @@ class Track extends Element
   }
 
   /**
-   * Set channels
+   * Set channels.
    *
-   * @param integer $channels
+   * @param int $channels
    */
   public function setChannels($channels)
   {
@@ -284,9 +284,9 @@ class Track extends Element
   }
 
   /**
-   * Get channels
+   * Get channels.
    *
-   * @return integer
+   * @return int
    */
   public function getChannels()
   {
@@ -294,9 +294,9 @@ class Track extends Element
   }
 
   /**
-   * Set duration
+   * Set duration.
    *
-   * @param integer $duration
+   * @param int $duration
    */
   public function setDuration($duration)
   {
@@ -304,9 +304,9 @@ class Track extends Element
   }
 
   /**
-   * Get duration
+   * Get duration.
    *
-   * @return integer
+   * @return int
    */
   public function getDuration()
   {
@@ -314,9 +314,9 @@ class Track extends Element
   }
 
   /**
-   * Set width
+   * Set width.
    *
-   * @param integer $width
+   * @param int $width
    */
   public function setWidth($width)
   {
@@ -324,9 +324,9 @@ class Track extends Element
   }
 
   /**
-   * Get width
+   * Get width.
    *
-   * @return integer
+   * @return int
    */
   public function getWidth()
   {
@@ -334,9 +334,9 @@ class Track extends Element
   }
 
   /**
-   * Set height
+   * Set height.
    *
-   * @param integer $height
+   * @param int $height
    */
   public function setHeight($height)
   {
@@ -344,9 +344,9 @@ class Track extends Element
   }
 
   /**
-   * Get height
+   * Get height.
    *
-   * @return integer
+   * @return int
    */
   public function getHeight()
   {
@@ -354,9 +354,9 @@ class Track extends Element
   }
 
   /**
-   * Set numview
+   * Set numview.
    *
-   * @param integer $numview
+   * @param int $numview
    */
   public function setNumview($numview)
   {
@@ -364,8 +364,7 @@ class Track extends Element
   }
 
   /**
-   * Increment numview
-   *
+   * Increment numview.
    */
   public function incNumview()
   {
@@ -373,9 +372,9 @@ class Track extends Element
   }
 
   /**
-   * Get numview
+   * Get numview.
    *
-   * @return integer
+   * @return int
    */
   public function getNumview()
   {
@@ -383,7 +382,7 @@ class Track extends Element
   }
 
   /**
-   * Get Resolution
+   * Get Resolution.
    *
    * @return array
    */
@@ -394,7 +393,7 @@ class Track extends Element
   }
 
   /**
-   * Set Resolution
+   * Set Resolution.
    *
    * @param array
    */
@@ -407,7 +406,7 @@ class Track extends Element
   }
 
   /**
-   * Get video aspect ratio
+   * Get video aspect ratio.
    *
    * @return float
    */
@@ -417,7 +416,7 @@ class Track extends Element
   }
 
   /**
-   * Get duration in minutes and seconds
+   * Get duration in minutes and seconds.
    *
    * @return array
    */
@@ -432,7 +431,7 @@ class Track extends Element
   }
 
   /**
-   * Set duration in minutes and seconds
+   * Set duration in minutes and seconds.
    *
    * @param array
    */
@@ -446,7 +445,7 @@ class Track extends Element
   /**
    * Return true if track is a master.
    *
-   * @return boolean
+   * @return bool
    */
   public function isMaster()
   {

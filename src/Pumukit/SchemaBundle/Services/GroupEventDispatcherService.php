@@ -15,7 +15,7 @@ class GroupEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class GroupEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event GROUP_CREATE
      * 'group.create' passing
@@ -40,7 +40,7 @@ class GroupEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event GROUP_UPDATE
      * 'group.update' passing
@@ -55,7 +55,7 @@ class GroupEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event GROUP_DELETE
      * 'group.delete' passing

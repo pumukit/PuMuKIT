@@ -8,8 +8,10 @@ interface InspectionServiceInterface
 {
     /**
      * Gets file duration in s.
+     *
      * @param $file
-     * @return integer $duration file duration in s rounded up.
+     *
+     * @return int $duration file duration in s rounded up
      */
     public function getDuration($file);
 

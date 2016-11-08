@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class IndexController extends Controller
 {
     /**
-     * db.MultimediaObject.aggregate([{$group: {_id: {$year: "$record_date"}}}])
+     * db.MultimediaObject.aggregate([{$group: {_id: {$year: "$record_date"}}}]).
      *
      * @Route("/arca.xml", defaults={"_format": "xml"}, name="pumukit_arca_index")
      * @Template()

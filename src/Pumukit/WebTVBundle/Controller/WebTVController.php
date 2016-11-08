@@ -8,7 +8,6 @@ namespace Pumukit\WebTVBundle\Controller;
  * This filter is used to avoid certain mmobjs/series from appearing when executing ODM calls. (check EventListener/FilterListener.php)
  * We use the implementation of before/after filters with an EventListener as in the Symfony cookbooks.
  * Symfony docs: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html#tag-controllers-to-be-checked
- *
  */
 interface WebTVController
 {

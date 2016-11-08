@@ -5,7 +5,7 @@ namespace Pumukit\EncoderBundle\Repository;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
- * CpuStatusRepository
+ * CpuStatusRepository.
  */
 class CpuStatusRepository extends DocumentRepository
 {

@@ -25,13 +25,13 @@ class RoutingManipulator extends Manipulator
     /**
      * Adds a routing resource at the top of the existing ones.
      *
-     * @param string  $bundle
-     * @param string  $format
-     * @param string  $prefix
-     * @param string  $path
-     * @param boolean $appendToEnd
+     * @param string $bundle
+     * @param string $format
+     * @param string $prefix
+     * @param string $path
+     * @param bool   $appendToEnd
      *
-     * @return Boolean true if it worked, false otherwise
+     * @return bool true if it worked, false otherwise
      *
      * @throws \RuntimeException If bundle is already imported
      */

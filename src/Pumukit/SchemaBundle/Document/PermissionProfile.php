@@ -21,14 +21,14 @@ class PermissionProfile
                                             );
 
     /**
-     * @var string $id
+     * @var string
      *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      * @MongoDB\UniqueIndex(order="asc")
@@ -36,35 +36,35 @@ class PermissionProfile
     private $name = '';
 
     /**
-     * @var array $permissions
+     * @var array
      *
      * @MongoDB\Collection
      */
     private $permissions = array();
 
     /**
-     * @var boolean $system
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $system = false;
 
     /**
-     * @var boolean $default
+     * @var bool
      *
      * @MongoDB\Boolean
      */
     private $default = false;
 
     /**
-     * @var string $scope
+     * @var string
      *
      * @MongoDB\String
      */
     private $scope = self::SCOPE_PERSONAL;
 
     /**
-     * @var integer $rank
+     * @var int
      *
      * @MongoDB\Int
      * @Gedmo\SortablePosition
@@ -72,7 +72,7 @@ class PermissionProfile
     private $rank;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class PermissionProfile
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -92,7 +92,7 @@ class PermissionProfile
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -102,7 +102,7 @@ class PermissionProfile
     }
 
     /**
-     * Set permissions
+     * Set permissions.
      *
      * @param array $permissions
      */
@@ -112,7 +112,7 @@ class PermissionProfile
     }
 
     /**
-     * Get permissions
+     * Get permissions.
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class PermissionProfile
     }
 
     /**
-     * Add permission
+     * Add permission.
      *
      * @param string $permission
      */
@@ -134,10 +134,11 @@ class PermissionProfile
     }
 
     /**
-     * Remove permission
+     * Remove permission.
      *
-     * @param  string  $permission
-     * @return boolean TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
+     * @param string $permission
+     *
+     * @return bool TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
      */
     public function removePermission($permission)
     {
@@ -153,10 +154,11 @@ class PermissionProfile
     }
 
     /**
-     * Contains permission
+     * Contains permission.
      *
-     * @param  string  $permission
-     * @return boolean TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
+     * @param string $permission
+     *
+     * @return bool TRUE if this PermissionProfile contains the specified permission, FALSE otherwise
      */
     public function containsPermission($permission)
     {
@@ -164,10 +166,11 @@ class PermissionProfile
     }
 
     /**
-     * Contains all permissions
+     * Contains all permissions.
      *
-     * @param  array   $permissions
-     * @return boolean TRUE if this PermissionProfile contains all permissions, FALSE otherwise
+     * @param array $permissions
+     *
+     * @return bool TRUE if this PermissionProfile contains all permissions, FALSE otherwise
      */
     public function containsAllPermissions(array $permissions)
     {
@@ -175,10 +178,11 @@ class PermissionProfile
     }
 
     /**
-     * Contains any permissions
+     * Contains any permissions.
      *
-     * @param  array   $permissions
-     * @return boolean TRUE if this PermissionProfile contains any permission of the list, FALSE otherwise
+     * @param array $permissions
+     *
+     * @return bool TRUE if this PermissionProfile contains any permission of the list, FALSE otherwise
      */
     public function containsAnyPermission(array $permissions)
     {
@@ -186,9 +190,9 @@ class PermissionProfile
     }
 
     /**
-     * Set system
+     * Set system.
      *
-     * @param boolean $system
+     * @param bool $system
      */
     public function setSystem($system)
     {
@@ -196,9 +200,9 @@ class PermissionProfile
     }
 
     /**
-     * Get system
+     * Get system.
      *
-     * @return boolean
+     * @return bool
      */
     public function getSystem()
     {
@@ -206,9 +210,9 @@ class PermissionProfile
     }
 
     /**
-     * Set default
+     * Set default.
      *
-     * @param boolean $default
+     * @param bool $default
      */
     public function setDefault($default)
     {
@@ -216,9 +220,9 @@ class PermissionProfile
     }
 
     /**
-     * Get default
+     * Get default.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDefault()
     {
@@ -226,9 +230,9 @@ class PermissionProfile
     }
 
     /**
-     * Set scope
+     * Set scope.
      *
-     * @param integer $scope
+     * @param int $scope
      */
     public function setScope($scope)
     {
@@ -236,9 +240,9 @@ class PermissionProfile
     }
 
     /**
-     * Get scope
+     * Get scope.
      *
-     * @return integer
+     * @return int
      */
     public function getScope()
     {
@@ -246,9 +250,9 @@ class PermissionProfile
     }
 
     /**
-     * Set rank
+     * Set rank.
      *
-     * @param integer $rank
+     * @param int $rank
      */
     public function setRank($rank)
     {
@@ -256,9 +260,9 @@ class PermissionProfile
     }
 
     /**
-     * Get rank
+     * Get rank.
      *
-     * @return integer
+     * @return int
      */
     public function getRank()
     {
@@ -267,9 +271,9 @@ class PermissionProfile
 
     /**
      * Helper function to know if the
-     * PermissionProfile is a global scope
+     * PermissionProfile is a global scope.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGlobal()
     {
@@ -278,9 +282,9 @@ class PermissionProfile
 
     /**
      * Helper function to know if the
-     * PermissionProfile is a personal scope
+     * PermissionProfile is a personal scope.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPersonal()
     {
@@ -289,9 +293,9 @@ class PermissionProfile
 
     /**
      * Helper function to know if the
-     * PermissionProfile is a none scope
+     * PermissionProfile is a none scope.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNone()
     {
@@ -299,7 +303,7 @@ class PermissionProfile
     }
 
     /**
-     * To String
+     * To String.
      */
     public function __toString()
     {
@@ -307,9 +311,9 @@ class PermissionProfile
     }
 
     /**
-     * Is system
+     * Is system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSystem()
     {
@@ -317,9 +321,9 @@ class PermissionProfile
     }
 
     /**
-     * Is default
+     * Is default.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDefault()
     {

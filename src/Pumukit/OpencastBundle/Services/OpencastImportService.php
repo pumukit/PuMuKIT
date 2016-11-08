@@ -40,14 +40,14 @@ class OpencastImportService
     }
 
     /**
-     * Import recording
+     * Import recording.
      *
      * Given a media package id
      * create a multimedia object
      * with the media package metadata
      *
      * @param string    $opencastId
-     * @param boolean   $invert
+     * @param bool      $invert
      * @param User|null $loggedInUser
      */
     public function importRecording($opencastId, $invert = false, User $loggedInUser = null)

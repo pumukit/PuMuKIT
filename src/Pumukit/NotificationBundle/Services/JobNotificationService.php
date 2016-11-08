@@ -31,7 +31,7 @@ class JobNotificationService
     }
 
     /**
-     * On job success
+     * On job success.
      *
      * @param JobEvent $event
      */
@@ -68,7 +68,7 @@ class JobNotificationService
     }
 
     /**
-     * On job error
+     * On job error.
      *
      * @param JobEvent $event
      */

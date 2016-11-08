@@ -68,7 +68,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Option action
+     * Option action.
      */
     public function optionAction(Request $request)
     {
@@ -115,7 +115,8 @@ class DefaultController extends Controller
     }
 
     /**
-     * Upload action
+     * Upload action.
+     *
      * @Template()
      */
     public function uploadAction(Request $request)
@@ -348,7 +349,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Get key data
+     * Get key data.
      */
     private function getKeyData($key, $formData, $default = array())
     {
@@ -356,7 +357,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Get series (new or existing one)
+     * Get series (new or existing one).
      */
     private function getSeries($seriesData = array())
     {
@@ -374,7 +375,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Create Series
+     * Create Series.
      */
     private function createSeries($seriesData = array())
     {
@@ -397,7 +398,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Create Multimedia Object
+     * Create Multimedia Object.
      */
     private function createMultimediaObject($mmData, $series)
     {
@@ -417,7 +418,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Add Tag to Multimedia Object by Code
+     * Add Tag to Multimedia Object by Code.
      */
     private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
     {
@@ -440,7 +441,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Set data
+     * Set data.
      */
     private function setData($resource, $resourceData, $keys)
     {
@@ -462,7 +463,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Remove Invalid Multimedia Object
+     * Remove Invalid Multimedia Object.
      */
     private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
     {
@@ -474,7 +475,7 @@ class DefaultController extends Controller
 
     /**
      * Get default field values in data
-     * for those important fields that can not be empty
+     * for those important fields that can not be empty.
      */
     private function getDefaultFieldValuesInData($resourceData = array(), $fieldName = '', $defaultValue = '', $isI18nField = false)
     {
@@ -495,7 +496,7 @@ class DefaultController extends Controller
 
     /**
      * Get uppercase field name
-     * Converts something like 'i18n_title' into 'I18nTitle'
+     * Converts something like 'i18n_title' into 'I18nTitle'.
      */
     private function getUpperFieldName($key = '')
     {

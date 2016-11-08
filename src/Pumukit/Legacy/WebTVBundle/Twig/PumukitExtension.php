@@ -49,7 +49,7 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get functions
+     * Get functions.
      */
     public function getFunctions()
     {
@@ -62,10 +62,9 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     *
-     * @param Series|MultimediaObject $object    Object to get the url (using $object->getPics())
-     * @param boolean                 $absolute  return absolute path.
-     * @param boolean                 $hd        return HD image.
+     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
+     * @param bool                    $absolute return absolute path
+     * @param bool                    $hd       return HD image
      *
      * @return string
      */
@@ -75,7 +74,7 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get public broadcast
+     * Get public broadcast.
      *
      * @return string
      */
@@ -85,9 +84,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct
+     * Get precinct.
      *
      * @param ArrayCollection $embeddedTags
+     *
      * @return EmbbededTag|null
      */
     public function getPrecinct($embeddedTags)
@@ -104,9 +104,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct of Series
+     * Get precinct of Series.
      *
      * @param ArrayCollection $multimediaObjects
+     *
      * @return EmbbededTag|null
      */
     public function getPrecinctOfSeries($multimediaObjects)
@@ -137,9 +138,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct fulltitle
+     * Get precinct fulltitle.
      *
      * @param EmbbededTag $precinctEmbeddedTag
+     *
      * @return string
      */
     public function getPrecinctFulltitle($precinctEmbeddedTag)
@@ -172,9 +174,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get duration in minutes and seconds
+     * Get duration in minutes and seconds.
      *
      * @param int $duration
+     *
      * @return string
      */
     public function getDurationInMinutesSeconds($duration)
@@ -190,9 +193,10 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get captions
+     * Get captions.
      *
      * @param MultimediaObject $multimediaObject
+     *
      * @return ArrayCollection
      */
     public function getCaptions(MultimediaObject $multimediaObject)

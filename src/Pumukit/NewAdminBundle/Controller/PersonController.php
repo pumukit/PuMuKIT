@@ -16,7 +16,7 @@ use Pumukit\NewAdminBundle\Form\Type\PersonType;
 class PersonController extends AdminController implements NewAdminController
 {
     /**
-     * Index
+     * Index.
      *
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:index.html.twig")
@@ -42,7 +42,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Create new person
+     * Create new person.
      *
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:create.html.twig")
@@ -83,7 +83,8 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update person
+     * Update person.
+     *
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:update.html.twig")
      */
@@ -123,7 +124,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Show person
+     * Show person.
      *
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:show.html.twig")
@@ -142,7 +143,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * List people
+     * List people.
      *
      * @Security("is_granted('ROLE_ACCESS_PEOPLE')")
      * @Template("PumukitNewAdminBundle:Person:list.html.twig")
@@ -168,7 +169,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Create new person with role from Multimedia Object
+     * Create new person with role from Multimedia Object.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
@@ -203,7 +204,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Create relation
+     * Create relation.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
@@ -273,7 +274,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Update relation
+     * Update relation.
      *
      * @Template("PumukitNewAdminBundle:Person:updaterelation.html.twig")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
@@ -343,11 +344,10 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Link person to multimedia object with role
+     * Link person to multimedia object with role.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     *
      */
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -390,7 +390,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Auto complete
+     * Auto complete.
      */
     public function autoCompleteAction(Request $request)
     {
@@ -412,7 +412,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Up person in MultimediaObject
+     * Up person in MultimediaObject.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
@@ -450,7 +450,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Down person in MultimediaObject
+     * Down person in MultimediaObject.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
@@ -488,7 +488,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete relation: EmbeddedPerson in Multimedia Object
+     * Delete relation: EmbeddedPerson in Multimedia Object.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
@@ -532,7 +532,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete Person
+     * Delete Person.
      *
      * @Template("PumukitNewAdminBundle:Person:list.html")
      */
@@ -555,7 +555,7 @@ class PersonController extends AdminController implements NewAdminController
 
     /**
      * Batch delete Person
-     * Overwrite to use PersonService
+     * Overwrite to use PersonService.
      */
     public function batchDeleteAction(Request $request)
     {
@@ -582,7 +582,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the criteria values
+     * Gets the criteria values.
      */
     public function getCriteria($config, $locale = 'en')
     {
@@ -626,7 +626,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Get sorting for person
+     * Get sorting for person.
      */
     private function getSorting(Request $request)
     {
@@ -644,7 +644,7 @@ class PersonController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria, $selectedPersonId = null)
     {

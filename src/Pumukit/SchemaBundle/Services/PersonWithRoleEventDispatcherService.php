@@ -15,7 +15,7 @@ class PersonWithRoleEventDispatcherService
     private $dispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher
      */
@@ -25,7 +25,7 @@ class PersonWithRoleEventDispatcherService
     }
 
     /**
-     * Dispatch create
+     * Dispatch create.
      *
      * Dispatchs the event PERSONWITHROLE_CREATE
      * 'personwithrole.create' passing
@@ -42,13 +42,13 @@ class PersonWithRoleEventDispatcherService
     }
 
     /**
-     * Dispatch update
+     * Dispatch update.
      *
      * Dispatchs the event PERSONWITHROLE_UPDATE
      * 'personwithrole.update' passing
      * the multimedia object and the personwithrole
      *
-     * @param MultimediaObject $multimediaObject
+     * @param MultimediaObject      $multimediaObject
      * @param Person|EmbeddedPerson $person
      * @param Role|EmbeddedRole     $role
      */
@@ -59,13 +59,13 @@ class PersonWithRoleEventDispatcherService
     }
 
     /**
-     * Dispatch delete
+     * Dispatch delete.
      *
      * Dispatchs the event PERSONWITHROLE_DELETE
      * 'personwithrole.delete' passing
      * the multimedia object and the personwithrole
      *
-     * @param MultimediaObject $multimediaObject
+     * @param MultimediaObject      $multimediaObject
      * @param Person|EmbeddedPerson $person
      * @param Role|EmbeddedRole     $role
      */

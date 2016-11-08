@@ -59,7 +59,7 @@ class FilterListener
     }
 
     /**
-     * Get people mongo query
+     * Get people mongo query.
      *
      * Match the MultimediaObjects
      * with given Person and Role code
@@ -67,8 +67,9 @@ class FilterListener
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param  Person|null $person
-     * @return array       $people
+     * @param Person|null $person
+     *
+     * @return array $people
      */
     private function getPeopleMongoQuery(Person $person = null)
     {
@@ -83,7 +84,7 @@ class FilterListener
     }
 
     /**
-     * Get logged in user
+     * Get logged in user.
      */
     private function getLoggedInUser()
     {
@@ -98,7 +99,7 @@ class FilterListener
     }
 
     /**
-     * Get groups mongo query
+     * Get groups mongo query.
      *
      * Match the MultimediaObjects
      * with some of the admin groups
@@ -107,7 +108,8 @@ class FilterListener
      * Query in MongoDB:
      * {"groups":{"$in":["___MongoID_of_Group_1___", "___MongoID_of_Group_2___"...]}}
      *
-     * @param  User  $user
+     * @param User $user
+     *
      * @return array $groups
      */
     private function getGroupsMongoQuery(User $user)
@@ -165,8 +167,7 @@ class FilterListener
     }
 
     /**
-     * Enable the "webtv" filter
-     *
+     * Enable the "webtv" filter.
      */
     private function enableWebTVFilter($routeParams)
     {

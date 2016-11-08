@@ -5,28 +5,28 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Tag
+ * Pumukit\SchemaBundle\Document\Tag.
  *
  * @MongoDB\EmbeddedDocument()
  */
 class EmbeddedTag
 {
     /**
-   * @var integer $id
+   * @var int
    *
    * @MongoDB\Id
    */
   private $id;
 
   /**
-   * @var string $title
+   * @var string
    *
    * @MongoDB\Raw
    */
   private $title = array('en' => '');
 
   /**
-   * @var string $description
+   * @var string
    * //Translatable
    *
    * @MongoDB\Raw
@@ -34,28 +34,28 @@ class EmbeddedTag
   private $description = array('en' => '');
 
   /**
-   * @var string $slug
+   * @var string
    *
    * @MongoDB\String
    */
   private $slug;
 
   /**
-   * @var string $cod
+   * @var string
    *
    * @MongoDB\String
    */
   private $cod = '';
 
   /**
-   * @var boolean $metatag
+   * @var bool
    *
    * @MongoDB\Boolean
    */
   private $metatag = false;
 
   /**
-   * @var boolean $display
+   * @var bool
    *
    * @MongoDB\Boolean
    */
@@ -63,20 +63,21 @@ class EmbeddedTag
 
   /**
    * Used locale to override Translation listener`s locale
-   * this is not a mapped field of entity metadata, just a simple property
-   * @var locale $locale
+   * this is not a mapped field of entity metadata, just a simple property.
+   *
+   * @var locale
    */
   private $locale = 'en';
 
   /**
-   * @var date $created
+   * @var date
    *
    * @MongoDB\Date
    */
   private $created;
 
   /**
-   * @var date $updated
+   * @var date
    *
    * @MongoDB\Date
    */
@@ -93,7 +94,7 @@ class EmbeddedTag
   private $level;
 
   /**
-   * Construct
+   * Construct.
    */
   public function __construct(Tag $tag)
   {
@@ -114,9 +115,9 @@ class EmbeddedTag
   }
 
   /**
-   * Get id
+   * Get id.
    *
-   * @return integer
+   * @return int
    */
   public function getId()
   {
@@ -124,7 +125,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set title
+   * Set title.
    *
    * @param string $title
    * @param string|null $locale
@@ -138,9 +139,10 @@ class EmbeddedTag
   }
 
   /**
-   * Get title
+   * Get title.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getTitle($locale = null)
@@ -156,7 +158,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get i18n title
+   * Get i18n title.
    *
    * @return array
    */
@@ -166,7 +168,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set i18n title
+   * Set i18n title.
    *
    * @param array $title
    */
@@ -176,7 +178,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set description
+   * Set description.
    *
    * @param string $description
    * @param string|null $locale
@@ -190,9 +192,10 @@ class EmbeddedTag
   }
 
   /**
-   * Get description
+   * Get description.
    *
    * @param string|null $locale
+   *
    * @return string
    */
   public function getDescription($locale = null)
@@ -208,7 +211,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set i18n description
+   * Set i18n description.
    *
    * @param array $description
    */
@@ -218,7 +221,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get i18n description
+   * Get i18n description.
    *
    * @return array
    */
@@ -228,9 +231,10 @@ class EmbeddedTag
   }
 
   /**
-   * Set slug
+   * Set slug.
    *
    * @param string $slug
+   *
    * @return Tag
    */
   public function setSlug($slug)
@@ -241,7 +245,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get slug
+   * Get slug.
    *
    * @return string
    */
@@ -251,7 +255,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set cod
+   * Set cod.
    *
    * @param string $cod
    */
@@ -261,7 +265,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get cod
+   * Get cod.
    *
    * @return string
    */
@@ -271,9 +275,9 @@ class EmbeddedTag
   }
 
   /**
-   * Set metatag
+   * Set metatag.
    *
-   * @param boolean $metatag
+   * @param bool $metatag
    */
   public function setMetatag($metatag)
   {
@@ -281,9 +285,9 @@ class EmbeddedTag
   }
 
   /**
-   * Get metatag
+   * Get metatag.
    *
-   * @return boolean
+   * @return bool
    */
   public function getMetatag()
   {
@@ -291,9 +295,9 @@ class EmbeddedTag
   }
 
   /**
-   * Set display
+   * Set display.
    *
-   * @param boolean $display
+   * @param bool $display
    */
   public function setDisplay($display)
   {
@@ -301,9 +305,9 @@ class EmbeddedTag
   }
 
   /**
-   * Get display
+   * Get display.
    *
-   * @return boolean
+   * @return bool
    */
   public function getDisplay()
   {
@@ -311,9 +315,10 @@ class EmbeddedTag
   }
 
   /**
-   * Set created
+   * Set created.
    *
    * @param \Date $created
+   *
    * @return Tag
    */
   public function setCreated($created)
@@ -324,10 +329,9 @@ class EmbeddedTag
   }
 
   /**
-   * Get created
+   * Get created.
    *
    * @return Date
-   *
    */
   public function getCreated()
   {
@@ -335,9 +339,10 @@ class EmbeddedTag
   }
 
   /**
-   * Set updated
+   * Set updated.
    *
    * @param \Date $updated
+   *
    * @return Tag
    */
   public function setUpdated($updated)
@@ -348,7 +353,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get updated
+   * Get updated.
    *
    * @return Date
    */
@@ -358,7 +363,7 @@ class EmbeddedTag
   }
 
   /**
-   * Set translatable locale
+   * Set translatable locale.
    *
    * @param locale $locale
    */
@@ -368,7 +373,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get locale
+   * Get locale.
    *
    * @return string
    */
@@ -378,7 +383,7 @@ class EmbeddedTag
   }
 
   /**
-   * to string
+   * to string.
    *
    * @return string
    */
@@ -388,7 +393,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get level
+   * Get level.
    */
   public function getLevel()
   {
@@ -396,7 +401,7 @@ class EmbeddedTag
   }
 
   /**
-   * Get path
+   * Get path.
    */
   public function getPath()
   {
@@ -404,7 +409,7 @@ class EmbeddedTag
   }
 
   /**
-   * Returns true if given node is children of tag
+   * Returns true if given node is children of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -423,7 +428,7 @@ class EmbeddedTag
   }
 
   /**
-   * Returns true if given node is descendant of tag
+   * Returns true if given node is descendant of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -439,7 +444,7 @@ class EmbeddedTag
   }
 
   /**
-   * Returns true if given node cod is descendant of tag
+   * Returns true if given node cod is descendant of tag.
    *
    * @param EmbeddedTag|Tag $tag
    *
@@ -458,7 +463,6 @@ class EmbeddedTag
   }
 
   /**
-   *
    * @param ArrayCollection $embeddedTags
    * @param EmbeddedTag|Tag $tag
    *
@@ -476,7 +480,7 @@ class EmbeddedTag
   }
 
   /**
-   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office)
+   * Returns true if the tag is a PUB tag (that appears in the Pub tab in the back-office).
    */
   public function isPubTag()
   {

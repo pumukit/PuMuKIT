@@ -357,7 +357,7 @@ EOT
     }
 
     /**
-     * Create Role from CSV array
+     * Create Role from CSV array.
      */
     private function createRoleFromCsvArray($csv_array)
     {
@@ -391,7 +391,7 @@ EOT
     }
 
     /**
-     * Create PermissionProfile from CSV array
+     * Create PermissionProfile from CSV array.
      */
     private function createPermissionProfileFromCsvArray($csv_array)
     {

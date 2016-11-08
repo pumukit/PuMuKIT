@@ -14,9 +14,9 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class SeriesController extends Controller implements WebTVController
 {
     /**
-    * @Route("/series/{id}", name="pumukit_webtv_series_index")
-    * @Template("PumukitWebTVBundle:Series:index.html.twig")
-    */
+     * @Route("/series/{id}", name="pumukit_webtv_series_index")
+     * @Template("PumukitWebTVBundle:Series:index.html.twig")
+     */
     public function indexAction(Series $series, Request $request)
     {
         $mmobjRepo = $this

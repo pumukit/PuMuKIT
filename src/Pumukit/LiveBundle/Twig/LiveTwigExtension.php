@@ -26,9 +26,10 @@ class LiveTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Get future and not finished event
+     * Get future and not finished event.
      *
-     * @param integer $limit
+     * @param int $limit
+     *
      * @return Event $event
      */
     public function getFutureAndNotFinishedEvent($limit = null)

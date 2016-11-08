@@ -25,7 +25,7 @@ class EventPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Assign a picture from an url
+     * Assign a picture from an url.
      */
     public function updateAction(Event $event, Request $request)
     {
@@ -66,7 +66,7 @@ class EventPicController extends Controller implements NewAdminController
     }
 
     /**
-     * Delete pic
+     * Delete pic.
      */
     public function deleteAction(Event $event, Request $request)
     {

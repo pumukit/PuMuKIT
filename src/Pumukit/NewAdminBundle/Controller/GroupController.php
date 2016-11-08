@@ -18,7 +18,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class GroupController extends AdminController implements NewAdminController
 {
     /**
-     * Index
+     * Index.
      *
      * @Template()
      */
@@ -39,7 +39,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * List action
+     * List action.
      *
      * @Template()
      */
@@ -55,7 +55,7 @@ class GroupController extends AdminController implements NewAdminController
     /**
      * Create Action
      * Overwrite to use group service
-     * to check if exists and dispatch event
+     * to check if exists and dispatch event.
      *
      * @param Request $request
      *
@@ -107,7 +107,7 @@ class GroupController extends AdminController implements NewAdminController
      * Update Action
      * Overwrite to avoid updating not
      * local groups and to use group service
-     * to update group and dispatch event
+     * to update group and dispatch event.
      *
      * @param Request $request
      *
@@ -150,7 +150,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete Group
+     * Delete Group.
      *
      * @Template("PumukitNewAdminBundle:Group:list.html")
      */
@@ -169,7 +169,7 @@ class GroupController extends AdminController implements NewAdminController
 
     /**
      * Batch delete Group
-     * Overwrite to use GroupService
+     * Overwrite to use GroupService.
      */
     public function batchDeleteAction(Request $request)
     {
@@ -219,7 +219,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Gets the list of resources according to a criteria
+     * Gets the list of resources according to a criteria.
      */
     public function getResources(Request $request, $config, $criteria)
     {
@@ -255,9 +255,10 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Get sorting for group
+     * Get sorting for group.
      *
      * @param Request $request
+     *
      * @return array
      */
     private function getSorting(Request $request)
@@ -274,8 +275,10 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Info Action
+     * Info Action.
+     *
      * @Template()
+     *
      * @param Request $request
      *
      * @return RedirectResponse|Response
@@ -314,8 +317,10 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Data Resource Action
+     * Data Resource Action.
+     *
      * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
+     *
      * @param Request $request
      *
      * @return RedirectResponse|Response
@@ -350,7 +355,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete User from Group action
+     * Delete User from Group action.
      *
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"id" = "userId"})
      */
@@ -364,7 +369,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete MultimediaObject from Group action
+     * Delete MultimediaObject from Group action.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
@@ -378,7 +383,7 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete Embeddedbroadcast from Group action
+     * Delete Embeddedbroadcast from Group action.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
@@ -392,10 +397,11 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Can be deleted
+     * Can be deleted.
      *
-     * @param  Group   $group
-     * @param  Request $request
+     * @param Group   $group
+     * @param Request $request
+     *
      * @return JsonResponse
      */
     public function canBeDeletedAction(Group $group, Request $request)
@@ -418,10 +424,11 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete all users from group
+     * Delete all users from group.
      *
-     * @param Group $group
+     * @param Group   $group
      * @param Request $request
+     *
      * @return Response
      */
     public function deleteAllUsersAction(Group $group, Request $request)
@@ -437,10 +444,11 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete all multimediaObjects from group
+     * Delete all multimediaObjects from group.
      *
-     * @param Group $group
+     * @param Group   $group
      * @param Request $request
+     *
      * @return Response
      */
     public function deleteAllMultimediaObjectsAction(Group $group, Request $request)
@@ -456,10 +464,11 @@ class GroupController extends AdminController implements NewAdminController
     }
 
     /**
-     * Delete all embeddedbroadcasts from group
+     * Delete all embeddedbroadcasts from group.
      *
-     * @param Group $group
+     * @param Group   $group
      * @param Request $request
+     *
      * @return Response
      */
     public function deleteAllEmbeddedBroadcastsAction(Group $group, Request $request)

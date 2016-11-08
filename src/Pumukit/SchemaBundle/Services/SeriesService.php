@@ -21,11 +21,12 @@ class SeriesService
         $this->seriesDispatcher = $seriesDispatcher;
     }
 
-   /**
+    /**
      * Resets the magic url for a given series. Returns the secret id.
      *
      * @param Series
-     * @return String
+     *
+     * @return string
      */
     public function resetMagicUrl($series)
     {
@@ -38,10 +39,11 @@ class SeriesService
     }
 
     /**
-     * Same Embedded Broadcast
+     * Same Embedded Broadcast.
      *
      * @param Series $series
-     * @return boolean
+     *
+     * @return bool
      */
     public function sameEmbeddedBroadcast(Series $series)
     {

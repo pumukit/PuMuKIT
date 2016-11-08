@@ -55,10 +55,11 @@ class Log
     }
 
     /**
-     * Check if the track is 'viewable'
+     * Check if the track is 'viewable'.
      *
      * @param Track $track
-     * @return boolean
+     *
+     * @return bool
      */
     private function isViewableTrack(Track $track = null)
     {

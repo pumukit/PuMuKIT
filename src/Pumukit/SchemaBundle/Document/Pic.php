@@ -5,28 +5,28 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\SchemaBundle\Document\Pic
+ * Pumukit\SchemaBundle\Document\Pic.
  *
  * @MongoDB\EmbeddedDocument
  */
 class Pic extends Element
 {
     /**
-   * @var int $width
+   * @var int
    *
    * @MongoDB\Int
    */
   private $width;
 
   /**
-   * @var integer $height
+   * @var int
    *
    * @MongoDB\Int
    */
   private $height;
 
   /**
-   * Set width
+   * Set width.
    *
    * @param int $width
    */
@@ -36,7 +36,7 @@ class Pic extends Element
   }
 
   /**
-   * Get width
+   * Get width.
    *
    * @return int
    */
@@ -46,7 +46,7 @@ class Pic extends Element
   }
 
   /**
-   * Set height
+   * Set height.
    *
    * @param int $height
    */
@@ -56,9 +56,9 @@ class Pic extends Element
   }
 
   /**
-   * Get height
+   * Get height.
    *
-   * @return integer
+   * @return int
    */
   public function getHeight()
   {
@@ -83,8 +83,8 @@ class Pic extends Element
       return $time;
   }
 
-      /**
-   * To string
+  /**
+   * To string.
    *
    * @return string
    */

@@ -25,8 +25,8 @@ class JobEvent extends Event
     protected $multimediaObject;
 
     /**
-     * @param Job $job
-     * @param Track $track
+     * @param Job              $job
+     * @param Track            $track
      * @param MultimediaObject $multimediaObject
      */
     public function __construct(Job $job, Track $track = null, MultimediaObject $multimediaObject = null)

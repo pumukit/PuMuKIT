@@ -19,10 +19,11 @@ class SeriesPlaylistService
     }
 
     /**
-     * Returns a query builder for the mmobjs of a series playlist embed document
+     * Returns a query builder for the mmobjs of a series playlist embed document.
      *
-     * @param array $playlistMmobjIds List of MongoIds to find.
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param array $playlistMmobjIds List of MongoIds to find
+     * @param array $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return QueryBuilder
      */
     protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = array())
@@ -36,10 +37,11 @@ class SeriesPlaylistService
     }
 
     /**
-     * Returns a query builder for the mmobjs of a series
+     * Returns a query builder for the mmobjs of a series.
      *
-     * @param Series $series The series to get mmobjs from
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param Series $series   The series to get mmobjs from
+     * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return QueryBuilder
      */
     protected function createSortedQuerySeriesMmobjs($series, $criteria = array())
@@ -60,8 +62,9 @@ class SeriesPlaylistService
      * First it gets all ids, then it makes a query for all (to reduce them, in case a filter is activated)
      * Then it sorts the result according to the original embed ids sorting.
      *
-     * @param Series $series The series to return mmobjs from.
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param Series $series   The series to return mmobjs from
+     * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return array
      */
     protected function retrieveSortedPlaylistMmobjs(Series $series, $criteria = array())
@@ -84,13 +87,14 @@ class SeriesPlaylistService
     }
 
     /**
-     * Returns an iterator with all mmobjs belonging to the playlist
+     * Returns an iterator with all mmobjs belonging to the playlist.
      *
      * This function returns an iterator with the 'series' mmobjs (mmobj whose series ref is this Collection)
      * followed by the 'playlist' mmobjs (mmobjs whose ids are on the playlist embedded document on this Collection)
      *
-     * @param Series $series The series to return mmobjs from.
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param Series $series   The series to return mmobjs from
+     * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return CountableAppendIterator
      */
     public function getPlaylistMmobjs(Series $series, $criteria = array())
@@ -108,15 +112,16 @@ class SeriesPlaylistService
     }
 
     /**
-     * Returns the 'first' mmobj on the playlist
+     * Returns the 'first' mmobj on the playlist.
      *
      * This function returns the first mmobj on the playlist. If there are any multimedia
      * objects which references this Collection, the first of those (using the rank criteria)
      * will be returned. Otherwise, the first valid mmobj belonging to the playlist embed
      * document will be returned.
      *
-     * @param Series $series The series to return the first mmobj from.
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param Series $series   The series to return the first mmobj from
+     * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return MultimediaObject
      */
     public function getPlaylistFirstMmobj(Series $series, $criteria = array())
@@ -139,9 +144,10 @@ class SeriesPlaylistService
      *
      * This function is used to check whether the given mmobj id is valid and belongs to the given series.
      *
-     * @param string $mmobjId The id of the multimedia object.
-     * @param Series $series The series to return the first mmobj from.
-     * @param array $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed.
+     * @param string $mmobjId  The id of the multimedia object
+     * @param Series $series   The series to return the first mmobj from
+     * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
+     *
      * @return MultimediaObject
      */
     public function getMmobjFromIdAndPlaylist($mmobjId, Series $series, $criteria = array())

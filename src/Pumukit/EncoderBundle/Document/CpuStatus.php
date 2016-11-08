@@ -5,10 +5,9 @@ namespace Pumukit\EncoderBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Pumukit\EncoderBundle\Document\CpuStatus
+ * Pumukit\EncoderBundle\Document\CpuStatus.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\CpuStatusRepository")
- *
  */
 class CpuStatus
 {
@@ -26,28 +25,28 @@ class CpuStatus
     );
 
     /**
-     * @var int $id
+     * @var int
      *
      * @MongoDB\Id
      */
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      *
      * @MongoDB\String
      */
     private $name;
 
     /**
-     * @var int $status
+     * @var int
      *
      * @MongoDB\Int
      */
     private $status = self::STATUS_WORKING;
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -57,7 +56,7 @@ class CpuStatus
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -67,7 +66,7 @@ class CpuStatus
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      */
@@ -77,7 +76,7 @@ class CpuStatus
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */
