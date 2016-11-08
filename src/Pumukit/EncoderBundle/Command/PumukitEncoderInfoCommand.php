@@ -19,7 +19,7 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
             ->setDescription('Pumukit show job info')
             ->setDefinition(array(
                 new InputArgument('id', InputArgument::OPTIONAL, 'Job identifier to execute'),
-                new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states')
+                new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states'),
             ))
             ->setHelp(<<<'EOT'
 TODO
@@ -66,7 +66,7 @@ EOT
                 $cpu['type'],
                 $cpu['host'],
                 $cpu['number'].'/'.$cpu['max'],
-                $cpu['description']
+                $cpu['description'],
             ));
         }
         $table->render();
@@ -97,7 +97,7 @@ EOT
         $output->writeln('<info>JOBS:</info>');
         $table = new Table($output);
         $table->setHeaders(array('Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
-                                 'Timeini', 'Timestart', 'Timeend'));
+                                 'Timeini', 'Timestart', 'Timeend', ));
 
         foreach ($jobs as $name => $job) {
             $table->addRow(array(

@@ -66,7 +66,7 @@ class PlaylistMultimediaObjectController extends Controller
 
         return array(
             'playlist' => $series,
-            'mms' => $mms
+            'mms' => $mms,
         );
     }
 
@@ -128,7 +128,7 @@ class PlaylistMultimediaObjectController extends Controller
         $mms = $this->getPlaylistMmobjs($series, $request);
         return array(
             'playlist' => $series,
-            'mms' => $mms
+            'mms' => $mms,
         );
     }
 
@@ -241,7 +241,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
         return array(
             'mmobj' => $mmobj,
-            'mmobj_id' => $id
+            'mmobj_id' => $id,
         );
     }
 
@@ -436,7 +436,7 @@ class PlaylistMultimediaObjectController extends Controller
             'id' => $request->get('id'),
             'ids' => $request->get('ids'),
             'num_mm' => $count,
-            'locales' => $this->container->getParameter('pumukit2.locales')
+            'locales' => $this->container->getParameter('pumukit2.locales'),
         );
     }
 

@@ -49,7 +49,7 @@ class CpuService
                 $freeCpus[] = array(
                                     'name' => $name,
                                     'busy' => $busy,
-                                    'max' => $cpu['max']
+                                    'max' => $cpu['max'],
                                     );
             }
         }

@@ -236,7 +236,7 @@ class LDAPService
                             }
                             $out[] = array(
                                            'mail' => $i['mail'][0],
-                                           'cn' => $i['cn'][0]
+                                           'cn' => $i['cn'][0],
                                            );
                         }
                     }

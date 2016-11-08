@@ -49,7 +49,7 @@ class LiveController extends AdminController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
                              array(
                                    'live' => $resource,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 

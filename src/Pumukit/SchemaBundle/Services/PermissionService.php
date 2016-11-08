@@ -56,16 +56,16 @@ class PermissionService
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" disabled',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),
-                    PermissionProfile::SCOPE_PERSONAL => array()
-                )
+                    PermissionProfile::SCOPE_PERSONAL => array(),
+                ),
             );
 
             $return[Permission::PREFIX_ROLE_TAG_DEFAULT.$pubchannel->getCod()] = array(
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" activated by default',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),
-                    PermissionProfile::SCOPE_PERSONAL => array()
-                )
+                    PermissionProfile::SCOPE_PERSONAL => array(),
+                ),
             );
         }
 
@@ -125,7 +125,7 @@ class PermissionService
         //Empty 'dependencies' to add to a permission without them
         $defaultDeps = array(
             PermissionProfile::SCOPE_GLOBAL => array(),
-            PermissionProfile::SCOPE_PERSONAL => array()
+            PermissionProfile::SCOPE_PERSONAL => array(),
         );
         $allPermissions = $this->getLocalPermissions() + $this->getPubTagsPermissions();
         foreach ($this->externalPermissions as $externalPermission) {

@@ -32,7 +32,7 @@ class PumukitNewAdminExtension extends Extension
         if ($container->hasParameter('pumukit2.naked_backoffice_domain')) {
             $arguments = array(
                 '%pumukit2.naked_backoffice_domain%',
-                '%pumukit2.naked_backoffice_background%'
+                '%pumukit2.naked_backoffice_background%',
             );
 
             if ($container->hasParameter('pumukit2.naked_backoffice_color')) {

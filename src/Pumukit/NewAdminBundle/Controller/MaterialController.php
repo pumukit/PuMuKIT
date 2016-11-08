@@ -84,14 +84,14 @@ class MaterialController extends Controller implements NewAdminController
             return array(
                          'mm' => $multimediaObject,
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => $e->getMessage(),
                          );
         }
 
         return array(
                      'mm' => $multimediaObject,
                      'uploaded' => 'success',
-                     'message' => 'New Material added.'
+                     'message' => 'New Material added.',
                      );
     }
 
@@ -136,7 +136,7 @@ class MaterialController extends Controller implements NewAdminController
     {
         return array(
                      'mmId' => $multimediaObject->getId(),
-                     'materials' => $multimediaObject->getMaterials()
+                     'materials' => $multimediaObject->getMaterials(),
                      );
     }
 }

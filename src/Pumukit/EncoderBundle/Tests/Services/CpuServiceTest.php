@@ -104,7 +104,7 @@ class CpuServiceTest extends WebTestCase
                                            'type' => CpuService::TYPE_LINUX,
                                            'user' => 'transco1',
                                            'password' => 'PUMUKIT',
-                                           'description' => 'Pumukit transcoder'
+                                           'description' => 'Pumukit transcoder',
                                            ),
                       'CPU_REMOTE' => array(
                                             'host' => '192.168.5.123',
@@ -113,7 +113,7 @@ class CpuServiceTest extends WebTestCase
                                             'type' => CpuService::TYPE_LINUX,
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder'
+                                            'description' => 'Pumukit transcoder',
                                             ),
                       'CPU_CLOUD' => array(
                                             'host' => '192.168.5.124',
@@ -122,8 +122,8 @@ class CpuServiceTest extends WebTestCase
                                             'type' => CpuService::TYPE_LINUX,
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder'
-                                            )
+                                            'description' => 'Pumukit transcoder',
+                                            ),
                       );
 
         return $cpus;

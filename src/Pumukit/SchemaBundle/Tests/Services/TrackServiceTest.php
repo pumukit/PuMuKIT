@@ -220,7 +220,7 @@ class TrackServiceTest extends WebTestCase
                                            'type' => CpuService::TYPE_LINUX,
                                            'user' => 'transco1',
                                            'password' => 'PUMUKIT',
-                                           'description' => 'Pumukit transcoder'
+                                           'description' => 'Pumukit transcoder',
                                            ),
                       'CPU_REMOTE' => array(
                                             'id' => 2,
@@ -230,8 +230,8 @@ class TrackServiceTest extends WebTestCase
                                             'type' => CpuService::TYPE_LINUX,
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
-                                            'description' => 'Pumukit transcoder'
-                                            )
+                                            'description' => 'Pumukit transcoder',
+                                            ),
                       );
 
         return $cpus;
@@ -255,10 +255,10 @@ class TrackServiceTest extends WebTestCase
                                                                          'host' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => __DIR__.'/../Resources/dir_out'                                                         ),
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ),
                                                  'app' => 'cp',
                                                  'rel_duration_size' => 1,
-                                                 'rel_duration_trans' => 1
+                                                 'rel_duration_trans' => 1,
                                                  ),
                           'MASTER_VIDEO_H264' => array(
                                                        'display' => false,
@@ -281,12 +281,12 @@ class TrackServiceTest extends WebTestCase
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
                                                                                'dir_out' => __DIR__.'/../Resources/dir_out',
-                                                                               'url_out' => 'http://localhost:8000/downloads/'
+                                                                               'url_out' => 'http://localhost:8000/downloads/',
                                                                                ),
                                                        'app' => 'avconv',
                                                        'rel_duration_size' => 1,
-                                                       'rel_duration_trans' => 1
-                                                       )
+                                                       'rel_duration_trans' => 1,
+                                                       ),
                           );
 
         return $profiles;

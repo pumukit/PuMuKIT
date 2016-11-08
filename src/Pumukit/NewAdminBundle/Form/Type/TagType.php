@@ -29,15 +29,15 @@ class TagType extends AbstractType
                                        'attr' => array(
                                                        'pattern' => "^\w*$",
                                                        'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
-                                                       'oninput' => "setCustomValidity('')"),
-                                       'label' => $this->translator->trans('Cod', array(), null, $this->locale)))
+                                                       'oninput' => "setCustomValidity('')", ),
+                                       'label' => $this->translator->trans('Cod', array(), null, $this->locale), ))
             ->add('i18n_title', 'texti18n',
                   array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $tag = $event->getData();

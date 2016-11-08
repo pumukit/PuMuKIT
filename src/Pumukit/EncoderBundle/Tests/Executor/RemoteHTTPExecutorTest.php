@@ -20,7 +20,7 @@ class RemoteHTTPExecutorTest extends WebTestCase
         $cpu = array(
             'host' => '127.0.0.1:9000',
             'user' => 'pumukit',
-            'password' => 'PUMUKIT'
+            'password' => 'PUMUKIT',
         );
 
         $executor = new RemoteHTTPExecutor();

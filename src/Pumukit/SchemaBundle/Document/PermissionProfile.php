@@ -17,7 +17,7 @@ class PermissionProfile
     public static $scopeDescription = array(
                                             PermissionProfile::SCOPE_GLOBAL => 'Global Scope',
                                             PermissionProfile::SCOPE_PERSONAL => 'Personal Scope',
-                                            PermissionProfile::SCOPE_NONE => 'No Scope'
+                                            PermissionProfile::SCOPE_NONE => 'No Scope',
                                             );
 
     /**

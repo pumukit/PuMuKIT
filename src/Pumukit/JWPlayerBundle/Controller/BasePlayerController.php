@@ -87,7 +87,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
                      'track' => $track,
-                     'magic_url' => true);
+                     'magic_url' => true, );
     }
 
     /**
@@ -108,6 +108,6 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
                      'is_mobile_device' => $isMobileDevice,
-                     'is_old_browser' => $isOldBrowser);
+                     'is_old_browser' => $isOldBrowser, );
     }
 }

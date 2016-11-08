@@ -99,7 +99,7 @@ class PlaylistController extends CollectionController
                              array(
                                    'series'                   => $series,
                                    'form'                     => $form->createView(),
-                                   'template'                 => '_template'
+                                   'template'                 => '_template',
                                    )
                              );
     }

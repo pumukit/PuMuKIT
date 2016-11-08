@@ -37,7 +37,7 @@ class MultimediaObjectController extends Controller
         return array(
                      'mm' => $multimediaObject,
                      'generate_sbs' => $generateSbs,
-                     'sbs_profile' => $sbsProfile
+                     'sbs_profile' => $sbsProfile,
                      );
     }
 
@@ -96,7 +96,7 @@ class MultimediaObjectController extends Controller
 
         return array(
                      'presenter_delivery_url' => $presenterDeliveryUrl,
-                     'presentation_delivery_url' => $presentationDeliveryUrl
+                     'presentation_delivery_url' => $presentationDeliveryUrl,
                      );
     }
 

@@ -139,7 +139,7 @@ class TagController extends Controller implements NewAdminController
 
         return array(
             'root' => $root,
-            'children' => $children
+            'children' => $children,
         );
     }
 

@@ -28,11 +28,11 @@ class UserUpdateType extends AbstractType
             ->add('fullname', 'text',
                   array(
                       'disabled' => !$user->isLocal(),
-                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale), ))
             ->add('username', 'text',
                   array(
                       'disabled' => true,
-                      'label' => $this->translator->trans('Username', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
             ->add('plain_password', 'password',
                   array(
                       'disabled' => !$user->isLocal(),
@@ -52,10 +52,10 @@ class UserUpdateType extends AbstractType
             ->add('email', 'email',
                   array(
                       'disabled' => !$user->isLocal(),
-                      'label' => $this->translator->trans('Email', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
             ->add('permissionProfile', null,
                   array(
-                      'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+                      'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $user = $event->getData();

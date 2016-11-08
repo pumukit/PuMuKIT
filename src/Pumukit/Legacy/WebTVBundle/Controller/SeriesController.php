@@ -25,7 +25,7 @@ class SeriesController extends Controller
         $this->updateBreadcrumbs($series);
         
         return array('series' => $series,
-                   'multimediaObjects' => $multimediaObjects);
+                   'multimediaObjects' => $multimediaObjects, );
     }
 
     /**
@@ -43,7 +43,7 @@ class SeriesController extends Controller
 
         return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects,
-                   'magic_url' => true);
+                   'magic_url' => true, );
     }
 
     private function updateBreadcrumbs(Series $series)

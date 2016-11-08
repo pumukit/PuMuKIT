@@ -74,7 +74,7 @@ class OpencastController extends PlayerController implements WebTVController
             'is_old_browser' => $isOldBrowser,
             'is_mobile_device' => $isMobileDevice,
             'editor_chapters' => $editorChapters,
-            'autostart' => $request->query->get('autostart', 'true')
+            'autostart' => $request->query->get('autostart', 'true'),
         );
     }
 }

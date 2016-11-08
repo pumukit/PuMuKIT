@@ -78,7 +78,7 @@ class PersonController extends AdminController implements NewAdminController
 
         return array(
                      'person' => $person,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 
@@ -117,7 +117,7 @@ class PersonController extends AdminController implements NewAdminController
 
         return array(
                      'person' => $person,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 
@@ -136,7 +136,7 @@ class PersonController extends AdminController implements NewAdminController
 
         return array(
                      'person' => $person,
-                     'series' => $series
+                     'series' => $series,
                      );
     }
 
@@ -162,7 +162,7 @@ class PersonController extends AdminController implements NewAdminController
 
         return array(
                      'people' => $resources,
-                     'countMmPeople' => $countMmPeople
+                     'countMmPeople' => $countMmPeople,
                      );
     }
 
@@ -197,7 +197,7 @@ class PersonController extends AdminController implements NewAdminController
                      'role' => $role,
                      'template' => $template,
                      'ldap_enabled' => $ldapEnabled,
-                     'owner' => $owner
+                     'owner' => $owner,
                      );
     }
 
@@ -254,7 +254,7 @@ class PersonController extends AdminController implements NewAdminController
                                        'role' => $role,
                                        'personal_scope_role_code' => $personalScopeRoleCode,
                                        'mm' => $multimediaObject,
-                                       'template' => $template
+                                       'template' => $template,
                                        ));
         }
 
@@ -266,7 +266,7 @@ class PersonController extends AdminController implements NewAdminController
                      'mm' => $multimediaObject,
                      'template' => $template,
                      'form' => $form->createView(),
-                     'owner' => $owner
+                     'owner' => $owner,
                      );
     }
 
@@ -315,7 +315,7 @@ class PersonController extends AdminController implements NewAdminController
                                            'role' => $role,
                                            'personal_scope_role_code' => $personalScopeRoleCode,
                                            'mm' => $multimediaObject,
-                                           'template' => $template
+                                           'template' => $template,
                                            ));
             } else {
                 $errors = $this->get('validator')->validate($person);
@@ -335,7 +335,7 @@ class PersonController extends AdminController implements NewAdminController
                      'mm' => $multimediaObject,
                      'template' => $template,
                      'form' => $form->createView(),
-                     'owner' => $owner
+                     'owner' => $owner,
                      );
     }
 
@@ -382,7 +382,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
-                                   'template' => $template
+                                   'template' => $template,
                                    ));
     }
 
@@ -401,7 +401,7 @@ class PersonController extends AdminController implements NewAdminController
                            'id'=> $p->getId(),
                            'label'=> $p->getName(),
                            'desc' => $p->getPost().' '.$p->getFirm(),
-                           'value' => $p->getName()
+                           'value' => $p->getName(),
                            );
         }
 
@@ -442,7 +442,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
-                                   'template' => $template
+                                   'template' => $template,
                                    ));
     }
 
@@ -480,7 +480,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
-                                   'template' => $template
+                                   'template' => $template,
                                    ));
     }
 
@@ -524,7 +524,7 @@ class PersonController extends AdminController implements NewAdminController
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
-                                   'template' => $template
+                                   'template' => $template,
                                    ));
     }
 

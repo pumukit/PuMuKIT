@@ -28,7 +28,7 @@ class ByTagController extends Controller
     
       return array('title' => 'Multimedia objects with tag',
                  'objects' => $pagerfanta,
-                 'tag' => $tag);
+                 'tag' => $tag, );
   }
   
   /**
@@ -45,7 +45,7 @@ class ByTagController extends Controller
     
       return array('title' => 'Series with tag',
                  'objects' => $pagerfanta,
-                 'tag' => $tag);
+                 'tag' => $tag, );
   }
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())

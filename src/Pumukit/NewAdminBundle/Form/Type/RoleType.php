@@ -27,8 +27,8 @@ class RoleType extends AbstractType
                                        'attr' => array(
                                                        'pattern' => "^\w*$",
                                                        'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
-                                                       'oninput' => "setCustomValidity('')"),
-                                       'label' => $this->translator->trans('Code', array(), null, $this->locale)))
+                                                       'oninput' => "setCustomValidity('')", ),
+                                       'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
             ->add('xml', 'text',
                   array('label' => $this->translator->trans('XML', array(), null, $this->locale)))
             ->add('i18n_name', 'texti18n',
@@ -37,7 +37,7 @@ class RoleType extends AbstractType
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Text', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

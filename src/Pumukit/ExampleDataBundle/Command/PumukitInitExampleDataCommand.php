@@ -488,7 +488,7 @@ EOT
                                 'userAgent' => $useragent,
                                 'referer' => 'http://localhost:8080/series/'.$mmobj->getSeries()->getId(),
                                 'multimediaObject' => new \MongoId($mmobj->getId()),
-                                'series' => new \MongoId($mmobj->getSeries()->getId()));
+                                'series' => new \MongoId($mmobj->getSeries()->getId()), );
                 $mmobj->incNumview();
                 $dm->persist($mmobj);
             }

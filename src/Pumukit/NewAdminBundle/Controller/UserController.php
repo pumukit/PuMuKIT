@@ -189,7 +189,7 @@ class UserController extends AdminController implements NewAdminController
 
         return array(
                      'user' => $user,
-                     'groups' => $groups
+                     'groups' => $groups,
                      );
     }
 
@@ -233,7 +233,7 @@ class UserController extends AdminController implements NewAdminController
                 $addGroups[$group->getId()] = array(
                                                     'key' => $group->getKey(),
                                                     'name' => $group->getName(),
-                                                    'origin' => $group->getOrigin()
+                                                    'origin' => $group->getOrigin(),
                                                     );
                 $addGroupsIds[] = new \MongoId($group->getId());
             }
@@ -242,14 +242,14 @@ class UserController extends AdminController implements NewAdminController
                 $deleteGroups[$group->getId()] = array(
                                                        'key' => $group->getKey(),
                                                        'name' => $group->getName(),
-                                                       'origin' => $group->getOrigin()
+                                                       'origin' => $group->getOrigin(),
                                                        );
             }
         }
 
         return new JsonResponse(array(
                                       'add' => $addGroups,
-                                      'delete' => $deleteGroups
+                                      'delete' => $deleteGroups,
                                       ));
     }
 

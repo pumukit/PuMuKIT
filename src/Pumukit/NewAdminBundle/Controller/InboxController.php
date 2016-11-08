@@ -42,7 +42,7 @@ class InboxController extends Controller implements NewAdminController
                                'relativepath' => $f->getRelativePathname(),
                                'is_file' => $f->isFile(),
                                'hash' => hash('md5', $f->getRealpath()),
-                               'content' => false);
+                               'content' => false, );
             }
         } else {
             $finder->depth('< 1')->directories()->followLinks()->in($dir);
@@ -55,7 +55,7 @@ class InboxController extends Controller implements NewAdminController
                                    'relativepath' => $f->getRelativePathname(),
                                    'is_file' => $f->isFile(),
                                    'hash' => hash('md5', $f->getRealpath()),
-                                   'content' => $contentFinder->count());
+                                   'content' => $contentFinder->count(), );
                 }
             }
         }

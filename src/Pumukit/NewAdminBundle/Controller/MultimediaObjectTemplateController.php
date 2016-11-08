@@ -77,7 +77,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
-                                   'groups'                   => $allGroups
+                                   'groups'                   => $allGroups,
                                    )
                              );
     }

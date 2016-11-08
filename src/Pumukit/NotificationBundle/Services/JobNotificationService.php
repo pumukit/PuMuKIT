@@ -60,7 +60,7 @@ class JobNotificationService
                                 'job' => $job,
                                 'commandLine' => $this->jobService->renderBat($job),
                                 'sender_name' => $this->senderName,
-                                'multimedia_object_admin_link' => $multimediaObjectAdminLink
+                                'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
             $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, false);
             return $output;
@@ -96,7 +96,7 @@ class JobNotificationService
                                 'job' => $job,
                                 'commandLine' => $this->jobService->renderBat($job),
                                 'sender_name' => $this->senderName,
-                                'multimedia_object_admin_link' => $multimediaObjectAdminLink
+                                'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
             $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, true);
             return $output;

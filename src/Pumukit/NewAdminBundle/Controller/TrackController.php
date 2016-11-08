@@ -72,14 +72,14 @@ class TrackController extends Controller implements NewAdminController
             return array(
                          'mm' => $multimediaObject,
                          'uploaded' => 'failed',
-                         'message' => 'The file is not a valid video or audio file'
+                         'message' => 'The file is not a valid video or audio file',
                          );
         }
 
         return array(
                      'mm' => $multimediaObject,
                      'uploaded' => 'success',
-                     'message' => 'New Track added.'
+                     'message' => 'New Track added.',
                      );
     }
 
@@ -111,7 +111,7 @@ class TrackController extends Controller implements NewAdminController
                                    'track'    => $track,
                                    'form'     => $form->createView(),
                                    'mmId'     => $multimediaObject->getId(),
-                                   'profiles' => $profiles
+                                   'profiles' => $profiles,
                                    ));
     }
 
@@ -199,7 +199,7 @@ class TrackController extends Controller implements NewAdminController
                      'jobs' => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'oc' => '',
-                     'reload_links' => $request->query->get('reload_links', false)
+                     'reload_links' => $request->query->get('reload_links', false),
                      );
     }
 
@@ -286,7 +286,7 @@ class TrackController extends Controller implements NewAdminController
 
         return array(
                      'resource'      => $multimediaObject,
-                     'resource_name' => 'mms'
+                     'resource_name' => 'mms',
                      );
     }
 

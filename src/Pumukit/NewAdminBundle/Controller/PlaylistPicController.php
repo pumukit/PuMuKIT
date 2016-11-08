@@ -23,7 +23,7 @@ class PlaylistPicController extends Controller implements NewAdminController
     {
         return array(
                      'resource' => $playlist,
-                     'resource_name' => 'playlist'
+                     'resource_name' => 'playlist',
                      );
     }
 
@@ -87,7 +87,7 @@ class PlaylistPicController extends Controller implements NewAdminController
                          'resource_name' => 'playlist',
                          'uploaded' => 'failed',
                          'message' => $e->getMessage(),
-                         'isBanner' => $isBanner
+                         'isBanner' => $isBanner,
                          );
         }
 
@@ -96,7 +96,7 @@ class PlaylistPicController extends Controller implements NewAdminController
                      'resource_name' => 'playlist',
                      'uploaded' => 'success',
                      'message' => 'New Pic added.',
-                     'isBanner' => $isBanner
+                     'isBanner' => $isBanner,
                      );
     }
 
@@ -190,7 +190,7 @@ class PlaylistPicController extends Controller implements NewAdminController
                      'resource_name' => 'playlist',
                      'pics' => $pics,
                      'page' => $page,
-                     'total' => $total
+                     'total' => $total,
                      );
     }
 
@@ -202,7 +202,7 @@ class PlaylistPicController extends Controller implements NewAdminController
     {
         return array(
                      'resource' => $playlist,
-                     'resource_name' => 'playlist'
+                     'resource_name' => 'playlist',
                      );
     }
 

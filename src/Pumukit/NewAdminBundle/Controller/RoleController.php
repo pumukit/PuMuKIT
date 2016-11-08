@@ -48,7 +48,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         return array(
                      'role' => $role,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 

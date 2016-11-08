@@ -25,7 +25,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     {
         return array(
                      'resource' => $multimediaObject,
-                     'resource_name' => 'mms'
+                     'resource_name' => 'mms',
                      );
     }
 
@@ -80,7 +80,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                          'resource_name' => 'mms',
                          'uploaded' => 'failed',
                          'message' => $e->getMessage(),
-                         'isBanner' => false
+                         'isBanner' => false,
                          );
         }
         
@@ -89,7 +89,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                      'resource_name' => 'mms',
                      'uploaded' => 'success',
                      'message' => 'New Pic added.',
-                     'isBanner' => false
+                     'isBanner' => false,
                      );
     }
   
@@ -185,7 +185,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                      'resource_name' => 'mms',
                      'pics' => $pics,
                      'page' => $page,
-                     'total' => $total
+                     'total' => $total,
                      );
     }
 

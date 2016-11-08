@@ -52,7 +52,7 @@ class MultimediaObjectController extends Controller
         return array('autostart' => $request->query->get('autostart', 'true'),
                    'intro' => $this->getIntro($request->query->get('intro')),
                    'multimediaObject' => $multimediaObject,
-                   'track' => $track);
+                   'track' => $track, );
     }
 
    /**
@@ -80,7 +80,7 @@ class MultimediaObjectController extends Controller
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
-                     'track' => $track);
+                     'track' => $track, );
     }
 
     /**
@@ -122,7 +122,7 @@ class MultimediaObjectController extends Controller
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'track' => $track,
-                     'magic_url' => true);
+                     'magic_url' => true, );
     }
 
     /**
@@ -140,7 +140,7 @@ class MultimediaObjectController extends Controller
 
         return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects,
-                   'unescoTag' => $unescoTag);
+                   'unescoTag' => $unescoTag, );
     }
 
     /**
@@ -159,7 +159,7 @@ class MultimediaObjectController extends Controller
         $unescoTag = $tagRepo->findOneByCod('UNESCO');
 
         return array('multimediaObjects' => $relatedMms,
-                   'unescoTag' => $unescoTag);
+                   'unescoTag' => $unescoTag, );
     }
 
     protected function getIntro($queryIntro=false)

@@ -28,7 +28,7 @@ class EventType extends AbstractType
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('place', 'text',
                   array('label' => $this->translator->trans('Location', array(), null, $this->locale)))
             ->add('live', null,
@@ -37,7 +37,7 @@ class EventType extends AbstractType
                   array('label' => $this->translator->trans('Schedule', array(), null, $this->locale)))
             ->add('display', 'checkbox',
                   array('required' => false,
-                        'label' => $this->translator->trans('Announce', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Announce', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

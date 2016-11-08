@@ -53,13 +53,13 @@ class ChannelController extends Controller implements WebTVController
 
             $results[] = array('tag' => $tag,
                                'objects' => $series,
-                               'numMmobjs' =>$numMmobjs);
+                               'numMmobjs' =>$numMmobjs, );
         }
 
         $this->updateBreadcrumbs($channelTitle, 'pumukit_webtv_channel_series', array('channelNumber' => $channelNumber));
         return array('title' => $channelTitle,
                      'results' => $results,
-                     'number_cols' => $numberCols);
+                     'number_cols' => $numberCols, );
     }
 
     public function getChannelTitle($channelNumber)

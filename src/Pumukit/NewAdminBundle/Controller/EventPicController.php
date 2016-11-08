@@ -20,7 +20,7 @@ class EventPicController extends Controller implements NewAdminController
     {
         return array(
                      'resource' => $event,
-                     'resource_name' => 'event'
+                     'resource_name' => 'event',
                      );
     }
 
@@ -54,14 +54,14 @@ class EventPicController extends Controller implements NewAdminController
             return array(
                          'event' => $event,
                          'uploaded' => 'failed',
-                         'message' => $e->getMessage()
+                         'message' => $e->getMessage(),
                          );
         }
 
         return array(
                      'event' => $event,
                      'uploaded' => 'success',
-                     'message' => 'New Pic added.'
+                     'message' => 'New Pic added.',
                      );
     }
 

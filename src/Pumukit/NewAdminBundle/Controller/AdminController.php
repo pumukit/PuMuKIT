@@ -76,7 +76,7 @@ class AdminController extends ResourceController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
                              array(
                                    $resourceName => $resource,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 
@@ -121,7 +121,7 @@ class AdminController extends ResourceController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
                              array(
                                    $resourceName => $resource,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 

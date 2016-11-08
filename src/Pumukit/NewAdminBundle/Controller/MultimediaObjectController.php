@@ -62,7 +62,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return array(
             'series' => $series,
             'mms' => $mms,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew')
+            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
         );
     }
 
@@ -108,7 +108,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return new JsonResponse(array(
                      'seriesId' => $series->getId(),
-                     'mmId' => $mmobj->getId()
+                     'mmId' => $mmobj->getId(),
                      ));
     }
 
@@ -219,7 +219,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'active_editor'            => $activeEditor,
                      'opencast_exists'          => $opencastExists,
                      'not_change_pub_channel'   => $notChangePubChannel,
-                     'groups'                   => $allGroups
+                     'groups'                   => $allGroups,
                      );
     }
 
@@ -237,7 +237,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
              'is_published' => $mmService->isPublished($resource, 'PUCHWEBTV'),
              'is_hidden' => $mmService->isHidden($resource, 'PUCHWEBTV'),
              'is_playable' => $mmService->hasPlayableResource($resource),
-             'warning_on_unpublished' => $warningOnUnpublished
+             'warning_on_unpublished' => $warningOnUnpublished,
         );
     }
 
@@ -309,7 +309,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                                array(
                                      'series' => $series,
-                                     'mms' => $mms
+                                     'mms' => $mms,
                                      )
                                );
         }
@@ -331,7 +331,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
                                    'not_change_pub_channel'   => $notChangePubChannel,
-                                   'groups'                   => $allGroups
+                                   'groups'                   => $allGroups,
                                    )
                              );
     }
@@ -390,7 +390,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                                  array(
                                        'series' => $series,
-                                       'mms' => $mms
+                                       'mms' => $mms,
                                        )
                                  );
         }
@@ -427,7 +427,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'pub_decisions'            => $pubDecisionsTags,
                                    'parent_tags'              => $parentTags,
                                    'not_change_pub_channel'   => $notChangePubChannel,
-                                   'groups'                   => $allGroups
+                                   'groups'                   => $allGroups,
                                    )
                              );
     }
@@ -476,7 +476,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                      'id' => $n->getId(),
                                      'cod' => $n->getCod(),
                                      'name' => $n->getTitle(),
-                                     'group' => $n->getPath()
+                                     'group' => $n->getPath(),
                                      );
         }
 
@@ -507,7 +507,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                        'id' => $n->getId(),
                                        'cod' => $n->getCod(),
                                        'name' => $n->getTitle(),
-                                       'group' => $n->getPath()
+                                       'group' => $n->getPath(),
                                        );
         }
 
@@ -744,7 +744,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                              array(
                                    'series' => $series,
-                                   'mms' => $mms
+                                   'mms' => $mms,
                                    )
                              );
     }
@@ -932,14 +932,14 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 if (!$isUserStillRelated) {
                     $response = array(
                                       'redirect' => 1,
-                                      'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId))
+                                      'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)),
                                       );
                     return new JsonResponse($response, JsonResponse::HTTP_OK);
                 }
             } catch (\Exception $e) {
                 $response = array(
                                   'redirect' => 1,
-                                  'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId))
+                                  'url' => $this->generateUrl('pumukitnewadmin_series_index', array('id' => $seriesId)),
                                   );
                 return new JsonResponse($response, JsonResponse::HTTP_OK);
             }
@@ -978,7 +978,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $info = array(
                       'type' => $type,
                       'password' => $password,
-                      'groups' => $groups
+                      'groups' => $groups,
                       );
 
         return new JsonResponse($info);
@@ -1017,7 +1017,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
             $jsonResponse = array(
                                   'description' => (string)$embeddedBroadcast,
-                                  'template' => $template
+                                  'template' => $template,
                                   );
 
             return new JsonResponse($jsonResponse);
@@ -1026,7 +1026,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'mm' => $multimediaObject,
                      'broadcasts' => $broadcasts,
                      'groups' => $allGroups,
-                     'template' => $template
+                     'template' => $template,
                      );
     }
 
@@ -1169,7 +1169,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $addGroups[$group->getId()] = array(
                                                 'key' => $group->getKey(),
                                                 'name' => $group->getName(),
-                                                'origin' => $group->getOrigin()
+                                                'origin' => $group->getOrigin(),
                                                 );
             $addGroupsIds[] = new \MongoId($group->getId());
         }
@@ -1178,7 +1178,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $deleteGroups[$group->getId()] = array(
                                                    'key' => $group->getKey(),
                                                    'name' => $group->getName(),
-                                                   'origin' => $group->getOrigin()
+                                                   'origin' => $group->getOrigin(),
                                                    );
         }
 

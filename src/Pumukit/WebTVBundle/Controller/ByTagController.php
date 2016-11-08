@@ -43,7 +43,7 @@ class ByTagController extends Controller implements WebTVController
       return array('title' => $title,
                  'objects' => $pagerfanta,
                  'tag' => $tag,
-                 'number_cols' => $numberCols);
+                 'number_cols' => $numberCols, );
   }
 
   /**
@@ -66,7 +66,7 @@ class ByTagController extends Controller implements WebTVController
       return array('title' => $title,
                  'objects' => $pagerfanta,
                  'tag' => $tag,
-                 'number_cols' => $numberCols);
+                 'number_cols' => $numberCols, );
   }
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())

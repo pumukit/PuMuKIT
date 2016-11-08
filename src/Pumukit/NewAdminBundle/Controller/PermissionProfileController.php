@@ -39,7 +39,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'dependencies' => $dependencies
+                     'dependencies' => $dependencies,
                      );
     }
 
@@ -74,7 +74,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
                      'permissionprofiles' => $permissionProfiles,
                      'permissions' => $permissions,
                      'scopes' => $scopes,
-                     'dependencies' => $dependencies
+                     'dependencies' => $dependencies,
                      );
     }
 
@@ -111,7 +111,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
         return array(
                      'permissionprofile' => $permissionProfile,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 
@@ -146,7 +146,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
         return array(
                      'permissionprofile' => $permissionProfile,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 

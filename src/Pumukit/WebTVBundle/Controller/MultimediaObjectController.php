@@ -46,7 +46,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         'intro' => $this->getIntro($request->query->get('intro')),
         'multimediaObject' => $multimediaObject,
         'track' => $track,
-        'editor_chapters' => $editorChapters);
+        'editor_chapters' => $editorChapters, );
     }
 
     /**
@@ -93,7 +93,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'track' => $track,
-                     'magic_url' => true);
+                     'magic_url' => true, );
     }
 
     /**
@@ -112,7 +112,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
 
         return array('series' => $series,
-                     'multimediaObjects' => $multimediaObjects
+                     'multimediaObjects' => $multimediaObjects,
         );
     }
 

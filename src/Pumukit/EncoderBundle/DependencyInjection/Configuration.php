@@ -83,7 +83,7 @@ class Configuration implements ConfigurationInterface
                                         ->info('Name of the streamserver')->end()
                                     ->enumNode('type')
                                         ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD,
-                                                       ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5))
+                                                       ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5, ))
                                         ->isRequired()
                                         ->info('Streamserver type')->end()
                                     ->scalarNode('host')->isRequired()->cannotBeEmpty()

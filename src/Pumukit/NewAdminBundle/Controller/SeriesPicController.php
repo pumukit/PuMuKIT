@@ -23,7 +23,7 @@ class SeriesPicController extends Controller implements NewAdminController
     {
         return array(
                      'resource' => $series,
-                     'resource_name' => 'series'
+                     'resource_name' => 'series',
                      );
     }
 
@@ -87,7 +87,7 @@ class SeriesPicController extends Controller implements NewAdminController
                          'resource_name' => 'series',
                          'uploaded' => 'failed',
                          'message' => $e->getMessage(),
-                         'isBanner' => $isBanner
+                         'isBanner' => $isBanner,
                          );
         }
 
@@ -96,7 +96,7 @@ class SeriesPicController extends Controller implements NewAdminController
                      'resource_name' => 'series',
                      'uploaded' => 'success',
                      'message' => 'New Pic added.',
-                     'isBanner' => $isBanner
+                     'isBanner' => $isBanner,
                      );
     }
 
@@ -190,7 +190,7 @@ class SeriesPicController extends Controller implements NewAdminController
                      'resource_name' => 'series',
                      'pics' => $pics,
                      'page' => $page,
-                     'total' => $total
+                     'total' => $total,
                      );
     }
 
@@ -202,7 +202,7 @@ class SeriesPicController extends Controller implements NewAdminController
     {
         return array(
                      'resource' => $series,
-                     'resource_name' => 'series'
+                     'resource_name' => 'series',
                      );
     }
 

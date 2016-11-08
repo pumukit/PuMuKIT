@@ -26,10 +26,10 @@ class MultimediaObjectPubType extends AbstractType
                   array('choices' => array(
                                            MultimediaObject::STATUS_PUBLISHED => 'Published',
                                            MultimediaObject::STATUS_BLOQ => 'Blocked',
-                                           MultimediaObject::STATUS_HIDE => 'Hidden'
+                                           MultimediaObject::STATUS_HIDE => 'Hidden',
                                            ),
                         'disabled' => $options['not_granted_change_status'],
-                        'label' => $this->translator->trans('Status', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
             ;
     }
 

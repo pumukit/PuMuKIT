@@ -200,7 +200,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline = array(
                           array('$match' => array('people.cod' => "$roleCode")),
                           array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people._id' => 1)),
-                          array('$unwind' => '$people')
+                          array('$unwind' => '$people'),
                           );
 
         $aggregation = $collection->aggregate($pipeline);
@@ -240,7 +240,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline = array(
                           array('$match' => array('people.cod' => "$roleCode", 'people.people.email' => "$email")),
                           array('$project' => array('_id' => 0, 'people.cod' => 1, 'people.people.email' => 1, 'people.people._id' => 1)),
-                          array('$unwind' => '$people')
+                          array('$unwind' => '$people'),
                           );
 
         $aggregation = $collection->aggregate($pipeline);

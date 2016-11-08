@@ -101,7 +101,7 @@ class BroadcastController extends AdminController implements NewAdminController
 
         return array(
                      'broadcast' => $broadcast,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 
@@ -147,7 +147,7 @@ class BroadcastController extends AdminController implements NewAdminController
 
         return array(
                      'broadcast' => $broadcast,
-                     'form' => $form->createView()
+                     'form' => $form->createView(),
                      );
     }
 

@@ -37,7 +37,7 @@ class DefaultController extends Controller
                      'live' => $live,
                      'mobile_device' => $mobileDevice,
                      'isIE' => $isIE,
-                     'versionIE' => $versionIE
+                     'versionIE' => $versionIE,
                      );
     }
 

@@ -25,7 +25,7 @@ class UserAgentParserServiceTest extends WebTestCase
                                 array('string'=>'Mozilla/4.0 (compatible; MSIE 4.5; Windows NT 5.1; .NET CLR 2.0.40607)', 'old'=> true),
                                 array('string'=>'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko', 'old'=> false),
                                 array('string'=>'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16', 'old'=> true),
-                                array('string'=>'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera', 'old'=> true));
+                                array('string'=>'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera', 'old'=> true), );
     }
 
     public function tearDown()

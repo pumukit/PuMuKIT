@@ -63,7 +63,7 @@ class SearchController extends Controller implements WebTVController
         'objects' => $pagerfanta,
         'search_years' => $searchYears,
         'number_cols' => $numberCols,
-        'total_objects' => $totalObjects);
+        'total_objects' => $totalObjects, );
     }
 
     /**
@@ -133,7 +133,7 @@ class SearchController extends Controller implements WebTVController
         'languages' => $searchLanguages,
         'blocked_tag' => $blockedTag,
         'search_years' => $searchYears,
-        'total_objects' => $totalObjects);
+        'total_objects' => $totalObjects, );
     }
 
     private function createPager($objects, $page)

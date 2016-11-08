@@ -345,7 +345,7 @@ class ClientService
             $params = array(
                             'username' => $user->getUsername(),
                             'password' => 'pumukit',
-                            'roles' => $roles
+                            'roles' => $roles,
                             );
             $output = $this->request($request, $params, 'POST', true);
             if (201 != $output['status']) {
@@ -376,7 +376,7 @@ class ClientService
             $params = array(
                             'username' => $user->getUsername(),
                             'password' => 'pumukit',
-                            'roles' => $roles
+                            'roles' => $roles,
                             );
             $output = $this->request($request, $params, 'PUT', true);
             if (200 != $output['status']) {
@@ -444,7 +444,7 @@ class ClientService
         $fields = (is_array($params)) ? http_build_query($params) : $params;
 
         $header = array('X-Requested-Auth: Digest',
-                        'X-Opencast-Matterhorn-Authorization: true');
+                        'X-Opencast-Matterhorn-Authorization: true', );
 
         $this->logger->addDebug(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                 .') Requested URL "'.$requestUrl.'" '

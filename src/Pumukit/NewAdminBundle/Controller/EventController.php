@@ -86,7 +86,7 @@ class EventController extends AdminController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:Event:create.html.twig',
                              array(
                                    'event' => $resource,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 

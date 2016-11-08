@@ -91,7 +91,7 @@ class PermissionProfileServiceTest extends WebTestCase
     {
         $permissions = array(
                             Permission::ACCESS_DASHBOARD,
-                            Permission::ACCESS_MULTIMEDIA_SERIES
+                            Permission::ACCESS_MULTIMEDIA_SERIES,
                             );
 
         $permissionProfile = new PermissionProfile();
@@ -111,13 +111,13 @@ class PermissionProfileServiceTest extends WebTestCase
         $newPermissions = array(
                                Permission::ACCESS_DASHBOARD,
                                Permission::ACCESS_MULTIMEDIA_SERIES,
-                               Permission::ACCESS_ROLES
+                               Permission::ACCESS_ROLES,
                                );
 
         $falsePermissions = array(
                                  Permission::ACCESS_DASHBOARD,
                                  Permission::ACCESS_MULTIMEDIA_SERIES,
-                                 Permission::ACCESS_LIVE_EVENTS
+                                 Permission::ACCESS_LIVE_EVENTS,
                                  );
 
         $this->assertEquals($newPermissions, $permissionProfile->getPermissions());
@@ -128,7 +128,7 @@ class PermissionProfileServiceTest extends WebTestCase
     {
         $permissions = array(
                             Permission::ACCESS_DASHBOARD,
-                            Permission::ACCESS_MULTIMEDIA_SERIES
+                            Permission::ACCESS_MULTIMEDIA_SERIES,
                             );
 
         $permissionProfile = new PermissionProfile();

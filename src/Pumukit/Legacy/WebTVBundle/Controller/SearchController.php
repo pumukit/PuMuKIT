@@ -52,7 +52,7 @@ class SearchController extends Controller
       $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
       return array('type' => 'series',
-         'objects' => $pagerfanta);
+         'objects' => $pagerfanta, );
   }
 
   /**
@@ -142,7 +142,7 @@ class SearchController extends Controller
          'tags' => $tags,
          'tag_found' => $tag_found,
          'type_found' => $type_found,
-         'duration_found' => $duration_found);
+         'duration_found' => $duration_found, );
   }
 
     private function createPager($objects, $page)

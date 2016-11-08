@@ -26,40 +26,40 @@ class TrackUpdateType extends AbstractType
             ->add('i18n_description', 'texti18n',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('hide', 'checkbox',
                   array(
                         'required' => false,
-                        'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
             ->add('language', 'customlanguage',
                   array(
                         'required' => true,
-                        'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ))
           ->add('durationinminutesandseconds', new TrackdurationType(),
                 array(
                       'required' => true,
                       'disabled' => true,
-                      'label' => $this->translator->trans('Duration', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Duration', array(), null, $this->locale), ))
           ->add('resolution', new TrackresolutionType(),
                 array(
                       'required' => true,
                       'disabled' => true,
-                      'label' => $this->translator->trans('Resolution', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Resolution', array(), null, $this->locale), ))
           ->add('size', 'integer',
                 array(
                       'required' => true,
                       'disabled' => true,
-                      'label' => $this->translator->trans('Size', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Size', array(), null, $this->locale), ))
           ->add('path', 'text',
                 array(
                       'required' => true,
                       'disabled' => true,
-                      'label' => $this->translator->trans('File', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('File', array(), null, $this->locale), ))
           ->add('url', 'text',
                 array(
                       'required' => true,
                       'disabled' => true,
-                      'label' => $this->translator->trans('URL', array(), null, $this->locale)));
+                      'label' => $this->translator->trans('URL', array(), null, $this->locale), ));
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

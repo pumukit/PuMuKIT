@@ -307,7 +307,7 @@ class JobService
                      'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
                      'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
                      'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
-                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR)))
+                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
                      );
     }
 

@@ -142,7 +142,7 @@ class CategoriesController extends Controller implements WebTVController
         );
         if ($provider !== null) {
             $criteria['$and'] = array(
-                array('tags.cod' => array('$eq' => $provider)));
+                array('tags.cod' => array('$eq' => $provider)), );
         }
         $pipeline = array(
             array('$match' => $criteria),

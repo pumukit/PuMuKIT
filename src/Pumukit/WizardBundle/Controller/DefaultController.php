@@ -28,7 +28,7 @@ class DefaultController extends Controller
         $formData = $request->get('pumukitwizard_form_data');
 
         return array(
-                     'form_data' => $formData
+                     'form_data' => $formData,
                      );
     }
 
@@ -50,7 +50,7 @@ class DefaultController extends Controller
                 $formData = array('series' => array(
                                                    'i18n_title' => $series->getI18nTitle(),
                                                    'i18n_subtitle' => $series->getI18nSubtitle(),
-                                                   'i18n_description' => $series->getI18nDescription()
+                                                   'i18n_description' => $series->getI18nDescription(),
                                                    ));
             }
         }
@@ -64,7 +64,7 @@ class DefaultController extends Controller
         return array(
                      'series_id' => $id,
                      'form_data' => $formData,
-                     'show_series' => $showSeries
+                     'show_series' => $showSeries,
                      );
     }
 
@@ -90,7 +90,7 @@ class DefaultController extends Controller
         $formData = $request->get('pumukitwizard_form_data');
 
         return array(
-                     'form_data' => $formData
+                     'form_data' => $formData,
                      );
     }
 
@@ -111,7 +111,7 @@ class DefaultController extends Controller
                      'form_data' => $formData,
                      'master_profiles' => $masterProfiles,
                      'pub_channels' => $pubChannelsTags,
-                     'languages' => $languages
+                     'languages' => $languages,
                      );
     }
 
@@ -251,7 +251,7 @@ class DefaultController extends Controller
                              'option' => $option,
                              'seriesId' => $seriesId,
                              'mmId' => null,
-                             'show_series' => $showSeries
+                             'show_series' => $showSeries,
                              );
             }
         } else {
@@ -262,7 +262,7 @@ class DefaultController extends Controller
                          'option' => $option,
                          'seriesId' => $seriesId,
                          'mmId' => null,
-                         'show_series' => $showSeries
+                         'show_series' => $showSeries,
                          );
         }
 
@@ -283,7 +283,7 @@ class DefaultController extends Controller
                      'option' => $option,
                      'seriesId' => $seriesId,
                      'mmId' => $mmId,
-                     'show_series' => $showSeries
+                     'show_series' => $showSeries,
                      );
     }
 
@@ -306,7 +306,7 @@ class DefaultController extends Controller
                      'series' => $series,
                      'mm' => $multimediaObject,
                      'option' => $option,
-                     'show_series' => $showSeries
+                     'show_series' => $showSeries,
                      );
     }
 
@@ -327,7 +327,7 @@ class DefaultController extends Controller
                      'series' => $series,
                      'message' => $errorMessage,
                      'option' => $option,
-                     'show_series' => $showSeries
+                     'show_series' => $showSeries,
                      );
     }
 
@@ -343,7 +343,7 @@ class DefaultController extends Controller
         return array(
                      'step' => $step,
                      'option' => $option,
-                     'show_series' => $showSeries
+                     'show_series' => $showSeries,
                      );
     }
 

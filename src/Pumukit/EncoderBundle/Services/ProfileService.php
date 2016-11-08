@@ -129,7 +129,7 @@ class ProfileService
         $info = array_map(function ($e) {
             return array('dir' => $e,
                                                     'free' => disk_free_space($e),
-                                                    'total' => disk_total_space($e));
+                                                    'total' => disk_total_space($e), );
         }, $shares);
 
         return $info;

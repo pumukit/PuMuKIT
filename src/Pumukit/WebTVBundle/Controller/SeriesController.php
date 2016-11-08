@@ -51,7 +51,7 @@ class SeriesController extends Controller implements WebTVController
 
         return array('series' => $series,
                    'multimediaObjects' => $pagerfanta,
-                   'magic_url' => true);
+                   'magic_url' => true, );
     }
 
     private function updateBreadcrumbs(Series $series)

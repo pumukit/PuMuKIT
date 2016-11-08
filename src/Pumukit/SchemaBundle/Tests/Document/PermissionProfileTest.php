@@ -15,7 +15,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            'ROLE_ACCESS_IMPORTER'
+                            'ROLE_ACCESS_IMPORTER',
                             );
         $system = true;
         $default = true;
@@ -44,7 +44,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            'ROLE_ACCESS_IMPORTER'
+                            'ROLE_ACCESS_IMPORTER',
                             );
         $system = true;
         $default = true;
@@ -68,17 +68,17 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
         $morePermissions = array(
                                  Permission::ACCESS_DASHBOARD,
                                  Permission::ACCESS_MULTIMEDIA_SERIES,
-                                 Permission::ACCESS_ADMIN_USERS
+                                 Permission::ACCESS_ADMIN_USERS,
                                  );
 
         $fewerPermissions = array(
                                  Permission::ACCESS_DASHBOARD,
-                                 Permission::ACCESS_MULTIMEDIA_SERIES
+                                 Permission::ACCESS_MULTIMEDIA_SERIES,
                                  );
 
         $notPermissions = array(
                                Permission::ACCESS_ADMIN_USERS,
-                               Permission::ACCESS_ROLES
+                               Permission::ACCESS_ROLES,
                                );
 
         $this->assertFalse($permissionProfile->containsAllPermissions($morePermissions));
@@ -93,7 +93,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
                             'ROLE_ACCESS_IMPORTER',
-                            Permission::ACCESS_ADMIN_USERS
+                            Permission::ACCESS_ADMIN_USERS,
                             );
 
         $this->assertEquals($newPermissions, $permissionProfile->addPermission(Permission::ACCESS_ADMIN_USERS));
@@ -113,7 +113,7 @@ class PermissionProfileTest extends \PHPUnit_Framework_TestCase
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
-                            'ROLE_ACCESS_IMPORTER'
+                            'ROLE_ACCESS_IMPORTER',
                             );
         $system = true;
         $default = true;

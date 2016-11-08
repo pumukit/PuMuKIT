@@ -30,7 +30,7 @@ class LiveType extends AbstractType
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('url', 'url',
                   array('label' => $this->translator->trans('URL', array(), null, $this->locale)))
             ->add('source_name', 'text',
@@ -38,11 +38,11 @@ class LiveType extends AbstractType
             ->add('broadcasting', 'choice',
                   array(
                         'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
-                        'label' => $this->translator->trans('Status', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
             ->add('live_type', 'choice',
                   array(
                         'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
-                        'label' => $this->translator->trans('Technology', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
         /*
             ->add('resolution', new LiveresolutionType(),
                   array(

@@ -201,7 +201,7 @@ class FilterListener
                 '$elemMatch' => [
                     'people._id' => new \MongoId($person->getId()),
                     'cod' => $roleCode,
-                ]
+                ],
             ];
             $filter->setParameter('people', $people);
         }

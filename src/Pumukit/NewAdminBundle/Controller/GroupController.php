@@ -99,7 +99,7 @@ class GroupController extends AdminController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:Group:create.html.twig',
                              array(
                                    'group' => $group,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 
@@ -145,7 +145,7 @@ class GroupController extends AdminController implements NewAdminController
         return $this->render('PumukitNewAdminBundle:Group:update.html.twig',
                              array(
                                    'group' => $group,
-                                   'form' => $form->createView()
+                                   'form' => $form->createView(),
                                    ));
     }
 
@@ -309,7 +309,7 @@ class GroupController extends AdminController implements NewAdminController
                      'viewer_multimedia_objects' => $viewerMultimediaObjects,
                      'countResources' => $countResources,
                      'can_delete' => $canBeDeleted,
-                     'delete_group_message' => $deleteMessage
+                     'delete_group_message' => $deleteMessage,
                      );
     }
 
@@ -345,7 +345,7 @@ class GroupController extends AdminController implements NewAdminController
                      'group'         => $group,
                      'action'        => $action,
                      'resources'     => $resources,
-                     'resource_name' => $resourceName
+                     'resource_name' => $resourceName,
                      );
     }
 
@@ -413,7 +413,7 @@ class GroupController extends AdminController implements NewAdminController
         return new JsonResponse(array(
                                       'canbedeleted' => $value,
                                       'deleteMessage' => $deleteMessage,
-                                      'groupName'    => $group->getName()
+                                      'groupName'    => $group->getName(),
                                       ));
     }
 

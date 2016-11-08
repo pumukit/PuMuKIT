@@ -26,7 +26,7 @@ class PersonalFilter extends SchemaFilter
         if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
             $criteria_backoffice['$or'] = array(
                 array('people' => $this->parameters['people']),
-                array('groups' => $this->parameters['groups'])
+                array('groups' => $this->parameters['groups']),
             );
         }
         if ($criteria_portal && $criteria_backoffice) {

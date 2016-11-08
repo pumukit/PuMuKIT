@@ -126,7 +126,7 @@ class PicExtractorService
             '{{ss}}' => $track->getTimeOfAFrame($frame),
             '{{size}}' => $newWidth.'x'.$newHeight,
             '{{input}}' => $track->getPath(),
-            '{{output}}' => $absCurrentDir.'/'.$picFileName
+            '{{output}}' => $absCurrentDir.'/'.$picFileName,
         );
 
         

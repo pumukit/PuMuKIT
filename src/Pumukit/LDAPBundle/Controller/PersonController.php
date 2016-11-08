@@ -34,7 +34,7 @@ class PersonController extends Controller
         return array(
                      'ldap_connected'  => $ldapConnected,
                      'mm'              => $multimediaObject,
-                     'role'            => $role
+                     'role'            => $role,
                      );
     }
 
@@ -51,7 +51,7 @@ class PersonController extends Controller
         return array(
                      'mm' => $multimediaObject,
                      'role' => $role,
-                     'template' => $template
+                     'template' => $template,
                      );
     }
 
@@ -71,7 +71,7 @@ class PersonController extends Controller
                                'value' => $person['cn'],
                                'label' => $person['cn'],
                                'mail'  => $person['mail'],
-                               'cn'    => $person['cn']
+                               'cn'    => $person['cn'],
                                );
             }
         } catch (\Exception $e) {
@@ -111,7 +111,7 @@ class PersonController extends Controller
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
-                                   'template' => $template
+                                   'template' => $template,
                                    ));
     }
 

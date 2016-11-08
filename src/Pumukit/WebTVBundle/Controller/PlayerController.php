@@ -61,7 +61,7 @@ class PlayerController extends Controller implements WebTVController
                     if ($trimming['start'] <= $time && $trimming['end'] >= $time) {
                         $editorChapters[] = array('title' => $chapt['name'],
                                                   'real_time' => $time,
-                                                  'time_to_show' => $time - $trimming['start']);
+                                                  'time_to_show' => $time - $trimming['start'], );
                     }
                 }
             }

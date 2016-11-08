@@ -41,7 +41,7 @@ class SeriesType extends AbstractType
                   array(
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
@@ -67,17 +67,17 @@ class SeriesType extends AbstractType
                   array(
                         'required' => false,
                         'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Header Text', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Header Text', array(), null, $this->locale), ))
             ->add('i18n_footer', 'textareai18n',
                   array(
                         'required' => false,
                         'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Footer Text', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Footer Text', array(), null, $this->locale), ))
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
                         'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Headline', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Headline', array(), null, $this->locale), ))
            ->add('template', 'choice',
                   array(
                         'choices' => array('date' => 'date', 'date_all' => 'date_all',

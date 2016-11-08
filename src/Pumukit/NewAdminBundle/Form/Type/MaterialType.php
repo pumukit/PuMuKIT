@@ -26,7 +26,7 @@ class MaterialType extends AbstractType
           ->add('language', 'customlanguage',
                 array(
                       'required' => true,
-                      'label' => $this->translator->trans('Language', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Language', array(), null, $this->locale), ))
           ->add('mime_type', 'choice', array(
                 'choices' => array(
                                    'xxx' => 'xxx - ',
@@ -43,9 +43,9 @@ class MaterialType extends AbstractType
                                    'doc' => 'doc - Word file',
                                    'srt' => 'srt - Text-captions srt',
                                    'vtt' => 'vtt - Video Text Tracks',
-                                   'dfxp' => 'dfxp - Distribution Format Exchange Profile'
+                                   'dfxp' => 'dfxp - Distribution Format Exchange Profile',
                                    ),
-                'label' => $this->translator->trans('Type')))
+                'label' => $this->translator->trans('Type'), ))
       ;
     }
 

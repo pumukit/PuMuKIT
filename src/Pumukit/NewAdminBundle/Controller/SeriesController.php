@@ -46,7 +46,7 @@ class SeriesController extends AdminController implements NewAdminController
 
         return array(
             'series' => $resources,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew')
+            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
         );
     }
 
@@ -166,7 +166,7 @@ class SeriesController extends AdminController implements NewAdminController
                                    'exclude_fields'           => $exclude_fields,
                                    'show_later_fields'        => $show_later_fields,
                                    'template'                 => '_template',
-                                   'groups'                   => $allGroups
+                                   'groups'                   => $allGroups,
                                    )
                              );
     }
@@ -306,7 +306,7 @@ class SeriesController extends AdminController implements NewAdminController
         $mmStatus = array(
                         'published' => MultimediaObject::STATUS_PUBLISHED,
                         'blocked' => MultimediaObject::STATUS_BLOQ,
-                        'hidden' => MultimediaObject::STATUS_HIDE
+                        'hidden' => MultimediaObject::STATUS_HIDE,
                         );
 
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
@@ -314,7 +314,7 @@ class SeriesController extends AdminController implements NewAdminController
         return array(
                      'series' => $series,
                      'mm_status' => $mmStatus,
-                     'pub_channels' => $pubChannels
+                     'pub_channels' => $pubChannels,
                      );
     }
 
@@ -618,7 +618,7 @@ class SeriesController extends AdminController implements NewAdminController
                      'broadcasts' => $broadcasts,
                      'groups' => $allGroups,
                      'sameBroadcast' => $sameBroadcast,
-                     'embeddedBroadcast' => $embeddedBroadcast
+                     'embeddedBroadcast' => $embeddedBroadcast,
                      );
     }
 

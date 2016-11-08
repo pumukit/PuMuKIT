@@ -166,7 +166,7 @@ class PermissionServiceTest extends WebTestCase
             'dependencies' => array(
                 'global' => array('ROLE_ONE', 'ROLE_TWO'),
                 'personal' => array('ROLE_DEPENDENCY'),
-            )
+            ),
         );
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = $erroringPermission;
@@ -182,8 +182,8 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = array(
                                      array(
                                            'role' => 'NOT_VALID',
-                                           'description' => 'Not valid'
-                                           )
+                                           'description' => 'Not valid',
+                                           ),
                                      );
         $permissionService = new PermissionService($this->dm, $externalPermissions);
     }
@@ -197,7 +197,7 @@ class PermissionServiceTest extends WebTestCase
                 'dependencies' => array(
                     'global' => array('ROLE_TWO'),
                     'personal' => array('ROLE_TWO'),
-                )
+                ),
             ),
             array(
                 'role' => 'ROLE_TWO',
@@ -205,7 +205,7 @@ class PermissionServiceTest extends WebTestCase
                 'dependencies' => array(
                     'global' => array('ROLE_THREE'),
                     'personal' => array(),
-                )
+                ),
             ),
             array(
                 'role' => 'ROLE_THREE',
@@ -213,7 +213,7 @@ class PermissionServiceTest extends WebTestCase
                 'dependencies' => array(
                     'global' => array('ROLE_ONE', 'ROLE_TWO'),
                     'personal' => array('ROLE_THREE'),
-                )
+                ),
             ),
             array(
                 'role' => 'ROLE_FOUR',

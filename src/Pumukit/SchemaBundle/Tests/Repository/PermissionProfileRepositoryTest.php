@@ -103,8 +103,8 @@ class PermissionProfileRepositoryTest extends WebTestCase
         $externalPermissions = array(
                                      array(
                                            'role' => 'ROLE_ONE',
-                                           'description' => 'Access One'
-                                           )
+                                           'description' => 'Access One',
+                                           ),
                                      );
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
