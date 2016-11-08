@@ -55,7 +55,7 @@ class BatchPicExtractorListener
                           .'Extracted pic from track '.
                           $track->getId().' into MultimediaObject "'
                           .$multimediaObject->getId().'"');
-      
+
         return true;
     }
 }

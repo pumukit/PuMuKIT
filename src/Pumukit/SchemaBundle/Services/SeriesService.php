@@ -25,7 +25,7 @@ class SeriesService
         $this->mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->seriesDispatcher = $seriesDispatcher;
     }
-    
+
    /**
      * Resets the magic url for a given series. Returns the secret id.
      *

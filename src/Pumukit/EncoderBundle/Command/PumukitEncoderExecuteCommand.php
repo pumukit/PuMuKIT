@@ -32,7 +32,7 @@ EOT
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
-        
+
         if (($id = $input->getArgument('id')) === null) {
             throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");
         }

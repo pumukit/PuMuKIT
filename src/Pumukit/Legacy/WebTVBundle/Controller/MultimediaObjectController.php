@@ -33,7 +33,7 @@ class MultimediaObjectController extends Controller
         if ($response instanceof Response) {
             return $response;
         }
-    
+
         $track = $request->query->has('track_id') ?
         $multimediaObject->getTrackById($request->query->get('track_id')) :
         $multimediaObject->getFilteredTrackWithTags(array('display'));
@@ -167,7 +167,7 @@ class MultimediaObjectController extends Controller
     protected function getIntro($queryIntro = false)
     {
         $hasIntro = $this->container->hasParameter('pumukit2.intro');
-      
+
         if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
             $intro = $queryIntro;
         } elseif ($hasIntro) {

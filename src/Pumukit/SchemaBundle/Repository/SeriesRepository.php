@@ -128,7 +128,7 @@ class SeriesRepository extends DocumentRepository
         if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
-        
+
         return $qb->getQuery()->execute();
     }
 
@@ -164,18 +164,18 @@ class SeriesRepository extends DocumentRepository
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
             ->findSeriesFieldWithTag($tag);
-        
+
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
         if (0 !== count($sort)) {
             $qb->sort($sort);
         }
-        
+
         if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
-        
+
         return $qb->getQuery()->execute();
     }
 
@@ -220,7 +220,7 @@ class SeriesRepository extends DocumentRepository
         if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
         }
-        
+
         return $qb->getQuery()->execute();
     }
 
@@ -247,9 +247,9 @@ class SeriesRepository extends DocumentRepository
     public function findSeriesByPersonId($personId)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
-        
+
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
-        
+
         return $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray())
             ->getQuery()

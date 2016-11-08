@@ -17,7 +17,7 @@ class ViewsLog
      * @MongoDB\Id
      */
     private $id;
-    
+
     /**
      * @var \Date
      *
@@ -31,28 +31,28 @@ class ViewsLog
      * @MongoDB\String
      */
     private $url;
-    
+
     /**
      * @var string $ip
      *
      * @MongoDB\String
      */
     private $ip;
-    
+
     /**
      * @var string $userAgent
      *
      * @MongoDB\String
      */
     private $userAgent;
-    
+
     /**
      * @var string $referer
      *
      * @MongoDB\String
      */
     private $referer;
-    
+
     /**
      * @var string $multimediaObject
      *

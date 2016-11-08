@@ -79,7 +79,7 @@ class Pic extends Element
               return floatval(substr($tag, 5));
           }
       }
-      
+
       return $time;
   }
 

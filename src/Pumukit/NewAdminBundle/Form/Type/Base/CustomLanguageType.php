@@ -15,7 +15,7 @@ class CustomLanguageType extends AbstractType
       'lsi' => 'International Sign Language',
       'sgn' => 'International Sign Language',
     );
-    
+
     private $translator;
     private $customLanguages;
 

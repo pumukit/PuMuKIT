@@ -30,7 +30,7 @@ class PersonController extends Controller
     {
         $ldapService = $this->get('pumukit_ldap.ldap');
         $ldapConnected = $ldapService->checkConnection();
-      
+
         return array(
                      'ldap_connected' => $ldapConnected,
                      'mm' => $multimediaObject,
@@ -104,7 +104,7 @@ class PersonController extends Controller
             return new Response($e->getMessage(), 400);
         }
         $template = $multimediaObject->isPrototype() ? '_template' : '';
-        
+
         return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
                              array(
                                    'people' => $multimediaObject->getPeopleByRole($role, true),

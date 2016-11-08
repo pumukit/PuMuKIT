@@ -216,7 +216,7 @@ class User extends BaseUser
                 $this->groups->getMongoData()
             );
         }
-      
+
         return array_map(function ($g) {
             return new \MongoId($g->getId());
         }, $this->groups->toArray());

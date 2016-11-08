@@ -99,7 +99,7 @@ class PicExtractorService
     {
         $currentDir = 'series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
         $absCurrentDir = $this->targetPath.'/'.$currentDir;
-       
+
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
 
@@ -129,7 +129,7 @@ class PicExtractorService
             '{{output}}' => $absCurrentDir.'/'.$picFileName,
         );
 
-        
+
         $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
         $process = new Process($commandLine);
         $process->setTimeout(60);
@@ -147,7 +147,7 @@ class PicExtractorService
             $tags = array('auto', 'frame_'.$frame, 'time_'.$track->getTimeOfAFrame($frame));
             $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
-        
+
         return true;
     }
 

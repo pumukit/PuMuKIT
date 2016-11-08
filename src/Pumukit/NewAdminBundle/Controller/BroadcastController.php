@@ -165,7 +165,7 @@ class BroadcastController extends AdminController implements NewAdminController
         if (0 !== $broadcast->getNumberMultimediaObjects()) {
             return new Response("Can not delete broadcast '".$broadcast->getName()."', There are Multimedia objects with this broadcast. ", 409);
         }
-        
+
         $this->get('pumukitschema.factory')->deleteResource($broadcast);
         if ($broadcastId === $this->get('session')->get('admin/broadcast/id')) {
             $this->get('session')->remove('admin/broadcast/id');

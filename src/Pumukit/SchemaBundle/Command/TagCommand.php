@@ -43,7 +43,7 @@ EOT
 
         $tagCode = $input->getArgument('tag');
         $tag = $this->getTag($tagCode);
-        
+
         $display = (true === $input->getOption('display'));
 
         $tag = $this->updateTag($tag, $display);

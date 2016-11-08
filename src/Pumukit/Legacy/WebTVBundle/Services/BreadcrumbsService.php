@@ -50,7 +50,7 @@ class BreadcrumbsService
         $this->breadcrumbs = array(array('title' => 'Home', 'link' => $this->router->generate('pumukit_webtv_index_index')));
     }
 
-  
+
     public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)
     {
         if ($forceTranslation) {
@@ -70,7 +70,7 @@ class BreadcrumbsService
                  $this->session->get('breadcrumbs/routeName', $this->allRoute),
                  $this->session->get('breadcrumbs/routeParameters', array()));
         }
-    
+
         $this->add($series->getTitle(), 'pumukit_webtv_series_index', array('id' => $series->getId()));
     }
 

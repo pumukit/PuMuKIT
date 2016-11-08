@@ -23,7 +23,7 @@ class SeriesController extends Controller
         $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED));
 
         $this->updateBreadcrumbs($series);
-        
+
         return array('series' => $series,
                    'multimediaObjects' => $multimediaObjects, );
     }

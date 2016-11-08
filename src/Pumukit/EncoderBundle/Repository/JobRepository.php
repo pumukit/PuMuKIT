@@ -24,7 +24,7 @@ class JobRepository extends DocumentRepository
         if (null != $sort) {
             $qb->sort($sort);
         }
-        
+
         return $qb;
     }
 

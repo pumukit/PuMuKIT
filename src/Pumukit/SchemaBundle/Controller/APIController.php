@@ -48,7 +48,7 @@ class APIController extends Controller implements NewAdminController
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $serializer = $this->get('serializer');
-        
+
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');

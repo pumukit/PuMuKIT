@@ -25,18 +25,18 @@ class ExceptionListener
             }
         } while (null !== $exception = $exception->getPrevious());
     }
-  
-  
+
+
     private function handleAccessDeniedException(GetResponseForExceptionEvent $event, AccessDeniedException $exception)
     {
         $req = $event->getRequest();
         if ($req->isXmlHttpRequest()) {
             $exception = $event->getException();
-      
+
             $response = new Response();
             $response->setContent($exception->getMessage());
             $response->setStatusCode($exception->getCode());
-      
+
             $event->setResponse($response);
         }
     }

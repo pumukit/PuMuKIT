@@ -30,14 +30,14 @@ class TrackType extends AbstractType
                       'required' => true,
                       'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ));
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
                                      'data_class' => 'Pumukit\SchemaBundle\Document\Track',
                                      ));
     }
-    
+
     public function getName()
     {
         return 'pumukitnewadmin_track';

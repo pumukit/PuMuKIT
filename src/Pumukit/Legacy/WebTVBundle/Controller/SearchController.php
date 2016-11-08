@@ -136,7 +136,7 @@ class SearchController extends Controller
     }
 
       $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
-        
+
       return array('type' => 'multimediaObject',
          'objects' => $pagerfanta,
          'tags' => $tags,

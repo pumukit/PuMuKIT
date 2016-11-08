@@ -254,7 +254,7 @@ class TrackController extends Controller implements NewAdminController
         $priority = $request->get('priority');
         $jobId = $request->get('jobId');
         $this->get('pumukitencoder.job')->updateJobPriority($jobId, $priority);
-        
+
         return new JsonResponse(array('jobId' => $jobId, 'priority' => $priority));
     }
 

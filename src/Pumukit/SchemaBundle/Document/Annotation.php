@@ -60,7 +60,7 @@ class Annotation
      * @MongoDB\Int
      */
     private $inpoint;
-    
+
     /**
      * @var int $outpoint
      *

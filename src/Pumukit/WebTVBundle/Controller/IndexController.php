@@ -43,7 +43,7 @@ class IndexController extends Controller implements WebTVController
     {
         $limit = $this->container->getParameter('limit_objs_mostviewed');
         $showLastMonth = $this->container->getParameter('show_mostviewed_lastmonth');
- 
+
         $repository = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         if ($showLastMonth) {
             $multimediaObjectsSortedByNumview = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);

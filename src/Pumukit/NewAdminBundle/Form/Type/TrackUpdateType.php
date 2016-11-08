@@ -61,14 +61,14 @@ class TrackUpdateType extends AbstractType
                       'disabled' => true,
                       'label' => $this->translator->trans('URL', array(), null, $this->locale), ));
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
                                      'data_class' => 'Pumukit\SchemaBundle\Document\Track',
                                      ));
     }
-    
+
     public function getName()
     {
         return 'pumukitnewadmin_track_update';

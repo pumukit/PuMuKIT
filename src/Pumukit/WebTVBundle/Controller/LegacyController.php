@@ -71,7 +71,7 @@ class LegacyController extends Controller implements WebTVController
             return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
         }
     }
-    
+
     /**
      * @Route("/{_locale}/video/iframe/{pumukit1id}.html")
      *

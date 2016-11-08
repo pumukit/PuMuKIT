@@ -53,13 +53,13 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
             $picService = $this->get('pumukitschema.mmspic');
             $multimediaObject = $picService->addPicUrl($multimediaObject, $url);
         }
-        
+
         return array(
                      'resource' => $multimediaObject,
                      'resource_name' => 'mms',
                      );
     }
-    
+
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
@@ -83,7 +83,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                          'isBanner' => false,
                          );
         }
-        
+
         return array(
                      'resource' => $multimediaObject,
                      'resource_name' => 'mms',
@@ -92,7 +92,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                      'isBanner' => false,
                      );
     }
-  
+
     /**
      * Delete pic
      */

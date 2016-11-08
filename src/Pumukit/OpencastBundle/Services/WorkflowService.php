@@ -56,7 +56,7 @@ class WorkflowService
         if ($errors > 0) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -110,7 +110,7 @@ class WorkflowService
                 }
             }
         }
-  
+
         return $templateWorkflows;
     }
 

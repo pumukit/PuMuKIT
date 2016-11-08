@@ -45,11 +45,11 @@ class ClientServiceTest extends WebTestCase
     public function testGetUserRoles()
     {
         $user = new User();
-        
+
         $user->setRoles(array('ROLE_TEST'));
         $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
         $this->assertEquals('["ROLE_TEST","ROLE_USER"]', $out);
-        
+
         $user->setRoles(array('ROLE_TEST', 'ROLE_TEST_2'));
         $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
         $this->assertEquals('["ROLE_TEST","ROLE_TEST_2","ROLE_USER"]', $out);
@@ -58,7 +58,7 @@ class ClientServiceTest extends WebTestCase
         $out = $this->invokeMethod($this->clientService, 'getUserRoles', array($user));
         $this->assertNotEquals('["ROLE_SUPER_ADMIN","ROLE_USER"]', $out);
     }
-    
+
     public function testGetMediaPackages()
     {
         $this->markTestSkipped(

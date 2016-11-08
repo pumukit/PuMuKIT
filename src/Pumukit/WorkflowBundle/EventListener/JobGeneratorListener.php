@@ -61,7 +61,7 @@ class JobGeneratorListener
         $jobs = array();
         foreach ($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
-            
+
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
                 $this->logger->info(sprintf("JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
@@ -83,19 +83,19 @@ class JobGeneratorListener
                         continue;
                     }
                 }
-                
+
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using standard target', $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());
             }
-            
+
             if (in_array($pubChannelCod, $targets['force'])) {
                 if ($multimediaObject->isOnlyAudio() && !$profile['audio']) {
                     $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
                                                 $targetProfile, $multimediaObject->getId()));
                     continue;
                 }
-            
+
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
                 $jobs[] = $this->jobService->addUniqueJob($master->getPath(), $targetProfile, 2, $multimediaObject, $master->getLanguage());

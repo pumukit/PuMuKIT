@@ -131,7 +131,7 @@ class SeriesTest extends \PHPUnit_Framework_TestCase
         $series = new Series();
         $pic1 = new Pic();
         $pic2 = new Pic();
-        
+
         $this->assertEquals(0, count($series->getPics()));
 
         $series->addPic($pic);

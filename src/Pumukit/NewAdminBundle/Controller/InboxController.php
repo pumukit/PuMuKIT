@@ -71,7 +71,7 @@ class InboxController extends Controller implements NewAdminController
         if (!$this->container->hasParameter('pumukit2.inbox')) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
-        
+
         $dir = realpath($this->container->getParameter('pumukit2.inbox'));
 
         if (!file_exists($dir)) {

@@ -35,7 +35,7 @@ class EventController extends AdminController implements NewAdminController
                 $update_session = false;
             }
         }
- 
+
         if ($update_session) {
             $this->get('session')->remove('admin/event/id');
         }

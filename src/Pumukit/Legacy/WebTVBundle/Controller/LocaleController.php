@@ -16,7 +16,7 @@ class LocaleController extends Controller
   {
       //TODO validate if is a valid locale using conf file.
     $this->get('session')->set('_locale', $locale);
-    
+
       $referer = $request->headers->get('referer');
       if (!$referer) {
           return $this->redirect('/');

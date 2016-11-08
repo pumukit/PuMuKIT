@@ -308,7 +308,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($mm->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
         $this->assertEquals(5, count($mm->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
         $this->assertEquals(1, count($mm->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
-    
+
         $this->assertEquals(1, count($mm->getFilteredTrackWithTags()));
         $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'))));
         $this->assertEquals(1, count($mm->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
@@ -685,7 +685,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->setDuration($duration);
 
         $this->assertEquals($duration_in_minutes_and_seconds1, $mm->getDurationInMinutesAndSeconds());
-        
+
         $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
         $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }

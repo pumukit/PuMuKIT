@@ -65,7 +65,7 @@ class PlayerController extends Controller implements WebTVController
                     }
                 }
             }
-            
+
             usort($editorChapters, function ($a, $b) {
                 return $a['real_time'] > $b['real_time'];
             });

@@ -111,7 +111,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
     {
         $t1 = new Track();
         $t1->setOnlyAudio(true);
-        
+
         $this->assertTrue($t1->isOnlyAudio());
         $t1->setOnlyAudio(false);
         $this->assertFalse($t1->isOnlyAudio());
@@ -136,7 +136,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
         $t1->setDuration($duration);
 
         $this->assertEquals($duration_in_minutes_and_seconds1, $t1->getDurationInMinutesAndSeconds());
-        
+
         $t1->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
         $this->assertEquals($duration_in_minutes_and_seconds2, $t1->getDurationInMinutesAndSeconds());
     }

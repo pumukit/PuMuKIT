@@ -415,7 +415,7 @@ class Track extends Element
   {
       return (0 == $this->height) ? 0 : $this->width / $this->height;
   }
-    
+
   /**
    * Get duration in minutes and seconds
    *

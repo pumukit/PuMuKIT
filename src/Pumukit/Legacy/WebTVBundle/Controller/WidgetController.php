@@ -18,7 +18,7 @@ class WidgetController extends Controller
 
         return array('live_channels' => $channels);
     }
-    
+
     /**
      * @Template()
      */

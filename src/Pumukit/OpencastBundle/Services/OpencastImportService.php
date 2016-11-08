@@ -28,7 +28,7 @@ class OpencastImportService
     private $opencastService;
     private $inspectionService;
     private $otherLocales;
-    
+
     public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array())
     {
         $this->opencastClient = $opencastClient;

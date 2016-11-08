@@ -51,7 +51,7 @@ class LocaleListener implements EventSubscriberInterface
                   throw new \Exception('Pumukit2.Locales is empty. You should define it in your parameters.');
               }
           }
-          
+
           $request->setLocale($request->getSession()->get('_locale'));
       }
     }

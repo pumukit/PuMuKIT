@@ -46,7 +46,7 @@ class TagType extends AbstractType
             foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                 $auxField = explode(':', $field);
                 $formOptions = array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($auxField[0]));
-                
+
                 try {
                     $event->getForm()->add($auxField[0], isset($auxField[1]) ? $auxField[1] : 'text', $formOptions);
                 } catch (\InvalidArgumentException $e) {
@@ -55,7 +55,7 @@ class TagType extends AbstractType
             }
         });
 
-        
+
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $tag = $event->getData();
 
