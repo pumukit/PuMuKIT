@@ -38,7 +38,6 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException BadMethodCallException
      */
-
     public function testGetDurationFileNotExists()
     {
         $is = new InspectionMediainfoService();
