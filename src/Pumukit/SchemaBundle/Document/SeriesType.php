@@ -15,239 +15,239 @@ use Doctrine\Common\Collections\ArrayCollection;
 class SeriesType
 {
     /**
-   * @var int
-   *
-   * @MongoDB\Id
-   */
-  private $id;
+     * @var int
+     *
+     * @MongoDB\Id
+     */
+    private $id;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\Raw
-   */
-  private $name = array('en' => '');
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $name = array('en' => '');
 
-  /**
-   * @var string
-   *
-   * @MongoDB\Raw
-   */
-  private $description = array('en' => '');
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $description = array('en' => '');
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   */
-  private $cod = 0;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     */
+    private $cod = 0;
 
-  /**
-   * @var ArrayCollection
-   *
-   * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
-   * @Serializer\Exclude
-   */
-  private $series;
+    /**
+     * @var ArrayCollection
+     *
+     * @MongoDB\ReferenceMany(targetDocument="Series", mappedBy="series_type", simple=true, orphanRemoval=false)
+     * @Serializer\Exclude
+     */
+    private $series;
 
-  /**
-   * Used locale to override Translation listener`s locale
-   * this is not a mapped field of entity metadata, just a simple property.
-   *
-   * @var locale
-   */
-  private $locale = 'en';
+    /**
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property.
+     *
+     * @var locale
+     */
+    private $locale = 'en';
 
     public function __construct()
     {
         $this->series = new ArrayCollection();
     }
 
-  /**
-   * Get id.
-   *
-   * @return int
-   */
-  public function getId()
-  {
-      return $this->id;
-  }
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Set name.
-   *
-   * @param string $name
-   * @param string|null $locale
-   */
-  public function setName($name, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->name[$locale] = $name;
-  }
+    /**
+     * Set name.
+     *
+     * @param string $name
+     * @param string|null $locale
+     */
+    public function setName($name, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->name[$locale] = $name;
+    }
 
-  /**
-   * Get name.
-   *
-   * @param string|null $locale
-   *
-   * @return string
-   */
-  public function getName($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->name[$locale])) {
-          return '';
-      }
+    /**
+     * Get name.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getName($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->name[$locale])) {
+            return '';
+        }
 
-      return $this->name[$locale];
-  }
+        return $this->name[$locale];
+    }
 
-  /**
-   * Set I18n name.
-   *
-   * @param array $name
-   */
-  public function setI18nName(array $name)
-  {
-      $this->name = $name;
-  }
+    /**
+     * Set I18n name.
+     *
+     * @param array $name
+     */
+    public function setI18nName(array $name)
+    {
+        $this->name = $name;
+    }
 
-  /**
-   * Get i18n name.
-   *
-   * @return array
-   */
-  public function getI18nName()
-  {
-      return $this->name;
-  }
+    /**
+     * Get i18n name.
+     *
+     * @return array
+     */
+    public function getI18nName()
+    {
+        return $this->name;
+    }
 
-  /**
-   * Set description.
-   *
-   * @param string $description
-   * @param string|null $locale
-   */
-  public function setDescription($description, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->description[$locale] = $description;
-  }
+    /**
+     * Set description.
+     *
+     * @param string $description
+     * @param string|null $locale
+     */
+    public function setDescription($description, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->description[$locale] = $description;
+    }
 
-  /**
-   * Get description.
-   *
-   * @param string|null $locale
-   *
-   * @return string
-   */
-  public function getDescription($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->description[$locale])) {
-          return '';
-      }
+    /**
+     * Get description.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getDescription($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->description[$locale])) {
+            return '';
+        }
 
-      return $this->description[$locale];
-  }
+        return $this->description[$locale];
+    }
 
-  /**
-   * Set I18n description.
-   *
-   * @param array $description
-   */
-  public function setI18nDescription(array $description)
-  {
-      $this->description = $description;
-  }
+    /**
+     * Set I18n description.
+     *
+     * @param array $description
+     */
+    public function setI18nDescription(array $description)
+    {
+        $this->description = $description;
+    }
 
-  /**
-   * Get i18n description.
-   *
-   * @return array
-   */
-  public function getI18nDescription()
-  {
-      return $this->description;
-  }
+    /**
+     * Get i18n description.
+     *
+     * @return array
+     */
+    public function getI18nDescription()
+    {
+        return $this->description;
+    }
 
-  /**
-   * Set cod.
-   *
-   * @param string $cod
-   */
-  public function setCod($cod)
-  {
-      $this->cod = $cod;
-  }
+    /**
+     * Set cod.
+     *
+     * @param string $cod
+     */
+    public function setCod($cod)
+    {
+        $this->cod = $cod;
+    }
 
-  /**
-   * Get cod.
-   *
-   * @return string
-   */
-  public function getCod()
-  {
-      return $this->cod;
-  }
+    /**
+     * Get cod.
+     *
+     * @return string
+     */
+    public function getCod()
+    {
+        return $this->cod;
+    }
 
-  /**
-   * Set locale.
-   *
-   * @param string $locale
-   */
-  public function setLocale($locale)
-  {
-      $this->locale = $locale;
-  }
+    /**
+     * Set locale.
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
-  /**
-   * Get locale.
-   *
-   * @return string
-   */
-  public function getLocale()
-  {
-      return $this->locale;
-  }
+    /**
+     * Get locale.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 
-  /**
-   * Contains series.
-   *
-   * @param Series $series
-   *
-   * @return bool
-   */
-  public function containsSeries(Series $series)
-  {
-      return $this->series->contains($series);
-  }
+    /**
+     * Contains series.
+     *
+     * @param Series $series
+     *
+     * @return bool
+     */
+    public function containsSeries(Series $series)
+    {
+        return $this->series->contains($series);
+    }
 
-  /**
-   * Get series.
-   *
-   * @return ArrayCollection
-   */
-  public function getSeries()
-  {
-      return $this->series;
-  }
+    /**
+     * Get series.
+     *
+     * @return ArrayCollection
+     */
+    public function getSeries()
+    {
+        return $this->series;
+    }
 
-  /**
-   * To string.
-   *
-   * @return string
-   */
-  public function __toString()
-  {
-      return $this->getName();
-  }
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

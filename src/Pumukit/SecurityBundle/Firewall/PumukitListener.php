@@ -19,27 +19,27 @@ class PumukitListener extends AbstractAuthenticationListener
 {
     protected $casService;
 
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService)
-  {
-      parent::__construct($securityContext, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService)
+    {
+        parent::__construct($securityContext, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
 
-      $this->casService = $casService;
-      $this->options['require_previous_session'] = false;
-  }
+        $this->casService = $casService;
+        $this->options['require_previous_session'] = false;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function attemptAuthentication(Request $request)
-  {
-      $this->casService->forceAuthentication();
-      $username = $this->casService->getUser();
+    /**
+     * {@inheritdoc}
+     */
+    protected function attemptAuthentication(Request $request)
+    {
+        $this->casService->forceAuthentication();
+        $username = $this->casService->getUser();
 
-      $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
+        $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
 
-      return $this->authenticationManager->authenticate($token);
-  }
+        return $this->authenticationManager->authenticate($token);
+    }
 }

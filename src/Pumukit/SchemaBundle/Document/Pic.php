@@ -12,84 +12,84 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Pic extends Element
 {
     /**
-   * @var int
-   *
-   * @MongoDB\Int
-   */
-  private $width;
+     * @var int
+     *
+     * @MongoDB\Int
+     */
+    private $width;
 
-  /**
-   * @var int
-   *
-   * @MongoDB\Int
-   */
-  private $height;
+    /**
+     * @var int
+     *
+     * @MongoDB\Int
+     */
+    private $height;
 
-  /**
-   * Set width.
-   *
-   * @param int $width
-   */
-  public function setWidth($width)
-  {
-      $this->width = $width;
-  }
+    /**
+     * Set width.
+     *
+     * @param int $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
 
-  /**
-   * Get width.
-   *
-   * @return int
-   */
-  public function getWidth()
-  {
-      return $this->width;
-  }
+    /**
+     * Get width.
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
 
-  /**
-   * Set height.
-   *
-   * @param int $height
-   */
-  public function setHeight($height)
-  {
-      $this->height = $height;
-  }
+    /**
+     * Set height.
+     *
+     * @param int $height
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+    }
 
-  /**
-   * Get height.
-   *
-   * @return int
-   */
-  public function getHeight()
-  {
-      return $this->height;
-  }
+    /**
+     * Get height.
+     *
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
 
-  /**
-   * Get time from a tag with time_XXX format.
-   *
-   * @return integer, default 0
-   */
-  public function getTime()
-  {
-      $time = 0;
+    /**
+     * Get time from a tag with time_XXX format.
+     *
+     * @return integer, default 0
+     */
+    public function getTime()
+    {
+        $time = 0;
 
-      foreach ($this->getTags() as $tag) {
-          if ('time_' == substr($tag, 0, 5)) {
-              return floatval(substr($tag, 5));
-          }
-      }
+        foreach ($this->getTags() as $tag) {
+            if ('time_' == substr($tag, 0, 5)) {
+                return floatval(substr($tag, 5));
+            }
+        }
 
-      return $time;
-  }
+        return $time;
+    }
 
-  /**
-   * To string.
-   *
-   * @return string
-   */
-  public function __toString()
-  {
-      return $this->getUrl();
-  }
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 }

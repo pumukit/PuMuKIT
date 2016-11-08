@@ -12,113 +12,113 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Comments
 {
     /**
-   * @var int
-   *
-   * @MongoDB\Id
-   */
-  private $id;
+     * @var int
+     *
+     * @MongoDB\Id
+     */
+    private $id;
 
-  /**
-   * @var \Date
-   *
-   * @MongoDB\Date
-   */
-  private $date;
+    /**
+     * @var \Date
+     *
+     * @MongoDB\Date
+     */
+    private $date;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   */
-  private $text;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     */
+    private $text;
 
-  /**
-   * @var int
-   *
-   * @MongoDB\Int
-   * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
-   */
-  private $multimedia_object_id;
+    /**
+     * @var int
+     *
+     * @MongoDB\Int
+     * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
+     */
+    private $multimedia_object_id;
 
-  /**
-   * Get id.
-   *
-   * @return int
-   */
-  public function getId()
-  {
-      return $this->id;
-  }
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Set date.
-   *
-   * @param @MongoDB\Date $date
-   *
-   * @return Comments
-   */
-  public function setDate($date)
-  {
-      $this->date = $date;
+    /**
+     * Set date.
+     *
+     * @param @MongoDB\Date $date
+     *
+     * @return Comments
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
 
-      return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * Get date.
-   *
-   * @return @MongoDB\Date
-   */
-  public function getDate()
-  {
-      return $this->date;
-  }
+    /**
+     * Get date.
+     *
+     * @return @MongoDB\Date
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 
-  /**
-   * Set text.
-   *
-   * @param string $text
-   *
-   * @return Comments
-   */
-  public function setText($text)
-  {
-      $this->text = $text;
+    /**
+     * Set text.
+     *
+     * @param string $text
+     *
+     * @return Comments
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
 
-      return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * Get text.
-   *
-   * @return string
-   */
-  public function getText()
-  {
-      return $this->text;
-  }
+    /**
+     * Get text.
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
 
-  /**
-   * Set multimedia_object_id.
-   *
-   * @param int $multimediaObjectId
-   *
-   * @return Comments
-   */
-  public function setMultimediaObjectId($multimediaObjectId)
-  {
-      $this->multimedia_object_id = $multimediaObjectId;
+    /**
+     * Set multimedia_object_id.
+     *
+     * @param int $multimediaObjectId
+     *
+     * @return Comments
+     */
+    public function setMultimediaObjectId($multimediaObjectId)
+    {
+        $this->multimedia_object_id = $multimediaObjectId;
 
-      return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * Get multimedia_object_id.
-   *
-   * @return int
-   */
-  public function getMultimediaObjectId()
-  {
-      return $this->multimedia_object_id;
-  }
+    /**
+     * Get multimedia_object_id.
+     *
+     * @return int
+     */
+    public function getMultimediaObjectId()
+    {
+        return $this->multimedia_object_id;
+    }
 }

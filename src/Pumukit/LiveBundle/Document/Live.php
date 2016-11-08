@@ -15,515 +15,515 @@ class Live
     const LIVE_TYPE_FMS = 'FMS';
     const LIVE_TYPE_WMS = 'WMS';
 
-  /**
-   * @var int
-   *
-   * @MongoDB\Id
-   */
-  private $id;
+    /**
+     * @var int
+     *
+     * @MongoDB\Id
+     */
+    private $id;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   * @Assert\NotBlank()
-   * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
-   */
-  private $url;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     * @Assert\NotBlank()
+     * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
+     */
+    private $url;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   */
-  private $passwd;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     */
+    private $passwd;
 
-  /**
-   * @var int
-   *
-   * @MongoDB\String
-   */
-  private $live_type = self::LIVE_TYPE_FMS;
+    /**
+     * @var int
+     *
+     * @MongoDB\String
+     */
+    private $live_type = self::LIVE_TYPE_FMS;
 
-  /**
-   * @var int
-   *
-   * @MongoDB\Int
-   */
-  private $width = 720;
+    /**
+     * @var int
+     *
+     * @MongoDB\Int
+     */
+    private $width = 720;
 
-  /**
-   * @var int
-   *
-   * @MongoDB\Int
-   */
-  private $height = 576;
+    /**
+     * @var int
+     *
+     * @MongoDB\Int
+     */
+    private $height = 576;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\Raw
-   */
-  private $qualities;
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $qualities;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   */
-  private $ip_source;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     */
+    private $ip_source;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\String
-   * @Assert\NotBlank()
-   */
-  private $source_name;
+    /**
+     * @var string
+     *
+     * @MongoDB\String
+     * @Assert\NotBlank()
+     */
+    private $source_name;
 
-  /**
-   * @var bool
-   *
-   * @MongoDB\Boolean
-   */
-  private $index_play = false;
+    /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $index_play = false;
 
-  /**
-   * @var bool
-   *
-   * @MongoDB\Boolean
-   */
-  private $broadcasting = false;
+    /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $broadcasting = false;
 
-  /**
-   * @var bool
-   *
-   * @MongoDB\Boolean
-   */
-  private $debug = false;
+    /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $debug = false;
 
-  /**
-   * @var string
-   *
-   * @MongoDB\Raw
-   * @Assert\NotBlank()
-   */
-  private $name = array('en' => '');
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     * @Assert\NotBlank()
+     */
+    private $name = array('en' => '');
 
-  /**
-   * @var string
-   *
-   * @MongoDB\Raw
-   */
-  private $description = array('en' => '');
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $description = array('en' => '');
 
-  /**
-   * @var locale
-   */
-  private $locale = 'en';
+    /**
+     * @var locale
+     */
+    private $locale = 'en';
 
-  /**
-   * Constructor.
-   */
-  protected static $instances = array();
+    /**
+     * Constructor.
+     */
+    protected static $instances = array();
 
     public function __toString()
     {
         return $this->getName();
     }
 
-  /**
-   * Get id.
-   *
-   * @return int
-   */
-  public function getId()
-  {
-      return $this->id;
-  }
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Set url.
-   *
-   * @param string $url
-   */
-  public function setUrl($url)
-  {
-      $this->url = $url;
-  }
+    /**
+     * Set url.
+     *
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
-  /**
-   * Get url.
-   *
-   * @return string
-   */
-  public function getUrl()
-  {
-      return $this->url;
-  }
+    /**
+     * Get url.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-  /**
-   * Set passwd.
-   *
-   * @param string $passwd
-   */
-  public function setPasswd($passwd)
-  {
-      $this->passwd = $passwd;
-  }
+    /**
+     * Set passwd.
+     *
+     * @param string $passwd
+     */
+    public function setPasswd($passwd)
+    {
+        $this->passwd = $passwd;
+    }
 
-  /**
-   * Get passwd.
-   *
-   * @return string
-   */
-  public function getPasswd()
-  {
-      return $this->passwd;
-  }
+    /**
+     * Get passwd.
+     *
+     * @return string
+     */
+    public function getPasswd()
+    {
+        return $this->passwd;
+    }
 
-  /**
-   * Set live_type.
-   *
-   * @param string $live_type
-   */
-  public function setLiveType($live_type)
-  {
-      $this->live_type = $live_type;
-  }
+    /**
+     * Set live_type.
+     *
+     * @param string $live_type
+     */
+    public function setLiveType($live_type)
+    {
+        $this->live_type = $live_type;
+    }
 
-  /**
-   * Get live_type.
-   *
-   * @return string
-   */
-  public function getLiveType()
-  {
-      return $this->live_type;
-  }
+    /**
+     * Get live_type.
+     *
+     * @return string
+     */
+    public function getLiveType()
+    {
+        return $this->live_type;
+    }
 
-  /**
-   * @Assert\True(message = "Live type not valid")
-   */
-  public function isValidLiveType()
-  {
-      return in_array($this->live_type, array(self::LIVE_TYPE_WMS, self::LIVE_TYPE_FMS));
-  }
+    /**
+     * @Assert\True(message = "Live type not valid")
+     */
+    public function isValidLiveType()
+    {
+        return in_array($this->live_type, array(self::LIVE_TYPE_WMS, self::LIVE_TYPE_FMS));
+    }
 
-  /**
-   * Set width.
-   *
-   * @param int $width
-   */
-  public function setWidth($width)
-  {
-      $this->width = $width;
-  }
+    /**
+     * Set width.
+     *
+     * @param int $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
 
-  /**
-   * Get width.
-   *
-   * @return int
-   */
-  public function getWidth()
-  {
-      return $this->width;
-  }
+    /**
+     * Get width.
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
 
-  /**
-   * Set height.
-   *
-   * @param int $height
-   */
-  public function setHeight($height)
-  {
-      $this->height = $height;
-  }
+    /**
+     * Set height.
+     *
+     * @param int $height
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+    }
 
-  /**
-   * Get height.
-   *
-   * @return int
-   */
-  public function getHeight()
-  {
-      return $this->height;
-  }
+    /**
+     * Get height.
+     *
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
 
-  /**
-   * Set qualities.
-   *
-   * @param string $qualities
-   */
-  public function setQualities($qualities)
-  {
-      $this->qualities = $qualities;
-  }
+    /**
+     * Set qualities.
+     *
+     * @param string $qualities
+     */
+    public function setQualities($qualities)
+    {
+        $this->qualities = $qualities;
+    }
 
-  /**
-   * Get qualities.
-   *
-   * @return string
-   */
-  public function getQualities()
-  {
-      return $this->qualities;
-  }
+    /**
+     * Get qualities.
+     *
+     * @return string
+     */
+    public function getQualities()
+    {
+        return $this->qualities;
+    }
 
-  /**
-   * Set ip_source.
-   *
-   * @param string $ip_source
-   */
-  public function setIpSource($ip_source)
-  {
-      $this->ip_source = $ip_source;
-  }
+    /**
+     * Set ip_source.
+     *
+     * @param string $ip_source
+     */
+    public function setIpSource($ip_source)
+    {
+        $this->ip_source = $ip_source;
+    }
 
-  /**
-   * Get ip_source.
-   *
-   * @return string
-   */
-  public function getIpSource()
-  {
-      return $this->ip_source;
-  }
+    /**
+     * Get ip_source.
+     *
+     * @return string
+     */
+    public function getIpSource()
+    {
+        return $this->ip_source;
+    }
 
-  /**
-   * Set source_name.
-   *
-   * @param string $source_name
-   */
-  public function setSourceName($source_name)
-  {
-      $this->source_name = $source_name;
-  }
+    /**
+     * Set source_name.
+     *
+     * @param string $source_name
+     */
+    public function setSourceName($source_name)
+    {
+        $this->source_name = $source_name;
+    }
 
-  /**
-   * Get source_name.
-   *
-   * @return string
-   */
-  public function getSourceName()
-  {
-      return $this->source_name;
-  }
+    /**
+     * Get source_name.
+     *
+     * @return string
+     */
+    public function getSourceName()
+    {
+        return $this->source_name;
+    }
 
-  /**
-   * Set index_play.
-   *
-   * @param bool $index_play
-   */
-  public function setIndexPlay($index_play)
-  {
-      $this->index_play = $index_play;
-  }
+    /**
+     * Set index_play.
+     *
+     * @param bool $index_play
+     */
+    public function setIndexPlay($index_play)
+    {
+        $this->index_play = $index_play;
+    }
 
-  /**
-   * Get index_play.
-   *
-   * @return bool
-   */
-  public function getIndexPlay()
-  {
-      return $this->index_play;
-  }
+    /**
+     * Get index_play.
+     *
+     * @return bool
+     */
+    public function getIndexPlay()
+    {
+        return $this->index_play;
+    }
 
-  /**
-   * Set broadcasting.
-   *
-   * @param bool $broadcasting
-   */
-  public function setBroadcasting($broadcasting)
-  {
-      $this->broadcasting = $broadcasting;
-  }
+    /**
+     * Set broadcasting.
+     *
+     * @param bool $broadcasting
+     */
+    public function setBroadcasting($broadcasting)
+    {
+        $this->broadcasting = $broadcasting;
+    }
 
-  /**
-   * Get broadcasting.
-   *
-   * @return bool
-   */
-  public function getBroadcasting()
-  {
-      return $this->broadcasting;
-  }
+    /**
+     * Get broadcasting.
+     *
+     * @return bool
+     */
+    public function getBroadcasting()
+    {
+        return $this->broadcasting;
+    }
 
-  /**
-   * Set debug.
-   *
-   * @param bool $debug
-   */
-  public function setDebug($debug)
-  {
-      $this->debug = $debug;
-  }
+    /**
+     * Set debug.
+     *
+     * @param bool $debug
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+    }
 
-  /**
-   * Get debug.
-   *
-   * @return bool
-   */
-  public function getDebug()
-  {
-      return $this->debug;
-  }
+    /**
+     * Get debug.
+     *
+     * @return bool
+     */
+    public function getDebug()
+    {
+        return $this->debug;
+    }
 
-  /**
-   * Set name.
-   *
-   * @param string $name
-   */
-  public function setName($name, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->name[$locale] = $name;
-  }
+    /**
+     * Set name.
+     *
+     * @param string $name
+     */
+    public function setName($name, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->name[$locale] = $name;
+    }
 
-  /**
-   * Get name.
-   *
-   * @return string
-   */
-  public function getName($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->name[$locale])) {
-          return '';
-      }
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->name[$locale])) {
+            return '';
+        }
 
-      return $this->name[$locale];
-  }
+        return $this->name[$locale];
+    }
 
-  /**
-   * Set I18n name.
-   *
-   * @param array $name
-   */
-  public function setI18nName(array $name)
-  {
-      $this->name = $name;
-  }
+    /**
+     * Set I18n name.
+     *
+     * @param array $name
+     */
+    public function setI18nName(array $name)
+    {
+        $this->name = $name;
+    }
 
-  /**
-   * Get i18n name.
-   *
-   * @return array
-   */
-  public function getI18nName()
-  {
-      return $this->name;
-  }
+    /**
+     * Get i18n name.
+     *
+     * @return array
+     */
+    public function getI18nName()
+    {
+        return $this->name;
+    }
 
-  /**
-   * Set description.
-   *
-   * @param string $description
-   */
-  public function setDescription($description, $locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      $this->description[$locale] = $description;
-  }
+    /**
+     * Set description.
+     *
+     * @param string $description
+     */
+    public function setDescription($description, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->description[$locale] = $description;
+    }
 
-  /**
-   * Get description.
-   *
-   * @return string
-   */
-  public function getDescription($locale = null)
-  {
-      if ($locale == null) {
-          $locale = $this->locale;
-      }
-      if (!isset($this->description[$locale])) {
-          return '';
-      }
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->description[$locale])) {
+            return '';
+        }
 
-      return $this->description[$locale];
-  }
+        return $this->description[$locale];
+    }
 
-  /**
-   * Set I18n description.
-   *
-   * @param array $description
-   */
-  public function setI18nDescription(array $description)
-  {
-      $this->description = $description;
-  }
+    /**
+     * Set I18n description.
+     *
+     * @param array $description
+     */
+    public function setI18nDescription(array $description)
+    {
+        $this->description = $description;
+    }
 
-  /**
-   * Get I18n description.
-   *
-   * @return array
-   */
-  public function getI18nDescription()
-  {
-      return $this->description;
-  }
+    /**
+     * Get I18n description.
+     *
+     * @return array
+     */
+    public function getI18nDescription()
+    {
+        return $this->description;
+    }
 
-  /**
-   * Set locale.
-   *
-   * @param string $locale
-   */
-  public function setLocale($locale)
-  {
-      $this->locale = $locale;
-  }
+    /**
+     * Set locale.
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
-  /**
-   * Get locale.
-   *
-   * @return string
-   */
-  public function getLocale()
-  {
-      return $this->locale;
-  }
+    /**
+     * Get locale.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 
-  /**
-   * Clone Live.
-   *
-   * @return Live
-   */
-  public function cloneResource()
-  {
-      $aux = clone $this;
-      $aux->id = null;
+    /**
+     * Clone Live.
+     *
+     * @return Live
+     */
+    public function cloneResource()
+    {
+        $aux = clone $this;
+        $aux->id = null;
 
-      return $aux;
-  }
+        return $aux;
+    }
 
-  /**
-   * Get Resolution.
-   *
-   * @return array
-   */
-  public function getResolution()
-  {
-      return array('width' => $this->width,
-         'height' => $this->height, );
-  }
+    /**
+     * Get Resolution.
+     *
+     * @return array
+     */
+    public function getResolution()
+    {
+        return array('width' => $this->width,
+                     'height' => $this->height, );
+    }
 
-  /**
-   * Set Resolution.
-   *
-   * @param array
-   */
-  public function setResolution($resolution)
-  {
-      if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
-          $this->width = $resolution['width'];
-          $this->height = $resolution['height'];
-      }
-  }
+    /**
+     * Set Resolution.
+     *
+     * @param array
+     */
+    public function setResolution($resolution)
+    {
+        if ((!empty($resolution['width'])) && (!empty($resolution['height']))) {
+            $this->width = $resolution['width'];
+            $this->height = $resolution['height'];
+        }
+    }
 }

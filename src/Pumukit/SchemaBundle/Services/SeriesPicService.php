@@ -50,66 +50,66 @@ class SeriesPicService
         return $this->targetUrl.'/'.$series->getId();
     }
 
-  /**
-   * Get pics from series or multimedia object.
-   */
-  public function getRecommendedPics($series)
-  {
-      return $this->repoMmobj->findDistinctUrlPicsInSeries($series);
-  }
+    /**
+     * Get pics from series or multimedia object.
+     */
+    public function getRecommendedPics($series)
+    {
+        return $this->repoMmobj->findDistinctUrlPicsInSeries($series);
+    }
 
-  /**
-   * Set a pic from an url into the series.
-   */
-  public function addPicUrl(Series $series, $picUrl, $isBanner = false, $bannerTargetUrl = '')
-  {
-      $pic = new Pic();
-      $pic->setUrl($picUrl);
-      if ($isBanner) {
-          $pic->setHide(true);
-          $pic->addTag('banner');
-          $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
-      }
-      // TODO: add pic the latest if it is banner
-      $series->addPic($pic);
-      $this->dm->persist($series);
-      $this->dm->flush();
-      $this->seriesDispatcher->dispatchUpdate($series);
+    /**
+     * Set a pic from an url into the series.
+     */
+    public function addPicUrl(Series $series, $picUrl, $isBanner = false, $bannerTargetUrl = '')
+    {
+        $pic = new Pic();
+        $pic->setUrl($picUrl);
+        if ($isBanner) {
+            $pic->setHide(true);
+            $pic->addTag('banner');
+            $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
+        }
+        // TODO: add pic the latest if it is banner
+        $series->addPic($pic);
+        $this->dm->persist($series);
+        $this->dm->flush();
+        $this->seriesDispatcher->dispatchUpdate($series);
 
-      return $series;
-  }
+        return $series;
+    }
 
-  /**
-   * Set a pic from an url into the series.
-   */
-  public function addPicFile(Series $series, UploadedFile $picFile, $isBanner = false, $bannerTargetUrl = '')
-  {
-      if (UPLOAD_ERR_OK != $picFile->getError()) {
-          throw new \Exception($picFile->getErrorMessage());
-      }
+    /**
+     * Set a pic from an url into the series.
+     */
+    public function addPicFile(Series $series, UploadedFile $picFile, $isBanner = false, $bannerTargetUrl = '')
+    {
+        if (UPLOAD_ERR_OK != $picFile->getError()) {
+            throw new \Exception($picFile->getErrorMessage());
+        }
 
-      if (!is_file($picFile->getPathname())) {
-          throw new FileNotFoundException($picFile->getPathname());
-      }
+        if (!is_file($picFile->getPathname())) {
+            throw new FileNotFoundException($picFile->getPathname());
+        }
 
-      $path = $picFile->move($this->getTargetPath($series), $picFile->getClientOriginalName());
+        $path = $picFile->move($this->getTargetPath($series), $picFile->getClientOriginalName());
 
-      $pic = new Pic();
-      $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-      $pic->setPath($path);
-      if ($isBanner) {
-          $pic->setHide(true);
-          $pic->addTag('banner');
-          $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
-      }
-      // TODO: add pic the latest if it is banner
-      $series->addPic($pic);
-      $this->dm->persist($series);
-      $this->dm->flush();
-      $this->seriesDispatcher->dispatchUpdate($series);
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setPath($path);
+        if ($isBanner) {
+            $pic->setHide(true);
+            $pic->addTag('banner');
+            $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
+        }
+        // TODO: add pic the latest if it is banner
+        $series->addPic($pic);
+        $this->dm->persist($series);
+        $this->dm->flush();
+        $this->seriesDispatcher->dispatchUpdate($series);
 
-      return $series;
-  }
+        return $series;
+    }
 
     /**
      * Remove Pic from Series.

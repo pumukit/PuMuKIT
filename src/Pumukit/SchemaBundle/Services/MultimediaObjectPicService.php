@@ -47,60 +47,60 @@ class MultimediaObjectPicService
         return $this->targetUrl.'/'.$multimediaObject->getId();
     }
 
-  /**
-   * Get pics from series or multimedia object.
-   */
-  public function getRecommendedPics($series)
-  {
-      return $this->repo->findDistinctUrlPics();
-  }
+    /**
+     * Get pics from series or multimedia object.
+     */
+    public function getRecommendedPics($series)
+    {
+        return $this->repo->findDistinctUrlPics();
+    }
 
-  /**
-   * Set a pic from an url into the multimediaObject.
-   */
-  public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
-  {
-      $pic = new Pic();
-      $pic->setUrl($picUrl);
+    /**
+     * Set a pic from an url into the multimediaObject.
+     */
+    public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
+    {
+        $pic = new Pic();
+        $pic->setUrl($picUrl);
 
-      $multimediaObject->addPic($pic);
-      $this->dm->persist($multimediaObject);
-      if ($flush) {
-          $this->dm->flush();
-      }
+        $multimediaObject->addPic($pic);
+        $this->dm->persist($multimediaObject);
+        if ($flush) {
+            $this->dm->flush();
+        }
 
-      $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+        $this->dispatcher->dispatchCreate($multimediaObject, $pic);
 
-      return $multimediaObject;
-  }
+        return $multimediaObject;
+    }
 
-  /**
-   * Set a pic from an url into the multimediaObject.
-   */
-  public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
-  {
-      if (UPLOAD_ERR_OK != $picFile->getError()) {
-          throw new \Exception($picFile->getErrorMessage());
-      }
+    /**
+     * Set a pic from an url into the multimediaObject.
+     */
+    public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
+    {
+        if (UPLOAD_ERR_OK != $picFile->getError()) {
+            throw new \Exception($picFile->getErrorMessage());
+        }
 
-      if (!is_file($picFile->getPathname())) {
-          throw new FileNotFoundException($picFile->getPathname());
-      }
+        if (!is_file($picFile->getPathname())) {
+            throw new FileNotFoundException($picFile->getPathname());
+        }
 
-      $path = $picFile->move($this->getTargetPath($multimediaObject), $picFile->getClientOriginalName());
+        $path = $picFile->move($this->getTargetPath($multimediaObject), $picFile->getClientOriginalName());
 
-      $pic = new Pic();
-      $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-      $pic->setPath($path);
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setPath($path);
 
-      $multimediaObject->addPic($pic);
-      $this->dm->persist($multimediaObject);
-      $this->dm->flush();
+        $multimediaObject->addPic($pic);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
 
-      $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+        $this->dispatcher->dispatchCreate($multimediaObject, $pic);
 
-      return $multimediaObject;
-  }
+        return $multimediaObject;
+    }
 
     /**
      * Remove Pic from Multimedia Object.

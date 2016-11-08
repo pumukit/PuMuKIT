@@ -15,44 +15,44 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 class BroadcastRepository extends DocumentRepository
 {
     /**
-   * Find default selected broadcast.
-   *
-   * @return Broadcast
-   */
-  public function findDefaultSel()
-  {
-      return $this->createQueryBuilder()
-      ->field('default_sel')->equals(true)
-      ->getQuery()
-      ->getSingleResult();
-  }
+     * Find default selected broadcast.
+     *
+     * @return Broadcast
+     */
+    public function findDefaultSel()
+    {
+        return $this->createQueryBuilder()
+            ->field('default_sel')->equals(true)
+            ->getQuery()
+            ->getSingleResult();
+    }
 
-  /**
-   * Find public broadcast.
-   *
-   * @return Broadcast
-   */
-  public function findPublicBroadcast()
-  {
-      return $this->createQueryBuilder()
-      ->field('broadcast_type_id')->equals('public')
-      ->getQuery()
-      ->getSingleResult();
-  }
+    /**
+     * Find public broadcast.
+     *
+     * @return Broadcast
+     */
+    public function findPublicBroadcast()
+    {
+        return $this->createQueryBuilder()
+            ->field('broadcast_type_id')->equals('public')
+            ->getQuery()
+            ->getSingleResult();
+    }
 
-  /**
-   * Find distinct ids by broadcast type id.
-   *
-   * @param string $broadcastTypeId
-   *
-   * @return Cursor
-   */
-  public function findDistinctIdsByBroadcastTypeId($broadcastTypeId)
-  {
-      return $this->createQueryBuilder()
-        ->field('broadcast_type_id')->equals($broadcastTypeId)
-        ->distinct('_id')
-        ->getQuery()
-        ->execute();
-  }
+    /**
+     * Find distinct ids by broadcast type id.
+     *
+     * @param string $broadcastTypeId
+     *
+     * @return Cursor
+     */
+    public function findDistinctIdsByBroadcastTypeId($broadcastTypeId)
+    {
+        return $this->createQueryBuilder()
+            ->field('broadcast_type_id')->equals($broadcastTypeId)
+            ->distinct('_id')
+            ->getQuery()
+            ->execute();
+    }
 }

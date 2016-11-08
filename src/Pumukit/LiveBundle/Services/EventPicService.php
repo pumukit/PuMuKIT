@@ -29,46 +29,46 @@ class EventPicService
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
-  /**
-   * Set a pic from an url into the event.
-   */
-  public function addPicUrl(Event $event, $picUrl)
-  {
-      $pic = new Pic();
-      $pic->setUrl($picUrl);
+    /**
+     * Set a pic from an url into the event.
+     */
+    public function addPicUrl(Event $event, $picUrl)
+    {
+        $pic = new Pic();
+        $pic->setUrl($picUrl);
 
-      $event->setPic($pic);
-      $this->dm->persist($event);
-      $this->dm->flush();
+        $event->setPic($pic);
+        $this->dm->persist($event);
+        $this->dm->flush();
 
-      return $event;
-  }
+        return $event;
+    }
 
-  /**
-   * Set a pic from an url into the event.
-   */
-  public function addPicFile(Event $event, UploadedFile $picFile)
-  {
-      if (UPLOAD_ERR_OK != $picFile->getError()) {
-          throw new \Exception($picFile->getErrorMessage());
-      }
+    /**
+     * Set a pic from an url into the event.
+     */
+    public function addPicFile(Event $event, UploadedFile $picFile)
+    {
+        if (UPLOAD_ERR_OK != $picFile->getError()) {
+            throw new \Exception($picFile->getErrorMessage());
+        }
 
-      if (!is_file($picFile->getPathname())) {
-          throw new FileNotFoundException($picFile->getPathname());
-      }
+        if (!is_file($picFile->getPathname())) {
+            throw new FileNotFoundException($picFile->getPathname());
+        }
 
-      $path = $picFile->move($this->targetPath.'/'.$event->getId(), $picFile->getClientOriginalName());
+        $path = $picFile->move($this->targetPath.'/'.$event->getId(), $picFile->getClientOriginalName());
 
-      $pic = new Pic();
-      $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
-      $pic->setPath($path);
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setPath($path);
 
-      $event->setPic($pic);
-      $this->dm->persist($event);
-      $this->dm->flush();
+        $event->setPic($pic);
+        $this->dm->persist($event);
+        $this->dm->flush();
 
-      return $event;
-  }
+        return $event;
+    }
 
     /**
      * Remove Pic from Event.

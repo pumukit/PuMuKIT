@@ -14,29 +14,29 @@ class PumukitFactory extends AbstractFactory
         $this->addOption('check_path', '/cas/login');
     }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getPosition()
-  {
-      return 'pre_auth';
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getPosition()
+    {
+        return 'pre_auth';
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getKey()
-  {
-      return 'pumukit';
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getKey()
+    {
+        return 'pumukit';
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  protected function isRememberMeAware($config)
-  {
-      return false;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    protected function isRememberMeAware($config)
+    {
+        return false;
+    }
 
     protected function getListenerId()
     {
@@ -48,9 +48,9 @@ class PumukitFactory extends AbstractFactory
         $listenerId = parent::createListener($container, $id, $config, $userProvider);
 
         $container
-          ->getDefinition($listenerId)
-          ->addArgument(new Reference('pumukit.casservice'))
-          ;
+            ->getDefinition($listenerId)
+            ->addArgument(new Reference('pumukit.casservice'))
+            ;
 
         return $listenerId;
     }
@@ -60,10 +60,10 @@ class PumukitFactory extends AbstractFactory
         $provider = 'pumukit.security.authentication.provider.'.$id;
 
         $container
-          ->setDefinition($provider, new DefinitionDecorator('pumukit.security.authentication.provider'))
-          ->replaceArgument(0, new Reference($userProviderId))
-          ->replaceArgument(1, $id)
-          ;
+            ->setDefinition($provider, new DefinitionDecorator('pumukit.security.authentication.provider'))
+            ->replaceArgument(0, new Reference($userProviderId))
+            ->replaceArgument(1, $id)
+            ;
 
         return $provider;
     }
@@ -72,11 +72,11 @@ class PumukitFactory extends AbstractFactory
     {
         $entryPointId = 'security.authentication.form_entry_point.'.$id;
         $container
-          ->setDefinition($entryPointId, new DefinitionDecorator('security.authentication.form_entry_point'))
-          ->addArgument(new Reference('security.http_utils'))
-          ->addArgument($config['check_path'])
-          ->addArgument($config['use_forward'])
-          ;
+            ->setDefinition($entryPointId, new DefinitionDecorator('security.authentication.form_entry_point'))
+            ->addArgument(new Reference('security.http_utils'))
+            ->addArgument($config['check_path'])
+            ->addArgument($config['use_forward'])
+            ;
 
         return $entryPointId;
     }
