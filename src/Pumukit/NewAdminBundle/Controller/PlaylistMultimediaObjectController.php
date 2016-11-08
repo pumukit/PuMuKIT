@@ -3,22 +3,12 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Adapter\MongoAdapter;
-use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Security\Permission;
-use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectMetaType;
-use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectPubType;
-use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

@@ -4,9 +4,6 @@ namespace Pumukit\NotificationBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;

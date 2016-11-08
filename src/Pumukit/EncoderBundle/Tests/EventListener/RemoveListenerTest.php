@@ -2,16 +2,10 @@
 
 namespace Pumukit\EncoderBundle\Tests\EventListener;
 
-use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\JobService;
 
 class RemoveListenerTest extends WebTestCase
 {

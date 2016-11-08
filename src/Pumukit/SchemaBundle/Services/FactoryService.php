@@ -8,7 +8,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Security\Permission;
 
 class FactoryService

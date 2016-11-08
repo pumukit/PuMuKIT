@@ -2,7 +2,6 @@
 
 namespace Pumukit\NotificationBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;

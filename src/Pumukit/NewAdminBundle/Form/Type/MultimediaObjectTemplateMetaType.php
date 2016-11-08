@@ -5,7 +5,6 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Translation\TranslatorInterface;
 

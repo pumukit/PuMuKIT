@@ -2,8 +2,6 @@
 
 namespace Pumukit\EncoderBundle\Executor;
 
-use Symfony\Component\Process\Process;
-
 class RemoteHTTPExecutor
 {
     public function execute($command, array $cpu)

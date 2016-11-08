@@ -20,7 +20,6 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class MultimediaObjectRepositoryTest extends WebTestCase
 {

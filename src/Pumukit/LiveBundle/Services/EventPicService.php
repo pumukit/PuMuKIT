@@ -4,7 +4,6 @@ namespace Pumukit\LiveBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\Pic;

@@ -3,11 +3,8 @@
 namespace Pumukit\BasePlayerBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Doctrine\Common\Collections\Criteria;
 use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 

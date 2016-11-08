@@ -2,11 +2,6 @@
 
 namespace Pumukit\WebTVBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-
 /**
  * Parses the user agent and retrieves readable information.
  * DISCLAIMER: DO NOT USE THE USER AGENT STRING. (Use javascript and feature detection, please)

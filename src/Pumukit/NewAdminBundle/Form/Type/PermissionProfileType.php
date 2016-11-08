@@ -5,7 +5,6 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class PermissionProfileType extends AbstractType

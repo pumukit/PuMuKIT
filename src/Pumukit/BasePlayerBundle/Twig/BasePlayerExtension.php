@@ -4,10 +4,7 @@ namespace Pumukit\BasePlayerBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Services\MaterialService;
-use Pumukit\SchemaBundle\Services\PicService;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

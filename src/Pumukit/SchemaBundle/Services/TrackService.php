@@ -7,7 +7,6 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 class TrackService

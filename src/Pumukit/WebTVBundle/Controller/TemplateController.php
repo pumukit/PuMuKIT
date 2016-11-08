@@ -4,7 +4,6 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class TemplateController extends ContainerAware implements WebTVController
 {

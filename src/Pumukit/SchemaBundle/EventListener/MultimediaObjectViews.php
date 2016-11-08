@@ -2,10 +2,6 @@
 
 namespace Pumukit\SchemaBundle\EventListener;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;

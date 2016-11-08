@@ -4,14 +4,10 @@ namespace Pumukit\JWPlayerBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\WebTVBundle\Controller\WebTVController;
 use Pumukit\CoreBundle\Controller\PersonalController;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 

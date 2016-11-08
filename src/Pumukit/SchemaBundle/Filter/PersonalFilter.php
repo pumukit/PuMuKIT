@@ -3,8 +3,6 @@
 namespace Pumukit\SchemaBundle\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
-use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PersonalFilter extends SchemaFilter
 {

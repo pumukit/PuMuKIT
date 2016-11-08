@@ -4,11 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class PlaylistType extends AbstractType

@@ -3,13 +3,6 @@
 namespace Pumukit\OpencastBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Services\FactoryService;
-use Pumukit\SchemaBundle\Services\TrackService;
-use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Services\CpuService;
-use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\SchemaBundle\Document\User;
 
