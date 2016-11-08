@@ -41,7 +41,7 @@ class FuncionalTest extends WebTestCase
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
-        $this->videoInputPath = realpath(__DIR__.'/../Resources') . '/CAMERA.mp4';
+        $this->videoInputPath = realpath(__DIR__.'/../Resources').'/CAMERA.mp4';
 
         $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());

@@ -168,7 +168,7 @@ class PumukitExtension extends \Twig_Extension
                 if ($placeTag) {
                     if ($placeTag->getTitle()) {
                         if ($fulltitle) {
-                            $fulltitle .= ', ' . $placeTag->getTitle();
+                            $fulltitle .= ', '.$placeTag->getTitle();
                         } else {
                             $fulltitle = $placeTag->getTitle();
                         }
@@ -195,10 +195,10 @@ class PumukitExtension extends \Twig_Extension
 
         $seconds = $duration % 60;
         if ($seconds < 10) {
-            $seconds = '0' . $seconds;
+            $seconds = '0'.$seconds;
         }
 
-        return $minutes ."' ". $seconds . "''";
+        return $minutes."' ".$seconds."''";
     }
 
     /**

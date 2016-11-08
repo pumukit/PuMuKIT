@@ -48,7 +48,7 @@ class LDAPService
                     return $result;
                 }
             } catch (\Exception $e) {
-                $this->logger->debug(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
+                $this->logger->debug(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
                 return false;
             }
         }
@@ -75,7 +75,7 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&($info['count'] != 0)) {
@@ -86,7 +86,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
-            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
             throw $e;
         }
 
@@ -109,7 +109,7 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)) {
@@ -119,7 +119,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
-            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
             throw $e;
         }
 
@@ -143,7 +143,7 @@ class LDAPService
             ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($linkIdentifier) {
                 $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid=' . $user, array(), 0, 1);
+                $searchResult = ldap_search($linkIdentifier, $this->baseDn, 'uid='.$user, array(), 0, 1);
                 if ($searchResult) {
                     $info = ldap_get_entries($linkIdentifier, $searchResult);
                     if (($info)&&(count($info) != 0)) {
@@ -153,7 +153,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
-            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
             throw $e;
         }
 
@@ -190,7 +190,7 @@ class LDAPService
         ldap_set_option($linkIdentifier, LDAP_OPT_PROTOCOL_VERSION, 3);
         if ($linkIdentifier) {
             $result = ldap_bind($linkIdentifier, $this->bindRdn, $this->bindPassword);
-            $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key . '=' . $value, array(), 0, 1);
+            $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key.'='.$value, array(), 0, 1);
             if ($searchResult) {
                 $info = ldap_get_entries($linkIdentifier, $searchResult);
                 if (($info)&&(count($info) != 0)) {
@@ -247,7 +247,7 @@ class LDAPService
                 ldap_close($linkIdentifier);
             }
         } catch (\Exception $e) {
-            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '. $e->getMessage());
+            $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.$e->getMessage());
             throw $e;
         }
 

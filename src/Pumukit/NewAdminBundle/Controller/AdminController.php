@@ -289,7 +289,7 @@ class AdminController extends ResourceController implements NewAdminController
         $sorting = $config->getSorting();
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/' . $config->getResourceName();
+        $session_namespace = 'admin/'.$config->getResourceName();
 
         if ($config->isPaginated()) {
             $resources = $this

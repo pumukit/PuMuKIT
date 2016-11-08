@@ -46,7 +46,7 @@ class APIKeywordsController extends Controller
         $serializer = $this->get('serializer');
 
         $pipeline = array(
-            array('$project' => array( 'k' => '$keywords.' . $lang, '_id' => false )),
+            array('$project' => array( 'k' => '$keywords.'.$lang, '_id' => false )),
             array('$match' => array('k' => array('$ne' => ''))),
             array('$unwind' => '$k'),
             array('$group' => array('_id' => '$k', 'count' => array( '$sum' => 1 ))),

@@ -60,7 +60,7 @@ class RoutingManipulator extends Manipulator
         $code .= "\n";
 
         if ($appendToEnd) {
-            $code = $current ."\n". $code;
+            $code = $current."\n".$code;
         } else {
             $code .= $current;
         }

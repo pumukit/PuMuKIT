@@ -108,9 +108,9 @@ class PicExtractorServiceTest extends WebTestCase
             }
         }
         $dirSeries = $this->resourcesDir.'/series/';
-        $dirSeriesId = $dirSeries . $multimediaObject->getSeries()->getId().'/';
-        $dirVideo = $dirSeriesId . 'video/';
-        $dirMmId = $dirVideo . $multimediaObject->getId() . '/';
+        $dirSeriesId = $dirSeries.$multimediaObject->getSeries()->getId().'/';
+        $dirVideo = $dirSeriesId.'video/';
+        $dirMmId = $dirVideo.$multimediaObject->getId().'/';
         $files = glob($dirMmId.'*', GLOB_MARK);
         foreach ($files as $file) {
             if (is_writable($file)) {

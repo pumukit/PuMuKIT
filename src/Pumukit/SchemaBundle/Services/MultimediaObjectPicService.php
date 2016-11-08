@@ -37,7 +37,7 @@ class MultimediaObjectPicService
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
     {
-        return $this->targetPath . '/' . $multimediaObject->getId();
+        return $this->targetPath.'/'.$multimediaObject->getId();
     }
 
     /**
@@ -45,7 +45,7 @@ class MultimediaObjectPicService
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
     {
-        return $this->targetUrl . '/' . $multimediaObject->getId();
+        return $this->targetUrl.'/'.$multimediaObject->getId();
     }
 
   /**

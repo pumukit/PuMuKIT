@@ -98,7 +98,7 @@ class PicExtractorService
      */
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
     {
-        $currentDir = 'series/' . $multimediaObject->getSeries()->getId() . '/video/' . $multimediaObject->getId();
+        $currentDir = 'series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
         $absCurrentDir = $this->targetPath.'/'.$currentDir;
        
         $fs = new Filesystem();
@@ -106,7 +106,7 @@ class PicExtractorService
 
         $picFileName = date('ymdGis').'.jpg';
         while (file_exists($absCurrentDir.'/'.$picFileName)) {
-            $picFileName = date('ymdGis'). rand(). '.jpg';
+            $picFileName = date('ymdGis').rand().'.jpg';
         }
 
         $aspectTrack = $this->getAspect($track);
@@ -125,7 +125,7 @@ class PicExtractorService
 
         $vars = array(
             '{{ss}}' => $track->getTimeOfAFrame($frame),
-            '{{size}}' => $newWidth . 'x' . $newHeight,
+            '{{size}}' => $newWidth.'x'.$newHeight,
             '{{input}}' => $track->getPath(),
             '{{output}}' => $absCurrentDir.'/'.$picFileName
         );
@@ -141,11 +141,11 @@ class PicExtractorService
 
         //log $process->getOutput()
         $picUrl = $this->targetUrl.'/'.$currentDir.'/'.$picFileName;
-        $picPath = $absCurrentDir .'/' . $picFileName;
+        $picPath = $absCurrentDir.'/'.$picFileName;
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = array('auto', 'frame_' . $frame, 'time_' . $track->getTimeOfAFrame($frame));
+            $tags = array('auto', 'frame_'.$frame, 'time_'.$track->getTimeOfAFrame($frame));
             $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
         

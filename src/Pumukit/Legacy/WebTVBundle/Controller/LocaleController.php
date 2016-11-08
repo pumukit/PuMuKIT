@@ -42,11 +42,11 @@ class LocaleController extends Controller
       $url = $this->generateUrl($route['_route'], $params);
 
       if (isset($paseReferer['query'])) {
-          $url .= '?' . $paseReferer['query'];
+          $url .= '?'.$paseReferer['query'];
       }
 
       if (isset($paseReferer['fragment'])) {
-          $url .= '#' . $paseReferer['fragment'];
+          $url .= '#'.$paseReferer['fragment'];
       }
 
       return $this->redirect($url);

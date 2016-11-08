@@ -196,7 +196,7 @@ class EmbeddedBroadcast
             }
         }
 
-        return $this->getName() . $groupsDescription;
+        return $this->getName().$groupsDescription;
     }
 
     /**

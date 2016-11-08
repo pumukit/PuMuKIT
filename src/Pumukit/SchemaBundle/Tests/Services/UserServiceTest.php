@@ -903,9 +903,9 @@ class UserServiceTest extends WebTestCase
         $this->dm->flush();
 
         $aux = 'first_second_';
-        $owners1 = array($aux . $person2->getId(), $aux . $person3->getId());
-        $owners2 = array($aux . $person1->getId(), $aux . $person2->getId(), $aux . $person3->getId());
-        $groups = array($aux . $group1->getId(), $aux . $group2->getId());
+        $owners1 = array($aux.$person2->getId(), $aux.$person3->getId());
+        $owners2 = array($aux.$person1->getId(), $aux.$person2->getId(), $aux.$person3->getId());
+        $groups = array($aux.$group1->getId(), $aux.$group2->getId());
 
         $this->assertFalse($this->userService->isUserLastRelation($user, null, $person1->getId(), $owners1, $groups));
         $this->assertFalse($this->userService->isUserLastRelation($user, null, $person2->getId(), $owners1, $groups));
@@ -1010,10 +1010,10 @@ class UserServiceTest extends WebTestCase
 
         $aux = 'first_second_';
 
-        $owners1 = array($aux . $person2->getId(), $aux . $person3->getId());
+        $owners1 = array($aux.$person2->getId(), $aux.$person3->getId());
         $this->assertFalse($this->userService->isUserInOwners($user, $owners1));
 
-        $owners2 = array($aux . $person1->getId(), $aux . $person2->getId(), $aux . $person3->getId());
+        $owners2 = array($aux.$person1->getId(), $aux.$person2->getId(), $aux.$person3->getId());
         $this->assertTrue($this->userService->isUserInOwners($user, $owners2));
     }
 
@@ -1034,7 +1034,7 @@ class UserServiceTest extends WebTestCase
         $this->dm->flush();
 
         $aux = 'first_second_';
-        $groups = array($aux . $group1->getId(), $aux . $group2->getId());
+        $groups = array($aux.$group1->getId(), $aux.$group2->getId());
 
         $this->assertFalse($this->userService->isUserInGroups($user, null, null, $groups));
 

@@ -203,13 +203,13 @@ class GroupController extends AdminController implements NewAdminController
             $message = $translator->trans('Not allowed to delete Groups:');
             foreach ($notDeleted as $key) {
                 if ($key === reset($notDeleted)) {
-                    $message = $message . ' ';
+                    $message = $message.' ';
                 } elseif ($key === end($notDeleted)) {
-                    $message = $message . ' and ';
+                    $message = $message.' and ';
                 } else {
-                    $message = $message . ', ';
+                    $message = $message.', ';
                 }
-                $message = $message . $key;
+                $message = $message.$key;
             }
         } else {
             $code = Response::HTTP_OK;

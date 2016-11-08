@@ -14,10 +14,10 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->resources_dir = realpath(__DIR__.'/../Resources') . DIRECTORY_SEPARATOR;
-        $this->wrong_file1   = $this->resources_dir . 'textfile.txt';
-        $this->wrong_file2   = $this->resources_dir . 'zerosizefile.txt';
-        $this->vid_no_audio = $this->resources_dir . 'SCREEN.avi';
+        $this->resources_dir = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR;
+        $this->wrong_file1   = $this->resources_dir.'textfile.txt';
+        $this->wrong_file2   = $this->resources_dir.'zerosizefile.txt';
+        $this->vid_no_audio = $this->resources_dir.'SCREEN.avi';
 
         if (!extension_loaded('ffmpeg')) {
             $this->markTestSkipped('The ffmpeg extension is not available.');
@@ -54,8 +54,8 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDuration()
     {
-        $file1 = $this->resources_dir . 'AUDIO.mp3';
-        $file2 = $this->resources_dir . 'CAMERA.mp4';
+        $file1 = $this->resources_dir.'AUDIO.mp3';
+        $file2 = $this->resources_dir.'CAMERA.mp4';
         $is   = new InspectionFfmpegService(); //logger missing, it is not initialized here.
       $this->assertEquals(2, $is->getDuration($file1));
         $this->assertEquals(2, $is->getDuration($file2));
@@ -84,7 +84,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testAutocompleteTrackOnlyAudio()
     {
-        $file  = $this->resources_dir . 'AUDIO.mp3';
+        $file  = $this->resources_dir.'AUDIO.mp3';
         $track = new Track();
         $is    = new InspectionFfmpegService();
         $track->setPath($file);
@@ -114,8 +114,8 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testAutocompleteTrackWithAudioAndVideo()
     {
-        $file1  = $this->resources_dir . 'CAMERA.mp4';
-        $file2  = $this->resources_dir . 'SCREEN.mp4';
+        $file1  = $this->resources_dir.'CAMERA.mp4';
+        $file2  = $this->resources_dir.'SCREEN.mp4';
         $track1 = new Track();
         $track2 = new Track();
         $is     = new InspectionFfmpegService();

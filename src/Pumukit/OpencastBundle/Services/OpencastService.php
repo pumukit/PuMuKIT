@@ -141,7 +141,7 @@ class OpencastService
 
         $sbsProfile = $this->profileService->getProfile($this->sbsProfileName);
 
-        $track->addTag('profile:' . $this->sbsProfileName);
+        $track->addTag('profile:'.$this->sbsProfileName);
 
         $tags = array('master', 'display');
         foreach ($tags as $tag) {

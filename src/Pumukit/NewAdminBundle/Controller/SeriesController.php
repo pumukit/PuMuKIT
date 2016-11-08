@@ -454,7 +454,7 @@ class SeriesController extends AdminController implements NewAdminController
                 foreach ($value['channels'] as $channelId => $mustContainsTag) {
                     $mustContainsTag = ('true' == $mustContainsTag);
                     $tag = $repoTags->find($channelId);
-                    if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tag->getCod())) {
+                    if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod())) {
                         if ($mustContainsTag && (!($mm->containsTag($tag)))) {
                             $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
                         } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {

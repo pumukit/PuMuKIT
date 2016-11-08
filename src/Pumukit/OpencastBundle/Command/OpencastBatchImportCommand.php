@@ -37,19 +37,19 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
         $batchSize = 200;
         $batchPlace = 0;
 
-        $output->writeln('Number of mediapackages: ' . $mediaPackages[0]);
+        $output->writeln('Number of mediapackages: '.$mediaPackages[0]);
 
         while ($batchPlace < $totalMediaPackages) {
-            $output->writeln('Importing recordings ' . $batchPlace . ' to ' . ($batchPlace + $batchSize));
+            $output->writeln('Importing recordings '.$batchPlace.' to '.($batchPlace + $batchSize));
             $mediaPackages = $opencastClientService->getMediaPackages('', $batchSize, $batchPlace);
 
             $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
             $repositoryMultimediaObjects = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
             foreach ($mediaPackages[1] as $mediaPackage) {
-                $output->writeln('Importing mediapackage: ' . $mediaPackage['id']);
+                $output->writeln('Importing mediapackage: '.$mediaPackage['id']);
                 if ($repositoryMultimediaObjects->findOneBy(array('properties.opencast' => $mediaPackage['id']))) {
-                    $output->writeln('Mediapackage ' . $mediaPackage['id'] . ' has already been imported, skipping to next mediapackage');
+                    $output->writeln('Mediapackage '.$mediaPackage['id'].' has already been imported, skipping to next mediapackage');
                 } else {
                     $opencastImportService->importRecording($mediaPackage['id'], $invert);
                 }
@@ -57,6 +57,6 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
             $batchPlace = $batchPlace + $batchSize;
         }
         $stopTime = microtime(true);
-        $output->writeln('Finished importing ' . $totalMediaPackages . ' recordings in ' . ($stopTime - $startTime) . ' seconds');
+        $output->writeln('Finished importing '.$totalMediaPackages.' recordings in '.($stopTime - $startTime).' seconds');
     }
 }

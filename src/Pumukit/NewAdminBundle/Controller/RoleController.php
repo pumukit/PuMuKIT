@@ -61,7 +61,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
         $sorting['rank'] = 'asc';
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/' . $config->getResourceName();
+        $session_namespace = 'admin/'.$config->getResourceName();
 
         if ($config->isPaginated()) {
             $resources = $this

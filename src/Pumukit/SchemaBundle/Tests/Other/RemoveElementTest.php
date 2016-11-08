@@ -1259,7 +1259,7 @@ class RemoveElementTest extends WebTestCase
     {
         $user = new User();
         $user->setUsername($username);
-        $user->setEmail($username . '@mail.com');
+        $user->setEmail($username.'@mail.com');
 
         return $user;
     }

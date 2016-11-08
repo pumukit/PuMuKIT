@@ -526,12 +526,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             foreach ($resource->getTags() as $tag) {
                 if ((0 == strpos($tag->getCod(), $codStart)) && (false !== strpos($tag->getCod(), $codStart)) &&
                     (!in_array($tag->getCod(), $checkedTags)) &&
-                    (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tag->getCod()))) {
+                    (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod()))) {
                     $resource->removeTag($tag);
                 }
             }
             foreach ($checkedTags as $cod => $checked) {
-                if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $cod)) {
+                if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$cod)) {
                     $tag = $this->get('pumukitschema.factory')->getTagsByCod($cod, false);
                     $resource->addTag($tag);
                 }
@@ -540,7 +540,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             foreach ($resource->getTags() as $tag) {
                 if ((0 == strpos($tag->getCod(), $codStart)) &&
                     (false !== strpos($tag->getCod(), $codStart)) &&
-                    (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tag->getCod()))) {
+                    (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod()))) {
                     $resource->removeTag($tag);
                 }
             }

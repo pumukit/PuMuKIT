@@ -397,7 +397,7 @@ class FactoryService
         $i18nTitles = array();
         foreach ($src->getI18nTitle() as $key => $val) {
             $string = $this->translator->trans('cloned', array(), null, $key);
-            $i18nTitles[$key] = $val . ' (' . $string. ')';
+            $i18nTitles[$key] = $val.' ('.$string.')';
         }
         $new->setI18nTitle($i18nTitles);
         $new->setI18nSubtitle($src->getI18nSubtitle());

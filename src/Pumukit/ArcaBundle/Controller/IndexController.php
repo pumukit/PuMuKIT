@@ -35,8 +35,8 @@ class IndexController extends Controller
     {
         $mmObjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $start = new \DateTime($year . '/01/01');
-        $end = new \DateTime($year . '/12/31');
+        $start = new \DateTime($year.'/01/01');
+        $end = new \DateTime($year.'/12/31');
 
         $in_range = array('$gte' => $start, '$lt' => $end);
 

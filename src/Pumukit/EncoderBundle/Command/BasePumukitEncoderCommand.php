@@ -17,6 +17,6 @@ abstract class BasePumukitEncoderCommand extends ContainerAwareCommand
             Job::STATUS_FINISHED => array('<info>', '</info>'),
         );
 
-        return $tags[$job_status][0] . Job::$statusTexts[$job_status] . $tags[$job_status][1];
+        return $tags[$job_status][0].Job::$statusTexts[$job_status].$tags[$job_status][1];
     }
 }

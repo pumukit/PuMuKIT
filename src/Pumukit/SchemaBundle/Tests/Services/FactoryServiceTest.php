@@ -331,7 +331,7 @@ class FactoryServiceTest extends WebTestCase
         $newTitles = $new->getI18nTitle();
         foreach ($src->getI18nTitle() as $key => $title) {
             $string = $this->translator->trans('cloned', array(), null, $key);
-            $title = $title . ' (' . $string. ')';
+            $title = $title.' ('.$string.')';
             $this->assertEquals($newTitles[$key], $title);
         }
         $this->assertTrue($src->getRank() < $new->getRank());

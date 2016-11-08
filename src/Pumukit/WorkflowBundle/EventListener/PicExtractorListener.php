@@ -29,9 +29,9 @@ class PicExtractorListener
         $this->mmsPicService = $mmsPicService;
         $this->picExtractorService = $picExtractorService;
         $this->logger = $logger;
-        $this->resourcesDir = realpath(__DIR__ . '/../Resources/public/images');
-        $this->defaultAudioPic = realpath($this->resourcesDir . '/sound_bn.png');
-        $this->audioPicCopy = $this->resourcesDir . '/sound_bn_copy.png';
+        $this->resourcesDir = realpath(__DIR__.'/../Resources/public/images');
+        $this->defaultAudioPic = realpath($this->resourcesDir.'/sound_bn.png');
+        $this->audioPicCopy = $this->resourcesDir.'/sound_bn_copy.png';
         $this->defaultAudioPicOriginalName = 'sound_bn.png';
         $this->autoExtractPic = $autoExtractPic;
     }

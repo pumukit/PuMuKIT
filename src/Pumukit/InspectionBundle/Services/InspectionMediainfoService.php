@@ -24,13 +24,13 @@ class InspectionMediainfoService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
+            throw new \BadMethodCallException('The file '.$file.' does not exist');
         }
 
         $xml = simplexml_load_string($this->getMediaInfo($file));
         if (!$this->xmlHasMediaContent($xml)) {
-            throw new \InvalidArgumentException('This file has no accesible video ' .
-                "nor audio tracks\n" . $file);
+            throw new \InvalidArgumentException('This file has no accesible video '.
+                "nor audio tracks\n".$file);
         }
 
         $duration = ceil($xml->File->track->Duration / 1000); // in ms (using mediainfo -f)
@@ -53,8 +53,8 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
         $xml = simplexml_load_string($this->getMediaInfo($track->getPath()));
         if (!$this->xmlHasMediaContent($xml)) {
-            throw new \InvalidArgumentException('This file has no accesible video ' .
-                "nor audio tracks\n" . $track->getPath());
+            throw new \InvalidArgumentException('This file has no accesible video '.
+                "nor audio tracks\n".$track->getPath());
         }
 
         foreach ($xml->File->track as $xml_track) {
@@ -99,13 +99,13 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
     private function getMediaInfo($file)
     {
-        $command = 'mediainfo -f --Output=XML \'' . $file . '\'';
+        $command = 'mediainfo -f --Output=XML \''.$file.'\'';
         $process = new Process($command);
         $process->setEnv(array( 'LANG' => 'en_US.UTF-8' ));
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
+            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '.
               $process->getExitCodeText().'. '.$process->getErrorOutput();
             if ($this->logger) {
                 $this->logger->error($message);

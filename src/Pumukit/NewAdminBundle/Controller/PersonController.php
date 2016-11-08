@@ -400,7 +400,7 @@ class PersonController extends AdminController implements NewAdminController
             $out[] = array(
                            'id'=> $p->getId(),
                            'label'=> $p->getName(),
-                           'desc' => $p->getPost().' '. $p->getFirm(),
+                           'desc' => $p->getPost().' '.$p->getFirm(),
                            'value' => $p->getName()
                            );
         }
@@ -596,7 +596,7 @@ class PersonController extends AdminController implements NewAdminController
 
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)) {
             if (('' !== $criteria['name']) && ('' !== $criteria['letter'])) {
-                $more = strtoupper($criteria['name'][0]) == strtoupper($criteria['letter']) ? '|^' . $criteria['name'] . '.*' : '';
+                $more = strtoupper($criteria['name'][0]) == strtoupper($criteria['letter']) ? '|^'.$criteria['name'].'.*' : '';
                 $new_criteria['name'] = new \MongoRegex('/^'.$criteria['letter'].'.*'.$criteria['name'].'.*'.$more.'/i');
             } elseif ('' !== $criteria['name']) {
                 $new_criteria['name'] = new \MongoRegex('/'.$criteria['name'].'/i');
@@ -615,7 +615,7 @@ class PersonController extends AdminController implements NewAdminController
 
         if (array_key_exists('post', $criteria)) {
             if ('' !== $criteria['post']) {
-                $new_criteria['post.' . $locale] = new \MongoRegex('/'.$criteria['post'].'/i');
+                $new_criteria['post.'.$locale] = new \MongoRegex('/'.$criteria['post'].'/i');
             }
         }
 

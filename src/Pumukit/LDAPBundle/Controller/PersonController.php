@@ -122,7 +122,7 @@ class PersonController extends Controller
         try {
             $aux = $ldapService->getListUsers('', $mail);
             if (0 === count($aux)) {
-                throw new \InvalidArgumentException('There is no LDAP user with the name "'. $cn . '" and email "'.$mail.'"');
+                throw new \InvalidArgumentException('There is no LDAP user with the name "'.$cn.'" and email "'.$mail.'"');
             }
             $person = new Person();
             $person->setName($aux[0]['cn']);

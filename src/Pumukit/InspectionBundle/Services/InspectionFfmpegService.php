@@ -26,7 +26,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
+            throw new \BadMethodCallException('The file '.$file.' does not exist');
         }
 
         $movie = new \ffmpeg_movie($file, false);

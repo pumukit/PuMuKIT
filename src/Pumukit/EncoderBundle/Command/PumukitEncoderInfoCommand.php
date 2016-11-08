@@ -67,7 +67,7 @@ EOT
                     '<info>Working</info>',
                 $cpu['type'],
                 $cpu['host'],
-                $cpu['number'] .'/'. $cpu['max'],
+                $cpu['number'].'/'.$cpu['max'],
                 $cpu['description']
             ));
         }
@@ -132,17 +132,17 @@ EOT
 
 
         //$description[] = sprintf('<comment>Scope</comment>            %s', $definition->getScope());
-        $output->writeln('<comment>Id</comment>                ' . $job->getId());
-        $output->writeln('<comment>Status</comment>            ' . $this->formatStatus($job->getStatus()));
-        $output->writeln('<comment>Mm</comment>                ' . $job->getMmId());
-        $output->writeln('<comment>Profile</comment>           ' . $job->getProfile());
-        $output->writeln('<comment>Cpu</comment>               ' . $job->getCpu());
-        $output->writeln('<comment>Priority</comment>          ' . $job->getPriority());
-        $output->writeln('<comment>Duration</comment>          ' . $job->getDuration());
-        $output->writeln('<comment>New Duration</comment>      ' . $job->getNewDuration());
-        $output->writeln('<comment>Timeini</comment>           ' . $job->getTimeini('Y-m-d H:i:s'));
-        $output->writeln('<comment>Timestart</comment>         ' . $job->getTimestart('Y-m-d H:i:s'));
-        $output->writeln('<comment>Timeend</comment>           ' . $job->getTimeend('Y-m-d H:i:s'));
+        $output->writeln('<comment>Id</comment>                '.$job->getId());
+        $output->writeln('<comment>Status</comment>            '.$this->formatStatus($job->getStatus()));
+        $output->writeln('<comment>Mm</comment>                '.$job->getMmId());
+        $output->writeln('<comment>Profile</comment>           '.$job->getProfile());
+        $output->writeln('<comment>Cpu</comment>               '.$job->getCpu());
+        $output->writeln('<comment>Priority</comment>          '.$job->getPriority());
+        $output->writeln('<comment>Duration</comment>          '.$job->getDuration());
+        $output->writeln('<comment>New Duration</comment>      '.$job->getNewDuration());
+        $output->writeln('<comment>Timeini</comment>           '.$job->getTimeini('Y-m-d H:i:s'));
+        $output->writeln('<comment>Timestart</comment>         '.$job->getTimestart('Y-m-d H:i:s'));
+        $output->writeln('<comment>Timeend</comment>           '.$job->getTimeend('Y-m-d H:i:s'));
         $output->writeln('<comment>Command</comment>');
         $output->writeln($jobService->renderBat($job));
         $output->writeln('<comment>Out</comment>');

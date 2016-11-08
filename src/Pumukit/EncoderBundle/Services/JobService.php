@@ -168,7 +168,7 @@ class JobService
             try {
                 $duration = $this->inspectionService->getDuration($pathFile);
             } catch (\Exception $e) {
-                $this->logger->addError('[addJob] InspectionService getDuration error message: '. $e->getMessage());
+                $this->logger->addError('[addJob] InspectionService getDuration error message: '.$e->getMessage());
                 throw new \Exception($e->getMessage());
             }
 
@@ -368,7 +368,7 @@ class JobService
 
         //TODO
         //$console = $this->getContainer()->getParameter('kernel.root_dir').'/console';
-        $console = __DIR__ . '/../../../../app/console';
+        $console = __DIR__.'/../../../../app/console';
 
         $pb
           ->add('php')
@@ -513,14 +513,14 @@ class JobService
         $vars['output'] = $job->getPathEnd();
 
         foreach (range(1, 9) as $identifier) {
-            $vars['tmpfile' . $identifier] = $this->tmpPath . '/' . rand();
+            $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.rand();
         }
 
         $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
         $twig = new \Twig_Environment($loader);
 
         $commandLine = $twig->render('bat', $vars);
-        $this->logger->addInfo('[renderBat] CommandLine: ' . $commandLine);
+        $this->logger->addInfo('[renderBat] CommandLine: '.$commandLine);
 
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if (CpuService::TYPE_WINDOWS === $cpu['type']) {
@@ -583,11 +583,11 @@ class JobService
     {
         $finalExtension = isset($profile['extension'])?$profile['extension']:$extension;
 
-        $tempDir = $profile['streamserver']['dir_out'] . '/' . $dir;
+        $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
 
         $this->mkdir($tempDir);
 
-        return realpath($tempDir) . '/' . $file . '.' . $finalExtension;
+        return realpath($tempDir).'/'.$file.'.'.$finalExtension;
     }
 
 
@@ -619,7 +619,7 @@ class JobService
         $profile = $this->profileService->getProfile($profileName);
 
         $track = new Track();
-        $track->addTag('profile:' . $profileName);
+        $track->addTag('profile:'.$profileName);
         if ($profile['master']) {
             $track->addTag('master');
         }
@@ -685,7 +685,7 @@ class JobService
         $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
 
         $profile = $this->getProfile($job);
-        $tempDir = $profile['streamserver']['dir_out'] . '/' . $mmobj->getSeries()->getId();
+        $tempDir = $profile['streamserver']['dir_out'].'/'.$mmobj->getSeries()->getId();
 
         $this->mkdir($tempDir);
 

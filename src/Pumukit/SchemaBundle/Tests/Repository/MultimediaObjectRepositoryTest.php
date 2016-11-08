@@ -2770,7 +2770,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals($type2, $embBroadcast->getType());
         $this->assertEquals($name2, $embBroadcast->getName());
-        $this->assertEquals($name2 . ': '.$group1->getName().', '.$group2->getName(), $embBroadcast->__toString());
+        $this->assertEquals($name2.': '.$group1->getName().', '.$group2->getName(), $embBroadcast->__toString());
 
         $embBroadcast->removeGroup($group2);
         $this->dm->persist($mm);

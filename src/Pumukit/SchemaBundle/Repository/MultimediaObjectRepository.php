@@ -532,7 +532,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->in(array(new \MongoId($tag->getId())))
-            ->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()). '.*\|/')));
+            ->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')));
 
         if (0 !== count($sort)) {
             $qb->sort($sort);

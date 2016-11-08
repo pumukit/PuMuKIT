@@ -101,7 +101,7 @@ class PumukitProvider implements AuthenticationProviderInterface
             }
 
             if (isset($attributes[self::CAS_GIVENNAME_KEY]) && isset($attributes[self::CAS_SURNAME_KEY])) {
-                $fullname = $attributes[self::CAS_GIVENNAME_KEY] .' '. $attributes[self::CAS_SURNAME_KEY];
+                $fullname = $attributes[self::CAS_GIVENNAME_KEY].' '.$attributes[self::CAS_SURNAME_KEY];
                 $user->setFullname($fullname);
             }
 

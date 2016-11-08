@@ -424,7 +424,7 @@ class DefaultController extends Controller
     {
         $addedTags = array();
 
-        if ($this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE . $tagCode)) {
+        if ($this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tagCode)) {
             return $addedTags;
         }
 

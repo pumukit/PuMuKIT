@@ -26,13 +26,13 @@ class InspectionFfprobeService implements InspectionServiceInterface
     public function getDuration($file)
     {
         if (!file_exists($file)) {
-            throw new \BadMethodCallException('The file ' . $file . ' does not exist');
+            throw new \BadMethodCallException('The file '.$file.' does not exist');
         }
 
         $json = json_decode($this->getMediaInfo($file));
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accesible video ' .
-                "nor audio tracks\n" . $file);
+            throw new \InvalidArgumentException('This file has no accesible video '.
+                "nor audio tracks\n".$file);
         }
 
         $duration = ceil(intval((string)$json->format->duration));
@@ -55,8 +55,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $json = json_decode($this->getMediaInfo($track->getPath()));
         if (!$this->jsonHasMediaContent($json)) {
-            throw new \InvalidArgumentException('This file has no accesible video ' .
-                "nor audio tracks\n" . $track->getPath());
+            throw new \InvalidArgumentException('This file has no accesible video '.
+                "nor audio tracks\n".$track->getPath());
         }
 
 
@@ -106,7 +106,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "' . $command . '": ' . $process->getExitCode() . ' ' .
+            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '.
               $process->getExitCodeText().'. '.$process->getErrorOutput();
             if ($this->logger) {
                 $this->logger->error($message);

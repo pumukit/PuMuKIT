@@ -436,7 +436,7 @@ class ClientService
     private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false)
     {
         if ($useAdminUrl) {
-            $requestUrl = $this->getAdminUrl() . $path;
+            $requestUrl = $this->getAdminUrl().$path;
         } else {
             $requestUrl = $this->url.$path;
         }
@@ -465,7 +465,7 @@ class ClientService
             curl_setopt($request, CURLOPT_POSTFIELDS, $fields);
             break;
         case 'PUT':
-            $header[] = 'Content-Length: ' . strlen($fields);
+            $header[] = 'Content-Length: '.strlen($fields);
             curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'PUT');
             curl_setopt($request, CURLOPT_POSTFIELDS, $fields);
             break;
@@ -501,7 +501,7 @@ class ClientService
         if ($method == 'GET') {
             if (200 != $output['status']) {
                 $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
-                                      .') Error (' . $output['status'] .') Processing Request : '.$requestUrl.'.');
+                                      .') Error ('.$output['status'].') Processing Request : '.$requestUrl.'.');
                 throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
             }
         }
