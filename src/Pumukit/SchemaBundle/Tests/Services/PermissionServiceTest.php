@@ -106,7 +106,7 @@ class PermissionServiceTest extends WebTestCase
             PermissionProfile::SCOPE_PERSONAL => array(),
         );
         $allDependencies['ROLE_THREE'] = array(
-            PermissionProfile::SCOPE_GLOBAL => array('ROLE_ONE','ROLE_TWO'),
+            PermissionProfile::SCOPE_GLOBAL => array('ROLE_ONE', 'ROLE_TWO'),
             PermissionProfile::SCOPE_PERSONAL => array(),
         );
         $allDependencies['ROLE_FOUR'] = array(

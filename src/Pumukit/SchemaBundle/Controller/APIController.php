@@ -34,7 +34,7 @@ class APIController extends Controller implements NewAdminController
         $counts = array('series' => $totalSeries,
                         'mms' => $totalMmobjs,
                         'hours' => $totalHours,
-                        'live_channels' => $totalLiveChannels,);
+                        'live_channels' => $totalLiveChannels, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
         return new Response($data);
@@ -137,7 +137,7 @@ class APIController extends Controller implements NewAdminController
                         'page' => $page,
                         'criteria' => $criteria,
                         'sort'  => $sort,
-                        'series' => $series,);
+                        'series' => $series, );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
         return new Response($data);

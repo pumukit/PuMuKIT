@@ -30,7 +30,7 @@ class SeriesController extends Controller implements WebTVController
         $this->updateBreadcrumbs($series);
 
         return array('series' => $series,
-        'multimediaObjects' => $pagerfanta,);
+        'multimediaObjects' => $pagerfanta, );
     }
 
     /**

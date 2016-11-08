@@ -56,17 +56,17 @@ class StatsService
         switch ($groupBy) {
             case 'hour':
                 $mongoProjectDate[] = 'H';
-                $mongoProjectDate[] = array('$substr' => array($dateField,0,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
                 $mongoProjectDate[] = 'T';
             case 'day':
-                $mongoProjectDate[] = array('$substr' => array($dateField,8,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
                 $mongoProjectDate[] = '-';
             default: //If it doesn't exists, it's 'month'
             case 'month':
-                $mongoProjectDate[] = array('$substr' => array($dateField,5,2));
+                $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
                 $mongoProjectDate[] = '-';
             case 'year':
-                $mongoProjectDate[] = array('$substr' => array($dateField,0,4));
+                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
                 break;
         }
 
