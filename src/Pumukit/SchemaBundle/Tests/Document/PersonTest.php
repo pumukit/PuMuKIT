@@ -86,7 +86,6 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     public function testCloneResource()
     {
         $person = new Person();
-        ;
 
         $this->assertEquals($person, $person->cloneResource());
     }
