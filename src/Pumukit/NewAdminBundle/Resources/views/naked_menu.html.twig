@@ -23,7 +23,7 @@
   <ul class="nav nav-tabs title-tabs" style="background: {{ app.request.attributes.get('nakedbackoffice_main_color', '#ED6D00') }};">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
       <li {{series_active ? "class=\"active\"":""}}>
-        <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index')}}">
+        <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index')}}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
           {{ series_title }}
           <div class="ripple-wrapper"></div>
         </a>
@@ -31,7 +31,7 @@
     {% endif %}
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
       <li {{ playlist_active ?"class=\"active\"":"" }}>
-        <a title="{% trans %}Go to playlists{% endtrans %}" href="{{url('pumukitnewadmin_playlist_index')}}">
+        <a title="{% trans %}Go to playlists{% endtrans %}" href="{{url('pumukitnewadmin_playlist_index')}}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
           {{ playlist_title }}
           <div class="ripple-wrapper"></div>
         </a>
