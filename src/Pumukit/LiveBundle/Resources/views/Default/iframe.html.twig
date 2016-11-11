@@ -7,7 +7,7 @@ body { margin: 0; padding:0; }
 {% endblock %}
 
 {% block javascripts %}
-  <script src="{{ asset('bundles/pumukitwebtv/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('bundles/pumukitlive/js/jwplayer/jwplayer.js') }}" type="text/javascript"></script>
   {% if jwplayer_key is defined %}<script type="text/javascript">jwplayer.key="{{ jwplayer_key }}";</script>{% endif %}
 {% endblock%}
 
