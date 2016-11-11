@@ -1,12 +1,14 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
   {% if live is not null %}
   <h3>{{ live.name }}</h3>
+  <div><pre>{{ live.id }}</pre></div>
   {{ live.description }}
   <div>
     <div>
-      {% trans %}URL{% endtrans %}: <a href="{# TODO: /live/index/id/{{ live.id }} #}">
-        {# "TODO: /live/index/id/{{ live.id }}" #}
-      </a>
+      {% trans %}URL{% endtrans %}:
+      <input type="text" class="form-control" id="show_player_url_iframe" readonly="" onclick="select()" value="{{ url('pumukit_live_id', {'id': live.id}) }}" />
+      {% trans %}IFRAME{% endtrans %}:
+      <input type="text" class="form-control" id="show_player_url_iframe" readonly="" onclick="select()" value="{{ url('pumukit_live_iframe_id', {'id': live.id}) }}" />
     </div>
     <div>
       {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ live.getIpSource() }}</span>
@@ -19,7 +21,7 @@
     </div>
   </div>
   <br />
-  {{ include('PumukitNewAdminBundle:Live:Players/'~live.getLiveType()~'.html.twig') }}      
+  {{ include('PumukitNewAdminBundle:Live:Players/'~live.getLiveType()~'.html.twig') }}
   {% else %}
   <p>
     {% trans %}Select any live channel.{% endtrans %}
@@ -29,4 +31,4 @@
 <p>
   {% trans %}You don't have enough permissions to access this content.{% endtrans %}
 </p>
-{% endif %}  
+{% endif %}
