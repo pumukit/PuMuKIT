@@ -22,7 +22,7 @@
                         <i style="font-size: 18px; vertical-align: middle" class="mdi-image-timer-auto"></i>{{ app.user.username }} <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu">
-                        <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|date()  }}</li>
+                        <li class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|localizeddate }}</li>
                         <li class="dropdown-header">{{ app.user.email }}</li>
                         <li class="divider"></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">{% trans %}Logout{% endtrans %}</a></li>
