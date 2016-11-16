@@ -117,10 +117,10 @@ class OaiController extends Controller
         $XMLrequest = new SimpleXMLExtended($XMLrequestText);
         $XMLrequest->addAttribute('metadataPrefix', 'oai_dc');
         if ($token->getFrom()) {
-            $XMLrequest->addAttribute('from', $token->getFrom()->format('Y/m/d'));
+            $XMLrequest->addAttribute('from', $token->getFrom()->format('Y-m-d'));
         }
         if ($token->getUntil()) {
-            $XMLrequest->addAttribute('until', $token->getUntil()->format('Y/m/d'));
+            $XMLrequest->addAttribute('until', $token->getUntil()->format('Y-m-d'));
         }
         if ($token->getSet()) {
             $XMLrequest->addAttribute('set', $token->getSet());
@@ -421,11 +421,11 @@ class OaiController extends Controller
         }
 
         $from = $request->query->has('from') ?
-            \DateTime::createFromFormat('Y/m/d', $request->query->get('from')) :
+            \DateTime::createFromFormat('Y-m-d', $request->query->get('from')) :
             null;
 
         $until = $request->query->has('until') ?
-            \DateTime::createFromFormat('Y/m/d', $request->query->get('until')) :
+            \DateTime::createFromFormat('Y-m-d', $request->query->get('until')) :
             null;
 
         return new ResumptionToken(0, $from, $until, $request->query->get('metadataPrefix'), $request->query->get('set'));
