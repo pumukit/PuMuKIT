@@ -17,10 +17,9 @@
 <p class="titulo_widget titulo_widget_grande">{{ live.name()|default("No title"|trans) }}</p>
 <div id="body">
   <div style="overflow:hidden;">
-    <div style="float: right; width: 314px;">
-      {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
-    </div>
-    {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {width: '640', height: '540', controlbar: 'bottom'} %}
+    {% render(controller('PumukitCmarLiveBundle:Chat:show', {'channel' : live.id})) %}
+    {% set width = enable_chat ? '640' : '100%' %}
+    {% include('PumukitLiveBundle:Default:liveplayer.html.twig') with {width: width, height: '540', controlbar: 'bottom'} %}
   </div>
 </div>
 {% include('PumukitLiveBundle:Default:info.html.twig') %}

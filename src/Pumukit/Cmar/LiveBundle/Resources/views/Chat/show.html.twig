@@ -1,92 +1,97 @@
-<table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; height: 100%">
-  <form id="chatForm" onsubmit="postChatMessage(); return false;" action="{{ path('pumukit_cmar_live_chat_post', {'channel': channel}) }}" method="post">
-    <tbody>
-      <tr style="overflow: hidden;">
-        <td id="chatList" class="chatBox" frameborder="0" style="overflow: hidden;">
-            {% render(controller('PumukitCmarLiveBundle:Chat:list', {'channel': channel})) %}
-        </td>
-      </tr>
-      <tr>
-        <td height="5"></td>
-      </tr>
-      <tr>
-        <td>
-          <table border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td align="left" class="chatText">{% trans %}Name{% endtrans %}:</td>
-                <td align="right">
-                  <input type="text" name="name" id="chatName" maxlength="30" class="chatForm" style="width:198px" {{ enable_chat?'':'disabled' }}>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <table border="0" cellspacing="0" cellpadding="0">
-                    <tbody>
-                      <tr>
-                        <td align="left" class="chatText">{% trans %}Message{% endtrans %}:</td>
-                        <td align="right">
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <textarea name="message" id="chatMessage" rows="3" style="width:305px; height:50px; resize: none; y-overflow: auto;" wrap="virtual" class="chatForm" {{ enable_chat?'':'disabled' }}></textarea>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr> 
-    </tbody>
-</table>
-<span style="position: relative; top: 10px; font: bold 14px verdana;">{% trans %}How to use the chat{% endtrans %}:</span>
-<span style="position: relative; top: 10px; font: 14px verdana;"> {% trans %}Enter your name, write your message and press Enter.{% endtrans %}</span>
-<script type="text/javascript">
-var timer = null;
-document.addEventListener('DOMContentLoaded', function() {
-   $('chatMessage').observe('keypress', function(event){
-      if ( event.keyCode == Event.KEY_RETURN  || event.which == Event.KEY_RETURN ) {
-         postChatMessage();
-         Event.stop(event);
+{% if enable_chat %}
+<div style="float: right; width: 314px;">
+  <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed; height: 100%">
+    <form id="chatForm" onsubmit="postChatMessage(); return false;" action="{{ path('pumukit_cmar_live_chat_post', {'channel': channel}) }}" method="post">
+      <tbody>
+        <tr style="overflow: hidden;">
+          <td id="chatList" class="chatBox" frameborder="0" style="overflow: hidden;">
+              {% render(controller('PumukitCmarLiveBundle:Chat:list', {'channel': channel})) %}
+          </td>
+        </tr>
+        <tr>
+          <td height="5"></td>
+        </tr>
+        <tr>
+          <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td align="left" class="chatText">{% trans %}Name{% endtrans %}:</td>
+                  <td align="right">
+                    <input type="text" name="name" id="chatName" maxlength="30" class="chatForm" style="width:198px" {{ enable_chat?'':'disabled' }}>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td align="left" class="chatText">{% trans %}Message{% endtrans %}:</td>
+                          <td align="right">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <textarea name="message" id="chatMessage" rows="3" style="width:305px; height:50px; resize: none; y-overflow: auto;" wrap="virtual" class="chatForm" {{ enable_chat?'':'disabled' }}></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+  <span style="position: relative; top: 10px; font: bold 14px verdana;">{% trans %}How to use the chat{% endtrans %}:</span>
+  <span style="position: relative; top: 10px; font: 14px verdana;"> {% trans %}Enter your name, write your message and press Enter.{% endtrans %}</span>
+  <script type="text/javascript">
+  var timer = null;
+  document.addEventListener('DOMContentLoaded', function() {
+     $('chatMessage').observe('keypress', function(event){
+        if ( event.keyCode == Event.KEY_RETURN  || event.which == Event.KEY_RETURN ) {
+           postChatMessage();
+           Event.stop(event);
+        }
+     });
+  });
+  postChatMessage = function()
+  {
+      if ($("chatName").value != '') {
+          var route = "{{ path('pumukit_cmar_live_chat_post', {'channel': channel, 'name': '__NAME__', 'message': '__MESSAGE__'})|raw }}";
+          route = route.replace('__NAME__', encodeURIComponent($("chatName").value));
+          route = route.replace('__MESSAGE__', encodeURIComponent($("chatMessage").value));
+          new Ajax.Request(route, {method: 'post', onSuccess: function(data) {
+                  var responseJson = data.responseJSON;
+                  if (responseJson != '') {
+                      var message = responseJson.message;
+                      if (message === 'Successful') {
+                          $("chatMessage").setValue('');
+                          updateChat();
+                      }
+                  }
+              }}
+          );
+          $("chatMessage").setValue('');
+      } else {
+          window.alert("{% trans %}Name cannot be empty{% endtrans %}");
       }
-   });
-});
-postChatMessage = function()
-{
-    if ($("chatName").value != '') {
-        var route = "{{ path('pumukit_cmar_live_chat_post', {'channel': channel, 'name': '__NAME__', 'message': '__MESSAGE__'})|raw }}";
-        route = route.replace('__NAME__', encodeURIComponent($("chatName").value));
-        route = route.replace('__MESSAGE__', encodeURIComponent($("chatMessage").value));
-        new Ajax.Request(route, {method: 'post', onSuccess: function(data) {
-                var responseJson = data.responseJSON;
-                if (responseJson != '') {
-                    var message = responseJson.message;
-                    if (message === 'Successful') {
-                        $("chatMessage").setValue('');
-                        updateChat();
-                    }
-                }
-            }}
-        );
-        $("chatMessage").setValue('');
-    } else {
-        window.alert("{% trans %}Name cannot be empty{% endtrans %}");
-    }
-    return false;
-}
-updateChat = function()
-{
-    if (timer != null)
-        clearTimeout(timer);
-    new Ajax.Updater("chatList", "{{ path('pumukit_cmar_live_chat_list', {'channel': channel}) }}", {onComplete: function(){
-          scrolldownChat();
-    }});
-    timer = setTimeout('updateChat()', {{ updateInterval }});
-}
-scrolldownChat = function()
-{
-    var chatDiv = document.getElementById('chatDiv');
-    chatDiv.scrollTop = chatDiv.scrollHeight;
-}
-updateChat();
-</script>
+      return false;
+  }
+  updateChat = function()
+  {
+      if (timer != null)
+          clearTimeout(timer);
+      new Ajax.Updater("chatList", "{{ path('pumukit_cmar_live_chat_list', {'channel': channel}) }}", {onComplete: function(){
+            scrolldownChat();
+      }});
+      timer = setTimeout('updateChat()', {{ updateInterval }});
+  }
+  scrolldownChat = function()
+  {
+      var chatDiv = document.getElementById('chatDiv');
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+  }
+  updateChat();
+  </script>
+
+</div>
+{% endif %}
