@@ -12,12 +12,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class VersionController extends Controller implements AdminController
 {
     /**
-     * @Route("/admin/versions")
+     * @Route("/admin/versions", name="pumukit_stats_versions")
      * @Template
      */
     public function indexAction(Request $request)
     {
-        return new Response('TODO', 501);
+        $composerLockFile = realpath($this->container->getParameter('kernel.root_dir').'/../composer.lock');
+        $composerLock = json_decode(@file_get_contents($composerLockFile));
+
+        $pumukit = array();
+        $other = array();
+        foreach($composerLock->packages as $package) {
+            if( (strpos($package->name, '/pmk2-') !== false) || strpos(strtolower($package->name), 'pumukit') !== false ) {
+                $pumukit[] = $package;
+            } else {
+                $other[] = $package;
+            }
+        }
+
+        return array('pumukitPackages' => $pumukit, 'otherPackages' => $other);
     }
 
     /**

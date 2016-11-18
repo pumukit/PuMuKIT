@@ -1,0 +1,59 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}Pumukit Bundle Versions{% endtrans %}</h1>
+
+    <div class="well">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Tags</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in pumukitPackages %}
+                <tr>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.name }}</td>
+                    <td><span class="label label-success">{{ item.version }}</span></td>
+                    <td>
+                        {% if item.keywords is defined %}
+                            {% for keyword in item.keywords %}
+                                <span class="label label-info">{{ keyword }}</span>
+                            {% endfor  %}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.description }}</td>
+                </tr>
+            {% endfor %}
+            {% for item in otherPackages %}
+                <tr class="otherPackages" style="display:none">
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.name }}</td>
+                    <td><span class="label label-success">{{ item.version }}</span></td>
+                    <td>
+                        {% if item.keywords is defined %}
+                            {% for keyword in item.keywords %}
+                                <span class="label label-info">{{ keyword }}</span>
+                            {% endfor  %}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button id="expandOtherPackages" class="btn btn-primary" type="button">{{ 'Other packages' | trans }}</button>
+    </div>
+
+    <script type="text/javascript">
+        $('#expandOtherPackages').click(function() {
+            $('.otherPackages').toggle();
+        })
+    </script>
+
+{% endblock %}
