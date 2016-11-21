@@ -41,7 +41,6 @@ class Builder extends ContainerAware
             $stats = $menu->addChild('Stats');
             $stats->addChild('Series', array('route' => 'pumukit_stats_series_index'));
             $stats->addChild('Multimedia Objects', array('route' => 'pumukit_stats_mmobj_index'));
-            $stats->addChild('Versions', array('route' => 'pumukit_stats_versions'));
 
             //TODO: Use VOTERS: https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#the-current-menu-item
             //Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually

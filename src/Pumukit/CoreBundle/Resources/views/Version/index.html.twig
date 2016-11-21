@@ -7,14 +7,21 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Tags</th>
-                <th>Description</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Version{% endtrans %}</th>
+                <th>{% trans %}Tags{% endtrans %}</th>
+                <th>{% trans %}Description{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>project</td>
+                    <td>pumukit/pumukit2</td>
+                    <td><span class="label label-success">{{constant('Pumukit\\PumukitVersion::VERSION')}}</span></td>
+                    <td></td>
+                    <td>Media Portal</td>
+                </tr>
             {% for item in pumukitPackages %}
                 <tr>
                     <td>{{ item.type }}</td>
