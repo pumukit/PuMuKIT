@@ -443,28 +443,32 @@ class TagServiceTest extends WebTestCase
         return $tag;
     }
 
-
-    public function testTatgsInTemplate()
+    public function testTatgsInPrototype()
     {
         $tag = $this->createTagWithTree('tag1');
+        $broTag = $this->tagRepo->findOneByCod('brother');
 
         $series = $this->factoryService->createSeries();
         $mmObject0 = $this->factoryService->createMultimediaObject($series);
         $this->assertEquals(0, count($mmObject0->getTags()));
 
-
-        $prototype = $this->factoryService->getMultimediaObjectPrototype($series); //from repo
+        //$prototype = $this->factoryService->getMultimediaObjectPrototype(); //from repo
+        $prototype = $this->mmobjRepo->findPrototype($series);
         $this->tagService->addTag($prototype, $tag);
-
 
         $mmObject1 = $this->factoryService->createMultimediaObject($series);
         $this->assertEquals(3, count($mmObject1->getTags()));
 
-        $this->tagService->deleteTag($tag);
+        try {
+            $this->tagService->deleteTag($tag);
+            $this->assertTrue(false); //The exception must be called
+        } catch (\Exception $e) {
+        }
+
+        $this->tagService->addTag($prototype, $broTag);
+        $this->tagService->deleteTag($broTag);
 
         $mmObject2 = $this->factoryService->createMultimediaObject($series);
-        $this->assertEquals(2, count($mmObject2->getTags()));
-
-
+        $this->assertEquals(3, count($mmObject2->getTags()));
     }
 }
