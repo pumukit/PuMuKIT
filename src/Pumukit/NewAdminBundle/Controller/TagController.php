@@ -58,6 +58,7 @@ class TagController extends Controller implements NewAdminController
             $msg = sprintf('Tag with children (%d) and multimedia objects (%d)',
                            count($tag->getChildren()),
                            $tag->getNumberMultimediaObjects());
+
             return new JsonResponse(array('status' => $msg), JsonResponse::HTTP_CONFLICT);
         }
 

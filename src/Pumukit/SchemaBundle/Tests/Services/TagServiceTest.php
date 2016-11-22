@@ -365,6 +365,40 @@ class TagServiceTest extends WebTestCase
         }
     }
 
+    /**
+     * @expectedException \Exception
+     */
+    public function testDeleteUsedTag()
+    {
+        $tag = $this->createTagWithTree('tag1');
+        $series = $this->factoryService->createSeries();
+        $mmObject0 = $this->factoryService->createMultimediaObject($series);
+        $this->tagService->addTag($mmObject0, $tag);
+        $this->tagService->deleteTag($tag);
+    }
+
+    public function testTagsInPrototype()
+    {
+        $tag = $this->createTagWithTree('tag1');
+        $broTag = $this->tagRepo->findOneByCod('brother');
+
+        $series = $this->factoryService->createSeries();
+        $mmObject0 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(0, count($mmObject0->getTags()));
+
+        $prototype = $this->mmobjRepo->findPrototype($series);
+        $this->tagService->addTag($prototype, $tag);
+
+        $mmObject1 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(3, count($mmObject1->getTags()));
+
+        $this->tagService->addTag($prototype, $broTag);
+        $this->tagService->deleteTag($broTag);
+
+        $mmObject2 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(3, count($mmObject2->getTags()));
+    }
+
     private function createMultimediaObject($title, $prototype = false)
     {
         $locale = 'en';
@@ -441,34 +475,5 @@ class TagServiceTest extends WebTestCase
         $this->dm->flush();
 
         return $tag;
-    }
-
-    public function testTatgsInPrototype()
-    {
-        $tag = $this->createTagWithTree('tag1');
-        $broTag = $this->tagRepo->findOneByCod('brother');
-
-        $series = $this->factoryService->createSeries();
-        $mmObject0 = $this->factoryService->createMultimediaObject($series);
-        $this->assertEquals(0, count($mmObject0->getTags()));
-
-        //$prototype = $this->factoryService->getMultimediaObjectPrototype(); //from repo
-        $prototype = $this->mmobjRepo->findPrototype($series);
-        $this->tagService->addTag($prototype, $tag);
-
-        $mmObject1 = $this->factoryService->createMultimediaObject($series);
-        $this->assertEquals(3, count($mmObject1->getTags()));
-
-        try {
-            $this->tagService->deleteTag($tag);
-            $this->assertTrue(false); //The exception must be called
-        } catch (\Exception $e) {
-        }
-
-        $this->tagService->addTag($prototype, $broTag);
-        $this->tagService->deleteTag($broTag);
-
-        $mmObject2 = $this->factoryService->createMultimediaObject($series);
-        $this->assertEquals(3, count($mmObject2->getTags()));
     }
 }
