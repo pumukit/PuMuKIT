@@ -12,6 +12,7 @@ class TagServiceTest extends WebTestCase
     private $tagRepo;
     private $mmobjRepo;
     private $tagService;
+    private $factoryService;
 
     public function setUp()
     {
@@ -25,6 +26,7 @@ class TagServiceTest extends WebTestCase
         $this->mmobjRepo = $this->dm
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
+        $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
           ->remove(array());
@@ -439,5 +441,31 @@ class TagServiceTest extends WebTestCase
         $this->dm->flush();
 
         return $tag;
+    }
+
+
+    public function testTatgsInTemplate()
+    {
+        $tag = $this->createTagWithTree('tag1');
+
+        $series = $this->factoryService->createSeries();
+        $mmObject0 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(0, count($mmObject0->getTags()));
+
+
+        $prototype = $this->factoryService->getMultimediaObjectPrototype($series); //from repo
+        $this->tagService->addTag($prototype, $tag);
+
+
+        $mmObject1 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(3, count($mmObject1->getTags()));
+
+        $this->dm->remove($tag);
+        $this->dm->flush();
+
+        $mmObject2 = $this->factoryService->createMultimediaObject($series);
+        $this->assertEquals(2, count($mmObject2->getTags()));
+
+
     }
 }
