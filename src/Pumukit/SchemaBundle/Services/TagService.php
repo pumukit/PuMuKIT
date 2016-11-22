@@ -214,6 +214,42 @@ class TagService
         return $tag;
     }
 
+
+    /**
+     * Delete Tag.
+     *
+     * @param Tag $tag
+     *
+     * @return bool
+     */
+    public function deleteTag(Tag $tag)
+    {
+        if ($this->canDeleteTag($tag)) {
+            $this->dm->remove($tag);
+            $this->dm->flush();
+
+            return true;
+        }
+
+        throw new \Exception('Tag with id '.$tag->getId().' can not be deleted.');
+    }
+
+
+    /**
+     * Delete Tag.
+     *
+     * @param Tag $tag
+     *
+     * @return bool
+     */
+    public function canDeleteTag(Tag $tag)
+    {
+        return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
+    }
+
+
+
+
     /**
      * Update embedded tag.
      *

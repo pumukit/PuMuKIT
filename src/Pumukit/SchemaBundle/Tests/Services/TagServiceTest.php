@@ -460,8 +460,7 @@ class TagServiceTest extends WebTestCase
         $mmObject1 = $this->factoryService->createMultimediaObject($series);
         $this->assertEquals(3, count($mmObject1->getTags()));
 
-        $this->dm->remove($tag);
-        $this->dm->flush();
+        $this->tagService->deleteTag($tag);
 
         $mmObject2 = $this->factoryService->createMultimediaObject($series);
         $this->assertEquals(2, count($mmObject2->getTags()));
