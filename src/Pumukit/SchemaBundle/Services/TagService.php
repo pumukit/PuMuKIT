@@ -215,6 +215,47 @@ class TagService
     }
 
     /**
+     * Delete Tag.
+     *
+     * @param Tag $tag
+     *
+     * @return bool
+     */
+    public function deleteTag(Tag $tag)
+    {
+        if ($this->canDeleteTag($tag)) {
+            $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
+            $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+
+            $query = $qb
+                ->update()
+                ->multiple(true)
+                ->field('tags')->pull($qb->expr()->field('_id')->equals($tag->getId()))
+                ->getQuery();
+            $aux = $query->execute();
+
+            $this->dm->remove($tag);
+            $this->dm->flush();
+
+            return true;
+        }
+
+        throw new \Exception('Tag with id '.$tag->getId().' can not be deleted.');
+    }
+
+    /**
+     * Delete Tag.
+     *
+     * @param Tag $tag
+     *
+     * @return bool
+     */
+    public function canDeleteTag(Tag $tag)
+    {
+        return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
+    }
+
+    /**
      * Update embedded tag.
      *
      * @param Tag         $tag

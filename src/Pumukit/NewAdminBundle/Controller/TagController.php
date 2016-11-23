@@ -52,15 +52,17 @@ class TagController extends Controller implements NewAdminController
      */
     public function deleteAction(Tag $tag, Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        if (0 == ($num = count($tag->getChildren())) && 0 == $tag->getNumberMultimediaObjects()) {
-            $dm->remove($tag);
-            $dm->flush();
+        try {
+            $this->get('pumukitschema.tag')->deleteTag($tag);
+        } catch (\Exception $e) {
+            $msg = sprintf('Tag with children (%d) and multimedia objects (%d)',
+                           count($tag->getChildren()),
+                           $tag->getNumberMultimediaObjects());
 
-            return new JsonResponse(array('status' => 'Deleted'), 200);
+            return new JsonResponse(array('status' => $msg), JsonResponse::HTTP_CONFLICT);
         }
 
-        return new JsonResponse(array('status' => 'Tag with children ('.$num.')'), JsonResponse::HTTP_CONFLICT);
+        return new JsonResponse(array('status' => 'Deleted'), 200);
     }
 
     /**
@@ -158,7 +160,7 @@ class TagController extends Controller implements NewAdminController
         $tagsWithChildren = array();
         foreach ($ids as $id) {
             $tag = $repo->find($id);
-            if (0 == count($tag->getChildren()) && 0 == $tag->getNumberMultimediaObjects()) {
+            if ($this->get('pumukitschema.tag')->canDeleteTag($tag)) {
                 $tags[] = $tag;
             } else {
                 $tagsWithChildren[] = $tag;
