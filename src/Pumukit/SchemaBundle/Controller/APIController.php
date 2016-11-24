@@ -148,6 +148,8 @@ class APIController extends Controller implements NewAdminController
 
     /**
      * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     *
+     * See "/api/live/lives.json"
      */
     public function liveAction(Request $request)
     {
