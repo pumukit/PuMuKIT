@@ -4,6 +4,7 @@ namespace Pumukit\OaiBundle\Controller;
 
 use Pumukit\OaiBundle\Utils\Iso639Convert;
 use Pumukit\OaiBundle\Utils\ResumptionToken;
+use Pumukit\OaiBundle\Utils\ResumptionTokenException;
 use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -99,8 +100,10 @@ class OaiController extends Controller
 
         try {
             $token = $this->getResumptionToken($request);
-        } catch (\Exception $e) {
+        } catch (ResumptionTokenException $e) {
             return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
+        } catch (\Exception $e) {
+            return $this->error('badArgument', 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax');
         }
 
         if ($token->getMetadataPrefix() !== 'oai_dc') {
@@ -188,8 +191,10 @@ class OaiController extends Controller
 
         try {
             $token = $this->getResumptionToken($request);
-        } catch (\Exception $e) {
+        } catch (ResumptionTokenException $e) {
             return $this->error('badResumptionToken', 'The value of the resumptionToken argument is invalid or expired');
+        } catch (\Exception $e) {
+            return $this->error('badArgument', 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax');
         }
 
         $allSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
