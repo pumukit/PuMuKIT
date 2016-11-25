@@ -31,7 +31,7 @@ class ResumptionTokenTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException Pumukit\OaiBundle\Utils\ResumptionTokenException
      */
     public function testInvalidDecode()
     {

@@ -130,12 +130,12 @@ class ResumptionToken
     {
         $base64Decode = base64_decode($token, true);
         if (false === $base64Decode) {
-            throw new \InvalidArgumentException('base64_decode error');
+            throw new ResumptionTokenException('base64_decode error');
         }
         $params = (array) json_decode(base64_decode($token, true));
 
         if (json_last_error()) {
-            throw new \InvalidArgumentException('json_decode error');
+            throw new ResumptionTokenException('json_decode error');
         }
 
         if (!empty($params['from'])) {
