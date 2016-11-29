@@ -15,7 +15,7 @@
           <div class="radio">
             <label class="required">
               <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
-              {{ broadcast_name }}
+              {{ broadcast_name|trans }}
             </label>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
             <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object{% endtrans %}"></i>

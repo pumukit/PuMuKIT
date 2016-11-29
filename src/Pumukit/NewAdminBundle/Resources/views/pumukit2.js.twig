@@ -2839,7 +2839,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
         success: function (response, textStatus, jqXHR) {
             var template = response['template'];
             var div_id = '#pumukitnewadmin_mm' + template + '_broadcast_description';
-            $(div_id).html(response['description']);
+            $(div_id).html(response['descriptioni18n']);
             var message = 'Successfully updated groups in Broadcast.';
             success(message);
         }
@@ -2877,7 +2877,7 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
         },
         success: function (response, textStatus, jqXHR) {
             var div_id = '#pumukitnewadmin_mm_template_broadcast_description';
-            $(div_id).html(response['description']);
+            $(div_id).html(response['descriptioni18n']);
             var message = 'Successfully updated Broadcast in all Multimedia Objects.';
             success(message);
         }
