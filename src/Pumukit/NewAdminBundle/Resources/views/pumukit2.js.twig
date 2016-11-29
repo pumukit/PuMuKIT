@@ -2650,7 +2650,7 @@ $(document).on('click', '#pumukitnewadmin_user_groups_submit', function() {
         },
         success: function(response){
             $('#list_users').html(response);
-            var message = 'Successfully updated groups in User.';
+            var message = '{% trans %}Successfully updated groups in User.{% endtrans %}';
             success(message);
         }
     });
@@ -2710,7 +2710,7 @@ function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
             if (response.redirect == 1) {
                 window.location.href = response.url;
             }
-            var message = 'Successfully updated groups in Mm.';
+            var message = '{% trans %}Successfully updated groups in Mm.{% endtrans %}';
             success(message);
         }
     });
@@ -2839,8 +2839,8 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatebroadcast_submit', function
         success: function (response, textStatus, jqXHR) {
             var template = response['template'];
             var div_id = '#pumukitnewadmin_mm' + template + '_broadcast_description';
-            $(div_id).html(response['description']);
-            var message = 'Successfully updated groups in Broadcast.';
+            $(div_id).html(response['descriptioni18n']);
+            var message = '{% trans %}Successfully updated Broadcast.{% endtrans %}';
             success(message);
         }
     });
@@ -2877,8 +2877,8 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
         },
         success: function (response, textStatus, jqXHR) {
             var div_id = '#pumukitnewadmin_mm_template_broadcast_description';
-            $(div_id).html(response['description']);
-            var message = 'Successfully updated Broadcast in all Multimedia Objects.';
+            $(div_id).html(response['descriptioni18n']);
+            var message = '{% trans %}Successfully updated Broadcast in all Multimedia Objects.{% endtrans %}';
             success(message);
         }
     });

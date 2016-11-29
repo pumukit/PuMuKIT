@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
-        <target xml:lang="zh-TW" state="needs-translation">Status</target>
+        <target xml:lang="zh-TW" state="translated">狀態</target>
       </trans-unit>
       <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU/iTunesU.">
         <source>Not published on PodcastEDU/iTunesU.</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="9b9d8a976b42e0bd66381797644943d5" resname="Published">
         <source>Published</source>
-        <target xml:lang="zh-TW" state="needs-translation">Published</target>
+        <target xml:lang="zh-TW" state="translated">已發布</target>
       </trans-unit>
       <trans-unit id="dd2771c80b506d8d4ff74b4ab60edb3d" resname="Podcast info For Series:">
         <source>Podcast info For Series:</source>

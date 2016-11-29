@@ -180,6 +180,11 @@ class EmbeddedBroadcast
 
     /**
      * to String.
+     *
+     * Only in English.
+     * For other languages:
+     * use getI18nDescription
+     * in EmbeddedBroadcastService
      */
     public function __toString()
     {
