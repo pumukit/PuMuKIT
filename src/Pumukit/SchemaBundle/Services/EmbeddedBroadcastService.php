@@ -377,12 +377,12 @@ class EmbeddedBroadcastService
     }
 
     /**
-     * Get i18n description
+     * Get i18n description.
      *
      * @param EmbeddedBroadcast $embeddedBroadcast
      * @param string            $locale
      */
-    public function getI18nDescription(EmbeddedBroadcast $embeddedBroadcast, $locale=null)
+    public function getI18nDescription(EmbeddedBroadcast $embeddedBroadcast, $locale = null)
     {
         $groups = $embeddedBroadcast->getGroups();
         $groupsDescription = '';

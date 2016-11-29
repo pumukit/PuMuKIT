@@ -804,15 +804,15 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->dm->flush();
 
         $locale = 'en';
-        $this->assertEquals((string)$emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
-        $this->assertEquals((string)$emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
-        $this->assertEquals((string)$emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
-        $this->assertEquals((string)$emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
+        $this->assertEquals((string) $emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
+        $this->assertEquals((string) $emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
+        $this->assertEquals((string) $emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
+        $this->assertEquals((string) $emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
 
         $locale = 'es';
-        $this->assertNotEquals((string)$emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
-        $this->assertNotEquals((string)$emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
-        $this->assertNotEquals((string)$emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
-        $this->assertNotEquals((string)$emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
+        $this->assertNotEquals((string) $emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
+        $this->assertNotEquals((string) $emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
+        $this->assertNotEquals((string) $emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
+        $this->assertNotEquals((string) $emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
     }
 }
