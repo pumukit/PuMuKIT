@@ -504,11 +504,12 @@ class PersonController extends AdminController implements NewAdminController
             $seriesId = $series->getId();
             $personService = $this->get('pumukitschema.person');
             $userService = $this->get('pumukitschema.user');
+            $translator = $this->get('translator');
             $person = $personService->findPersonById($request->get('id'));
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
         } catch (\Exception $e) {
-            return new Response("Can not delete relation of Person '".$person->getName()."' with MultimediaObject '".$multimediaObject->getId()."'. ".$e->getMessage(), 409);
+            return new Response($translator->trans("Can not delete relation of Person '").$person->getName().$translator->trans("' with MultimediaObject '").$multimediaObject->getId()."'. ", 409);
         }
 
         $template = '';
@@ -545,10 +546,10 @@ class PersonController extends AdminController implements NewAdminController
             if (0 === $personService->countMultimediaObjectsWithPerson($person)) {
                 $personService->deletePerson($person);
             } else {
-                return new Response($translator->trans("Can not delete Person '").$person->getName().$translator->trans("'. There are Multimedia objects with this Person."), 409);
+                return new Response($translator->trans("Can't delete Person'").' '.$person->getName().$translator->trans("'. There are Multimedia objects with this Person."), 409);
             }
         } catch (\Exception $e) {
-            return new Response($translator->trans("Can not delete Person '").$person->getName()."'. ", 409);
+            return new Response($translator->trans("Can't delete Person'").' '.$person->getName()."'. ", 409);
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_person_list'));
