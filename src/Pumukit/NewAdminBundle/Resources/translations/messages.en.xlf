@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
@@ -2541,6 +2541,26 @@
       <trans-unit id="155b1df1148cc19be298f9507aa3964d" resname="dfxp - Distribution Format Exchange Profile">
         <source>dfxp - Distribution Format Exchange Profile</source>
         <target>dfxp - Distribution Format Exchange Profile</target>
+      </trans-unit>
+      <trans-unit id="31e5ffbe4c0d489a392f12ebeb163c77" resname="IFRAME">
+        <source>IFRAME</source>
+        <target>IFRAME</target>
+      </trans-unit>
+      <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
+        <source>Successfully updated groups in User.</source>
+        <target>Successfully updated groups in User.</target>
+      </trans-unit>
+      <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
+        <source>Successfully updated groups in Mm.</source>
+        <target>Successfully updated groups in Mm.</target>
+      </trans-unit>
+      <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
+        <source>Successfully updated Broadcast.</source>
+        <target>Successfully updated Broadcast.</target>
+      </trans-unit>
+      <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
+        <source>Successfully updated Broadcast in all Multimedia Objects.</source>
+        <target>Successfully updated Broadcast in all Multimedia Objects.</target>
       </trans-unit>
     </body>
   </file>
