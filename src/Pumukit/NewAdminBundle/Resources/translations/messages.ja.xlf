@@ -2542,6 +2542,26 @@
         <source>dfxp - Distribution Format Exchange Profile</source>
         <target xml:lang="ja" state="needs-translation">dfxp - Distribution Format Exchange Profile</target>
       </trans-unit>
+      <trans-unit id="31e5ffbe4c0d489a392f12ebeb163c77" resname="IFRAME">
+        <source>IFRAME</source>
+        <target xml:lang="ja" state="needs-translation">IFRAME</target>
+      </trans-unit>
+      <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
+        <source>Successfully updated groups in User.</source>
+        <target xml:lang="ja" state="needs-translation">Successfully updated groups in User.</target>
+      </trans-unit>
+      <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
+        <source>Successfully updated groups in Mm.</source>
+        <target xml:lang="ja" state="needs-translation">Successfully updated groups in Mm.</target>
+      </trans-unit>
+      <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
+        <source>Successfully updated Broadcast.</source>
+        <target xml:lang="ja" state="needs-translation">Successfully updated Broadcast.</target>
+      </trans-unit>
+      <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
+        <source>Successfully updated Broadcast in all Multimedia Objects.</source>
+        <target xml:lang="ja" state="needs-translation">Successfully updated Broadcast in all Multimedia Objects.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
