@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class EmbeddedBroadcastService
 {
@@ -22,11 +23,12 @@ class EmbeddedBroadcastService
     private $authorizationChecker;
     private $router;
     private $templating;
+    private $translator;
 
     /**
      * Constructor.
      */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, $disabledBroadcast)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, TranslatorInterface $translator, $disabledBroadcast)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -36,6 +38,7 @@ class EmbeddedBroadcastService
         $this->templating = $templating;
         $this->router = $router;
         $this->disabledBroadcast = $disabledBroadcast;
+        $this->translator = $translator;
     }
 
     /**
@@ -371,5 +374,32 @@ class EmbeddedBroadcastService
             $this->deleteGroup($group, $multimediaObject, false);
         }
         $this->dm->flush();
+    }
+
+    /**
+     * Get i18n description
+     *
+     * @param EmbeddedBroadcast $embeddedBroadcast
+     * @param string            $locale
+     */
+    public function getI18nDescription(EmbeddedBroadcast $embeddedBroadcast, $locale=null)
+    {
+        $groups = $embeddedBroadcast->getGroups();
+        $groupsDescription = '';
+        if (($embeddedBroadcast->getType() === EmbeddedBroadcast::TYPE_GROUPS) && ($groups)) {
+            $groupsDescription = ': ';
+            foreach ($groups as $group) {
+                $groupsDescription .= $group->getName();
+                if ($group != $groups->last()) {
+                    $groupsDescription .= ', ';
+                }
+            }
+        }
+
+        if ($locale) {
+            return $this->translator->trans($embeddedBroadcast->getName(), array(), null, $locale).$groupsDescription;
+        }
+
+        return $this->translator->trans($embeddedBroadcast->getName()).$groupsDescription;
     }
 }

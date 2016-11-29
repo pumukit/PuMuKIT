@@ -222,6 +222,7 @@
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="templating" />
             <argument type="service" id="router" />
+            <argument type="service" id="translator" />
             <argument>%pumukit_new_admin.disable_broadcast_creation%</argument>
         </service>
 
