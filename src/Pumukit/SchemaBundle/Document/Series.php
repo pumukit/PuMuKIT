@@ -776,7 +776,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -813,7 +813,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -851,7 +851,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1017,7 +1017,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1041,5 +1041,4 @@ class Series
 
         return $url;
     }
-
 }
