@@ -11,6 +11,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class Element
 {
+
+    use Traits\Properties;
+
     /**
      * @var int
      *
