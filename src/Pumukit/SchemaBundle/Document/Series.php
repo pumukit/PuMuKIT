@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Series
 {
     use Traits\Keywords;
+    use Traits\Properties;
 
     const TYPE_SERIES = 0;
     const TYPE_PLAYLIST = 1;
@@ -138,13 +139,6 @@ class Series
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
-
-    /**
-     * @var array
-     *
-     * @MongoDB\Raw
-     */
-    private $properties = array();
 
     /**
      * Used locale to override Translation listener`s locale
@@ -782,7 +776,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -819,7 +813,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -857,7 +851,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1023,7 +1017,7 @@ class Series
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -1046,52 +1040,5 @@ class Series
         }
 
         return $url;
-    }
-
-    /**
-     * Get properties, null if none.
-     *
-     * @return array
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
-     * Set properties.
-     *
-     * @param array $properties
-     */
-    public function setProperties($properties)
-    {
-        $this->properties = $properties;
-    }
-
-    /**
-     * Get property, null if none.
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    public function getProperty($key)
-    {
-        if (isset($this->properties[$key])) {
-            return $this->properties[$key];
-        }
-
-        return null;
-    }
-
-    /**
-     * Set property.
-     *
-     * @param string $key
-     * @param string $value
-     */
-    public function setProperty($key, $value)
-    {
-        $this->properties[$key] = $value;
     }
 }
