@@ -18,10 +18,7 @@
               <tr>
                 <th></th>
                 <th>{% trans %}Title{% endtrans %}</th>
-                {# TODO  sf_user.getAttribute(user_type_id, 1) is 0 #}
-                {% if true %}
                 <th>{% trans %}Status{% endtrans %}</th>
-                {% endif %}
                 {% for channel in pub_channels %}
                 <th style="{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod)) ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
                 {% endfor %}
@@ -37,13 +34,12 @@
                   </div>
                 </td>
                 <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
-                {# TODO sf_user getAttribute('user_type_id', 1) is 0 #}
-                {% if true %}
                 <td>
                   <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
                                     if (status_selected.length != 0){
                                         $('select.status_change_pub').each(function(){$(this).val(status_selected)});
                                     }"
+                          {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
                           id="all_status_change_pub" class="form-control">
                     <option selected="selected"></option>
                     <option value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
@@ -51,13 +47,13 @@
                     <option value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
                   </select>
                 </td>
-                {% endif %}
                 {% for channel in pub_channels %}
+                {% set disabled = (not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod)) %}
                 <td>
-                  <div class="checkbox">
+                  <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
                     <label>
                       <input type="checkbox"
-                             {% if not channel.display or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod) %}
+                             {% if disabled %}
                              disabled="disabled"
                              {% else %}
                              onclick="window.click_checkbox_channel_changepub_all('{{ channel.id }}', this.checked);"
@@ -80,21 +76,21 @@
                   </div>
                 </td>
                 <td>{{ mm.getTitle() }}</td>
-                {# TODO sf_usergetAttribute('user_type_id', 1) is 0 #}
-                {% if true %}
                 <td>
-                  <select name="data[{{ mm.id }}][status]" id="status_change_pub_{{ mm.id }}" class="status_change_pub form-control">
+                  <select name="data[{{ mm.id }}][status]"
+                          id="status_change_pub_{{ mm.id }}"
+                          {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
+                          class="status_change_pub form-control">
                     <option {{ ((mm_status.published) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.published }}">{% trans %}Published{% endtrans %}</option>
                     <option {{ ((mm_status.blocked) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.blocked }}">{% trans %}Blocked{% endtrans %}</option>
                     <option {{ ((mm_status.hidden) == mm.status) ? 'selected="selected"' : '' }} value="{{ mm_status.hidden }}">{% trans %}Hidden{% endtrans %}</option>
                   </select>
                 </td>
-                {% endif %}
 
                 {% for channel in pub_channels %}
-                {% if not channel.display or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod) %}
+                {% if not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod) %}
                 <td>
-                  <div class="checkbox">
+                  <div class="checkbox pmk_disabled_checkbox">
                     <label>
                       <input type="checkbox" disabled="disabled">
                     </label>
