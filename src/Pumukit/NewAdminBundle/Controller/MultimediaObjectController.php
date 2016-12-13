@@ -549,6 +549,75 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
+     * Search a tag.
+     */
+    public function searchTagAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+
+        $search_text = $request->get('search_text');
+        $lang = $request->getLocale();
+        $mmId = $request->get('mmId');
+
+        $parent = $repo->findOneById($request->get('parent'));
+        $parent_path = str_replace('|', "\|", $parent->getPath());
+
+        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
+        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
+                  //->limit(20)
+                  ->getQuery()
+                  ->execute();
+        $result = $children->toArray();
+
+        if (!$result) {
+            return $this->render('PumukitNewAdminBundle:MultimediaObject:listtagsajaxnone.html.twig',
+                                 array('mmId' => $mmId, 'parentId' => $parent->getId()));
+        }
+
+        foreach ($children->toArray() as $tag) {
+            $result = $this->getAllParents($tag, $result, $parent->getId());
+        }
+
+        usort(
+            $result,
+            function ($x, $y) {
+                return strcasecmp($x->getCod(), $y->getCod());
+            }
+        );
+
+        return $this->render(
+            'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
+            array('nodes' => $result, 'mmId' => $mmId, 'block_tag' => $parent->getId(), 'parent' => $parent, 'search_text' => $search_text)
+        );
+    }
+
+    private function getAllParents($element, $tags, $top_parent)
+    {
+        if ($element->getParent() != null) {
+            $parentMissing = true;
+            foreach ($tags as $tag) {
+                if ($element->getParent() == $tag) {
+                    $parentMissing = false;
+                    break;
+                }
+            }
+
+            if ($parentMissing) {
+                $parent = $element->getParent(); //"retrieveByPKWithI18n");
+                if ($parent->getId() != $top_parent) {
+                    $tags[] = $parent;
+                    $tags = $this->getAllParents($parent, $tags, $top_parent);
+                }
+            }
+        }
+
+        return $tags;
+    }
+
+    /**
      * Get the view list of multimedia objects
      * belonging to a series.
      */

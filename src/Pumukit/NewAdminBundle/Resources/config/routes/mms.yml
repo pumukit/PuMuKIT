@@ -130,6 +130,13 @@ pumukitnewadmin_mms_getchildrentag:
     defaults:
         _controller: pumukitnewadmin.controller.mms:getChildrenTagAction
 
+pumukitnewadmin_mms_searchtag:
+    pattern: /search/{search_text}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:searchTagAction
+        search_text:
+
 pumukitnewadmin_mms_list:
     pattern: /list
     methods: [GET, POST]

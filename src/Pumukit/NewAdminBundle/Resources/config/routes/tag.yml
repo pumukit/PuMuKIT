@@ -39,10 +39,3 @@ pumukitnewadmin_tag_batch_delete:
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:batchDelete
-
-pumukitnewadmin_tag_search:
-    pattern: /search/{search_text}
-    methods: [GET, POST]
-    defaults:
-        _controller: PumukitNewAdminBundle:Tag:search
-        search_text:
