@@ -9,7 +9,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.6.*",
+        "symfony/symfony": "2.7.*",
         "doctrine/mongodb-odm": "1.0.x-dev#328c1eba840a4f3b81d3a28211b3f1ce5445ceaf",
         "doctrine/mongodb-odm-bundle": "3.0.x-dev#1ac417f1e1374474778707f9f0d7d82b19d17922",
         "twig/extensions": "~1.0",
