@@ -35,7 +35,7 @@
           {% endspaceless %}
         </td>
         <td>
-          {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
+          {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify status of all Multimedia Objects{% endtrans %})"></i>
           </a>

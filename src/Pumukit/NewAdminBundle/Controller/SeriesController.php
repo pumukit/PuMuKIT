@@ -452,18 +452,24 @@ class SeriesController extends AdminController implements NewAdminController
         foreach ($values as $id => $value) {
             $mm = $repo->find($id);
             if ($mm) {
-                foreach ($value['channels'] as $channelId => $mustContainsTag) {
-                    $mustContainsTag = ('true' == $mustContainsTag);
-                    $tag = $repoTags->find($channelId);
-                    if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod())) {
-                        if ($mustContainsTag && (!($mm->containsTag($tag)))) {
-                            $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
-                        } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
-                            $tagAdded = $tagService->removeTagFromMultimediaObject($mm, $tag->getId());
+                if ($this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL)) {
+                    foreach ($value['channels'] as $channelId => $mustContainsTag) {
+                        $mustContainsTag = ('true' == $mustContainsTag);
+                        $tag = $repoTags->find($channelId);
+                        if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod())) {
+                            if ($mustContainsTag && (!($mm->containsTag($tag)))) {
+                                $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
+                            } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
+                                $tagAdded = $tagService->removeTagFromMultimediaObject($mm, $tag->getId());
+                            }
                         }
                     }
                 }
-                $mm->setStatus($value['status']);
+
+                if ($this->isGranted(Permission::CHANGE_MMOBJECT_STATUS)) {
+                    $mm->setStatus($value['status']);
+                }
+
                 $dm->persist($mm);
             }
         }
