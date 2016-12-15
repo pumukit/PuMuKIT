@@ -38,7 +38,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        return array('autostart' => $request->query->get('autostart', 'true'),
+        return array('autostart' => $request->query->get('autostart', 'false'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
@@ -77,7 +77,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        return array('autostart' => $request->query->get('autostart', 'true'),
+        return array('autostart' => $request->query->get('autostart', 'false'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
