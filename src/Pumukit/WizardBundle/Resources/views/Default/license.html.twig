@@ -1,0 +1,38 @@
+{% extends 'PumukitWizardBundle:Default:index.html.twig' %}
+{% block wizard_body %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': true})) %}
+<div class="well">
+  <form id="pumukitwizard_license_form" autocomplete="off"
+        action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
+    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
+    <fieldset>
+      <div class="col-md-7">
+        <div class="form-group" id="pumukitwizard_license_text">
+          <input type="textarea" value="{{ license_text }}"/>
+        </div>
+        <div class="form-group" id="pumukitwizard_license_accept_text">
+          <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"
+                     name="pumukitwizard_form_data[license][accept]"
+                     id="pumukitwizard_license_accept"
+                     class="license_input_checkbox"
+                     />
+              {% trans %}Accept license{% endtrans %}
+            </label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+{% endblock wizard_body %}
