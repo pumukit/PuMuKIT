@@ -109,12 +109,26 @@ class TagService
      */
     public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
-        $removeTags = array();
-
         $tag = $this->repository->find($tagId);
         if (!$tag) {
             throw new \Exception('Tag with id '.$tagId.' not found.');
         }
+
+        return $this->removeTag($mmobj, $tag, $executeFlush);
+    }
+
+    /**
+     * Remove Tag from Multimedia Object.
+     *
+     * @param MultimediaObject $mmobj
+     * @param string           $tagId
+     * @param bool             $executeFlush
+     *
+     * @return Array[Tag] removed tags
+     */
+    public function removeTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
+    {
+        $removeTags = array();
 
         do {
             $children = $tag->getChildren();

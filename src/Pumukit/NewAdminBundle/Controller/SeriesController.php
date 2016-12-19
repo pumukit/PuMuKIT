@@ -458,22 +458,24 @@ class SeriesController extends AdminController implements NewAdminController
                         $tag = $repoTags->find($channelId);
                         if (!$this->isGranted(Permission::PREFIX_ROLE_TAG_DISABLE.$tag->getCod())) {
                             if ($mustContainsTag && (!($mm->containsTag($tag)))) {
-                                $tagAdded = $tagService->addTagToMultimediaObject($mm, $tag->getId());
+                                $tagAdded = $tagService->addTag($mm, $tag);
                             } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
-                                $tagAdded = $tagService->removeTagFromMultimediaObject($mm, $tag->getId());
+                                $tagAdded = $tagService->removeTag($mm, $tag);
                             }
                         }
                     }
                 }
 
-                if ($this->isGranted(Permission::CHANGE_MMOBJECT_STATUS)) {
+                if (
+                    $this->isGranted(Permission::CHANGE_MMOBJECT_STATUS) &&
+                    $value['status'] != $mm->getStatus()
+                ) {
                     $mm->setStatus($value['status']);
+                    $dm->persist($mm);
+                    $dm->flush();
                 }
-
-                $dm->persist($mm);
             }
         }
-        $dm->flush();
     }
 
     /**
