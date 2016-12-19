@@ -3,7 +3,15 @@
 <div class="row">
   <div class="col-md-12">
     <ul id="mainNav" class="nav nav-pills nav-wizard">
-      <li class="{% if not show_series %}disabled{%else%}{% if (step == 0) %}active{% elseif ((step == 1) or (step == 2 and not access_inbox)) %}lastdone{% elseif (step > 1) %}done{% endif %}{% endif %}">
+      {% if show_license %}
+      <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 1) or (step == 2 and not access_inbox)) %}lastdone{% elseif (step > 1) %}done{% endif %}{% endif %}">
+        <a id="pumukitwizard_type_previous" href="#">{% trans with {'%i-1%': i-1} %}Step %i-1%: License{% endtrans %}<br/>
+          <span>{% trans %}Accept the license{% endtrans %}</span>
+        </a>
+        <div class="nav-arrow"></div>
+      </li>
+      {% endif %}
+      <li class="{% if not show_series or step == -1 %}disabled{%else%}{% if (step == 0) %}active{% elseif ((step == 1) or (step == 2 and not access_inbox)) %}lastdone{% elseif (step > 1) %}done{% endif %}{% endif %}">
         <a id="pumukitwizard_type_previous" href="#">{% trans with {'%i%': i} %}Step %i%: Series{% endtrans %}<br/>
           <span>{% trans %}Create a new Series for the Multimedia Object{% endtrans %}</span>
         </a>

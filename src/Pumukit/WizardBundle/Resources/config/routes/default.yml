@@ -4,6 +4,12 @@ pumukitwizard_default_index:
     defaults:
         _controller: PumukitWizardBundle:Default:series
 
+pumukitwizard_default_license:
+    pattern: /license
+    methods: [GET, POST]
+    defaults:
+        _controller: PumukitWizardBundle:Default:license
+
 pumukitwizard_default_series:
     pattern: /series
     methods: [GET, POST]
