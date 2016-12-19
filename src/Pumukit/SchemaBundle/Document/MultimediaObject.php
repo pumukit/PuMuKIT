@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class MultimediaObject
 {
     use Traits\Keywords;
+    use Traits\Properties;
 
     const STATUS_PUBLISHED = 0;
     const STATUS_BLOQ = 1; //Kept for backwards compatibility
@@ -171,13 +172,6 @@ class MultimediaObject
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
-
-    /**
-     * @var string
-     *
-     * @MongoDB\Raw
-     */
-    private $properties = array();
 
     /**
      * @var string
@@ -2620,65 +2614,6 @@ class MultimediaObject
         }
 
         return true;
-    }
-
-    /**
-     * Get properties, null if none.
-     *
-     * @return array
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
-     * Set properties.
-     *
-     * @param array $properties
-     */
-    public function setProperties($properties)
-    {
-        $this->properties = $properties;
-    }
-
-    /**
-     * Get property, null if none.
-     *
-     * @param string $key
-     *
-     * @return string|null
-     */
-    public function getProperty($key)
-    {
-        if (isset($this->properties[$key])) {
-            return $this->properties[$key];
-        }
-
-        return null;
-    }
-
-    /**
-     * Set property.
-     *
-     * @param string $key
-     * @param string $value
-     */
-    public function setProperty($key, $value)
-    {
-        $this->properties[$key] = $value;
-    }
-
-    /**
-     * Remove property.
-     *
-     * @param string $key
-     */
-    public function removeProperty($key)
-    {
-        if (isset($this->properties[$key])) {
-            unset($this->properties[$key]);
-        }
     }
 
     /**
