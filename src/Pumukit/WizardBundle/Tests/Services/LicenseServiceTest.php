@@ -78,4 +78,16 @@ class LicenseServiceTest extends WebTestCase
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
     }
+
+    public function testGetLicenseContent()
+    {
+        $showLicense = true;
+        $locales = array('en');
+        $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->templating, $this->translator);
+
+        $licenseFile = realpath($this->licenseDir.'/en.txt');
+        $licenseContent = @file_get_contents($licenseFile);
+        $this->assertEquals($licenseContent, $licenseService->getLicenseContent());
+        $this->assertEquals($licenseContent, $licenseService->getLicenseContent('en'));
+    }
 }
