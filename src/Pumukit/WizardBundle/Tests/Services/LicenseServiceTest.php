@@ -51,6 +51,7 @@ class LicenseServiceTest extends WebTestCase
     {
         $showLicense = false;
         $locales = array('en');
+        $locale = 'en';
         $content = 'test';
         $templating = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')
             ->disableOriginalConstructor()
@@ -60,20 +61,20 @@ class LicenseServiceTest extends WebTestCase
             ->will($this->returnValue($content));
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $templating, $this->translator);
         $formData = array();
-        $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData));
+        $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
         
         $showLicense = true;
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $templating, $this->translator);
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $locale);
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
         
         $formData = array('license' => array('accept' => true));
-        $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData));
+        $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
    
         $formData = array('license' => array('accept' => false));
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $locale);
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
