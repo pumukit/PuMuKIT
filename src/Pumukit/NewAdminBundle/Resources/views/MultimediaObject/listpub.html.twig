@@ -1,7 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% for pub in pubs %}
       {% set status = mm.containsTag(pub) %}
-      {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod))) %}
+      {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
       <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
         <label>
         <input type="checkbox"
