@@ -41,7 +41,7 @@ class DefaultController extends Controller
 
         return array(
             'license_text' => $licenseContent,
-            'form_data' => $formData
+            'form_data' => $formData,
         );
     }
 
