@@ -52,7 +52,7 @@ class PermissionService
         }
 
         foreach ($tag->getChildren() as $pubchannel) {
-            $return[Permission::PREFIX_ROLE_TAG_DISABLE.$pubchannel->getCod()] = array(
+            $return[Permission::getRoleTagDisableForPubChannel($pubchannel->getCod())] = array(
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" disabled',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),
@@ -60,7 +60,7 @@ class PermissionService
                 ),
             );
 
-            $return[Permission::PREFIX_ROLE_TAG_DEFAULT.$pubchannel->getCod()] = array(
+            $return[Permission::getRoleTagDefaultForPubChannel($pubchannel->getCod())] = array(
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" activated by default',
                 'dependencies' => array(
                     PermissionProfile::SCOPE_GLOBAL => array(),

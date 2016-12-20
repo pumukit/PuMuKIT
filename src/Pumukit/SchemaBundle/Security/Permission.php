@@ -211,6 +211,11 @@ class Permission
         return false;
     }
 
+    public static function getRoleTagDefaultForPubChannel($cod)
+    {
+        return self::PREFIX_ROLE_TAG_DEFAULT.strtoupper($cod);
+    }
+
     const PREFIX_ROLE_TAG_DISABLE = 'ROLE_TAG_DISABLE_';
 
     public static function isRoleTagDisable($role)
@@ -225,5 +230,10 @@ class Permission
         }
 
         return false;
+    }
+
+    public static function getRoleTagDisableForPubChannel($cod)
+    {
+        return self::PREFIX_ROLE_TAG_DISABLE.strtoupper($cod);
     }
 }
