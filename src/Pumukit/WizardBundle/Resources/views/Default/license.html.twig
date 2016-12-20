@@ -2,13 +2,41 @@
 {% block wizard_body %}
 {% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': true})) %}
 <div class="well">
+  {% if form_data.series is defined %}
+    {% if form_data.series.id is defined %}
+      {% set series_id = form_data.series.id %}
+    {% else %}
+      {% set series_id = null %}
+    {% endif %}
+  {% else %}
+    {% set series_id = null %}
+  {% endif %}
+  {% if form_data.license is defined %}
+    {% if form_data.license.accept is defined %}
+      {% set license_accept = form_data.license.accept %}
+    {% else %}
+      {% set license_accept = null %}
+    {% endif %}
+  {% else %}
+    {% set license_accept = null %}
+  {% endif %}  
+  {% if null == series_id %}
   <form id="pumukitwizard_license_form" autocomplete="off"
-        action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
-    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="">
+        action="{{ path('pumukitwizard_default_series') }}" method="POST">
+  {% else %}
+  <form id="pumukitwizard_license_form" autocomplete="off"
+        action="{{ path('pumukitwizard_default_type', {'id': form_data.series.id}) }}" method="POST">
+    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ series_id }}">
+  {% endif %}
     <div class="row">
       <div class="col-md-12">
         <div class="text-right">
-          <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+          {% if null == series_id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
           <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
         </div>
       </div>
@@ -30,10 +58,14 @@
                      name="pumukitwizard_form_data[license][accept]"
                      id="pumukitwizard_license_accept"
                      class="license_input_checkbox"
+                     {{ license_accept ? 'checked="checked"' : '' }}
                      />
               {% trans %}Accept license{% endtrans %}
             </label>
           </div>
+          {% if show_error %}
+          <div class="wizard-error">{% trans %}You must accept the license to continue.{% endtrans %}</div>
+          {% endif %}
         </div>
       </div>
     </fieldset>

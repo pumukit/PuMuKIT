@@ -11,6 +11,9 @@
     <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_multimediaobject_series_{{ field }}_{{ locale }}" value="{{ value }}">
     {% endfor %}
     {% endfor %}
+    {% if license_enable %}
+    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
+    {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
     <div class="row">
       <div class="col-md-12">

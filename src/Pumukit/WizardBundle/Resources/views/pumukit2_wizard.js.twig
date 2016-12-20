@@ -1,5 +1,14 @@
 $(function(){
 
+    $('#pumukitwizard_series_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            var typeForm = $('#pumukitwizard_body form')[0];
+            typeForm.action = "{{ path('pumukitwizard_default_license')|raw }}";
+            typeForm.submit();
+        }
+        return false;
+    });
+
     $('#pumukitwizard_type_previous').on('click', function(e){
         if($(this).parent().hasClass('lastdone')){
             var typeForm = $('#pumukitwizard_body form')[0];
