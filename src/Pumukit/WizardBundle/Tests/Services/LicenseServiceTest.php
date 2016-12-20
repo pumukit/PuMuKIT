@@ -20,7 +20,7 @@ class LicenseServiceTest extends WebTestCase
         $this->templating = static::$kernel->getContainer()->get('templating');
         $this->translator = static::$kernel->getContainer()->get('translator');
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
-        $this->licenseDir = realpath($this->resourcesDir . '/data/license');
+        $this->licenseDir = realpath($this->resourcesDir.'/data/license');
     }
 
     public function tearDown()
@@ -62,17 +62,17 @@ class LicenseServiceTest extends WebTestCase
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $templating, $this->translator);
         $formData = array();
         $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
-        
+
         $showLicense = true;
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $templating, $this->translator);
         $response = $licenseService->isLicenseEnabledAndAccepted($formData, $locale);
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         $this->assertEquals($content, $response->getContent());
-        
+
         $formData = array('license' => array('accept' => true));
         $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
-   
+
         $formData = array('license' => array('accept' => false));
         $response = $licenseService->isLicenseEnabledAndAccepted($formData, $locale);
         $this->assertTrue($response instanceof Response);

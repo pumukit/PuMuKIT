@@ -15,9 +15,9 @@ class LicenseService
     private $translator;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param boolean             $showLicense
+     * @param bool                $showLicense
      * @param string              $licenseDir
      * @param array               $locales
      * @param EngineInterface     $templating
@@ -28,7 +28,7 @@ class LicenseService
         $this->showLicense = $showLicense;
         $this->licenseDir = realpath($licenseDir);
         if ($this->showLicense && !$this->licenseDir) {
-            throw new \Exception($this->translator->trans('Directory path not found: ') . $licenseDir);
+            throw new \Exception($this->translator->trans('Directory path not found: ').$licenseDir);
         }
         $this->locales = $locales;
         $this->templating = $templating;
@@ -37,32 +37,32 @@ class LicenseService
     }
 
     /**
-     * Is license enabled to be shown on wizard steps
+     * Is license enabled to be shown on wizard steps.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
         return $this->showLicense;
     }
 
-    
     /**
-     * Is license enabled and accepted
+     * Is license enabled and accepted.
      *
-     * @param  array            $formData
-     * @return boolean|Response
+     * @param array $formData
+     *
+     * @return bool|Response
      */
     public function isLicenseEnabledAndAccepted($formData = array(), $locale = null)
     {
         if ($this->isEnabled()) {
-	        if (array_key_exists('license', $formData)) {
+            if (array_key_exists('license', $formData)) {
                 if (array_key_exists('accept', $formData['license'])) {
-	                if ($formData['license']['accept']) {
+                    if ($formData['license']['accept']) {
                         return true;
                     } else {
                         return $this->renderLicenseNotAccepted($formData, $locale);
-		            }
+                    }
                 }
             }
 
@@ -73,15 +73,16 @@ class LicenseService
     }
 
     /**
-     * Get license content file
+     * Get license content file.
      *
-     * @param  string $locale
+     * @param string $locale
+     *
      * @return string $licenseContent
      */
     public function getLicenseContent($locale = null)
     {
         if ($locale) {
-            $licenseFile = realpath($this->licenseDir . '/' . $locale . '.txt');
+            $licenseFile = realpath($this->licenseDir.'/'.$locale.'.txt');
         } else {
             $licenseFile = $this->getAnyLicenseFile();
         }
@@ -98,12 +99,12 @@ class LicenseService
     }
 
     /**
-     * Check license files
+     * Check license files.
      *
      * Checks if there is any valid file in license directory.
      * Valid file names are {locale}.txt
      *
-     * @return boolean|Exception true if there is any valid file, throws Exception otherwise
+     * @return bool|Exception true if there is any valid file, throws Exception otherwise
      */
     private function checkLicenseFiles()
     {
@@ -119,7 +120,7 @@ class LicenseService
     }
 
     /**
-     * Get any license file path in locales
+     * Get any license file path in locales.
      *
      * @return string $filepath
      */
@@ -127,7 +128,7 @@ class LicenseService
     {
         $licenseFile = false;
         foreach ($this->locales as $locale) {
-            $licenseFile = realpath($this->licenseDir . '/' . $locale . '.txt');
+            $licenseFile = realpath($this->licenseDir.'/'.$locale.'.txt');
             if ($licenseFile) {
                 break;
             }
@@ -137,10 +138,11 @@ class LicenseService
     }
 
     /**
-     * Render license not accepted
+     * Render license not accepted.
      *
-     * @param  array    $formData
-     * @param  string   $locale
+     * @param array  $formData
+     * @param string $locale
+     *
      * @return Response
      */
     private function renderLicenseNotAccepted($formData = array(), $locale = null)

@@ -34,6 +34,7 @@ class DefaultController extends Controller
                     }
                 }
             }
+
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
@@ -42,10 +43,9 @@ class DefaultController extends Controller
         return array(
             'license_text' => $licenseContent,
             'form_data' => $formData,
-            'show_error' => $showError
+            'show_error' => $showError,
         );
     }
-
 
     /**
      * @Template()
@@ -463,7 +463,7 @@ class DefaultController extends Controller
             return $series;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -483,7 +483,7 @@ class DefaultController extends Controller
             return $multimediaObject;
         }
 
-        return null;
+        return;
     }
 
     /**

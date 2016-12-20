@@ -19,18 +19,17 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_wizard');
-	$rootNode
-	  ->children()
-	    ->booleanNode('show_license')
-	      ->defaultFalse()
-	      ->info('Enable showing license in first step')
-	    ->end()
-	    ->scalarNode('license_dir')
-	      ->defaultValue('')
-	      ->info("Path dir of the license files to show in first step if enabled according to locale. E.g.: '%kernel.root_dir%/../src/Pumukit/WizardBundle/Resources/data/license/'. In this folder there should be files named after its locale language: es.txt, en.txt, fr.txt, etc.")
-	    ->end()
-	  ->end();
-	  
+        $rootNode
+      ->children()
+        ->booleanNode('show_license')
+          ->defaultFalse()
+          ->info('Enable showing license in first step')
+        ->end()
+        ->scalarNode('license_dir')
+          ->defaultValue('')
+          ->info("Path dir of the license files to show in first step if enabled according to locale. E.g.: '%kernel.root_dir%/../src/Pumukit/WizardBundle/Resources/data/license/'. In this folder there should be files named after its locale language: es.txt, en.txt, fr.txt, etc.")
+        ->end()
+      ->end();
 
         return $treeBuilder;
     }
