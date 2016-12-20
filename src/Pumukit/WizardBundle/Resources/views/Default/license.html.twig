@@ -44,6 +44,7 @@
     <fieldset>
       <div class="col-md-7">
         <div class="form-group" id="pumukitwizard_license_text">
+          <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
           <div class="form-row license-wrapper">
             <pre>
               {{ license_text|raw }}
@@ -51,7 +52,6 @@
           </div>
         </div>
         <div class="form-group" id="pumukitwizard_license_accept_text">
-          <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
           <div class="checkbox">
             <label>
               <input type="checkbox"
@@ -63,9 +63,7 @@
               {% trans %}Accept license{% endtrans %}
             </label>
           </div>
-          {% if show_error %}
-          <div class="wizard-error">{% trans %}You must accept the license to continue.{% endtrans %}</div>
-          {% endif %}
+          <div id="pumukitwizard_license_error" class="wizard-error" hidden="hidden">{% trans %}You must accept the license to continue.{% endtrans %}</div>
         </div>
       </div>
     </fieldset>
