@@ -88,17 +88,20 @@
                 </td>
 
                 {% for channel in pub_channels %}
+                {% set status = mm.containsTag(channel) %}
                 {% if not channel.display or not is_granted('ROLE_CHANGE_MMOBJECT_PUBCHANNEL') or is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper) %}
                 <td>
                   <div class="checkbox pmk_disabled_checkbox">
                     <label>
-                      <input type="checkbox" disabled="disabled">
+                      <input type="checkbox"
+                             disabled="disabled"
+                             {{ (status) ? 'checked="checked"' : "" }}
+                             />
                     </label>
                   </div>
                 </td>
                 {% else %}
                 <td>
-                  {% set status = mm.containsTag(channel) %}
                   <div class="checkbox">
                     <label>
                       <input type="checkbox"
