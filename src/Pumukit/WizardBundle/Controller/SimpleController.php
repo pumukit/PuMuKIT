@@ -29,7 +29,7 @@ class SimpleController extends Controller
             'series' => $series,
             'languages' => $languages,
             'show_license' => $licenseService->isEnabled(),
-            'license_text' => $licenseContent
+            'license_text' => $licenseContent,
         );
     }
 
