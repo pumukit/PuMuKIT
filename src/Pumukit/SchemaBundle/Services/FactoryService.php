@@ -177,7 +177,7 @@ class FactoryService
                 $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
             }
             foreach ($loggedInUser->getRoles() as $role) {
-                if ($pubCh = Permission::getPubChannelForRoleTagDefaul($role)) {
+                if ($pubCh = Permission::getPubChannelForRoleTagDefault($role)) {
                     $this->tagService->addTagByCodToMultimediaObject($mm, $pubCh, false);
                 }
             }

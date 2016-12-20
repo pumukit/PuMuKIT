@@ -197,14 +197,14 @@ class Permission
 
     const PREFIX_ROLE_TAG_DEFAULT = 'ROLE_TAG_DEFAULT_';
 
-    public static function isRoleTagDefaul($role)
+    public static function isRoleTagDefault($role)
     {
         return 0 === strpos($role, self::PREFIX_ROLE_TAG_DEFAULT);
     }
 
-    public static function getPubChannelForRoleTagDefaul($role)
+    public static function getPubChannelForRoleTagDefault($role)
     {
-        if (self::isRoleTagDefaul($role)) {
+        if (self::isRoleTagDefault($role)) {
             return substr($role, strlen(self::PREFIX_ROLE_TAG_DEFAULT));
         }
 
