@@ -28,7 +28,7 @@ class LicenseService
         $this->showLicense = $showLicense;
         $this->licenseDir = realpath($licenseDir);
         if ($this->showLicense && !$this->licenseDir) {
-            throw new \Exception($this->translator->trans('Directory path not found: ' . $licenseDir));
+            throw new \Exception($this->translator->trans('Directory path not found: ') . $licenseDir);
         }
         $this->locales = $locales;
         $this->templating = $templating;
@@ -53,7 +53,7 @@ class LicenseService
      * @param  array            $formData
      * @return boolean|Response
      */
-    public function isLicenseEnabledAndAccepted($formData = array())
+    public function isLicenseEnabledAndAccepted($formData = array(), $locale = null)
     {
         if ($this->isEnabled()) {
 	        if (array_key_exists('license', $formData)) {
@@ -61,12 +61,12 @@ class LicenseService
 	                if ($formData['license']['accept']) {
                         return true;
                     } else {
-                        return $this->renderLicenseNotAccepted();
+                        return $this->renderLicenseNotAccepted($locale);
 		            }
                 }
             }
-            
-            return $this->renderLicenseNotAccepted();
+
+            return $this->renderLicenseNotAccepted($locale);
         }
 
         return false;
@@ -141,9 +141,10 @@ class LicenseService
      *
      * @return Response
      */
-    private function renderLicenseNotAccepted()
+    private function renderLicenseNotAccepted($locale = null)
     {
-        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('show_error' => true));
+        $licenseContent = $this->getLicenseContent($locale);
+        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('show_error' => true, 'license_text' => $licenseContent));
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
