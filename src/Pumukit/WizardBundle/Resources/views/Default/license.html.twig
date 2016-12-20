@@ -16,7 +16,11 @@
     <fieldset>
       <div class="col-md-7">
         <div class="form-group" id="pumukitwizard_license_text">
-          <input type="textarea" value="{{ license_text }}"/>
+          <div class="form-row license-wrapper">
+            <pre>
+              {{ license_text|raw }}
+            </pre>
+          </div>
         </div>
         <div class="form-group" id="pumukitwizard_license_accept_text">
           <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>

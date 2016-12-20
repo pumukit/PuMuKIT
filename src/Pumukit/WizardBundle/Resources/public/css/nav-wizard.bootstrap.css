@@ -184,3 +184,8 @@
 .nav-wizard>li>a {
   padding: 30px 30px;
 }
+
+.license-wrapper {
+    height: 300px;
+    overflow-y: scroll
+}
