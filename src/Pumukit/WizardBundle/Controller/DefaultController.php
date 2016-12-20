@@ -96,7 +96,6 @@ class DefaultController extends Controller
 
             return $this->redirect($this->generateUrl('pumukitwizard_default_option', array('pumukitwizard_form_data' => $formData)));
         }
-        dump($formData);
         $licenseService = $this->get('pumukit_wizard.license');
         $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
