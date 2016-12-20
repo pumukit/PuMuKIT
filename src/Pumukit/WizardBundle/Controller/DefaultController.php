@@ -38,12 +38,10 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
-        $showError = $request->get('show_error');
 
         return array(
             'license_text' => $licenseContent,
-            'form_data' => $formData,
-            'show_error' => $showError,
+            'form_data' => $formData
         );
     }
 

@@ -148,7 +148,7 @@ class LicenseService
     private function renderLicenseNotAccepted($formData = array(), $locale = null)
     {
         $licenseContent = $this->getLicenseContent($locale);
-        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('show_error' => true, 'license_text' => $licenseContent, 'form_data' => $formData));
+        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('license_text' => $licenseContent, 'form_data' => $formData));
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }

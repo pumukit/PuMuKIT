@@ -77,4 +77,15 @@ $(function(){
         }
         return false;
     });
+
+    $('#pumukitwizard_license_form').on('submit', function(e){
+        e.preventDefault();
+        var license_accept = $('#pumukitwizard_license_accept').is(':checked');
+        if(license_accept){
+            this.submit();
+        } else {
+            $('#pumukitwizard_license_error').show();
+        }
+        return false;
+    });
 });
