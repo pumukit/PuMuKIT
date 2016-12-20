@@ -28,7 +28,7 @@ class DefaultController extends Controller
         if (!$licenseService->isEnabled()) {
             // Render series or multimedia object
         }
-        $licenseContenct = $this->getLicenseContent($request->getLocale());
+        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
 
         return array(
             'license_text' => $licenseContent,
@@ -43,7 +43,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
@@ -60,7 +60,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
@@ -102,7 +102,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
@@ -121,7 +121,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
@@ -138,7 +138,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
@@ -166,7 +166,7 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData);
+        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if ($response instanceof Response) {
             return $response;
         }
