@@ -6,6 +6,9 @@
         enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitwizard_default_upload') }}" method="POST">
     <iframe name="iframeUpload" style="display:none" src=""></iframe>
+    {% if license_enable %}
+    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
+    {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ form_data.series.id }}">
     {% for field, locales in form_data.series %}
     {% for locale, value in locales %}

@@ -4,6 +4,9 @@
 <div class="well">
   <form id="pumukitwizard_type_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_option') }}" method="POST">
+    {% if license_enable %}
+    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
+    {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ series_id }}">
     {% for field, locales in form_data.series %}
     {% for locale, value in locales %}

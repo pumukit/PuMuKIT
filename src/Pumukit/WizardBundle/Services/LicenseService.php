@@ -61,12 +61,12 @@ class LicenseService
 	                if ($formData['license']['accept']) {
                         return true;
                     } else {
-                        return $this->renderLicenseNotAccepted($locale);
+                        return $this->renderLicenseNotAccepted($formData, $locale);
 		            }
                 }
             }
 
-            return $this->renderLicenseNotAccepted($locale);
+            return $this->renderLicenseNotAccepted($formData, $locale);
         }
 
         return false;
@@ -139,12 +139,14 @@ class LicenseService
     /**
      * Render license not accepted
      *
+     * @param  array    $formData
+     * @param  string   $locale
      * @return Response
      */
-    private function renderLicenseNotAccepted($locale = null)
+    private function renderLicenseNotAccepted($formData = array(), $locale = null)
     {
         $licenseContent = $this->getLicenseContent($locale);
-        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('show_error' => true, 'license_text' => $licenseContent));
+        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('show_error' => true, 'license_text' => $licenseContent, 'form_data' => $formData));
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
