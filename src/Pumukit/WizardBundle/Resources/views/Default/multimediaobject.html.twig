@@ -34,52 +34,6 @@
     <fieldset>
       {# TODO build input fields with for loop #}
       <div class="col-md-7">
-        {% if show_tags and (available_tags|length > 0) %}
-        <div class="form-group" id="pumukitwizard_multimediaobject_tag">
-          <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
-          <div class="form-control-wrapper">
-            <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
-              <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
-              {% for tag in available_tags %}
-              {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
-              <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
-              {% else %}
-              <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
-              {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-        {% endif %}
-        {% if show_object_license %}
-        <div class="form-group" id="pumukitwizard_multimediaobject_license">
-          <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
-          <div class="form-control-wrapper">
-            {% if object_available_licenses|length > 0 %}
-            <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
-              <option value="0">{% trans %}Select a license...{% endtrans %}</option>
-              {% for license in object_available_licenses %}
-              {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
-              <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
-              {% else %}
-              <option value="{{ license }}">{{ license }}</option>
-              {% endif %}
-              {% endfor %}
-            </select>
-            {% else %}
-            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}">
-            {% elseif object_default_license is not null %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}">
-            {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="">
-            {% endif %}
-            <span class="material-input"></span>
-            {% endif %}
-            <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
-          </div>
-        </div>
-        {% endif %}
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
           <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>
@@ -125,6 +79,35 @@
             {% endfor %}
           </div>
         </div>
+        {% if show_object_license %}
+        <div class="form-group" id="pumukitwizard_multimediaobject_license">
+          <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            {% if object_available_licenses|length > 0 %}
+            <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
+              <option value="0">{% trans %}Select a license...{% endtrans %}</option>
+              {% for license in object_available_licenses %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+              <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
+              {% else %}
+              <option value="{{ license }}">{{ license }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            {% else %}
+            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}">
+            {% elseif object_default_license is not null %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}">
+            {% else %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="">
+            {% endif %}
+            <span class="material-input"></span>
+            {% endif %}
+            <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
+          </div>
+        </div>
+        {% endif %}
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
           <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
           <div>
@@ -140,6 +123,23 @@
             {% endfor %}
           </div>
         </div>
+        {% if show_tags and (available_tags|length > 0) %}
+        <div class="form-group" id="pumukitwizard_multimediaobject_tag">
+          <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
+              <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
+              {% for tag in available_tags %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
+              <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
+              {% else %}
+              <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </fieldset>
   </form>
