@@ -24,6 +24,9 @@ class PumukitWizardExtension extends Extension
 
         $container->setParameter('pumukit_wizard.show_license', $config['show_license']);
         $container->setParameter('pumukit_wizard.license_dir', $config['license_dir']);
+        $container->setParameter('pumukit_wizard.show_tags', $config['show_tags']);
+        $container->setParameter('pumukit_wizard.tag_parent_code', $config['tag_parent_code']);
+        $container->setParameter('pumukit_wizard.show_object_license', $config['show_object_license']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

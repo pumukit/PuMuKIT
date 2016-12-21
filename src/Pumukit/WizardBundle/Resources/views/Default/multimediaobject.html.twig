@@ -34,6 +34,23 @@
     <fieldset>
       {# TODO build input fields with for loop #}
       <div class="col-md-7">
+        {% if show_tags and (available_tags|length > 0) %}
+        <div class="form-group" id="pumukitwizard_multimediaobject_tag">
+          <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
+              <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
+              {% for tag in available_tags %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
+              <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
+              {% else %}
+              <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% endif %}
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
           <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>
