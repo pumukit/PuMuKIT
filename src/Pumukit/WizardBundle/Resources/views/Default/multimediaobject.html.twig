@@ -51,6 +51,35 @@
           </div>
         </div>
         {% endif %}
+        {% if show_object_license %}
+        <div class="form-group" id="pumukitwizard_multimediaobject_license">
+          <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            {% if object_available_licenses|length > 0 %}
+            <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
+              <option value="0">{% trans %}Select a license...{% endtrans %}</option>
+              {% for license in object_available_licenses %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+              <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
+              {% else %}
+              <option value="{{ license }}">{{ license }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            {% else %}
+            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}">
+            {% elseif object_default_license is not null %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}">
+            {% else %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="">
+            {% endif %}
+            <span class="material-input"></span>
+            {% endif %}
+            <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
+          </div>
+        </div>
+        {% endif %}
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
           <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>

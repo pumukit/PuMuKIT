@@ -152,8 +152,10 @@ class DefaultController extends Controller
         }
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
         $objectDefaultLicense = null;
+        $objectAvailableLicenses = null;
         if ($showObjectLicense) {
             $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license', null);
+            $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses', null);
         }
 
         return array(
@@ -163,6 +165,7 @@ class DefaultController extends Controller
                      'available_tags' => $availableTags,
                      'show_object_license' => $showObjectLicense,
                      'object_default_license' => $objectDefaultLicense,
+                     'object_available_licenses' => $objectAvailableLicenses,
                      );
     }
 
@@ -184,12 +187,17 @@ class DefaultController extends Controller
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+
         return array(
                      'form_data' => $formData,
                      'master_profiles' => $masterProfiles,
                      'pub_channels' => $pubChannelsTags,
                      'languages' => $languages,
                      'license_enable' => $licenseService->isEnabled(),
+                     'show_tags' => $showTags,
+                     'show_object_license' => $showObjectLicense,
                      );
     }
 
@@ -208,6 +216,8 @@ class DefaultController extends Controller
         }
         $jobService = $this->get('pumukitencoder.job');
         $inspectionService = $this->get('pumukit.inspection');
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
         $series = null;
         $seriesId = null;
@@ -296,9 +306,17 @@ class DefaultController extends Controller
                         }
                     }
 
-                    $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
-                    if ($tagCode != '0') {
-                        $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                    if ($showTags) {
+                        $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
+                        if ($tagCode != '0') {
+                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                        }
+                    }
+                    if ($showObjectLicense) {
+                        $license = $this->getKeyData('license', $formData['multimediaobject']);
+                        if ($license && ($license !== '0')) {
+                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], array('license'));
+                        }
                     }
                 } elseif ('multiple' === $option) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);

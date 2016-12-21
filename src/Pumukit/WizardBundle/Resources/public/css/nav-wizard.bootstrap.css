@@ -193,3 +193,7 @@
 .wizard-error {
     color: red;
 }
+
+.info-link {
+    float: right;
+}
