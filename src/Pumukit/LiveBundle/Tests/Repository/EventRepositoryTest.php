@@ -66,6 +66,13 @@ class EventRepositoryTest extends WebTestCase
 
     public function testFindFutureAndNotFinished()
     {
+        $live1 = new Live();
+        $live2 = new Live();
+        $this->dm->persist($live1);
+        $this->dm->persist($live2);
+        $this->dm->flush();
+
+
         $date = new \DateTime('15-12-2015 9:00:00');
         $date1 = new \DateTime('18-12-2015 9:00:00');
         $date2 = new \DateTime('30-12-2015 9:00:00');
@@ -87,21 +94,25 @@ class EventRepositoryTest extends WebTestCase
         $event1->setDisplay(true);
         $event1->setDate($date1);
         $event1->setDuration($duration1);
+        $event1->setLive($live1);
 
         $event2 = new Event();
         $event2->setDisplay(true);
         $event2->setDate($date2);
         $event2->setDuration($duration2);
+        $event2->setLive($live1);
 
         $event3 = new Event();
         $event3->setDisplay(true);
         $event3->setDate($date3);
         $event3->setDuration($duration3);
+        $event3->setLive($live2);
 
         $event4 = new Event();
         $event4->setDisplay(true);
         $event4->setDate($date4);
         $event4->setDuration($duration4);
+        $event4->setLive($live2);
 
         $this->dm->persist($event1);
         $this->dm->persist($event2);
@@ -120,6 +131,12 @@ class EventRepositoryTest extends WebTestCase
 
         $events = array($event4, $event1, $event3, $event2);
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date)->toArray()));
+
+        $events = array($event1, $event2);
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date, $live1)->toArray()));
+
+        $events = array($event4, $event3);
+        $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date, $live2)->toArray()));
     }
 
     public function testFindByHoursEvent()

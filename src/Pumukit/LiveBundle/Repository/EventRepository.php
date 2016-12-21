@@ -3,6 +3,7 @@
 namespace Pumukit\LiveBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\LiveBundle\Document\Live;
 
 /**
  * EventRepository.
@@ -84,10 +85,11 @@ class EventRepository extends DocumentRepository
      *
      * @param int  $limit
      * @param Date $date
+     * @param Live $live Find only events of a live channel
      *
      * @return Cursor
      */
-    public function findFutureAndNotFinished($limit = null, $date = null)
+    public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
     {
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
@@ -103,12 +105,17 @@ class EventRepository extends DocumentRepository
         $startDay->setTime(0, 0, 0);
         $finishDay->setTime(23, 59, 59);
 
-        $currentDayEvents = $this->createQueryBuilder()
+        $currentDayEventsQB = $this->createQueryBuilder()
             ->field('display')->equals(true)
             ->field('date')->gte($startDay)
             ->field('date')->lte($finishDay)
-            ->sort('date', 1)
-            ->getQuery()->execute();
+            ->sort('date', 1);
+
+        if ($live) {
+            $currentDayEventsQB->field('live')->references($live);
+        }
+
+        $currentDayEvents = $currentDayEventsQB->getQuery()->execute();
 
         $duration = 0;
         foreach ($currentDayEvents as $event) {
@@ -124,6 +131,10 @@ class EventRepository extends DocumentRepository
             ->field('display')->equals(true)
             ->field('date')->gte($currentDatetime)
             ->sort('date', 1);
+
+        if ($live) {
+            $qb->field('live')->references($live);
+        }
 
         if ($limit) {
             $qb->limit($limit);
