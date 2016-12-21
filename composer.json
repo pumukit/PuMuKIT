@@ -36,7 +36,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "4.8.*",
         "friendsofphp/php-cs-fixer": "@stable"
     },
     "scripts": {
