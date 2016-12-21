@@ -18,6 +18,7 @@
     {% endfor %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_track_type_option" value="{{ form_data.type.option }}">
     {% if 'single' == form_data.type.option %}
+    <input type="hidden" name="pumukitwizard_form_data[multimediaobject][tag]" id="pumukitwizard_track_multimediaobject_tag" value="{{ form_data.multimediaobject.tag }}">
     {% for field, locales in form_data.multimediaobject %}
     {% for locale, value in locales %}
     {# TODO if value is not null here or at the end of wizard #}

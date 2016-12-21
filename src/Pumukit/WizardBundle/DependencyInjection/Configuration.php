@@ -29,6 +29,18 @@ class Configuration implements ConfigurationInterface
           ->defaultValue('')
           ->info("Path dir of the license files to show in first step if enabled according to locale. E.g.: '%kernel.root_dir%/../src/Pumukit/WizardBundle/Resources/data/license/'. In this folder there should be files named after its locale language: es.txt, en.txt, fr.txt, etc.")
         ->end()
+        ->booleanNode('show_tags')
+          ->defaultFalse()
+          ->info('Enable adding tag to a MultimediaObject in metadata step')
+        ->end()
+        ->scalarNode('tag_parent_code')
+          ->defaultValue('UNESCO')
+          ->info("Parent tag code of tags available to add to a Multimedia Object. E.g.: UNESCO")
+        ->end()
+        ->booleanNode('show_object_license')
+          ->defaultFalse()
+          ->info('Enable adding license to a MultimediaObject in metadata step. This license is defined in pumukit_schema.license (could be a string or an array).')
+        ->end()
       ->end();
 
         return $treeBuilder;

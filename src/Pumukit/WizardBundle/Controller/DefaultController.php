@@ -139,9 +139,30 @@ class DefaultController extends Controller
             return $response;
         }
 
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $availableTags = array();
+        if ($showTags) {
+            $tagCode = $this->container->getParameter('pumukit_wizard.tag_parent_code', '');
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagParent = $tagRepo->findOneBy(array('cod' => $tagCode));
+            if ($tagParent) {
+                $availableTags = $tagParent->getChildren();
+            }
+        }
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $objectDefaultLicense = null;
+        if ($showObjectLicense) {
+            $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license', null);
+        }
+
         return array(
                      'form_data' => $formData,
                      'license_enable' => $licenseService->isEnabled(),
+                     'show_tags' => $showTags,
+                     'available_tags' => $availableTags,
+                     'show_object_license' => $showObjectLicense,
+                     'object_default_license' => $objectDefaultLicense,
                      );
     }
 
@@ -273,6 +294,11 @@ class DefaultController extends Controller
                         foreach ($pubchannel as $tagCode => $valueOn) {
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                         }
+                    }
+
+                    $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
+                    if ($tagCode != '0') {
+                        $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                     }
                 } elseif ('multiple' === $option) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
