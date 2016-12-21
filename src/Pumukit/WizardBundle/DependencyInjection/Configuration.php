@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
         ->end()
         ->scalarNode('tag_parent_code')
           ->defaultValue('UNESCO')
-          ->info("Parent tag code of tags available to add to a Multimedia Object. E.g.: UNESCO")
+          ->info('Parent tag code of tags available to add to a Multimedia Object. E.g.: UNESCO')
         ->end()
         ->booleanNode('show_object_license')
           ->defaultFalse()
