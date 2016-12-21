@@ -76,6 +76,8 @@ class SenderService
      * @param string $template
      * @param array  $parameters
      * @param bool   $error
+     *
+     * @return bool
      */
     public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
     {
@@ -96,6 +98,39 @@ class SenderService
             return $sent;
         }
 
+        return false;
+    }
+
+    /**
+     * Send multiple notification.
+     *
+     * @param array $emailTo
+     * @param string $subject
+     * @param string $template
+     * @param array  $parameters
+     * @param bool   $error
+     *
+     * @return bool
+     */
+    public function sendMultipleNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
+    {
+        if ($this->enable) {
+            $message = \Swift_Message::newInstance();
+            if ($error && $this->notificateErrorsToSender) {
+                $message->addBcc($this->senderEmail);
+            }
+            $message
+                ->setSubject($subject)
+                ->setSender($this->senderEmail, $this->senderName)
+                ->setFrom($this->senderEmail, $this->senderName)
+                ->addReplyTo($this->senderEmail, $this->senderName)
+                ->setTo($emailTo)
+                ->setBody($this->templating->render($template, $parameters), 'text/html');
+
+            $sent = $this->mailer->send($message);
+
+            return $sent;
+        }
         return false;
     }
 }
