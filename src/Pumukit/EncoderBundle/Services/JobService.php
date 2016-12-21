@@ -282,6 +282,13 @@ class JobService
         $this->dm->flush();
     }
 
+    private function deleteTempFiles(Job $job)
+    {
+        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+            unlink($job->getPathIni());
+        }
+    }
+
     public function updateJobPriority($id, $priority)
     {
         $job = $this->repo->find($id);
@@ -439,6 +446,8 @@ class JobService
 
             $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
             $this->propService->finishJob($multimediaObject, $job);
+
+            $this->deleteTempFiles($job);
         } catch (\Exception $e) {
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_ERROR);
