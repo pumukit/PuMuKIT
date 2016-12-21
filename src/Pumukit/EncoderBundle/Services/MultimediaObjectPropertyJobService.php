@@ -47,23 +47,21 @@ class MultimediaObjectPropertyJobService
         $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
     }
 
-
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
         $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->update()
-            ->field('properties.' . $key)->push($value)
+            ->field('properties.'.$key)->push($value)
             ->field('_id')->equals($multimediaObject->getId())
             ->getQuery()
             ->execute();
     }
 
-
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
         $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->update()
-            ->field('properties.' . $key)->pull($value)
+            ->field('properties.'.$key)->pull($value)
             ->field('_id')->equals($multimediaObject->getId())
             ->getQuery()
             ->execute();
