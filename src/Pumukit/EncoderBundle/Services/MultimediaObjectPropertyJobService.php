@@ -21,73 +21,51 @@ class MultimediaObjectPropertyJobService
     public function addJob(MultimediaObject $multimediaObject, Job $job)
     {
         $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
-        $this->save($multimediaObject);
     }
 
     public function executeJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
-            $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
-        }
-        $this->save($multimediaObject);
+        $this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
+        $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
     }
 
     public function finishJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
-            $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
-        }
-        $this->save($multimediaObject);
+        $this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
+        $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
     }
 
     public function errorJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
-            $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
-        }
-        $this->save($multimediaObject);
+        $this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
+        $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
     }
 
     public function retryJob(MultimediaObject $multimediaObject, Job $job)
     {
-        if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId())) {
-            $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
-        }
-        $this->save($multimediaObject);
+        $this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
+        $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
     }
 
-    private function save(MultimediaObject $multimediaObject)
-    {
-        $this->dm->persist($multimediaObject);
-        $this->dm->flush();
-    }
 
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        if ($values = $multimediaObject->getProperty($key)) {
-            $values[] = $value;
-            $multimediaObject->setProperty($key, $values);
-        } else {
-            $multimediaObject->setProperty($key, array($value));
-        }
+        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+            ->update()
+            ->field('properties.' . $key)->push($value)
+            ->field('_id')->equals($multimediaObject->getId())
+            ->getQuery()
+            ->execute();
     }
 
-    /**
-     * @return true if remove correctly
-     */
+
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        if ($values = $multimediaObject->getProperty($key)) {
-            $values = array_values(array_diff($values, array($value)));
-            if ($values) {
-                $multimediaObject->setProperty($key, $values);
-            } else {
-                $multimediaObject->removeProperty($key);
-            }
-
-            return true;
-        }
-
-        return false;
+        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+            ->update()
+            ->field('properties.' . $key)->pull($value)
+            ->field('_id')->equals($multimediaObject->getId())
+            ->getQuery()
+            ->execute();
     }
 }
