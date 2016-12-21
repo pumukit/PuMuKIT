@@ -254,6 +254,38 @@
         <source>Upload</source>
         <target>Upload</target>
       </trans-unit>
+      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
+        <source>License</source>
+        <target>License</target>
+      </trans-unit>
+      <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
+        <source>Accept license</source>
+        <target>Accept license</target>
+      </trans-unit>
+      <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
+        <source>You must accept the license to continue.</source>
+        <target>You must accept the license to continue.</target>
+      </trans-unit>
+      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
+        <source>Tag</source>
+        <target>Tag</target>
+      </trans-unit>
+      <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
+        <source>Select a tag...</source>
+        <target>Select a tag...</target>
+      </trans-unit>
+      <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
+        <source>Select a license...</source>
+        <target>Select a license...</target>
+      </trans-unit>
+      <trans-unit id="c9aa3ecc7fb983bea35b50e7db852064" resname="Step %i-1%: License">
+        <source>Step %i-1%: License</source>
+        <target>Step %i-1%: License</target>
+      </trans-unit>
+      <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
+        <source>Accept the license</source>
+        <target>Accept the license</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
