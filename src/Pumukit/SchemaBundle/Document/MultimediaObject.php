@@ -2342,7 +2342,7 @@ class MultimediaObject
      * Get people in multimedia object by role.
      *
      * @param string $roleCod
-     * @param bool   $always to search in all the roles
+     * @param bool   $always  to search in all the roles
      *
      * @return array
      */

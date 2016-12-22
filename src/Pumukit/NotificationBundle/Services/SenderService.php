@@ -15,7 +15,7 @@ class SenderService
     private $notificateErrorsToSender;
     private $environment;
     private $translator;
-    private $subject = "Can't send email to this emails.";
+    private $subject = "Can't send email to this email.";
     private $template = 'PumukitExpiredVideoBundle:Email:error.html.twig';
 
     public function __construct(
@@ -79,35 +79,33 @@ class SenderService
     }
 
     /**
-     *
-     * Send notification
+     * Send notification.
      *
      * @param $emailTo
      * @param $subject
      * @param $template
      * @param array $parameters
-     * @param bool $error
+     * @param bool  $error
+     *
      * @return bool
      */
     public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
-        if ($this->enable && ($filterEmail["verified"] || $filterEmail["error"])) {
-
-            if(isset($filterEmail["verified"])) {
+        if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
+            if (isset($filterEmail['verified'])) {
                 $sent = $this->sendEmailTemplate(
-                    $filterEmail["verified"],
+                    $filterEmail['verified'],
                     $subject,
                     $template,
                     $parameters,
                     $error
                 );
-
             }
 
-            if(isset($filterEmail["error"])) {
-                $parameters["body"] = $filterEmail["error"];
+            if (isset($filterEmail['error'])) {
+                $parameters['body'] = $filterEmail['error'];
                 $this->sendEmailTemplate(
                     $this->senderEmail,
                     $this->subject,
@@ -124,9 +122,10 @@ class SenderService
     }
 
     /**
-     * Checks if string|array email are valid
+     * Checks if string|array email are valid.
      *
      * @param string|array $emailTo
+     *
      * @return bool
      */
     private function filterEmail($emailTo)
@@ -135,16 +134,16 @@ class SenderService
         if (is_array($emailTo)) {
             foreach ($emailTo as $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
-                    $filterEmail["verified"] = $email;
+                    $filterEmail['verified'] = $email;
                 } else {
-                    $filterEmail["error"] = $email;
+                    $filterEmail['error'] = $email;
                 }
             }
         } else {
             if (filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
-                $filterEmail["verified"] = $emailTo;
+                $filterEmail['verified'] = $emailTo;
             } else {
-                $filterEmail["error"] = $emailTo;
+                $filterEmail['error'] = $emailTo;
             }
         }
 
@@ -152,13 +151,14 @@ class SenderService
     }
 
     /**
-     * Create the email and send
+     * Create the email and send.
      *
      * @param $emailTo
      * @param $subject
      * @param $template
      * @param $parameters
      * @param $error
+     *
      * @return mixed
      */
     private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
@@ -177,7 +177,6 @@ class SenderService
             ->setTo($emailTo)
             ->setBody($this->templating->render($template, $parameters), 'text/html');
 
-        echo $message;die;
         return $this->mailer->send($message);
     }
 }
