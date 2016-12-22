@@ -96,18 +96,19 @@ class SenderService
         if ($this->enable && ($filterEmail["verified"] || $filterEmail["error"])) {
 
             if(isset($filterEmail["verified"])) {
-                $sent["verified"] = $this->createEmailTemplate(
+                $sent = $this->sendEmailTemplate(
                     $filterEmail["verified"],
                     $subject,
                     $template,
                     $parameters,
                     $error
                 );
+
             }
 
             if(isset($filterEmail["error"])) {
                 $parameters["body"] = $filterEmail["error"];
-                $sent["error"] = $this->createEmailTemplate(
+                $this->sendEmailTemplate(
                     $this->senderEmail,
                     $this->subject,
                     $this->template,
@@ -160,7 +161,7 @@ class SenderService
      * @param $error
      * @return mixed
      */
-    private function createEmailTemplate($emailTo, $subject, $template, $parameters, $error)
+    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToSender) {
@@ -176,6 +177,7 @@ class SenderService
             ->setTo($emailTo)
             ->setBody($this->templating->render($template, $parameters), 'text/html');
 
-        return $sent = $this->mailer->send($message);
+        echo $message;die;
+        return $this->mailer->send($message);
     }
 }
