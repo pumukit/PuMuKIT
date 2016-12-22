@@ -25,45 +25,71 @@ class MultimediaObjectPropertyJobService
 
     public function executeJob(MultimediaObject $multimediaObject, Job $job)
     {
-        $this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
-        $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
+        if ($this->delPropertyInArray($multimediaObject, 'pending_jobs', $job->getId())) {
+            $this->addPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
+        }
     }
 
     public function finishJob(MultimediaObject $multimediaObject, Job $job)
     {
-        $this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
-        $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
+        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
+            $this->addPropertyInArray($multimediaObject, 'finished_jobs', $job->getId());
+        }
     }
 
     public function errorJob(MultimediaObject $multimediaObject, Job $job)
     {
-        $this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId());
-        $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
+        if ($this->delPropertyInArray($multimediaObject, 'executing_jobs', $job->getId())) {
+            $this->addPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
+        }
     }
 
     public function retryJob(MultimediaObject $multimediaObject, Job $job)
     {
-        $this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId());
-        $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
+        if ($this->delPropertyInArray($multimediaObject, 'error_jobs', $job->getId())) {
+            $this->addPropertyInArray($multimediaObject, 'pending_jobs', $job->getId());
+        }
     }
 
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-            ->update()
-            ->field('properties.'.$key)->push($value)
-            ->field('_id')->equals($multimediaObject->getId())
-            ->getQuery()
-            ->execute();
+        if ($multimediaObject->getProperty($key)) {
+            $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+                ->update()
+                ->field('properties.'.$key)->push($value)
+                ->field('_id')->equals($multimediaObject->getId())
+                ->getQuery()
+                ->execute();
+        } else {
+            $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+                ->update()
+                ->field('properties.'.$key)->set(array($value))
+                ->field('_id')->equals($multimediaObject->getId())
+                ->getQuery()
+                ->execute();
+        }
     }
 
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-            ->update()
-            ->field('properties.'.$key)->pull($value)
-            ->field('_id')->equals($multimediaObject->getId())
-            ->getQuery()
-            ->execute();
+        if (array($value) == $multimediaObject->getProperty($key)) {
+            $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+                ->update()
+                ->field('properties.'.$key)->unsetField()
+                ->field('_id')->equals($multimediaObject->getId())
+                ->getQuery()
+                ->execute();
+
+            return true;
+        } else {
+            $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+                ->update()
+                ->field('properties.'.$key)->pull($value)
+                ->field('_id')->equals($multimediaObject->getId())
+                ->getQuery()
+                ->execute();
+
+            return 1 == $out['nModified'];
+        }
     }
 }
