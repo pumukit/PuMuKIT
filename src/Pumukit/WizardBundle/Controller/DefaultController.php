@@ -27,12 +27,8 @@ class DefaultController extends Controller
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
         if (!$licenseService->isEnabled()) {
-            if (array_key_exists('series', $formData)) {
-                if (array_key_exists('id', $formData['series'])) {
-                    if ($formData['series']['id'] != null) {
-                        return $this->redirect($this->generateUrl('pumukitwizard_default_type', array('pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'])));
-                    }
-                }
+            if (isset($formData['series']['id']) && $formData['series']['id'] != null) {
+                return $this->redirect($this->generateUrl('pumukitwizard_default_type', array('pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'])));
             }
 
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
