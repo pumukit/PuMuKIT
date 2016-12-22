@@ -1,0 +1,10 @@
+<h2>{{ subject }}</h2>
+<br/>
+<ul>
+{% for email in body %}
+    <li>{{ email }}</li>
+{% endfor %}
+</ul>
+<br/>
+<br/>
+{{ sender_name }}
