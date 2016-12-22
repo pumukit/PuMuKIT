@@ -227,6 +227,10 @@ class MultimediaObject
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
+
+        $this->setPublicDate(new \DateTime('now'));
+        $this->setRecordDate($this->getPublicDate());
+        $this->setProperty('created', $this->getPublicDate());
     }
 
     public function __toString()

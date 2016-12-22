@@ -53,51 +53,40 @@ class MultimediaObjectPropertyJobService
 
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        try {
-            if ($multimediaObject->getProperty($key)) {
-                $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-                    ->update()
-                    ->field('properties.'.$key)->push($value)
-                    ->field('_id')->equals($multimediaObject->getId())
-                    ->getQuery()
-                    ->execute();
-            } else {
-                $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-                    ->update()
-                    ->field('properties.'.$key)->set(array($value))
-                    ->field('_id')->equals($multimediaObject->getId())
-                    ->getQuery()
-                    ->execute();
-            }
-        } catch (\Exception $e) {
-        }
+        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+            ->update()
+            ->field('properties.'.$key)->push($value)
+            ->field('_id')->equals($multimediaObject->getId())
+            ->getQuery()
+            ->execute();
     }
 
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        try {
-            if (array($value) == $multimediaObject->getProperty($key)) {
-                $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-                    ->update()
-                    ->field('properties.'.$key)->unsetField()
-                    ->field('_id')->equals($multimediaObject->getId())
-                    ->field('properties.'.$key)->equals($value)
-                    ->getQuery()
-                    ->execute();
+        //Try to delete all the property if is the last job in this state.
+        $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+             ->update()
+             ->field('properties.'.$key)->unsetField()
+             ->field('_id')->equals($multimediaObject->getId())
+             ->field('properties.'.$key)->equals(array($value))
+             ->getQuery()
+             ->execute();
 
-                return true;
-            } else {
-                $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-                     ->update()
-                     ->field('properties.'.$key)->pull($value)
-                     ->field('_id')->equals($multimediaObject->getId())
-                     ->field('properties.'.$key)->equals($value)
-                     ->getQuery()
-                     ->execute();
+        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
+            return true;
+        }
 
-                return (isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n']);
-            }
-        } catch (\Exception $e) {
+        // If not delete job from the property
+        $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+             ->update()
+             ->field('properties.'.$key)->pull($value)
+             ->field('_id')->equals($multimediaObject->getId())
+             ->field('properties.'.$key)->equals($value)
+             ->getQuery()
+             ->execute();
+
+        if ((isset($out['nModified']) && 1 == $out['nModified']) || (isset($out['n']) && 1 == $out['n'])) {
+            return true;
         }
 
         return false;
