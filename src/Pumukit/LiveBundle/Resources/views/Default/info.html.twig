@@ -1,4 +1,4 @@
-{% set event = future_and_not_finished_event(1)|first %}
+{% set event = future_and_not_finished_event(1, live)|first %}
 <div class="panel panel-primary text-center">
   <div class="panel-heading">
     {% if event %}

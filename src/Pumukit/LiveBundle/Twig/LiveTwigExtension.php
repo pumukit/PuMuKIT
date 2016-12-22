@@ -3,6 +3,7 @@
 namespace Pumukit\LiveBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\LiveBundle\Document\Live;
 
 class LiveTwigExtension extends \Twig_Extension
 {
@@ -21,8 +22,8 @@ class LiveTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-                     new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
-                     );
+            new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
+        );
     }
 
     /**
@@ -32,10 +33,10 @@ class LiveTwigExtension extends \Twig_Extension
      *
      * @return Event $event
      */
-    public function getFutureAndNotFinishedEvent($limit = null)
+    public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
     {
         $eventRepo = $this->dm->getRepository('PumukitLiveBundle:Event');
 
-        return $eventRepo->findFutureAndNotFinished($limit ? $limit : null);
+        return $eventRepo->findFutureAndNotFinished($limit, null, $live);
     }
 }
