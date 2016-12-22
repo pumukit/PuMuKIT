@@ -69,19 +69,21 @@ class SenderService
     }
 
     /**
-     * Send notification.
      *
-     * @param string $emailTo
-     * @param string $subject
-     * @param string $template
-     * @param array  $parameters
-     * @param bool   $error
+     * Send notification
      *
+     * @param $emailTo
+     * @param $subject
+     * @param $template
+     * @param array $parameters
+     * @param bool $error
      * @return bool
      */
     public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
     {
-        if ($this->enable && filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
+        $filterEmail = $this->filterEmail($emailTo);
+
+        if ($this->enable && $filterEmail) {
             $message = \Swift_Message::newInstance();
             if ($error && $this->notificateErrorsToSender) {
                 $message->addBcc($this->senderEmail);
@@ -93,6 +95,7 @@ class SenderService
               ->addReplyTo($this->senderEmail, $this->senderName)
               ->setTo($emailTo)
               ->setBody($this->templating->render($template, $parameters), 'text/html');
+
             $sent = $this->mailer->send($message);
 
             return $sent;
@@ -102,35 +105,28 @@ class SenderService
     }
 
     /**
-     * Send multiple notification.
+     * Checks if string|array email are valid
      *
-     * @param array $emailTo
-     * @param string $subject
-     * @param string $template
-     * @param array  $parameters
-     * @param bool   $error
-     *
+     * @param string|array $emailTo
      * @return bool
      */
-    public function sendMultipleNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
+    private function filterEmail($emailTo)
     {
-        if ($this->enable) {
-            $message = \Swift_Message::newInstance();
-            if ($error && $this->notificateErrorsToSender) {
-                $message->addBcc($this->senderEmail);
+        $filterEmail = false;
+        if(is_array($emailTo)) {
+            foreach($emailTo as $email) {
+                if( filter_var($email, FILTER_VALIDATE_EMAIL) != false ) {
+                    $filterEmail = true;
+                } else {
+                    $filterEmail = false;
+                }
             }
-            $message
-                ->setSubject($subject)
-                ->setSender($this->senderEmail, $this->senderName)
-                ->setFrom($this->senderEmail, $this->senderName)
-                ->addReplyTo($this->senderEmail, $this->senderName)
-                ->setTo($emailTo)
-                ->setBody($this->templating->render($template, $parameters), 'text/html');
-
-            $sent = $this->mailer->send($message);
-
-            return $sent;
+        } else {
+            if(filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
+                $filterEmail = true;
+            }
         }
-        return false;
+
+        return $filterEmail;
     }
 }
