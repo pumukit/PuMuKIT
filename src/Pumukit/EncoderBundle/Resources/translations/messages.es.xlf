@@ -4,23 +4,26 @@
     <body>
       <trans-unit id="eb6f9298251729ce25963477b32c6245" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target xml:lang="es-ES" state="translated">Tareas pendientes (pausadas &amp; esperando)</target>
+        <target xml:lang="es-ES" state="translated">Tareas pendientes (pausadas y esperando)</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Tareas pendientes (pausadas &amp; esperando)</target>
+        </alt-trans>
       </trans-unit>
-      <trans-unit id="86ca3ab6fc59d8ae02dbc91c63419584" resname="Executing jobs">
+      <trans-unit id="86ca3ab6fc59d8ae02dbc91c63419584" resname="Executing jobs" approved="yes">
         <source>Executing jobs</source>
-        <target xml:lang="es-ES" state="translated">Tareas en ejecución</target>
+        <target xml:lang="es-ES">Tareas en ejecución</target>
       </trans-unit>
-      <trans-unit id="bd3507e49a4df5619011bf068816adb7" resname="Executed jobs">
+      <trans-unit id="bd3507e49a4df5619011bf068816adb7" resname="Executed jobs" approved="yes">
         <source>Executed jobs</source>
-        <target xml:lang="es-ES" state="translated">Tareas ejecutadas</target>
+        <target xml:lang="es-ES">Tareas ejecutadas</target>
       </trans-unit>
-      <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
+      <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content." approved="yes">
         <source>You don't have enough permissions to access this content.</source>
-        <target xml:lang="es-ES" state="translated">No tienes permisos suficientes para acceder a este contenido.</target>
+        <target xml:lang="es-ES">No tienes permisos suficientes para acceder a este contenido.</target>
       </trans-unit>
-      <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
+      <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info" approved="yes">
         <source>Job info</source>
-        <target xml:lang="es-ES" state="translated">Información de la tarea</target>
+        <target xml:lang="es-ES">Información de la tarea</target>
       </trans-unit>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>

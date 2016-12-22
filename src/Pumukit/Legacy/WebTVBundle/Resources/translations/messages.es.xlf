@@ -2,25 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
+      <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences" approved="yes">
         <source>Health Sciences</source>
-        <target xml:lang="es-ES" state="translated">Ciencias de la Salud</target>
+        <target xml:lang="es-ES">Ciencias de la Salud</target>
       </trans-unit>
-      <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities">
+      <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities" approved="yes">
         <source>Humanities</source>
-        <target xml:lang="es-ES" state="translated">Humanidades</target>
+        <target xml:lang="es-ES">Humanidades</target>
       </trans-unit>
-      <trans-unit id="8e8790229c666128fa88ff6e76de8565" resname="Experimental sciences">
+      <trans-unit id="8e8790229c666128fa88ff6e76de8565" resname="Experimental sciences" approved="yes">
         <source>Experimental sciences</source>
-        <target xml:lang="es-ES" state="translated">Ciencias Experimentales</target>
+        <target xml:lang="es-ES">Ciencias Experimentales</target>
       </trans-unit>
-      <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science">
+      <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science" approved="yes">
         <source>Technical science</source>
-        <target xml:lang="es-ES" state="translated">Ciencias tecnológicas</target>
+        <target xml:lang="es-ES">Ciencias tecnológicas</target>
       </trans-unit>
-      <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
+      <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences" approved="yes">
         <source>Social and Legal sciences</source>
-        <target xml:lang="es-ES" state="translated">Ciencias Jurídico-Sociales</target>
+        <target xml:lang="es-ES">Ciencias Jurídico-Sociales</target>
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>

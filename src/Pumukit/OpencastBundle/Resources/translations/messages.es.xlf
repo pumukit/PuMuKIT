@@ -2,25 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer">
+      <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer" approved="yes">
         <source>Opencast Importer</source>
-        <target xml:lang="es-ES" state="translated">Importador de Opencast</target>
+        <target xml:lang="es-ES">Importador de Opencast</target>
       </trans-unit>
-      <trans-unit id="bb1ca97ec761fc37101737ba0aa2e7c5" resname="ERROR">
+      <trans-unit id="bb1ca97ec761fc37101737ba0aa2e7c5" resname="ERROR" approved="yes">
         <source>ERROR</source>
-        <target xml:lang="es-ES" state="translated">ERROR</target>
+        <target xml:lang="es-ES">ERROR</target>
       </trans-unit>
-      <trans-unit id="a11b072c3d08c062a300f31d69537da5" resname="Execute on the server">
+      <trans-unit id="a11b072c3d08c062a300f31d69537da5" resname="Execute on the server" approved="yes">
         <source>Execute on the server</source>
-        <target xml:lang="es-ES" state="translated">Ejecutar en el servidor</target>
+        <target xml:lang="es-ES">Ejecutar en el servidor</target>
       </trans-unit>
-      <trans-unit id="567904efe9e64d9faf3e41ef402cb568" resname="where">
+      <trans-unit id="567904efe9e64d9faf3e41ef402cb568" resname="where" approved="yes">
         <source>where</source>
-        <target xml:lang="es-ES" state="translated">donde</target>
+        <target xml:lang="es-ES">donde</target>
       </trans-unit>
-      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search" approved="yes">
         <source>Search</source>
-        <target xml:lang="es-ES" state="translated">Buscar</target>
+        <target xml:lang="es-ES">Buscar</target>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
         <source>Name</source>

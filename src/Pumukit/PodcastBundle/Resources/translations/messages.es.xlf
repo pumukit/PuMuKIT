@@ -2,25 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="778165da01a1188513a46798e98af1ec" resname="Podcast info For Multimedia Object:">
+      <trans-unit id="778165da01a1188513a46798e98af1ec" resname="Podcast info For Multimedia Object:" approved="yes">
         <source>Podcast info For Multimedia Object:</source>
-        <target xml:lang="es-ES" state="translated">Información de podcast para el Objeto Multimedia:</target>
+        <target xml:lang="es-ES">Información de podcast para el Objeto Multimedia:</target>
       </trans-unit>
-      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status" approved="yes">
         <source>Status</source>
-        <target xml:lang="es-ES" state="translated">Estado</target>
+        <target xml:lang="es-ES">Estado</target>
       </trans-unit>
-      <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU/iTunesU.">
+      <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU/iTunesU." approved="yes">
         <source>Not published on PodcastEDU/iTunesU.</source>
-        <target xml:lang="es-ES" state="translated">No publicado en PodcastEDU/iTunesU.</target>
+        <target xml:lang="es-ES">No publicado en PodcastEDU/iTunesU.</target>
       </trans-unit>
-      <trans-unit id="712d3f979769cd5fe11bbdaa5e650541" resname="WARNING, Not video tracks with">
+      <trans-unit id="712d3f979769cd5fe11bbdaa5e650541" resname="WARNING, Not video tracks with" approved="yes">
         <source>WARNING, Not video tracks with</source>
-        <target xml:lang="es-ES" state="translated">ADVERTENCIA, no hay pistas de vídeo con</target>
+        <target xml:lang="es-ES">ADVERTENCIA, no hay pistas de vídeo con</target>
       </trans-unit>
-      <trans-unit id="41981645c29b944b17d9db3c9aabc515" resname="WARNING, Not audio tracks with">
+      <trans-unit id="41981645c29b944b17d9db3c9aabc515" resname="WARNING, Not audio tracks with" approved="yes">
         <source>WARNING, Not audio tracks with</source>
-        <target xml:lang="es-ES" state="translated">ADVERTENCIA, no hay pistas de audio con</target>
+        <target xml:lang="es-ES">ADVERTENCIA, no hay pistas de audio con</target>
       </trans-unit>
       <trans-unit id="9b9d8a976b42e0bd66381797644943d5" resname="Published">
         <source>Published</source>

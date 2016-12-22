@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
         <source>Current live event</source>
-        <target xml:lang="eu" state="needs-translation">Evento en vivo actual</target>
+        <target xml:lang="eu" state="translated">Evento en vivo actual</target>
       </trans-unit>
       <trans-unit id="19633d75b6ef363510f653f26704a4e1" resname="Next live event">
         <source>Next live event</source>
-        <target xml:lang="eu" state="needs-translation">Próximo evento en vivo</target>
+        <target xml:lang="eu" state="translated">Próximo evento en vivo</target>
       </trans-unit>
       <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
         <source>EVENT</source>
@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="eu" state="needs-translation">Sin título</target>
+        <target xml:lang="eu" state="translated">Sin título</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="eu" state="needs-translation">Evento</target>
+        <target xml:lang="eu" state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
         <source>Place</source>
@@ -44,19 +44,19 @@
       </trans-unit>
       <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
         <source>Time</source>
-        <target xml:lang="eu" state="needs-translation">Hora</target>
+        <target xml:lang="eu" state="translated">Hora</target>
       </trans-unit>
       <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target xml:lang="eu" state="needs-translation">JWPlayer no es compatible con la versión de su navegador</target>
+        <target xml:lang="eu" state="translated">JWPlayer no es compatible con la versión de su navegador</target>
       </trans-unit>
       <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target xml:lang="eu" state="needs-translation">Por favor, emplee la versión 9.0 o superior o use otro navegador.</target>
+        <target xml:lang="eu" state="translated">Por favor, emplee la versión 9.0 o superior o use otro navegador.</target>
       </trans-unit>
       <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target xml:lang="eu" state="needs-translation">Es necesario instalar el plugin Flash. JWPlayer necesita al menos la versión 10.1.82.76 de Flash para reproducir.</target>
+        <target xml:lang="eu" state="translated">Es necesario instalar el plugin Flash. JWPlayer necesita al menos la versión 10.1.82.76 de Flash para reproducir.</target>
       </trans-unit>
     </body>
   </file>

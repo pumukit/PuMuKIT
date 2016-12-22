@@ -4,59 +4,62 @@
     <body>
       <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
         <source>Current live event</source>
-        <target xml:lang="zh-TW" state="needs-translation">Current live event</target>
+        <target xml:lang="zh-TW" state="translated">現有的即時事件</target>
       </trans-unit>
       <trans-unit id="19633d75b6ef363510f653f26704a4e1" resname="Next live event">
         <source>Next live event</source>
-        <target xml:lang="zh-TW" state="needs-translation">Next live event</target>
+        <target xml:lang="zh-TW" state="translated">下一個即時事件</target>
       </trans-unit>
       <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
         <source>EVENT</source>
-        <target xml:lang="zh-TW" state="needs-translation">EVENT</target>
+        <target xml:lang="zh-TW" state="translated">事件</target>
       </trans-unit>
       <trans-unit id="8c756b7e3daff6db3808a377b05a148f" resname="PLACE">
         <source>PLACE</source>
-        <target xml:lang="zh-TW" state="needs-translation">PLACE</target>
+        <target xml:lang="zh-TW" state="translated">地方</target>
       </trans-unit>
       <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
         <source>DATE</source>
-        <target xml:lang="zh-TW" state="needs-translation">DATE</target>
+        <target xml:lang="zh-TW" state="translated">日期</target>
       </trans-unit>
       <trans-unit id="346ff32eaa3c09983fb2ec057816d352" resname="TIME">
         <source>TIME</source>
-        <target xml:lang="zh-TW" state="needs-translation">TIME</target>
+        <target xml:lang="zh-TW" state="translated">時間</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="zh-TW" state="needs-translation">No title</target>
+        <target xml:lang="zh-TW" state="translated">無標題</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="zh-TW" state="needs-translation">Event</target>
+        <target xml:lang="zh-TW" state="translated">事件</target>
       </trans-unit>
       <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
         <source>Place</source>
-        <target xml:lang="zh-TW" state="needs-translation">Place</target>
+        <target xml:lang="zh-TW" state="translated">放置</target>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="zh-TW" state="needs-translation">Date</target>
+        <target xml:lang="zh-TW" state="translated">日期</target>
       </trans-unit>
       <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
         <source>Time</source>
-        <target xml:lang="zh-TW" state="needs-translation">Time</target>
+        <target xml:lang="zh-TW" state="translated">時間：</target>
       </trans-unit>
       <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target xml:lang="zh-TW" state="needs-translation">JWPlayer does not support your browser version</target>
+        <target xml:lang="zh-TW" state="translated">JWPlayer 不支援您的瀏覽器版本</target>
       </trans-unit>
       <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target xml:lang="zh-TW" state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+        <target xml:lang="zh-TW" state="translated">請使用 9.0 或更高版本，或者使用另一個瀏覽器。</target>
       </trans-unit>
       <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target xml:lang="zh-TW" state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target xml:lang="zh-TW" state="translated">Flash 外掛程式需要安裝。JWPlayer 需要最低 Flash 版本 10.1.82.76 。</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">Flash 外掛程式需要安裝。JWPlayer 需要最低 Flash 版本 10.1.82.76 到流。</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>
