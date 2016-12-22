@@ -72,7 +72,6 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->persist($live2);
         $this->dm->flush();
 
-
         $date = new \DateTime('15-12-2015 9:00:00');
         $date1 = new \DateTime('18-12-2015 9:00:00');
         $date2 = new \DateTime('30-12-2015 9:00:00');
