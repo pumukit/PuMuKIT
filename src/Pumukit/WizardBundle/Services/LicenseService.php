@@ -2,7 +2,6 @@
 
 namespace Pumukit\WizardBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,7 +10,6 @@ class LicenseService
     private $showLicense;
     private $licenseDir;
     private $locales;
-    private $templating;
     private $translator;
 
     /**
@@ -20,10 +18,9 @@ class LicenseService
      * @param bool                $showLicense
      * @param string              $licenseDir
      * @param array               $locales
-     * @param EngineInterface     $templating
      * @param TranslatorInterface $translator
      */
-    public function __construct($showLicense = false, $licenseDir = '', array $locales = array(), EngineInterface $templating, TranslatorInterface $translator)
+    public function __construct($showLicense = false, $licenseDir = '', array $locales = array(), TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->showLicense = $showLicense;
@@ -32,7 +29,6 @@ class LicenseService
             throw new \Exception($this->translator->trans('Directory path not found: ').$licenseDir);
         }
         $this->locales = $locales;
-        $this->templating = $templating;
         $this->checkLicenseFiles();
     }
 
@@ -51,25 +47,19 @@ class LicenseService
      *
      * @param array $formData
      *
-     * @return bool|Response
+     * @return bool Returns FALSE if not enabled and not accepted, TRUE otherwise
      */
     public function isLicenseEnabledAndAccepted($formData = array(), $locale = null)
     {
         if ($this->isEnabled()) {
-            if (array_key_exists('license', $formData)) {
-                if (array_key_exists('accept', $formData['license'])) {
-                    if ($formData['license']['accept']) {
-                        return true;
-                    } else {
-                        return $this->renderLicenseNotAccepted($formData, $locale);
-                    }
-                }
+            if (isset($formData['license']['accept']) && $formData['license']['accept']) {
+                return true;
             }
 
-            return $this->renderLicenseNotAccepted($formData, $locale);
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -135,21 +125,5 @@ class LicenseService
         }
 
         return $licenseFile;
-    }
-
-    /**
-     * Render license not accepted.
-     *
-     * @param array  $formData
-     * @param string $locale
-     *
-     * @return Response
-     */
-    private function renderLicenseNotAccepted($formData = array(), $locale = null)
-    {
-        $licenseContent = $this->getLicenseContent($locale);
-        $renderedView = $this->templating->render('PumukitWizardBundle:Default:license.html.twig', array('license_text' => $licenseContent, 'form_data' => $formData));
-
-        return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 }

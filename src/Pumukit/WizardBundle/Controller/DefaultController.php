@@ -48,9 +48,9 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
 
         return array(
@@ -91,9 +91,9 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pumukitwizard_default_option', array('pumukitwizard_form_data' => $formData)));
         }
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
 
         return array(
@@ -111,9 +111,9 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
 
         if (('multiple' == $formData['type']['option']) && (false !== $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX))) {
@@ -130,9 +130,9 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
 
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
@@ -172,9 +172,9 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
@@ -206,9 +206,9 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
-        $response = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
-        if ($response instanceof Response) {
-            return $response;
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
         $jobService = $this->get('pumukitencoder.job');
         $inspectionService = $this->get('pumukit.inspection');

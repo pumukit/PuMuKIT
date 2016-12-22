@@ -9,7 +9,6 @@
             <argument>%pumukit_wizard.show_license%</argument>
             <argument>%pumukit_wizard.license_dir%</argument>
             <argument>%pumukit2.locales%</argument>
-            <argument type="service" id="templating" />
             <argument type="service" id="translator" />
         </service>
     </services>
