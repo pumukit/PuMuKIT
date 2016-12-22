@@ -85,7 +85,7 @@ class EventRepository extends DocumentRepository
      *
      * @param int  $limit
      * @param Date $date
-     * @param Live $live Find only events of a live channel
+     * @param Live $live  Find only events of a live channel
      *
      * @return Cursor
      */
