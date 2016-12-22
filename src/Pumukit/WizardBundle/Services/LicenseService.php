@@ -25,6 +25,7 @@ class LicenseService
      */
     public function __construct($showLicense = false, $licenseDir = '', array $locales = array(), EngineInterface $templating, TranslatorInterface $translator)
     {
+        $this->translator = $translator;
         $this->showLicense = $showLicense;
         $this->licenseDir = realpath($licenseDir);
         if ($this->showLicense && !$this->licenseDir) {
@@ -32,7 +33,6 @@ class LicenseService
         }
         $this->locales = $locales;
         $this->templating = $templating;
-        $this->translator = $translator;
         $this->checkLicenseFiles();
     }
 
