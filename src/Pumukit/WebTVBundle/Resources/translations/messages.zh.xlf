@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target xml:lang="zh-TW" state="needs-translation">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+        <target xml:lang="zh-TW" state="translated">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target xml:lang="zh-TW" state="needs-translation">There are no videos with these specifications</target>
+        <target xml:lang="zh-TW" state="translated">沒有與這些相近的視頻</target>
       </trans-unit>
       <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding">
         <source>Date of holding</source>
@@ -195,7 +195,10 @@
       </trans-unit>
       <trans-unit id="4758dceaf837bdcdc9761caa8e71f0dc" resname="No Track.">
         <source>No Track.</source>
-        <target xml:lang="zh-TW" state="translated">沒有曲目</target>
+        <target xml:lang="zh-TW" state="translated">沒有軌道</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">沒有曲目</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c1a65631c7c397dd4cc3be65afd6a54b" resname="This series does not have any multimedia objects.">
         <source>This series does not have any multimedia objects.</source>
@@ -207,7 +210,7 @@
       </trans-unit>
       <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
         <source>Categories</source>
-        <target xml:lang="zh-TW" state="needs-translation">Categories</target>
+        <target xml:lang="zh-TW" state="translated">類別</target>
       </trans-unit>
       <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
         <source>Most viewed</source>

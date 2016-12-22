@@ -18,9 +18,9 @@
         <source>Technical science</source>
         <target xml:lang="es-ES">Ciencias tecnológicas</target>
       </trans-unit>
-      <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
+      <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences" approved="yes">
         <source>Social and Legal sciences</source>
-        <target xml:lang="es-ES" state="translated">Ciencias Juridico-Sociales</target>
+        <target xml:lang="es-ES">Ciencias Juridico-Sociales</target>
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>

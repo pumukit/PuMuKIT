@@ -2,25 +2,28 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
+      <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully" approved="yes">
         <source>Audio/Video uploaded successfully</source>
-        <target xml:lang="es-ES" state="translated">Audio/Vídeo subido correctamente</target>
+        <target xml:lang="es-ES">Audio/Vídeo subido correctamente</target>
       </trans-unit>
       <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target xml:lang="es-ES" state="translated">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        <target xml:lang="es-ES" state="translated">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un correo electrónico cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        </alt-trans>
       </trans-unit>
-      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
+      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES" approved="yes">
         <source>SERIES</source>
-        <target xml:lang="es-ES" state="translated">SERIES</target>
+        <target xml:lang="es-ES">SERIES</target>
       </trans-unit>
-      <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
+      <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO" approved="yes">
         <source>VIDEO</source>
-        <target xml:lang="es-ES" state="translated">VÍDEO</target>
+        <target xml:lang="es-ES">VÍDEO</target>
       </trans-unit>
-      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE" approved="yes">
         <source>DATE</source>
-        <target xml:lang="es-ES" state="translated">FECHA</target>
+        <target xml:lang="es-ES">FECHA</target>
       </trans-unit>
       <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa" resname="Actions">
         <source>Actions</source>

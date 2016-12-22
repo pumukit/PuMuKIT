@@ -2562,6 +2562,22 @@
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
         <target>Successfully updated Broadcast in all Multimedia Objects.</target>
       </trans-unit>
+      <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
+        <source>Any Internet user can play the new multimedia objects created from this video template</source>
+        <target>Any Internet user can play the new multimedia objects created from this video template</target>
+      </trans-unit>
+      <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe" resname="Only users with the defined password can play the new multimedia objects created from this video template">
+        <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
+        <target>Only users with the defined password can play the new multimedia objects created from this video template</target>
+      </trans-unit>
+      <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
+        <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
+        <target>Only logged in users in the system can play the new multimedia objects created from this video template</target>
+      </trans-unit>
+      <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
+        <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
+        <target>Only users in the selected Groups can play the new multimedia objects created from this video template</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

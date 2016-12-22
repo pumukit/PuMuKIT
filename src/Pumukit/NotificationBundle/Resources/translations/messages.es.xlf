@@ -9,21 +9,24 @@
           <target xml:lang="es-ES">Id</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status" approved="yes">
         <source>Status</source>
-        <target xml:lang="es-ES" state="translated">Estado</target>
+        <target xml:lang="es-ES">Estado</target>
       </trans-unit>
       <trans-unit id="66a0a78cd1e3aaed9aa1073b49b48270" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target xml:lang="es-ES" state="translated">Objeto Multimedia Id</target>
+        <target xml:lang="es-ES" state="translated">Id de Objeto Multimedia</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Objeto Multimedia Id</target>
+        </alt-trans>
       </trans-unit>
-      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile" approved="yes">
         <source>Profile</source>
-        <target xml:lang="es-ES" state="translated">Perfil</target>
+        <target xml:lang="es-ES">Perfil</target>
       </trans-unit>
-      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
+      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu" approved="yes">
         <source>Cpu</source>
-        <target xml:lang="es-ES" state="translated">Cpu</target>
+        <target xml:lang="es-ES">Cpu</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>

@@ -2,25 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <body>
-      <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
+      <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast" approved="yes">
         <source>create new broadcast</source>
-        <target xml:lang="es-ES" state="translated">crear nuevo perfil de difusión</target>
+        <target xml:lang="es-ES">crear nuevo perfil de difusión</target>
       </trans-unit>
-      <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast.">
+      <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast." approved="yes">
         <source>There was an error in creating the Broadcast.</source>
-        <target xml:lang="es-ES" state="translated">Ha ocurrido un error creando el perfil de difusión.</target>
+        <target xml:lang="es-ES">Ha ocurrido un error creando el perfil de difusión.</target>
       </trans-unit>
-      <trans-unit id="4d6f5d583504b7023b52efa2d93f9516" resname="Broadcast successfully created.">
+      <trans-unit id="4d6f5d583504b7023b52efa2d93f9516" resname="Broadcast successfully created." approved="yes">
         <source>Broadcast successfully created.</source>
-        <target xml:lang="es-ES" state="translated">Perfil de difusión creado correctamente.</target>
+        <target xml:lang="es-ES">Perfil de difusión creado correctamente.</target>
       </trans-unit>
-      <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close">
+      <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close" approved="yes">
         <source>Close</source>
-        <target xml:lang="es-ES" state="translated">Cerrar</target>
+        <target xml:lang="es-ES">Cerrar</target>
       </trans-unit>
-      <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
+      <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes" approved="yes">
         <source>Save changes</source>
-        <target xml:lang="es-ES" state="translated">Guardar cambios</target>
+        <target xml:lang="es-ES">Guardar cambios</target>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
@@ -2343,6 +2343,9 @@
       <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
         <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
         <source>My Playlists</source>
@@ -2594,6 +2597,22 @@
       <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
         <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
+      </trans-unit>
+      <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
+        <source>Any Internet user can play the new multimedia objects created from this video template</source>
+        <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir los nuevos objetos multimedia creados a partir de esta plantilla de video</target>
+      </trans-unit>
+      <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe" resname="Only users with the defined password can play the new multimedia objects created from this video template">
+        <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
+      </trans-unit>
+      <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
+        <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios logueados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
+      </trans-unit>
+      <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
+        <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
       </trans-unit>
     </body>
   </file>
