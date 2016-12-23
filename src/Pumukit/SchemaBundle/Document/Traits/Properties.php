@@ -50,6 +50,22 @@ trait Properties
     }
 
     /**
+     * Get property as DateTime, FALSE on failure or null if none.
+     *
+     * @param string $key
+     *
+     * @return DateTime|null|false
+     */
+    public function getPropertyAsDateTime($key)
+    {
+        if (isset($this->properties[$key])) {
+            return \DateTime::createFromFormat('Y-m-d\TH:i:sT', $this->properties[$key]);
+        }
+
+        return null;
+    }
+
+    /**
      * Set property.
      *
      * @param string $key
@@ -58,6 +74,17 @@ trait Properties
     public function setProperty($key, $value)
     {
         $this->properties[$key] = $value;
+    }
+
+    /**
+     * Set property.
+     *
+     * @param string   $key
+     * @param DateTime $value
+     */
+    public function setPropertyAsDateTime($key, \DateTime $value)
+    {
+        $this->properties[$key] = $value->format('c');
     }
 
     /**
