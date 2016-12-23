@@ -14,6 +14,8 @@ use FOS\UserBundle\Model\GroupInterface;
  */
 class User extends BaseUser
 {
+    use Traits\Properties;
+
     const ORIGIN_LOCAL = 'local';
 
     /**
