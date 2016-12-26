@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Person
 {
+    use Traits\Properties;
+
     /**
      * @var string
      *
