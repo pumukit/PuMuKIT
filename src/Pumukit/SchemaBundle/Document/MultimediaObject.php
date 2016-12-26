@@ -228,9 +228,10 @@ class MultimediaObject
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
 
-        $this->setPublicDate(new \DateTime('now'));
-        $this->setRecordDate($this->getPublicDate());
-        $this->setProperty('created', $this->getPublicDate());
+        $now = new \DateTime('now');
+        $this->setPublicDate($now);
+        $this->setRecordDate($now);
+        $this->setPropertyAsDateTime('created', $now);
     }
 
     public function __toString()
@@ -813,6 +814,7 @@ class MultimediaObject
     }
 
     // Start tag section. Caution: MultimediaObject tags are Tag objects, not strings.
+
     /**
      * Get tags.
      *
@@ -1060,7 +1062,7 @@ class MultimediaObject
         $out = array();
         foreach ($snapshot as $key => $pic) {
             if ($pic->getId() === $picId) {
-                $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
+                $out[($key * 10) + ($up ? -11 : 11)] = $pic;
             } else {
                 $out[$key * 10] = $pic;
             }
@@ -1372,7 +1374,7 @@ class MultimediaObject
         $out = array();
         foreach ($snapshot as $key => $track) {
             if ($track->getId() === $trackId) {
-                $out[($key * 10) + ($up ? -11 : 11) ] = $track;
+                $out[($key * 10) + ($up ? -11 : 11)] = $track;
             } else {
                 $out[$key * 10] = $track;
             }
@@ -1704,7 +1706,7 @@ class MultimediaObject
         $out = array();
         foreach ($snapshot as $key => $material) {
             if ($material->getId() === $materialId) {
-                $out[($key * 10) + ($up ? -11 : 11) ] = $material;
+                $out[($key * 10) + ($up ? -11 : 11)] = $material;
             } else {
                 $out[$key * 10] = $material;
             }
@@ -1976,7 +1978,7 @@ class MultimediaObject
         $out = array();
         foreach ($snapshot as $key => $link) {
             if ($link->getId() === $linkId) {
-                $out[($key * 10) + ($up ? -11 : 11) ] = $link;
+                $out[($key * 10) + ($up ? -11 : 11)] = $link;
             } else {
                 $out[$key * 10] = $link;
             }

@@ -26,9 +26,9 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $title = 'Star Wars';
         $subtitle = 'Spoiler';
         $description = "Darth Vader: Obi-Wan never told you what happened to your father.
-			Luke Skywalker: He told me enough! He told me you killed him!
-			Darth Vader: No. I am your father.
-			Luke Skywalker: No... that's not true! That's impossible!";
+            Luke Skywalker: He told me enough! He told me you killed him!
+            Darth Vader: No. I am your father.
+            Luke Skywalker: No... that's not true! That's impossible!";
         $numview = 2;
         $locale = 'en';
         $line2 = 'line2';
@@ -51,6 +51,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $broadcast->setDescription('Private broadcast');
 
         $mm = new MultimediaObject();
+        $this->assertInstanceOf('DateTime', $mm->getPropertyAsDateTime('created'));
         $mm->setRank($rank);
         $mm->setStatus($status);
         $mm->setSeries($series);
@@ -119,6 +120,15 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->removeProperty($property3);
 
         $this->assertNull($mm->getProperty($property3));
+    }
+
+    public function testPropertiesDateTime()
+    {
+        $series = new Series();
+        $date = new \DateTime();
+
+        $series->setPropertyAsDateTime('test_date', $date);
+        $this->assertEquals($date->getTimestamp(), $series->getPropertyAsDateTime('test_date')->getTimestamp());
     }
 
     public function testToString()
@@ -487,7 +497,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($title, $mm->getTags()[0]->getTitle());
         $this->assertEquals($description, $mm->getTags()[0]->getDescription());
         $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
-        $this->assertEquals($cod,  $mm->getTags()[0]->getCod());
+        $this->assertEquals($cod, $mm->getTags()[0]->getCod());
         $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
         $this->assertEquals($created, $mm->getTags()[0]->getCreated());
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
@@ -534,7 +544,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($title, $mm->getTags()[0]->getTitle());
         $this->assertEquals($description, $mm->getTags()[0]->getDescription());
         $this->assertEquals($slug, $mm->getTags()[0]->getSlug());
-        $this->assertEquals($cod,  $mm->getTags()[0]->getCod());
+        $this->assertEquals($cod, $mm->getTags()[0]->getCod());
         $this->assertEquals($metatag, $mm->getTags()[0]->getMetatag());
         $this->assertEquals($created, $mm->getTags()[0]->getCreated());
         $this->assertEquals($updated, $mm->getTags()[0]->getUpdated());
