@@ -31,7 +31,22 @@ class TrackFileController extends Controller
             $this->dispatchViewEvent($mmobj, $track);
         }
 
+        if ($secret = $this->container->getParameter('pumukitplayer.secure_secret')) {
+            $timestamp = time() + $this->container->getParameter('pumukitplayer.secure_duration');
+            $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
+
+            return $this->redirect($track->getUrl()."?md5=${hash}&expires=${timestamp}");
+        }
+
         return $this->redirect($track->getUrl());
+    }
+
+    protected function getHash(Track $track, $timestamp, $secret, $ip)
+    {
+        $url = $track->getUrl();
+        $path = parse_url($url, PHP_URL_PATH);
+
+        return str_replace('=', '', strtr(base64_encode(md5("${timestamp}${path}${ip} ${secret}", true)), '+/', '-_'));
     }
 
     protected function shouldIncreaseViews(Track $track, Request $request)
