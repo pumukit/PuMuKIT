@@ -56,7 +56,10 @@
       </trans-unit>
       <trans-unit id="984c6990081d06520196629b3ce40e54" resname="There are no mediapackages with those values.">
         <source>There are no mediapackages with those values.</source>
-        <target xml:lang="zh-TW" state="translated">沒有與這些值相同的媒體包。</target>
+        <target xml:lang="zh-TW" state="translated">沒有與這些值相同的媒體櫃。</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">沒有與這些值相同的媒體包。</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b754e0e9927059d42b166c04f3ef8975" resname="play in opencast">
         <source>play in opencast</source>
@@ -80,7 +83,7 @@
       </trans-unit>
       <trans-unit id="98b21d345c906eb9ab72133821217a43" resname="Import inverted">
         <source>Import inverted</source>
-        <target xml:lang="zh-TW" state="needs-translation">Import inverted</target>
+        <target xml:lang="zh-TW" state="translated">導入倒</target>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
@@ -88,7 +91,10 @@
       </trans-unit>
       <trans-unit id="63ca19d0f7bd43783e79c5ff2e2a7b4a" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
         <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
-        <target xml:lang="zh-TW" state="translated">{0} 使用者 |{1} mediaPackages |]1，Inf] 媒體包</target>
+        <target xml:lang="zh-TW" state="translated">{0} 使用者 |{1} 媒體櫃 |]1，Inf] 媒體櫃</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">{0} 使用者 |{1} mediaPackages |]1，Inf] 媒體包</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
         <source>Cancel current search</source>
@@ -111,7 +117,7 @@
       </trans-unit>
       <trans-unit id="ab6b7e1b0708d1ad1d4ba0f137f95817" resname="Capture frame from">
         <source>Capture frame from</source>
-        <target xml:lang="zh-TW" state="needs-translation">Capture frame from</target>
+        <target xml:lang="zh-TW" state="translated">擷取嵌入碼從</target>
       </trans-unit>
       <trans-unit id="0e3a50ba0067d015c223dcaed58f9fb3" resname="Transcode to profile">
         <source>Transcode to profile</source>
@@ -135,7 +141,10 @@
       </trans-unit>
       <trans-unit id="c7bc3fddddb62d5b656adc30cea77a55" resname="Presentation">
         <source>Presentation</source>
-        <target xml:lang="zh-TW" state="translated">展示</target>
+        <target xml:lang="zh-TW" state="translated">簡報</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">展示</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
         <source>OK</source>
@@ -143,7 +152,10 @@
       </trans-unit>
       <trans-unit id="a0a7b04286793b4b5812c07b4ec10475" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
-        <target xml:lang="zh-TW" state="translated">更新多媒體物件的檔案資訊</target>
+        <target xml:lang="zh-TW" state="translated">更新多媒體物件的Opencast 檔案資訊</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">更新多媒體物件的檔案資訊</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="befcc65c57d8bf87d3b1cc3f52dcff0b" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
