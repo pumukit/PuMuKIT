@@ -19,8 +19,11 @@ class PumukitBasePlayerExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        /* $configuration = new Configuration();
-           $config = $this->processConfiguration($configuration, $configs); */
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('pumukitplayer.secure_secret', $config['secure_secret']);
+        $container->setParameter('pumukitplayer.secure_duration', $config['secure_duration']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
