@@ -191,6 +191,8 @@ class TrackController extends Controller implements NewAdminController
         $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
+        $allBundles = $this->container->getParameter('kernel.bundles');
+        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         return array(
                      'mm' => $multimediaObject,
@@ -198,6 +200,7 @@ class TrackController extends Controller implements NewAdminController
                      'jobs' => $jobs,
                      'not_master_profiles' => $notMasterProfiles,
                      'oc' => '',
+                     'opencast_exists' => $opencastExists,
                      'reload_links' => $request->query->get('reload_links', false),
                      );
     }
