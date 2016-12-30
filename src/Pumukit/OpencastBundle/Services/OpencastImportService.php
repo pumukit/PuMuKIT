@@ -276,9 +276,8 @@ class OpencastImportService
         }
 
         $video = $this->getMediaPackageField($opencastTrack, 'video');
-
         $encoder = $this->getMediaPackageField($video, 'encoder');
-        $vcodec = $this->getMediaPackageField($video, 'type');
+        $vcodec = $this->getMediaPackageField($encoder, 'type');
         if ($vcodec) {
             $track->setVcodec($vcodec);
         }
@@ -290,6 +289,8 @@ class OpencastImportService
 
         if (!$track->getVcodec() && $track->getAcodec()) {
             $track->setOnlyAudio(true);
+        } else {
+            $track->setOnlyAudio(false);
         }
 
         $track->addTag("opencast");
