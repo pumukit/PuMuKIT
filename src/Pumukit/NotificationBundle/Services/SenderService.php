@@ -15,7 +15,7 @@ class SenderService
     private $notificateErrorsToSender;
     private $environment;
     private $translator;
-    private $subject = "Can't send email to this email.";
+    private $subject = "Can't send email to this address.";
     private $template = 'PumukitExpiredVideoBundle:Email:error.html.twig';
 
     public function __construct(
