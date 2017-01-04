@@ -189,7 +189,7 @@
   padding: 30px 30px;
 }
 
-.license-wrapper {
+.license-wrapper pre {
     height: 300px;
     overflow-y: scroll
 }

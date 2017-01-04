@@ -33,9 +33,7 @@
         <div class="form-group" id="pumukitwizard_license_text">
           <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
           <div class="form-row license-wrapper">
-            <pre>
-              {{ license_text|raw }}
-            </pre>
+            <pre>{{ license_text|raw }}</pre>
           </div>
         </div>
         <div class="form-group" id="pumukitwizard_license_accept_text">
@@ -47,10 +45,10 @@
                      class="license_input_checkbox"
                      {{ license_accept ? 'checked="checked"' : '' }}
                      />
-              {% trans %}Accept license{% endtrans %}
+              {% trans %}Accept license.{% endtrans %}
             </label>
+            <span id="pumukitwizard_license_error" class="wizard-error" hidden="hidden">{% trans %}You must accept the license to continue.{% endtrans %}</span>
           </div>
-          <div id="pumukitwizard_license_error" class="wizard-error" hidden="hidden">{% trans %}You must accept the license to continue.{% endtrans %}</div>
         </div>
       </div>
     </fieldset>
