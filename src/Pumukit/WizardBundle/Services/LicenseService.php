@@ -3,7 +3,6 @@
 namespace Pumukit\WizardBundle\Services;
 
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class LicenseService
 {
@@ -20,7 +19,7 @@ class LicenseService
      * @param array               $locales
      * @param TranslatorInterface $translator
      */
-    public function __construct($showLicense = false, $licenseDir = '', array $locales = array(), TranslatorInterface $translator)
+    public function __construct($showLicense, $licenseDir, array $locales, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->showLicense = $showLicense;
