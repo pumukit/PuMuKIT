@@ -5,14 +5,18 @@
     <ul id="mainNav" class="nav nav-pills nav-wizard">
       {% if show_license %}
       <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
-        <a id="pumukitwizard_series_previous" href="#">{% trans with {'%i-1%': i-1} %}Step %i-1%: License{% endtrans %}<br/>
+        <a id="pumukitwizard_series_previous" href="#">
+          <span class="step-header">{% trans with {'%i-1%': i-1} %}Step %i-1%: License{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Accept the license{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
       </li>
       {% endif %}
       <li class="{% if not show_series or step == -1 %}disabled{%else%}{% if (step == 0) %}active{% elseif ((step == 1) or (step == 2 and not access_inbox)) %}lastdone{% elseif (step > 1) %}done{% endif %}{% endif %}">
-        <a id="pumukitwizard_type_previous" href="#">{% trans with {'%i%': i} %}Step %i%: Series{% endtrans %}<br/>
+        <a id="pumukitwizard_type_previous" href="#">
+          <span class="step-header">{% trans with {'%i%': i} %}Step %i%: Series{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Create a new Series for the Multimedia Object{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
@@ -20,7 +24,9 @@
       {% set i = i + (show_series ? 1 : 0) %}
       {% if access_inbox %}
       <li class="{% if not show_series and not show_license %}first-child-pumukit{% endif %} {% if (step == 1) %}active{% elseif ((step == 2) or ((step == 3) and ('multiple' == option))) %}lastdone{% elseif (step > 2) %}done{% elseif (step < 1) %}disabled{% set i = i -1%}{% endif %}">
-        <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">{% trans with {'%i%': i} %}Step %i%: Type{% endtrans %}<br/>
+        <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">
+          <span class="step-header">{% trans with {'%i%': i} %}Step %i%: Type{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Choose option type{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
@@ -28,7 +34,9 @@
       {% set i = i+1 %}
       {% endif %}
       <li class="{% if not show_series and not access_inbox%}first-child-pumukit{% endif %} {% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif (step < 2) or ('multiple' == option) %}disabled{% set i = i -1%}{% endif %}">
-        <a id="pumukitwizard_track_previous" href="#">{% trans with {'%i%': i} %}Step %i%: Metadata{% endtrans %}<br/>
+        <a id="pumukitwizard_track_previous" href="#">
+          <span class="step-header">{% trans with {'%i%': i} %}Step %i%: Metadata{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Insert the data for the Multimedia Object{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
@@ -36,14 +44,18 @@
       {% set i = i+1 %}
       {% if  ('single' == option) %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% set i = i -1%}{% endif %}">
-        <a href="#">{% trans with {'%i%': i} %}Step %i%: File{% endtrans %}<br/>
+        <a href="#">
+          <span class="step-header">{% trans with {'%i%': i} %}Step %i%: File{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Upload the multimedia file{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
       </li>
       {% elseif ('multiple' == option) and access_inbox %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}disabled{% set i = i -1%}{% endif %}">
-        <a href="#">{% trans with {'%i%': i} %}Step %i% Files{% endtrans %}<br/>
+        <a href="#">
+          <span class="step-header">{% trans with {'%i%': i} %}Step %i% Files{% endtrans %}</span>
+          <br/>
           <span>{% trans %}Select an inbox folder with the multimedia files{% endtrans %}</span>
         </a>
         <div class="nav-arrow"></div>
@@ -52,10 +64,10 @@
       <li class="{% if (step == 4) or (step == 5) %}active{% elseif (step < 4) %}disabled{% endif %}">
         <a href="#">
           {% if (5 == step) %}
-          {% trans %}Final step: Error{% endtrans %}<br/>
+          <span class="step-header">{% trans %}Final step: Error{% endtrans %}</span><br/>
           <span>{% trans %}Failure in wizard proccess{% endtrans %}</span>
           {% else %}
-          {% trans %}Final step: End{% endtrans %}<br/>
+          <span class="step-header">{% trans %}Final step: End{% endtrans %}</span><br/>
           <span>{% trans %}Wait for the end of transcoding to be notified{% endtrans %}</span>
           {% endif %}
         </a>

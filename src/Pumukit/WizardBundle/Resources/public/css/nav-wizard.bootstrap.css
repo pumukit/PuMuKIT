@@ -1,3 +1,7 @@
+.nav-wizard .step-header {
+  font-weight: bold;
+}
+
 .nav-wizard > li {
   float: left;
 }
