@@ -18,7 +18,7 @@
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
@@ -32,11 +32,11 @@
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
-  right: -50px;
+  right: -25px;
   z-index: 2;
 }
 .nav-wizard > li:first-child > a {
@@ -69,11 +69,11 @@
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
-  right: -50px;
+  right: -25px;
   z-index: 2;
 }
 .nav-wizard > li.first-child-pumukit > a {
