@@ -28,19 +28,6 @@
         action="{{ path('pumukitwizard_default_type', {'id': form_data.series.id}) }}" method="POST">
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ series_id }}">
   {% endif %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% if null == series_id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
     <fieldset>
       <div class="col-md-7">
         <div class="form-group" id="pumukitwizard_license_text">
@@ -67,6 +54,19 @@
         </div>
       </div>
     </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {% if null == series_id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 {% endblock wizard_body %}
