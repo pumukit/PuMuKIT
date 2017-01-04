@@ -15,9 +15,19 @@ class SenderService
     private $notificateErrorsToSender;
     private $environment;
     private $translator;
+    private $subject = "Can't send email to this email.";
+    private $template = 'PumukitExpiredVideoBundle:Email:error.html.twig';
 
-    public function __construct($mailer, EngineInterface $templating, TranslatorInterface $translator, $enable, $senderEmail, $senderName, $notificateErrorsToSender, $environment = 'dev')
-    {
+    public function __construct(
+        $mailer,
+        EngineInterface $templating,
+        TranslatorInterface $translator,
+        $enable,
+        $senderEmail,
+        $senderName,
+        $notificateErrorsToSender,
+        $environment = 'dev'
+    ) {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->translator = $translator;
@@ -71,31 +81,102 @@ class SenderService
     /**
      * Send notification.
      *
-     * @param string $emailTo
-     * @param string $subject
-     * @param string $template
-     * @param array  $parameters
-     * @param bool   $error
+     * @param $emailTo
+     * @param $subject
+     * @param $template
+     * @param array $parameters
+     * @param bool  $error
+     *
+     * @return bool
      */
     public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
     {
-        if ($this->enable && filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
-            $message = \Swift_Message::newInstance();
-            if ($error && $this->notificateErrorsToSender) {
-                $message->addBcc($this->senderEmail);
+        $filterEmail = $this->filterEmail($emailTo);
+
+        if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
+            if (isset($filterEmail['verified'])) {
+                $sent = $this->sendEmailTemplate(
+                    $filterEmail['verified'],
+                    $subject,
+                    $template,
+                    $parameters,
+                    $error
+                );
             }
-            $message
-              ->setSubject($subject)
-              ->setSender($this->senderEmail, $this->senderName)
-              ->setFrom($this->senderEmail, $this->senderName)
-              ->addReplyTo($this->senderEmail, $this->senderName)
-              ->setTo($emailTo)
-              ->setBody($this->templating->render($template, $parameters), 'text/html');
-            $sent = $this->mailer->send($message);
+
+            if (isset($filterEmail['error'])) {
+                $parameters['body'] = $filterEmail['error'];
+                $this->sendEmailTemplate(
+                    $this->senderEmail,
+                    $this->subject,
+                    $this->template,
+                    $parameters,
+                    $error
+                );
+            }
 
             return $sent;
         }
 
         return false;
+    }
+
+    /**
+     * Checks if string|array email are valid.
+     *
+     * @param string|array $emailTo
+     *
+     * @return bool
+     */
+    private function filterEmail($emailTo)
+    {
+        $filterEmail = array();
+        if (is_array($emailTo)) {
+            foreach ($emailTo as $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
+                    $filterEmail['verified'] = $email;
+                } else {
+                    $filterEmail['error'] = $email;
+                }
+            }
+        } else {
+            if (filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
+                $filterEmail['verified'] = $emailTo;
+            } else {
+                $filterEmail['error'] = $emailTo;
+            }
+        }
+
+        return $filterEmail;
+    }
+
+    /**
+     * Create the email and send.
+     *
+     * @param $emailTo
+     * @param $subject
+     * @param $template
+     * @param $parameters
+     * @param $error
+     *
+     * @return mixed
+     */
+    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
+    {
+        $message = \Swift_Message::newInstance();
+        if ($error && $this->notificateErrorsToSender) {
+            $message->addBcc($this->senderEmail);
+        }
+
+        /* Send to verified emails */
+        $message
+            ->setSubject($subject)
+            ->setSender($this->senderEmail, $this->senderName)
+            ->setFrom($this->senderEmail, $this->senderName)
+            ->addReplyTo($this->senderEmail, $this->senderName)
+            ->setTo($emailTo)
+            ->setBody($this->templating->render($template, $parameters), 'text/html');
+
+        return $this->mailer->send($message);
     }
 }
