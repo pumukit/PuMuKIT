@@ -1,4 +1,6 @@
 {% block body %}
+{% autoescape false %}
+
 {# SET VARIABLES #}
 {% set default_contrast_background = default_contrast_background | default("#ed6d00") %}
 {% set default_light_background = default_light_background | default("#858585") %}
@@ -782,4 +784,5 @@ a:hover .cover {
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
 
+{% endautoescape %}
 {% endblock %}
