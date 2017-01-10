@@ -52,7 +52,7 @@
       {% elseif ('multiple' == option) and access_inbox %}
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}future{% endif %}">
         <a href="#">
-          <div class="step-header">{% trans with {'%i%': i} %}Step %i% Files{% endtrans %}</div>
+          <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Files{% endtrans %}</div>
           <div class="pumukitnewadmin-trim-row">{% trans %}Select an inbox folder with the multimedia files{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
