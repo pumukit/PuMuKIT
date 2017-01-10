@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Finder;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -93,7 +92,7 @@ class DefaultController extends Controller
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
         if (!$licenseEnabledAndAccepted) {
-            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('show_series' => $showSeries, 'pumukitwizard_form_data' => $formData)));
         }
 
         return array(

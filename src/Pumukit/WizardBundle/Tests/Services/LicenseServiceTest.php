@@ -4,7 +4,6 @@ namespace Pumukit\WizardBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\WizardBundle\Services\LicenseService;
-use Symfony\Component\HttpFoundation\Response;
 
 class LicenseServiceTest extends WebTestCase
 {

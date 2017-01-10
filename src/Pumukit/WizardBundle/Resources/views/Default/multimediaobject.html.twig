@@ -15,22 +15,6 @@
     <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
     {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% spaceless %}
-          {% if 'null' == form_data.series.id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-          </a>
-          {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
     <fieldset>
       {# TODO build input fields with for loop #}
       <div class="col-md-7">
@@ -142,6 +126,22 @@
         {% endif %}
       </div>
     </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {% spaceless %}
+          {% if 'null' == form_data.series.id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 {% endblock wizard_body %}

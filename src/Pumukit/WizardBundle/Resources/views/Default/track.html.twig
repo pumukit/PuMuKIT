@@ -31,22 +31,6 @@
     {% endfor %}
     {% endfor %}
     {% endif %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% spaceless %}
-          {% if 'null' == form_data.series.id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-          </a>
-          {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
     <fieldset>
       <div class="col-md-6">
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
@@ -151,6 +135,22 @@
         <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
       </div>
     </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {% spaceless %}
+          {% if 'null' == form_data.series.id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 

@@ -1,9 +1,32 @@
-.nav-wizard > li {
-  float: left;
+.nav-wizard .step-header {
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
+.nav-wizard > li,
+.nav-wizard.steps-5 > li {
+  float: left;
+  width: calc(20% - 2px);
+}
+
+.nav-wizard.steps-6 > li {
+  width: calc(16.666667% - 2px);
+}
+
+.nav-wizard.steps-4 > li {
+  width: calc(25% - 2px);
+}
+
+.nav-wizard.steps-3 > li {
+  width: calc(33.33333% - 2px);
+}
+
 .nav-wizard > li > a {
   position: relative;
   background-color: #d5d5d5;
+  width: 100%;
 }
 .nav-wizard > li > a .badge {
   margin-left: 3px;
@@ -11,14 +34,14 @@
   background-color: #ED6D00;
 }
 .nav-wizard > li:not(:first-child) > a {
-  padding-left: 60px;
+  padding-left: 40px;
 }
 .nav-wizard > li:not(:first-child) > a:before {
   width: 0px;
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
@@ -32,11 +55,11 @@
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
-  right: -50px;
+  right: -25px;
   z-index: 2;
 }
 .nav-wizard > li:first-child > a {
@@ -69,11 +92,11 @@
   height: 0px;
   border-top: 50px inset transparent;
   border-bottom: 50px inset transparent;
-  border-left: 50px solid #eeeeee;
+  border-left: 25px solid #eeeeee;
   position: absolute;
   content: "";
   top: 0;
-  right: -50px;
+  right: -25px;
   z-index: 2;
 }
 .nav-wizard > li.first-child-pumukit > a {
@@ -92,6 +115,7 @@
 .nav-wizard > li:hover > a:after {
   border-left-color: #d5d5d5;
 }
+.nav-wizard > li.future > a,
 .nav-wizard > li.done > a {
   color: #777777;
   background-color: #d5d5d5;
@@ -101,6 +125,7 @@
   color: #777777;
   border-right-color: #d5d5d5;
 }
+.nav-wizard > li.future > a:after,
 .nav-wizard > li.done > a:after {
   color: #777777;
   border-left-color: #d5d5d5;
@@ -182,18 +207,25 @@
   border-radius: 0px;
 }
 .nav-wizard>li>a {
-  padding: 30px 30px;
+  padding: 30px 15px 30px 30px;
 }
 
-.license-wrapper {
-    height: 300px;
-    overflow-y: scroll
+
+.license-wrapper pre {
+  height: 300px;
+  overflow-y: scroll
 }
 
 .wizard-error {
-    color: red;
+  color: red;
 }
 
 .info-link {
-    float: right;
+  float: right;
+}
+
+
+#pumukitwizard_body {
+  max-width: 1280px;
+  margin: 0 auto;
 }

@@ -1,6 +1,6 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': true})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': app.request.get('show_series', true)})) %}
 <div class="well">
   {% if form_data.series is defined %}
     {% if form_data.series.id is defined %}
@@ -28,6 +28,30 @@
         action="{{ path('pumukitwizard_default_type', {'id': form_data.series.id}) }}" method="POST">
     <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ series_id }}">
   {% endif %}
+    <fieldset>
+      <div class="col-md-7">
+        <div class="form-group" id="pumukitwizard_license_text">
+          <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
+          <div class="form-row license-wrapper">
+            <pre>{{ license_text|raw }}</pre>
+          </div>
+        </div>
+        <div class="form-group" id="pumukitwizard_license_accept_text">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"
+                     name="pumukitwizard_form_data[license][accept]"
+                     id="pumukitwizard_license_accept"
+                     class="license_input_checkbox"
+                     {{ license_accept ? 'checked="checked"' : '' }}
+                     />
+              {% trans %}Accept license.{% endtrans %}
+            </label>
+            <span id="pumukitwizard_license_error" class="wizard-error" hidden="hidden">{% trans %}You must accept the license to continue.{% endtrans %}</span>
+          </div>
+        </div>
+      </div>
+    </fieldset>
     <div class="row">
       <div class="col-md-12">
         <div class="text-right">
@@ -41,32 +65,6 @@
         </div>
       </div>
     </div>
-    <fieldset>
-      <div class="col-md-7">
-        <div class="form-group" id="pumukitwizard_license_text">
-          <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>
-          <div class="form-row license-wrapper">
-            <pre>
-              {{ license_text|raw }}
-            </pre>
-          </div>
-        </div>
-        <div class="form-group" id="pumukitwizard_license_accept_text">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"
-                     name="pumukitwizard_form_data[license][accept]"
-                     id="pumukitwizard_license_accept"
-                     class="license_input_checkbox"
-                     {{ license_accept ? 'checked="checked"' : '' }}
-                     />
-              {% trans %}Accept license{% endtrans %}
-            </label>
-          </div>
-          <div id="pumukitwizard_license_error" class="wizard-error" hidden="hidden">{% trans %}You must accept the license to continue.{% endtrans %}</div>
-        </div>
-      </div>
-    </fieldset>
   </form>
 </div>
 {% endblock wizard_body %}
