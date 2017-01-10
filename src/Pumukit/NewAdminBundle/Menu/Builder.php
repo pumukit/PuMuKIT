@@ -77,8 +77,11 @@ class Builder extends ContainerAware
             }
         }
 
-        if ($authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS) || $authorizationChecker->isGranted(Permission::ACCESS_PERMISSION_PROFILES) ||
+        if ($authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS) ||
+            $authorizationChecker->isGranted(Permission::ACCESS_GROUPS) ||
+            $authorizationChecker->isGranted(Permission::ACCESS_PERMISSION_PROFILES) ||
             $authorizationChecker->isGranted(Permission::ACCESS_ROLES)) {
+
             $management = $menu->addChild('Management');
             if ($authorizationChecker->isGranted(Permission::ACCESS_ADMIN_USERS)) {
                 $management->addChild('Admin users', array('route' => 'pumukitnewadmin_user_index'));
@@ -94,9 +97,18 @@ class Builder extends ContainerAware
             }
         }
 
+        $tools = null;
         if ($showImporterTab && $authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER')) {
-            $importer = $menu->addChild('Tools');
-            $importer->addChild('OC-Importer', array('route' => 'pumukitopencast'));
+            $tools = $menu->addChild('Tools');
+            $tools->addChild('OC-Importer', array('route' => 'pumukitopencast'));
+        }
+
+        foreach($this->container->get('pumukitnewadmin.menu')->items() as $item) {
+            if ($authorizationChecker->isGranted($item->getAccessRole())) {
+                if (!$tools) $tools = $menu->addChild('Tools');
+                $tools->addChild($item->getName(), array('route' => $item->getUri()));
+            }
+
         }
 
         return $menu;
