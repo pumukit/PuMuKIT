@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Http\HttpUtils;
 
-
 class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 {
     const LDAP_ID_KEY = 'uid';
@@ -48,7 +47,6 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-
         $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $token->getUser()->getUsername());
         if (!isset($info) || !$info) {
             throw new \RuntimeException('User not found.');
@@ -74,7 +72,6 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
         $this->container->get('security.context')->setToken($token);
 
         return $this->httpUtils->createRedirectResponse($request, $this->determineTargetUrl());
-
     }
 
     private function createUser($info, $token)
@@ -107,7 +104,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
             }
         }
 
-        if (in_array("urn:mace:rediris.es:ehu.es:entitlement:service:pumukit", $info["irisuserentitlement"])) {
+        if (in_array('urn:mace:rediris.es:ehu.es:entitlement:service:pumukit', $info['irisuserentitlement'])) {
             $user->setPermissionProfile($permissionProfileAdmin);
             $this->userService->update($user, true, false);
         }
