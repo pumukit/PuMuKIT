@@ -10,7 +10,7 @@ interface ItemInterface
     public function getName();
 
     /**
-     * Get the uri for a menu item
+     * Get the uri for a menu item.
      *
      * @return string
      */
