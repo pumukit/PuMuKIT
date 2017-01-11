@@ -9,7 +9,7 @@
         {% autoescape 'js' %}
         <script type="text/javascript">
           var str = JSON.stringify({{ multimediaObject.getProperties()|json_encode|raw }}, null, 4);
-          document.getElementById('multimediaobject_properties_code').innerHTML = str;
+          document.getElementById('multimediaobject_properties_code').innerText  = str;
         </script>
         {% endautoescape %}
       </div>

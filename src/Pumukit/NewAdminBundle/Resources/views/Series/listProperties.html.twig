@@ -9,7 +9,7 @@
         {% autoescape 'js' %}
         <script type="text/javascript">
           var str = JSON.stringify({{ series.getProperties()|json_encode|raw }}, null, 4);
-          document.getElementById('series_properties_code').innerHTML = str;
+          document.getElementById('series_properties_code').innerText = str;
         </script>
         {% endautoescape %}
       </div>
