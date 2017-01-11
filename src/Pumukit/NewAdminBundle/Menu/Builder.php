@@ -23,7 +23,8 @@ class Builder extends ContainerAware
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) &&
-            $authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
+            $authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU) &&
+            !$authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $menu->addChild('Upload new videos', array('route' => 'pumukitwizard_default_series'));
         }
 
