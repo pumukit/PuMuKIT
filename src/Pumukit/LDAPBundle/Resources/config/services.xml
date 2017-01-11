@@ -5,6 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <!--  TODO Merge ldap and pumukit_ldap.ldap services-->
+        <service id="ldap" class="Symfony\Component\Ldap\LdapClient">
+            <argument>%pumukit_ldap.server%</argument>
+        </service>
+
         <service id="pumukit_ldap.ldap" class="Pumukit\LDAPBundle\Services\LDAPService">
             <argument>%pumukit_ldap.server%</argument>
             <argument>%pumukit_ldap.bind_rdn%</argument>
