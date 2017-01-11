@@ -57,7 +57,7 @@ doctrine_mongodb:
             options: {}
     default_database: "%mongodb_database%"
     auto_generate_hydrator_classes: true
-    auto_generate_proxy_classes: "%kernel.debug%"
+    auto_generate_proxy_classes: true
     document_managers:
         default:
             auto_mapping: true
