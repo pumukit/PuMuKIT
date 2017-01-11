@@ -17,7 +17,7 @@
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
     <fieldset>
       {# TODO build input fields with for loop #}
-      <div class="col-md-7">
+      <div class="col-md-10">
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
           <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>
@@ -64,7 +64,7 @@
           </div>
         </div>
         {% if show_object_license %}
-        <div class="form-group" id="pumukitwizard_multimediaobject_license">
+        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_license">
           <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
           <div class="form-control-wrapper">
             {% if object_available_licenses|length > 0 %}
@@ -92,7 +92,7 @@
           </div>
         </div>
         {% endif %}
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
+        <div class="form-group col-md-12 row" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
           <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
           <div>
             {% for locale in locales %}
@@ -108,7 +108,7 @@
           </div>
         </div>
         {% if show_tags and (available_tags|length > 0) %}
-        <div class="form-group" id="pumukitwizard_multimediaobject_tag">
+        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_tag">
           <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
           <div class="form-control-wrapper">
             <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
