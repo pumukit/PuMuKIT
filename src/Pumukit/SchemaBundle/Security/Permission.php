@@ -26,6 +26,7 @@ class Permission
     const ACCESS_ADVANCED_UPLOAD = 'ROLE_ACCESS_ADVANCED_UPLOAD';
     const ACCESS_EDIT_PLAYLIST = 'ROLE_ACCESS_EDIT_PLAYLIST';
     const ACCESS_WIZARD_UPLOAD = 'ROLE_ACCESS_WIZARD_UPLOAD';
+    const SHOW_WIZARD_MENU = 'ROLE_SHOW_WIZARD_MENU';
     const ACCESS_API = 'ROLE_ACCESS_API';
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
@@ -160,6 +161,13 @@ class Permission
         ),
         self::ACCESS_WIZARD_UPLOAD => array(
             'description' => 'Access Wizard Upload',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::SHOW_WIZARD_MENU => array(
+            'description' => 'Show Wizard Menu Item',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),

@@ -22,6 +22,11 @@ class Builder extends ContainerAware
             $menu->addChild('Dashboard', array('route' => 'pumukit_newadmin_dashboard_index'));
         }
 
+        if ($authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) &&
+            $authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
+            $menu->addChild('Upload new videos', array('route' => 'pumukitwizard_default_series'));
+        }
+
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
             $mediaManager = $menu->addChild('Media Manager');
             $series = $mediaManager->addChild('Series', array('route' => 'pumukitnewadmin_series_index'));
