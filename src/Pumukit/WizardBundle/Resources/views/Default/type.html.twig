@@ -14,7 +14,7 @@
     <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_type_series_{{ field }}_{{ locale }}" value="{{ value }}">
     {% endfor %}
     {% endfor %}
-    <fieldset>
+    <fieldset class="well">
       <div class="form-group" id="pumukitwizard_type_option">
         <label for="pumukitwizard_type_option" class="control-label">{% trans %}Type{% endtrans %}</label>
         {% if form_data.type is defined %}
