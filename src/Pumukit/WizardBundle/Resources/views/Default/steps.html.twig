@@ -9,7 +9,7 @@
       <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
         <a id="pumukitwizard_series_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: License{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Accept the license{% endtrans %}</div>
+          <div class="step-body">{% trans %}Accept the license{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -18,7 +18,7 @@
       <li class="{% if not show_series %}disabled{% elseif (step == 0) %}active{% elseif (step == -1) %}future{% elseif ((step == 1) or (step == 2 and not access_inbox)) %}lastdone{% elseif (step > 1) %}done{% endif %}">
         <a id="pumukitwizard_type_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Series{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Create a new Series for the Multimedia Object{% endtrans %}</div>
+          <div class="step-body">{% trans %}Create a new Series for the Multimedia Object{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -27,7 +27,7 @@
       <li class="{% if not show_series and not show_license %}first-child-pumukit{% endif %} {% if (step == 1) %}active{% elseif ((step == 2) or ((step == 3) and ('multiple' == option))) %}lastdone{% elseif (step > 2) %}done{% elseif (step < 1) %}future{% endif %}">
         <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Type{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Choose option type{% endtrans %}</div>
+          <div class="step-body">{% trans %}Choose option type{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -36,7 +36,7 @@
       <li class="{% if not show_series and not access_inbox%}first-child-pumukit{% endif %} {% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif 'multiple' == option %}disabled{% elseif step < 2%}future{% endif %}">
         <a id="pumukitwizard_track_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Metadata{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Insert the data for the Multimedia Object{% endtrans %}</div>
+          <div class="step-body">{% trans %}Insert the data for the Multimedia Object{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -45,7 +45,7 @@
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}future{% endif %}">
         <a href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: File{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Upload the multimedia file{% endtrans %}</div>
+          <div class="step-body">{% trans %}Upload the multimedia file{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -53,7 +53,7 @@
       <li class="{% if (step == 3) %}active{% elseif (step > 2) %}done{% elseif (step < 3) %}future{% endif %}">
         <a href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Files{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Select an inbox folder with the multimedia files{% endtrans %}</div>
+          <div class="step-body">{% trans %}Select an inbox folder with the multimedia files{% endtrans %}</div>
         </a>
         <div class="nav-arrow"></div>
       </li>
@@ -62,10 +62,10 @@
         <a href="#">
           {% if (5 == step) %}
           <div class="step-header">{% trans %}Final step: Error{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Failure in wizard proccess{% endtrans %}</div>
+          <div class="step-body">{% trans %}Failure in wizard proccess{% endtrans %}</div>
           {% else %}
           <div class="step-header">{% trans %}Final step: End{% endtrans %}</div>
-          <div class="pumukitnewadmin-trim-row">{% trans %}Wait for the end of transcoding to be notified{% endtrans %}</div>
+          <div class="step-body">{% trans %}Wait for the end of transcoding to be notified{% endtrans %}</div>
           {% endif %}
         </a>
         <div class="nav-arrow"></div>

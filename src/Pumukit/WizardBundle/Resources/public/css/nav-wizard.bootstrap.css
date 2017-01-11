@@ -5,6 +5,15 @@
   overflow: hidden;
 }
 
+.step-body {
+  height: 20px;
+  font-size: 12px;
+}
+
+.nav-wizard {
+  overflow: hidden;
+}
+
 .nav-wizard > li,
 .nav-wizard.steps-5 > li {
   float: left;
@@ -207,7 +216,7 @@
   border-radius: 0px;
 }
 .nav-wizard>li>a {
-  padding: 30px 15px 30px 30px;
+  padding: 23px 15px 37px 30px;
 }
 
 
