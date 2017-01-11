@@ -1,14 +1,22 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ path('pumukitwizard_js') }}"></script>
+{% endblock %}
 {% block body %}
   <h3> {% trans %}Upload local file{% endtrans %}</h3>
   <div class="row" style="padding-top: 50px">
     <div class="col-md-12">
       <div class="well" >
-          <form id="pumukitwizard_track_form"
+          <form id="pumukitwizard_simple_track_form"
                 autocomplete="off"
                 enctype="multipart/form-data"
                 action="{{ path('pumukitwizard_simple_upload', {'id': series.id}) }}" method="POST">
-
+            <input type="hidden" id="pumukitwizard_show_license" value="{{ show_license ? 'true':'false'}}"/>
             <div class="row">
               <div class="col-md-12">
                 <div class="text-right">
@@ -38,9 +46,10 @@
                     <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
                   </div>
                 </div>
-
+              {% if show_license %}
+              {% include 'PumukitWizardBundle:Simple:license.html.twig' with {'license_text': license_text} %}
+              {% endif %}
               </div>
-
             </fieldset>
           </form>
       </div>

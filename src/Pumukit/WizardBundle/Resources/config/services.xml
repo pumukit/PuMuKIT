@@ -4,13 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <services>
-        <service id="pumukit_wizard.example" class="Pumukit\WizardBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="pumukit_wizard.license" class="Pumukit\WizardBundle\Services\LicenseService">
+            <argument>%pumukit_wizard.show_license%</argument>
+            <argument>%pumukit_wizard.license_dir%</argument>
+            <argument>%pumukit2.locales%</argument>
+            <argument type="service" id="translator" />
         </service>
     </services>
-    -->
 </container>

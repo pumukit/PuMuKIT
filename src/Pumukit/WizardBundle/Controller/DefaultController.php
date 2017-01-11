@@ -21,12 +21,40 @@ class DefaultController extends Controller
     /**
      * @Template()
      */
+    public function licenseAction(Request $request)
+    {
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        if (!$licenseService->isEnabled()) {
+            if (isset($formData['series']['id']) && $formData['series']['id'] != null) {
+                return $this->redirect($this->generateUrl('pumukitwizard_default_type', array('pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'])));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
+        }
+        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
+
+        return array(
+            'license_text' => $licenseContent,
+            'form_data' => $formData,
+        );
+    }
+
+    /**
+     * @Template()
+     */
     public function seriesAction(Request $request)
     {
-        $formData = $request->get('pumukitwizard_form_data');
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+        }
 
         return array(
                      'form_data' => $formData,
+                     'license_enable' => $licenseService->isEnabled(),
                      );
     }
 
@@ -35,8 +63,7 @@ class DefaultController extends Controller
      */
     public function typeAction($id, Request $request)
     {
-        $formData = $request->get('pumukitwizard_form_data');
-
+        $formData = $request->get('pumukitwizard_form_data', array());
         $showSeries = true;
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
             ->getRepository('PumukitSchemaBundle:Series');
@@ -51,6 +78,9 @@ class DefaultController extends Controller
                                                    'i18n_description' => $series->getI18nDescription(),
                                                    ));
             }
+            if ($series->getId()) {
+                $formData['series']['id'] = $series->getId();
+            }
         }
 
         if (false === $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX)) {
@@ -59,11 +89,17 @@ class DefaultController extends Controller
 
             return $this->redirect($this->generateUrl('pumukitwizard_default_option', array('pumukitwizard_form_data' => $formData)));
         }
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('show_series' => $showSeries, 'pumukitwizard_form_data' => $formData)));
+        }
 
         return array(
                      'series_id' => $id,
                      'form_data' => $formData,
                      'show_series' => $showSeries,
+                     'license_enable' => $licenseService->isEnabled(),
                      );
     }
 
@@ -72,7 +108,12 @@ class DefaultController extends Controller
      */
     public function optionAction(Request $request)
     {
-        $formData = $request->get('pumukitwizard_form_data');
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+        }
 
         if (('multiple' == $formData['type']['option']) && (false !== $this->get('security.authorization_checker')->isGranted(Permission::ACCESS_INBOX))) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_track', array('pumukitwizard_form_data' => $formData)));
@@ -86,10 +127,40 @@ class DefaultController extends Controller
      */
     public function multimediaobjectAction(Request $request)
     {
-        $formData = $request->get('pumukitwizard_form_data');
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+        }
+
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $availableTags = array();
+        if ($showTags) {
+            $tagCode = $this->container->getParameter('pumukit_wizard.tag_parent_code', '');
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagParent = $tagRepo->findOneBy(array('cod' => $tagCode));
+            if ($tagParent) {
+                $availableTags = $tagParent->getChildren();
+            }
+        }
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $objectDefaultLicense = null;
+        $objectAvailableLicenses = null;
+        if ($showObjectLicense) {
+            $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license', null);
+            $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses', null);
+        }
 
         return array(
                      'form_data' => $formData,
+                     'license_enable' => $licenseService->isEnabled(),
+                     'show_tags' => $showTags,
+                     'available_tags' => $availableTags,
+                     'show_object_license' => $showObjectLicense,
+                     'object_default_license' => $objectDefaultLicense,
+                     'object_available_licenses' => $objectAvailableLicenses,
                      );
     }
 
@@ -98,7 +169,12 @@ class DefaultController extends Controller
      */
     public function trackAction(Request $request)
     {
-        $formData = $request->get('pumukitwizard_form_data');
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+        }
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
         $factoryService = $this->get('pumukitschema.factory');
@@ -106,11 +182,17 @@ class DefaultController extends Controller
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+
         return array(
                      'form_data' => $formData,
                      'master_profiles' => $masterProfiles,
                      'pub_channels' => $pubChannelsTags,
                      'languages' => $languages,
+                     'license_enable' => $licenseService->isEnabled(),
+                     'show_tags' => $showTags,
+                     'show_object_license' => $showObjectLicense,
                      );
     }
 
@@ -121,14 +203,21 @@ class DefaultController extends Controller
      */
     public function uploadAction(Request $request)
     {
+        $formData = $request->get('pumukitwizard_form_data', array());
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabledAndAccepted = $licenseService->isLicenseEnabledAndAccepted($formData, $request->getLocale());
+        if (!$licenseEnabledAndAccepted) {
+            return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
+        }
         $jobService = $this->get('pumukitencoder.job');
         $inspectionService = $this->get('pumukit.inspection');
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
         $series = null;
         $seriesId = null;
         $multimediaObject = null;
         $mmId = null;
-        $formData = $request->get('pumukitwizard_form_data');
         if ($formData) {
             $seriesData = $this->getKeyData('series', $formData);
 
@@ -209,6 +298,19 @@ class DefaultController extends Controller
                     if ($multimediaObject && $pubchannel) {
                         foreach ($pubchannel as $tagCode => $valueOn) {
                             $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                        }
+                    }
+
+                    if ($showTags) {
+                        $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
+                        if ($tagCode != '0') {
+                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                        }
+                    }
+                    if ($showObjectLicense) {
+                        $license = $this->getKeyData('license', $formData['multimediaobject']);
+                        if ($license && ($license !== '0')) {
+                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], array('license'));
                         }
                     }
                 } elseif ('multiple' === $option) {
@@ -340,11 +442,14 @@ class DefaultController extends Controller
         $step = $request->get('step');
         $option = $request->get('option');
         $showSeries = $request->get('show_series');
+        $licenseService = $this->get('pumukit_wizard.license');
+        $showLicense = $licenseService->isEnabled();
 
         return array(
                      'step' => $step,
                      'option' => $option,
                      'show_series' => $showSeries,
+                     'show_license' => $showLicense,
                      );
     }
 
@@ -394,7 +499,7 @@ class DefaultController extends Controller
             return $series;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -414,7 +519,7 @@ class DefaultController extends Controller
             return $multimediaObject;
         }
 
-        return null;
+        return;
     }
 
     /**

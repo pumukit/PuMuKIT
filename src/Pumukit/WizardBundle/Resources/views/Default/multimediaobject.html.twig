@@ -11,26 +11,13 @@
     <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_multimediaobject_series_{{ field }}_{{ locale }}" value="{{ value }}">
     {% endfor %}
     {% endfor %}
+    {% if license_enable %}
+    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
+    {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% spaceless %}
-          {% if 'null' == form_data.series.id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-          </a>
-          {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
-        </div>
-      </div>
-    </div>
-    <fieldset>
+    <fieldset class="well">
       {# TODO build input fields with for loop #}
-      <div class="col-md-7">
+      <div class="col-md-10">
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
           <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>
@@ -76,7 +63,36 @@
             {% endfor %}
           </div>
         </div>
-        <div class="form-group" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
+        {% if show_object_license %}
+        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_license">
+          <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            {% if object_available_licenses|length > 0 %}
+            <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
+              <option value="0">{% trans %}Select a license...{% endtrans %}</option>
+              {% for license in object_available_licenses %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+              <option value="{{ license }}" {{ form_data['multimediaobject']['license'] == license ? 'selected="selected"':'' }}>{{ license }}</option>
+              {% else %}
+              <option value="{{ license }}">{{ license }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            {% else %}
+            {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}">
+            {% elseif object_default_license is not null %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}">
+            {% else %}
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="">
+            {% endif %}
+            <span class="material-input"></span>
+            {% endif %}
+            <a target="_blank" class="info-link" href="http://es.creativecommons.org/blog/licencias/">+INFO</a>
+          </div>
+        </div>
+        {% endif %}
+        <div class="form-group col-md-12 row" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
           <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
           <div>
             {% for locale in locales %}
@@ -91,8 +107,41 @@
             {% endfor %}
           </div>
         </div>
+        {% if show_tags and (available_tags|length > 0) %}
+        <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_tag">
+          <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
+          <div class="form-control-wrapper">
+            <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
+              <option value="0">{% trans %}Select a tag...{% endtrans %}</option>
+              {% for tag in available_tags %}
+              {% if form_data.multimediaobject is defined and form_data.multimediaobject.tag is defined %}
+              <option value="{{ tag.cod }}" {{ form_data['multimediaobject']['tag'] == tag.cod ? 'selected="selected"':'' }}>{{ tag.getTitle() }}</option>
+              {% else %}
+              <option value="{{ tag.cod }}">{{ tag.getTitle() }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-right">
+          {% spaceless %}
+          {% if 'null' == form_data.series.id %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% endif %}
+          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+          </a>
+          {% endspaceless %}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 {% endblock wizard_body %}

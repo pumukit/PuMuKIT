@@ -20,11 +20,16 @@ class SimpleController extends Controller
      */
     public function indexAction(Series $series, Request $request)
     {
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
+
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
         return array(
             'series' => $series,
             'languages' => $languages,
+            'show_license' => $licenseService->isEnabled(),
+            'license_text' => $licenseContent,
         );
     }
 

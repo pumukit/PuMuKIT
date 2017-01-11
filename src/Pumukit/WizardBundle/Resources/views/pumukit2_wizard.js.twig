@@ -1,5 +1,14 @@
 $(function(){
 
+    $('#pumukitwizard_series_previous').on('click', function(e){
+        if($(this).parent().hasClass('lastdone')){
+            var typeForm = $('#pumukitwizard_body form')[0];
+            typeForm.action = "{{ path('pumukitwizard_default_license')|raw }}";
+            typeForm.submit();
+        }
+        return false;
+    });
+
     $('#pumukitwizard_type_previous').on('click', function(e){
         if($(this).parent().hasClass('lastdone')){
             var typeForm = $('#pumukitwizard_body form')[0];
@@ -51,5 +60,32 @@ $(function(){
         }else{
             return false;
         }
+    });
+
+    $('#pumukitwizard_simple_track_form').on('submit', function(e){
+        e.preventDefault();
+        var show_license = $('#pumukitwizard_show_license').val();
+        if (show_license == "true") {
+            var license_accept = $('#pumukitwizard_license_accept').is(':checked');
+            if(license_accept){
+                this.submit();
+            } else {
+                $('#wizard_error_display').show();
+            }
+        } else {
+            this.submit();
+        }
+        return false;
+    });
+
+    $('#pumukitwizard_license_form').on('submit', function(e){
+        e.preventDefault();
+        var license_accept = $('#pumukitwizard_license_accept').is(':checked');
+        if(license_accept){
+            this.submit();
+        } else {
+            $('#pumukitwizard_license_error').show();
+        }
+        return false;
     });
 });

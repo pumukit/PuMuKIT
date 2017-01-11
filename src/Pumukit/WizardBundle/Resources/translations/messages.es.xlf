@@ -257,6 +257,50 @@
         <source>Upload</source>
         <target xml:lang="es-ES" state="translated">Subida</target>
       </trans-unit>
+      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
+        <source>License</source>
+        <target>Licencia</target>
+      </trans-unit>
+      <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
+        <source>Accept license</source>
+        <target>Acepte la licencia</target>
+      </trans-unit>
+      <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
+        <source>You must accept the license to continue.</source>
+        <target>Tiene que aceptar la licencia para continuar.</target>
+      </trans-unit>
+      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
+        <source>Tag</source>
+        <target>Categoría</target>
+      </trans-unit>
+      <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
+        <source>Select a tag...</source>
+        <target>Selecione una categoría...</target>
+      </trans-unit>
+      <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
+        <source>Select a license...</source>
+        <target>Selecione una licencia...</target>
+      </trans-unit>
+      <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
+        <source>Accept the license</source>
+        <target>Acepte la licencia</target>
+      </trans-unit>
+      <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
+        <source>Accept license.</source>
+        <target>Acepte la licencia.</target>
+      </trans-unit>
+      <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
+        <source>Step %i%: License</source>
+        <target>Paso %i%: Licencia</target>
+      </trans-unit>
+      <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
+        <source>Step %i%: Files</source>
+        <target>Step %i%: Archivos</target>
+      </trans-unit>
+      <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
+        <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
+        <target>No se permite subir videos de tamaño superior a %max_filesize%. Para asegurar el correcto funcionamiento del proceso de subida de vídeos al portal, se recomienda que los vídeos a subir tengan una resolucion estándar de 4:3 o 16.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
