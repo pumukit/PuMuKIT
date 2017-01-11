@@ -118,8 +118,13 @@
           <label for="url" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
           <div class="input-group">
             <input type="file" name="resource" id="resource" value="" size="70">
-            <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
             <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
+          </div>
+          <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
+            <strong>
+              <i class="mdi-action-info"></i>
+            </strong>
+            {% trans with {'%max_filesize%': php_upload_max_filesize()} %}Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.{% endtrans %}
           </div>
         </div>
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
