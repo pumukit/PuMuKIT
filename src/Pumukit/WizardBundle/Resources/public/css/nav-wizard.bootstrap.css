@@ -112,53 +112,56 @@
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-.nav-wizard > li.done:hover > a,
 .nav-wizard > li:hover > a {
   background-color: #d5d5d5;
 }
-.nav-wizard > li.done:hover > a:before,
 .nav-wizard > li:hover > a:before {
   border-right-color: #d5d5d5;
 }
-.nav-wizard > li.done:hover > a:after,
 .nav-wizard > li:hover > a:after {
   border-left-color: #d5d5d5;
 }
-.nav-wizard > li.future > a,
-.nav-wizard > li.done > a {
+.nav-wizard > li.future > a {
   color: #777777;
   background-color: #d5d5d5;
   cursor: default;
-}
-.nav-wizard > li.done > a:before {
-  color: #777777;
-  border-right-color: #d5d5d5;
 }
 .nav-wizard > li.future > a:after,
 .nav-wizard > li.done > a:after {
   color: #777777;
   border-left-color: #d5d5d5;
 }
+.nav-wizard > li.done:hover > a,
 .nav-wizard > li.lastdone:hover > a {
   background-color: #009587;
 }
+.nav-wizard > li.done:hover > a:before,
 .nav-wizard > li.lastdone:hover > a:before {
   border-right-color: #009587;
 }
+.nav-wizard > li.done:hover > a:after,
 .nav-wizard > li.lastdone:hover > a:after {
   border-left-color: #009587;
 }
+.nav-wizard > li.done > a,
 .nav-wizard > li.lastdone > a {
   color: #ffffff;
   background-color: #009587;
 }
+.nav-wizard > li.done > a:before,
 .nav-wizard > li.lastdone > a:before {
   color: #ffffff;
   border-right-color: #009587;
 }
+.nav-wizard > li.done > a:after,
 .nav-wizard > li.lastdone > a:after {
   color: #ffffff;
   border-left-color: #009587;
+}
+.nav-wizard > li.done > a,
+.nav-wizard > li.done > a:hover,
+.nav-wizard > li.done > a:focus {
+  cursor: default;
 }
 .nav-wizard > li.active > a,
 .nav-wizard > li.active > a:hover,
