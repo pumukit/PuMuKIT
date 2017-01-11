@@ -278,13 +278,25 @@
         <source>Select a license...</source>
         <target>Select a license...</target>
       </trans-unit>
-      <trans-unit id="c9aa3ecc7fb983bea35b50e7db852064" resname="Step %i-1%: License">
-        <source>Step %i-1%: License</source>
-        <target>Step %i-1%: License</target>
-      </trans-unit>
       <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
         <source>Accept the license</source>
         <target>Accept the license</target>
+      </trans-unit>
+      <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
+        <source>Accept license.</source>
+        <target>Accept license.</target>
+      </trans-unit>
+      <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
+        <source>Step %i%: License</source>
+        <target>Step %i%: License</target>
+      </trans-unit>
+      <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
+        <source>Step %i%: Files</source>
+        <target>Step %i%: Files</target>
+      </trans-unit>
+      <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
+        <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
+        <target>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
       </trans-unit>
     </body>
   </file>
