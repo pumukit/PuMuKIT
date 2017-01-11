@@ -56,5 +56,8 @@
       <argument>%pumukitschema.enable_add_user_as_person%</argument>
       <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
+
+    <service id="pumukitnewadmin.menu" class="Pumukit\NewAdminBundle\Menu\Chain" />
+
   </services>
 </container>
