@@ -299,7 +299,7 @@
       </trans-unit>
       <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target>No se permite subir videos de tamaño superior a %max_filesize%. Para asegurar el correcto funcionamiento del proceso de subida de vídeos al portal, se recomienda que los vídeos a subir tengan una resolucion estándar de 4:3 o 16.</target>
+        <target>No se permite subir videos de tamaño superior a %max_filesize%. Para asegurar el correcto funcionamiento del proceso de subida de vídeos al portal, se recomienda que los vídeos a subir tengan una resolucion estándar de 4:3 o 16:9.</target>
       </trans-unit>
     </body>
   </file>
