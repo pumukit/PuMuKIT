@@ -48,13 +48,13 @@
         <ul>
           {% if series is not empty %}
           <li>
-            <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
+            <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
               {% trans %}Create another Multimedia Object in same Series{% endtrans %}
             </a>
           </li>
           {% endif %}
           <li>
-            <a href="{{ path('pumukitwizard_default_series') }}">
+            <a href="{{ path('pumukitwizard_default_series') }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
               {% trans %}Create another Multimedia Object in a new Series{% endtrans %}
             </a>
           </li>

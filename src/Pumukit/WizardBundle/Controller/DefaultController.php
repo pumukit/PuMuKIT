@@ -404,12 +404,16 @@ class DefaultController extends Controller
         $option = $request->get('option');
         $showSeries = $request->get('show_series');
 
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseEnabled = $licenseService->isEnabled();
+
         return array(
                      'message' => 'success it seems',
                      'series' => $series,
                      'mm' => $multimediaObject,
                      'option' => $option,
                      'show_series' => $showSeries,
+                     'license_enabled' => $licenseEnabled,
                      );
     }
 
