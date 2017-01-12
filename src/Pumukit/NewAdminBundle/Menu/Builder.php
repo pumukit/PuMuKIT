@@ -14,6 +14,7 @@ class Builder extends ContainerAware
 
         // Add translations in src/Pumukit/NewAdminBundle/Resource/translations/NewAdminBundle.locale.yml
         $authorizationChecker = $this->container->get('security.authorization_checker');
+        $masterRequest = $this->container->get('request_stack')->getMasterRequest();
         $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
         $showDashboardTab = $this->container->getParameter('pumukit2.show_dashboard_tab');
         $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
@@ -25,7 +26,8 @@ class Builder extends ContainerAware
         if ($authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) &&
             $authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU) &&
             !$authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            $menu->addChild('Upload new videos', array('route' => 'pumukitwizard_default_series'));
+            $class = ($masterRequest && (0 === strpos($masterRequest->attributes->get('_route'), 'pumukitwizard_default_'))) ? 'active' : '';
+            $menu->addChild('Upload new videos', array('route' => 'pumukitwizard_default_series', 'attributes' => array('class' => $class)));
         }
 
         if ($authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
