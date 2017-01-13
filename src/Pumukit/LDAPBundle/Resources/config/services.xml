@@ -23,6 +23,7 @@
             <argument type="service" id="router" />
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.user" />
+            <argument type="service" id="pumukitschema.person" />
             <argument type="service" id="pumukit_ldap.ldap" />
             <argument type="service" id="pumukitschema.permissionprofile" />
             <argument type="service" id="session"/>

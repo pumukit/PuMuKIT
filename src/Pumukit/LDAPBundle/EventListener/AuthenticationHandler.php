@@ -30,6 +30,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
         Router $router,
         DocumentManager $dm,
         UserService $userService,
+        PersonService $personService,
         LDAPService $LDAPService,
         PermissionProfileService $permissionProfileService,
         Session $session,
@@ -85,7 +86,35 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
         $this->userService->create($user);
 
+        if(isset($info['edupersonaffiliation'][0])) {
+            foreach ($info['edupersonaffiliation'][0] as $key) {
+                $group = $this->getGroup($key);
+                $this->userService->addGroup($group, $user, true, false);
+                $this->personService->referencePersonIntoUser($user);
+            }
+        }
+
         return $user;
+    }
+
+    private function getGroup($key)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groupService = $this->get('pumukitschema.group');
+
+
+        $cleanKey = preg_replace('/\W/', '', $key);
+        $group = $repo->findOneByKey($cleanKey);
+        if ($group) {
+            return $group;
+        }
+        $group = new Group();
+        $group->setKey($cleanKey);
+        $group->setName($key);
+        $group->setOrigin('ldap');
+        $groupService->create($group);
+        return $group;
     }
 
     private function promoteUser($info, $user)
