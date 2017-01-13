@@ -150,6 +150,6 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     private function isAdmin($info)
     {
-        return false;
+        return in_array('urn:mace:rediris.es:ehu.es:entitlement:service:pumukit_admin', $info['irisuserentitlement']);
     }
 }
