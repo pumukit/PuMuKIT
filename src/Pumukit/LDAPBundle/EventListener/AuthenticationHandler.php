@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\LDAPBundle\Handler;
+namespace Pumukit\LDAPBundle\EventListener;
 
 use Pumukit\LDAPBundle\Services\LDAPService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
