@@ -4,6 +4,7 @@ namespace Pumukit\LDAPBundle\EventListener;
 
 use Pumukit\LDAPBundle\Services\LDAPService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
+use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
