@@ -52,22 +52,19 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
             throw new \RuntimeException('User not found.');
         }
 
-        if (!isset($info['edupersonaffiliation'][0])) {
-            throw new \RuntimeException('User invalid.');
-        }
-
-        /* New PuMuKIT2 user */
         $pumukitUser = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(
             array('username' => $token->getUser()->getUsername())
         );
-        if (count($pumukitUser) <= 0) {
-            $pumukitUser = $this->createUser($info, $token);
-            $this->promoteUser($info, $pumukitUser);
-        } else {
-            $this->promoteUser($info, $pumukitUser);
-        }
 
-        /* Log in PuMuKIT2 user */
+        if (count($pumukitUser) <= 0) {
+            try {
+                $pumukitUser = $this->createUser($info, $token);
+            } catch (\Exception $e) {
+                throw  $e;
+            }
+        }
+        $this->promoteUser($info, $pumukitUser);
+
         $token = new UsernamePasswordToken($pumukitUser, null, 'user', $pumukitUser->getRoles());
         $this->container->get('security.context')->setToken($token);
 
@@ -93,18 +90,15 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     private function promoteUser($info, $user)
     {
-        $permissionProfileViewer = $this->permissionProfileService->getByName('Viewer');
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
 
-        if ($permissionProfileViewer == $user->getPermissionProfile()) {
-            if (in_array($info['edupersonaffiliation'][0], array('PAS', 'PDI'))) {
-                $user->setPermissionProfile($permissionProfileAutoPub);
-                $this->userService->update($user, true, false);
-            }
+        if ($this->isAutoPub($info)) {
+            $user->setPermissionProfile($permissionProfileAutoPub);
+            $this->userService->update($user, true, false);
         }
 
-        if (in_array('urn:mace:rediris.es:ehu.es:entitlement:service:pumukit', $info['irisuserentitlement'])) {
+        if ($this->isAdmin($info)) {
             $user->setPermissionProfile($permissionProfileAdmin);
             $this->userService->update($user, true, false);
         }
@@ -117,5 +111,15 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
         } else {
             return $this->session->get('target_path');
         }
+    }
+
+    private function isAutoPub($info)
+    {
+        return in_array('urn:mace:rediris.es:ehu.es:entitlement:service:pumukit', $info['irisuserentitlement']);
+    }
+
+    private function isAdmin($info)
+    {
+        return false;
     }
 }
