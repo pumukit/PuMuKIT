@@ -363,7 +363,7 @@ class PersonController extends AdminController implements NewAdminController
             // TODO Snackbars and toasts
             //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$msg_alert = array('info', $message);
-        } catch (\Excepction $e) {
+        } catch (\Exception $e) {
             //$message = sprintf($this->getContext()->getI18N()->__("Persona ya asociada a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$this->msg_alert = array('error', $message);
         }

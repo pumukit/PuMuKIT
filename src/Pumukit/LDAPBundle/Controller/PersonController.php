@@ -101,7 +101,7 @@ class PersonController extends Controller
                 $person = $this->createPersonFromLDAP($cn, $email);
             }
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-        } catch (\Excepction $e) {
+        } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
         }
         $template = $multimediaObject->isPrototype() ? '_template' : '';
