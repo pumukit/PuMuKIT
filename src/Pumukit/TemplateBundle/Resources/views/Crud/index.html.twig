@@ -1,0 +1,47 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+<h3>{% trans %}Templates{% endtrans %}</h3>
+
+<div class="row">
+  <div class="">
+    <div class="col-md-2">
+      <div class="well">
+        <ul class="nav nav-pills nav-stacked">
+          {% for template in templates|sort %}
+          <li {% if active == template %}class="active"{% endif %}>
+            <a href="{{ path('pumukit_template_crud_index', {'active': template.name})}}">{{ template.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="text-right">
+          <a href="{{ path('pumukit_template_crud_create') }}" class="btn btn-raised btn-xs">{% trans %}New{% endtrans %}</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="well">
+        {% if active %}
+          <h2>{{ active.name }}</h2>
+          {% form_theme edit_form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+          {{ form_start(edit_form) }}
+          {{ form_widget(edit_form) }}
+          <div class="text-right">
+            <a class="btn btn-danger btn-raised" href="{{path('pumukit_template_crud_delete', {'id': active.id})}}" onclick="confirm('{% trans %}Are you sure?{% endtrans %}')">{% trans %}Delete{% endtrans %}</a>
+            <button type="button" class="btn btn-default btn-raised">{% trans %}Reset{% endtrans %}</button>
+            <button type="submit" class="btn btn-primary btn-raised">{% trans %}Save changes{% endtrans %}</button>
+          </div>
+
+          {{ form_end(edit_form) }}
+        {% else %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>{% trans %}No templates{% endtrans %}</strong>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
