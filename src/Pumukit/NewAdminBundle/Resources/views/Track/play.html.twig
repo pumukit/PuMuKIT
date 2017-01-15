@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <video id="player_{{ track.id }}" src="{{ track.url }}" controls="" style="background: black; width: 100%;"></video>
+  <video id="player_{{ track.id }}" src="{{ track_url(track) }}" controls="" style="background: black; width: 100%;"></video>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
   </div>
