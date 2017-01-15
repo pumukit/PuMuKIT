@@ -29,6 +29,10 @@ class LDAPUserService
 
     public function createUser($info)
     {
+        if (!isset($info['uid'][0])) {
+            throw new \InvalidArgumentException('Uuid is not set ')
+        }
+
         $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('username' => $info['uid'][0]));
         if (count($user) <= 0) {
             try {
@@ -45,9 +49,16 @@ class LDAPUserService
     private function newUser($info)
     {
         $user = new User();
-        $user->setEmail($info['mail'][0]);
-        $user->setUsername($info['uid'][0]);
-        $user->setFullname($info['cn'][0]);
+
+        if (isset($info['mail'][0])) {
+            $user->setEmail($info['mail'][0]);
+        }
+        if(isset($info['uid'][0])) {
+            $user->setUsername($info['uid'][0]);
+        }
+        if(isset($info['cn'][0])) {
+            $user->setFullname($info['cn'][0]);
+        }
 
         $permissionProfile = $this->permissionProfileService->getByName('Viewer');
         $user->setPermissionProfile($permissionProfile);
