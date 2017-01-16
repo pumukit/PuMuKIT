@@ -33,6 +33,7 @@ class DefaultController extends Controller
             if ($seriesExists) {
                 return $this->redirect($this->generateUrl('pumukitwizard_default_type', array('pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'])));
             }
+
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
