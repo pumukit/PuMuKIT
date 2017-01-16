@@ -37,7 +37,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
             throw new \RuntimeException('User not found.');
         }
 
-        $user = $this->ldapUserService->createUser($info);
+        $user = $this->ldapUserService->createUser($info, $token->getUser()->getUsername());
 
         $token = new UsernamePasswordToken($user, null, 'user', $user->getRoles());
         $this->container->get('security.context')->setToken($token);
