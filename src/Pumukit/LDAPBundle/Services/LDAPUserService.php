@@ -53,9 +53,9 @@ class LDAPUserService
         if (isset($info['mail'][0])) {
             $user->setEmail($info['mail'][0]);
         }
-        if (isset($username)) {
-            $user->setUsername($username);
-        }
+
+        $user->setUsername($username);
+        
         if (isset($info['cn'][0])) {
             $user->setFullname($info['cn'][0]);
         }
