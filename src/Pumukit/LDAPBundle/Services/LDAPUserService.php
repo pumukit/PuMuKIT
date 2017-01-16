@@ -112,23 +112,23 @@ class LDAPUserService
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
 
-        if ($this->isAutoPub($info)) {
+        if ($this->isAutoPub($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAutoPub);
             $this->userService->update($user, true, false);
         }
 
-        if ($this->isAdmin($user->getUsername())) {
+        if ($this->isAdmin($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAdmin);
             $this->userService->update($user, true, false);
         }
     }
 
-    public function isAutoPub($info)
+    public function isAutoPub($info, $username)
     {
         return false;
     }
 
-    public function isAdmin($username)
+    public function isAdmin($info, $username)
     {
         return false;
     }
