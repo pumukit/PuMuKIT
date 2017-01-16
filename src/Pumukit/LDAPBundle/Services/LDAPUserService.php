@@ -66,13 +66,13 @@ class LDAPUserService
         $user->setEnabled(true);
 
         $this->userService->create($user);
+        $this->personService->referencePersonIntoUser($user);
 
         if (isset($info['edupersonaffiliation'][0])) {
             foreach ($info['edupersonaffiliation'] as $key => $value) {
                 if ('count' !== $key) {
                     $group = $this->getGroup($value);
                     $this->userService->addGroup($group, $user, true, false);
-                    $this->personService->referencePersonIntoUser($user);
                 }
             }
         }
@@ -82,7 +82,6 @@ class LDAPUserService
                 if ('count' !== $key) {
                     $group = $this->getGroup($value);
                     $this->userService->addGroup($group, $user, true, false);
-                    $this->personService->referencePersonIntoUser($user);
                 }
             }
         }
