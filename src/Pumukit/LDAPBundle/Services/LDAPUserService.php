@@ -55,7 +55,7 @@ class LDAPUserService
         }
 
         $user->setUsername($username);
-        
+
         if (isset($info['cn'][0])) {
             $user->setFullname($info['cn'][0]);
         }
@@ -69,7 +69,7 @@ class LDAPUserService
 
         if (isset($info['edupersonaffiliation'][0])) {
             foreach ($info['edupersonaffiliation'] as $key => $value) {
-                if ('count' != $key) {
+                if ('count' !== $key) {
                     $group = $this->getGroup($value);
                     $this->userService->addGroup($group, $user, true, false);
                     $this->personService->referencePersonIntoUser($user);
@@ -79,7 +79,7 @@ class LDAPUserService
 
         if (isset($info['irisclassifcode'][0])) {
             foreach ($info['irisclassifcode'] as $key => $value) {
-                if ('count' != $key) {
+                if ('count' !== $key) {
                     $group = $this->getGroup($value);
                     $this->userService->addGroup($group, $user, true, false);
                     $this->personService->referencePersonIntoUser($user);
