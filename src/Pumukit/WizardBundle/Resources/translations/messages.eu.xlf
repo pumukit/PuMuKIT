@@ -4,19 +4,28 @@
     <body>
       <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
-        <target xml:lang="eu" state="translated">Audio/Vídeo subido correctamente</target>
+        <target xml:lang="eu" state="translated">Audioa/Bideoa ongi igota</target>
+        <alt-trans>
+          <target xml:lang="eu">Audio/Vídeo subido correctamente</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target xml:lang="eu" state="translated">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        <target xml:lang="eu" state="translated">Webgunean agertu ahal izateko bideoa transcodifikatzea beharrezkoa da. Email bat jasoko duzu transkodifikazioa bukatzen denean bideoa webgunean eskuragarri dagoela esanez.</target>
+        <alt-trans>
+          <target xml:lang="eu">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="eu" state="needs-translation">SERIES</target>
+        <target xml:lang="eu" state="translated">SERIEA</target>
       </trans-unit>
       <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
         <source>VIDEO</source>
-        <target xml:lang="eu" state="translated">VÍDEO</target>
+        <target xml:lang="eu" state="translated">BIDEO</target>
+        <alt-trans>
+          <target xml:lang="eu">VÍDEO</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
         <source>DATE</source>
@@ -28,19 +37,31 @@
       </trans-unit>
       <trans-unit id="4a8a4f3d4d0f09e16347e8a1c4bedb20" resname="Edit Multimedia Object">
         <source>Edit Multimedia Object</source>
-        <target xml:lang="eu" state="translated">Editar Objeto Multimedia</target>
+        <target xml:lang="eu" state="translated">Multimedia Objetua Editatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Editar Objeto Multimedia</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="be5b3fae8a55670cb583c472c1db6eec" resname="Back to Series">
         <source>Back to Series</source>
-        <target xml:lang="eu" state="translated">Volver a la Serie</target>
+        <target xml:lang="eu" state="translated">Seriera itzuli</target>
+        <alt-trans>
+          <target xml:lang="eu">Volver a la Serie</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e11c6540433c2a394c533b8131fc2b46" resname="Create another Multimedia Object in same Series">
         <source>Create another Multimedia Object in same Series</source>
-        <target xml:lang="eu" state="translated">Crear otro Objeto Multimedia en la misma Serie</target>
+        <target xml:lang="eu" state="translated">Serie bereko beste objetu multimedia bat sortu</target>
+        <alt-trans>
+          <target xml:lang="eu">Crear otro Objeto Multimedia en la misma Serie</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b050796730bc9fb6c6cc1c0a671c1803" resname="Create another Multimedia Object in a new Series">
         <source>Create another Multimedia Object in a new Series</source>
-        <target xml:lang="eu" state="translated">Crear otro Objeto Multimedia en una Serie nueva</target>
+        <target xml:lang="eu" state="translated">Beste Multimedia Objetu bat sortu serie berrian</target>
+        <alt-trans>
+          <target xml:lang="eu">Crear otro Objeto Multimedia en una Serie nueva</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="76c4d065fdc391cc3939df61dea1d9b6" resname="Upload another video" approved="yes">
         <source>Upload another video</source>
@@ -48,7 +69,10 @@
       </trans-unit>
       <trans-unit id="56acfb948c5ac0cf6f3d4a195248618a" resname="Upload another Multimedia Object in same Series">
         <source>Upload another Multimedia Object in same Series</source>
-        <target xml:lang="eu" state="translated">Subir otro Objeto Multimedia en la misma Serie</target>
+        <target xml:lang="eu" state="translated">Seriera bestes Multimedia Objetu bat igo </target>
+        <alt-trans>
+          <target xml:lang="eu">Subir otro Objeto Multimedia en la misma Serie</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
@@ -84,7 +108,10 @@
       </trans-unit>
       <trans-unit id="42c9c567af4142d1cc75f0665952abf0" resname="Step 2: Type">
         <source>Step 2: Type</source>
-        <target xml:lang="eu" state="translated">Paso 2: Tipo</target>
+        <target xml:lang="eu" state="translated">Paso 2: Mota</target>
+        <alt-trans>
+          <target xml:lang="eu">Paso 2: Tipo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="076de82c8cf022f48f74f7e9c3c40b1b" resname="Choose option type">
         <source>Choose option type</source>
@@ -92,7 +119,10 @@
       </trans-unit>
       <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
         <source>Step</source>
-        <target xml:lang="eu" state="translated">Paso</target>
+        <target xml:lang="eu" state="translated">Hurratsa</target>
+        <alt-trans>
+          <target xml:lang="eu">Paso</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
@@ -100,23 +130,38 @@
       </trans-unit>
       <trans-unit id="c2f27ee4404e902513128c40d208e108" resname="Insert the data for the Multimedia Object">
         <source>Insert the data for the Multimedia Object</source>
-        <target xml:lang="eu" state="translated">Introduzca los datos del Objeto Multimedia</target>
+        <target xml:lang="eu" state="translated">Sar itzazu Multimedia Objetuaren datuak</target>
+        <alt-trans>
+          <target xml:lang="eu">Introduzca los datos del Objeto Multimedia</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
         <source>File</source>
-        <target xml:lang="eu" state="translated">Artxibo</target>
+        <target xml:lang="eu" state="translated">Fitxategi</target>
+        <alt-trans>
+          <target xml:lang="eu">Artxibo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c3e635ca964a04246b5abb062f917280" resname="Upload the multimedia file">
         <source>Upload the multimedia file</source>
-        <target xml:lang="eu" state="translated">Subir el archivo multimedia</target>
+        <target xml:lang="eu" state="translated">Multimedia Fitxategia igo</target>
+        <alt-trans>
+          <target xml:lang="eu">Subir el archivo multimedia</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="eafecfd638c10dc2c75c61f8350e3d1c" resname="Step 3: Files">
         <source>Step 3: Files</source>
-        <target xml:lang="eu" state="translated">Paso 3: Archivos</target>
+        <target xml:lang="eu" state="translated">Paso 3: Fitxategiak</target>
+        <alt-trans>
+          <target xml:lang="eu">Paso 3: Archivos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Final step: Error">
         <source>Final step: Error</source>
-        <target xml:lang="eu" state="translated">Paso final: Error</target>
+        <target xml:lang="eu" state="translated">Azken hurratsa: Error</target>
+        <alt-trans>
+          <target xml:lang="eu">Paso final: Error</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
@@ -124,19 +169,34 @@
       </trans-unit>
       <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Final step: End">
         <source>Final step: End</source>
-        <target xml:lang="eu" state="translated">Paso final: Final</target>
+        <target xml:lang="eu" state="translated">Azken hurratsa: amaiera</target>
+        <alt-trans>
+          <target xml:lang="eu">Paso final: Final</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>
-        <target xml:lang="eu" state="translated">Espere al final de la transcodificación para ser notificado</target>
+        <target xml:lang="eu" state="translated">Transkodifikazioa bukatzen denean ohartaraziko zaitugu</target>
+        <alt-trans>
+          <target xml:lang="eu">Itxaronzazu transkodifikazioaren amaiera ohartua izateko</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Espere al final de la transcodificación para ser notificado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="eu" state="translated">Perfil</target>
+        <target xml:lang="eu" state="translated">Profila</target>
+        <alt-trans>
+          <target xml:lang="eu">Perfil</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
         <source>Publication Channels</source>
-        <target xml:lang="eu" state="translated">Canales de publicación</target>
+        <target xml:lang="eu" state="translated">Argitaratze kateak</target>
+        <alt-trans>
+          <target xml:lang="eu">Canales de publicación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
@@ -144,19 +204,31 @@
       </trans-unit>
       <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
         <source>Low-Priority</source>
-        <target xml:lang="eu" state="translated">Prioridad Baja</target>
+        <target xml:lang="eu" state="translated">Lehentasun gutxi</target>
+        <alt-trans>
+          <target xml:lang="eu">Prioridad Baja</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
         <source>Normal-Priority</source>
-        <target xml:lang="eu" state="translated">Prioridad Normal</target>
+        <target xml:lang="eu" state="translated">Lehentasun normala</target>
+        <alt-trans>
+          <target xml:lang="eu">Prioridad Normal</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="7050cf0d21fcaca51e96bdaf8c6413e0" resname="High-Priority">
         <source>High-Priority</source>
-        <target xml:lang="eu" state="translated">Prioridad Alta</target>
+        <target xml:lang="eu" state="translated">Lehentasun haundia</target>
+        <alt-trans>
+          <target xml:lang="eu">Prioridad Alta</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="cb76fb50035786c968dabe4987c5d5db" resname="Video/Audio language">
         <source>Video/Audio language</source>
-        <target xml:lang="eu" state="translated">Idioma de Vídeo/Audio</target>
+        <target xml:lang="eu" state="translated">Bideo/Audio-aren hizkuntza</target>
+        <alt-trans>
+          <target xml:lang="eu">Idioma de Vídeo/Audio</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="650be61892bf690026089544abbd9d26" resname="Mode">
         <source>Mode</source>
@@ -164,11 +236,17 @@
       </trans-unit>
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target xml:lang="eu" state="translated">Buzón de entrada en el servidor</target>
+        <target xml:lang="eu" state="translated">Sarrera ontzia zerbitzarian</target>
+        <alt-trans>
+          <target xml:lang="eu">Buzón de entrada en el servidor</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
-        <target xml:lang="eu" state="translated">Disco duro local</target>
+        <target xml:lang="eu" state="translated">Bertako disko gogorra</target>
+        <alt-trans>
+          <target xml:lang="eu">Disco duro local</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="606257a79c31efa1d61589c6a48f5b2e" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
@@ -176,11 +254,17 @@
       </trans-unit>
       <trans-unit id="45c1d7f6167c454c8e40dc9dbe8b9432" resname="Audio/video file">
         <source>Audio/video file</source>
-        <target xml:lang="eu" state="translated">Archivo de audio/vídeo</target>
+        <target xml:lang="eu" state="translated">Audio/bideo fitxategia</target>
+        <alt-trans>
+          <target xml:lang="eu">Archivo de audio/vídeo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
         <source>Under</source>
-        <target xml:lang="eu" state="translated">Bajo</target>
+        <target xml:lang="eu" state="translated">Menpean</target>
+        <alt-trans>
+          <target xml:lang="eu">Bajo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
         <source>Progress</source>

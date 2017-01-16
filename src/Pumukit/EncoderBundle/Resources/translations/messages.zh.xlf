@@ -123,7 +123,7 @@
       </trans-unit>
       <trans-unit id="13427dbd0b43c7c05931e734f40d0a3c" resname="Timeini">
         <source>Timeini</source>
-        <target xml:lang="zh-TW" state="needs-translation">Timeini</target>
+        <target xml:lang="zh-TW" state="translated">初始時間</target>
       </trans-unit>
       <trans-unit id="42883eb38646fc2c2498101d4373bcb1" resname="Timestart">
         <source>Timestart</source>
