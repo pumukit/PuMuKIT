@@ -25,18 +25,23 @@ class DefaultController extends Controller
     {
         $formData = $request->get('pumukitwizard_form_data', array());
         $licenseService = $this->get('pumukit_wizard.license');
+        $seriesExists = false;
+        if (isset($formData['series']['id']) && $formData['series']['id'] != null) {
+            $seriesExists = true;
+        }
         if (!$licenseService->isEnabled()) {
-            if (isset($formData['series']['id']) && $formData['series']['id'] != null) {
+            if ($seriesExists) {
                 return $this->redirect($this->generateUrl('pumukitwizard_default_type', array('pumukitwizard_form_data' => $formData, 'id' => $formData['series']['id'])));
             }
-
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData)));
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
+        $showSeries = !$seriesExists;
 
         return array(
             'license_text' => $licenseContent,
             'form_data' => $formData,
+            'show_series' => $showSeries,
         );
     }
 
