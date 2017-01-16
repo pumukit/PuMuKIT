@@ -27,16 +27,16 @@ class LDAPUserService
         $this->groupService = $groupService;
     }
 
-    public function createUser($info)
+    public function createUser($info, $username)
     {
-        if (!isset($info['uid'][0])) {
-            throw new \InvalidArgumentException('Uuid is not set ');
+        if (!isset($username)) {
+            throw new \InvalidArgumentException('Uid is not set ');
         }
 
-        $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('username' => $info['uid'][0]));
+        $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('username' => $username));
         if (count($user) <= 0) {
             try {
-                $user = $this->newUser($info);
+                $user = $this->newUser($info, $username);
             } catch (\Exception $e) {
                 throw  $e;
             }
@@ -46,16 +46,16 @@ class LDAPUserService
         return $user;
     }
 
-    private function newUser($info)
+    private function newUser($info, $username)
     {
         $user = new User();
 
         if (isset($info['mail'][0])) {
             $user->setEmail($info['mail'][0]);
         }
-        if (isset($info['uid'][0])) {
-            $user->setUsername($info['uid'][0]);
-        }
+
+        $user->setUsername($username);
+        
         if (isset($info['cn'][0])) {
             $user->setFullname($info['cn'][0]);
         }
@@ -112,23 +112,23 @@ class LDAPUserService
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
 
-        if ($this->isAutoPub($info)) {
+        if ($this->isAutoPub($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAutoPub);
             $this->userService->update($user, true, false);
         }
 
-        if ($this->isAdmin($info)) {
+        if ($this->isAdmin($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAdmin);
             $this->userService->update($user, true, false);
         }
     }
 
-    public function isAutoPub($info)
+    public function isAutoPub($info, $username)
     {
         return false;
     }
 
-    public function isAdmin($info)
+    public function isAdmin($info, $username)
     {
         return false;
     }
