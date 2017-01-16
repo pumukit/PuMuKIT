@@ -738,7 +738,10 @@
       </trans-unit>
       <trans-unit id="6adf97f83acf6453d4a6a4b1070f3754" resname="None">
         <source>None</source>
-        <target xml:lang="es-ES" state="translated">Nignuno</target>
+        <target xml:lang="es-ES" state="translated">Ninguno</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Nignuno</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="3c962bd8a53df855c9bd1ca3f35e8107" resname="Change broadcast profile">
         <source>Change broadcast profile</source>

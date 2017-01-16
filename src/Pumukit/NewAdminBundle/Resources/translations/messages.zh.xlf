@@ -203,7 +203,10 @@
       </trans-unit>
       <trans-unit id="dd1f775e443ff3b9a89270713580a51b" resname="Previous">
         <source>Previous</source>
-        <target xml:lang="zh-TW" state="translated">上一頁</target>
+        <target xml:lang="zh-TW" state="translated">上一個</target>
+        <alt-trans>
+          <target xml:lang="zh-TW">上一頁</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="03219b11d6170520cd434a165300cbde" resname="TODAY">
         <source>TODAY</source>
@@ -2593,19 +2596,20 @@
       </trans-unit>
       <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
-        <target xml:lang="zh-TW" state="needs-translation">Any Internet user can play the new multimedia objects created from this video template</target>
+        <target xml:lang="zh-TW" state="translated">任何互聯網使用者可以播放此視頻的範本所創建的新多媒體物件</target>
       </trans-unit>
       <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe" resname="Only users with the defined password can play the new multimedia objects created from this video template">
         <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
-        <target xml:lang="zh-TW" state="needs-translation">Only users with the defined password can play the new multimedia objects created from this video template</target>
+        <target xml:lang="zh-TW" state="translated">只有註冊密碼的使用者可以瀏覽從這個視訊範本
+所創建的新媒體物件</target>
       </trans-unit>
       <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
-        <target xml:lang="zh-TW" state="needs-translation">Only logged in users in the system can play the new multimedia objects created from this video template</target>
+        <target xml:lang="zh-TW" state="translated">只有登錄的使用者在系統中可以播放此視頻的範本所創建的新的多媒體物件</target>
       </trans-unit>
       <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
-        <target xml:lang="zh-TW" state="needs-translation">Only users in the selected Groups can play the new multimedia objects created from this video template</target>
+        <target xml:lang="zh-TW" state="translated">只有選定群組中的使用者才可以開啟從該視頻的範本所創建的新多媒體物件</target>
       </trans-unit>
     </body>
   </file>

@@ -4,15 +4,27 @@
     <body>
       <trans-unit id="eb6f9298251729ce25963477b32c6245" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target xml:lang="eu" state="translated">Tareas pendientes (pausadas &amp; esperando)</target>
+        <target xml:lang="eu" state="translated">Tareas pendientes (etenak &amp; itxaroten)</target>
+        <alt-trans>
+          <target xml:lang="eu">Tareas pendientes (pausadas &amp; esperando)</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="86ca3ab6fc59d8ae02dbc91c63419584" resname="Executing jobs">
         <source>Executing jobs</source>
-        <target xml:lang="eu" state="translated">Tareas en ejecución</target>
+        <target xml:lang="eu" state="translated">Lanak exekutatzen</target>
+        <alt-trans>
+          <target xml:lang="eu">Atazak exekutatzen</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Tareas en ejecución</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="bd3507e49a4df5619011bf068816adb7" resname="Executed jobs">
         <source>Executed jobs</source>
-        <target xml:lang="eu" state="translated">Tareas ejecutadas</target>
+        <target xml:lang="eu" state="translated">Lan exekutatuak</target>
+        <alt-trans>
+          <target xml:lang="eu">Tareas ejecutadas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
@@ -20,11 +32,17 @@
       </trans-unit>
       <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
         <source>Job info</source>
-        <target xml:lang="eu" state="translated">Información de la tarea</target>
+        <target xml:lang="eu" state="translated">Lanaren informazioa</target>
+        <alt-trans>
+          <target xml:lang="eu">Atazaren informazioa</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Información de la tarea</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>
-        <target xml:lang="eu" state="needs-translation">Id</target>
+        <target xml:lang="eu" state="translated">Id</target>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -32,7 +50,7 @@
       </trans-unit>
       <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
         <source>Mm</source>
-        <target xml:lang="eu" state="needs-translation">Mm</target>
+        <target xml:lang="eu" state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
@@ -40,15 +58,24 @@
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="eu" state="needs-translation">Cpu</target>
+        <target xml:lang="eu" state="translated">Puz</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="eu" state="translated">Duración</target>
+        <target xml:lang="eu" state="translated">Iraupena</target>
+        <alt-trans>
+          <target xml:lang="eu">Duración</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="9060587edeb01a63e3d3edc959678d1e" resname="Before">
         <source>Before</source>
-        <target xml:lang="eu" state="translated">Antes</target>
+        <target xml:lang="eu" state="translated">Gero</target>
+        <alt-trans>
+          <target xml:lang="eu">Aurretik</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Antes</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="632a2406bbcbcd553eec45ac14b40a0a" resname="after">
         <source>after</source>
@@ -56,19 +83,31 @@
       </trans-unit>
       <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
         <source>Times</source>
-        <target xml:lang="eu" state="translated">Data</target>
+        <target xml:lang="eu" state="translated">Hordua</target>
+        <alt-trans>
+          <target xml:lang="eu">Data</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
         <source>Created</source>
-        <target xml:lang="eu" state="translated">Creado</target>
+        <target xml:lang="eu" state="translated">Sortua</target>
+        <alt-trans>
+          <target xml:lang="eu">Creado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="3bebb2f89180b03fa5ae736665f648d9" resname="started">
         <source>started</source>
-        <target xml:lang="eu" state="translated">empezado</target>
+        <target xml:lang="eu" state="translated">hasia</target>
+        <alt-trans>
+          <target xml:lang="eu">empezado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="a5d7ceb2c59b8cee46c2953fec9abc19" resname="finished">
         <source>finished</source>
-        <target xml:lang="eu" state="translated">terminado</target>
+        <target xml:lang="eu" state="translated">bukatua</target>
+        <alt-trans>
+          <target xml:lang="eu">terminado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
@@ -76,35 +115,59 @@
       </trans-unit>
       <trans-unit id="08f935001020133c14d4d97e789f105a" resname="Edit priority">
         <source>Edit priority</source>
-        <target xml:lang="eu" state="translated">Editar prioridad</target>
+        <target xml:lang="eu" state="translated">Lehentasuna editatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Editar prioridad</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="a6fbb2ce4173b61ca5a2f0450191112c" resname="Output Command">
         <source>Output Command</source>
-        <target xml:lang="eu" state="translated">Comando de salida</target>
+        <target xml:lang="eu" state="translated">Irteera komandoa</target>
+        <alt-trans>
+          <target xml:lang="eu">Comando de salida</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="eu" state="translated">Ezerestatu</target>
+        <target xml:lang="eu" state="translated">Ezeztatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Ezerestatu</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
         <source>RETRY</source>
-        <target xml:lang="eu" state="translated">REINTENTO</target>
+        <target xml:lang="eu" state="translated">Saiatu berriro</target>
+        <alt-trans>
+          <target xml:lang="eu">REINTENTO</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="32f68a60cef40faedbc6af20298c1a1e" resname="DELETE">
         <source>DELETE</source>
-        <target xml:lang="eu" state="translated">ELIMINAR</target>
+        <target xml:lang="eu" state="translated">Ezabatu</target>
+        <alt-trans>
+          <target xml:lang="eu">ELIMINAR</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="12ceff2290bb9039beaa8f36d5dec226" resname="Jobs">
         <source>Jobs</source>
-        <target xml:lang="eu" state="translated">Trabajos</target>
+        <target xml:lang="eu" state="translated">Lanak</target>
+        <alt-trans>
+          <target xml:lang="eu">Trabajos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
         <source>No</source>
-        <target xml:lang="eu" state="translated">Tareas</target>
+        <target xml:lang="eu" state="translated">Ez</target>
+        <alt-trans>
+          <target xml:lang="eu">Tareas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="a97a53891aaa0e1e806ed87486edaf93" resname="No showing">
         <source>No showing</source>
-        <target xml:lang="eu" state="translated">No mostrado</target>
+        <target xml:lang="eu" state="translated">Ez erakusten</target>
+        <alt-trans>
+          <target xml:lang="eu">No mostrado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="374cf3e959215546c32da5ffc58377ca" resname="Please change the filter or">
         <source>Please change the filter or</source>
@@ -112,59 +175,98 @@
       </trans-unit>
       <trans-unit id="020a0ac0479ca173abe32eeae82da63a" resname="reset it">
         <source>reset it</source>
-        <target xml:lang="eu" state="translated">resetéelo</target>
+        <target xml:lang="eu" state="translated">berabiarazi</target>
+        <alt-trans>
+          <target xml:lang="eu">resetéelo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ad05f78187c942f9dd521605fa81f1ba" resname="MM">
         <source>MM</source>
-        <target xml:lang="eu" state="needs-translation">MM</target>
+        <target xml:lang="eu" state="translated">MM</target>
       </trans-unit>
       <trans-unit id="13427dbd0b43c7c05931e734f40d0a3c" resname="Timeini">
         <source>Timeini</source>
-        <target xml:lang="eu" state="translated">Hora de inicio</target>
+        <target xml:lang="eu" state="translated">Hasiera ordua</target>
+        <alt-trans>
+          <target xml:lang="eu">Hora de inicio</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="42883eb38646fc2c2498101d4373bcb1" resname="Timestart">
         <source>Timestart</source>
-        <target xml:lang="eu" state="translated">Hora de comienzo</target>
+        <target xml:lang="eu" state="translated">Hasiera ordua</target>
+        <alt-trans>
+          <target xml:lang="eu">Hora de comienzo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6de1d7293f1c9304bb0d3fd7033d6557" resname="Timeend">
         <source>Timeend</source>
-        <target xml:lang="eu" state="translated">Hora de finalización</target>
+        <target xml:lang="eu" state="translated">Bukaera ordua</target>
+        <alt-trans>
+          <target xml:lang="eu">Hora de finalización</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="371ab4ac98728d66b49d1a14ba726292" resname="Encoder Job info">
         <source>Encoder Job info</source>
-        <target xml:lang="eu" state="translated">Información de la tarea de codificación</target>
+        <target xml:lang="eu" state="translated">Kodifikatze lanaren informazioa</target>
+        <alt-trans>
+          <target xml:lang="eu">Información de la tarea de codificación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="654ff8bc59f856f8da10158830c43a48" resname="{0} jobs|{1} job|]1,Inf] jobs">
         <source>{0} jobs|{1} job|]1,Inf] jobs</source>
-        <target xml:lang="eu" state="translated">{0} trabajos |{1} trabajo|]1,Inf] trabajos</target>
+        <target xml:lang="eu" state="translated">{0} lanak|{1} lana|]1,Inf] lanak</target>
+        <alt-trans>
+          <target xml:lang="eu">{0} trabajos |{1} trabajo|]1,Inf] trabajos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e99180abf47a8b3a856e0bcb2656990a" resname="Paused">
         <source>Paused</source>
-        <target xml:lang="eu" state="translated">En pausa</target>
+        <target xml:lang="eu" state="translated">Pausatuak</target>
+        <alt-trans>
+          <target xml:lang="eu">En pausa</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5706de961fb376d701be6e7762d8b09c" resname="Waiting">
         <source>Waiting</source>
-        <target xml:lang="eu" state="translated">En espera</target>
+        <target xml:lang="eu" state="translated">Itxaroten</target>
+        <alt-trans>
+          <target xml:lang="eu">En espera</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="63c4cc5944eb60b1969f2333ead70fc9" resname="Executing">
         <source>Executing</source>
-        <target xml:lang="eu" state="translated">En ejecución</target>
+        <target xml:lang="eu" state="translated">Exekutatzen</target>
+        <alt-trans>
+          <target xml:lang="eu">En ejecución</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="8f3d10eb21bd36347c258679eba9e92b" resname="Finished">
         <source>Finished</source>
-        <target xml:lang="eu" state="translated">Finalizadas</target>
+        <target xml:lang="eu" state="translated">Bukatuak</target>
+        <alt-trans>
+          <target xml:lang="eu">Finalizadas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="902b0d55fddef6f8d651fe1035b7d4bd" resname="Error">
         <source>Error</source>
-        <target xml:lang="eu" state="translated">Erróneas</target>
+        <target xml:lang="eu" state="translated">Akastunak</target>
+        <alt-trans>
+          <target xml:lang="eu">Erróneas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="27a06a9e3d5e7f67eb604a39536208c9" resname="jobs">
         <source>jobs</source>
-        <target xml:lang="eu" state="translated">tareas</target>
+        <target xml:lang="eu" state="translated">lanak</target>
+        <alt-trans>
+          <target xml:lang="eu">tareas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1f47aaef4e18375487b09f623bd90866" resname="This CPU is in maintenance mode.">
         <source>This CPU is in maintenance mode.</source>
-        <target xml:lang="eu" state="translated">Esta CPU está en mantenimiento.</target>
+        <target xml:lang="eu" state="translated">Puz-a mantenu moduan dago.</target>
+        <alt-trans>
+          <target xml:lang="eu">Esta CPU está en mantenimiento.</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

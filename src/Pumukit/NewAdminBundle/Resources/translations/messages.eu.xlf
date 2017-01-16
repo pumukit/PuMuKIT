@@ -4,23 +4,38 @@
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
-        <target xml:lang="eu" state="translated">crear nuevo perfil de difusión</target>
+        <target xml:lang="eu" state="translated">emanaldi berria sortu</target>
+        <alt-trans>
+          <target xml:lang="eu">crear nuevo perfil de difusión</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
-        <target xml:lang="eu" state="translated">Ha ocurrido un error creando el perfil de difusión.</target>
+        <target xml:lang="eu" state="translated">Emanaldia sortzerakoan akats bat egon da.</target>
+        <alt-trans>
+          <target xml:lang="eu">Ha ocurrido un error creando el perfil de difusión.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4d6f5d583504b7023b52efa2d93f9516" resname="Broadcast successfully created.">
         <source>Broadcast successfully created.</source>
-        <target xml:lang="eu" state="translated">Perfil de difusión creado correctamente.</target>
+        <target xml:lang="eu" state="translated">Emanaldia akatsik gabe sortua.</target>
+        <alt-trans>
+          <target xml:lang="eu">Perfil de difusión creado correctamente.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close">
         <source>Close</source>
-        <target xml:lang="eu" state="translated">Cerrar</target>
+        <target xml:lang="eu" state="translated">Itsi</target>
+        <alt-trans>
+          <target xml:lang="eu">Cerrar</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
         <source>Save changes</source>
-        <target xml:lang="eu" state="translated">Guardar cambios</target>
+        <target xml:lang="eu" state="translated">Aldaketak gorde</target>
+        <alt-trans>
+          <target xml:lang="eu">Guardar cambios</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
@@ -44,19 +59,34 @@
       </trans-unit>
       <trans-unit id="12cd1377e2da59d9aef7dd9dd4932bf1" resname="Broadcast profiles">
         <source>Broadcast profiles</source>
-        <target xml:lang="eu" state="translated">Perfiles de difusión</target>
+        <target xml:lang="eu" state="translated">Emanaldi profila</target>
+        <alt-trans>
+          <target xml:lang="eu">Emanaldi profile</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Perfiles de difusión</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="882737e085a883190178a2d6738cd825" resname="Actions on selected items">
         <source>Actions on selected items</source>
-        <target xml:lang="eu" state="translated">Acciones sobre los elementos seleccionados</target>
+        <target xml:lang="eu" state="translated">Ekintzak aukeratutako elementuetan</target>
+        <alt-trans>
+          <target xml:lang="eu">Acciones sobre los elementos seleccionados</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="25b1e58532fdaa3ed86d04f30b943ff8" resname="Select an action...">
         <source>Select an action...</source>
-        <target xml:lang="eu" state="translated">Seleccione una acción...</target>
+        <target xml:lang="eu" state="translated">Aukeratu ekintza bat...</target>
+        <alt-trans>
+          <target xml:lang="eu">Seleccione una acción...</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f" resname="Delete selected">
         <source>Delete selected</source>
-        <target xml:lang="eu" state="translated">Eliminar elemento seleccionado</target>
+        <target xml:lang="eu" state="translated">Ezabatu aukeratutako elementua</target>
+        <alt-trans>
+          <target xml:lang="eu">Eliminar elemento seleccionado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
@@ -68,7 +98,10 @@
       </trans-unit>
       <trans-unit id="8fd93ea382b6642f13ff291b76f5bc85" resname="Profile Name">
         <source>Profile Name</source>
-        <target xml:lang="eu" state="translated">Nombre del perfil</target>
+        <target xml:lang="eu" state="translated">Profilaren izena</target>
+        <alt-trans>
+          <target xml:lang="eu">Nombre del perfil</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
         <source>Description</source>
@@ -76,27 +109,45 @@
       </trans-unit>
       <trans-unit id="62a5e490880a92eef74f167d9dc6dca0" resname="Hide">
         <source>Hide</source>
-        <target xml:lang="eu" state="translated">Izkutua</target>
+        <target xml:lang="eu" state="translated">Izkutatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Izkutua</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
-        <target xml:lang="eu" state="translated">Obj. Mm.</target>
+        <target xml:lang="eu" state="translated">Mm. Obj.</target>
+        <alt-trans>
+          <target xml:lang="eu">Obj. Mm.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c91391b6983c77f7562c2a156a321f07" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
-        <target xml:lang="eu" state="translated">No hay perfiles de difusión con esos valores.</target>
+        <target xml:lang="eu" state="translated">Ez dago balio horiek dituen emanaldirik.</target>
+        <alt-trans>
+          <target xml:lang="eu">No hay perfiles de difusión con esos valores.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4a9ebd8b6cab747973e7ff131a660a8e" resname="Edit Broadcast">
         <source>Edit Broadcast</source>
-        <target xml:lang="eu" state="translated">Editar perfil de difusión</target>
+        <target xml:lang="eu" state="translated">Emanaldia editatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Editar perfil de difusión</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="d8effba971c620e405826682352b31d7" resname="Select this broadcast by default">
         <source>Select this broadcast by default</source>
-        <target xml:lang="eu" state="translated">Seleccionar este perfil de difusión por defecto</target>
+        <target xml:lang="eu" state="translated">Aukeratu emanaldi hau</target>
+        <alt-trans>
+          <target xml:lang="eu">Seleccionar este perfil de difusión por defecto</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e37dd7e25177f297750b902a35f2d5ea" resname="Default broadcast changed to">
         <source>Default broadcast changed to</source>
-        <target xml:lang="eu" state="translated">Perfil de difusión por defecto cambiado a</target>
+        <target xml:lang="eu" state="translated">Aldezaurretik ezarritako emanaldi profila aldatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Perfil de difusión por defecto cambiado a</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ed3ad9a67a38f55342b301a058878f48" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
         <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
@@ -148,7 +199,7 @@
       </trans-unit>
       <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
         <source>Img</source>
-        <target xml:lang="eu" state="needs-translation">Img</target>
+        <target xml:lang="eu" state="translated">Irudia</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
@@ -244,7 +295,7 @@
       </trans-unit>
       <trans-unit id="96aa8615b9f8a7330695d231603ac9ce" resname="min.">
         <source>min.</source>
-        <target xml:lang="eu" state="needs-translation">min.</target>
+        <target xml:lang="eu" state="translated">min.</target>
       </trans-unit>
       <trans-unit id="cc58cd4895e7a86c70d4fa9d9427da40" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -416,7 +467,7 @@
       </trans-unit>
       <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
         <source>URL</source>
-        <target xml:lang="eu" state="needs-translation">URL</target>
+        <target xml:lang="eu" state="translated">URL-a</target>
       </trans-unit>
       <trans-unit id="b5a4b64b2aa505bd7c11f79b8a9f458d" resname="Resolution">
         <source>Resolution</source>
@@ -776,7 +827,7 @@
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="eu" state="needs-translation">Email</target>
+        <target xml:lang="eu" state="translated">Emaila</target>
       </trans-unit>
       <trans-unit id="cc991c5669b278ab24bee4d0c911f3c9" resname="Edit Person">
         <source>Edit Person</source>
@@ -808,7 +859,7 @@
       </trans-unit>
       <trans-unit id="526d688f37a86d3c3f27d0c5016eb71d" resname="Reset">
         <source>Reset</source>
-        <target xml:lang="eu" state="translated">Reset</target>
+        <target xml:lang="eu" state="translated">Berrezarri</target>
       </trans-unit>
       <trans-unit id="eac43c6192e71b67210c7e4310d0f13b" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
@@ -1032,7 +1083,7 @@
       </trans-unit>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>
-        <target xml:lang="eu" state="needs-translation">Id</target>
+        <target xml:lang="eu" state="translated">Id</target>
       </trans-unit>
       <trans-unit id="bcc254b55c4a1babdf1dcb82c207506b" resname="Phone">
         <source>Phone</source>
@@ -1040,11 +1091,11 @@
       </trans-unit>
       <trans-unit id="551b723eafd6a31d444fcb2f5920fbd3" resname="INFO">
         <source>INFO</source>
-        <target xml:lang="eu" state="needs-translation">INFO</target>
+        <target xml:lang="eu" state="translated">INFO</target>
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="eu" state="needs-translation">SERIES</target>
+        <target xml:lang="eu" state="translated">SERIEAK</target>
       </trans-unit>
       <trans-unit id="f3177b164abaa30bcc742ed6dec3c7a3" resname="Select any person">
         <source>Select any person</source>
@@ -1220,7 +1271,7 @@
       </trans-unit>
       <trans-unit id="2b3e9d78880001e51d2a8bbec9c67f06" resname="Id:">
         <source>Id:</source>
-        <target xml:lang="eu" state="needs-translation">Id:</target>
+        <target xml:lang="eu" state="translated">Id:</target>
       </trans-unit>
       <trans-unit id="3aea427a69e8906b95790872a9ab07cd" resname="Preview:">
         <source>Preview:</source>
@@ -1276,7 +1327,7 @@
       </trans-unit>
       <trans-unit id="4059b0251f66a18cb56f544728796875" resname="Info">
         <source>Info</source>
-        <target xml:lang="eu" state="needs-translation">Info</target>
+        <target xml:lang="eu" state="translated">Argibideak</target>
       </trans-unit>
       <trans-unit id="31fde7b05ac8952dacf4af8a704074ec" resname="Preview">
         <source>Preview</source>
@@ -1320,11 +1371,11 @@
       </trans-unit>
       <trans-unit id="9949c8a2c8c52e71890de5cf5a9dac6a" resname="Cod">
         <source>Cod</source>
-        <target xml:lang="eu" state="needs-translation">Cod</target>
+        <target xml:lang="eu" state="translated">Kodea</target>
       </trans-unit>
       <trans-unit id="a5cd3ed116608dac017f14c046ea56bf" resname="Roles">
         <source>Roles</source>
-        <target xml:lang="eu" state="needs-translation">Roles</target>
+        <target xml:lang="eu" state="translated">Rolak</target>
       </trans-unit>
       <trans-unit id="b9987a246a537f4fe86f1f2e3d10dbdb" resname="Display">
         <source>Display</source>
@@ -1376,7 +1427,7 @@
       </trans-unit>
       <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
         <source>No</source>
-        <target xml:lang="eu" state="needs-translation">No</target>
+        <target xml:lang="eu" state="translated">Ez</target>
       </trans-unit>
       <trans-unit id="db05535e84f43715a5315c58a3c56807" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
@@ -1640,11 +1691,11 @@
       </trans-unit>
       <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
         <source>Mm</source>
-        <target xml:lang="eu" state="needs-translation">Mm</target>
+        <target xml:lang="eu" state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="eu" state="needs-translation">Cpu</target>
+        <target xml:lang="eu" state="translated">Puz</target>
       </trans-unit>
       <trans-unit id="9060587edeb01a63e3d3edc959678d1e" resname="Before">
         <source>Before</source>
@@ -2372,7 +2423,7 @@
       </trans-unit>
       <trans-unit id="930b8c3c83b91181a331f0d737c67476" resname="Subseries">
         <source>Subseries</source>
-        <target xml:lang="eu" state="needs-translation">Subseries</target>
+        <target xml:lang="eu" state="translated">Azpiserieak</target>
       </trans-unit>
       <trans-unit id="4020d50ee12e4b5063fb4137dce9b739" resname="USERS">
         <source>USERS</source>
@@ -2460,7 +2511,7 @@
       </trans-unit>
       <trans-unit id="2f05998d2a71cdc19b7109549bbe2646" resname="STREAM">
         <source>STREAM</source>
-        <target xml:lang="eu" state="needs-translation">STREAM</target>
+        <target xml:lang="eu" state="translated">STREAM</target>
       </trans-unit>
       <trans-unit id="e7e767d7c0e58b16e57d3ab16150db80" resname="Technology">
         <source>Technology</source>
@@ -2544,7 +2595,7 @@
       </trans-unit>
       <trans-unit id="31e5ffbe4c0d489a392f12ebeb163c77" resname="IFRAME">
         <source>IFRAME</source>
-        <target xml:lang="eu" state="needs-translation">IFRAME</target>
+        <target xml:lang="eu" state="translated">IFRAMEA</target>
       </trans-unit>
       <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
@@ -2564,19 +2615,28 @@
       </trans-unit>
       <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
-        <target xml:lang="eu" state="needs-translation">Any Internet user can play the new multimedia objects created from this video template</target>
+        <target xml:lang="eu" state="translated">Bideo txantilloi honen bidez sortutako objetu multimeak internetko edozein erabiltzailek ikusi ditzazke</target>
+        <alt-trans>
+          <target xml:lang="eu">Txantilloi honen bidez sortutako objetu multimea internetko edozein erabiltzailek ikusi dezake</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe" resname="Only users with the defined password can play the new multimedia objects created from this video template">
         <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
-        <target xml:lang="eu" state="needs-translation">Only users with the defined password can play the new multimedia objects created from this video template</target>
+        <target xml:lang="eu" state="translated">Bideo txantilloi honen bitartez sortutako multimedia objetuak pasahitza duten erabiltzaileek soilik ikusi ditzazkete</target>
+        <alt-trans>
+          <target xml:lang="eu">Txantilloi honen bitartez sortutako multimedia objetua pasahitza duten erabiltzaileek soilik ikusi dezakete</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
-        <target xml:lang="eu" state="needs-translation">Only logged in users in the system can play the new multimedia objects created from this video template</target>
+        <target xml:lang="eu" state="translated">Bideo txantilloi honen bidez sortutako multimedia objetuak logeatuak dauden erabiltzaileak soilik ikusi ditzazkete</target>
+        <alt-trans>
+          <target xml:lang="eu">Txantilloi honen bitartez sortutako multimedia objetuak logeatuak dauden erabiltzaileak soilik ikusi dezakete</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
-        <target xml:lang="eu" state="needs-translation">Only users in the selected Groups can play the new multimedia objects created from this video template</target>
+        <target xml:lang="eu" state="translated">Bideo txantilloi honen bidez sortutako multimedia objetuak talde berezietan dauden erabiltzaileak soilik ikusi ditzazkete</target>
       </trans-unit>
     </body>
   </file>
