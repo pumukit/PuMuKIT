@@ -1,6 +1,6 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': app.request.get('show_series', true)})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': show_series})) %}
 <div class="well">
   {% if form_data.series is defined %}
     {% if form_data.series.id is defined %}
