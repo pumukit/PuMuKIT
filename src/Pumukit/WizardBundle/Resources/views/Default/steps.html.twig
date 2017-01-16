@@ -6,7 +6,7 @@
   <div class="col-md-12">
     <ul id="mainNav" class="nav nav-pills nav-wizard steps-{{ num_steps }}">
       {% if show_license %}
-      <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
+      <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) or ((step == 2) and not access_inbox) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
         <a id="pumukitwizard_series_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: License{% endtrans %}</div>
           <div class="step-body">{% trans %}Accept the license{% endtrans %}</div>
@@ -33,7 +33,7 @@
       </li>
       {% set i = i+1 %}
       {% endif %}
-      <li class="{% if not show_series and not access_inbox%}first-child-pumukit{% endif %} {% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif 'multiple' == option %}disabled{% elseif step < 2%}future{% endif %}">
+      <li class="{% if not show_series and not access_inbox and not show_license %}first-child-pumukit{% endif %} {% if (step == 2) and ('single' == option) %}active{% elseif (step == 3) and ('single' == option) %}lastdone{% elseif (step > 3) and ('single' == option) %}done{% elseif 'multiple' == option %}disabled{% elseif step < 2%}future{% endif %}">
         <a id="pumukitwizard_track_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Metadata{% endtrans %}</div>
           <div class="step-body">{% trans %}Insert the data for the Multimedia Object{% endtrans %}</div>
