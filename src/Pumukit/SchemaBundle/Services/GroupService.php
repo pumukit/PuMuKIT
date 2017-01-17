@@ -339,4 +339,20 @@ class GroupService
     {
         return $this->repo->findByIdNotIn($ids);
     }
+
+    /**
+     * Find groups not in
+     * the given array but
+     * in the total of groups
+     * given.
+     *
+     * @param array $ids
+     * @param array $total
+     *
+     * @return Cursor
+     */
+    public function findByIdNotInOf($ids = array(), $total = array())
+    {
+        return $this->repo->findByIdNotInOf($ids, $total);
+    }
 }
