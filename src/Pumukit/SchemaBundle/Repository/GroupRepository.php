@@ -27,4 +27,24 @@ class GroupRepository extends DocumentRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Find groups not in
+     * the given array but
+     * in the total of groups
+     * given.
+     *
+     * @param array $ids
+     * @param array $total
+     *
+     * @return Cursor
+     */
+    public function findByIdNotInOf($ids = array(), $total = array())
+    {
+        return $this->createQueryBuilder()
+            ->field('_id')->in($total)
+            ->field('_id')->notIn($ids)
+            ->getQuery()
+            ->execute();
+    }
 }
