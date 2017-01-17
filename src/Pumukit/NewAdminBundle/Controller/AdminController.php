@@ -336,4 +336,24 @@ class AdminController extends ResourceController implements NewAdminController
 
         return $form;
     }
+
+    /**
+     * Get all groups for logged in user
+     * according to user scope.
+     *
+     * @return ArrayCollection
+     */
+    public function getAllGroups()
+    {
+        $groupService = $this->get('pumukitschema.group');
+        $userService = $this->get('pumukitschema.user');
+        $loggedInUser = $this->getUser();
+        if ($loggedInUser->isSuperAdmin() || $userService->hasGlobalScope($loggedInUser)) {
+            $allGroups = $groupService->findAll();
+        } else {
+            $allGroups = $loggedInUser->getGroups();
+        }
+
+        return $allGroups;
+    }
 }

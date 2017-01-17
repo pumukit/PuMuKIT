@@ -120,8 +120,7 @@ class SeriesController extends AdminController implements NewAdminController
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
 
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
+        $allGroups = $this->getAllGroups();
 
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
@@ -594,8 +593,7 @@ class SeriesController extends AdminController implements NewAdminController
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
+        $allGroups = $this->getAllGroups();
         $seriesService = $this->get('pumukitschema.series');
         $embeddedBroadcast = false;
         $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);

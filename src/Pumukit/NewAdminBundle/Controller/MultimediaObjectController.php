@@ -202,8 +202,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $allBundles = $this->container->getParameter('kernel.bundles');
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
+        $allGroups = $this->getAllGroups();
 
         return array(
                      'mm' => $resource,
@@ -252,10 +251,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
-        $groupService = $this->get('pumukitschema.group');
 
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
-        $allGroups = $groupService->findAll();
+        $allGroups = $this->getAllGroups();
 
         try {
             $personalScopeRole = $personService->getPersonalScopeRole();
@@ -413,8 +411,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         if (null === $roles) {
             throw new \Exception('Not found any role.');
         }
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
+
+        $allGroups = $this->getAllGroups();
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
                              array(
@@ -1071,8 +1069,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $broadcasts = $embeddedBroadcastService->getAllTypes();
-        $groupService = $this->get('pumukitschema.group');
-        $allGroups = $groupService->findAll();
+        $allGroups = $this->getAllGroups();
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             try {
@@ -1251,7 +1248,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                                 );
             $addGroupsIds[] = new \MongoId($group->getId());
         }
-        $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
+        $allGroups = $this->getAllGroups();
+        foreach ($allGroups as $group) {
+            $allGroupsIds[] = new \MongoId($group->getId());
+        }
+        $groupsToDelete = $groupService->findByIdNotInOf($addGroupsIds, $allGroupsIds);
         foreach ($groupsToDelete as $group) {
             $deleteGroups[$group->getId()] = array(
                                                    'key' => $group->getKey(),
