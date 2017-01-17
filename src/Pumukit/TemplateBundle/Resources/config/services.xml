@@ -12,7 +12,7 @@
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
     </service>
 
-    <service id="pumukit_template.menu" class="Pumukit\TemplateBundle\Services\MenuServices">
+    <service id="pumukit_template.menu" class="Pumukit\TemplateBundle\Services\MenuService">
       <tag name="pumukitnewadmin.menuitem" />
     </service>
   </services>

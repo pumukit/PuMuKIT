@@ -55,8 +55,8 @@ class CrudController extends Controller
         return array(
             'templates' => $templates,
             'active' => $active,
-            'delete_form' => $deleteForm->createView(),
-            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm ? $deleteForm->createView() : null,
+            'edit_form' => $editForm ? $editForm->createView() : null,
         );
     }
 
