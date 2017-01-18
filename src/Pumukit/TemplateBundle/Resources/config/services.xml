@@ -10,6 +10,7 @@
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="templating" />
       <argument type="service" id="pumukitschema.schema.locale" />
+      <argument type="service" id="pumukit_web_tv.breadcrumbs" />
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
     </service>
 
