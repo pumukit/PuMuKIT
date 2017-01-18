@@ -287,6 +287,58 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
+     * Find series by person id and role cod or groups
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @param ArrayCollection $groups
+     *
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
+
+        return $this->createQueryBuilder()
+                    ->field('_id')->in($referencedSeries->toArray())
+                    ->getQuery()
+                    ->execute();
+    }
+
+    /**
+     * Find series by person id and role cod or groups sorted
+     *
+     * @param string $personId
+     * @param string $roleCod
+     * @param ArrayCollection $groups
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
+
+        $qb = $this->createQueryBuilder()
+                   ->field('_id')->in($referencedSeries->toArray());
+
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
+
+        if ($limit > 0) {
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb->getQuery()
+                  ->execute();
+    }
+
+    /**
      * Find series with given series type.
      *
      * @param SeriesType $series_type
