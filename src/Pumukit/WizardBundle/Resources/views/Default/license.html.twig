@@ -1,33 +1,15 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': show_series})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': -1, 'option': 'single', 'show_series': show_series, 'same_series': same_series})) %}
 <div class="well">
-  {% if form_data.series is defined %}
-    {% if form_data.series.id is defined %}
-      {% set series_id = form_data.series.id %}
-    {% else %}
-      {% set series_id = null %}
-    {% endif %}
-  {% else %}
-    {% set series_id = null %}
-  {% endif %}
-  {% if form_data.license is defined %}
-    {% if form_data.license.accept is defined %}
-      {% set license_accept = form_data.license.accept %}
-    {% else %}
-      {% set license_accept = null %}
-    {% endif %}
-  {% else %}
-    {% set license_accept = null %}
-  {% endif %}
-  {% if null == series_id %}
-  <form id="pumukitwizard_license_form" autocomplete="off"
-        action="{{ path('pumukitwizard_default_series') }}" method="POST">
-  {% else %}
+  {% if same_series %}
   <form id="pumukitwizard_license_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_type', {'id': form_data.series.id}) }}" method="POST">
-    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ series_id }}">
+  {% else %}
+  <form id="pumukitwizard_license_form" autocomplete="off"
+        action="{{ path('pumukitwizard_default_series') }}" method="POST">
   {% endif %}
+    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
     <fieldset class="well">
       <div class="col-md-12">
         <div class="form-group" id="pumukitwizard_license_text">
@@ -43,7 +25,7 @@
                      name="pumukitwizard_form_data[license][accept]"
                      id="pumukitwizard_license_accept"
                      class="license_input_checkbox"
-                     {{ license_accept ? 'checked="checked"' : '' }}
+                     {{ form_data.license.accept is defined ? (form_data.license.accept ? 'checked="checked"' : '') : '' }}
                      />
               {% trans %}Accept license.{% endtrans %}
             </label>
@@ -55,10 +37,10 @@
     <div class="row">
       <div class="col-md-12">
         <div class="text-right">
-          {% if null == series_id %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
+          {% if form_data.series.id is defined %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
           {% endif %}
           <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
           <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>

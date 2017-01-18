@@ -236,7 +236,6 @@
   float: right;
 }
 
-
 #pumukitwizard_body {
   max-width: 1280px;
   margin: 0 auto;
@@ -244,4 +243,8 @@
 
 .wizard-empty-title {
   padding-top: 36px;
+}
+
+.wizard-new-series {
+    padding-top: 30px;
 }

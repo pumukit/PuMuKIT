@@ -1,21 +1,10 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': ('null' == form_data.series.id)})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 2, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) %}
 <div class="well">
   <form id="pumukitwizard_multimediaobject_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_track') }}" method="POST">
-    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="{{ form_data.series.id }}">
-    {% for field, locales in form_data.series %}
-    {% for locale, value in locales %}
-    {# TODO if value is not null here or at the end of wizard #}
-    <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_multimediaobject_series_{{ field }}_{{ locale }}" value="{{ value }}">
-    {% endfor %}
-    {% endfor %}
-    {% if license_enable %}
-    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
-    {% endif %}
-    <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
-    <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
+    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
     <fieldset class="well">
       {# TODO build input fields with for loop #}
       <div class="col-md-10">

@@ -1,50 +1,72 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': 0, 'option': 'single', 'show_series': true})) %}
+{% render(controller('PumukitWizardBundle:Default:steps', {'step': 0, 'option': 'single', 'show_series': true, 'same_series': same_series})) %}
 <div class="well">
   <form id="pumukitwizard_series_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
-    {% if license_enable %}
-    <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
-    {% endif %}
-    <input type="hidden" name="pumukitwizard_form_data[series][id]" id="pumukitwizard_series_id" value="">
-    <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
+    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
     <fieldset class="well">
+      {% if reuse_series and not same_series and (user_series|length > 0) %}
+      <div class="col-md-6">
+        <div class="form-group" id="pumukitwizard_series_select_i18n_title">
+          <label for="pumukitwizard_series_reuse_i18n_title" class="control-label">{% trans %}Series{% endtrans %}</label>
+          <select id="pumukitwizard_series_reuse_i18n_title" name="pumukitwizard_form_data[series][reuse][id]" class="form-control" {{ form_data.series.new is defined ? (form_data.series.new ? 'disabled="disabled"':'') : 'disabled="disabled"' }}>
+            {% for oneseries in user_series %}
+            <option value="{{ oneseries.id }}" {{ form_data.series.id is defined ? ((form_data.series.id == oneseries.id)?'selected="selected"':''):''}}>{{ oneseries.getTitle() }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div class="checkbox wizard-new-series">
+          <label>
+            <input type="checkbox"
+                   name="pumukitwizard_form_data[series][new_checkbox]"
+                   id="pumukitwizard_series_new_checkbox"
+                   class="pub_channel_input_checkbox"
+                   {{ form_data.series.new is defined ? (form_data.series.new ? 'checked="checked"':'') : 'checked="checked"' }}
+                   />
+            {% trans %}New{% endtrans %}
+          </label>
+        </div>
+      </div>
+      {# add checkbox #}
+      {% endif %}
       <div class="col-md-10">
-        <div class="form-group" id="pumukitwizard_series_i18n_title">
+        <div class="form-group" id="pumukitwizard_series_new_i18n_title">
           <label for="pumukitwizard_series_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
-            {% if form_data.series is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_title, locale) }}">
+            {% if form_data.series.i18n_title is defined %}
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_title, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="">
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
           {% endfor %}
         </div>
-        <div class="form-group" id="pumukitwizard_series_i18n_subtitle">
+        <div class="form-group" id="pumukitwizard_series_new_i18n_subtitle">
           <label for="pumukitwizard_series_i18n_subtitle" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
-            {% if form_data.series is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}">
+            {% if form_data.series.i18n_subtitle is defined %}
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="">
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
           {% endfor %}
         </div>
-        <div class="form-group" id="pumukitwizard_series_i18n_description">
+        <div class="form-group" id="pumukitwizard_series_new_i18n_description">
           <label for="pumukitwizard_series_i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
-            {% if form_data.series is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_description, locale) }}">
+            {% if form_data.series.i18n_description is defined %}
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_description, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="">
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>

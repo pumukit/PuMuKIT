@@ -3,6 +3,7 @@
 {% set num_steps = 6 - (show_license ? 0 : 1) - (show_series ? 0 : 1) - ('multiple' == option ? 1 : 0) - (access_inbox ? 0 : 1) %}
 
 <div class="row">
+  <input type="hidden" id="pumukitwizard_steps_same_series" value="{{ same_series ? 0 : 1 }}"/>
   <div class="col-md-12">
     <ul id="mainNav" class="nav nav-pills nav-wizard steps-{{ num_steps }}">
       {% if show_license %}
