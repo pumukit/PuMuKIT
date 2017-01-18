@@ -12,6 +12,7 @@ class Permission
     const ACCESS_LIVE_EVENTS = 'ROLE_ACCESS_LIVE_EVENTS';
     const ACCESS_JOBS = 'ROLE_ACCESS_JOBS';
     const ACCESS_PEOPLE = 'ROLE_ACCESS_PEOPLE';
+    const SHOW_PEOPLE_MENU = 'ROLE_SHOW_PEOPLE_MENU';
     const ACCESS_TAGS = 'ROLE_ACCESS_TAGS';
     // @deprecated in version 2.3
     const ACCESS_BROADCASTS = 'ROLE_ACCESS_BROADCASTS';
@@ -70,6 +71,13 @@ class Permission
         ),
         self::ACCESS_PEOPLE => array(
             'description' => 'Access People',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::SHOW_PEOPLE_MENU => array(
+            'description' => 'SHOW_PEOPLE_MENU',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
