@@ -9,6 +9,7 @@
     <service id="pumukit_template.routefound" class="Pumukit\TemplateBundle\EventListener\RouteFoundHttpListener">
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="templating" />
+      <argument type="service" id="pumukitschema.schema.locale" />
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
     </service>
 
