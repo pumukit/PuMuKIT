@@ -66,7 +66,6 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries)));
         }
         $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
-
         $reuseSeries = $this->getParameter('pumukit_wizard.reuse_series');
         $userSeries = array();
         if ($reuseSeries) {
