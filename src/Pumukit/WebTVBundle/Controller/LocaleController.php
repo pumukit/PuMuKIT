@@ -24,7 +24,12 @@ class LocaleController extends Controller implements WebTVController
         $paseReferer = parse_url($referer);
         $refererPath = $paseReferer['path'];
         $lastPath = str_replace($request->getBaseUrl(), '', $refererPath);
-        $route = $this->get('router')->getMatcher()->match($lastPath);
+
+        try {
+            $route = $this->get('router')->getMatcher()->match($lastPath);
+        } catch (\Exception $e) {
+            return $this->redirect('/');
+        }
 
         if (!isset($route['_route'])) {
             return $this->redirect('/');
