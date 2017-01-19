@@ -77,7 +77,7 @@ class Permission
             ),
         ),
         self::SHOW_PEOPLE_MENU => array(
-            'description' => 'SHOW_PEOPLE_MENU',
+            'description' => 'Show People Menu Item',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
