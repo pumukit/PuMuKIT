@@ -2578,6 +2578,10 @@
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
         <target>Only users in the selected Groups can play the new multimedia objects created from this video template</target>
       </trans-unit>
+      <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
+        <source>Upload new videos</source>
+        <target>Upload new videos</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

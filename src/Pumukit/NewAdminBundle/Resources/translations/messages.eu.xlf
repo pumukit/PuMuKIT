@@ -2638,6 +2638,10 @@
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
         <target xml:lang="eu" state="translated">Bideo txantilloi honen bidez sortutako multimedia objetuak talde berezietan dauden erabiltzaileak soilik ikusi ditzazkete</target>
       </trans-unit>
+      <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
+        <source>Upload new videos</source>
+        <target>Bideo Berriak Igo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
