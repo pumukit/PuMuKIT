@@ -338,6 +338,10 @@
         <source>Upload</source>
         <target xml:lang="eu" state="translated">Subida</target>
       </trans-unit>
+      <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
+        <source>Empty title</source>
+        <target>Bideoaren Izenburua</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
