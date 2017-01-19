@@ -6,7 +6,7 @@
         action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
 
     <input type="hidden" name="id" id="id" value="{{ mm.id }}">
-    <input type="hidden" name="series_id" id="series_id" value="{{ series.id }}">
+    <input type="hidden" name="series_id" id="series_id" value="{{ mm.series.id }}">
 
     <div class="row">
       <div class="col-xs-6">

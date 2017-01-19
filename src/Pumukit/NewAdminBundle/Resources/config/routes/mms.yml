@@ -232,3 +232,17 @@ pumukitnewadmin_mms_modal_preview:
     methods: [GET]
     defaults:
         _controller: pumukitnewadmin.controller.mms:modalPreviewAction
+
+pumukitnewadmin_mms_indexall:
+    pattern: /mmslist
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:indexAllAction
+        _sylius:
+            filterable: true
+
+pumukitnewadmin_mms_listAll:
+    pattern: /listAll
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:listAllAction

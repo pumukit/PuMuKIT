@@ -71,4 +71,45 @@ class SeriesSearchService
 
         return $criteria;
     }
+
+    public function processMMOCriteria($reqCriteria)
+    {
+        $new_criteria = array();
+
+        foreach ($reqCriteria as $property => $value) {
+            if (('search' === $property) && ('' !== $value)) {
+
+                $new_criteria['$or'] = array(
+                    array('_id' => array('$in' => array($value))),
+                    array('$text' => array('$search' => $value)),
+                );
+
+            } elseif (('date' == $property) && ('' !== $value)) {
+                $new_criteria += $this->processDates($value);
+            } elseif (('announce' === $property) && ('' !== $value)) {
+                if ('true' === $value) {
+                    $new_criteria[$property] = true;
+                } elseif ('false' === $value) {
+                    $new_criteria[$property] = false;
+                }
+            } elseif (('person_name' === $property) && ('' !== $value)) {
+                $new_criteria['people.people'] = array(
+                    array('_id' => array('$in' => array($value))),
+                    array('name' => array('$search' => $value)),
+                );
+            } elseif (('person_role' === $property) && ('' !== $value)) {
+                if('all' !== $value) {
+                    $new_criteria['people.cod'] = array(array('people.cod' => $value),);
+                }
+            } elseif (('channel' === $property) && ('' !== $value)) {
+                if('all' !== $value) {
+                    $new_criteria['tag.cod'] = array(
+                        array('tag.cod' => $value),
+                    );
+                }
+            }
+        }
+
+        return $new_criteria;
+    }
 }
