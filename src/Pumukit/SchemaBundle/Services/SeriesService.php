@@ -91,10 +91,10 @@ class SeriesService
      * with owner role code or share groups
      * with the multimedia object.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $roleOwnerCode
-     * @param array $sort
-     * @param int $limit
+     * @param array  $sort
+     * @param int    $limit
      *
      * @return ArrayCollection
      */

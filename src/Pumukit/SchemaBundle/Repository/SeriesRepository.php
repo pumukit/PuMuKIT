@@ -287,10 +287,10 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id and role cod or groups
+     * Find series by person id and role cod or groups.
      *
-     * @param string $personId
-     * @param string $roleCod
+     * @param string          $personId
+     * @param string          $roleCod
      * @param ArrayCollection $groups
      *
      * @return ArrayCollection
@@ -307,14 +307,14 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Find series by person id and role cod or groups sorted
+     * Find series by person id and role cod or groups sorted.
      *
-     * @param string $personId
-     * @param string $roleCod
+     * @param string          $personId
+     * @param string          $roleCod
      * @param ArrayCollection $groups
-     * @param array $sort
-     * @param int $limit
-     * @param int $page
+     * @param array           $sort
+     * @param int             $limit
+     * @param int             $page
      *
      * @return ArrayCollection
      */
