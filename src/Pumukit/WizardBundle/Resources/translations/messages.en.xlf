@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
@@ -297,6 +300,10 @@
       <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
         <target>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
+      </trans-unit>
+      <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
+        <source>Empty title</source>
+        <target>Empty title</target>
       </trans-unit>
     </body>
   </file>

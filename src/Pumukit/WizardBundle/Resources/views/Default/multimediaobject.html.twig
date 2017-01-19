@@ -15,6 +15,7 @@
     <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
     {% endif %}
     <input type="hidden" name="pumukitwizard_form_data[type][option]" id="pumukitwizard_multimediaobject_type_option" value="{{ form_data.type.option }}">
+    <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
     <fieldset class="well">
       {# TODO build input fields with for loop #}
       <div class="col-md-10">
@@ -125,6 +126,11 @@
         </div>
         {% endif %}
       </div>
+      {% if mandatory_title %}
+      <div class="col-md-2  wizard-empty-title">
+        <span id="pumukitwizard_multimediaobject_title_empty" class="wizard-error" hidden="hidden">{% trans %}Empty title{% endtrans %}</span>
+      </div>
+      {% endif %}
     </fieldset>
     <div class="row">
       <div class="col-md-12">

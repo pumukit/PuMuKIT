@@ -57,10 +57,12 @@ class DefaultController extends Controller
         if (!$licenseEnabledAndAccepted) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData)));
         }
+        $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
 
         return array(
                      'form_data' => $formData,
                      'license_enable' => $licenseService->isEnabled(),
+                     'mandatory_title' => $mandatoryTitle,
                      );
     }
 
@@ -158,6 +160,7 @@ class DefaultController extends Controller
             $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license', null);
             $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses', null);
         }
+        $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
 
         return array(
                      'form_data' => $formData,
@@ -167,6 +170,7 @@ class DefaultController extends Controller
                      'show_object_license' => $showObjectLicense,
                      'object_default_license' => $objectDefaultLicense,
                      'object_available_licenses' => $objectAvailableLicenses,
+                     'mandatory_title' => $mandatoryTitle,
                      );
     }
 

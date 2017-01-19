@@ -41,6 +41,10 @@ class Configuration implements ConfigurationInterface
           ->defaultFalse()
           ->info('Enable adding license to a MultimediaObject in metadata step. This license is defined in pumukit_schema.license (could be a string or an array).')
         ->end()
+        ->booleanNode('mandatory_title')
+          ->defaultFalse()
+          ->info('Enable to force mandatory title in Series and Multimedia Object steps.')
+        ->end()
       ->end();
 
         return $treeBuilder;
