@@ -88,4 +88,47 @@ $(function(){
         }
         return false;
     });
+
+    $('#pumukitwizard_series_form').on('submit', function(e) {
+        return check_mandatory_title('series');
+    });
+
+    $('#pumukitwizard_multimediaobject_form').on('submit', function(e) {
+        return check_mandatory_title('multimediaobject');
+    });
 });
+
+check_mandatory_title = function(step) {
+    var mandatory_title = $('#pumukitwizard_mandatory_title').val();
+    if (mandatory_title == 1) {
+        var filled = false;
+        var inputId = 'pumukitwizard_'+step+'_i18n_title_';
+        var errorId = '#pumukitwizard_'+step+'_title_empty';
+        var title = '';
+        $("input[id^="+inputId+"]").each(function (i, el) {
+            var value = $(el).val();
+            if (value != null && value != '') {
+                filled = true;
+                title = value;
+                return false;
+            }
+        });
+        if (filled) {
+            $(errorId).attr('hidden', 'hidden');
+            autofill(inputId, title);
+        } else {
+            $(errorId).removeAttr('hidden');
+        }
+        return filled;
+    }
+    return true;
+}
+
+autofill = function(inputId, givenValue) {
+    $("input[id^="+inputId+"]").each(function (i, el) {
+        var value = $(el).val();
+        if (value == null || value == '') {
+            $(el).val(givenValue);
+        }
+    });
+}
