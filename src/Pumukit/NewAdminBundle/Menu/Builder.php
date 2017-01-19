@@ -71,10 +71,11 @@ class Builder extends ContainerAware
         if ($authorizationChecker->isGranted(Permission::ACCESS_JOBS)) {
             $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'));
         }
-        if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) || $authorizationChecker->isGranted(Permission::ACCESS_TAGS) ||
+        if (($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU)) ||
+            $authorizationChecker->isGranted(Permission::ACCESS_TAGS) ||
             $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
             $tables = $menu->addChild('Tables');
-            if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE)) {
+            if ($authorizationChecker->isGranted(Permission::ACCESS_PEOPLE) && $authorizationChecker->isGranted(Permission::SHOW_PEOPLE_MENU)) {
                 $tables->addChild('People', array('route' => 'pumukitnewadmin_person_index'));
             }
             if ($authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
