@@ -4,7 +4,7 @@
 <div class="well">
   <form id="pumukitwizard_series_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_type', {'id': 'null'}) }}" method="POST">
-    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
+    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'series'} %}
     <fieldset class="well">
       {% if reuse_series and not same_series and (user_series|length > 0) %}
       <div class="col-md-6">
@@ -21,7 +21,7 @@
         <div class="checkbox wizard-new-series">
           <label>
             <input type="checkbox"
-                   name="pumukitwizard_form_data[series][new_checkbox]"
+                   name="pumukitwizard_form_data[series][new]"
                    id="pumukitwizard_series_new_checkbox"
                    class="pub_channel_input_checkbox"
                    {{ form_data.series.new is defined ? (form_data.series.new ? 'checked="checked"':'') : 'checked="checked"' }}

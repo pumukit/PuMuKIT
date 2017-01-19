@@ -4,7 +4,7 @@
 <div class="well">
   <form id="pumukitwizard_type_form" autocomplete="off"
         action="{{ path('pumukitwizard_default_option') }}" method="POST">
-    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
+    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'type'} %}
     <fieldset class="well">
       <div class="form-group" id="pumukitwizard_type_option">
         <label for="pumukitwizard_type_option" class="control-label">{% trans %}Type{% endtrans %}</label>

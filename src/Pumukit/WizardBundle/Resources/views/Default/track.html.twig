@@ -6,7 +6,7 @@
         enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitwizard_default_upload') }}" method="POST">
     <iframe name="iframeUpload" style="display:none" src=""></iframe>
-    {% include('PumukitWizardBundle:Default:hidden.html.twig') %}
+    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
     <fieldset class="well">
       <div class="col-md-10">
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
