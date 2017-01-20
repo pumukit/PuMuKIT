@@ -49,8 +49,10 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
     {
         if (null !== $this->session->get('_security.main.target_path')) {
             return $this->session->get('_security.main.target_path');
-        } else {
+        } elseif (null !== $this->session->get('target_path')) {
             return $this->session->get('target_path');
+        } else {
+            return 'homepage';
         }
     }
 }
