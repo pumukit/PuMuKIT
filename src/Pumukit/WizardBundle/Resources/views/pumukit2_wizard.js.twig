@@ -1,3 +1,5 @@
+"use strict";
+
 $(function(){
 
     $('#pumukitwizard_series_previous').on('click', function(e){
@@ -23,7 +25,11 @@ $(function(){
             var multimediaobjectForm = $('#pumukitwizard_multimediaobject_form')[0];
             var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
             var seriesId = $('#pumukitwizard_series_id').val();
-            multimediaobjectForm.action = route.replace('__seriesId__', seriesId);
+            if (!seriesId) {
+                multimediaobjectForm.action = route.replace('__seriesId__', 'null');
+            } else {
+                multimediaobjectForm.action = route.replace('__seriesId__', seriesId);
+            }
             multimediaobjectForm.submit();
         }
         return false;
@@ -96,9 +102,23 @@ $(function(){
     $('#pumukitwizard_multimediaobject_form').on('submit', function(e) {
         return check_mandatory_title('multimediaobject');
     });
+
+    $('#pumukitwizard_series_new_checkbox').on('click', function(e){
+        if ($('#pumukitwizard_series_new_checkbox').is(":checked")) {
+            $('#pumukitwizard_series_reuse_i18n_title').attr('disabled', 'disabled');
+            $("input[id^='pumukitwizard_series_i18n_']").each(function (i, el) {
+                $(el).removeAttr('disabled');
+            });
+        } else {
+            $('#pumukitwizard_series_reuse_i18n_title').removeAttr('disabled');
+            $("input[id^='pumukitwizard_series_i18n_']").each(function (i, el) {
+                $(el).attr('disabled', 'disabled');
+            });
+        }
+    });
 });
 
-check_mandatory_title = function(step) {
+function check_mandatory_title(step) {
     var mandatory_title = $('#pumukitwizard_mandatory_title').val();
     if (mandatory_title == 1) {
         var filled = false;
@@ -124,7 +144,7 @@ check_mandatory_title = function(step) {
     return true;
 }
 
-autofill = function(inputId, givenValue) {
+function autofill(inputId, givenValue) {
     $("input[id^="+inputId+"]").each(function (i, el) {
         var value = $(el).val();
         if (value == null || value == '') {

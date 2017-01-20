@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Group;
 
 class SeriesRepositoryTest extends WebTestCase
 {
@@ -39,6 +40,8 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+            ->remove(array());
+        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
             ->remove(array());
         $this->dm->flush();
     }
@@ -608,6 +611,34 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertFalse(in_array($series1, $seriesKatePresenter->toArray()));
         $this->assertTrue(in_array($series2, $seriesKatePresenter->toArray()));
         $this->assertFalse(in_array($series3, $seriesKatePresenter->toArray()));
+
+        $group1 = new Group();
+        $group1->setKey('group1');
+        $group1->setName('Group 1');
+        $group2 = new Group();
+        $group2->setKey('group2');
+        $group2->setName('Group 2');
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+        $mm21->addGroup($group1);
+        $this->dm->persist($mm21);
+        $this->dm->flush();
+
+        $groups = array($group1->getId());
+        $seriesJohnActor1 = $this->repo->findByPersonIdAndRoleCodOrGroups($personJohn->getId(), $roleActor->getCod(), $groups);
+        $groups = array($group2->getId());
+        $seriesJohnActor2 = $this->repo->findByPersonIdAndRoleCodOrGroups($personJohn->getId(), $roleActor->getCod(), $groups);
+
+        $this->assertEquals(3, count($seriesJohnActor1));
+        $this->assertTrue(in_array($series1, $seriesJohnActor1->toArray()));
+        $this->assertTrue(in_array($series2, $seriesJohnActor1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnActor1->toArray()));
+
+        $this->assertEquals(2, count($seriesJohnActor2));
+        $this->assertTrue(in_array($series1, $seriesJohnActor2->toArray()));
+        $this->assertFalse(in_array($series2, $seriesJohnActor2->toArray()));
+        $this->assertTrue(in_array($series3, $seriesJohnActor2->toArray()));
     }
 
     public function testFindBySeriesType()

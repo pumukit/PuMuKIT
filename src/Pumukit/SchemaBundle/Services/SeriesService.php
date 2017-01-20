@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\User;
 
 class SeriesService
 {
@@ -80,5 +81,33 @@ class SeriesService
         $total = $this->mmRepo->countInSeriesWithPrototype($series);
 
         return $total === $count;
+    }
+
+    /**
+     * Get Series of User.
+     * A User is owner of a Series
+     * if the Series has some multimedia
+     * object where the user is, as person,
+     * with owner role code or share groups
+     * with the multimedia object.
+     *
+     * @param User   $user
+     * @param string $roleOwnerCode
+     * @param array  $sort
+     * @param int    $limit
+     *
+     * @return ArrayCollection
+     */
+    public function getSeriesOfUser(User $user, $roleOwnerCode = '', $sort = array(), $limit = 0)
+    {
+        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal()) {
+            return $this->repo->findBy(array(), $sort, $limit);
+        }
+        $groups = array();
+        foreach ($user->getGroups() as $group) {
+            $groups[] = $group->getId();
+        }
+
+        return $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($user->getPerson()->getId(), $roleOwnerCode, $groups, $sort, $limit);
     }
 }

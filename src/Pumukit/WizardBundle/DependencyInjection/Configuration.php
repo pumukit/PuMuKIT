@@ -45,6 +45,10 @@ class Configuration implements ConfigurationInterface
           ->defaultFalse()
           ->info('Enable to force mandatory title in Series and Multimedia Object steps.')
         ->end()
+        ->booleanNode('reuse_series')
+          ->defaultFalse()
+          ->info('Enable adding new multimedia object to an existing series belonging to the logged in user.')
+        ->end()
       ->end();
 
         return $treeBuilder;
