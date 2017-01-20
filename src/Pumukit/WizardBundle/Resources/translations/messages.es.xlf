@@ -287,7 +287,7 @@
       </trans-unit>
       <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
         <source>Accept license.</source>
-        <target>Acepte la licencia.</target>
+        <target>Aceptar la licencia.</target>
       </trans-unit>
       <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
         <source>Step %i%: License</source>
