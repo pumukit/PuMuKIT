@@ -126,7 +126,7 @@
       <div class="col-md-12">
         <div class="text-right">
           {% spaceless %}
-          {% if form_data.series.id is defined and null != form_data.series.id %}
+          {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
           {% else %}
           <a href="{{ path('pumukitnewadmin_series_index') }}">

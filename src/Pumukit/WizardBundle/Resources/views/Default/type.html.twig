@@ -33,10 +33,10 @@
       <div class="col-md-12">
         <div class="text-right">
           {% spaceless %}
-          {% if show_series %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% else %}
+          {% if same_series and series_id is defined and series_id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': series_id}) }}">
+          {% else %}
+          <a href="{{ path('pumukitnewadmin_series_index') }}">
           {% endif %}
           <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
           </a>
