@@ -121,6 +121,10 @@ $(function(){
 function check_mandatory_title(step) {
     var mandatory_title = $('#pumukitwizard_mandatory_title').val();
     if (mandatory_title == 1) {
+        var new_checkbox = document.getElementById("pumukitwizard_series_new_checkbox");
+        if (new_checkbox != null && !new_checkbox.checked) {
+            return true;
+        }
         var filled = false;
         var inputId = 'pumukitwizard_'+step+'_i18n_title_';
         var errorId = '#pumukitwizard_'+step+'_title_empty';
