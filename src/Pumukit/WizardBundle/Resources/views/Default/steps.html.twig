@@ -7,7 +7,7 @@
   <div class="col-md-12">
     <ul id="mainNav" class="nav nav-pills nav-wizard steps-{{ num_steps }}">
       {% if show_license %}
-      <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) or ((step == 2) and not access_inbox) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
+      <li class="{% if not show_license %}disabled{%else%}{% if (step == -1) %}active{% elseif ((step == 0) and show_series) or ((step == 1) and not show_series) or ((step == 2) and not access_inbox and same_series) %}lastdone{% elseif (step > 0) %}done{% endif %}{% endif %}">
         <a id="pumukitwizard_series_previous" href="#">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: License{% endtrans %}</div>
           <div class="step-body">{% trans %}Accept the license{% endtrans %}</div>
