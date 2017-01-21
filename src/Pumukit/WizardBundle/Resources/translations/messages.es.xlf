@@ -117,17 +117,17 @@
         <source>Step 3: Files</source>
         <target xml:lang="es-ES" state="translated">Paso 3: Archivos</target>
       </trans-unit>
-      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Final step: Error">
-        <source>Final step: Error</source>
-        <target xml:lang="es-ES" state="translated">Paso final: Error</target>
+      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Step %i%: Error">
+        <source>Step %i%: Error</source>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Error</target>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
         <target xml:lang="es-ES" state="translated">Fallo en el proceso del asistente</target>
       </trans-unit>
-      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Final step: End">
-        <source>Final step: End</source>
-        <target xml:lang="es-ES" state="translated">Paso final: Final</target>
+      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Step %i%: End">
+        <source>Step %i%: End</source>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Final</target>
       </trans-unit>
       <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>

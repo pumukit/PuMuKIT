@@ -62,10 +62,10 @@
       <li class="{% if (step == 4) or (step == 5) %}active{% elseif (step < 4) %}future{% endif %}">
         <a href="#">
           {% if (5 == step) %}
-          <div class="step-header">{% trans %}Final step: Error{% endtrans %}</div>
+          <div class="step-header">{% trans with {'%i%': i+1} %}Step %i%: Error{% endtrans %}</div>
           <div class="step-body">{% trans %}Failure in wizard proccess{% endtrans %}</div>
           {% else %}
-          <div class="step-header">{% trans %}Final step: End{% endtrans %}</div>
+          <div class="step-header">{% trans with {'%i%': i+1} %}Step %i%: End{% endtrans %}</div>
           <div class="step-body">{% trans %}Wait for the end of transcoding to be notified{% endtrans %}</div>
           {% endif %}
         </a>

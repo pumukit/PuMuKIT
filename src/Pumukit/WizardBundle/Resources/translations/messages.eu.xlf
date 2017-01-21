@@ -156,8 +156,8 @@
           <target xml:lang="eu">Paso 3: Archivos</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Final step: Error">
-        <source>Final step: Error</source>
+      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Step %i%: Error">
+        <source>Step %i%: Error</source>
         <target xml:lang="eu" state="translated">Azken hurratsa: Error</target>
         <alt-trans>
           <target xml:lang="eu">Paso final: Error</target>
@@ -167,8 +167,8 @@
         <source>Failure in wizard proccess</source>
         <target xml:lang="eu" state="translated">Laguntzailearen prozezuan akats bat gertatu da</target>
       </trans-unit>
-      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Final step: End">
-        <source>Final step: End</source>
+      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Step %i%: End">
+        <source>Step %i%: End</source>
         <target xml:lang="eu" state="translated">Azken hurratsa: amaiera</target>
         <alt-trans>
           <target xml:lang="eu">Paso final: Final</target>
