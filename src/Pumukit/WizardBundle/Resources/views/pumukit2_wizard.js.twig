@@ -116,6 +116,11 @@ $(function(){
             });
         }
     });
+
+    $('.pumukitwizard-btn-back').on('click', function(e){
+        $('.lastdone a').last().click()
+    });
+
 });
 
 function check_mandatory_title(step) {

@@ -32,6 +32,9 @@
     <div class="row">
       <div class="col-md-12">
         <div class="text-right">
+          {% if license_enable or show_series %}
+          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">{% trans %}Back{% endtrans %}</button>
+          {% endif %}
           {% spaceless %}
           {% if same_series and series_id is defined and series_id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': series_id}) }}">

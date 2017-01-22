@@ -126,6 +126,9 @@
       <div class="col-md-12">
         <div class="text-right">
           {% spaceless %}
+          {% if license_enable or show_series or access_inbox %}
+          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">{% trans %}Back{% endtrans %}</button>
+          {% endif %}
           {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
           {% else %}

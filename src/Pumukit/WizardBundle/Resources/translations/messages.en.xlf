@@ -117,7 +117,7 @@
         <source>Step 3: Files</source>
         <target>Step 3: Files</target>
       </trans-unit>
-      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Step %i%: Error">
+      <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
         <source>Step %i%: Error</source>
         <target>Step %i%: Error</target>
       </trans-unit>
@@ -125,7 +125,7 @@
         <source>Failure in wizard proccess</source>
         <target>Failure in wizard proccess</target>
       </trans-unit>
-      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Step %i%: End">
+      <trans-unit id="2688c6fafa9408f68f3bf46c8fcfaa02" resname="Step %i%: End">
         <source>Step %i%: End</source>
         <target>Step %i%: End</target>
       </trans-unit>
@@ -304,6 +304,18 @@
       <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
         <source>Empty title</source>
         <target>Empty title</target>
+      </trans-unit>
+      <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f" resname="Back">
+        <source>Back</source>
+        <target>Back</target>
+      </trans-unit>
+      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+        <source>Series</source>
+        <target>Series</target>
+      </trans-unit>
+      <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
+        <source>New</source>
+        <target>New</target>
       </trans-unit>
     </body>
   </file>
