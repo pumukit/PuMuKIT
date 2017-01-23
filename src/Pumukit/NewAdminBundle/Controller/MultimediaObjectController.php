@@ -1333,32 +1333,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             'pubChannels' => $aChannels,
             'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
         );
-
-        /*$dm = $this->get('doctrine_mongodb')->getManager();
-
-        $mms = $this->getListAllMultimediaObjects($request);
-        $update_session = true;
-        foreach ($mms as $mm) {
-            if ($mm->getId() == $this->get('session')->get('admin/mmslist/id')) {
-                $update_session = false;
-            }
-        }
-
-        if ($update_session) {
-            $this->get('session')->remove('admin/mmslist/id');
-        }
-
-
-        $aRoles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
-        $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
-        $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
-
-        return array(
-            'mms' => $mms,
-            'roles' => $aRoles,
-            'pubChannels' => $aChannels,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
-        );*/
     }
 
     /**
@@ -1369,83 +1343,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
-        $selectedSeriesId = $request->get('selectedSeriesId', null);
-        $resources = $this->getResources($request, $config, $criteria, $selectedSeriesId);
+        $resources = $this->getResources($request, $config, $criteria);
 
-        /*return array(
-            'mms' => $resources,
-            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
-
-            );*/
         return $this->render('PumukitNewAdminBundle:MultimediaObject:listAll.html.twig',
             array(
                 'mms' => $resources,
                 'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
             )
         );
-         /*$config = $this->getConfiguration();
-         //$criteria = $this->getCriteria($config);
-         //$resources = $this->getResources($request, $config, $criteria);
-         $criteria = $this->getCriteria($config);
-
-         $mms = $this->getListAllMultimediaObjects($request, $criteria);
-         $update_session = true;
-         foreach ($mms as $mm) {
-             if ($mm->getId() == $this->get('session')->get('admin/mmslist/id')) {
-                 $update_session = false;
-             }
-        }
-         if ($update_session) {
-                $this->get('session')->remove('admin/mmslist/id');
-            }
-
-         return $this->render('PumukitNewAdminBundle:MultimediaObject:listAll.html.twig',
-             array(
-                    'mms' => $mms,
-                    'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
-                )
-        );*/
      }
-
-    /**
-     * Get the view list of multimedia objects
-     * belonging to a series.
-     */
-    protected function getListAllMultimediaObjects(Request $request, $criteria = null)
-    {
-        $session = $this->get('session');
-
-        if (!isset($criteria)) {
-            $criteria = $session->get('admin/mmslist/criteria');
-            if (!isset($criteria)) {
-                $criteria = null;
-            }
-        }
-        if (isset($criteria['reset'])) {
-            $criteria = null;
-        }
-
-        $page = $request->get('page');
-        $page = (!isset($page) || $page <= 0) ? 1 : $page;
-        $session->set('admin/mmslist/page', $page);
-        $paginate = $request->get('paginate');
-        $maxPerPage = (isset($paginate)) ? $paginate : $session->get('admin/mmslist/paginate', 10);
-        $maxPerPage = (!isset($maxPerPage) || !in_array($maxPerPage, array(10, 20, 50))) ? 10 : $maxPerPage;
-
-        $session->set('admin/mmslist/paginate', $maxPerPage);
-        $mmsQueryBuilder = $this
-            ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
-            ->findAllByCriteria($criteria);
-
-        $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
-        $mms = new Pagerfanta($adapter);
-        $mms
-            ->setMaxPerPage($maxPerPage)
-            ->setNormalizeOutOfRangePages(true);
-        $mms->setCurrentPage($page);
-        return $mms;
-    }
 
     private function renderList(MultimediaObject $resource, $referer)
     {
@@ -1484,18 +1390,41 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $new_criteria = $this->get('pumukitnewadmin.series_search')->processMMOCriteria($criteria, true);
 
         return $new_criteria;
+    }
 
-        /*$criteria = $this->getRequest()->get('criteria', array());
+    /**
+     * Gets the list of resources according to a criteria.
+     */
+    public function getResources(Request $request, $config, $criteria)
+    {
+        $sorting = $config->getSorting();
+        $repository = $this->getRepository();
+        $session = $this->get('session');
+        $session_namespace = 'admin/mmlist';
 
-        if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/mmslist/criteria');
-        } elseif ($criteria) {
-            $this->get('session')->set('admin/mmslist/criteria', $criteria);
+        if ($config->isPaginated()) {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+
+            if ($request->get('page', null)) {
+                $session->set($session_namespace.'/page', $request->get('page', 1));
+            }
+
+            if ($request->get('paginate', null)) {
+                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+            }
+
+            $resources
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setNormalizeOutOfRangePages(true)
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
+        } else {
+            $resources = $this
+                ->resourceResolver
+                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
         }
-        $criteria = $this->get('session')->get('admin/mmslist/criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.series_search')->processMMOCriteria($criteria);
-
-        return $new_criteria;*/
+        return $resources;
     }
 }

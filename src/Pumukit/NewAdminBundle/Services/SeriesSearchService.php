@@ -25,13 +25,13 @@ class SeriesSearchService
                     $ids[] = $value;
 
                     $new_criteria['$or'] = array(
-                      array('_id' => array('$in' => $ids)),
-                      array('$text' => array('$search' => $value)),
+                        array('_id' => array('$in' => $ids)),
+                        array('$text' => array('$search' => $value)),
                     );
                 } else {
                     $new_criteria['$or'] = array(
-                      array('_id' => $value),
-                      array('$text' => array('$search' => $value)),
+                        array('_id' => $value),
+                        array('$text' => array('$search' => $value)),
                     );
                 }
             } elseif (('date' == $property) && ('' !== $value)) {
@@ -75,6 +75,9 @@ class SeriesSearchService
     public function processMMOCriteria($reqCriteria)
     {
         $new_criteria = array();
+        $bAnnounce = '';
+        $bChannel = '';
+        $bPerson = false;
 
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
@@ -84,30 +87,39 @@ class SeriesSearchService
                     array('$text' => array('$search' => $value)),
                 );
 
-            } elseif (('date' == $property) && ('' !== $value)) {
-                $new_criteria += $this->processDates($value);
+            } elseif (('person_name' === $property) && ('' !== $value)) {
+                $new_criteria[] = array('$or' => array(array('people.people._id' => array('$in' => array($value))),array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
+                $bPerson = true;
+            } elseif (('person_role' === $property) && ('' !== $value) && $bPerson && ('all' !== $value)) {
+                $new_criteria['people.cod'] = $value;
+            } elseif (('channel' === $property)  && ('' !== $value)) {
+                if ('all' !== $value) {
+                    $bChannel = true;
+                    $sChannelValue = $value;
+                }
             } elseif (('announce' === $property) && ('' !== $value)) {
                 if ('true' === $value) {
-                    $new_criteria[$property] = true;
+                    $bAnnounce = true;
                 } elseif ('false' === $value) {
-                    $new_criteria[$property] = false;
+                    $bAnnounce = false;
                 }
-            } elseif (('person_name' === $property) && ('' !== $value)) {
-                $new_criteria['people.people'] = array(
-                    array('_id' => array('$in' => array($value))),
-                    array('name' => array('$search' => $value)),
-                );
-            } elseif (('person_role' === $property) && ('' !== $value)) {
-                if('all' !== $value) {
-                    $new_criteria['people.cod'] = array(array('people.cod' => $value),);
-                }
-            } elseif (('channel' === $property) && ('' !== $value)) {
-                if('all' !== $value) {
-                    $new_criteria['tag.cod'] = array(
-                        array('tag.cod' => $value),
-                    );
-                }
+            } elseif (('date' === $property) && ('' !== $value)) {
+                $new_criteria += $this->processDates($value);
             }
+        }
+
+        if('' !== $bAnnounce) {
+            if (('' !== $bChannel) && $bChannel && $bAnnounce) {
+                $new_criteria[] = array('$and' => array(array('tags.cod' => $sChannelValue), array('tags.cod' => 'PUDENEW')));
+            } elseif (('' !== $bChannel) && $bChannel) {
+                $new_criteria[] = array('tags.cod' => $sChannelValue);
+            } elseif ($bAnnounce) {
+                $new_criteria[] = array('tags.cod' => 'PUDENEW');
+            } elseif (!$bAnnounce) {
+                $new_criteria[] = array('tags.cod' => array('$nin' => array('PUDENEW')));
+            }
+        } elseif (('' !== $bChannel) && $bChannel) {
+            $new_criteria[] = array('tags.cod' => $sChannelValue);
         }
 
         return $new_criteria;
