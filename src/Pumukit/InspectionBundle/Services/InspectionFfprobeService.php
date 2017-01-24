@@ -37,13 +37,17 @@ class InspectionFfprobeService implements InspectionServiceInterface
                 "nor audio tracks\n".$file);
         }
 
-        $duration = ceil(intval((string) $json->format->duration));
+        $duration = 0;
+        if (isset($json->format->duration)) {
+            $duration = ceil(intval((string) $json->format->duration));
+        }
 
         return $duration;
     }
 
     // Check the desired codec names (MPEG Audio/MPEG-1 Audio layer 3; AAC / Advanced Audio Codec / ...)
     // Now we choose FORMAT.
+
     /**
      * Completes track information from a given path using mediainfo.
      *
@@ -82,7 +86,6 @@ class InspectionFfprobeService implements InspectionServiceInterface
                     $track->setAcodec((string) $stream->codec_name);
                     $track->setChannels(intval($stream->channels));
                     break;
-
             }
             $track->setOnlyAudio($only_audio);
         }
