@@ -220,7 +220,7 @@ EOT
 
         if ($repoName == 'tag') {
             //Creates the csvTagHeaders (to be used later)
-            if (($csvTagHeaders = fgetcsv($file, 300, ';', '"')) === false) {
+            if (($csvTagHeaders = fgetcsv($file, 0, ';', '"')) === false) {
                 $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
 
                 return -1;
@@ -251,7 +251,7 @@ EOT
 
         $row = 1;
         $importedTags = array();
-        while (($currentRow = fgetcsv($file, 300, ';')) !== false) {
+        while (($currentRow = fgetcsv($file, 0, ';')) !== false) {
             $number = count($currentRow);
             if (('tag' === $repoName) ||
                 (('role' === $repoName) && ($number == 7 || $number == 10)) ||

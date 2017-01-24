@@ -92,7 +92,7 @@ EOT
 
         $row = 1;
         if (($file = fopen($file, 'r')) !== false) {
-            while (($currentRow = fgetcsv($file, 300, ';')) !== false) {
+            while (($currentRow = fgetcsv($file, 0, ';')) !== false) {
                 $number = count($currentRow);
                 if (('tag' === $repoName) && ($number == 6 || $number == 9)) {
                     //Check header rows
