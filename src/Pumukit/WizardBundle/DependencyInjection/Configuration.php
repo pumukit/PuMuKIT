@@ -49,6 +49,10 @@ class Configuration implements ConfigurationInterface
           ->defaultFalse()
           ->info('Enable adding new multimedia object to an existing series belonging to the logged in user.')
         ->end()
+        ->booleanNode('reuse_admin_series')
+          ->defaultFalse()
+          ->info('When reuse_series is set to True, the admin user can reuse any series or just the series he/she created.')
+        ->end()
       ->end();
 
         return $treeBuilder;
