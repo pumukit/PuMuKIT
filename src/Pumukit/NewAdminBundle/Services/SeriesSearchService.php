@@ -81,18 +81,16 @@ class SeriesSearchService
 
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
-
                 $new_criteria['$or'] = array(
                     array('_id' => array('$in' => array($value))),
                     array('$text' => array('$search' => $value)),
                 );
-
             } elseif (('person_name' === $property) && ('' !== $value)) {
-                $new_criteria += array('$or' => array(array('people.people._id' => array('$in' => array($value))),array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
+                $new_criteria += array('$or' => array(array('people.people._id' => array('$in' => array($value))), array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
                 $bPerson = true;
             } elseif (('person_role' === $property) && ('' !== $value) && $bPerson && ('all' !== $value)) {
                 $new_criteria['people.cod'] = $value;
-            } elseif (('channel' === $property)  && ('' !== $value)) {
+            } elseif (('channel' === $property) && ('' !== $value)) {
                 if ('all' !== $value) {
                     $bChannel = true;
                     $sChannelValue = $value;
@@ -108,7 +106,7 @@ class SeriesSearchService
             }
         }
 
-        if('' !== $bAnnounce) {
+        if ('' !== $bAnnounce) {
             if (('' !== $bChannel) && $bChannel && $bAnnounce) {
                 $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue), array('tags.cod' => 'PUDENEW')));
             } elseif (('' !== $bChannel) && $bChannel) {

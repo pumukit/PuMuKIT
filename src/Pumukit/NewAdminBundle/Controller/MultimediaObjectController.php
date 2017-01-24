@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
@@ -1336,9 +1335,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-    +     * List action
-    +     * Overwrite to pass series parameter.
-    +     */
+     +     * List action
+     +     * Overwrite to pass series parameter.
+     +     */
     public function listAllAction(Request $request)
     {
         $config = $this->getConfiguration();
@@ -1351,7 +1350,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
             )
         );
-     }
+    }
 
     private function renderList(MultimediaObject $resource, $referer)
     {
