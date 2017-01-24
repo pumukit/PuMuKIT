@@ -79,8 +79,9 @@ class DefaultController extends Controller
             /* $limit = 30; */
             $seriesService = $this->get('pumukitschema.series');
             $user = $this->getUser();
+            $reuseAdminSeries = $this->getParameter('pumukit_wizard.reuse_admin_series');
             $personalScopeRoleCode = $this->getParameter('pumukitschema.personal_scope_role_code');
-            $userSeries = $seriesService->getSeriesOfUser($user, $personalScopeRoleCode, $sort, $limit);
+            $userSeries = $seriesService->getSeriesOfUser($user, $reuseAdminSeries, $personalScopeRoleCode, $sort, $limit);
         }
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
