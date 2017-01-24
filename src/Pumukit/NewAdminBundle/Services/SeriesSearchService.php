@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesSearchService
 {
@@ -74,7 +75,7 @@ class SeriesSearchService
 
     public function processMMOCriteria($reqCriteria)
     {
-        $new_criteria = array();
+        $new_criteria = array('status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE));
         $bAnnounce = '';
         $bChannel = '';
         $bPerson = false;
