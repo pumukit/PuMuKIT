@@ -1335,9 +1335,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     +     * List action
-     +     * Overwrite to pass series parameter.
-     +     */
+     * List action
+     * Overwrite to pass series parameter.
+     */
     public function listAllAction(Request $request)
     {
         $config = $this->getConfiguration();
