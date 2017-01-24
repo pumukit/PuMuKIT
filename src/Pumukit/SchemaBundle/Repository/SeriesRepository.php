@@ -397,7 +397,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithTagAndSeriesType($tag, $seriesType, $sort = array(), $limit = 0, $page = 0)
     {
-        $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType,  $sort);
+        $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 
         if ($limit > 0) {
             $qb->limit($limit)->skip($limit * $page);
@@ -415,7 +415,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return QueryBuilder
      */
-    public function createBuilderWithTagAndSeriesType($tag, $seriesType,  $sort = array())
+    public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = array())
     {
         $referencedSeries = $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')

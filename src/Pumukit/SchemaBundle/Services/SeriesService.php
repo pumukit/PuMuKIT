@@ -91,16 +91,17 @@ class SeriesService
      * with owner role code or share groups
      * with the multimedia object.
      *
-     * @param User   $user
-     * @param string $roleOwnerCode
-     * @param array  $sort
-     * @param int    $limit
+     * @param User    $user
+     * @param boolean $onlyAdminSeries
+     * @param string  $roleOwnerCode
+     * @param array   $sort
+     * @param int     $limit
      *
      * @return ArrayCollection
      */
-    public function getSeriesOfUser(User $user, $roleOwnerCode = '', $sort = array(), $limit = 0)
+    public function getSeriesOfUser(User $user, $onlyAdminSeries = false, $roleOwnerCode = '', $sort = array(), $limit = 0)
     {
-        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal()) {
+        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
             return $this->repo->findBy(array(), $sort, $limit);
         }
         $groups = array();
