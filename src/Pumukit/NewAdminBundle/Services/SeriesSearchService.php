@@ -88,7 +88,7 @@ class SeriesSearchService
                 );
 
             } elseif (('person_name' === $property) && ('' !== $value)) {
-                $new_criteria[] = array('$or' => array(array('people.people._id' => array('$in' => array($value))),array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
+                $new_criteria += array('$or' => array(array('people.people._id' => array('$in' => array($value))),array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
                 $bPerson = true;
             } elseif (('person_role' === $property) && ('' !== $value) && $bPerson && ('all' !== $value)) {
                 $new_criteria['people.cod'] = $value;
@@ -110,16 +110,16 @@ class SeriesSearchService
 
         if('' !== $bAnnounce) {
             if (('' !== $bChannel) && $bChannel && $bAnnounce) {
-                $new_criteria[] = array('$and' => array(array('tags.cod' => $sChannelValue), array('tags.cod' => 'PUDENEW')));
+                $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue), array('tags.cod' => 'PUDENEW')));
             } elseif (('' !== $bChannel) && $bChannel) {
-                $new_criteria[] = array('tags.cod' => $sChannelValue);
+                $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue)));
             } elseif ($bAnnounce) {
-                $new_criteria[] = array('tags.cod' => 'PUDENEW');
+                $new_criteria += array('$and' => array(array('tags.cod' => 'PUDENEW')));
             } elseif (!$bAnnounce) {
-                $new_criteria[] = array('tags.cod' => array('$nin' => array('PUDENEW')));
+                $new_criteria += array('$and' => array(array('tags.cod' => array('$nin' => array('PUDENEW')))));
             }
         } elseif (('' !== $bChannel) && $bChannel) {
-            $new_criteria[] = array('tags.cod' => $sChannelValue);
+            $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue)));
         }
 
         return $new_criteria;
