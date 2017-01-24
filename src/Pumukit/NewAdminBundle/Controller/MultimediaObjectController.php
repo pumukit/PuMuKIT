@@ -268,13 +268,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             throw new \Exception('Not found any role.');
         }
 
-        /*$sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById(null, $sessionId);
-        if (null === $series) {
-            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
-        }
-        $this->get('session')->set('admin/series/id', $series->getId());*/
-
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
@@ -314,7 +307,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                                    'mm' => $resource,
                                    'form_meta' => $formMeta->createView(),
                                    'form_pub' => $formPub->createView(),
-                                   //'series' => $series,
                                    'roles' => $roles,
                                    'personal_scope_role' => $personalScopeRole,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
@@ -1364,10 +1356,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 )
             );
         } else {
-            $request = $this->getRequest();
-            $mms = $this->getListAllMultimediaObjects($request);
-
-            return $this->render('PumukitNewAdminBundle:MultimediaObject:listAll.html.twig', array('mms' => $mms));
+            return $this->redirectToRoute('pumukitnewadmin_mms_listAll', array(), 301);
         }
     }
 
