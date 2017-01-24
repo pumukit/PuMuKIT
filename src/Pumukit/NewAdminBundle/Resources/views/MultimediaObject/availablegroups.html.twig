@@ -1,12 +1,16 @@
 {% if can_modify_groups %}
 {% for group in groups if group not in resource.getGroups() %}
-<a href="#" 
+<a href="#"
    id="delete_{{ resource_name }}_group_{{ group.id }}"
-   onclick="javascript:return select_group(this);" 
+   onclick="javascript:return select_group(this);"
    ondblclick="javascript:add_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');"
    class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row">
   <i class="mdi-social-group"></i>
-  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+    {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+  {% else %}
+    {{ group.name }}
+  {% endif %}
 </a>
 {% endfor %}
 {% else %}
@@ -17,7 +21,11 @@
    ondblclick="window.alert('{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}');return false;"
    class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row">
   <i class="mdi-social-group"></i>
-  {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+    {{ group.key }} - {{ group.name }} - ({{ group.origin }})
+  {% else %}
+    {{ group.name }}
+  {% endif %}
 </a>
 {% endfor %}
 {% endif %}

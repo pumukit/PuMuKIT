@@ -1014,7 +1014,11 @@ function toggle_show_all()
 
 function create_element_in_select(tag, block_tag_id, mm_id) {
   var $ul = $("#select_ul_tag_cod_" + block_tag_id);
+  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
   $ul.append('<a href="#" ondblclick="javascript:del_tree_tag(\'' + tag.id + '\', \'' + mm_id +'\');" onclick="return select_tree_tag(this);" class="list-group-item" id="select_li_' + tag.id + '">' + tag.cod + ' - ' + tag.name +'</a>');
+  {% else %}
+  $ul.append('<a href="#" ondblclick="javascript:del_tree_tag(\'' + tag.id + '\', \'' + mm_id +'\');" onclick="return select_tree_tag(this);" class="list-group-item" id="select_li_' + tag.id + '">' + tag.name +'</a>');
+  {% endif %}
 }
 
 function inc_num_mm(tag_id, num)
@@ -2594,7 +2598,11 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
     }
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
     var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
+    {% else %}
+    var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
+    {% endif %}
     $add_groups_list.append(item_text);
 }
 
@@ -2618,7 +2626,11 @@ function create_element_group_in_delete_groups(group_id, group_key, group_name, 
             var item_onclick = 'onclick="return select_group(this);"';
             var item_ondblclick = 'ondblclick="javascript:add_group(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+resource+'\');"';
         }
-        var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+            var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
+        {% else %}
+            var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
+        {% endif %}
         $delete_groups_list.append(item_text);
     }
 }

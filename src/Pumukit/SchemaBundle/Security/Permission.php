@@ -32,6 +32,7 @@ class Permission
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
     const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
+    const SHOW_CODES = 'ROLE_SHOW_CODES';
 
     public static $permissionDescription = array(
         self::ACCESS_DASHBOARD => array(
@@ -204,6 +205,13 @@ class Permission
         ),
         self::INIT_STATUS_PUBLISHED => array(
             'description' => 'Init Multimedia Objects in published status',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::SHOW_CODES => array(
+            'description' => 'Show tag and group codes in the backoffice',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
