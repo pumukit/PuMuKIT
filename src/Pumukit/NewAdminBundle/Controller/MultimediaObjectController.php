@@ -172,7 +172,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parentTags = $factoryService->getParentTags();
 
         $resource = $this->findOr404($request);
-        $series = $resource->getSeries(); //TODO
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
