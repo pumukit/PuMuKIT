@@ -1,0 +1,110 @@
+{% set criteria = app.session.get('admin/mmslist/criteria') %}
+<div class="well" xmlns="http://www.w3.org/1999/html">
+    <form autocomplete="off" id="filter_series" class="form" onsubmit="return filter_multimedia_list(this);">
+        <fieldset>
+            <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch"
+                               aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %} :</label>
+                                <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %} :</label>
+                                <input type="text" class="form-control" name="criteria[person_name]" id="filters_person_name" value="{{ criteria['person_name']|default("") }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="filters_person_role" class="control-label">{% trans %}Role{% endtrans %} :</label>
+                                <select class="form-control" name="criteria[person_role]" id="filters_person_role">
+                                    <option value="all">{% trans %}All{% endtrans %}</option>
+                                    {% for role in roles %}
+                                        <option value="{{ role.cod }}">{{ role.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="filter_place" class="control-label">{% trans %}Publication channel{% endtrans %} :</label>
+                                <select class="form-control" name="criteria[channel]" id="filters_person_role">
+                                    <option value="all">{% trans %}All{% endtrans %}</option>
+                                    {% for channel in pubChannels %}
+                                        <option value="{{ channel.cod }}">{{ channel.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %} :</label>
+                                <div class="row">
+                                    <div class="col-md-11 col-md-offset-1">
+                                        {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local"
+                                                                                   class="form-control"
+                                                                                   pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)"
+                                                                                   title="Format YYYY-MM-DDThh:mm:ss"
+                                                                                   name="criteria[date][from]"
+                                                                                   id="filters_date_from"
+                                                                                   value="{{ criteria['date']['from']|default("") }}">
+                                        <br/>
+                                        {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local"
+                                                                                       class="form-control"
+                                                                                       pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)"
+                                                                                       title="Format YYYY-MM-DDThh:mm:ss"
+                                                                                       name="criteria[date][to]"
+                                                                                       id="filters_date_to"
+                                                                                       value="{{ criteria['date']['to']|default("") }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %} :</label>
+                                <select class="form-control" name="criteria[announce]" id="filters_announce">
+                                    <option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
+                                    <option value="true">{% trans %}Yes{% endtrans %}</option>
+                                    <option value="false">{% trans %}No{% endtrans %}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="text-right">
+            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function resetSearchForm() {
+        $('filters_title').value = '';
+        $('filters_person').value = '';
+        $('filters_date_from').value = '';
+        $('filters_date_to').value = '';
+        $('filters_announce').value = 'diff';
+        $('filters_status').value = 'all';
+    }
+    function filter_multimedia_list(form) {
+        var from_date = $('#filters_date_from');
+        var to_date = $('#filters_date_to');
+        if (to_date.val() != "" && from_date.val() >= to_date.val()) {
+            to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
+        } else {
+            //console.log($(form).serialize());
+            $('#list_mms').load('{{ path('pumukitnewadmin_mms_listAll')|raw }}', $(form).serialize());
+        }
+        return false;
+    }
+</script>

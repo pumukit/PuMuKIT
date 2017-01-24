@@ -126,7 +126,7 @@
             <div class="col-md-6 text-right">
               <div class="pagerfanta">
                 {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
-                                                          "routeParams": {"id": series.id}, "routeName": "pumukitnewadmin_mms_index"}) }}
+                                                          "routeParams": {"id": series}, "routeName": "pumukitnewadmin_mms_index"}) }}
                 {% if not is_naked() %}
                 <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value">
                   <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
