@@ -67,10 +67,12 @@ class InspectionFfprobeService implements InspectionServiceInterface
         }
 
         $track->setMimetype(mime_content_type($track->getPath()));
-        $track->setBitrate(intval($json->format->bit_rate));
-        $aux = intval((string) $json->format->duration);
-        $track->setDuration(ceil($aux));
-        $track->setSize((string) $json->format->size);
+        $bitrate = isset($json->format->bit_rate) ? intval($json->format->bit_rate) : 0;
+        $track->setBitrate($bitrate);
+        $duration = isset($json->format->duration) ? intval((string) $json->format->duration) : 0;
+        $track->setDuration(ceil($duration));
+        $size = isset($json->format->size) ? (string) $json->format->size : 0;
+        $track->setSize($size);
 
         foreach ($json->streams as $stream) {
             switch ((string) $stream->codec_type) {
