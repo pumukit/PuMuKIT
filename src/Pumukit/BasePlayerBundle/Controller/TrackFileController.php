@@ -31,15 +31,14 @@ class TrackFileController extends Controller
             $this->dispatchViewEvent($mmobj, $track);
         }
 
-
         if ($secret = $this->container->getParameter('pumukitplayer.secure_secret')) {
             $timestamp = time() + $this->container->getParameter('pumukitplayer.secure_duration');
             $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
 
-            return $this->redirect($track->getUrl()."?md5=${hash}&expires=${timestamp}&" . http_build_query($request->query->all(), null, '&'));
+            return $this->redirect($track->getUrl()."?md5=${hash}&expires=${timestamp}&".http_build_query($request->query->all(), null, '&'));
         }
 
-        return $this->redirect($track->getUrl() . '?' . http_build_query($request->query->all()));
+        return $this->redirect($track->getUrl().http_build_query($request->query->all(), '?'));
     }
 
     protected function getHash(Track $track, $timestamp, $secret, $ip)
