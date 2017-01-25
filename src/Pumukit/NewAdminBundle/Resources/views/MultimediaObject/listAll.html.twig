@@ -10,14 +10,49 @@
                         </label>
                     </div>
                 </th>
-                <th colspan="{{ is_naked() ? 4 : 5 }}" width="5%"></th>
+                <th colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
                 <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
                 <th width="1%">{% trans %}Img{% endtrans %}</th>
-                <th width="15%">{% trans %}Serie{% endtrans %}</th>
-                <th>{% trans %}Title{% endtrans %}</th>
+                {% if 'series' == app.session.get('admin/mmslist/sort') %}
+                    <th width="15%">
+                        <a href="#" id="pumukitnewadmin_mmo_series_sort_selected">{% trans %}Series{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+                    </th>
+                {% else %}
+                    <th width="15%">
+                        <a href="#" id="pumukitnewadmin_mmo_series_sort_not_selected">{% trans %}Series{% endtrans %}</a>
+                    </th>
+                {% endif %}
+                {% if 'title' == app.session.get('admin/mmslist/sort') %}
+                    <th>
+                        <a href="#" id="pumukitnewadmin_mmo_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+                    </th>
+                {% else %}
+                    <th>
+                        <a href="#" id="pumukitnewadmin_mmo_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
+                    </th>
+                {% endif %}
                 <th width="1%">{% trans %}Duration{% endtrans %}</th>
-                <th width="1%">{% trans %}RecDate{% endtrans %}</th>
-                <th width="1%">{% trans %}PubDate{% endtrans %}</th>
+                {% if 'record_date' == app.session.get('admin/mmslist/sort') %}
+                    <th width="1%">
+                        <a href="#" id="pumukitnewadmin_mmo_record_date_sort_selected">{% trans %}RecDate{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+                    </th>
+                {% else %}
+                    <th width="1%">
+                        <a href="#" id="pumukitnewadmin_mmo_record_date_sort_not_selected">{% trans %}RecDate{% endtrans %}</a>
+                    </th>
+                {% endif %}
+                {% if 'public_date' == app.session.get('admin/mmslist/sort') %}
+                    <th width="1%">
+                        <a href="#" id="pumukitnewadmin_mmo_public_date_sort_selected">{% trans %}PubDate{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+                    </th>
+                {% else %}
+                    <th width="1%">
+                        <a href="#" id="pumukitnewadmin_mmo_public_date_sort_not_selected">{% trans %}PubDate{% endtrans %}</a>
+                    </th>
+                {% endif %}
+
+                <input type="hidden" name="pumukitnewadmin_mmo_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/mmslist/type')=='asc'?'desc':'asc' }}"/>
+
             </tr>
             </thead>
 
@@ -44,28 +79,6 @@
                     {% endif %}
                     <td>
                         {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
-                    </td>
-                    <td>
-                        {% if mms.getCurrentPage() != 1 or not loop.first %}
-                            {% spaceless %}
-                                <a href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}"
-                                   title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-                                <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}"
-                                   title="{% trans %}Move to the beginning of the list{% endtrans %}"><i
-                                            class="mdi-editor-vertical-align-top"></i></a>
-                            {% endspaceless %}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
-                            {% spaceless %}
-                                <a href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}"
-                                   title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-                                <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}"
-                                   title="{% trans %}Move to the end of the list{% endtrans %}"><i
-                                            class="mdi-editor-vertical-align-bottom"></i></a>
-                            {% endspaceless %}
-                        {% endif %}
                     </td>
 
                     <td onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')"

@@ -1385,7 +1385,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/mmlist';
@@ -1415,4 +1415,24 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return $resources;
     }
+
+    private function getSorting(Request $request)
+    {
+        $session = $this->get('session');
+
+        if ($sorting = $request->get('sorting')) {
+            $session->set('admin/mmslist/type', current($sorting));
+            $session->set('admin/mmslist/sort', key($sorting));
+        }
+
+        $value = $session->get('admin/mmslist/type', 'desc');
+        $key = $session->get('admin/mmslist/sort', 'public_date');
+
+        if ($key == 'title') {
+            $key .= '.'.$request->getLocale();
+        }
+
+        return  array($key => $value);
+    }
+
 }
