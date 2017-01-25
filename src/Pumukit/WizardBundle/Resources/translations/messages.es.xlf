@@ -5,377 +5,320 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
+      <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully" approved="yes">
         <source>Audio/Video uploaded successfully</source>
-        <target>Audio/Vídeo subido correctamente</target>
+        <target xml:lang="es-ES">Audio/Vídeo subido correctamente</target>
       </trans-unit>
       <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target state="translated">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un correo electrónico cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        <target xml:lang="es-ES" state="translated">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un correo electrónico cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
+        </alt-trans>
       </trans-unit>
-      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
+      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES" approved="yes">
         <source>SERIES</source>
-        <target>SERIES</target>
+        <target xml:lang="es-ES">SERIES</target>
       </trans-unit>
-      <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
+      <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO" approved="yes">
         <source>VIDEO</source>
-        <target>VÍDEO</target>
+        <target xml:lang="es-ES">VÍDEO</target>
       </trans-unit>
-      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE" approved="yes">
         <source>DATE</source>
-        <target>FECHA</target>
+        <target xml:lang="es-ES">FECHA</target>
       </trans-unit>
       <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa" resname="Actions">
         <source>Actions</source>
-        <target state="translated">Acciones</target>
+        <target xml:lang="es-ES" state="translated">Acciones</target>
       </trans-unit>
       <trans-unit id="4a8a4f3d4d0f09e16347e8a1c4bedb20" resname="Edit Multimedia Object">
         <source>Edit Multimedia Object</source>
-        <target state="translated">Editar Objeto Multimedia</target>
+        <target xml:lang="es-ES" state="translated">Editar Objeto Multimedia</target>
       </trans-unit>
       <trans-unit id="be5b3fae8a55670cb583c472c1db6eec" resname="Back to Series">
         <source>Back to Series</source>
-        <target state="translated">Volver a la Serie</target>
+        <target xml:lang="es-ES" state="translated">Volver a la Serie</target>
       </trans-unit>
       <trans-unit id="e11c6540433c2a394c533b8131fc2b46" resname="Create another Multimedia Object in same Series">
         <source>Create another Multimedia Object in same Series</source>
-        <target state="translated">Crear otro Objeto Multimedia en la misma Serie</target>
+        <target xml:lang="es-ES" state="translated">Crear otro Objeto Multimedia en la misma Serie</target>
       </trans-unit>
       <trans-unit id="b050796730bc9fb6c6cc1c0a671c1803" resname="Create another Multimedia Object in a new Series">
         <source>Create another Multimedia Object in a new Series</source>
-        <target state="translated">Crear otro Objeto Multimedia en una Serie nueva</target>
+        <target xml:lang="es-ES" state="translated">Crear otro Objeto Multimedia en una Serie nueva</target>
       </trans-unit>
       <trans-unit id="76c4d065fdc391cc3939df61dea1d9b6" resname="Upload another video">
         <source>Upload another video</source>
-        <target state="translated">Subir otro vídeo</target>
+        <target xml:lang="es-ES" state="translated">Subir otro vídeo</target>
       </trans-unit>
       <trans-unit id="56acfb948c5ac0cf6f3d4a195248618a" resname="Upload another Multimedia Object in same Series">
         <source>Upload another Multimedia Object in same Series</source>
-        <target state="translated">Subir otro Objeto Multimedia en la misma Serie</target>
+        <target xml:lang="es-ES" state="translated">Subir otro Objeto Multimedia en la misma Serie</target>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target state="translated">Cancelar</target>
+        <target xml:lang="es-ES" state="translated">Cancelar</target>
       </trans-unit>
       <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
         <source>Next</source>
-        <target state="translated">Siguiente</target>
+        <target xml:lang="es-ES" state="translated">Siguiente</target>
       </trans-unit>
       <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
         <source>Title</source>
-        <target state="translated">Título</target>
+        <target xml:lang="es-ES" state="translated">Título</target>
       </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
         <source>Description</source>
-        <target state="translated">Descripción</target>
+        <target xml:lang="es-ES" state="translated">Descripción</target>
       </trans-unit>
       <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
-        <target state="translated">Subtítulo</target>
+        <target xml:lang="es-ES" state="translated">Subtítulo</target>
       </trans-unit>
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
-        <target state="translated">Titular</target>
+        <target xml:lang="es-ES" state="translated">Titular</target>
       </trans-unit>
       <trans-unit id="98787e0ea3ebdac853b739123f35ad8d" resname="Step 1: Series">
         <source>Step 1: Series</source>
-        <target state="translated">Paso 1: Serie</target>
+        <target xml:lang="es-ES" state="translated">Paso 1: Serie</target>
       </trans-unit>
       <trans-unit id="35bc5fb60ebdee8bbd4b8c68d797cb74" resname="Create a new Series for the Multimedia Object">
         <source>Create a new Series for the Multimedia Object</source>
-        <target state="translated">Crear una nueva Serie para el Objeto Multimedia</target>
+        <target xml:lang="es-ES" state="translated">Crear una nueva Serie para el Objeto Multimedia</target>
       </trans-unit>
       <trans-unit id="42c9c567af4142d1cc75f0665952abf0" resname="Step 2: Type">
         <source>Step 2: Type</source>
-        <target state="translated">Paso 2: Tipo</target>
+        <target xml:lang="es-ES" state="translated">Paso 2: Tipo</target>
       </trans-unit>
       <trans-unit id="076de82c8cf022f48f74f7e9c3c40b1b" resname="Choose option type">
         <source>Choose option type</source>
-        <target state="translated">Seleccione una opción</target>
+        <target xml:lang="es-ES" state="translated">Seleccione una opción</target>
       </trans-unit>
       <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
         <source>Step</source>
-        <target state="translated">Paso</target>
+        <target xml:lang="es-ES" state="translated">Paso</target>
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
-        <target state="translated">Metadatos</target>
+        <target xml:lang="es-ES" state="translated">Metadatos</target>
       </trans-unit>
       <trans-unit id="c2f27ee4404e902513128c40d208e108" resname="Insert the data for the Multimedia Object">
         <source>Insert the data for the Multimedia Object</source>
-        <target state="translated">Introduzca los datos del Objeto Multimedia</target>
+        <target xml:lang="es-ES" state="translated">Introduzca los datos del Objeto Multimedia</target>
       </trans-unit>
       <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
         <source>File</source>
-        <target state="translated">Archivo</target>
+        <target xml:lang="es-ES" state="translated">Archivo</target>
       </trans-unit>
       <trans-unit id="c3e635ca964a04246b5abb062f917280" resname="Upload the multimedia file">
         <source>Upload the multimedia file</source>
-        <target state="translated">Subir el archivo multimedia</target>
+        <target xml:lang="es-ES" state="translated">Subir el archivo multimedia</target>
       </trans-unit>
       <trans-unit id="eafecfd638c10dc2c75c61f8350e3d1c" resname="Step 3: Files">
         <source>Step 3: Files</source>
-        <target state="translated">Paso 3: Archivos</target>
+        <target xml:lang="es-ES" state="translated">Paso 3: Archivos</target>
       </trans-unit>
       <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
         <source>Step %i%: Error</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: Error</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Error</target>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
-        <target state="translated">Fallo en el proceso del asistente</target>
+        <target xml:lang="es-ES" state="translated">Fallo en el proceso del asistente</target>
       </trans-unit>
       <trans-unit id="2688c6fafa9408f68f3bf46c8fcfaa02" resname="Step %i%: End">
         <source>Step %i%: End</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: End</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Final</target>
       </trans-unit>
       <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>
-        <target state="translated">Espere al final de la transcodificación para ser notificado</target>
+        <target xml:lang="es-ES" state="translated">Espere al final de la transcodificación para ser notificado</target>
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target state="translated">Perfil</target>
+        <target xml:lang="es-ES" state="translated">Perfil</target>
       </trans-unit>
       <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
         <source>Publication Channels</source>
-        <target state="translated">Canales de publicación</target>
+        <target xml:lang="es-ES" state="translated">Canales de publicación</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
-        <target state="translated">Prioridad</target>
+        <target xml:lang="es-ES" state="translated">Prioridad</target>
       </trans-unit>
       <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
         <source>Low-Priority</source>
-        <target state="translated">Prioridad Baja</target>
+        <target xml:lang="es-ES" state="translated">Prioridad Baja</target>
       </trans-unit>
       <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
         <source>Normal-Priority</source>
-        <target state="translated">Prioridad Normal</target>
+        <target xml:lang="es-ES" state="translated">Prioridad Normal</target>
       </trans-unit>
       <trans-unit id="7050cf0d21fcaca51e96bdaf8c6413e0" resname="High-Priority">
         <source>High-Priority</source>
-        <target state="translated">Prioridad Alta</target>
+        <target xml:lang="es-ES" state="translated">Prioridad Alta</target>
       </trans-unit>
       <trans-unit id="cb76fb50035786c968dabe4987c5d5db" resname="Video/Audio language">
         <source>Video/Audio language</source>
-        <target state="translated">Idioma de Vídeo/Audio</target>
+        <target xml:lang="es-ES" state="translated">Idioma de Vídeo/Audio</target>
       </trans-unit>
       <trans-unit id="650be61892bf690026089544abbd9d26" resname="Mode">
         <source>Mode</source>
-        <target state="translated">Modo</target>
+        <target xml:lang="es-ES" state="translated">Modo</target>
       </trans-unit>
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target state="translated">Buzón de entrada en el servidor</target>
+        <target xml:lang="es-ES" state="translated">Buzón de entrada en el servidor</target>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
-        <target state="translated">Disco duro local</target>
+        <target xml:lang="es-ES" state="translated">Disco duro local</target>
       </trans-unit>
       <trans-unit id="606257a79c31efa1d61589c6a48f5b2e" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
-        <target state="translated">Directorio de la bandeja de entrada en el servidor</target>
+        <target xml:lang="es-ES" state="translated">Directorio de la bandeja de entrada en el servidor</target>
       </trans-unit>
       <trans-unit id="45c1d7f6167c454c8e40dc9dbe8b9432" resname="Audio/video file">
         <source>Audio/video file</source>
-        <target state="translated">Archivo de audio/vídeo</target>
+        <target xml:lang="es-ES" state="translated">Archivo de audio/vídeo</target>
       </trans-unit>
       <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
         <source>Under</source>
-        <target state="translated">Bajo</target>
+        <target xml:lang="es-ES" state="translated">Bajo</target>
       </trans-unit>
       <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
         <source>Progress</source>
-        <target state="translated">Progreso</target>
+        <target xml:lang="es-ES" state="translated">Progreso</target>
       </trans-unit>
       <trans-unit id="e08ad75931308230cd41ec229bf0689e" resname="Empty file field">
         <source>Empty file field</source>
-        <target state="translated">Campo del archivo vacío</target>
+        <target xml:lang="es-ES" state="translated">Campo del archivo vacío</target>
       </trans-unit>
       <trans-unit id="a1fa27779242b4902f7ae3bdd5c6d508" resname="Type">
         <source>Type</source>
-        <target state="translated">Tipo</target>
+        <target xml:lang="es-ES" state="translated">Tipo</target>
       </trans-unit>
       <trans-unit id="473e56fdfc7526af60d45f3b085e7233" resname="Add one single multimedia object">
         <source>Add one single multimedia object</source>
-        <target state="translated">Añadir un único objeto multimedia</target>
+        <target xml:lang="es-ES" state="translated">Añadir un único objeto multimedia</target>
       </trans-unit>
       <trans-unit id="29b0b1445e27d0f0b3316b4c62f0b9d9" resname="Add multiple multimedia objects">
         <source>Add multiple multimedia objects</source>
-        <target state="translated">Añadir múltiples objetos multimedia</target>
+        <target xml:lang="es-ES" state="translated">Añadir múltiples objetos multimedia</target>
       </trans-unit>
       <trans-unit id="ac645573724145961004e8cf4ca1f161" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
         <source>The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</source>
-        <target state="translated">El video será codificado y estará disponible pronto. Se le enviará un email, al finalizar la codificación, notificándole la disponiblilidad de su vídeo.</target>
+        <target xml:lang="es-ES" state="translated">El video será codificado y estará disponible pronto. Se le enviará un email, al finalizar la codificación, notificándole la disponiblilidad de su vídeo.</target>
       </trans-unit>
       <trans-unit id="0e0c1fbe23cc8b0a6efe81ad19696cde" resname="Main action">
         <source>Main action</source>
-        <target state="translated">Acción principal</target>
+        <target xml:lang="es-ES" state="translated">Acción principal</target>
       </trans-unit>
       <trans-unit id="9877bbb1e06f0d527d6db7730b280808" resname="Other actions">
         <source>Other actions</source>
-        <target state="translated">Otras acciones</target>
+        <target xml:lang="es-ES" state="translated">Otras acciones</target>
       </trans-unit>
       <trans-unit id="00e7eb6faf895de659ff4867af26f4b2" resname="Back to Media Manager">
         <source>Back to Media Manager</source>
-        <target state="translated">Volver al Gestor de Contenidos</target>
+        <target xml:lang="es-ES" state="translated">Volver al Gestor de Contenidos</target>
       </trans-unit>
       <trans-unit id="3581c92a1b99446dd964e2f17a237fb0" resname="back to My Multimedia Series">
         <source>back to My Multimedia Series</source>
-        <target state="translated">volver a la Lista de Series</target>
+        <target xml:lang="es-ES" state="translated">volver a la Lista de Series</target>
       </trans-unit>
       <trans-unit id="bdd2527a33dde2cebd2505fe6c632901" resname="Step %i%: Series">
         <source>Step %i%: Series</source>
-        <target state="translated">Paso %i%: Serie</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Serie</target>
       </trans-unit>
       <trans-unit id="c25f54728be4b84db806278226cb807c" resname="Step %i%: Type">
         <source>Step %i%: Type</source>
-        <target state="translated">Paso %i%: Tipo</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Tipo</target>
       </trans-unit>
       <trans-unit id="db92647ad45e71b6a0c78c4db8bd1b59" resname="Step %i%: Metadata">
         <source>Step %i%: Metadata</source>
-        <target state="translated">Paso %i%: Metadatos</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Metadatos</target>
       </trans-unit>
       <trans-unit id="dbc36739335bda25dfacef1bd59b542f" resname="Step %i%: File">
         <source>Step %i%: File</source>
-        <target state="translated">Paso %i%: Archivo</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Archivo</target>
       </trans-unit>
       <trans-unit id="0facbdaa7637bd7301367e5d6dc289bd" resname="Step %i% Files">
         <source>Step %i% Files</source>
-        <target state="translated">Paso %i%: Archivos</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Archivos</target>
       </trans-unit>
       <trans-unit id="7944880ab2acaba249065098a6aad7db" resname="Select an inbox folder with the multimedia files">
         <source>Select an inbox folder with the multimedia files</source>
-        <target state="translated">Seleccione el directorio con los ficheros multimedia</target>
+        <target xml:lang="es-ES" state="translated">Seleccione el directorio con los ficheros multimedia</target>
       </trans-unit>
       <trans-unit id="aa5744ab814190a3518c1146c8202b4d" resname="Upload local file">
         <source>Upload local file</source>
-        <target state="translated">Subir fichero local</target>
+        <target xml:lang="es-ES" state="translated">Subir fichero local</target>
       </trans-unit>
       <trans-unit id="91412465ea9169dfd901dd5e7c96dd99" resname="Upload">
         <source>Upload</source>
-        <target state="translated">Subida</target>
+        <target xml:lang="es-ES" state="translated">Subida</target>
       </trans-unit>
       <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
         <source>License</source>
-        <target>Licencia</target>
+        <target xml:lang="es-ES" state="translated">Licencia</target>
       </trans-unit>
       <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
         <source>Accept license</source>
-        <target>Acepte la licencia</target>
+        <target xml:lang="es-ES" state="translated">Acepte la licencia</target>
       </trans-unit>
       <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
         <source>You must accept the license to continue.</source>
-        <target>Tiene que aceptar la licencia para continuar.</target>
+        <target xml:lang="es-ES" state="translated">Tiene que aceptar la licencia para continuar.</target>
       </trans-unit>
       <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
         <source>Tag</source>
-        <target>Categoría</target>
+        <target xml:lang="es-ES" state="translated">Categoría</target>
       </trans-unit>
       <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
         <source>Select a tag...</source>
-        <target>Selecione una categoría...</target>
+        <target xml:lang="es-ES" state="translated">Selecione una categoría...</target>
       </trans-unit>
       <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
         <source>Select a license...</source>
-        <target>Selecione una licencia...</target>
+        <target xml:lang="es-ES" state="translated">Selecione una licencia...</target>
       </trans-unit>
       <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
         <source>Accept the license</source>
-        <target>Acepte la licencia</target>
+        <target xml:lang="es-ES" state="translated">Acepte la licencia</target>
       </trans-unit>
       <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
         <source>Accept license.</source>
-        <target>Aceptar la licencia.</target>
+        <target xml:lang="es-ES" state="translated">Aceptar la licencia.</target>
       </trans-unit>
       <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
         <source>Step %i%: License</source>
-        <target>Paso %i%: Licencia</target>
+        <target xml:lang="es-ES" state="translated">Paso %i%: Licencia</target>
       </trans-unit>
       <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
         <source>Step %i%: Files</source>
-        <target>Step %i%: Archivos</target>
+        <target xml:lang="es-ES" state="translated">Step %i%: Archivos</target>
       </trans-unit>
       <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target>No se permite subir videos de tamaño superior a %max_filesize%. Para asegurar el correcto funcionamiento del proceso de subida de vídeos al portal, se recomienda que los vídeos a subir tengan una resolucion estándar de 4:3 o 16:9.</target>
+        <target xml:lang="es-ES" state="translated">No se permite subir videos de tamaño superior a %max_filesize%. Para asegurar el correcto funcionamiento del proceso de subida de vídeos al portal, se recomienda que los vídeos a subir tengan una resolucion estándar de 4:3 o 16:9.</target>
       </trans-unit>
       <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
         <source>Empty title</source>
-        <target>Título vacío</target>
+        <target xml:lang="es-ES" state="translated">Título vacío</target>
       </trans-unit>
       <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f" resname="Back">
         <source>Back</source>
-        <target>Anterior</target>
+        <target xml:lang="es-ES" state="translated">Anterior</target>
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target>Series</target>
+        <target xml:lang="es-ES" state="translated">Series</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
-        <target>Nuevo</target>
-      </trans-unit>
-      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
-        <source>License</source>
-        <target xml:lang="es-ES" state="needs-translation">License</target>
-      </trans-unit>
-      <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
-        <source>Accept license</source>
-        <target xml:lang="es-ES" state="needs-translation">Accept license</target>
-      </trans-unit>
-      <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
-        <source>You must accept the license to continue.</source>
-        <target xml:lang="es-ES" state="needs-translation">You must accept the license to continue.</target>
-      </trans-unit>
-      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
-        <source>Tag</source>
-        <target xml:lang="es-ES" state="needs-translation">Tag</target>
-      </trans-unit>
-      <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
-        <source>Select a tag...</source>
-        <target xml:lang="es-ES" state="needs-translation">Select a tag...</target>
-      </trans-unit>
-      <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
-        <source>Select a license...</source>
-        <target xml:lang="es-ES" state="needs-translation">Select a license...</target>
-      </trans-unit>
-      <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
-        <source>Accept the license</source>
-        <target xml:lang="es-ES" state="needs-translation">Accept the license</target>
-      </trans-unit>
-      <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
-        <source>Accept license.</source>
-        <target xml:lang="es-ES" state="needs-translation">Accept license.</target>
-      </trans-unit>
-      <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
-        <source>Step %i%: License</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: License</target>
-      </trans-unit>
-      <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
-        <source>Step %i%: Files</source>
-        <target xml:lang="es-ES" state="needs-translation">Step %i%: Files</target>
-      </trans-unit>
-      <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
-        <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target xml:lang="es-ES" state="needs-translation">Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
-      </trans-unit>
-      <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
-        <source>Empty title</source>
-        <target xml:lang="es-ES" state="needs-translation">Empty title</target>
-      </trans-unit>
-      <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f" resname="Back">
-        <source>Back</source>
-        <target xml:lang="es-ES" state="needs-translation">Back</target>
-      </trans-unit>
-      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
-        <source>Series</source>
-        <target xml:lang="es-ES" state="needs-translation">Series</target>
-      </trans-unit>
-      <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
-        <source>New</source>
-        <target xml:lang="es-ES" state="needs-translation">New</target>
+        <target xml:lang="es-ES" state="translated">Nuevo</target>
       </trans-unit>
     </body>
   </file>
