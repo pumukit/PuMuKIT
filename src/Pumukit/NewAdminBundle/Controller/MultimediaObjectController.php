@@ -1434,5 +1434,4 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return  array($key => $value);
     }
-
 }
