@@ -2619,7 +2619,14 @@
       </trans-unit>
       <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
         <source>Upload new videos</source>
-        <target>Subir Nuevos Vídeos</target>
+        <target xml:lang="es-ES" state="translated">Subir nuevos videos</target>
+      </trans-unit>
+      <trans-unit id="5032d49ae2d911e6bf01fe55135034f3" resname="Multimedia List">
+        <source>Multimedia List</source>
+        <target xml:lang="es-ES" state="translated">Listado objetos multimedia</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Listado objectos multimedia</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

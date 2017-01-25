@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
@@ -114,17 +117,17 @@
         <source>Step 3: Files</source>
         <target xml:lang="gl" state="needs-translation">Step 3: Files</target>
       </trans-unit>
-      <trans-unit id="684803631929cd08a6cdd02c142d5cbb" resname="Final step: Error">
-        <source>Final step: Error</source>
-        <target xml:lang="gl" state="needs-translation">Final step: Error</target>
+      <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
+        <source>Step %i%: Error</source>
+        <target xml:lang="gl" state="needs-translation">Step %i%: Error</target>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
         <target xml:lang="gl" state="needs-translation">Failure in wizard proccess</target>
       </trans-unit>
-      <trans-unit id="cb7a1fc32a47512e45cd7894fcde01d9" resname="Final step: End">
-        <source>Final step: End</source>
-        <target xml:lang="gl" state="needs-translation">Final step: End</target>
+      <trans-unit id="2688c6fafa9408f68f3bf46c8fcfaa02" resname="Step %i%: End">
+        <source>Step %i%: End</source>
+        <target xml:lang="gl" state="needs-translation">Step %i%: End</target>
       </trans-unit>
       <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>
@@ -253,6 +256,66 @@
       <trans-unit id="91412465ea9169dfd901dd5e7c96dd99" resname="Upload">
         <source>Upload</source>
         <target xml:lang="gl" state="needs-translation">Upload</target>
+      </trans-unit>
+      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
+        <source>License</source>
+        <target xml:lang="gl" state="needs-translation">License</target>
+      </trans-unit>
+      <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
+        <source>Accept license</source>
+        <target xml:lang="gl" state="needs-translation">Accept license</target>
+      </trans-unit>
+      <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
+        <source>You must accept the license to continue.</source>
+        <target xml:lang="gl" state="needs-translation">You must accept the license to continue.</target>
+      </trans-unit>
+      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
+        <source>Tag</source>
+        <target xml:lang="gl" state="needs-translation">Tag</target>
+      </trans-unit>
+      <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
+        <source>Select a tag...</source>
+        <target xml:lang="gl" state="needs-translation">Select a tag...</target>
+      </trans-unit>
+      <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
+        <source>Select a license...</source>
+        <target xml:lang="gl" state="needs-translation">Select a license...</target>
+      </trans-unit>
+      <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
+        <source>Accept the license</source>
+        <target xml:lang="gl" state="needs-translation">Accept the license</target>
+      </trans-unit>
+      <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
+        <source>Accept license.</source>
+        <target xml:lang="gl" state="needs-translation">Accept license.</target>
+      </trans-unit>
+      <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
+        <source>Step %i%: License</source>
+        <target xml:lang="gl" state="needs-translation">Step %i%: License</target>
+      </trans-unit>
+      <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
+        <source>Step %i%: Files</source>
+        <target xml:lang="gl" state="needs-translation">Step %i%: Files</target>
+      </trans-unit>
+      <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
+        <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
+        <target xml:lang="gl" state="needs-translation">Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
+      </trans-unit>
+      <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
+        <source>Empty title</source>
+        <target xml:lang="gl" state="needs-translation">Empty title</target>
+      </trans-unit>
+      <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f" resname="Back">
+        <source>Back</source>
+        <target xml:lang="gl" state="needs-translation">Back</target>
+      </trans-unit>
+      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+        <source>Series</source>
+        <target xml:lang="gl" state="needs-translation">Series</target>
+      </trans-unit>
+      <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
+        <source>New</source>
+        <target xml:lang="gl" state="needs-translation">New</target>
       </trans-unit>
     </body>
   </file>
