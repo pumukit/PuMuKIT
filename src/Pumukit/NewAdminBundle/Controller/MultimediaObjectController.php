@@ -1375,7 +1375,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
         $criteria = $this->get('session')->get('admin/mmslist/criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.series_search')->processMMOCriteria($criteria, true);
+        $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
 
         return $new_criteria;
     }
