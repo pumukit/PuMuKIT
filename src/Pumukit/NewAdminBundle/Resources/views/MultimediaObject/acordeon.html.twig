@@ -24,7 +24,7 @@
                                 <input type="text" class="form-control" name="criteria[person_name]" id="filters_person_name" value="{{ criteria['person_name']|default("") }}">
                             </div>
                             <div class="form-group">
-                                <label for="filters_person_role" class="control-label">{% trans %}Role{% endtrans %} :</label>
+                                <label for="filters_person_role" class="control-label">{% trans %}Roles{% endtrans %} :</label>
                                 <select class="form-control" name="criteria[person_role]" id="filters_person_role">
                                     <option value="all">{% trans %}All{% endtrans %}</option>
                                     {% for role in roles %}
