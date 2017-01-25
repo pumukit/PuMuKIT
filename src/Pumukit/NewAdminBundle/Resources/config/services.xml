@@ -49,6 +49,10 @@
       <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
     </service>
 
+    <service id="pumukitnewadmin.multimedia_object_search" class="Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService">
+      <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+    </service>
+
     <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="pumukitschema.person"/>
