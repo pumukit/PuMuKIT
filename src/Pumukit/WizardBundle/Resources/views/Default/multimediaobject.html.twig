@@ -124,12 +124,8 @@
       {% endif %}
     </fieldset>
     <div class="row">
-      <div class="col-md-12">
-        <div class="text-right">
-          {% spaceless %}
-          {% if license_enable or show_series or access_inbox %}
-          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">{% trans %}Back{% endtrans %}</button>
-          {% endif %}
+      <div class="col-md-4">
+        {% spaceless %}
           {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
           {% else %}
@@ -137,8 +133,14 @@
           {% endif %}
           <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
           </a>
-          {% endspaceless %}
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+        {% endspaceless %}
+      </div>
+      <div class="col-md-8">
+        <div class="text-right">
+          {% if license_enable or show_series or access_inbox %}
+          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">&laquo; {% trans %}Back{% endtrans %}</button>
+          {% endif %}
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
         </div>
       </div>
     </div>

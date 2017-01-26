@@ -81,13 +81,15 @@
       {% endif %}
     </fieldset>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-4">
+        <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+      </div>
+      <div class="col-md-8">
         <div class="text-right">
           {% if license_enable %}
-          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">{% trans %}Back{% endtrans %}</button>
+          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">&laquo; {% trans %}Back{% endtrans %}</button>
           {% endif %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}"><button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
         </div>
       </div>
     </div>

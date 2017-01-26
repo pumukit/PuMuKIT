@@ -35,15 +35,17 @@
       </div>
     </fieldset>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-4">
+        {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
+        <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
+        {% else %}
+        <a href="{{ path('pumukitnewadmin_series_index') }}">
+        {% endif %}
+        <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
+      </div>
+      <div class="col-md-8">
         <div class="text-right">
-          {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}">
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}">
-          {% endif %}
-          <button type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button></a>
-          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %}</button>
+          <button type="submit" class="btn btn-primary btn-raised">{% trans %}Next{% endtrans %} &raquo;</button>
         </div>
       </div>
     </div>
