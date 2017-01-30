@@ -430,6 +430,8 @@ class DefaultController extends Controller
                         }
                     }
                 }
+                $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
+                $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
             } catch (\Exception $e) {
                 // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
@@ -518,12 +520,14 @@ class DefaultController extends Controller
         $showSeries = $request->get('show_series');
 
         $series = $this->findSeriesById($request->get('seriesId'));
+        $sameSeries = $request->get('same_series', false);
 
         return array(
                      'series' => $series,
                      'message' => $errorMessage,
                      'option' => $option,
                      'show_series' => $showSeries,
+                     'same_series' => $sameSeries,
                      );
     }
 
