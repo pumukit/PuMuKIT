@@ -431,7 +431,7 @@ class DefaultController extends Controller
                     }
                 }
                 $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
-                $formDispatcher->dispatchSubmit($formData);
+                $formDispatcher->dispatchSubmit($multimediaObject, $formData);
             } catch (\Exception $e) {
                 // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
