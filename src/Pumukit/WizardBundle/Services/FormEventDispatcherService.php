@@ -4,6 +4,7 @@ namespace Pumukit\WizardBundle\Services;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\WizardBundle\Event\WizardEvents;
 use Pumukit\WizardBundle\Event\FormEvent;
 
@@ -31,12 +32,13 @@ class FormEventDispatcherService
      * 'wizard.form.submit' passing
      * the submitted form
      *
+     * @param User             $user
      * @param MultimediaObject $multimediaObject
      * @param array            $form
      */
-    public function dispatchSubmit(MultimediaObject $multimediaObject, array $form)
+    public function dispatchSubmit(User $user, MultimediaObject $multimediaObject, array $form)
     {
-        $event = new FormEvent($multimediaObject, $form);
+        $event = new FormEvent($user, $multimediaObject, $form);
         $this->dispatcher->dispatch(WizardEvents::FORM_SUBMIT, $event);
     }
 }

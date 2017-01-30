@@ -5,6 +5,7 @@ namespace Pumukit\WizardBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\WizardBundle\Event\WizardEvents;
 use Pumukit\WizardBundle\Event\FormEvent;
 use Pumukit\WizardBundle\Services\FormEventDispatcherService;
@@ -41,9 +42,12 @@ class FormEventDispatcherServiceTest extends WebTestCase
             $this->assertTrue($event instanceof FormEvent);
             $this->assertEquals(WizardEvents::FORM_SUBMIT, $title);
             $form = $event->getForm();
-            $multimediaObject = $event->getMultimediaObject();
             MockUpFormListener::$called = true;
             MockUpFormListener::$title = $form['title'];
+            $user = $event->getUser();
+            $this->assertTrue($user instanceof User);
+            $multimediaObject = $event->getMultimediaObject();
+            $this->assertTrue($multimediaObject instanceof MultimediaObject);
         });
         $this->assertFalse(MockUpFormListener::$called);
         $this->assertEquals(self::EMPTY_TITLE, MockUpFormListener::$title);
@@ -51,7 +55,8 @@ class FormEventDispatcherServiceTest extends WebTestCase
         $multimediaObject = new MultimediaObject();
         $multimediaObject->setTitle($title);
         $form = array('title' => $title);
-        $this->formDispatcher->dispatchSubmit($multimediaObject, $form);
+        $user = new User();
+        $this->formDispatcher->dispatchSubmit($user, $multimediaObject, $form);
         $this->assertTrue(MockUpFormListener::$called);
         $this->assertEquals($title, MockUpFormListener::$title);
     }

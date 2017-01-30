@@ -4,6 +4,7 @@ namespace Pumukit\WizardBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 
 class FormEvent extends Event
 {
@@ -18,12 +19,26 @@ class FormEvent extends Event
     protected $multimediaObject;
 
     /**
+     * @var User
+     */
+    protected $user;
+
+    /**
      * @param array $form
      */
-    public function __construct(MultimediaObject $multimediaObject, array $form)
+    public function __construct(User $user, MultimediaObject $multimediaObject, array $form)
     {
+        $this->user = $user;
         $this->multimediaObject = $multimediaObject;
         $this->form = $form;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**
