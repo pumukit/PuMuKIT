@@ -3,7 +3,6 @@
 namespace Pumukit\WizardBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Pumukit\WizardBundle\Document\Series;
 
 class FormEvent extends Event
 {
