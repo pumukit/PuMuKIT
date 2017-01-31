@@ -27,9 +27,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -51,9 +49,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -96,13 +92,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -126,13 +116,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -175,13 +159,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -222,13 +200,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -326,13 +298,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
                    ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()
                   ->execute();
@@ -399,9 +365,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -425,9 +389,7 @@ class SeriesRepository extends DocumentRepository
             ->field('_id')->in($referencedSeries->toArray())
             ->field('series_type')->references($seriesType);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -446,5 +408,58 @@ class SeriesRepository extends DocumentRepository
           ->field('properties.'.$propertyName)->equals($propertyValue)
           ->getQuery()
           ->getSingleResult();
+    }
+
+    /**
+     * Add limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addLimitToQueryBuilder($qb, $limit = 0, $page = 0)
+    {
+        if ($limit > 0) {
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     *
+     * @return QueryBuilder
+     */
+    private function addSortToQueryBuilder($qb, $sort = array())
+    {
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort and limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
+
+        return $qb;
     }
 }

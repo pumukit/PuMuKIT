@@ -33,9 +33,7 @@ class MultimediaObjectRepository extends DocumentRepository
         ->field('status')->in($status)
         ->sort('rank', 1);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()
         ->execute();
@@ -307,9 +305,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('$text')->equals(array('$search' => $text))
             ->distinct('series');
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -328,9 +324,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb->addOr($qb->expr()->field('_id')->equals($text));
         $qb->distinct('series');
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -462,9 +456,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -483,9 +475,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGeneralTag($tag, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -503,9 +493,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
             ->field('tags._id')->equals(new \MongoId($tag->getId()));
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -523,9 +511,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -544,9 +530,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->field('series')->references($series)
           ->field('status')->in($status);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -564,9 +548,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ->field('tags._id')->in(array(new \MongoId($tag->getId())))
             ->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')));
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -602,13 +584,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->in($mongoIds);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -629,13 +605,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->all($mongoIds);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -671,13 +641,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->notEqual(new \MongoId($tag->getId()));
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -713,13 +677,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('tags._id')->notIn($mongoIds);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -874,9 +832,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->sort('rank', 1)
           ->getQuery()
@@ -966,9 +922,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createStandardQueryBuilder()
           ->field('series')->references($series);
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -1168,9 +1122,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findByTagCodQuery($tag, $sort = array())
     {
         $qb = $this->findByTagCodQueryBuilder($tag);
-        if ($sort) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb->getQuery();
     }
@@ -1213,9 +1165,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findAllByTagQuery($tag, $sort = array())
     {
         $qb = $this->findAllByTagQueryBuilder($tag);
-        if ($sort) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb->getQuery();
     }
@@ -1268,9 +1218,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('groups')->in(array(new \MongoId($group->getId())));
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -1289,9 +1237,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -1310,9 +1256,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->count()->getQuery()->execute();
     }
@@ -1330,9 +1274,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -1351,9 +1293,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -1372,9 +1312,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->count()->getQuery()->execute();
     }
@@ -1454,5 +1392,58 @@ class MultimediaObjectRepository extends DocumentRepository
         ->count()
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * Add limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addLimitToQueryBuilder($qb, $limit = 0, $page = 0)
+    {
+        if ($limit > 0) {
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     *
+     * @return QueryBuilder
+     */
+    private function addSortToQueryBuilder($qb, $sort = array())
+    {
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort and limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
+
+        return $qb;
     }
 }
