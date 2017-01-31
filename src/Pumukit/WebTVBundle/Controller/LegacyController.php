@@ -10,12 +10,12 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class LegacyController extends Controller implements WebTVController
 {
     /**
-     * @Route("/serial/index/id/{pumukit1id}")
      * @Route("/serial/index/id/{pumukit1id}.html")
-     * @Route("/{_locale}/serial/index/id/{pumukit1id}")
+     * @Route("/serial/index/id/{pumukit1id}")
      * @Route("/{_locale}/serial/index/id/{pumukit1id}.html")
-     * @Route("/{_locale}/serial/{pumukit1id}")
+     * @Route("/{_locale}/serial/index/id/{pumukit1id}")
      * @Route("/{_locale}/serial/{pumukit1id}.html")
+     * @Route("/{_locale}/serial/{pumukit1id}")
      *
      * Parameters:
      * - {_locale} matches the current locale
@@ -43,8 +43,8 @@ class LegacyController extends Controller implements WebTVController
      * @Route("/video/{pumukit1id}", requirements={
      *     "pumukit1id": "\d+"
      * }, defaults={"filter": false})
-     * @Route("/video/index/id/{pumukit1id}", defaults={"filter": false})
      * @Route("/video/index/id/{pumukit1id}.html", defaults={"filter": false})
+     * @Route("/video/index/id/{pumukit1id}", defaults={"filter": false})
      *
      * Parameters:
      * - {_locale} matches current locale
@@ -95,8 +95,8 @@ class LegacyController extends Controller implements WebTVController
 
     /**
      * @Route("/file/{pumukit1id}")
-     * @Route("/{_locale}/file/{pumukit1id}")
      * @Route("/{_locale}/file/{pumukit1id}.html")
+     * @Route("/{_locale}/file/{pumukit1id}")
      *
      * Parameters:
      * - {_locale} matches the current locale
