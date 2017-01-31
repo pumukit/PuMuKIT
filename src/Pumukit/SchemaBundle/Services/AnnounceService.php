@@ -74,7 +74,7 @@ class AnnounceService
         $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
 
         if (!$withPudenewTag) {
-            return $queryBuilderMms->sort(array('public_date' => 1))->getQuery()->execute()->toArray();
+            return $queryBuilderMms->sort(array('public_date' => -1))->getQuery()->execute()->toArray();
         }
 
         $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
