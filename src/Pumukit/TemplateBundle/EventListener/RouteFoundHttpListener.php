@@ -4,25 +4,27 @@ namespace Pumukit\TemplateBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\EventListener\LocaleListener;
-use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 
 class RouteFoundHttpListener
 {
-    private $templatEngine;
     private $repository;
+    private $httpKernel;
+    private $requestStack;
     private $requestFixer;
-    private $breadcrumbsService;
 
-    public function __construct(DocumentManager $dm, EngineInterface $templatEngine,
-                                LocaleListener $requestFixer, BreadcrumbsService $breadcrumbsService)
+    public function __construct(DocumentManager $dm,
+                                HttpKernelInterface $httpKernel,
+                                RequestStack $requestStack,
+                                LocaleListener $requestFixer)
     {
-        $this->templatEngine = $templatEngine;
         $this->repository = $dm->getRepository('PumukitTemplateBundle:Template');
+        $this->httpKernel = $httpKernel;
+        $this->requestStack = $requestStack;
         $this->requestFixer = $requestFixer;
-        $this->breadcrumbsService = $breadcrumbsService;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -39,10 +41,17 @@ class RouteFoundHttpListener
 
             $t = $this->repository->findOneBy(array('name' => $name, 'hide' => false));
             if ($t) {
-                $this->breadcrumbsService->addList($t->getName(), 'pumukit_webtv_index_index', array(), true);
-                $response = $this->templatEngine->renderResponse('PumukitTemplateBundle:List:index.html.twig', array('template' => $t));
+                $response = $this->forward('PumukitTemplateBundle:List:index', array('name' => $name));
                 $event->setResponse($response);
             }
         }
+    }
+
+    private function forward($controller, array $path = array(), array $query = array())
+    {
+        $path['_controller'] = $controller;
+        $subRequest = $this->requestStack->getCurrentRequest()->duplicate($query, null, $path);
+
+        return $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
     }
 }
