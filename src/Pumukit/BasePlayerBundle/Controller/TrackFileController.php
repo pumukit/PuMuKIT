@@ -38,7 +38,11 @@ class TrackFileController extends Controller
             return $this->redirect($track->getUrl()."?md5=${hash}&expires=${timestamp}&".http_build_query($request->query->all(), null, '&'));
         }
 
-        return $this->redirect($track->getUrl().http_build_query($request->query->all(), '?'));
+        if ($request->query->all()) {
+            return $this->redirect($track->getUrl().'?'.http_build_query($request->query->all()));
+        } else {
+            return $this->redirect($track->getUrl());
+        }
     }
 
     protected function getHash(Track $track, $timestamp, $secret, $ip)
