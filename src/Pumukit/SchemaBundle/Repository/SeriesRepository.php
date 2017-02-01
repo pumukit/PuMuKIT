@@ -565,6 +565,63 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
+     * Find by title with locale query builder.
+     *
+     * @param string $search
+     * @param string $locale
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return QueryBuilder
+     */
+    public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('title.'.$locale)->equals(new \MongoRegex(sprintf('/%s/i', $title)));
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find by title with locale query.
+     *
+     * @param string $search
+     * @param string $locale
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return Query
+     */
+    public function findByTitleWithLocaleQuery($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findByTitleWithLocaleQueryBuilder($title, $locale, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by title with locale.
+     *
+     * @param string $search
+     * @param string $locale
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return Query
+     */
+    public function findByTitleWithLocale($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    {
+        $query = $this->findByTitleWithLocaleQuery($title, $locale, $sort, $limit, $page);
+
+        return $query->execute();
+    }
+
+    /**
      * Add limit (and page) to Query Builder.
      *
      * @param QueryBuilder $qb
