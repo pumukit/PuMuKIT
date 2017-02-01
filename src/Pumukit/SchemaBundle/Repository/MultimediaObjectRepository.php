@@ -1584,17 +1584,23 @@ class MultimediaObjectRepository extends DocumentRepository
                 $groups = $groups->toArray();
                 $groupsIds = $this->getMongoIds($groups);
             } else {
-                $mock = false;
+                $mockString = false;
+                $mockGroup = false;
                 foreach ($groups as $group) {
                     if (gettype($group) === 'string') {
-                        $mock = true;
+                        $mockString = true;
+                        break;
+                    } elseif ($group instanceof Group) {
+                        $mockGroup = true;
                         break;
                     }
                 }
-                if ($mock) {
+                if ($mockString) {
                     foreach ($groups as $group) {
                         $groupsIds[] = new \MongoId($group);
                     }
+                } elseif ($mockGroup) {
+                    $groupsIds = $this->getMongoIds($groups);
                 } else {
                     $groupsIds = $groups;
                 }
