@@ -1273,6 +1273,54 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($series3, $seriesPerson2Role3Group2->toArray()));
     }
 
+    public function testfindByTitleWithLocale()
+    {
+        $test1 = 'test1';
+        $test2 = 'test2';
+        $prueba1 = 'prueba1';
+        $prueba2 = 'prueba2';
+        $enLocale = 'en';
+        $esLocale = 'es';
+        $series1I8nTitle = array($enLocale => $test1, $esLocale => $prueba1);
+        $series1 = new Series();
+        $series1->setI18nTitle($series1I8nTitle);
+
+        $series2I8nTitle = array($enLocale => $test2, $esLocale => $prueba2);
+        $series2 = new Series();
+        $series2->setI18nTitle($series2I8nTitle);
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $seriesTest1En = $this->repo->findByTitleWithLocale($test1, $enLocale)->toArray();
+        $seriesTest1Es = $this->repo->findByTitleWithLocale($test1, $esLocale)->toArray();
+        $seriesPrueba1En = $this->repo->findByTitleWithLocale($prueba1, $enLocale)->toArray();
+        $seriesPrueba1Es = $this->repo->findByTitleWithLocale($prueba1, $esLocale)->toArray();
+        $seriesTest2En = $this->repo->findByTitleWithLocale($test2, $enLocale)->toArray();
+        $seriesTest2Es = $this->repo->findByTitleWithLocale($test2, $esLocale)->toArray();
+        $seriesPrueba2En = $this->repo->findByTitleWithLocale($prueba2, $enLocale)->toArray();
+        $seriesPrueba2Es = $this->repo->findByTitleWithLocale($prueba2, $esLocale)->toArray();
+
+        $this->assertTrue(in_array($series1, $seriesTest1En));
+        $this->assertFalse(in_array($series1, $seriesTest1Es));
+        $this->assertFalse(in_array($series1, $seriesPrueba1En));
+        $this->assertTrue(in_array($series1, $seriesPrueba1Es));
+        $this->assertFalse(in_array($series1, $seriesTest2En));
+        $this->assertFalse(in_array($series1, $seriesTest2Es));
+        $this->assertFalse(in_array($series1, $seriesPrueba2En));
+        $this->assertFalse(in_array($series1, $seriesPrueba2Es));
+
+        $this->assertFalse(in_array($series2, $seriesTest1En));
+        $this->assertFalse(in_array($series2, $seriesTest1Es));
+        $this->assertFalse(in_array($series2, $seriesPrueba1En));
+        $this->assertFalse(in_array($series2, $seriesPrueba1Es));
+        $this->assertTrue(in_array($series2, $seriesTest2En));
+        $this->assertFalse(in_array($series2, $seriesTest2Es));
+        $this->assertFalse(in_array($series2, $seriesPrueba2En));
+        $this->assertTrue(in_array($series2, $seriesPrueba2Es));
+    }
+
     private function createSeriesType($name)
     {
         $description = 'description';
