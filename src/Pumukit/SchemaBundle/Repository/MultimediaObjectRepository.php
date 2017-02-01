@@ -363,20 +363,8 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByPersonIdAndRoleCodOrGroupsQueryBuilder($personId, $roleCod, $groups)
     {
-        // TODO #10479: Find better way to get array with only IDs of groups
-        if ($groups) {
-            if (gettype($groups) !== 'array') {
-                $groups = $groups->toArray();
-                $groupsIds = array();
-                foreach ($groups as $group) {
-                    $groupsIds[] = new \MongoId($group->getId());
-                }
-            } else {
-                $groupsIds = $groups;
-            }
-        } else {
-            $groupsIds = array();
-        }
+        $groupsIds = $this->getGroupsIdsArray($groups);
+
         $qb = $this->createQueryBuilder();
         $qb->addOr($qb->expr()->field('groups')->in($groupsIds));
         $qb->addOr($qb->expr()->field('people')->elemMatch(
@@ -896,6 +884,32 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Find by embedded broadcast type query builder.
+     *
+     * @param string $type
+     *
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastTypeQueryBuilder($type)
+    {
+        return $this->createQueryBuilder()
+            ->field('embeddedBroadcast.type')->equals($type);
+    }
+
+    /**
+     * Find by embedded broadcast type query.
+     *
+     * @param string $type
+     *
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastTypeQuery($type)
+    {
+        return $this->findByEmbeddedBroadcastTypeQueryBuilder($type)
+            ->getQuery();
+    }
+
+    /**
      * Find by embedded broadcast type.
      *
      * @param string $type
@@ -904,9 +918,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function findByEmbeddedBroadcastType($type)
     {
-        return $this->createQueryBuilder()
-            ->field('embeddedBroadcast.type')->equals($type)
-            ->getQuery()
+        return $this->findByEmbeddedBroadcastTypeQuery($type)
             ->execute();
     }
 
@@ -1366,11 +1378,13 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countInSeriesWithEmbeddedBroadcastGroups(Series $series, $type = '', $groups = array())
     {
+        $groupsIds = $this->getGroupsIdsArray($groups);
+
         return $this->createQueryBuilder()
             ->field('series')->references($series)
             ->field('embeddedBroadcast.type')->equals($type)
-            ->field('embeddedBroadcast.groups')->all($groups)
-            ->field('embeddedBroadcast.groups')->size(count($groups))
+            ->field('embeddedBroadcast.groups')->all($groupsIds)
+            ->field('embeddedBroadcast.groups')->size(count($groupsIds))
             ->count()
             ->getQuery()
             ->execute();
@@ -1392,6 +1406,121 @@ class MultimediaObjectRepository extends DocumentRepository
         ->count()
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * Find Series field by EmbeddedBroadcast type Query Builder.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type)
+            ->distinct('series');
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find Series field by EmbeddedBroadcast type Query.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByEmbeddedBroadcastTypeQuery($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find Series field by EmbeddedBroadcast type.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findSeriesFieldByEmbeddedBroadcastType($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $query = $this->findSeriesFieldByEmbeddedBroadcastTypeQuery($type, $sort, $limit, $page);
+
+        return $query->execute();
+    }
+
+    /**
+     * Find series field with embedded broadcast type and groups Query Builder.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $groupsIds = $this->getGroupsIdsArray($groups);
+
+        $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type)
+            ->field('embeddedBroadcast.groups')->all($groupsIds)
+            ->field('embeddedBroadcast.groups')->size(count($groupsIds))
+            ->distinct('series');
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find series field with embedded broadcast type and groups Query.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find series field with embedded broadcast type and groups.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $query = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
+
+        return $query->execute();
     }
 
     /**
@@ -1445,5 +1574,35 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb;
+    }
+
+    private function getGroupsIdsArray($groups)
+    {
+        // TODO #10479: Find better way to get array with only IDs of groups
+        if ($groups) {
+            if (gettype($groups) !== 'array') {
+                $groups = $groups->toArray();
+                $groupsIds = $this->getMongoIds($groups);
+            } else {
+                $mock = false;
+                foreach ($groups as $group) {
+                    if (gettype($group) === 'string') {
+                        $mock = true;
+                        break;
+                    }
+                }
+                if ($mock) {
+                    foreach ($groups as $group) {
+                        $groupsIds[] = new \MongoId($group);
+                    }
+                } else {
+                    $groupsIds = $groups;
+                }
+            }
+        } else {
+            $groupsIds = array();
+        }
+
+        return $groupsIds;
     }
 }

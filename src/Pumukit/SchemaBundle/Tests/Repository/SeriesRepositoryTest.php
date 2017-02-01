@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 
 class SeriesRepositoryTest extends WebTestCase
 {
@@ -1047,6 +1048,231 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertEquals(2, $this->repo->countPublic());
     }
 
+    public function testFindByEmbeddedBroadcastType()
+    {
+        $mm1 = new MultimediaObject();
+        $mm1->setTitle('test2');
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $mm2 = new MultimediaObject();
+        $mm2->setTitle('test1');
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $type1 = EmbeddedBroadcast::TYPE_PASSWORD;
+        $name1 = EmbeddedBroadcast::NAME_PASSWORD;
+        $password1 = '123456';
+
+        $embeddedBroadcast1 = new EmbeddedBroadcast();
+        $embeddedBroadcast1->setType($type1);
+        $embeddedBroadcast1->setName($name1);
+        $embeddedBroadcast1->setPassword($password1);
+
+        $type2 = EmbeddedBroadcast::TYPE_PUBLIC;
+        $name2 = EmbeddedBroadcast::NAME_PUBLIC;
+        $password2 = '123456';
+
+        $embeddedBroadcast2 = new EmbeddedBroadcast();
+        $embeddedBroadcast2->setType($type2);
+        $embeddedBroadcast2->setName($name2);
+        $embeddedBroadcast2->setPassword($password2);
+
+        $mm1->setEmbeddedBroadcast($embeddedBroadcast1);
+        $mm2->setEmbeddedBroadcast($embeddedBroadcast2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->flush();
+
+        $series1 = new Series();
+        $series1->setTitle('series1');
+        $series2 = new Series();
+        $series2->setTitle('series2');
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $series1->addMultimediaObject($mm1);
+        $series2->addMultimediaObject($mm2);
+        $mm1->setSeries($series1);
+        $mm2->setSeries($series2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $passwordSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD);
+        $publicSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC);
+        $loginSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN);
+        $groupsSeries = $this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS);
+        $this->assertEquals(1, count($passwordSeries));
+        $this->assertEquals(1, count($publicSeries));
+        $this->assertEquals(0, count($loginSeries));
+        $this->assertEquals(0, count($groupsSeries));
+
+        $this->assertTrue(in_array($series1, $passwordSeries->toArray()));
+        $this->assertFalse(in_array($series1, $publicSeries->toArray()));
+        $this->assertFalse(in_array($series1, $loginSeries->toArray()));
+        $this->assertFalse(in_array($series1, $groupsSeries->toArray()));
+
+        $this->assertFalse(in_array($series2, $passwordSeries->toArray()));
+        $this->assertTrue(in_array($series2, $publicSeries->toArray()));
+        $this->assertFalse(in_array($series2, $loginSeries->toArray()));
+        $this->assertFalse(in_array($series2, $groupsSeries->toArray()));
+
+        $group1 = new Group();
+        $group1->setKey('group1');
+        $group1->setName('Group 1');
+        $group2 = new Group();
+        $group2->setKey('group2');
+        $group2->setName('Group 2');
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+        $embeddedBroadcast1->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $embeddedBroadcast1->setName(EmbeddedBroadcast::NAME_GROUPS);
+        $embeddedBroadcast1->addGroup($group1);
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $groups1 = array($group1->getId());
+        $groups2 = array($group2->getId());
+        $groups12 = array($group1->getId(), $group2->getId());
+
+        $seriesGroups1 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups1);
+        $seriesGroups2 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups2);
+        $seriesGroups12 = $this->repo->findByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups12);
+        $this->assertEquals(1, count($seriesGroups1));
+        $this->assertEquals(0, count($seriesGroups2));
+        $this->assertEquals(0, count($seriesGroups12));
+
+        $this->assertTrue(in_array($series1, $seriesGroups1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesGroups1->toArray()));
+        $this->assertFalse(in_array($series1, $seriesGroups2->toArray()));
+        $this->assertFalse(in_array($series2, $seriesGroups2->toArray()));
+        $this->assertFalse(in_array($series1, $seriesGroups12->toArray()));
+        $this->assertFalse(in_array($series2, $seriesGroups12->toArray()));
+    }
+
+    public function testFindByPersonIdAndRoleCodOrGroupsSorted()
+    {
+        $series1 = $this->createSeries('Series 1');
+        $series2 = $this->createSeries('Series 2');
+        $series3 = $this->createSeries('Series 3');
+
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->persist($series3);
+        $this->dm->flush();
+
+        $person1 = $this->createPerson('Person 1');
+        $person2 = $this->createPerson('Person 2');
+
+        $role1 = $this->createRole('Role1');
+        $role2 = $this->createRole('Role2');
+        $role3 = $this->createRole('Role3');
+
+        $mm1 = $this->createMultimediaObjectAssignedToSeries('MmObject 1', $series1);
+        $mm2 = $this->createMultimediaObjectAssignedToSeries('MmObject 2', $series2);
+        $mm3 = $this->createMultimediaObjectAssignedToSeries('MmObject 3', $series1);
+        $mm4 = $this->createMultimediaObjectAssignedToSeries('MmObject 4', $series3);
+
+        $mm1->addPersonWithRole($person1, $role1);
+        $mm2->addPersonWithRole($person2, $role2);
+        $mm3->addPersonWithRole($person1, $role1);
+        $mm3->addPersonWithRole($person2, $role2);
+        $mm4->addPersonWithRole($person1, $role3);
+
+        $group1 = new Group();
+        $group1->setKey('group1');
+        $group1->setName('Group 1');
+        $group2 = new Group();
+        $group2->setKey('group2');
+        $group2->setName('Group 2');
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+        $mm1->addGroup($group1);
+        $mm2->addGroup($group1);
+        $mm3->addGroup($group1);
+        $mm3->addGroup($group2);
+        $mm4->addGroup($group2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->persist($mm4);
+        $this->dm->flush();
+
+        $groups1 = array($group1->getId());
+        $groups2 = array($group2->getId());
+
+        $seriesPerson1Role1Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role1->getCod(), $groups1);
+        $seriesPerson1Role1Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role1->getCod(), $groups2);
+        $seriesPerson1Role2Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role2->getCod(), $groups1);
+        $seriesPerson1Role2Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role2->getCod(), $groups2);
+        $seriesPerson1Role3Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role3->getCod(), $groups1);
+        $seriesPerson1Role3Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person1->getId(), $role3->getCod(), $groups2);
+        $seriesPerson2Role1Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role1->getCod(), $groups1);
+        $seriesPerson2Role1Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role1->getCod(), $groups2);
+        $seriesPerson2Role2Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role2->getCod(), $groups1);
+        $seriesPerson2Role2Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role2->getCod(), $groups2);
+        $seriesPerson2Role3Group1 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role3->getCod(), $groups1);
+        $seriesPerson2Role3Group2 = $this->repo->findByPersonIdAndRoleCodOrGroupsSorted($person2->getId(), $role3->getCod(), $groups2);
+
+        $this->assertEquals(2, count($seriesPerson1Role1Group1));
+        $this->assertEquals(2, count($seriesPerson1Role1Group2));
+        $this->assertEquals(2, count($seriesPerson1Role2Group1));
+        $this->assertEquals(2, count($seriesPerson1Role2Group2));
+        $this->assertEquals(3, count($seriesPerson1Role3Group1));
+        $this->assertEquals(2, count($seriesPerson1Role3Group2));
+        $this->assertEquals(2, count($seriesPerson2Role1Group1));
+        $this->assertEquals(2, count($seriesPerson2Role1Group2));
+        $this->assertEquals(2, count($seriesPerson2Role2Group1));
+        $this->assertEquals(3, count($seriesPerson2Role2Group2));
+        $this->assertEquals(2, count($seriesPerson2Role3Group1));
+        $this->assertEquals(2, count($seriesPerson2Role3Group2));
+
+        $this->assertTrue(in_array($series1, $seriesPerson1Role1Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson1Role1Group2->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson1Role2Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson1Role2Group2->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson1Role3Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson1Role3Group2->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role1Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role1Group2->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role2Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role2Group2->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role3Group1->toArray()));
+        $this->assertTrue(in_array($series1, $seriesPerson2Role3Group2->toArray()));
+
+        $this->assertTrue(in_array($series2, $seriesPerson1Role1Group1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesPerson1Role1Group2->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson1Role2Group1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesPerson1Role2Group2->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson1Role3Group1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesPerson1Role3Group2->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson2Role1Group1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesPerson2Role1Group2->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson2Role2Group1->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson2Role2Group2->toArray()));
+        $this->assertTrue(in_array($series2, $seriesPerson2Role3Group1->toArray()));
+        $this->assertFalse(in_array($series2, $seriesPerson2Role3Group2->toArray()));
+
+        $this->assertFalse(in_array($series3, $seriesPerson1Role1Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson1Role1Group2->toArray()));
+        $this->assertFalse(in_array($series3, $seriesPerson1Role2Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson1Role2Group2->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson1Role3Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson1Role3Group2->toArray()));
+        $this->assertFalse(in_array($series3, $seriesPerson2Role1Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson2Role1Group2->toArray()));
+        $this->assertFalse(in_array($series3, $seriesPerson2Role2Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson2Role2Group2->toArray()));
+        $this->assertFalse(in_array($series3, $seriesPerson2Role3Group1->toArray()));
+        $this->assertTrue(in_array($series3, $seriesPerson2Role3Group2->toArray()));
+    }
+
     private function createSeriesType($name)
     {
         $description = 'description';
@@ -1100,5 +1326,54 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
 
         return $mm;
+    }
+
+    private function createPerson($name)
+    {
+        $email = $name.'@mail.es';
+        $web = 'http://www.url.com';
+        $phone = '+34986123456';
+        $honorific = 'honorific';
+        $firm = 'firm';
+        $post = 'post';
+        $bio = 'Biografía extensa de la persona';
+
+        $person = new Person();
+        $person->setName($name);
+        $person->setEmail($email);
+        $person->setWeb($web);
+        $person->setPhone($phone);
+        $person->setHonorific($honorific);
+        $person->setFirm($firm);
+        $person->setPost($post);
+        $person->setBio($bio);
+
+        $this->dm->persist($person);
+        $this->dm->flush();
+
+        return $person;
+    }
+
+    private function createRole($name)
+    {
+        $cod = $name; // string (20)
+        $rank = strlen($name); // Quick and dirty way to keep it unique
+        $xml = '<xml content and definition of this/>';
+        $display = true;
+        $text = 'Black then white are all i see in my infancy.';
+
+        $role = new Role();
+        $role->setCod($cod);
+        $role->setRank($rank);
+        $role->setXml($xml);
+        $role->setDisplay($display); // true by default
+        $role->setName($name);
+        $role->setText($text);
+        $role->increaseNumberPeopleInMultimediaObject();
+
+        $this->dm->persist($role);
+        $this->dm->flush();
+
+        return $role;
     }
 }

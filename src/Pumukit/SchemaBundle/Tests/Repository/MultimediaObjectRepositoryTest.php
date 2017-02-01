@@ -414,6 +414,57 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmobjsLhazarBenjenHand = $this->repo->findBySeriesAndPersonIdWithRoleCod($series_lhazar, $person_benjen->getId(), $role_hand->getCod());
         $this->assertEquals(0, count($mmobjsLhazarBenjenHand));
         $this->assertFalse(in_array($mm4, $mmobjsLhazarBenjenHand->toArray()));
+
+        // Test find by person id and role cod or groups
+        $group1 = new Group();
+        $group1->setKey('group1');
+        $group1->setName('Group 1');
+        $group2 = new Group();
+        $group2->setKey('group2');
+        $group2->setName('Group 2');
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+        $mm1->addGroup($group1);
+        $mm2->addGroup($group1);
+        $mm3->addGroup($group1);
+        $mm3->addGroup($group2);
+        $mm4->addGroup($group2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($mm3);
+        $this->dm->persist($mm4);
+        $this->dm->flush();
+
+        $groups1 = array($group1->getId());
+        $groups2 = array($group2->getId());
+
+        $mmobj_benjen_ranger_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_ranger->getCod(), $groups1);
+        $mmobj_benjen_ranger_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_ranger->getCod(), $groups2);
+        $mmobj_ned_lord_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_lord->getCod(), $groups1);
+        $mmobj_ned_lord_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_lord->getCod(), $groups2);
+        $mmobj_ned_hand_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_hand->getCod(), $groups1);
+        $mmobj_ned_hand_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_hand->getCod(), $groups2);
+        $mmobj_benjen_lord_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_lord->getCod(), $groups1);
+        $mmobj_benjen_lord_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_lord->getCod(), $groups2);
+        $mmobj_ned_ranger_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_ranger->getCod(), $groups1);
+        $mmobj_ned_ranger_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_ned->getId(), $role_ranger->getCod(), $groups2);
+        $mmobj_benjen_hand_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_hand->getCod(), $groups1);
+        $mmobj_benjen_hand_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_hand->getCod(), $groups2);
+
+        $this->assertEquals(3, count($mmobj_benjen_ranger_group1));
+        $this->assertEquals(3, count($mmobj_ned_lord_group1));
+        $this->assertEquals(4, count($mmobj_ned_hand_group1));
+        $this->assertEquals(3, count($mmobj_benjen_ranger_group2));
+        $this->assertEquals(3, count($mmobj_ned_lord_group2));
+        $this->assertEquals(2, count($mmobj_ned_hand_group2));
+
+        $this->assertEquals(3, count($mmobj_benjen_lord_group1));
+        $this->assertEquals(3, count($mmobj_ned_ranger_group1));
+        $this->assertEquals(3, count($mmobj_benjen_hand_group1));
+        $this->assertEquals(2, count($mmobj_benjen_lord_group2));
+        $this->assertEquals(2, count($mmobj_ned_ranger_group2));
+        $this->assertEquals(2, count($mmobj_benjen_hand_group2));
     }
 
     public function testPeopleInMultimediaObjectCollection()
@@ -2821,6 +2872,76 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(1, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC)));
         $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN)));
         $this->assertEquals(0, count($this->repo->findByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS)));
+
+        $series1 = new Series();
+        $series1->setTitle('series1');
+        $series2 = new Series();
+        $series2->setTitle('series2');
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $series1->addMultimediaObject($mm1);
+        $series2->addMultimediaObject($mm2);
+        $mm1->setSeries($series1);
+        $mm2->setSeries($series2);
+        $this->dm->persist($mm1);
+        $this->dm->persist($mm2);
+        $this->dm->persist($series1);
+        $this->dm->persist($series2);
+        $this->dm->flush();
+
+        $passwordSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PASSWORD);
+        $publicSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_PUBLIC);
+        $loginSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_LOGIN);
+        $groupsSeriesField = $this->repo->findSeriesFieldByEmbeddedBroadcastType(EmbeddedBroadcast::TYPE_GROUPS);
+        $this->assertEquals(1, count($passwordSeriesField));
+        $this->assertEquals(1, count($publicSeriesField));
+        $this->assertEquals(0, count($loginSeriesField));
+        $this->assertEquals(0, count($groupsSeriesField));
+
+        $this->assertTrue(in_array($series1->getId(), $passwordSeriesField->toArray()));
+        $this->assertFalse(in_array($series1->getId(), $publicSeriesField->toArray()));
+        $this->assertFalse(in_array($series1->getId(), $loginSeriesField->toArray()));
+        $this->assertFalse(in_array($series1->getId(), $groupsSeriesField->toArray()));
+
+        $this->assertFalse(in_array($series2->getId(), $passwordSeriesField->toArray()));
+        $this->assertTrue(in_array($series2->getId(), $publicSeriesField->toArray()));
+        $this->assertFalse(in_array($series2->getId(), $loginSeriesField->toArray()));
+        $this->assertFalse(in_array($series2->getId(), $groupsSeriesField->toArray()));
+
+        $group1 = new Group();
+        $group1->setKey('group1');
+        $group1->setName('Group 1');
+        $group2 = new Group();
+        $group2->setKey('group2');
+        $group2->setName('Group 2');
+        $this->dm->persist($group1);
+        $this->dm->persist($group2);
+        $this->dm->flush();
+        $embeddedBroadcast1->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $embeddedBroadcast1->setName(EmbeddedBroadcast::NAME_GROUPS);
+        $embeddedBroadcast1->addGroup($group1);
+        $this->dm->persist($mm1);
+        $this->dm->flush();
+
+        $groups1 = array($group1->getId());
+        $groups2 = array($group2->getId());
+        $groups12 = array($group1->getId(), $group2->getId());
+
+        $seriesGroups1 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups1);
+        $seriesGroups2 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups2);
+        $seriesGroups12 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups12);
+        $this->assertEquals(1, count($seriesGroups1));
+        $this->assertEquals(0, count($seriesGroups2));
+        $this->assertEquals(0, count($seriesGroups12));
+
+        $this->assertTrue(in_array($series1->getId(), $seriesGroups1->toArray()));
+        $this->assertFalse(in_array($series2->getId(), $seriesGroups1->toArray()));
+        $this->assertFalse(in_array($series1->getId(), $seriesGroups2->toArray()));
+        $this->assertFalse(in_array($series2->getId(), $seriesGroups2->toArray()));
+        $this->assertFalse(in_array($series1->getId(), $seriesGroups12->toArray()));
+        $this->assertFalse(in_array($series2->getId(), $seriesGroups12->toArray()));
     }
 
     public function testCountInSeriesWithPrototype()
