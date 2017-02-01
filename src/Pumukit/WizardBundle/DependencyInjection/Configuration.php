@@ -50,8 +50,8 @@ class Configuration implements ConfigurationInterface
           ->info('Enable adding new multimedia object to an existing series belonging to the logged in user.')
         ->end()
         ->booleanNode('reuse_admin_series')
-          ->defaultTrue()
-          ->info('When reuse_series is set to True, the admin user can reuse any series or just the series he/she created.')
+          ->defaultFalse()
+          ->info('Only valid when parameter reuse_series is set to True. If reuse_admin_series is true, the admin user can reuse only the series he/she created. If reuse_admin_series is set to false, the admin user can reuse any series of PuMuKIT.')
         ->end()
       ->end();
 
