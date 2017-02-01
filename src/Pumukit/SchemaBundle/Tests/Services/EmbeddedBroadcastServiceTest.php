@@ -22,7 +22,6 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
     private $authorizationChecker;
     private $templating;
     private $router;
-    private $translator;
 
     public function setUp()
     {
@@ -45,8 +44,6 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->get('templating');
         $this->router = static::$kernel->getContainer()
             ->get('router');
-        $this->translator = static::$kernel->getContainer()
-            ->get('translator');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
@@ -65,14 +62,13 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->authorizationChecker = null;
         $this->templating = null;
         $this->router = null;
-        $this->translator = null;
         gc_collect_cycles();
         parent::tearDown();
     }
 
     public function testCreateEmbeddedBroadcastByType()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, $this->translator, false);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, false);
         $passwordBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PASSWORD);
         $ldapBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -158,7 +154,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function testGetAllBroadcastTypes()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, $this->translator, false);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, false);
         $broadcasts = array(
                             EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                             EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
@@ -167,7 +163,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
                             );
         $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
 
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, $this->translator, true);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, true);
         $broadcasts = array(
                             EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                             EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
@@ -178,7 +174,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
     public function testCreatePublicEmbeddedBroadcast()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, $this->translator, false);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, false);
         $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
         $this->assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
         $this->assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
@@ -519,7 +515,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->method('render')
             ->will($this->returnValue($content));
 
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, $this->translator, false);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, null, '');
         $this->assertTrue($response instanceof Response);
@@ -538,7 +534,7 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
             ->method('isGranted')
             ->will($this->returnValue(true));
 
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, $this->translator, false);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
 
         $this->assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 
@@ -759,60 +755,5 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $this->embeddedBroadcastService->deleteAllFromGroup($group);
         $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
-    }
-
-    public function testGetI18nDescription()
-    {
-        $group = new Group();
-        $group->setKey('key');
-        $group->setName('group');
-        $this->dm->persist($group);
-        $this->dm->flush();
-
-        $this->assertEquals(0, count($this->mmRepo->findWithGroupInEmbeddedBroadcast($group)->toArray()));
-
-        $mm1 = new MultimediaObject();
-        $mm1->setTitle('mm1');
-        $emb1 = new EmbeddedBroadcast();
-        $emb1->addGroup($group);
-        $emb1->setType(EmbeddedBroadcast::TYPE_GROUPS);
-        $mm1->setEmbeddedBroadcast($emb1);
-
-        $mm2 = new MultimediaObject();
-        $mm2->setTitle('mm2');
-        $emb2 = new EmbeddedBroadcast();
-        $emb2->setType(EmbeddedBroadcast::TYPE_PUBLIC);
-        $mm2->setEmbeddedBroadcast($emb2);
-
-        $mm3 = new MultimediaObject();
-        $mm3->setTitle('mm3');
-        $emb3 = new EmbeddedBroadcast();
-        $emb3->setType(EmbeddedBroadcast::TYPE_PASSWORD);
-        $emb3->setPassword('test');
-        $mm3->setEmbeddedBroadcast($emb3);
-
-        $mm4 = new MultimediaObject();
-        $mm4->setTitle('mm2');
-        $emb4 = new EmbeddedBroadcast();
-        $emb4->setType(EmbeddedBroadcast::TYPE_LOGIN);
-        $mm4->setEmbeddedBroadcast($emb4);
-
-        $this->dm->persist($mm1);
-        $this->dm->persist($mm2);
-        $this->dm->persist($mm3);
-        $this->dm->persist($mm4);
-        $this->dm->flush();
-
-        $locale = 'en';
-        $this->assertEquals((string) $emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
-        $this->assertEquals((string) $emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
-        $this->assertEquals((string) $emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
-        $this->assertEquals((string) $emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
-
-        $locale = 'es';
-        $this->assertNotEquals((string) $emb1, $this->embeddedBroadcastService->getI18nDescription($emb1, $locale));
-        $this->assertNotEquals((string) $emb2, $this->embeddedBroadcastService->getI18nDescription($emb2, $locale));
-        $this->assertNotEquals((string) $emb3, $this->embeddedBroadcastService->getI18nDescription($emb3, $locale));
-        $this->assertNotEquals((string) $emb4, $this->embeddedBroadcastService->getI18nDescription($emb4, $locale));
     }
 }

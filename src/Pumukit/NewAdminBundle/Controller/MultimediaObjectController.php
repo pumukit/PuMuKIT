@@ -1049,6 +1049,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $locale = $request->getLocale();
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $specialTranslationService = $this->get('pumukitschema.special_translation');
         $broadcasts = $embeddedBroadcastService->getAllTypes();
         $allGroups = $this->getAllGroups();
         $template = $multimediaObject->isPrototype() ? '_template' : '';
@@ -1071,7 +1072,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
             $jsonResponse = array(
                                   'description' => (string) $embeddedBroadcast,
-                                  'descriptioni18n' => $embeddedBroadcastService->getI18nDescription($embeddedBroadcast),
+                                  'descriptioni18n' => $specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast),
                                   'template' => $template,
                                   );
 
