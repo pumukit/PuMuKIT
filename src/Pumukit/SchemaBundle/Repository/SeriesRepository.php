@@ -27,9 +27,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -51,9 +49,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -96,13 +92,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -126,13 +116,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->in($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -175,13 +159,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -222,13 +200,7 @@ class SeriesRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()
             ->field('_id')->notIn($referencedSeries->toArray());
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -307,6 +279,50 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
+     * Find series by person id and role cod or groups sorted Query Builder.
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @param array           $sort
+     * @param int             $limit
+     * @param int             $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
+
+        $qb = $this->createQueryBuilder()
+                   ->field('_id')->in($referencedSeries->toArray());
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find series by person id and role cod or groups sorted Query.
+     *
+     * @param string          $personId
+     * @param string          $roleCod
+     * @param ArrayCollection $groups
+     * @param array           $sort
+     * @param int             $limit
+     * @param int             $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
      * Find series by person id and role cod or groups sorted.
      *
      * @param string          $personId
@@ -320,22 +336,9 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
+        $query = $this->findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort, $limit, $page);
 
-        $qb = $this->createQueryBuilder()
-                   ->field('_id')->in($referencedSeries->toArray());
-
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
-
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
-
-        return $qb->getQuery()
-                  ->execute();
+        return $query->execute();
     }
 
     /**
@@ -399,9 +402,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 
-        if ($limit > 0) {
-            $qb->limit($limit)->skip($limit * $page);
-        }
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
         return $qb->getQuery()->execute();
     }
@@ -425,9 +426,7 @@ class SeriesRepository extends DocumentRepository
             ->field('_id')->in($referencedSeries->toArray())
             ->field('series_type')->references($seriesType);
 
-        if (0 !== count($sort)) {
-            $qb->sort($sort);
-        }
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
 
         return $qb;
     }
@@ -446,5 +445,175 @@ class SeriesRepository extends DocumentRepository
           ->field('properties.'.$propertyName)->equals($propertyValue)
           ->getQuery()
           ->getSingleResult();
+    }
+
+    /**
+     * Find by EmbeddedBroadcast type Query Builder.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastType($type);
+
+        $qb = $this->createQueryBuilder()
+                   ->field('_id')->in($referencedSeries->toArray());
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find by EmbeddedBroadcast type Query.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastTypeQuery($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by EmbeddedBroadcast type.
+     *
+     * @param string $type
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return ArrayCollection
+     */
+    public function findByEmbeddedBroadcastType($type = '', $sort = array(), $limit = 0, $page = 0)
+    {
+        $query = $this->findByEmbeddedBroadcastTypeQuery($type, $sort, $limit, $page);
+
+        return $query->execute();
+    }
+
+    /**
+     * Find by embedded broadcast type and groups Query Builder.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type, $groups);
+
+        $qb = $this->createQueryBuilder()
+                   ->field('_id')->in($referencedSeries->toArray());
+
+        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
+     * Find by embedded broadcast type and groups Query.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Find by embedded broadcast type and groups.
+     *
+     * @param string $type
+     * @param array  $groups
+     * @param array  $sort
+     * @param int    $limit
+     * @param int    $page
+     *
+     * @return int
+     */
+    public function findByEmbeddedBroadcastTypeAndGroups($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    {
+        $query = $this->findByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
+
+        return $query->execute();
+    }
+
+    /**
+     * Add limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addLimitToQueryBuilder($qb, $limit = 0, $page = 0)
+    {
+        if ($limit > 0) {
+            $qb->limit($limit)->skip($limit * $page);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     *
+     * @return QueryBuilder
+     */
+    private function addSortToQueryBuilder($qb, $sort = array())
+    {
+        if (0 !== count($sort)) {
+            $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort and limit (and page) to Query Builder.
+     *
+     * @param QueryBuilder $qb
+     * @param array        $sort
+     * @param int          $limit
+     * @param int          $page
+     *
+     * @return QueryBuilder
+     */
+    private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
+
+        return $qb;
     }
 }
