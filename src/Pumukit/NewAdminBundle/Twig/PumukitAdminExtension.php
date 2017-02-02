@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -21,10 +22,13 @@ class PumukitAdminExtension extends \Twig_Extension
     private $router;
     private $countMmobjsByStatus;
     private $countMmobjsWithTag;
+    private $mmobjService;
+    private $specialTranslationService;
+
     /**
      * Constructor.
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
@@ -32,6 +36,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $this->translator = $translator;
         $this->router = $router;
         $this->mmobjService = $mmobjService;
+        $this->specialTranslationService = $specialTranslationService;
     }
 
     /**
@@ -80,6 +85,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFunction('is_mmobj_owner', array($this, 'isUserOwner')),
             new \Twig_SimpleFunction('broadcast_description', array($this, 'getBroadcastDescription')),
             new \Twig_SimpleFunction('is_naked', array($this, 'isNaked'), array('needs_environment' => true)),
+            new \Twig_SimpleFunction('trans_i18n_broadcast', array($this, 'getI18nEmbeddedBroadcast')),
         );
     }
 
@@ -609,5 +615,18 @@ class PumukitAdminExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    /**
+     * Returns the embbedded Broadcast
+     * __toString() function translated.
+     *
+     * @param EmbeddedBroadcast $embeddedBroadcast
+     *
+     * @return string
+     */
+    public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, $locale = 'en')
+    {
+        return $this->specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast, $locale);
     }
 }
