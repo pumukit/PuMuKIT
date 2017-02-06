@@ -89,9 +89,10 @@ class LDAPUserService
         return $user;
     }
 
-    private function getGroup($key)
+    protected function getGroup($key)
     {
         $cleanKey = preg_replace('/\W/', '', $key);
+        $cleanName = $this->getGroupName($key);
 
         $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneByKey($cleanKey);
         if ($group) {
@@ -99,11 +100,16 @@ class LDAPUserService
         }
         $group = new Group();
         $group->setKey($cleanKey);
-        $group->setName($key);
+        $group->setName($cleanName);
         $group->setOrigin('ldap');
         $this->groupService->create($group);
 
         return $group;
+    }
+
+    protected function getGroupName($key)
+    {
+        return $key;
     }
 
     private function promoteUser($info, $user)
