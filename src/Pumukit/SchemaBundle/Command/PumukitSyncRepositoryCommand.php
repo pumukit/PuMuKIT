@@ -30,7 +30,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
 
-        $this->syncNumberMultimediaObjectsOnTags($input, $output);
+        $this->syncTags($input, $output);
         $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
         $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
         $this->syncJobsInMultimediaObjectsProperties($input, $output);
@@ -115,7 +115,7 @@ EOT
         }
     }
 
-    private function syncNumberMultimediaObjectsOnTags(InputInterface $input, OutputInterface $output)
+    private function syncTags(InputInterface $input, OutputInterface $output)
     {
         $tagRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         $mmRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -123,8 +123,10 @@ EOT
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findWithTag($tag);
-            $output->writeln($tag->getCod().': '.count($mms));
+            $children = $tag->getChildren();
+            $output->writeln(sprintf('%s: %d mmobj and %d children', $tag->getCod(), count($mms), count($children)));
             $tag->setNumberMultimediaObjects(count($mms));
+            $tag->setNumberOfChildren(count($children));
             $this->dm->persist($tag);
         }
         $this->dm->flush();

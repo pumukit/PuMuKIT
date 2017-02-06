@@ -24,6 +24,8 @@ class Tag
     private $id;
 
     /**
+     * Number of Multimedia Object with this tag. Only for cache purposes.
+     *
      * @var int
      *
      * @MongoDB\Int
@@ -110,6 +112,16 @@ class Tag
      * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent", sort={"cod": 1})
      */
     private $children = array();
+
+    /**
+     * Number of children. Only for cache purposes.
+     *
+     * @var int
+     *
+     * @MongoDB\Int
+     * @MongoDB\Increment
+     */
+    private $number_children = 0;
 
     /**
      * @MongoDB\Field(type="string")
@@ -462,7 +474,19 @@ class Tag
 
     private function addChild(Tag $tag)
     {
+        ++$this->number_children;
+
         return $this->children[] = $tag;
+    }
+
+    public function getNumberOfChildren()
+    {
+        return $this->number_children;
+    }
+
+    public function setNumberOfChildren($count)
+    {
+        $this->number_children = $count;
     }
 
     public function getLevel()
