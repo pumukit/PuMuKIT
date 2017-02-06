@@ -1,6 +1,6 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 {% for node in nodes %}
-  {% set children_length = node.getChildren()|length %}
+  {% set children_length = node.getNumberOfChildren() %}
    <a href="#"
       onclick="javascript:return select_tree_tag(this);"
       {% if not node.getMetatag() %} ondblclick="javascript:add_tree_tag('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %}
