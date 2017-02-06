@@ -15,7 +15,10 @@
       </trans-unit>
       <trans-unit id="01577ff53454d174ba9f5beea9f1e198" resname="Not published on PodcastEDU/iTunesU.">
         <source>Not published on PodcastEDU/iTunesU.</source>
-        <target xml:lang="eu" state="translated">PodcastEDU/iTunesUn ez argitaratua.</target>
+        <target xml:lang="eu" state="translated">PodcastEDU/iTunesU-n ez argitaratua.</target>
+        <alt-trans>
+          <target xml:lang="eu">PodcastEDU/iTunesUn ez argitaratua.</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">No publicado en PodcastEDU/iTunesU.</target>
         </alt-trans>
@@ -61,7 +64,10 @@
       </trans-unit>
       <trans-unit id="613b1a00ac381aba783479879e63263c" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
-        <target xml:lang="eu" state="translated">Suscribirse al podcast de esta serie (requiere iTunes)</target>
+        <target xml:lang="eu" state="translated">Serie honen podcastera harpidetu (iTunes beharrezkoa)</target>
+        <alt-trans>
+          <target xml:lang="eu">Suscribirse al podcast de esta serie (requiere iTunes)</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
         <source>It downloads and subscribes to the full video podcasts of this series.</source>
@@ -80,7 +86,10 @@
       </trans-unit>
       <trans-unit id="7de670fb5df1ea744e72712d4ea29cbe" resname="All POD">
         <source>All POD</source>
-        <target xml:lang="eu" state="translated">Todos POD</target>
+        <target xml:lang="eu" state="translated">POD guztiak</target>
+        <alt-trans>
+          <target xml:lang="eu">Todos POD</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>
