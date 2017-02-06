@@ -123,10 +123,10 @@ EOT
         $tags = $tagRepo->findAll();
         foreach ($tags as $tag) {
             $mms = $mmRepo->findWithTag($tag);
-            $children = $tag->getChildren();
-            $output->writeln(sprintf('%s: %d mmobj and %d children', $tag->getCod(), count($mms), count($children)));
+            $numChildren = $tagRepo->childCount($tag, true);
+            $output->writeln(sprintf('%s: %d mmobj and %d children', $tag->getCod(), count($mms), $numOfChildren));
             $tag->setNumberMultimediaObjects(count($mms));
-            $tag->setNumberOfChildren(count($children));
+            $tag->setNumberOfChildren($numOfChildren);
             $this->dm->persist($tag);
         }
         $this->dm->flush();
