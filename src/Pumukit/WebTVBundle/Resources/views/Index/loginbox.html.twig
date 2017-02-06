@@ -7,7 +7,7 @@
       <span class="glyphicon glyphicon-briefcase"></span> {% trans %}Go to back-office{% endtrans %}
     </a>
     {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}
-    <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
+    <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Manage my videos{% endtrans %}">
       <span class="glyphicon glyphicon-briefcase"></span> {% trans %}Manage my videos{% endtrans %}
     </a>
     {% endif %}
