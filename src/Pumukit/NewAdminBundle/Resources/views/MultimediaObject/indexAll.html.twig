@@ -6,7 +6,7 @@
             {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
                 <li class="active">{% trans %}My Multimedia Objects{% endtrans %}</li>
             {% else %}
-                <li class="active">{% trans %}Multimedia Objects{% endtrans %}</li>
+                <li class="active">{{ multimedia_object_label }}</li>
             {% endif %}
         </ul>
     </h3>
