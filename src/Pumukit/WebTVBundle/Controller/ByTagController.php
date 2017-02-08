@@ -29,10 +29,10 @@ class ByTagController extends Controller implements WebTVController
             //This should be included on SchemaBundle:MultimediaObjectRepository.
             $mmobjs = $repo->createBuilderWithGeneralTag($tag, array('record_date' => -1));
             $title = $this->get('translator')->trans('General %title%', array('%title%' => $tag->getTitle()));
-            $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod(), 'useTagAsGeneral' => true));
+            $this->updateBreadcrumbs($title, 'pumukit_webtv_bytag_multimediaobjects', array('tagCod' => $tag->getCod(), 'useTagAsGeneral' => true));
         } else {
             $mmobjs = $repo->createBuilderWithTag($tag, array('record_date' => -1));
-            $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('cod' => $tag->getCod()));
+            $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_multimediaobjects', array('tagCod' => $tag->getCod()));
             $title = $tag->getTitle();
         }
 
@@ -58,7 +58,7 @@ class ByTagController extends Controller implements WebTVController
         $series = $repo->createBuilderWithTag($tag, array('public_date' => -1));
 
         $pagerfanta = $this->createPager($series, $request->query->get('page', 1));
-        $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_series', array('cod' => $tag->getCod()));
+        $this->updateBreadcrumbs($tag->getTitle(), 'pumukit_webtv_bytag_series', array('tagCod' => $tag->getCod()));
 
         $title = $tag->getTitle();
         $title = $this->get('translator')->trans('Series with tag: %title%', array('%title%' => $title));
