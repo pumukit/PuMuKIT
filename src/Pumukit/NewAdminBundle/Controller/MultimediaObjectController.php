@@ -1319,11 +1319,14 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
         $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
 
+        $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
+
         return array(
             'mms' => $resources,
             'roles' => $aRoles,
             'pubChannels' => $aChannels,
             'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'multimedia_object_label' => $multimediaObjectLabel,
         );
     }
 

@@ -36,7 +36,7 @@ class Builder extends ContainerAware
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'));
             $series->setDisplayChildren(false);
 
-            $mmslist = $mediaManager->addChild('Multimedia List', array('route' => 'pumukitnewadmin_mms_indexall'));
+            $mmslist = $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), array('route' => 'pumukitnewadmin_mms_indexall'));
             $mmslist->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_indexall'));
             $mmslist->setDisplayChildren(false);
         }
