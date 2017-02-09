@@ -45,6 +45,8 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
+                            ->booleanNode('nocheckduration')->defaultValue(false)
+                                ->info('When true, the usual duration checks are not performed on this profile.')->end()
                             ->booleanNode('display')->defaultValue(false)
                                 ->info('Displays the track')->end()
                             ->booleanNode('wizard')->defaultValue(true)
