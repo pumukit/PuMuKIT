@@ -62,8 +62,8 @@
       <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
 
-    <service id="pumukitnewadmin.menu" class="Pumukit\NewAdminBundle\Menu\Chain" />
-    <service id="pumukitnewadmin.mmobjlistbuttons" class="Pumukit\NewAdminBundle\Menu\Chain" />
+    <service id="pumukitnewadmin.menu" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
+    <service id="pumukitnewadmin.mmobjlistbuttons" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
 
     <!-- This extension is used to get the list of buttons(items) added through the pumukitnewadmin.mmobjlistbuttonsitem tag -->
     <service id="pumukitnewadmin.twig_mmobjbuttons_extension" class="Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension">

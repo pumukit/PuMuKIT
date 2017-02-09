@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Twig;
 
-use Pumukit\NewAdminBundle\Menu\Chain;
+use Pumukit\NewAdminBundle\Menu\ItemsList;
 
 class MultimediaObjectButtonsExtension extends \Twig_Extension
 {
-    public function __construct(Chain $mmobjListButtons)
+    public function __construct(ItemsList $mmobjListButtons)
     {
         $this->mmobjListButtons = $mmobjListButtons;
     }
