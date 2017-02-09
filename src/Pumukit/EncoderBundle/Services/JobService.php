@@ -482,7 +482,9 @@ class JobService
     public function searchError($profile, $var, $duration_in, $duration_end)
     {
         // This allows to configure a profile for videos without timestamps to be reindexed.
-        if(isset($profile['nocheckduration']) && $profile['nocheckduration']) return true;
+        if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
+            return true;
+        }
 
         $duration_conf = 25;
         if (($duration_in < $duration_end - $duration_conf) || ($duration_in > $duration_end + $duration_conf)) {
