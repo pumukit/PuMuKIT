@@ -128,12 +128,12 @@ class LDAPUserService
         }
     }
 
-    public function isAutoPub($info, $username)
+    protected function isAutoPub($info, $username)
     {
         return false;
     }
 
-    public function isAdmin($info, $username)
+    protected function isAdmin($info, $username)
     {
         return false;
     }
