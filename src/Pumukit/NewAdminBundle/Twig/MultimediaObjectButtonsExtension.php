@@ -16,7 +16,7 @@ class MultimediaObjectButtonsExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'pumukitadmin_extension';
+        return 'pumukitadmin_button_extension';
     }
 
     /**
