@@ -63,6 +63,7 @@
     </service>
 
     <service id="pumukitnewadmin.menu" class="Pumukit\NewAdminBundle\Menu\Chain" />
+    <service id="pumukitnewadmin.mmobjlistbuttons" class="Pumukit\NewAdminBundle\Menu\Chain" />
 
   </services>
 </container>
