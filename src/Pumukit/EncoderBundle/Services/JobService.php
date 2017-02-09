@@ -137,10 +137,10 @@ class JobService
      *
      * @return Job
      */
-    public function addJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
+    public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
     {
         if (self::ADD_JOB_UNIQUE & $flags) {
-            $job = $this->repo->findOneBy(array('profile' => $profile, 'mm_id' => $multimediaObject->getId()));
+            $job = $this->repo->findOneBy(array('profile' => $profileName, 'mm_id' => $multimediaObject->getId()));
 
             if ($job) {
                 return $job;
@@ -149,9 +149,9 @@ class JobService
 
         $this->checkService();
 
-        if (null === $this->profileService->getProfile($profile)) {
-            $this->logger->addError('[addJob] Can not find given profile with name "'.$profile);
-            throw new \Exception("Can't find given profile with name ".$profile);
+        if (null === $profile = $this->profileService->getProfile($profileName)) {
+            $this->logger->addError('[addJob] Can not find given profile with name "'.$profileName);
+            throw new \Exception("Can't find given profile with name ".$profileName);
         }
 
         if (null === $multimediaObject) {
@@ -159,11 +159,15 @@ class JobService
             throw new \Exception('Given null multimedia object');
         }
 
-        if (!(self::ADD_JOB_NOT_CHECKS & $flags)) {
+        $checkduration = !(isset($profile['nocheckduration']) && $profile['nocheckduration']);
+
+        if ($checkduration && !(self::ADD_JOB_NOT_CHECKS & $flags)) {
             if (!is_file($pathFile)) {
                 $this->logger->addError('[addJob] FileNotFoundException: Could not find file "'.$pathFile);
                 throw new FileNotFoundException($pathFile);
             }
+            $this->logger->addInfo('Not doing duration checks on job with profile'.$profileName);
+
             try {
                 $duration = $this->inspectionService->getDuration($pathFile);
             } catch (\Exception $e) {
@@ -177,13 +181,13 @@ class JobService
             }
         }
 
-        if (0 == $duration) {
+        if ($checkduration && 0 == $duration) {
             throw new \Exception('The media file duration is zero');
         }
 
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
-        $job->setProfile($profile);
+        $job->setProfile($profileName);
         $job->setPathIni($pathFile);
         $job->setDuration($duration);
         $job->setPriority($priority);
@@ -309,12 +313,12 @@ class JobService
     public function getAllJobsStatus()
     {
         return array(
-                     'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
-                     'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
-                     'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
-                     'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
-                     'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
-                     );
+            'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
+            'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
+            'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
+            'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
+            'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
+        );
     }
 
     /**
@@ -366,9 +370,9 @@ class JobService
         // PHP wraps the process in "sh -c" by default, but we need to control
         // the process directly.
         /*
-        if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
+          if ( ! defined('PHP_WINDOWS_VERSION_MAJOR')) {
           $pb->add('exec');
-        }
+          }
         */
 
         //TODO
@@ -376,19 +380,19 @@ class JobService
         $console = __DIR__.'/../../../../app/console';
 
         $pb
-          ->add('php')
-          ->add($console)
-          ->add(sprintf('--env=%s', $this->environment))
-          ;
+            ->add('php')
+            ->add($console)
+            ->add(sprintf('--env=%s', $this->environment))
+            ;
 
         if (false) {
             $pb->add('--verbose');
         }
 
         $pb
-          ->add('pumukit:encoder:job')
-          ->add($job->getId())
-          ;
+            ->add('pumukit:encoder:job')
+            ->add($job->getId())
+            ;
 
         $process = $pb->getProcess();
 
@@ -477,6 +481,9 @@ class JobService
      */
     public function searchError($profile, $var, $duration_in, $duration_end)
     {
+        // This allows to configure a profile for videos without timestamps to be reindexed.
+        if(isset($profile['nocheckduration']) && $profile['nocheckduration']) return true;
+
         $duration_conf = 25;
         if (($duration_in < $duration_end - $duration_conf) || ($duration_in > $duration_end + $duration_conf)) {
             throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $duration_in, $duration_end));
