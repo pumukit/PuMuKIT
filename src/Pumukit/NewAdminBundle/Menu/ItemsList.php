@@ -2,7 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Menu;
 
-class Chain
+class ItemsList
 {
     private $items;
 

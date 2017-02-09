@@ -10,18 +10,26 @@ class MenuPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
+        // The services tagged as pumukitnewadmin.menuitem (notice the extra 'item' in the name) will be added here
+        $this->addItems($container, 'pumukitnewadmin.menu');
+        // The services tagged as pumukitnewadmin.mmobjlistbuttonsitem will be added here
+        $this->addItems($container, 'pumukitnewadmin.mmobjlistbuttons');
+    }
+
+    public function addItems($container, $serviceName)
+    {
         // always first check if the primary service is defined
-        if (!$container->has('pumukitnewadmin.menu')) {
+        if (!$container->has($serviceName)) {
             return;
         }
 
-        $definition = $container->findDefinition('pumukitnewadmin.menu');
+        $definition = $container->findDefinition($serviceName);
 
-        // find all service IDs with the pumukitnewadmin.menuitem tag
-        $taggedServices = $container->findTaggedServiceIds('pumukitnewadmin.menuitem');
+        // find all service IDs with the item tag
+        $taggedServices = $container->findTaggedServiceIds($serviceName.'item');
 
         foreach ($taggedServices as $id => $tags) {
-            // add the transport service to the Chain service
+            // add the transport service to the ItemsList service
             $definition->addMethodCall('add', array(new Reference($id)));
         }
     }
