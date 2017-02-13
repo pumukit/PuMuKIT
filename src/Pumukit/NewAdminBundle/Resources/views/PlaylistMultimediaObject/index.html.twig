@@ -121,18 +121,5 @@
        });
    }
 
-   {# function update_views(){
-   var mmId = $('#id').val();
-   var playlistId = '{{ playlist.id }}';
-   var listRoute = '{{ path('pumukitnewadmin_playlistmms_list', {'id': '__playlistId__'}) }}';
-   listRoute = listRoute.replace('__playlistId__', playlistId);
-   var previewRoute = '{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}';
-   previewRoute = previewRoute.replace('__mmId__', mmId);
-   var editRoute = '{{ path('pumukitnewadmin_mms_edit', {'id': '__mmId__'}) }}';
-   editRoute = editRoute.replace('__mmId__', mmId);
-   $('#list_playlistmms').load(listRoute,function(){console.log('haha');});
-   $('#preview_playlistmm').load(previewRoute);
-   }
-   $('#tv_admin_container form').on('submit', update_views); #}
   </script>
 {% endblock %}

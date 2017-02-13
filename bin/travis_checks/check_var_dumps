@@ -1,0 +1,25 @@
+# Finds dumps (either classical var_dump() or symfony dump() in the most straight-forward cases
+if egrep --color=auto -nr '(^| +|;|	+|\{%|\{{)(var_)?dump\(' src/Pumukit/ --include \*.php --include \*.twig ; then
+    echo "";
+    echo "ERROR: Found one or several calls to var_dump()/dump() on the php code.";
+    echo "";
+    errorsOnChecks=1;
+fi
+
+
+# Finds console.log() calls for javascript code
+# TODO: This grep is excluding the 'public' directories on purpose, although most of the js code is there.
+#       The issue is that there are external libraries with console.logs on their code as of now, and since we don't
+#       use a dependencies manager for web assets (bower, jam, ...) those libraries are included in the code.
+if egrep --color=auto -nr 'console.log\(' src/Pumukit/ --include \*.html* --include \*.js* --exclude-dir=public ; then
+    echo "";
+    echo "ERROR: Found one or several console.log() calls on the js code.";
+    echo "";
+    errorsOnChecks=1;
+fi
+
+if [ $errorsOnChecks ]; then
+   exit -1;
+fi
+
+exit 0;

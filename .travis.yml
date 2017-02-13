@@ -34,5 +34,6 @@ script:
     - php app/console yaml:lint app
     - php app/console twig:lint src
     - php app/console twig:lint app
+    - ./bin/travis_checks/check_var_dumps
     - php bin/php-cs-fixer.phar fix src --level=symfony --dry-run -v
     - phpunit -c app
