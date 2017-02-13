@@ -46,7 +46,11 @@ $(function(){
             }else{
                 trackForm.action = "{{ path('pumukitwizard_default_multimediaobject')|raw }}";
             }
-            trackForm.enctype = "";
+            try {
+                trackForm.enctype = "";
+            } catch (e) {
+                /* DO NOTHING: IE9 Workaround */
+            }
             trackForm.target = "";
             trackForm.submit();
         }
