@@ -147,8 +147,6 @@ class JobService
             }
         }
 
-        $this->checkService();
-
         if (null === $profile = $this->profileService->getProfile($profileName)) {
             $this->logger->addError('[addJob] Can not find given profile with name "'.$profileName);
             throw new \Exception("Can't find given profile with name ".$profileName);
@@ -411,6 +409,8 @@ class JobService
     public function execute(Job $job)
     {
         set_time_limit(0);
+
+        $this->checkService();
 
         $profile = $this->getProfile($job);
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
