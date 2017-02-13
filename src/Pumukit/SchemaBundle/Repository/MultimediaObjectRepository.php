@@ -1029,7 +1029,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findRelatedMultimediaObjects(MultimediaObject $multimediaObject)
+    public function findRelatedMultimediaObjects(MultimediaObject $multimediaObject, $tagBase = 'UNESCO')
     {
         $qb = $this->createQueryBuilder()
           ->field('_id')->notEqual($multimediaObject->getId())
@@ -1039,7 +1039,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $unescoTag = $tagRepo->findOneByCod('UNESCO');
+        $unescoTag = $tagRepo->findOneByCod($tagBase);
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
             if ($unescoTag) {

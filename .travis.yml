@@ -30,9 +30,11 @@ before_script:
 
 script:
     - find src -type f -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+
     - php app/console lint:yaml src
     - php app/console lint:yaml app
     - php app/console lint:twig src
     - php app/console lint:twig app
+    - ./bin/travis_checks/check_var_dumps
     - php bin/php-cs-fixer.phar fix src --level=symfony --dry-run -v
     - phpunit -c app
