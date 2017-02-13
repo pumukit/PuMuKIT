@@ -102,7 +102,6 @@
         if (to_date.val() != "" && from_date.val() >= to_date.val()) {
             to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
         } else {
-            //console.log($(form).serialize());
             $('#list_mms').load('{{ path('pumukitnewadmin_mms_listAll')|raw }}', $(form).serialize());
         }
         return false;
