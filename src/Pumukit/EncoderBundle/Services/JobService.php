@@ -440,7 +440,7 @@ class JobService
             $this->logger->addInfo('[execute] duration: '.$duration);
 
             //Check for different durations. Throws exception if they don't match.
-            $this->searchError($profile['app'], $out, $job->getDuration(), $duration);
+            $this->searchError($profile, $out, $job->getDuration(), $duration);
 
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
