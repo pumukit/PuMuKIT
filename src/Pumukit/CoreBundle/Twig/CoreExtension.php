@@ -43,7 +43,6 @@ class CoreExtension extends \Twig_Extension
      */
     public function isBundleEnabled($bundle)
     {
-
         return array_key_exists(
             $bundle,
             $this->container->getParameter('kernel.bundles')
