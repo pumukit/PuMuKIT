@@ -1373,11 +1373,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $criteria = $this->getRequest()->get('criteria', array());
 
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/mmslist/criteria');
+            $this->get('session')->remove('admin/'. $config->getResourceName() . '/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/mmslist/criteria', $criteria);
+            $this->get('session')->set('admin/'. $config->getResourceName() . '/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/mmslist/criteria', array());
+        $criteria = $this->get('session')->get('admin/'. $config->getResourceName() . '/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
 
@@ -1389,10 +1389,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $this->getSorting($request);
+        $sorting = $this->getSorting($request, $config->getResourceName());
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/mmlist';
+        $session_namespace = 'admin/' .$config->getResourceName();
 
         if ($config->isPaginated()) {
             $resources = $this
@@ -1420,17 +1420,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return $resources;
     }
 
-    private function getSorting(Request $request)
+    private function getSorting(Request $request, $session_namespace)
     {
         $session = $this->get('session');
 
         if ($sorting = $request->get('sorting')) {
-            $session->set('admin/mmslist/type', current($sorting));
-            $session->set('admin/mmslist/sort', key($sorting));
+            $session->set('admin/'. $session_namespace . '/type', current($sorting));
+            $session->set('admin/'. $session_namespace . '/sort', key($sorting));
         }
 
-        $value = $session->get('admin/mmslist/type', 'desc');
-        $key = $session->get('admin/mmslist/sort', 'public_date');
+        $value = $session->get('admin/'. $session_namespace . '/type', 'desc');
+        $key = $session->get('admin/'. $session_namespace . '/sort', 'public_date');
 
         if ($key == 'title') {
             $key .= '.'.$request->getLocale();
