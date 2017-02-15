@@ -1373,11 +1373,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $criteria = $this->getRequest()->get('criteria', array());
 
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+            $this->get('session')->remove('admin/'.$this->getResourceName($this->getRequest()).'/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+            $this->get('session')->set('admin/'.$this->getResourceName($this->getRequest()).'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($this->getRequest()).'/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
 
@@ -1389,10 +1389,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $this->getSorting($request, $config->getResourceName());
+        $sorting = $this->getSorting($request, $this->getResourceName($request));
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/'.$config->getResourceName();
+        $session_namespace = 'admin/'.$this->getResourceName($request);
 
         if ($config->isPaginated()) {
             $resources = $this
@@ -1437,5 +1437,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         return  array($key => $value);
+    }
+
+    private function getResourceName(Request $request)
+    {
+        $sRoute = $request->get('_route');
+
+        return (strpos($sRoute, 'all') === false) ? 'mms' : 'mmslist';
     }
 }
