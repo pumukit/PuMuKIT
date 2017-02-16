@@ -1,3 +1,4 @@
+{% block hidden_inputs %}
 {% if license_enable and form_data.license.accept is defined %}
   <input type="hidden" name="pumukitwizard_form_data[license][accept]" id="pumukitwizard_multimediaobject_license_accept" value="{{ form_data.license.accept }}">
 {% endif %}
@@ -49,3 +50,4 @@
     {% endfor %}
   {% endfor %}
 {% endif %}
+{% endblock %}
