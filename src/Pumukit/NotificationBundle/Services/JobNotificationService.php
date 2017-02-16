@@ -7,6 +7,7 @@ use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Symfony\Component\Routing\RouterInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class JobNotificationService
 {
@@ -46,7 +47,8 @@ class JobNotificationService
                 return;
             }
 
-            if (!$job->getEmail()) {
+            $multimediaObject = $event->getMultimediaObject();
+            if (!($emailsTo = $this->getEmails($job, $multimediaObject))) {
                 return;
             }
 
@@ -64,7 +66,7 @@ class JobNotificationService
                                 'sender_name' => $this->senderName,
                                 'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
-            $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, false);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, $template, $parameters, false);
 
             return $output;
         }
@@ -83,11 +85,11 @@ class JobNotificationService
                 return;
             }
 
-            if (!$job->getEmail()) {
+            $multimediaObject = $event->getMultimediaObject();
+            if (!($emailsTo = $this->getEmails($job, $multimediaObject))) {
                 return;
             }
 
-            $multimediaObject = $event->getMultimediaObject();
             $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
             $errorMessage = $this->subjectFails;
@@ -101,10 +103,15 @@ class JobNotificationService
                                 'sender_name' => $this->senderName,
                                 'multimedia_object_admin_link' => $multimediaObjectAdminLink,
                                 );
-            $output = $this->senderService->sendNotification($job->getEmail(), $subject, $template, $parameters, true);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, $template, $parameters, true);
 
             return $output;
         }
+    }
+
+    public function getEmails(Job $job, MultimediaObject $multimediaObject)
+    {
+        return $job->getEmail();
     }
 
     private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
