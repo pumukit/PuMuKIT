@@ -137,6 +137,7 @@ class JobNotificationService
      */
     protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {
+
         return $job->getEmail();
     }
 
