@@ -645,7 +645,9 @@ class JobService
         if (!empty($description)) {
             $track->setI18nDescription($description);
         }
-        $track->setLanguage($language);
+        if ($language) {
+            $track->setLanguage($language);
+        }
 
         $track->setPath($pathEnd);
         if (isset($profile['streamserver']['url_out'])) {

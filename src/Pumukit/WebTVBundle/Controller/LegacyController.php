@@ -12,10 +12,10 @@ class LegacyController extends Controller implements WebTVController
     /**
      * @Route("/serial/index/id/{pumukit1id}.html")
      * @Route("/serial/index/id/{pumukit1id}")
-     * @Route("/{_locale}/serial/index/id/{pumukit1id}.html")
-     * @Route("/{_locale}/serial/index/id/{pumukit1id}")
-     * @Route("/{_locale}/serial/{pumukit1id}.html")
-     * @Route("/{_locale}/serial/{pumukit1id}")
+     * @Route("/{_locale}/serial/index/id/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/{_locale}/serial/index/id/{pumukit1id}", requirements={"_locale"=".."})
+     * @Route("/{_locale}/serial/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/{_locale}/serial/{pumukit1id}", requirements={"_locale"=".."})
      *
      * Parameters:
      * - {_locale} matches the current locale
@@ -38,8 +38,8 @@ class LegacyController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/{_locale}/video/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/{_locale}/video/{pumukit1id}", defaults={"filter": false})
+     * @Route("/{_locale}/video/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
      * @Route("/video/{pumukit1id}", requirements={
      *     "pumukit1id": "\d+"
      * }, defaults={"filter": false})
@@ -71,7 +71,7 @@ class LegacyController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/{_locale}/video/iframe/{pumukit1id}.html")
+     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
      *
      * Parameters:
      * - {_locale} matches the current locale
@@ -95,8 +95,8 @@ class LegacyController extends Controller implements WebTVController
 
     /**
      * @Route("/file/{pumukit1id}")
-     * @Route("/{_locale}/file/{pumukit1id}.html")
-     * @Route("/{_locale}/file/{pumukit1id}")
+     * @Route("/{_locale}/file/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/{_locale}/file/{pumukit1id}", requirements={"_locale"=".."})
      *
      * Parameters:
      * - {_locale} matches the current locale
