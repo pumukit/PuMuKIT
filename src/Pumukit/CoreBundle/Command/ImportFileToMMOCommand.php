@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-class ImportCommand extends ContainerAwareCommand
+class ImportFileToMMOCommand extends ContainerAwareCommand
 {
     private $dm = null;
 
