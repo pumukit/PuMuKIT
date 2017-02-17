@@ -149,7 +149,7 @@ class SenderService
         }
         $filterEmail = array(
             'verified' => $verifiedEmails,
-            'error' => $errorEmails
+            'error' => $errorEmails,
         );
 
         return $filterEmail;

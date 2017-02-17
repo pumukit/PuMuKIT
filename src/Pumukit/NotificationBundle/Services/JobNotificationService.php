@@ -130,7 +130,7 @@ class JobNotificationService
     /**
      * Get emails.
      *
-     * @param Job $job
+     * @param Job              $job
      * @param MultimediaObject $multimediaObject
      *
      * @return string|array
