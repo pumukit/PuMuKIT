@@ -23,7 +23,7 @@ class VersionController extends Controller implements AdminController
         $pumukit = array();
         $other = array();
         foreach ($composerLock->packages as $package) {
-            if ((strpos($package->name, '/pmk2-') !== false) || strpos(strtolower($package->name), 'pumukit') !== false) {
+            if ((strpos($package->name, '/pmk2-') !== false) || strpos(strtolower($package->name), 'pumukit') !== false || strpos(strtolower($package->name), 'teltek') !== false) {
                 $pumukit[] = $package;
             } else {
                 $other[] = $package;
