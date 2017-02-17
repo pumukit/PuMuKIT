@@ -11,8 +11,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class JobNotificationService
 {
-    const JOB_TEMPLATE = 'PumukitNotificationBundle:Email:job.html.twig';
-
     protected $senderService;
     protected $jobService;
     protected $platformName;
