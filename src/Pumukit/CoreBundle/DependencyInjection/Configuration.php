@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('path_files')
-                    ->defaultValue('/mnt/pumukit/storage/masters')
+                    ->defaultValue('/mnt/pumukit/storage/masters/test.mp4')
                     ->info('default path files')
                 ->end()
                 ->scalarNode('profile')
