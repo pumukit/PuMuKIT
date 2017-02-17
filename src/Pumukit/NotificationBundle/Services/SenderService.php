@@ -179,6 +179,7 @@ class SenderService
                 $errorEmails[] = $emailTo;
             }
         }
+
         $filterEmail = array(
             'verified' => $verifiedEmails,
             'error' => $errorEmails,
