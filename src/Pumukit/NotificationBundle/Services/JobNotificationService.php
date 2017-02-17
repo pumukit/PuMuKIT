@@ -11,13 +11,15 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class JobNotificationService
 {
-    private $senderService;
-    private $jobService;
-    private $platformName;
-    private $senderName;
-    private $environment;
-    private $translator;
-    private $router;
+    const JOB_TEMPLATE = 'PumukitNotificationBundle:Email:job.html.twig';
+
+    protected $senderService;
+    protected $jobService;
+    protected $platformName;
+    protected $senderName;
+    protected $environment;
+    protected $translator;
+    protected $router;
 
     public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment, $template, $subjectSuccess, $subjectFails)
     {
@@ -41,35 +43,7 @@ class JobNotificationService
      */
     public function onJobSuccess(JobEvent $event)
     {
-        if ($this->enable) {
-            $job = $event->getJob();
-            if (!$job) {
-                return;
-            }
-
-            $multimediaObject = $event->getMultimediaObject();
-            if (!($emailsTo = $this->getEmails($job, $multimediaObject))) {
-                return;
-            }
-
-            $multimediaObject = $event->getMultimediaObject();
-            $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
-
-            $successMessage = $this->subjectSuccess;
-            $subject = ($this->platformName ? $this->platformName.': ' : '').$successMessage;
-            $template = $this->template;
-            $parameters = array(
-                                'subject' => $subject,
-                                'job_status' => Job::$statusTexts[$job->getStatus()],
-                                'job' => $job,
-                                'commandLine' => $this->jobService->renderBat($job),
-                                'sender_name' => $this->senderName,
-                                'multimedia_object_admin_link' => $multimediaObjectAdminLink,
-                                );
-            $output = $this->senderService->sendNotification($emailsTo, $subject, $template, $parameters, false);
-
-            return $output;
-        }
+        return $this->sendJobNotification($event, false);
     }
 
     /**
@@ -78,6 +52,20 @@ class JobNotificationService
      * @param JobEvent $event
      */
     public function onJobError(JobEvent $event)
+    {
+        return $this->sendJobNotification($event, true);
+    }
+
+    /**
+     * Send job notification according if the job
+     * was succeeded or not.
+     *
+     * @param JobEvent $event
+     * @param bool     $error
+     *
+     * @return bool
+     */
+    protected function sendJobNotification(JobEvent $event, $error = false)
     {
         if ($this->enable) {
             $job = $event->getJob();
@@ -90,26 +78,67 @@ class JobNotificationService
                 return;
             }
 
-            $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
+            $subject = $this->getSubjectEmail($job, $error);
+            $parameters = $this->getParametersEmail($job, $multimediaObject, $subject);
 
-            $errorMessage = $this->subjectFails;
-            $subject = ($this->platformName ? $this->platformName.': ' : '').$errorMessage;
-            $template = $this->template;
-            $parameters = array(
-                                'subject' => $subject,
-                                'job_status' => Job::$statusTexts[$job->getStatus()],
-                                'job' => $job,
-                                'commandLine' => $this->jobService->renderBat($job),
-                                'sender_name' => $this->senderName,
-                                'multimedia_object_admin_link' => $multimediaObjectAdminLink,
-                                );
-            $output = $this->senderService->sendNotification($emailsTo, $subject, $template, $parameters, true);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error);
 
             return $output;
         }
     }
 
-    public function getEmails(Job $job, MultimediaObject $multimediaObject)
+    /**
+     * Get subject email.
+     *
+     * @param Job  $job
+     * @param bool $error
+     *
+     * @return string
+     */
+    protected function getSubjectEmail(Job $job, $error = false)
+    {
+        if ($error) {
+            $message = $this->subjectFails;
+        } else {
+            $message = $this->subjectSuccess;
+        }
+        $subject = ($this->platformName ? $this->platformName.': ' : '').$message;
+
+        return $subject;
+    }
+
+    /**
+     * Get parameters email.
+     *
+     * @param Job              $job
+     * @param MultimediaObject $multimediaObject
+     * @param string           $subject
+     *
+     * @return array
+     */
+    protected function getParametersEmail(Job $job, MultimediaObject $multimediaObject, $subject)
+    {
+        $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
+
+        return array(
+            'subject' => $subject,
+            'job_status' => Job::$statusTexts[$job->getStatus()],
+            'job' => $job,
+            'commandLine' => $this->jobService->renderBat($job),
+            'sender_name' => $this->senderName,
+            'multimedia_object_admin_link' => $multimediaObjectAdminLink,
+        );
+    }
+
+    /**
+     * Get emails.
+     *
+     * @param Job $job
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string|array
+     */
+    protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {
         return $job->getEmail();
     }
