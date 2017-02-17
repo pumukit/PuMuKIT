@@ -24,6 +24,24 @@ class ImportFileToMMOCommand extends ContainerAwareCommand
             ->addArgument('description', InputArgument::OPTIONAL, 'description')
             ->setHelp(<<<'EOT'
 This command import file like a track on a multimedia object
+
+Example complete: 
+<info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% %profile% %language% %description%</info>
+
+Example with multimediaobjectid and folder:
+<info>php app/console import:multimedia:file 58a31ce08381165d008b456a /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
+
+Example with multimediaobjectid:
+<info>php app/console import:multimedia:file 58a31ce08381165d008b456a</info>
+
+By default params folder, profile, language and description are:
+
+<info>
+    pathfile: /mnt/pumukit/storage/masters/test.mp4
+    profile: video_h264
+    language: en
+    description: 2017 opencast community summit
+</info>
 EOT
             );
     }
