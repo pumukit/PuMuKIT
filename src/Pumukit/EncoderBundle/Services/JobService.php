@@ -645,7 +645,7 @@ class JobService
         if (!empty($description)) {
             $track->setI18nDescription($description);
         }
-        if($language) {
+        if ($language) {
             $track->setLanguage($language);
         }
 
