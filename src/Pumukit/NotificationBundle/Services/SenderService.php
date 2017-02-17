@@ -16,7 +16,7 @@ class SenderService
     private $environment;
     private $translator;
     private $subject = "Can't send email to this address.";
-    private $template = 'PumukitExpiredVideoBundle:Email:error.html.twig';
+    private $template = 'PumukitNotificationBundle:Email:error.html.twig';
 
     public function __construct(
         $mailer,
@@ -130,22 +130,27 @@ class SenderService
      */
     private function filterEmail($emailTo)
     {
-        $filterEmail = array();
+        $verifiedEmails = array();
+        $errorEmails = array();
         if (is_array($emailTo)) {
             foreach ($emailTo as $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
-                    $filterEmail['verified'] = $email;
+                    $verifiedEmails[] = $email;
                 } else {
-                    $filterEmail['error'] = $email;
+                    $errorEmails[] = $email;
                 }
             }
         } else {
             if (filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
-                $filterEmail['verified'] = $emailTo;
+                $verifiedEmails[] = $emailTo;
             } else {
-                $filterEmail['error'] = $emailTo;
+                $errorEmails[] = $emailTo;
             }
         }
+        $filterEmail = array(
+            'verified' => $verifiedEmails,
+            'error' => $errorEmails
+        );
 
         return $filterEmail;
     }
