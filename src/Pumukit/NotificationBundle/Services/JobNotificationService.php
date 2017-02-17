@@ -11,8 +11,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class JobNotificationService
 {
-    const JOB_TEMPLATE = 'PumukitNotificationBundle:Email:job.html.twig';
-
     protected $senderService;
     protected $jobService;
     protected $platformName;
@@ -78,7 +76,7 @@ class JobNotificationService
             $subject = $this->getSubjectEmail($job, $error);
             $parameters = $this->getParametersEmail($job, $multimediaObject, $subject);
 
-            $output = $this->senderService->sendNotification($emailsTo, $subject, self::JOB_TEMPLATE, $parameters, $error);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, SenderService::TEMPLATE_JOB, $parameters, $error);
 
             return $output;
         }

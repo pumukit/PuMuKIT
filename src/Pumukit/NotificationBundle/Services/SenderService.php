@@ -7,6 +7,10 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class SenderService
 {
+    const TEMPLATE_JOB = 'PumukitNotificationBundle:Email:job.html.twig';
+    const TEMPLATE_NOTIFICATION = 'PumukitNotificationBundle:Email:notification.html.twig';
+    const TEMPLATE_ERROR = 'PumukitNotificationBundle:Email:error.html.twig';
+
     private $mailer;
     private $templating;
     private $jobService;
@@ -16,7 +20,7 @@ class SenderService
     private $environment;
     private $translator;
     private $subject = "Can't send email to this address.";
-    private $template = 'PumukitNotificationBundle:Email:error.html.twig';
+    private $template = self::TEMPLATE_ERROR;
 
     public function __construct(
         $mailer,
