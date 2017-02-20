@@ -76,7 +76,7 @@ EOT
                 $oTrack = $this->jobService->createTrack($oMultimedia, $sPath, $sProfile, $sLanguage, $sDescription);
                 $output->writeln('<info> Track '.$oTrack->getId().' was imported succesfully on '.$oMultimedia->getId().'</info>');
             } catch (Exception $exception) {
-                $output->writeln('<error>' . $exception->getMessage() . '</error>');
+                $output->writeln('<error>'.$exception->getMessage().'</error>');
             }
         } else {
             $output->writeln('<error> Path is not a file: '.$sPath.'</error>');
