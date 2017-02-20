@@ -17,7 +17,7 @@ class SenderServiceTest extends WebTestCase
     private $senderName;
     private $senderEmail;
     private $adminEmail;
-    private $notificateErrorsToSender;
+    private $notificateErrorsToAdmin;
     private $environment;
 
     public function setUp()
@@ -35,10 +35,10 @@ class SenderServiceTest extends WebTestCase
         $this->senderEmail = 'sender@pumukit.org';
         $this->senderName = 'Sender Pumukit';
         $this->adminEmail = 'admin@pumukit.org';
-        $this->notificateErrorsToSender = true;
+        $this->notificateErrorsToAdmin = true;
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToSender, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToAdmin, $this->environment);
     }
 
     public function tearDown()
@@ -54,7 +54,7 @@ class SenderServiceTest extends WebTestCase
         $this->senderEmail = null;
         $this->senderName = null;
         $this->adminEmail = null;
-        $this->notificateErrorsToSender = null;
+        $this->notificateErrorsToAdmin = null;
         $this->environment = null;
         $this->senderService = null;
         gc_collect_cycles();
@@ -81,9 +81,9 @@ class SenderServiceTest extends WebTestCase
         $this->assertEquals($this->adminEmail, $this->senderService->getAdminEmail());
     }
 
-    public function testDoNotificateErrorsToSender()
+    public function testDoNotificateErrorsToAdmin()
     {
-        $this->assertEquals($this->notificateErrorsToSender, $this->senderService->doNotificateErrorsToSender());
+        $this->assertEquals($this->notificateErrorsToAdmin, $this->senderService->doNotificateErrorsToAdmin());
     }
 
     public function testSendNotification()
