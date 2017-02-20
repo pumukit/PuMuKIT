@@ -13,21 +13,20 @@ class JobNotificationService
 {
     protected $senderService;
     protected $jobService;
-    protected $platformName;
-    protected $senderName;
     protected $environment;
     protected $translator;
     protected $router;
+    protected $template;
+    protected $subjectSuccess;
+    protected $subjectFails;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment, $template, $subjectSuccess, $subjectFails)
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment = 'dev', $template, $subjectSuccess, $subjectFails)
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
         $this->translator = $translator;
         $this->router = $router;
         $this->enable = $enable;
-        $this->platformName = $platformName;
-        $this->senderName = $senderName;
         $this->environment = $environment;
         $this->template = $template;
         $this->subjectSuccess = $subjectSuccess;
@@ -100,7 +99,7 @@ class JobNotificationService
         } else {
             $message = $this->subjectSuccess;
         }
-        $subject = ($this->platformName ? $this->platformName.': ' : '').$message;
+        $subject = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
 
         return $subject;
     }
@@ -123,7 +122,7 @@ class JobNotificationService
             'job_status' => Job::$statusTexts[$job->getStatus()],
             'job' => $job,
             'commandLine' => $this->jobService->renderBat($job),
-            'sender_name' => $this->senderName,
+            'sender_name' => $this->senderService->getSenderName(),
             'multimedia_object_admin_link' => $multimediaObjectAdminLink,
         );
     }
