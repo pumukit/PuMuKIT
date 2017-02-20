@@ -17,7 +17,7 @@ class SenderService
     private $senderEmail;
     private $senderName;
     private $adminEmail;
-    private $notificateErrorsToSender;
+    private $notificateErrorsToAdmin;
     private $environment;
     private $translator;
     private $subject = "Can't send email to this address.";
@@ -31,7 +31,7 @@ class SenderService
         $senderEmail,
         $senderName,
         $adminEmail,
-        $notificateErrorsToSender,
+        $notificateErrorsToAdmin,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
@@ -41,7 +41,7 @@ class SenderService
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
         $this->adminEmail = $adminEmail;
-        $this->notificateErrorsToSender = $notificateErrorsToSender;
+        $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->environment = $environment;
     }
 
@@ -86,13 +86,13 @@ class SenderService
     }
 
     /**
-     * Do notificate errors to sender.
+     * Do notificate errors to admin.
      *
      * @return bool
      */
-    public function doNotificateErrorsToSender()
+    public function doNotificateErrorsToAdmin()
     {
-        return $this->notificateErrorsToSender;
+        return $this->notificateErrorsToAdmin;
     }
 
     /**
@@ -186,7 +186,7 @@ class SenderService
     private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
     {
         $message = \Swift_Message::newInstance();
-        if ($error && $this->notificateErrorsToSender) {
+        if ($error && $this->notificateErrorsToAdmin) {
             $message->addBcc($this->adminEmail);
         }
 
