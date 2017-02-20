@@ -22,10 +22,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('path_files')
-                    ->defaultValue('/mnt/pumukit/storage/masters/test.mp4')
-                    ->info('default path files')
-                ->end()
                 ->scalarNode('profile')
                     ->defaultValue('video_h264')
                     ->info('Profile name of track')

@@ -18,7 +18,7 @@ class ImportFileToMMOCommand extends ContainerAwareCommand
             ->setName('import:multimedia:file')
             ->setDescription('This command import file like a track on a multimedia object')
             ->addArgument('object', InputArgument::REQUIRED, 'object')
-            ->addArgument('folder', InputArgument::OPTIONAL, 'folder')
+            ->addArgument('file', InputArgument::REQUIRED, 'file')
             ->addArgument('profile', InputArgument::OPTIONAL, 'profile')
             ->addArgument('language', InputArgument::OPTIONAL, 'language')
             ->addArgument('description', InputArgument::OPTIONAL, 'description')
@@ -28,16 +28,12 @@ This command import file like a track on a multimedia object
 Example complete: 
 <info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% %profile% %language% %description%</info>
 
-Example with multimediaobjectid and folder:
+Basic example:
 <info>php app/console import:multimedia:file 58a31ce08381165d008b456a /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
 
-Example with multimediaobjectid:
-<info>php app/console import:multimedia:file 58a31ce08381165d008b456a</info>
-
-By default params folder, profile, language and description are:
+By default params profile, language and description are:
 
 <info>
-    pathfile: /mnt/pumukit/storage/masters/test.mp4
     profile: video_h264
     language: en
     description: 2017 opencast community summit
@@ -52,7 +48,6 @@ EOT
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
 
-        $this->folderFiles = $this->getContainer()->getParameter('pumukit_microsites_opencast2017.path_files');
         $this->profile = $this->getContainer()->getParameter('pumukit_microsites_opencast2017.profile');
         $this->language = $this->getContainer()->getParameter('pumukit_microsites_opencast2017.language');
         $this->aDescription = array($this->getContainer()->getParameter('pumukit_microsites_opencast2017.description'));
@@ -71,7 +66,7 @@ EOT
             echo $exception->getMessage();
         }
 
-        $sPath = ($input->getArgument('folder')) ? $input->getArgument('folder') : $this->folderFiles;
+        $sPath = $input->getArgument('file');
         if (is_file($sPath)) {
             $sProfile = ($input->getArgument('profile')) ? $input->getArgument('profile') : $this->profile;
             $sLanguage = ($input->getArgument('language')) ? $input->getArgument('language') : $this->language;
@@ -81,10 +76,10 @@ EOT
                 $oTrack = $this->jobService->createTrack($oMultimedia, $sPath, $sProfile, $sLanguage, $sDescription);
                 $output->writeln('<info> Track '.$oTrack->getId().' was imported succesfully on '.$oMultimedia->getId().'</info>');
             } catch (Exception $exception) {
-                echo $exception->getMessage();
+                $output->writeln('<error>' . $exception->getMessage() . '</error>');
             }
         } else {
-            $output->writeln('<error> Path is not a directory: '.$sPath.'</error>');
+            $output->writeln('<error> Path is not a file: '.$sPath.'</error>');
         }
     }
 }
