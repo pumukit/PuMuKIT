@@ -42,6 +42,11 @@ class Configuration implements ConfigurationInterface
               ->defaultTrue()
               ->info('Whether the sender email receives error notifications or not')
             ->end()
+            ->arrayNode('admin_email')
+              ->prototype('scalar')
+              ->defaultValue('admin@pumukit.org')
+              ->info('Email or list of emails of the administrators of the platform.')
+            ->end()
           ->end()
           ;
 
