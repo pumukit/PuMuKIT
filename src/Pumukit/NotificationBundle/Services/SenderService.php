@@ -16,6 +16,7 @@ class SenderService
     private $jobService;
     private $senderEmail;
     private $senderName;
+    private $adminEmail;
     private $notificateErrorsToSender;
     private $environment;
     private $translator;
@@ -29,6 +30,7 @@ class SenderService
         $enable,
         $senderEmail,
         $senderName,
+        $adminEmail,
         $notificateErrorsToSender,
         $environment = 'dev'
     ) {
@@ -38,6 +40,7 @@ class SenderService
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
+        $this->adminEmail = $adminEmail;
         $this->notificateErrorsToSender = $notificateErrorsToSender;
         $this->environment = $environment;
     }
@@ -70,6 +73,16 @@ class SenderService
     public function getSenderName()
     {
         return $this->senderName;
+    }
+
+    /**
+     * Get Admin email.
+     *
+     * @return string|array
+     */
+    public function getAdminEmail()
+    {
+        return $this->adminEmail;
     }
 
     /**

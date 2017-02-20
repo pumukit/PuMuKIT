@@ -15,7 +15,8 @@ class SenderServiceTest extends WebTestCase
     private $translator;
     private $enable;
     private $senderName;
-    private $senterEmail;
+    private $senderEmail;
+    private $adminEmail;
     private $notificateErrorsToSender;
     private $environment;
 
@@ -31,12 +32,13 @@ class SenderServiceTest extends WebTestCase
         $this->templating = $container->get('templating');
         $this->translator = $container->get('translator');
         $this->enable = true;
-        $this->senderEmail = 'mercefan@gmail.com';
-        $this->senderName = 'Mercefan';
+        $this->senderEmail = 'sender@pumukit.org';
+        $this->senderName = 'Sender Pumukit';
+        $this->adminEmail = 'admin@pumukit.org';
         $this->notificateErrorsToSender = true;
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->notificateErrorsToSender, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToSender, $this->environment);
     }
 
     public function tearDown()
@@ -51,6 +53,7 @@ class SenderServiceTest extends WebTestCase
         $this->enable = null;
         $this->senderEmail = null;
         $this->senderName = null;
+        $this->adminEmail = null;
         $this->notificateErrorsToSender = null;
         $this->environment = null;
         $this->senderService = null;
@@ -73,6 +76,11 @@ class SenderServiceTest extends WebTestCase
         $this->assertEquals($this->senderName, $this->senderService->getSenderName());
     }
 
+    public function testGetAdminEmail()
+    {
+        $this->assertEquals($this->adminEmail, $this->senderService->getAdminEmail());
+    }
+
     public function testDoNotificateErrorsToSender()
     {
         $this->assertEquals($this->notificateErrorsToSender, $this->senderService->doNotificateErrorsToSender());
@@ -82,11 +90,11 @@ class SenderServiceTest extends WebTestCase
     {
         $this->markTestSkipped('S');
 
-        $mailTo = 'mrey@teltek.es';
+        $mailTo = 'receiver@pumukit.org';
         $subject = 'Test sender service';
         $body = 'test send notification';
         $template = 'PumukitNotificationBundle:Email:notification.html.twig';
-        $parameters = array('subject' => $subject, 'body' => $body, 'sender_name' => 'mercefan');
+        $parameters = array('subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit');
         $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
         $this->assertEquals(1, $output);
     }
