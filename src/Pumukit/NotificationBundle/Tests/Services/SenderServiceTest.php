@@ -18,6 +18,7 @@ class SenderServiceTest extends WebTestCase
     private $senderEmail;
     private $adminEmail;
     private $notificateErrorsToAdmin;
+    private $platformName;
     private $environment;
 
     public function setUp()
@@ -36,9 +37,10 @@ class SenderServiceTest extends WebTestCase
         $this->senderName = 'Sender Pumukit';
         $this->adminEmail = 'admin@pumukit.org';
         $this->notificateErrorsToAdmin = true;
+        $this->platformName = 'Pumukit tv';
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToAdmin, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
     }
 
     public function tearDown()
@@ -55,6 +57,7 @@ class SenderServiceTest extends WebTestCase
         $this->senderName = null;
         $this->adminEmail = null;
         $this->notificateErrorsToAdmin = null;
+        $this->platformName = null;
         $this->environment = null;
         $this->senderService = null;
         gc_collect_cycles();
@@ -84,6 +87,11 @@ class SenderServiceTest extends WebTestCase
     public function testDoNotificateErrorsToAdmin()
     {
         $this->assertEquals($this->notificateErrorsToAdmin, $this->senderService->doNotificateErrorsToAdmin());
+    }
+
+    public function testGetPlatformName()
+    {
+        $this->assertEquals($this->platformName, $this->senderService->getPlatformName());
     }
 
     public function testSendNotification()

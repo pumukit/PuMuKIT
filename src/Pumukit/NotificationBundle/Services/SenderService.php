@@ -18,6 +18,7 @@ class SenderService
     private $senderName;
     private $adminEmail;
     private $notificateErrorsToAdmin;
+    private $platformName;
     private $environment;
     private $translator;
     private $subject = "Can't send email to this address.";
@@ -32,6 +33,7 @@ class SenderService
         $senderName,
         $adminEmail,
         $notificateErrorsToAdmin,
+        $platformName,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
@@ -42,6 +44,7 @@ class SenderService
         $this->senderName = $senderName;
         $this->adminEmail = $adminEmail;
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
+        $this->platformName = $platformName;
         $this->environment = $environment;
     }
 
@@ -93,6 +96,16 @@ class SenderService
     public function doNotificateErrorsToAdmin()
     {
         return $this->notificateErrorsToAdmin;
+    }
+
+    /**
+     * Get platform name.
+     *
+     * @return string
+     */
+    public function getPlatformName()
+    {
+        return $this->platformName;
     }
 
     /**

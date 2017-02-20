@@ -13,6 +13,7 @@
         <argument>%pumukit_notification.sender_name%</argument>
         <argument>%pumukit_notification.admin_email%</argument>
         <argument>%pumukit_notification.notificate_errors_to_admin%</argument>
+        <argument>%pumukit_notification.platform_name%</argument>
         <argument>%kernel.environment%</argument>
       </service>
       <service id="pumukit_notification.listener" class="Pumukit\NotificationBundle\Services\JobNotificationService">
@@ -21,7 +22,6 @@
         <argument type="service" id="translator" />
         <argument type="service" id="router" />
         <argument>%pumukit_notification.enable%</argument>
-        <argument>%pumukit_notification.platform_name%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
         <argument>%kernel.environment%</argument>
         <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />

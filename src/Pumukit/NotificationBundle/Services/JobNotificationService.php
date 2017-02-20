@@ -13,21 +13,17 @@ class JobNotificationService
 {
     protected $senderService;
     protected $jobService;
-    protected $platformName;
-    protected $senderName;
     protected $environment;
     protected $translator;
     protected $router;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment = 'dev')
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment = 'dev')
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
         $this->translator = $translator;
         $this->router = $router;
         $this->enable = $enable;
-        $this->platformName = $platformName;
-        $this->senderName = $senderName;
         $this->environment = $environment;
     }
 
@@ -97,7 +93,7 @@ class JobNotificationService
         } else {
             $message = $this->translator->trans("Job with id '".$job->getId()."' successfully finished");
         }
-        $subject = ($this->platformName ? $this->platformName.': ' : '').$message;
+        $subject = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
 
         return $subject;
     }
@@ -120,7 +116,7 @@ class JobNotificationService
             'job_status' => Job::$statusTexts[$job->getStatus()],
             'job' => $job,
             'commandLine' => $this->jobService->renderBat($job),
-            'sender_name' => $this->senderName,
+            'sender_name' => $this->senderService->getSenderName(),
             'multimedia_object_admin_link' => $multimediaObjectAdminLink,
         );
     }
