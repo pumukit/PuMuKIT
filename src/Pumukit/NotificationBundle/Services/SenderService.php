@@ -187,7 +187,7 @@ class SenderService
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToSender) {
-            $message->addBcc($this->senderEmail);
+            $message->addBcc($this->adminEmail);
         }
 
         /* Send to verified emails */
