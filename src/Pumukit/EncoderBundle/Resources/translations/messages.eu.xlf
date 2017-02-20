@@ -28,7 +28,10 @@
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
-        <target xml:lang="eu" state="translated">No tienes permisos suficientes para acceder a este contenido.</target>
+        <target xml:lang="eu" state="translated">Ez duzu beharrezko baimenak edukin hau ikusteko.</target>
+        <alt-trans>
+          <target xml:lang="eu">No tienes permisos suficientes para acceder a este contenido.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
         <source>Job info</source>

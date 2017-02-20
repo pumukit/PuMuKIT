@@ -78,7 +78,10 @@
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video" approved="yes">
         <source>Video</source>
-        <target xml:lang="eu">Vídeo</target>
+        <target xml:lang="eu">Bideoa</target>
+        <alt-trans>
+          <target xml:lang="eu">Vídeo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed" approved="yes">
         <source>Viewed</source>
@@ -90,6 +93,9 @@
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time" approved="yes">
         <source>time</source>
         <target xml:lang="eu">vez</target>
+        <alt-trans>
+          <target xml:lang="eu">aldiz</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">aldi</target>
         </alt-trans>
@@ -104,6 +110,9 @@
       <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times" approved="yes">
         <source>{0}times|{1}time|]1,Inf]times</source>
         <target xml:lang="eu">{0}veces|{1}vez|]1,Inf]veces</target>
+        <alt-trans>
+          <target xml:lang="eu">{0}aldiz|{1}aldi|]1,Inf]aldiz</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">{0}aldiz|aldi{1}|]1,Inf]aldiz</target>
         </alt-trans>
@@ -120,9 +129,9 @@
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos" approved="yes">
         <source>Videos</source>
-        <target xml:lang="eu">Vídeos</target>
+        <target xml:lang="eu">Bideoak</target>
         <alt-trans>
-          <target xml:lang="eu">Bideoak</target>
+          <target xml:lang="eu">Vídeos</target>
         </alt-trans>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours" approved="yes">
@@ -134,9 +143,9 @@
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications" approved="yes">
         <source>There are no videos with these specifications</source>
-        <target xml:lang="eu">No existen vídeos de estas características</target>
+        <target xml:lang="eu">Ez da horrelako bideorik aurkitu</target>
         <alt-trans>
-          <target xml:lang="eu">Ez da horrelako bideorik aurkitu</target>
+          <target xml:lang="eu">No existen vídeos de estas características</target>
         </alt-trans>
       </trans-unit>
       <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding" approved="yes">
@@ -464,14 +473,20 @@
       </trans-unit>
       <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target xml:lang="eu" state="translated">Bideo hau pribatua da sartze mugatuarekin</target>
+        <target xml:lang="eu" state="translated">Bideo hau pribatua da saio mugatuarekin</target>
+        <alt-trans>
+          <target xml:lang="eu">Bideo hau pribatua da sartze mugatuarekin</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Este vídeo es privado con acceso restringido</target>
         </alt-trans>
       </trans-unit>
       <trans-unit id="d2e23e955956256bed1752d5f85b0899" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
-        <target xml:lang="eu" state="translated">Sartzea beharrezkoa da ikusteko</target>
+        <target xml:lang="eu" state="translated">Saoia hastea beharrezkoa da ikusteko</target>
+        <alt-trans>
+          <target xml:lang="eu">Sartzea beharrezkoa da ikusteko</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Se requiere iniciar sesión para ver el vídeo</target>
         </alt-trans>
@@ -485,7 +500,10 @@
       </trans-unit>
       <trans-unit id="054c9692816df8b7212f4407755f82a2" resname="Manage my videos">
         <source>Manage my videos</source>
-        <target xml:lang="eu" state="translated">Administrar mis vídeos</target>
+        <target xml:lang="eu" state="translated">Nire bideoak kudeatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Administrar mis vídeos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4394c8d8e63c470de62ced3ae85de5ae" resname="Log out">
         <source>Log out</source>
@@ -496,7 +514,10 @@
       </trans-unit>
       <trans-unit id="bffe9a3c9a7e00ba00a11749e022d911" resname="Log in">
         <source>Log in</source>
-        <target xml:lang="eu" state="translated">Sartu</target>
+        <target xml:lang="eu" state="translated">Saioa hasi</target>
+        <alt-trans>
+          <target xml:lang="eu">Sartu</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Iniciar sesión</target>
         </alt-trans>
@@ -510,7 +531,10 @@
       </trans-unit>
       <trans-unit id="7e2708aeb65763c54052f57ed1a1ec1d" resname="Attachments">
         <source>Attachments</source>
-        <target xml:lang="eu" state="translated">Archivos adjuntos</target>
+        <target xml:lang="eu" state="translated">Eranskinak</target>
+        <alt-trans>
+          <target xml:lang="eu">Archivos adjuntos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="404eb0c9cf5314b4ddfa9914d2b2ce94" resname="There are no attachments">
         <source>There are no attachments</source>
@@ -521,7 +545,10 @@
       </trans-unit>
       <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
         <source>Share on Facebook</source>
-        <target xml:lang="eu" state="translated">Compartir en Facebook</target>
+        <target xml:lang="eu" state="translated">Facebook-en partekatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Compartir en Facebook</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
         <source>Share on Google +</source>
@@ -581,7 +608,10 @@
       </trans-unit>
       <trans-unit id="cb5760cc8a804f5f7085d3692f736117" resname="Search by series">
         <source>Search by series</source>
-        <target xml:lang="eu" state="translated">Búsqueda por series</target>
+        <target xml:lang="eu" state="translated">Bilaketa serieetan</target>
+        <alt-trans>
+          <target xml:lang="eu">Búsqueda por series</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
@@ -687,7 +717,10 @@
       </trans-unit>
       <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
         <source>Spanish Sign Language</source>
-        <target xml:lang="eu" state="translated">Zeinu hizkuntz espainiarra</target>
+        <target xml:lang="eu" state="translated">Espainiar zeinu hizkuntza</target>
+        <alt-trans>
+          <target xml:lang="eu">Zeinu hizkuntz espainiarra</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Zeinu hizkuntz espainola</target>
         </alt-trans>
@@ -718,7 +751,10 @@
       </trans-unit>
       <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target xml:lang="eu" state="translated">Telesaila</target>
+        <target xml:lang="eu" state="translated">serieak</target>
+        <alt-trans>
+          <target xml:lang="eu">Telesaila</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

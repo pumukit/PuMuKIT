@@ -971,9 +971,12 @@
         <source>Post</source>
         <target xml:lang="es-ES" state="translated">Puesto</target>
       </trans-unit>
-      <trans-unit id="17a53d1a012580ef609b70ef6a25d1f1" resname="Letter">
+      <trans-unit id="17a53d1a012580ef609b70ef6a25d1f1" resname="Letter" approved="yes">
         <source>Letter</source>
-        <target xml:lang="es-ES" state="translated">Carta</target>
+        <target xml:lang="es-ES">Letra</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Carta</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="5129d1f61faeedfd033bae6e66a36eb6" resname="Select any person.">
         <source>Select any person.</source>

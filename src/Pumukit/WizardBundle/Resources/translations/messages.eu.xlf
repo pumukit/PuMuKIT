@@ -14,7 +14,10 @@
       </trans-unit>
       <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target xml:lang="eu" state="translated">Webgunean agertu ahal izateko bideoa transcodifikatzea beharrezkoa da. Email bat jasoko duzu transkodifikazioa bukatzen denean bideoa webgunean eskuragarri dagoela esanez.</target>
+        <target xml:lang="eu" state="translated">Bideoa webgunean agertu ahal izateko transkodifikatu behar dugu. Email bat jasoko duzu transkodifikazioa bukatzen denean bideoa webgunean eskuragarri dagoela esanez.</target>
+        <alt-trans>
+          <target xml:lang="eu">Webgunean agertu ahal izateko bideoa transcodifikatzea beharrezkoa da. Email bat jasoko duzu transkodifikazioa bukatzen denean bideoa webgunean eskuragarri dagoela esanez.</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">El vídeo tiene que codificarse para estar disponible en la página web. Se le enviará un email, cuando finalice la codificación, notificando la disponibilidad de su vídeo.</target>
         </alt-trans>
@@ -25,7 +28,10 @@
       </trans-unit>
       <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
         <source>VIDEO</source>
-        <target xml:lang="eu" state="translated">BIDEO</target>
+        <target xml:lang="eu" state="translated">BIDEOA</target>
+        <alt-trans>
+          <target xml:lang="eu">BIDEO</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">VÍDEO</target>
         </alt-trans>
@@ -103,7 +109,10 @@
       </trans-unit>
       <trans-unit id="98787e0ea3ebdac853b739123f35ad8d" resname="Step 1: Series">
         <source>Step 1: Series</source>
-        <target xml:lang="eu" state="translated">1. urratsa: Telesaila</target>
+        <target xml:lang="eu" state="translated">1. urratsa: Seriea</target>
+        <alt-trans>
+          <target xml:lang="eu">1. urratsa: Telesaila</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="35bc5fb60ebdee8bbd4b8c68d797cb74" resname="Create a new Series for the Multimedia Object">
         <source>Create a new Series for the Multimedia Object</source>
@@ -122,7 +131,10 @@
       </trans-unit>
       <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
         <source>Step</source>
-        <target xml:lang="eu" state="translated">Hurratsa</target>
+        <target xml:lang="eu" state="translated">Urratsa</target>
+        <alt-trans>
+          <target xml:lang="eu">Hurratsa</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Paso</target>
         </alt-trans>
