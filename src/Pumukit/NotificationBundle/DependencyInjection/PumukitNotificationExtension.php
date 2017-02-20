@@ -30,6 +30,7 @@ class PumukitNotificationExtension extends Extension
         $container->setParameter('pumukit_notification.subject_success', $config['subject_success']);
         $container->setParameter('pumukit_notification.subject_fails', $config['subject_fails']);
         $container->setParameter('pumukit_notification.notificate_errors_to_sender', $config['notificate_errors_to_sender']);
+        $container->setParameter('pumukit_notification.admin_email', $config['admin_email']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
