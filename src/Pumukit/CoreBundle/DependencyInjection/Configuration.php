@@ -20,21 +20,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_core');
 
-        $rootNode
-            ->children()
-                ->scalarNode('profile')
-                    ->defaultValue('video_h264')
-                    ->info('Profile name of track')
-                ->end()
-                ->scalarNode('language')
-                    ->defaultValue('en')
-                    ->info('Language of track')
-                ->end()
-                ->scalarNode('description')
-                    ->defaultValue('2017 opencast community summit')
-                    ->info('Language of track')
-                ->end()
-            ->end();
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.

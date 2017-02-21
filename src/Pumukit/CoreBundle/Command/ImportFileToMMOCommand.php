@@ -5,6 +5,7 @@ namespace Pumukit\CoreBundle\Command;
 use Assetic\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
@@ -19,25 +20,18 @@ class ImportFileToMMOCommand extends ContainerAwareCommand
             ->setDescription('This command import file like a track on a multimedia object')
             ->addArgument('object', InputArgument::REQUIRED, 'object')
             ->addArgument('file', InputArgument::REQUIRED, 'file')
-            ->addArgument('profile', InputArgument::OPTIONAL, 'profile')
-            ->addArgument('language', InputArgument::OPTIONAL, 'language')
+            ->addOption('profile', null, InputOption::VALUE_OPTIONAL, 'profile')
+            ->addOption('language', null, InputOption::VALUE_OPTIONAL, 'language', null)
             ->addArgument('description', InputArgument::OPTIONAL, 'description')
             ->setHelp(<<<'EOT'
 This command import file like a track on a multimedia object
 
 Example complete: 
-<info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% %profile% %language% %description%</info>
+<info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
 
 Basic example:
 <info>php app/console import:multimedia:file 58a31ce08381165d008b456a /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
 
-By default params profile, language and description are:
-
-<info>
-    profile: video_h264
-    language: en
-    description: 2017 opencast community summit
-</info>
 EOT
             );
     }
@@ -47,10 +41,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
-
-        $this->profile = $this->getContainer()->getParameter('pumukit_microsites_opencast2017.profile');
-        $this->language = $this->getContainer()->getParameter('pumukit_microsites_opencast2017.language');
-        $this->aDescription = array($this->getContainer()->getParameter('pumukit_microsites_opencast2017.description'));
+        $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -68,9 +59,9 @@ EOT
 
         $sPath = $input->getArgument('file');
         if (is_file($sPath)) {
-            $sProfile = ($input->getArgument('profile')) ? $input->getArgument('profile') : $this->profile;
-            $sLanguage = ($input->getArgument('language')) ? $input->getArgument('language') : $this->language;
-            $sDescription = ($input->getArgument('description')) ? array($input->getArgument('description')) : $this->aDescription;
+            $sProfile = ($input->getOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();
+            $sLanguage = ($input->getOption('language')) ? $input->getOption('language') : null;
+            $sDescription = ($input->getArgument('description')) ? array($input->getArgument('description')) : '';
 
             try {
                 $oTrack = $this->jobService->createTrack($oMultimedia, $sPath, $sProfile, $sLanguage, $sDescription);

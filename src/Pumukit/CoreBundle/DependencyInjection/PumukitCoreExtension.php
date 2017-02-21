@@ -22,10 +22,6 @@ class PumukitCoreExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('pumukit_core.profile', $config['profile']);
-        $container->setParameter('pumukit_core.language', $config['language']);
-        $container->setParameter('pumukit_core.description', $config['description']);
-
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
