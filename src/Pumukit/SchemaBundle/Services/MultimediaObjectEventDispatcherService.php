@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Event\MultimediaObjectCloneEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
@@ -67,5 +68,21 @@ class MultimediaObjectEventDispatcherService
     {
         $event = new MultimediaObjectEvent($multimediaObject);
         $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_DELETE, $event);
+    }
+
+    /**
+     * Dispatch clone.
+     *
+     * Dispatchs the event MULTIMEDIAOBJECT_CLONE
+     * 'multimediaobject.clone' passing
+     * the multimedia object
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param MultimediaObject $multimediaObjectCloned
+     */
+    public function dispatchClone(MultimediaObject $multimediaObject, MultimediaObject $multimediaObjectCloned)
+    {
+        $event = new MultimediaObjectCloneEvent($multimediaObject, $multimediaObjectCloned);
+        $this->dispatcher->dispatch(SchemaEvents::MULTIMEDIAOBJECT_CLONE, $event);
     }
 }
