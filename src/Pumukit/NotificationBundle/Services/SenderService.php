@@ -134,6 +134,7 @@ class SenderService
                     $error
                 );
             }
+
             if ($filterEmail['error']) {
                 $parameters['body'] = $filterEmail['error'];
 
