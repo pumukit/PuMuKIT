@@ -18,7 +18,7 @@ class JobNotificationService
     private $translator;
     private $router;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment = 'dev', $template, $subjectSuccess, $subjectFails)
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment, $template, $subjectSuccess, $subjectFails)
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
@@ -93,7 +93,8 @@ class JobNotificationService
             $errorMessage = $this->subjectFails;
             $subject = ($this->platformName ? $this->platformName.': ' : '').$errorMessage;
             $template = $this->template;
-            var_dump($errorMessage);die;
+            var_dump($errorMessage);
+            die;
             $parameters = array(
                                 'subject' => $subject,
                                 'job_status' => Job::$statusTexts[$job->getStatus()],
