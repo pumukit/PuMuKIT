@@ -4090,6 +4090,14 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Multimedia List</source>
         <target xml:lang="eu" state="translated">Multimedia Zerrenda</target>
       </trans-unit>
+      <trans-unit id="22e52e2af80f11e6bc6492361f002671" resname="Expired video list">
+        <source>Expired video list</source>
+        <target xml:lang="eu" state="translated">Iraungitako bideoak</target>
+      </trans-unit>
+      <trans-unit id="22e530bef80f11e6bc6492361f002671" resname="Edit Templates">
+        <source>Edit templates</source>
+        <target xml:lang="eu" state="translated">Txantiloiak editatu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

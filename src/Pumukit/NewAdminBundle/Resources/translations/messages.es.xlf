@@ -2631,6 +2631,14 @@
           <target xml:lang="es-ES">Listado objectos multimedia</target>
         </alt-trans>
       </trans-unit>
+      <trans-unit id="22e52e2af80f11e6bc6492361f002671" resname="Expired video list">
+        <source>Expired video list</source>
+        <target xml:lang="es-ES" state="translated">Vídeos caducados</target>
+      </trans-unit>
+      <trans-unit id="22e530bef80f11e6bc6492361f002671" resname="Edit Templates">
+        <source>Edit templates</source>
+        <target xml:lang="es-ES" state="translated">Editar plantillas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
