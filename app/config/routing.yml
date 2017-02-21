@@ -37,11 +37,6 @@ pumukit_live:
     type:     annotation
     prefix:   /
 
-pumukit_new_admin_tmp:
-    resource: "@PumukitNewAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /admin
-
 pumukit_web_tv_file:
     resource: @PumukitWebTVBundle/Resources/config/routing.yml
     prefix:   /
