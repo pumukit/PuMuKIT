@@ -4,7 +4,10 @@
     <body>
       <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
         <source>Current live event</source>
-        <target xml:lang="eu" state="translated">Momentuko zuzenezko emanaldia</target>
+        <target xml:lang="eu" state="translated">Momentuko zuzeneko emanaldia</target>
+        <alt-trans>
+          <target xml:lang="eu">Momentuko zuzenezko emanaldia</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Evento en vivo actual</target>
         </alt-trans>
