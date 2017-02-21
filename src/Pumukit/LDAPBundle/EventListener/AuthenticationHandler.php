@@ -32,12 +32,14 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $token->getUser()->getUsername());
+        $username = strtoupper($token->getUser()->getUsername());
+
+        $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $username);
         if (!isset($info) || !$info) {
             throw new \RuntimeException('User not found.');
         }
 
-        $user = $this->ldapUserService->createUser($info, $token->getUser()->getUsername());
+        $user = $this->ldapUserService->createUser($info, $username);
 
         $token = new UsernamePasswordToken($user, null, 'user', $user->getRoles());
         $this->container->get('security.context')->setToken($token);
