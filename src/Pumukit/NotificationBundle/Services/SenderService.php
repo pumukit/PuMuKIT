@@ -119,12 +119,13 @@ class SenderService
      *
      * @return bool
      */
-    public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
+    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
         if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
-            if (isset($filterEmail['verified'])) {
+            if ($filterEmail['verified']) {
+
                 $sent = $this->sendEmailTemplate(
                     $filterEmail['verified'],
                     $subject,
@@ -134,8 +135,9 @@ class SenderService
                 );
             }
 
-            if (isset($filterEmail['error'])) {
+            if ($filterEmail['error']) {
                 $parameters['body'] = $filterEmail['error'];
+
                 $this->sendEmailTemplate(
                     $this->senderEmail,
                     $this->subject,
