@@ -60,6 +60,18 @@ final class SchemaEvents
     const MULTIMEDIAOBJECT_CREATE = 'multimediaobject.create';
 
     /**
+     * The multimediaobject.clone event is thrown each time a
+     * multimedia object is cloned.
+     *
+     * The event listener receives an
+     * Pumukit\SchemaBundle\Event\MultimediaObjectEvent instance
+     * and the same cloned
+     *
+     * @var string
+     */
+    const MULTIMEDIAOBJECT_CLONE = 'multimediaobject.clone';
+
+    /**
      * The multimediaobject.delete event is thrown each time a
      * multimedia object is deleted.
      *

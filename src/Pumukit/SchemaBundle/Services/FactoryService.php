@@ -478,6 +478,8 @@ class FactoryService
         $this->dm->persist($new);
         $this->dm->flush();
 
+        $this->mmsDispatcher->dispatchClone($src, $new);
+
         return $new;
     }
 
