@@ -31,6 +31,7 @@ class Permission
     const ACCESS_API = 'ROLE_ACCESS_API';
     const ACCESS_INBOX = 'ROLE_ACCESS_INBOX';
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
+    const ADD_OWNER = 'ROLE_ADD_OWNER';
     const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
     const SHOW_CODES = 'ROLE_SHOW_CODES';
 
@@ -198,6 +199,13 @@ class Permission
         ),
         self::MODIFY_OWNER => array(
             'description' => 'Modify Owners & Groups',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::ADD_OWNER => array(
+            'description' => 'Add Owners',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
