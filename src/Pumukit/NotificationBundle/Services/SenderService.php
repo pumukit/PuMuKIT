@@ -125,7 +125,6 @@ class SenderService
 
         if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
             if ($filterEmail['verified']) {
-
                 $sent = $this->sendEmailTemplate(
                     $filterEmail['verified'],
                     $subject,
