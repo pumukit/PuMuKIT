@@ -18,7 +18,7 @@ class JobNotificationService
     private $translator;
     private $router;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment = 'dev')
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $platformName, $senderName, $environment, $template, $subjectSuccess, $subjectFails)
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
@@ -28,6 +28,9 @@ class JobNotificationService
         $this->platformName = $platformName;
         $this->senderName = $senderName;
         $this->environment = $environment;
+        $this->template = $template;
+        $this->subjectSuccess = $subjectSuccess;
+        $this->subjectFails = $subjectFails;
     }
 
     /**
@@ -50,9 +53,9 @@ class JobNotificationService
             $multimediaObject = $event->getMultimediaObject();
             $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
-            $successMessage = $this->translator->trans("Job with id '".$job->getId()."' successfully finished");
+            $successMessage = $this->subjectSuccess;
             $subject = ($this->platformName ? $this->platformName.': ' : '').$successMessage;
-            $template = 'PumukitNotificationBundle:Email:job.html.twig';
+            $template = $this->template;
             $parameters = array(
                                 'subject' => $subject,
                                 'job_status' => Job::$statusTexts[$job->getStatus()],
@@ -87,9 +90,9 @@ class JobNotificationService
             $multimediaObject = $event->getMultimediaObject();
             $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
-            $errorMessage = $this->translator->trans("Job with id '".$job->getId()."' failed");
+            $errorMessage = $this->subjectFails;
             $subject = ($this->platformName ? $this->platformName.': ' : '').$errorMessage;
-            $template = 'PumukitNotificationBundle:Email:job.html.twig';
+            $template = $this->template;
             $parameters = array(
                                 'subject' => $subject,
                                 'job_status' => Job::$statusTexts[$job->getStatus()],

@@ -23,6 +23,9 @@
         <argument>%pumukit_notification.platform_name%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
         <argument>%kernel.environment%</argument>
+        <argument>%pumukit_notification.template%</argument>
+        <argument>%pumukit_notification.subject_success%</argument>
+        <argument>%pumukit_notification.subject_fails%</argument>
         <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
         <tag name="kernel.event_listener" event="job.error" method="onJobError" />
       </service>
