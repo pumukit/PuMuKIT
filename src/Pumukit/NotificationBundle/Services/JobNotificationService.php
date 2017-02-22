@@ -93,8 +93,6 @@ class JobNotificationService
             $errorMessage = $this->subjectFails;
             $subject = ($this->platformName ? $this->platformName.': ' : '').$errorMessage;
             $template = $this->template;
-            var_dump($errorMessage);
-            die;
             $parameters = array(
                                 'subject' => $subject,
                                 'job_status' => Job::$statusTexts[$job->getStatus()],
