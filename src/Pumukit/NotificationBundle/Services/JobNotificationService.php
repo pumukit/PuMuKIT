@@ -20,7 +20,7 @@ class JobNotificationService
     protected $subjectSuccess;
     protected $subjectFails;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment = 'dev', $template, $subjectSuccess, $subjectFails)
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails)
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
