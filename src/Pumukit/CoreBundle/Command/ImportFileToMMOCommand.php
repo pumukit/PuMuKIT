@@ -54,7 +54,7 @@ EOT
                 array('id' => new \MongoId($input->getArgument('object')))
             );
         } catch (Exception $exception) {
-            echo $exception->getMessage();
+            $output->writeln('<error>'.$exception->getMessage().'</error>');
         }
 
         $sPath = $input->getArgument('file');
