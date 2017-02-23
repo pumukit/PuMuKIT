@@ -33,6 +33,7 @@
             <argument type="service" id="pumukit_ldap.ldap" />
             <argument type="service" id="pumukitschema.permissionprofile" />
             <argument type="service" id="pumukitschema.group" />
+            <argument type="service" id="logger"/>
         </service>
     </services>
 </container>
