@@ -15,8 +15,10 @@ class SenderServiceTest extends WebTestCase
     private $translator;
     private $enable;
     private $senderName;
-    private $senterEmail;
-    private $notificateErrorsToSender;
+    private $senderEmail;
+    private $adminEmail;
+    private $notificateErrorsToAdmin;
+    private $platformName;
     private $environment;
 
     public function setUp()
@@ -31,12 +33,14 @@ class SenderServiceTest extends WebTestCase
         $this->templating = $container->get('templating');
         $this->translator = $container->get('translator');
         $this->enable = true;
-        $this->senderEmail = 'mercefan@gmail.com';
-        $this->senderName = 'Mercefan';
-        $this->notificateErrorsToSender = true;
+        $this->senderEmail = 'sender@pumukit.org';
+        $this->senderName = 'Sender Pumukit';
+        $this->adminEmail = 'admin@pumukit.org';
+        $this->notificateErrorsToAdmin = true;
+        $this->platformName = 'Pumukit tv';
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->notificateErrorsToSender, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
     }
 
     public function tearDown()
@@ -51,7 +55,9 @@ class SenderServiceTest extends WebTestCase
         $this->enable = null;
         $this->senderEmail = null;
         $this->senderName = null;
-        $this->notificateErrorsToSender = null;
+        $this->adminEmail = null;
+        $this->notificateErrorsToAdmin = null;
+        $this->platformName = null;
         $this->environment = null;
         $this->senderService = null;
         gc_collect_cycles();
@@ -73,20 +79,30 @@ class SenderServiceTest extends WebTestCase
         $this->assertEquals($this->senderName, $this->senderService->getSenderName());
     }
 
-    public function testDoNotificateErrorsToSender()
+    public function testGetAdminEmail()
     {
-        $this->assertEquals($this->notificateErrorsToSender, $this->senderService->doNotificateErrorsToSender());
+        $this->assertEquals($this->adminEmail, $this->senderService->getAdminEmail());
+    }
+
+    public function testDoNotificateErrorsToAdmin()
+    {
+        $this->assertEquals($this->notificateErrorsToAdmin, $this->senderService->doNotificateErrorsToAdmin());
+    }
+
+    public function testGetPlatformName()
+    {
+        $this->assertEquals($this->platformName, $this->senderService->getPlatformName());
     }
 
     public function testSendNotification()
     {
         $this->markTestSkipped('S');
 
-        $mailTo = 'mrey@teltek.es';
+        $mailTo = 'receiver@pumukit.org';
         $subject = 'Test sender service';
         $body = 'test send notification';
         $template = 'PumukitNotificationBundle:Email:notification.html.twig';
-        $parameters = array('subject' => $subject, 'body' => $body, 'sender_name' => 'mercefan');
+        $parameters = array('subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit');
         $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
         $this->assertEquals(1, $output);
     }

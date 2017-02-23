@@ -51,6 +51,7 @@ class JobNotificationServiceTest extends WebTestCase
     public function testOnJobSuccess()
     {
         $multimediaObject = $this->createNewMultimediaObjectWithTrack();
+        $track = $multimediaObject->getTracks()[0];
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 
@@ -58,7 +59,7 @@ class JobNotificationServiceTest extends WebTestCase
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $event = new JobEvent($job);
+        $event = new JobEvent($job, $track, $multimediaObject);
         $output = $this->jobNotificationService->onJobSuccess($event);
 
         $this->assertEquals(1, $output);
@@ -68,6 +69,7 @@ class JobNotificationServiceTest extends WebTestCase
     public function testOnJobError()
     {
         $multimediaObject = $this->createNewMultimediaObjectWithTrack();
+        $track = $multimediaObject->getTracks()[0];
 
         $job = $this->createNewJob(Job::STATUS_WAITING, $multimediaObject);
 
@@ -75,10 +77,10 @@ class JobNotificationServiceTest extends WebTestCase
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $event = new JobEvent($job);
+        $event = new JobEvent($job, $track, $multimediaObject);
         $output = $this->jobNotificationService->onJobError($event);
 
-        $this->assertEquals(2, $output);
+        $this->assertEquals(1, $output);
         $this->assertEquals(1, count($this->repo->findAll()));
     }
 

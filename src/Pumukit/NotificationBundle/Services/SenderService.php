@@ -7,16 +7,22 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class SenderService
 {
+    const TEMPLATE_JOB = 'PumukitNotificationBundle:Email:job.html.twig';
+    const TEMPLATE_NOTIFICATION = 'PumukitNotificationBundle:Email:notification.html.twig';
+    const TEMPLATE_ERROR = 'PumukitNotificationBundle:Email:error.html.twig';
+
     private $mailer;
     private $templating;
     private $jobService;
     private $senderEmail;
     private $senderName;
-    private $notificateErrorsToSender;
+    private $adminEmail;
+    private $notificateErrorsToAdmin;
+    private $platformName;
     private $environment;
     private $translator;
     private $subject = "Can't send email to this address.";
-    private $template = 'PumukitExpiredVideoBundle:Email:error.html.twig';
+    private $template = self::TEMPLATE_ERROR;
 
     public function __construct(
         $mailer,
@@ -25,7 +31,9 @@ class SenderService
         $enable,
         $senderEmail,
         $senderName,
-        $notificateErrorsToSender,
+        $adminEmail,
+        $notificateErrorsToAdmin,
+        $platformName,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
@@ -34,7 +42,9 @@ class SenderService
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
-        $this->notificateErrorsToSender = $notificateErrorsToSender;
+        $this->adminEmail = $adminEmail;
+        $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
+        $this->platformName = $platformName;
         $this->environment = $environment;
     }
 
@@ -69,13 +79,33 @@ class SenderService
     }
 
     /**
-     * Do notificate errors to sender.
+     * Get Admin email.
+     *
+     * @return string|array
+     */
+    public function getAdminEmail()
+    {
+        return $this->adminEmail;
+    }
+
+    /**
+     * Do notificate errors to admin.
      *
      * @return bool
      */
-    public function doNotificateErrorsToSender()
+    public function doNotificateErrorsToAdmin()
     {
-        return $this->notificateErrorsToSender;
+        return $this->notificateErrorsToAdmin;
+    }
+
+    /**
+     * Get platform name.
+     *
+     * @return string
+     */
+    public function getPlatformName()
+    {
+        return $this->platformName;
     }
 
     /**
@@ -89,12 +119,12 @@ class SenderService
      *
      * @return bool
      */
-    public function sendNotification($emailTo, $subject, $template, $parameters = array(), $error = true)
+    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
         if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
-            if (isset($filterEmail['verified'])) {
+            if ($filterEmail['verified']) {
                 $sent = $this->sendEmailTemplate(
                     $filterEmail['verified'],
                     $subject,
@@ -104,8 +134,9 @@ class SenderService
                 );
             }
 
-            if (isset($filterEmail['error'])) {
+            if ($filterEmail['error']) {
                 $parameters['body'] = $filterEmail['error'];
+
                 $this->sendEmailTemplate(
                     $this->senderEmail,
                     $this->subject,
@@ -130,22 +161,27 @@ class SenderService
      */
     private function filterEmail($emailTo)
     {
-        $filterEmail = array();
+        $verifiedEmails = array();
+        $errorEmails = array();
         if (is_array($emailTo)) {
             foreach ($emailTo as $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
-                    $filterEmail['verified'] = $email;
+                    $verifiedEmails[] = $email;
                 } else {
-                    $filterEmail['error'] = $email;
+                    $errorEmails[] = $email;
                 }
             }
         } else {
             if (filter_var($emailTo, FILTER_VALIDATE_EMAIL)) {
-                $filterEmail['verified'] = $emailTo;
+                $verifiedEmails[] = $emailTo;
             } else {
-                $filterEmail['error'] = $emailTo;
+                $errorEmails[] = $emailTo;
             }
         }
+        $filterEmail = array(
+            'verified' => $verifiedEmails,
+            'error' => $errorEmails,
+        );
 
         return $filterEmail;
     }
@@ -164,8 +200,8 @@ class SenderService
     private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
     {
         $message = \Swift_Message::newInstance();
-        if ($error && $this->notificateErrorsToSender) {
-            $message->addBcc($this->senderEmail);
+        if ($error && $this->notificateErrorsToAdmin) {
+            $message->addBcc($this->adminEmail);
         }
 
         /* Send to verified emails */

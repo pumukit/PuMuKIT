@@ -32,7 +32,7 @@
                      return false;">
       {% trans %}Use{% endtrans %}
     </button>
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+    {% if app.user and ((role.cod != personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE'))) or ((role.cod == personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
     <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
             id="create_relation" href="#"
             onclick="var aux = $('#name').val();

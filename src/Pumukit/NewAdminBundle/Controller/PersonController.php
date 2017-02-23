@@ -178,7 +178,7 @@ class PersonController extends AdminController implements NewAdminController
     public function listAutocompleteAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
-            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+            $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
         $config = $this->getConfiguration();
@@ -192,6 +192,12 @@ class PersonController extends AdminController implements NewAdminController
         $ldapEnabled = $this->container->has('pumukit_ldap.ldap');
 
         $owner = $request->get('owner', false);
+        $personService = $this->get('pumukitschema.person');
+        try {
+            $personalScopeRole = $personService->getPersonalScopeRole();
+        } catch (\Exception $e) {
+            return new Response($e, Response::HTTP_BAD_REQUEST);
+        }
 
         return array(
                      'people' => $resources,
@@ -200,6 +206,7 @@ class PersonController extends AdminController implements NewAdminController
                      'template' => $template,
                      'ldap_enabled' => $ldapEnabled,
                      'owner' => $owner,
+                     'personal_scope_role_code' => $personalScopeRole->getCod(),
                      );
     }
 
@@ -352,7 +359,7 @@ class PersonController extends AdminController implements NewAdminController
     public function linkAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
-            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+            $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
         $personService = $this->get('pumukitschema.person');
@@ -420,7 +427,7 @@ class PersonController extends AdminController implements NewAdminController
     public function upAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
-            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+            $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
         $personService = $this->get('pumukitschema.person');
@@ -458,7 +465,7 @@ class PersonController extends AdminController implements NewAdminController
     public function downAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
-            $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
+            $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
         $personService = $this->get('pumukitschema.person');

@@ -1,3 +1,13 @@
+pumukit_new_admin_parent:
+    resource: "../../src/Pumukit/NewAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+pumukit_new_admin:
+    resource: "@PumukitNewAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 pumukitnewadmin_js:
     pattern: /admin/pumukit2.js
     methods: [GET]

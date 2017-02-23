@@ -16,5 +16,9 @@
       <argument>%pumukitschema.enable_add_user_as_person%</argument>
       <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
+    <service id="pumukitcore.twig_extension" class="Pumukit\CoreBundle\Twig\CoreExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="service_container"/>
+    </service>
   </services>
 </container>
