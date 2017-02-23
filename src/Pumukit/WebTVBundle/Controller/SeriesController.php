@@ -23,7 +23,7 @@ class SeriesController extends Controller implements WebTVController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $objects = $mmobjRepo->createBuilderWithSeriesAndStatus($series, array(MultimediaObject::STATUS_PUBLISHED), array('rank', 1));
+        $objects = $mmobjRepo->createBuilderWithSeriesAndStatus($series, array(MultimediaObject::STATUS_PUBLISHED), array('rank' => 1));
 
         $pagerfanta = $this->createPager($objects, $request->query->get('page', 1));
 
@@ -44,7 +44,7 @@ class SeriesController extends Controller implements WebTVController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $objects = $mmobjRepo->createBuilderWithSeries($series);
+        $objects = $mmobjRepo->createBuilderWithSeries($series, array('rank' => 1));
 
         $pagerfanta = $this->createPager($objects, $request->query->get('page', 1));
 
