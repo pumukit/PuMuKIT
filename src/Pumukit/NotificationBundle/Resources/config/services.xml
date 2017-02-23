@@ -22,7 +22,6 @@
         <argument type="service" id="translator" />
         <argument type="service" id="router" />
         <argument>%pumukit_notification.enable%</argument>
-        <argument>%pumukit_notification.sender_name%</argument>
         <argument>%kernel.environment%</argument>
         <argument>%pumukit_notification.template%</argument>
         <argument>%pumukit_notification.subject_success%</argument>
