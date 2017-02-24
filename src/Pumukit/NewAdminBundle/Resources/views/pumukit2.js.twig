@@ -331,7 +331,7 @@ window.extract_pic = function(trackId, mmId, numframe)
 {
     var url = "{{ path('pumukitnewadmin_track_pic', {'id': '__trackId__', 'mmId': '__mmId__', 'preview': 1, 'numframe': '__numframe__'})|raw }}";
     $.ajax({
-	url: url.replace('__mmId__', mmId).replace('__trackId__', trackId).replace('__numframe__', numframe),
+    url: url.replace('__mmId__', mmId).replace('__trackId__', trackId).replace('__numframe__', numframe),
         type: 'POST',
         beforeSend: function(){
             $('#pic_mms_' + mmId +'_load').show();
@@ -430,7 +430,7 @@ window.submit_series_change_pub = function()
             var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
             channels[channelsId[i]] = channel.prop('checked')
         }
-        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};        
+        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};
     });
     if (values.size == 0) return false;
 
@@ -457,41 +457,41 @@ window.change_select = function(element, selector, pluralName, seriesId)
     case 'transc_pause':
         if (confirm('Pausar videos')) {
             new Ajax.Updater('list_transcoders', '/editar.php/transcoders/pause', {
-		            asynchronous: true,
-		            evalScripts: true,
+                    asynchronous: true,
+                    evalScripts: true,
                 onSuccess:  selector.selectedIndex = 0,
-		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			    );
+                    parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+                );
         }
         break;
     case 'transc_play':
         if (confirm('Reanudar videos')) {
             new Ajax.Updater('list_transcoders', '/editar.php/transcoders/continue', {
-		            asynchronous: true,
-		            evalScripts: true,
+                    asynchronous: true,
+                    evalScripts: true,
                 onSuccess:  selector.selectedIndex = 0,
-		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			    );
+                    parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+                );
         }
         break;
     case 'transc_borrar':
         if (confirm('Borrar objetos multimedia')) {
             new Ajax.Updater('list_transcoders', '/editar.php/transcoders/delete', {
-		asynchronous: true,
-		evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
                 onSuccess:  selector.selectedIndex = 0,
-		parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			    );
+        parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+                );
         }
         break;
     case 'transc_limpiar':
         if (confirm('Limpiar videos completados del listado')) {
             new Ajax.Updater('list_transcoders', '/editar.php/transcoders/clean', {
-		            asynchronous: true,
-		            evalScripts: true,
+                    asynchronous: true,
+                    evalScripts: true,
                 onSuccess:  selector.selectedIndex = 0,
-		            parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			    );
+                    parameters: 'ids='+$$('.transcoder_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+                );
         }
         break;
 */
@@ -561,26 +561,26 @@ window.change_select = function(element, selector, pluralName, seriesId)
         break;
 /* TODO
     case 'serial_master':
-	Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
+    Modalbox.show('/editar.php/transcoders/masterserial', {title:'Master Multimedia', width:800});
         selector.selectedIndex = 0;
         break;
       //separar honores sel
     case 'inv_working_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+            );
         break;
       //separar honores sel
     case 'inv_working_all':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/working', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'all=1'}
-			);
+        parameters: 'all=1'}
+            );
         break;
 */
     case 'order_rec_date_asc':
@@ -646,35 +646,35 @@ window.change_select = function(element, selector, pluralName, seriesId)
       //status mm
     case 'set_status_0_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/0', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+            );
         break;
     case 'set_status_1_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/1', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+            );
         break;
     case 'set_status_2_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/2', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+            );
         break;
     case 'set_status_3_sel':
         new Ajax.Updater('list_'+element+'s', '/editar.php/'+element+'s/change/status/3', {
-	    asynchronous: true,
-	    evalScripts: true,
+        asynchronous: true,
+        evalScripts: true,
             onSuccess:  selector.selectedIndex = 0,
-	    parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
-			);
+        parameters: 'ids='+$$('.'+element+'_checkbox:checked').invoke('getAttribute', 'id').toJSON()}
+            );
         break;
 */
     case 'invert_announce_selected':
@@ -765,12 +765,12 @@ function select_tree_tag(element)
   return false;
 }
 
-function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod) 
+function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 {
   parent = $(element.parentElement);
   if (parent.hasClass("notload")) {
     parent.removeClass("notload");
-  
+
     var route = "{{ path('pumukitnewadmin_mms_getchildrentag', {'id': 'PLACEHOLDER_TAG_ID'})|raw }}";
     route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', id);
 
@@ -780,14 +780,14 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
     parent.addClass("expanded").removeClass("collapsed");
   } else {
     if (parent.hasClass("expanded")) {
-      $(".c_" + tag_cod).hide();      
+      $(".c_" + tag_cod).hide();
       $(".c_" + tag_cod+".expanded").removeClass("expanded").addClass("collapsed");
       parent.removeClass("expanded").addClass("collapsed");
     } else {
       $(".tag_li_parent_" + id).show();
       parent.addClass("expanded").removeClass("collapsed");
     }
-    
+
   }
 
 }
@@ -837,7 +837,7 @@ function inc_num_mm(tag_id, num)
   }
 }
 
-function add_tree_tag(tag_id, mm_id, block_tag_id) 
+function add_tree_tag(tag_id, mm_id, block_tag_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
@@ -854,14 +854,14 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
 }
 
 
-function del_tree_tag(tag_id, mm_id) 
+function del_tree_tag(tag_id, mm_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
   route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
   $.ajax({
-    url: route, 
+    url: route,
     type: 'DELETE',
-    parameters: {'_method': 'DELETE'}, 
+    parameters: {'_method': 'DELETE'},
     success: function(response){
       for (var i=0; i<response.deleted.length; i++) {
         var c = response.deleted[i];
@@ -899,14 +899,14 @@ function filter_series(form)
     if (to_date.val() != "" && from_date.val() >= to_date.val()) {
         to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
     }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());    
+        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());
     }
-  
+
     return false;
 }
 
 function comprobar_date(date, re){
-    return !re.test(date); 
+    return !re.test(date);
 }
 
 procesaOk = function(){
@@ -972,18 +972,18 @@ $(function() {
     route = route.replace('__seriesId__', seriesId);
     $.ajax(route, {
             type: 'GET',
-	    error: function(jqXHR, textStatus, errorThrown){
+        error: function(jqXHR, textStatus, errorThrown){
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
                         no_success(errorThrown+': '+textStatus+', '+message);
-	    },
-	    success: function(response, textStatus, jqXHR){
-			var seriesId = response['seriesId'];
-			var mmId = response['mmId'];
+        },
+        success: function(response, textStatus, jqXHR){
+            var seriesId = response['seriesId'];
+            var mmId = response['mmId'];
 
-			// NOTE: Important to call listAction first to update multimedia object id in session
-			var routeList = "{{ path('pumukitnewadmin_mms_list', {'id': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
-			routeList = routeList.replace('__newMmId__', mmId);
+            // NOTE: Important to call listAction first to update multimedia object id in session
+            var routeList = "{{ path('pumukitnewadmin_mms_list', {'id': '__seriesId__', 'newMmId': '__newMmId__'}) }}";
+            routeList = routeList.replace('__newMmId__', mmId);
             $('#list_mms').load(routeList.replace('__seriesId__', seriesId), {'_method':'POST'}, function(){
                 var routeShow = "{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}";
                 $('#preview_mm').load(routeShow.replace('__mmId__', mmId), {'_method':'POST'});
@@ -994,8 +994,8 @@ $(function() {
                     init_tabs();
                 });
             });
-			success('{% trans %}Multimedia Object successfully created.{% endtrans %}');
-	    }
+            success('{% trans %}Multimedia Object successfully created.{% endtrans %}');
+        }
     });
 
     return false;
@@ -1010,9 +1010,9 @@ $(function() {
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
                         no_success(errorThrown+': '+textStatus+', '+message);
-	        },
+            },
             success: function(response, textStatus, jqXHR){
-			    var seriesId = response['seriesId'];
+                var seriesId = response['seriesId'];
 
                 // NOTE: Important to call listAction first to update series id in session
                 var routeList = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__seriesId__'})|raw }}";
@@ -1024,8 +1024,8 @@ $(function() {
                         init_tabs();
                     });
                 });
-	            success('{% trans %}Series successfully created.{% endtrans %}');
-	        }
+                success('{% trans %}Series successfully created.{% endtrans %}');
+            }
     });
     return false;
   });
@@ -1092,7 +1092,7 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_selecte
     $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
 });
- 
+
 $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
@@ -1323,8 +1323,8 @@ test_url_generation = function(url){
 
 comprobar_form_file_nmb = function(file){
     if (file == ""){
-	$('#error_file').show();
-	return false;
+    $('#error_file').show();
+    return false;
     }
     return true;
 }
@@ -1413,9 +1413,9 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                     if(type == 'dir') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' + 
-                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' + 
-                                 '{% trans %}This directory{% endtrans %}' + 
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
+                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
+                                 '{% trans %}This directory{% endtrans %}' +
                                  '</a>';
                     }
                   }
@@ -1936,8 +1936,8 @@ function test_material_form_url(url){
     $('.error').hide();
 
     if (test_url_generation(url)){
-    	$('#error_url').show();
-	    return false;
+        $('#error_url').show();
+        return false;
     }
     $('#myModal').modal('hide');
     return true;
@@ -1946,8 +1946,8 @@ function test_material_form_url(url){
 function test_material_form_file_nmb(file){
     $('.error').hide();
     if (file == ""){
-    	$('#error_file').show();
-	    return false;
+        $('#error_file').show();
+        return false;
     }
 
     return true;
