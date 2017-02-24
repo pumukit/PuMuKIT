@@ -9,15 +9,20 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class LDAPUserService
 {
+    const EDU_PERSON_AFFILIATION = 'edupersonaffiliation';
+    const IRISCLASSIFCODE = 'irisclassifcode';
+
     protected $dm;
     protected $userService;
-    protected $LDAPService;
+    protected $ldapService;
     protected $permissionProfile;
+    protected $logger;
 
-    public function __construct(DocumentManager $documentManager, UserService $userService, PersonService $personService, LDAPService $LDAPService, PermissionProfileService $permissionProfile, GroupService $groupService)
+    public function __construct(DocumentManager $documentManager, UserService $userService, PersonService $personService, LDAPService $LDAPService, PermissionProfileService $permissionProfile, GroupService $groupService, LoggerInterface $logger)
     {
         $this->dm = $documentManager;
         $this->userService = $userService;
@@ -25,6 +30,7 @@ class LDAPUserService
         $this->ldapService = $LDAPService;
         $this->permissionProfileService = $permissionProfile;
         $this->groupService = $groupService;
+        $this->logger = $logger;
     }
 
     public function createUser($info, $username)
@@ -68,20 +74,30 @@ class LDAPUserService
         $this->userService->create($user);
         $this->personService->referencePersonIntoUser($user);
 
-        if (isset($info['edupersonaffiliation'][0])) {
-            foreach ($info['edupersonaffiliation'] as $key => $value) {
+        if (isset($info[self::EDU_PERSON_AFFILIATION][0])) {
+            foreach ($info[self::EDU_PERSON_AFFILIATION] as $key => $value) {
                 if ('count' !== $key) {
-                    $group = $this->getGroup($value);
-                    $this->userService->addGroup($group, $user, true, false);
+                    try {
+                        $group = $this->getGroup($value, self::EDU_PERSON_AFFILIATION);
+                        $this->userService->addGroup($group, $user, true, false);
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\Exception $e) {
+                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                    }
                 }
             }
         }
 
-        if (isset($info['irisclassifcode'][0])) {
-            foreach ($info['irisclassifcode'] as $key => $value) {
+        if (isset($info[self::IRISCLASSIFCODE][0])) {
+            foreach ($info[self::IRISCLASSIFCODE] as $key => $value) {
                 if ('count' !== $key) {
-                    $group = $this->getGroup($value);
-                    $this->userService->addGroup($group, $user, true, false);
+                    try {
+                        $group = $this->getGroup($value, self::IRISCLASSIFCODE);
+                        $this->userService->addGroup($group, $user, true, false);
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\Exception $e) {
+                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                    }
                 }
             }
         }
@@ -89,10 +105,10 @@ class LDAPUserService
         return $user;
     }
 
-    protected function getGroup($key)
+    protected function getGroup($key, $type = null)
     {
         $cleanKey = preg_replace('/\W/', '', $key);
-        $cleanName = $this->getGroupName($key);
+        $cleanName = $this->getGroupName($key, $type);
 
         $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneByKey($cleanKey);
         if ($group) {
@@ -107,7 +123,7 @@ class LDAPUserService
         return $group;
     }
 
-    protected function getGroupName($key)
+    protected function getGroupName($key, $type = null)
     {
         return $key;
     }
