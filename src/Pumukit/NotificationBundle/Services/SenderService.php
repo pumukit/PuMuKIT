@@ -16,6 +16,10 @@ class SenderService
     private $jobService;
     private $senderEmail;
     private $senderName;
+    private $enableMultiLang;
+    private $locales;
+    private $subjectSuccessTrans;
+    private $subjectFailsTrans;
     private $adminEmail;
     private $notificateErrorsToAdmin;
     private $platformName;
@@ -31,6 +35,10 @@ class SenderService
         $enable,
         $senderEmail,
         $senderName,
+        $enableMultiLang,
+        $locales,
+        $subjectSuccessTrans,
+        $subjectFailsTrans,
         $adminEmail,
         $notificateErrorsToAdmin,
         $platformName,
@@ -42,6 +50,10 @@ class SenderService
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
+        $this->enableMultiLang = $enableMultiLang;
+        $this->locales = $locales;
+        $this->subjectSuccessTrans = $subjectSuccessTrans;
+        $this->subjectFailsTrans = $subjectFailsTrans;
         $this->adminEmail = $adminEmail;
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
@@ -79,6 +91,16 @@ class SenderService
     }
 
     /**
+     * IsMultiLangEnabled.
+     *
+     * @return bool
+     */
+    public function isMultiLangEnabled()
+    {
+        return $this->enableMultiLang;
+    }
+
+    /**
      * Get Admin email.
      *
      * @return string|array
@@ -109,6 +131,26 @@ class SenderService
     }
 
     /**
+     * Get Subject Success Trans
+     *
+     * @return array
+     */
+    public function getSubjectSuccessTrans()
+    {
+        return $this->subjectSuccessTrans;
+    }
+
+    /**
+     * Get Subject Fails Trans
+     *
+     * @return array
+     */
+    public function getSubjectFailsTrans()
+    {
+        return $this->subjectFailsTrans;
+    }
+
+    /**
      * Send notification.
      *
      * @param $emailTo
@@ -116,10 +158,11 @@ class SenderService
      * @param $template
      * @param array $parameters
      * @param bool  $error
+     * @param bool $transConfigSubject
      *
      * @return bool
      */
-    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true)
+    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
@@ -130,7 +173,8 @@ class SenderService
                     $subject,
                     $template,
                     $parameters,
-                    $error
+                    $error,
+                    $transConfigSubject
                 );
             }
 
@@ -142,7 +186,8 @@ class SenderService
                     $this->subject,
                     $this->template,
                     $parameters,
-                    $error
+                    $error,
+                    $transConfigSubject
                 );
             }
 
@@ -194,15 +239,18 @@ class SenderService
      * @param $template
      * @param $parameters
      * @param $error
+     * @param $transConfigSubject
      *
      * @return mixed
      */
-    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error)
+    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject)
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToAdmin) {
             $message->addBcc($this->adminEmail);
         }
+
+        $body = $this->getBodyInMultipleLanguages($template, $parameters, $transConfigSubject, $error);
 
         /* Send to verified emails */
         $message
@@ -211,8 +259,86 @@ class SenderService
             ->setFrom($this->senderEmail, $this->senderName)
             ->addReplyTo($this->senderEmail, $this->senderName)
             ->setTo($emailTo)
-            ->setBody($this->templating->render($template, $parameters), 'text/html');
+            ->setBody($body, 'text/html');
 
         return $this->mailer->send($message);
+    }
+
+    /**
+     * Get body in multiple languages
+     *
+     * @param string $template
+     * @param array  $parameters
+     * @param bool   $transConfigSubject
+     *
+     * @return string
+     */
+    public function getBodyInMultipleLanguages($template, $parameters, $transConfigSubject, $error)
+    {
+        if (!$this->enableMultiLang) {
+            return $this->templating->render($template, $parameters);
+        }
+
+        $sessionLocale = $this->translator->getLocale();
+        $body = '';
+        foreach ($this->locales as $locale) {
+            $this->translator->setLocale($locale);
+            $parameters = $this->transConfigurationSubject($parameters, $transConfigSubject, $locale, $error);
+            $bodyLocale = $this->templating->render($template, $parameters);
+            $body = $body . $bodyLocale;
+        }
+        $this->translator->setLocale($sessionLocale);
+
+        return $body;
+    }
+
+    private function transConfigurationSubject($parameters, $transConfigSubject, $locale, $error)
+    {
+        if ($transConfigSubject) {
+            if ($error) {
+                $subject = $this->getSubjectSuccessTransWithLocale($locale);
+            } else {
+                $subject = $this->getSubjectFailsTransWithLocale($locale);
+            }
+            $parameters['subject'] = ($this->getPlatformName() ? $this->getPlatformName().': ' : '').$subject;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Get Subject Success Trans With Locale
+     *
+     * @return string
+     */
+    public function getSubjectSuccessTransWithLocale($locale = 'en')
+    {
+        return $this->getSubjectTransWithLocale($this->subjectSuccessTrans, $locale);
+    }
+
+    /**
+     * Get Subject Fails Trans With Locale
+     *
+     * @return string
+     */
+    public function getSubjectFailsTransWithLocale($locale = 'en')
+    {
+        return $this->getSubjectTransWithLocale($this->subjectFailsTrans, $locale);
+    }
+
+    /**
+     * Get Subject Trans With Locale
+     *
+     * @return string
+     */
+    public function getSubjectTransWithLocale(array $subjectArray = array(), $locale = 'en')
+    {
+        foreach ($subjectArray as $translation) {
+            if (isset($translation['locale']) && ($locale == $translation['locale']) && isset($translation['subject'])){
+                return $translation['subject'];
+            }
+        }
+
+        return null;
     }
 }
