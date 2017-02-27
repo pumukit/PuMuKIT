@@ -1576,7 +1576,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $qb;
     }
 
-    private function getGroupsIdsArray($groups)
+    public function getGroupsIdsArray($groups)
     {
         // TODO #10479: Find better way to get array with only IDs of groups
         if ($groups) {
