@@ -159,7 +159,7 @@ class SenderService
     {
         return $this->locales;
     }
-    
+
     /**
      * Send notification.
      *
