@@ -151,6 +151,16 @@ class SenderService
     }
 
     /**
+     * Get locales.
+     *
+     * @return array
+     */
+    public function getLocales()
+    {
+        return $this->locales;
+    }
+    
+    /**
      * Send notification.
      *
      * @param $emailTo
