@@ -145,12 +145,11 @@ class JobNotificationService
         foreach ($subjectTrans as $translation) {
             if (isset($translation['subject'])) {
                 $slash = $message ? ' / ' : '';
-                $message = $message . $slash . $translation['subject'];
+                $message = $message.$slash.$translation['subject'];
             }
         }
 
         $subjectEmail = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
-
 
         return $subjectEmail;
     }

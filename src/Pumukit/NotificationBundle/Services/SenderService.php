@@ -131,7 +131,7 @@ class SenderService
     }
 
     /**
-     * Get Subject Success Trans
+     * Get Subject Success Trans.
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class SenderService
     }
 
     /**
-     * Get Subject Fails Trans
+     * Get Subject Fails Trans.
      *
      * @return array
      */
@@ -158,7 +158,7 @@ class SenderService
      * @param $template
      * @param array $parameters
      * @param bool  $error
-     * @param bool $transConfigSubject
+     * @param bool  $transConfigSubject
      *
      * @return bool
      */
@@ -265,7 +265,7 @@ class SenderService
     }
 
     /**
-     * Get body in multiple languages
+     * Get body in multiple languages.
      *
      * @param string $template
      * @param array  $parameters
@@ -286,7 +286,7 @@ class SenderService
             $this->translator->setLocale($locale);
             $parameters = $this->transConfigurationSubject($parameters, $locale, $error, $transConfigSubject);
             $bodyLocale = $this->templating->render($template, $parameters);
-            $body = $body . $bodyLocale;
+            $body = $body.$bodyLocale;
         }
         $this->translator->setLocale($sessionLocale);
 
@@ -308,7 +308,7 @@ class SenderService
     }
 
     /**
-     * Get Subject Success Trans With Locale
+     * Get Subject Success Trans With Locale.
      *
      * @return string
      */
@@ -318,7 +318,7 @@ class SenderService
     }
 
     /**
-     * Get Subject Fails Trans With Locale
+     * Get Subject Fails Trans With Locale.
      *
      * @return string
      */
@@ -328,14 +328,14 @@ class SenderService
     }
 
     /**
-     * Get Subject Trans With Locale
+     * Get Subject Trans With Locale.
      *
      * @return string
      */
     public function getSubjectTransWithLocale(array $subjectArray = array(), $locale = 'en')
     {
         foreach ($subjectArray as $translation) {
-            if (isset($translation['locale']) && ($locale == $translation['locale']) && isset($translation['subject'])){
+            if (isset($translation['locale']) && ($locale == $translation['locale']) && isset($translation['subject'])) {
                 return $translation['subject'];
             }
         }
