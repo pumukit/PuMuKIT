@@ -101,9 +101,9 @@ class JobNotificationService
     {
         if ($error) {
             return $this->subjectFails;
-        } else {
-            return $this->subjectSuccess;
         }
+
+        return $this->subjectSuccess;
     }
 
     /**
@@ -134,19 +134,18 @@ class JobNotificationService
     {
         if (!$this->senderService->isMultiLangEnabled()) {
             return $this->getSubjectEmailInParameters($job, $error);
+        }
+
+        if ($error) {
+            $subjectTrans = $this->subjectFailsTrans;
         } else {
-            if ($error) {
-                $subjectTrans = $this->subjectFailsTrans;
-            } else {
-                $subjectTrans = $this->subjectSuccessTrans;
-            }
-            $message = '';
-            foreach ($subjectTrans as $translation) {
-                if (isset($translation['subject'])) {
-                    $subject = $translation['subject'];
-                    $slash = $message ? ' / ' : '';
-                    $message = $message . $slash . $subject;
-                }
+            $subjectTrans = $this->subjectSuccessTrans;
+        }
+        $message = '';
+        foreach ($subjectTrans as $translation) {
+            if (isset($translation['subject'])) {
+                $slash = $message ? ' / ' : '';
+                $message = $message . $slash . $translation['subject'];
             }
         }
 

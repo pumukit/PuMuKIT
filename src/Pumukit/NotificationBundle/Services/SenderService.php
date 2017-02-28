@@ -250,7 +250,7 @@ class SenderService
             $message->addBcc($this->adminEmail);
         }
 
-        $body = $this->getBodyInMultipleLanguages($template, $parameters, $transConfigSubject, $error);
+        $body = $this->getBodyInMultipleLanguages($template, $parameters, $error, $transConfigSubject);
 
         /* Send to verified emails */
         $message
@@ -269,11 +269,12 @@ class SenderService
      *
      * @param string $template
      * @param array  $parameters
+     * @param bool   $error
      * @param bool   $transConfigSubject
      *
      * @return string
      */
-    public function getBodyInMultipleLanguages($template, $parameters, $transConfigSubject, $error)
+    public function getBodyInMultipleLanguages($template, $parameters, $error, $transConfigSubject)
     {
         if (!$this->enableMultiLang) {
             return $this->templating->render($template, $parameters);
@@ -283,7 +284,7 @@ class SenderService
         $body = '';
         foreach ($this->locales as $locale) {
             $this->translator->setLocale($locale);
-            $parameters = $this->transConfigurationSubject($parameters, $transConfigSubject, $locale, $error);
+            $parameters = $this->transConfigurationSubject($parameters, $locale, $error, $transConfigSubject);
             $bodyLocale = $this->templating->render($template, $parameters);
             $body = $body . $bodyLocale;
         }
@@ -292,13 +293,13 @@ class SenderService
         return $body;
     }
 
-    private function transConfigurationSubject($parameters, $transConfigSubject, $locale, $error)
+    private function transConfigurationSubject($parameters, $locale, $error, $transConfigSubject)
     {
         if ($transConfigSubject) {
             if ($error) {
-                $subject = $this->getSubjectSuccessTransWithLocale($locale);
-            } else {
                 $subject = $this->getSubjectFailsTransWithLocale($locale);
+            } else {
+                $subject = $this->getSubjectSuccessTransWithLocale($locale);
             }
             $parameters['subject'] = ($this->getPlatformName() ? $this->getPlatformName().': ' : '').$subject;
         }
