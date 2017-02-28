@@ -444,6 +444,10 @@ class PersonService
      */
     private function createFromUser(User $user)
     {
+        if ($person = $this->repoPerson->findOneByEmail($user->getEmail())) {
+            return $person;
+        }
+
         $person = new Person();
 
         $person->setName($user->getFullname() ?: $user->getUsername());
