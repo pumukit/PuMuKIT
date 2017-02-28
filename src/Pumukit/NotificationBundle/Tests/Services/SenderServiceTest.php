@@ -35,12 +35,16 @@ class SenderServiceTest extends WebTestCase
         $this->enable = true;
         $this->senderEmail = 'sender@pumukit.org';
         $this->senderName = 'Sender Pumukit';
+        $this->enableMultiLang = true;
+        $this->locales = array('en', 'es');
+        $this->subjectSuccessTrans = array(0 => array('locale' => 'en', 'subject' => 'Job Success'), 1 => array('locale' => 'es', 'subject' => 'Trabajo exitoso'));
+        $this->subjectFailsTrans = array(0 => array('locale' => 'en', 'subject' => 'Job Fails'), 1 => array('locale' => 'es', 'subject' => 'Trabajo fallido'));
         $this->adminEmail = 'admin@pumukit.org';
         $this->notificateErrorsToAdmin = true;
         $this->platformName = 'Pumukit tv';
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->environment);
     }
 
     public function tearDown()
