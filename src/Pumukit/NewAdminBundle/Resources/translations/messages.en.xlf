@@ -2586,6 +2586,10 @@
         <source>Multimedia List</source>
         <target>Multimedia List</target>
       </trans-unit>
+      <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
+        <source>This Series is announced</source>
+        <target>This Series is announced</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
