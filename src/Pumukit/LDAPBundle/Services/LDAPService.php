@@ -198,7 +198,7 @@ class LDAPService
             $searchResult = ldap_search($linkIdentifier, $this->baseDn, $key.'='.$value, array(), 0, 1);
             if ($searchResult) {
                 $info = ldap_get_entries($linkIdentifier, $searchResult);
-                if (($info) && (count($info) != 0)) {
+                if (($info) && (count($info) != 0) && isset($info[0])) {
                     $return = $info[0];
                 }
             }
