@@ -174,6 +174,7 @@ class JobNotificationService
             'commandLine' => $this->jobService->renderBat($job),
             'sender_name' => $this->senderService->getSenderName(),
             'multimedia_object_admin_link' => $multimediaObjectAdminLink,
+            'multimedia_object' => $multimediaObject,
         );
     }
 
