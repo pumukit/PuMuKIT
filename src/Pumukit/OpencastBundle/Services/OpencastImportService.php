@@ -171,6 +171,7 @@ class OpencastImportService
         return $series;
     }
 
+
     public function getOpencastUrls($opencastId = '')
     {
         $opencastUrls = array();
@@ -210,7 +211,7 @@ class OpencastImportService
         return $opencastUrls;
     }
 
-    private function getMediaPackageField($mediaFields = array(), $field = '')
+    public function getMediaPackageField($mediaFields = array(), $field = '')
     {
         if ($mediaFields && $field) {
             if (isset($mediaFields[$field])) {
@@ -221,7 +222,7 @@ class OpencastImportService
         return null;
     }
 
-    private function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null)
+    public function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null)
     {
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');

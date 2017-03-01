@@ -18,7 +18,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             ->setDescription('Import a single opencast recording')
             ->addArgument('id', InputArgument::REQUIRED, 'Opencast id to import')
             ->addOption('invert', 'i', InputOption::VALUE_NONE, 'Inverted recording (CAMERA <-> SCREEN)')
-            ->addOption('mmobjid', 'o', InputOption::VALUE_NONE, 'Use an existing multimedia object. Not create a new one')
+            ->addOption('mmobjid', 'o', InputOption::VALUE_OPTIONAL, 'Use an existing multimedia object. Not create a new one')
         ;
     }
 
@@ -33,7 +33,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
 
         if ($mmObjId = $input->getOption('mmobjid')) {
             if ($mmobj = $mmobjRepo->find($mmObjId)) {
-                $this->completeMultimediaObject($mmobj);
+                $this->completeMultimediaObject($mmobj, $opencastId, $input->getOption('invert'));
             } else {
                 $output->writeln('No multimedia object with id '.$mmObjId);
             }
@@ -46,7 +46,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
         }
     }
 
-    protected function completeMultimediaObject(MultimediaObject $multimediaObject)
+    protected function completeMultimediaObject(MultimediaObject $multimediaObject, $opencastId, $invert)
     {
         $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
         $opencastClient = $this->getContainer()->get('pumukit_opencast.client');
@@ -73,6 +73,6 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             $track = $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
         }
 
-        //$mmsService->updateMultimediaObject($multimediaObject);
+        $mmsService->updateMultimediaObject($multimediaObject);
     }
 }
