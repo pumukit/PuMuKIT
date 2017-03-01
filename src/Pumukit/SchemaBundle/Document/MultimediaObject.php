@@ -1541,6 +1541,33 @@ class MultimediaObject
     }
 
     /**
+     * Get master track.
+     *
+     * @param bool $any to get only tagged tracks
+     *
+     * @return Track|null
+     */
+    public function getMaster($any = true)
+    {
+        $master = $this->getTrackWithTag('master');
+
+        if ($master || !$any) {
+            return $master;
+        }
+
+        $isAudio = $this->isOnlyAudio();
+
+        foreach ($this->tracks as $track) {
+            if (($isAudio && $track->isOnlyAudio()) ||
+                (!$isAudio && !$track->isOnlyAudio())) {
+                return $track;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Get audio/video track with tag display. Get an audio track if the object is an audio.
      *
      * @return Track|null
@@ -2614,7 +2641,7 @@ class MultimediaObject
         }
 
         foreach ($this->tracks as $track) {
-            if (!$track->getOnlyAudio()) {
+            if (!$track->isOnlyAudio()) {
                 return false;
             }
         }

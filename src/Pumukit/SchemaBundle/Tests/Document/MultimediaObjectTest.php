@@ -699,4 +699,27 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
         $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }
+
+    public function testGetMaster()
+    {
+        $mm = new MultimediaObject();
+        $track3 = new Track();
+        $track3->addTag('master');
+        $track3->setOnlyAudio(false);
+        $track2 = new Track();
+        $track2->setOnlyAudio(false);
+        $track1 = new Track();
+        $track1->setOnlyAudio(true);
+
+        $this->assertEquals(null, $mm->getMaster());
+        $mm->addTrack($track1);
+        $this->assertEquals($track1, $mm->getMaster());
+        $this->assertEquals(null, $mm->getMaster(false));
+        $mm->addTrack($track2);
+        $this->assertEquals($track2, $mm->getMaster());
+        $this->assertEquals(null, $mm->getMaster(false));
+        $mm->addTrack($track3);
+        $this->assertEquals($track3, $mm->getMaster());
+        $this->assertEquals($track3, $mm->getMaster(false));
+    }
 }
