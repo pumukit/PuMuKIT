@@ -36,7 +36,9 @@ class LiveType extends AbstractType
             ->add('source_name', 'text',
                   array('label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
             ->add('passwd', 'text',
-                  array('label' => $this->translator->trans('Password', array(), null, $this->locale)))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
             ->add('broadcasting', 'choice',
                   array(
                         'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
