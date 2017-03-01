@@ -171,7 +171,6 @@ class OpencastImportService
         return $series;
     }
 
-
     public function getOpencastUrls($opencastId = '')
     {
         $opencastUrls = array();
