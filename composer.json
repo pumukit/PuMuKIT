@@ -6,7 +6,7 @@
     "description": "Media Portal",
     "autoload": {
         "psr-4": {
-            "Pumukit\\": "src/Pumukit/"
+            "": "src/"
         },
         "classmap": [
             "app/AppKernel.php",
