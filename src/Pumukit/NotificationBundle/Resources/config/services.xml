@@ -11,6 +11,10 @@
         <argument>%pumukit_notification.enable%</argument>
         <argument>%pumukit_notification.sender_email%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
+        <argument>%pumukit_notification.enable_multi_lang%</argument>
+        <argument>%pumukit2.locales%</argument>
+        <argument>%pumukit_notification.subject_success_trans%</argument>
+        <argument>%pumukit_notification.subject_fails_trans%</argument>
         <argument>%pumukit_notification.admin_email%</argument>
         <argument>%pumukit_notification.notificate_errors_to_admin%</argument>
         <argument>%pumukit_notification.platform_name%</argument>
@@ -26,6 +30,8 @@
         <argument>%pumukit_notification.template%</argument>
         <argument>%pumukit_notification.subject_success%</argument>
         <argument>%pumukit_notification.subject_fails%</argument>
+        <argument>%pumukit_notification.subject_success_trans%</argument>
+        <argument>%pumukit_notification.subject_fails_trans%</argument>
         <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
         <tag name="kernel.event_listener" event="job.error" method="onJobError" />
       </service>

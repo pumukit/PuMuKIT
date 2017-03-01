@@ -19,8 +19,10 @@ class JobNotificationService
     protected $template;
     protected $subjectSuccess;
     protected $subjectFails;
+    protected $subjectSuccessTrans;
+    protected $subjectFailsTrans;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails)
+    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
     {
         $this->senderService = $senderService;
         $this->jobService = $jobService;
@@ -31,6 +33,8 @@ class JobNotificationService
         $this->template = $template;
         $this->subjectSuccess = $subjectSuccess;
         $this->subjectFails = $subjectFails;
+        $this->subjectSuccessTrans = $subjectSuccessTrans;
+        $this->subjectFailsTrans = $subjectFailsTrans;
     }
 
     /**
@@ -76,12 +80,46 @@ class JobNotificationService
             }
 
             $subject = $this->getSubjectEmail($job, $error);
-            $parameters = $this->getParametersEmail($job, $multimediaObject, $subject);
+            $subjectInParameters = $this->getSubjectEmailInParameters($job, $error);
+            $parameters = $this->getParametersEmail($job, $multimediaObject, $subjectInParameters);
 
-            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error, true);
 
             return $output;
         }
+    }
+
+    /**
+     * Get message.
+     *
+     * @param Job  $job
+     * @param bool $error
+     *
+     * @return string
+     */
+    protected function getMessage(Job $job, $error = false)
+    {
+        if ($error) {
+            return $this->subjectFails;
+        }
+
+        return $this->subjectSuccess;
+    }
+
+    /**
+     * Get subject email in parameters.
+     *
+     * @param Job  $job
+     * @param bool $error
+     *
+     * @return string
+     */
+    protected function getSubjectEmailInParameters(Job $job, $error = false)
+    {
+        $message = $this->getMessage($job, $error);
+        $subject = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
+
+        return $subject;
     }
 
     /**
@@ -94,14 +132,26 @@ class JobNotificationService
      */
     protected function getSubjectEmail(Job $job, $error = false)
     {
-        if ($error) {
-            $message = $this->subjectFails;
-        } else {
-            $message = $this->subjectSuccess;
+        if (!$this->senderService->isMultiLangEnabled()) {
+            return $this->getSubjectEmailInParameters($job, $error);
         }
-        $subject = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
 
-        return $subject;
+        if ($error) {
+            $subjectTrans = $this->subjectFailsTrans;
+        } else {
+            $subjectTrans = $this->subjectSuccessTrans;
+        }
+        $message = '';
+        foreach ($subjectTrans as $translation) {
+            if (isset($translation['subject'])) {
+                $slash = $message ? ' / ' : '';
+                $message = $message.$slash.$translation['subject'];
+            }
+        }
+
+        $subjectEmail = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
+
+        return $subjectEmail;
     }
 
     /**
