@@ -87,7 +87,7 @@
           {% endif %}
         </div>
         {% else %}
-        <input type="hidden" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked"/>
+        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
         {% endif %}
         {% if 'single' == form_data.type.option %}
         <div class="form-group" id="pumukitwizard_track_file">
