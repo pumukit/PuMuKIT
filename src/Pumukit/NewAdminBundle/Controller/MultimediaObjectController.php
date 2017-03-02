@@ -34,6 +34,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function indexAction(Request $request)
     {
         $config = $this->getConfiguration();
+
         $criteria = $this->getCriteria($config);
         $resources = $this->getResources($request, $config, $criteria);
 
@@ -1361,7 +1362,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 )
             );
         } else {
-            return $this->redirectToRoute('pumukitnewadmin_mms_listAll', array(), 301);
+            return $this->redirectToRoute('pumukitnewadmin_mms_listall', array(), 301);
         }
     }
 
@@ -1371,7 +1372,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function getCriteria($config)
     {
         $criteria = $this->getRequest()->get('criteria', array());
-
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/'.$this->getResourceName($this->getRequest()).'/criteria');
         } elseif ($criteria) {
