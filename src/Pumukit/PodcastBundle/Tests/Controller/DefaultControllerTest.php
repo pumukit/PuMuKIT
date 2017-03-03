@@ -16,22 +16,16 @@ class DefaultControllerTest extends WebTestCase
     {
         $options = array('environment' => 'test');
         static::bootKernel($options);
-        $this->container = static::$kernel->getContainer();
 
-        if (!array_key_exists('PumukitPodcastBundle', $this->container->getParameter('kernel.bundles'))) {
+        if (!array_key_exists('PumukitPodcastBundle', static::$kernel->getContainer()->getParameter('kernel.bundles'))) {
             $this->markTestSkipped('PodcastBundle is not installed');
         }
 
         $this->client = static::createClient();
 
-        $this->dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-        $this->router = $this->container->get('router');
-        $this->factory = $this->container->get('pumukitschema.factory');
-
-        $container = static::$kernel->getContainer();
-        $this->dm = $container->get('doctrine_mongodb.odm.document_manager');
-        $this->router = $container->get('router');
-        $this->factory = $container->get('pumukitschema.factory');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->router = static::$kernel->getContainer()->get('router');
+        $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
@@ -44,7 +38,6 @@ class DefaultControllerTest extends WebTestCase
         if (isset($this->dm)) {
             $this->dm->close();
         }
-        $this->container = null;
         $this->client = null;
         $this->dm = null;
         $this->router = null;
