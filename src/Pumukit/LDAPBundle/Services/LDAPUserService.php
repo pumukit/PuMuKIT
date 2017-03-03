@@ -107,7 +107,7 @@ class LDAPUserService
 
     protected function getGroup($key, $type = null)
     {
-        $cleanKey = preg_replace('/\W/', '', $key);
+        $cleanKey = $this->getGroupKey($key, $type);
         $cleanName = $this->getGroupName($key, $type);
 
         $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneByKey($cleanKey);
@@ -121,6 +121,11 @@ class LDAPUserService
         $this->groupService->create($group);
 
         return $group;
+    }
+
+    protected function getGroupKey($key, $type = null)
+    {
+        return preg_replace('/\W/', '', $key);
     }
 
     protected function getGroupName($key, $type = null)
