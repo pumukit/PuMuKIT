@@ -79,6 +79,12 @@ class RemoveListener
             $multimediaObjects = $mmobjRepo->findWithGroup($document);
             foreach ($multimediaObjects as $multimediaObject) {
                 $mmsService->deleteGroup($document, $multimediaObject, false);
+            }
+            $multimediaObjects = $mmobjRepo->createQueryBuilder()
+                ->field('embeddedBroadcast.groups')->in(array(new \MongoId($document->getId())))
+                ->getQuery()
+                ->execute();
+            foreach ($multimediaObjects as $multimediaObject) {
                 $embBroadcastService->deleteGroup($document, $multimediaObject, false);
             }
             $userService = $this->container->get('pumukitschema.user');
