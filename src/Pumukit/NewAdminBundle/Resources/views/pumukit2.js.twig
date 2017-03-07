@@ -3077,10 +3077,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_series_sort_selected', function(){
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_mmo_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'series': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'series': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'series': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'series': '__type__'}})|raw }}";
     }
     $('#list_mms').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -3088,10 +3088,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_series_sort_selected', function(){
 $(document).on('click', '#pumukitnewadmin_mmo_series_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'series': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'series': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'series': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'series': 'asc'}})|raw }}";
     }
     $('#list_mms').load(route, {'_method':'POST'});
     return false;
@@ -3101,10 +3101,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_title_sort_selected', function(){
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_mmo_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'title': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'title': '__type__'}})|raw }}";
     }
     $('#list_mms').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -3112,10 +3112,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_title_sort_selected', function(){
 $(document).on('click', '#pumukitnewadmin_mmo_title_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'title': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'title': 'asc'}})|raw }}";
     }
     $('#list_mms').load(route, {'_method':'POST'});
     return false;
@@ -3125,10 +3125,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_public_date_sort_selected', functi
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_mmo_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'public_date': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'public_date': '__type__'}})|raw }}";
     }
     $('#list_mms').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -3137,10 +3137,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_public_date_sort_selected', functi
 $(document).on('click', '#pumukitnewadmin_mmo_public_date_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'public_date': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'public_date': 'asc'}})|raw }}";
     }
     $('#list_mms').load(route, {'_method':'POST'});
     return false;
@@ -3150,10 +3150,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_record_date_sort_selected', functi
     var inputROId = $('#inputROId').val();
     var type = $('#pumukitnewadmin_mmo_sort_change_type').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'record_date': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'record_date': '__type__'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'record_date': '__type__'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'record_date': '__type__'}})|raw }}";
     }
     $('#list_mms').load(route.replace('__type__', type), {'_method':'POST'});
     return false;
@@ -3162,10 +3162,10 @@ $(document).on('click', '#pumukitnewadmin_mmo_record_date_sort_selected', functi
 $(document).on('click', '#pumukitnewadmin_mmo_record_date_sort_not_selected', function(){
     var inputROId = $('#inputROId').val();
     if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'selectedSeriesId': '__inputROId__', 'sorting': {'record_date': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'selectedSeriesId': '__inputROId__', 'sorting': {'record_date': 'asc'}})|raw }}";
         route = route.replace('__inputROId__', inputROId);
     } else {
-        var route = "{{ path('pumukitnewadmin_mms_listAll', {'sorting': {'record_date': 'asc'}})|raw }}";
+        var route = "{{ path('pumukitnewadmin_mms_listall', {'sorting': {'record_date': 'asc'}})|raw }}";
     }
     $('#list_mms').load(route, {'_method':'POST'});
     return false;
