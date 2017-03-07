@@ -241,7 +241,7 @@ pumukitnewadmin_mms_indexall:
         _sylius:
             filterable: true
 
-pumukitnewadmin_mms_listAll:
+pumukitnewadmin_mms_listall:
     pattern: /listAll
     methods: [GET, POST]
     defaults:
