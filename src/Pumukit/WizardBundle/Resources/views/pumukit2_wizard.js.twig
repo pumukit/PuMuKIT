@@ -74,13 +74,13 @@ $(function(){
 
     $('#pumukitwizard_simple_track_form').on('submit', function(e){
         e.preventDefault();
-        var show_license = $('#pumukitwizard_show_license').val();
+        var show_license = $('#pumukitwizard_simple_license_show').val();
         if (show_license == "true") {
-            var license_accept = $('#pumukitwizard_license_accept').is(':checked');
+            var license_accept = $('#pumukitwizard_simple_license_accept').is(':checked');
             if(license_accept){
                 this.submit();
             } else {
-                $('#wizard_error_display').show();
+                $('#pumukitwizard_simple_error_display').show();
             }
         } else {
             this.submit();
