@@ -70,6 +70,10 @@ class LicenseService
      */
     public function getLicenseContent($locale = null)
     {
+        if (!$this->isEnabled()) {
+            return '';
+        }
+
         if ($locale) {
             $licenseFile = realpath($this->licenseDir.'/'.$locale.'.txt');
         } else {

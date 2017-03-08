@@ -16,7 +16,7 @@
                 autocomplete="off"
                 enctype="multipart/form-data"
                 action="{{ path('pumukitwizard_simple_upload', {'id': series.id}) }}" method="POST">
-            <input type="hidden" id="pumukitwizard_show_license" value="{{ show_license ? 'true':'false'}}"/>
+            <input type="hidden" id="pumukitwizard_simple_license_show" value="{{ show_license ? 'true':'false'}}"/>
             <div class="row">
               <div class="col-md-12">
                 <div class="text-right">
