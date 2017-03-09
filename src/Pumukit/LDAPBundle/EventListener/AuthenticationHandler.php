@@ -32,7 +32,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $username = strtoupper($token->getUser()->getUsername());
+        $username = strtolower($token->getUser()->getUsername());
 
         $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $username);
         if (!isset($info) || !$info) {
