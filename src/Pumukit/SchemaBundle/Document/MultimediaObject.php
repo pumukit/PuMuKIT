@@ -870,6 +870,7 @@ class MultimediaObject
             if ($tag->getCod() == $tagToRemove->getCod()) {
                 $removed = $this->tags->removeElement($tag);
                 $this->tags = new ArrayCollection(array_values($this->tags->toArray()));
+
                 return $removed;
             }
         }
