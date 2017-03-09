@@ -3,3 +3,8 @@ parameters:
     pumukit2.locales:
         - en
         - es
+pumukit_notification:
+    template: 'PumukitNotificationBundle:Email:job.html.twig'
+    sender_email: notifications@pumukit.org
+    admin_email:
+        - notifications@pumukit.org

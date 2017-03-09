@@ -257,7 +257,13 @@ class SenderService
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToAdmin) {
-            $message->addBcc($this->adminEmail);
+            if (is_array($this->adminEmail)) {
+                foreach ($this->adminEmail as $admin) {
+                    $message->addBcc($admin);
+                }
+            } else {
+                $message->addBcc($this->adminEmail);
+            }
         }
 
         $body = $this->getBodyInMultipleLanguages($template, $parameters, $error, $transConfigSubject);
