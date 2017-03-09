@@ -166,7 +166,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsTrack($track1));
         $this->assertFalse($mm->containsTrack($track2));
 
-        $tracksArray = array(0 => $track1, 2 => $track3);
+        $tracksArray = array($track1, $track3);
         $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
     }
 
@@ -196,7 +196,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsPic($pic1));
         $this->assertFalse($mm->containsPic($pic2));
 
-        $picsArray = array(0 => $pic1, 2 => $pic3);
+        $picsArray = array($pic1, $pic3);
         $this->assertEquals($picsArray, $mm->getPics()->toArray());
         $this->assertEquals($pic1, $mm->getPic());
 
@@ -227,7 +227,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsMaterial($material1));
         $this->assertFalse($mm->containsMaterial($material2));
 
-        $materialsArray = array(0 => $material1, 2 => $material3);
+        $materialsArray = array($material1, $material3);
         $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
     }
 
@@ -254,7 +254,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsLink($link1));
         $this->assertFalse($mm->containsLink($link2));
 
-        $linksArray = array(0 => $link1, 2 => $link3);
+        $linksArray = array($link1, $link3);
         $this->assertEquals($linksArray, $mm->getLinks()->toArray());
     }
 
