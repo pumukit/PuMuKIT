@@ -12,6 +12,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    const TEMPLATE = 'PumukitNotificationBundle:Email:job.html.twig';
+    const SENDER_EMAIL = 'notifications@pumukit.org';
+    const ADMIN_EMAIL = 'admin@pumukit.org';
+
     /**
      * {@inheritdoc}
      */
@@ -31,7 +35,7 @@ class Configuration implements ConfigurationInterface
               ->info('The name of the Pumukit platform')
             ->end()
             ->scalarNode('sender_email')
-              ->defaultValue('notifications@pumukit.org')
+              ->defaultValue(self::TEMPLATE)
               ->info('The email of the sender')
             ->end()
             ->scalarNode('sender_name')
@@ -43,7 +47,7 @@ class Configuration implements ConfigurationInterface
               ->info('Enable sending mails in multiple langs (subject and body)')
             ->end()
             ->scalarNode('template')
-              ->defaultValue('PumukitNotificationBundle:Email:job.html.twig')
+              ->defaultValue(self::TEMPLATE)
               ->info('Template of emails.')
             ->end()
             ->scalarNode('subject_success')
@@ -80,7 +84,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->arrayNode('admin_email')
               ->prototype('scalar')
-              ->defaultValue('admin@pumukit.org')
+              ->defaultValue(self::ADMIN_EMAIL)
               ->info('Email or list of emails of the administrators of the platform.')
             ->end()
           ->end()
