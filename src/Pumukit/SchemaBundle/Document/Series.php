@@ -910,6 +910,7 @@ class Series
     public function removePic(Pic $pic)
     {
         $this->pics->removeElement($pic);
+        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
@@ -922,6 +923,7 @@ class Series
         $this->pics = $this->pics->filter(function ($pic) use ($picId) {
             return $pic->getId() !== $picId;
         });
+        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
