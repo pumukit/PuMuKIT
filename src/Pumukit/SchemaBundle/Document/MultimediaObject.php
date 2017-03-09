@@ -868,7 +868,10 @@ class MultimediaObject
     {
         foreach ($this->tags as $tag) {
             if ($tag->getCod() == $tagToRemove->getCod()) {
-                return $this->tags->removeElement($tag);
+                $removed = $this->tags->removeElement($tag);
+                $this->tags = new ArrayCollection(array_values($this->tags->toArray()));
+
+                return $removed;
             }
         }
 
@@ -1014,6 +1017,7 @@ class MultimediaObject
     public function removePic(Pic $pic)
     {
         $this->pics->removeElement($pic);
+        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
@@ -1026,6 +1030,7 @@ class MultimediaObject
         $this->pics = $this->pics->filter(function ($pic) use ($picId) {
             return $pic->getId() !== $picId;
         });
+        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
@@ -1322,6 +1327,7 @@ class MultimediaObject
     public function removeTrack(Track $track)
     {
         $this->tracks->removeElement($track);
+        $this->tracks = new ArrayCollection(array_values($this->tracks->toArray()));
 
         $this->updateDuration();
     }
@@ -1336,6 +1342,7 @@ class MultimediaObject
         $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
             return $track->getId() !== $trackId;
         });
+        $this->tracks = new ArrayCollection(array_values($this->tracks->toArray()));
 
         $this->updateDuration();
     }
@@ -1685,6 +1692,7 @@ class MultimediaObject
     public function removeMaterial(Material $material)
     {
         $this->materials->removeElement($material);
+        $this->materials = new ArrayCollection(array_values($this->materials->toArray()));
     }
 
     /**
@@ -1697,6 +1705,7 @@ class MultimediaObject
         $this->materials = $this->materials->filter(function ($material) use ($materialId) {
             return $material->getId() !== $materialId;
         });
+        $this->materials = new ArrayCollection(array_values($this->materials->toArray()));
     }
 
     /**
@@ -1957,6 +1966,7 @@ class MultimediaObject
     public function removeLink(Link $link)
     {
         $this->links->removeElement($link);
+        $this->links = new ArrayCollection(array_values($this->links->toArray()));
     }
 
     /**
@@ -1969,6 +1979,7 @@ class MultimediaObject
         $this->links = $this->links->filter(function ($link) use ($linkId) {
             return $link->getId() !== $linkId;
         });
+        $this->links = new ArrayCollection(array_values($this->links->toArray()));
     }
 
     /**
@@ -2444,6 +2455,7 @@ class MultimediaObject
 
         if (0 === count($embeddedRole->getPeople())) {
             $this->people->removeElement($embeddedRole);
+            $this->people = new ArrayCollection(array_values($this->people->toArray()));
         }
 
         return $hasRemoved;
@@ -2597,6 +2609,7 @@ class MultimediaObject
     public function removeGroup(Group $group)
     {
         $this->groups->removeElement($group);
+        $this->groups = new ArrayCollection(array_values($this->groups->toArray()));
     }
 
     /**
