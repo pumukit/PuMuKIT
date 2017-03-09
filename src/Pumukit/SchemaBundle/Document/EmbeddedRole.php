@@ -317,7 +317,7 @@ class EmbeddedRole
 
         $hasRemoved = (count($aux) !== count($this->people));
 
-        $this->people = $aux;
+        $this->people = new ArrayCollection(array_values($aux->toArray()));
 
         return $hasRemoved;
     }
