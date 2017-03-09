@@ -33,6 +33,7 @@ class PicServiceTest extends WebTestCase
         $this->context = static::$kernel->getContainer()->get('router.request_context');
         $this->rootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
+        $this->localhost = $this->context->getScheme().'://localhost';
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
@@ -49,6 +50,7 @@ class PicServiceTest extends WebTestCase
         $this->context = null;
         $this->rootDir = null;
         $this->webDir = null;
+        $this->localhost = null;
         $this->picService = null;
         gc_collect_cycles();
         parent::tearDown();
