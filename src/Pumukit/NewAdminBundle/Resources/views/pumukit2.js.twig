@@ -767,8 +767,9 @@ window.change_select = function(element, selector, pluralName, seriesId)
             ids.push($this.attr("id"));
         });
         if (ids.length == 0) {
-          no_success('No multimedia object selected');
-          break;
+            var message = '{% trans %}No multimedia object selected{% endtrans %}';
+            no_success(message);
+            break;
         }
         var route = '{{ path('pumukitnewadmin_mms_cut', {'ids': '__ids__'})|raw }}';
         $.ajax({
@@ -810,7 +811,8 @@ window.change_select = function(element, selector, pluralName, seriesId)
             ids.push($this.attr("id"));
         });
         if (ids.length == 0) {
-          no_success('No multimedia object selected');
+            var message = '{% trans %}No multimedia object selected{% endtrans %}';
+            no_success(message);
           break;
         }
 
