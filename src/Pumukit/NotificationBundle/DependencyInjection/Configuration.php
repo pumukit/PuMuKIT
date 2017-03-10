@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
               ->info('The name of the Pumukit platform')
             ->end()
             ->scalarNode('sender_email')
-              ->defaultValue(self::TEMPLATE)
+              ->defaultValue(self::SENDER_EMAIL)
               ->info('The email of the sender')
             ->end()
             ->scalarNode('sender_name')
