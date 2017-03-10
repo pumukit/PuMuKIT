@@ -301,6 +301,7 @@ class SenderService
         foreach ($this->locales as $locale) {
             $this->translator->setLocale($locale);
             $parameters = $this->transConfigurationSubject($parameters, $locale, $error, $transConfigSubject);
+            $parameters['locale'] = $locale;
             $bodyLocale = $this->templating->render($template, $parameters);
             $body = $body.$bodyLocale;
         }
