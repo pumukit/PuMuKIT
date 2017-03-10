@@ -27,7 +27,7 @@ class DefaultController extends Controller
      */
     public function iframeAction(Live $live, Request $request, $iframe = true)
     {
-        if (!$live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
+        if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ?
                                  'PumukitLiveBundle:Default:iframepassword.html.twig' :
                                  'PumukitLiveBundle:Default:indexpassword.html.twig',
