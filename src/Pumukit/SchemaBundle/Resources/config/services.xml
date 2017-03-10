@@ -23,6 +23,7 @@
 
         <service id="pumukitschema.schema.remove" class="Pumukit\SchemaBundle\EventListener\RemoveListener">
             <argument type="service" id="service_container" />
+            <argument type="service" id="translator" />
             <tag name="doctrine_mongodb.odm.event_listener" event="preRemove" />
         </service>
 
