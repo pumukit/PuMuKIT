@@ -1,7 +1,11 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-  {% render(controller('PumukitWebTVBundle:Index:categories')) %}
+    {% if app.request.attributes.get('microsite_custom_categories') %}
+        {% render(controller(app.request.attributes.get('microsite_custom_categories'))) %}
+    {% else %}
+        {% render(controller('PumukitWebTVBundle:Index:categories')) %}
+    {% endif %}
   <div class="pumukit_announce row">
     {% render(controller('PumukitWebTVBundle:Index:mostviewed')) %}
     {% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %} 
