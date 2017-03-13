@@ -8,15 +8,18 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\EncoderBundle\Document\Job;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class RemoveListener
 {
     private $container;
+    private $translator;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, TranslatorInterface $translator)
     {
         //NOTE: using container instead of tag service to avoid ServiceCircularReferenceException.
         $this->container = $container;
+        $this->translator = $translator;
     }
 
     public function preRemove(LifecycleEventArgs $args)
@@ -36,8 +39,13 @@ class RemoveListener
             $executingJobs = $jobRepo->findByStatusAndMultimediaObjectId(Job::STATUS_EXECUTING, $document->getId());
 
             if (0 !== $executingJobs->count()) {
-                throw new \Exception("Can not delete Multimedia Object with id '".$document->getId()."'.".
-                                     " It has '".$executingJobs->count()."' jobs executing.");
+                throw new \Exception(
+                    $this->translator->trans('Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',
+                        array(
+                            '%videoId%' => $document->getId(),
+                            '%jobsCount%' => $executingJobs->count(),
+                        ))
+                );
             }
             $mmsService = $this->container->get('pumukitschema.multimedia_object');
             $mmsService->removeFromAllPlaylists($document);
