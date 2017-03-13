@@ -27,6 +27,7 @@ class SenderService
     private $translator;
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
+    private $sendPersonName;
 
     public function __construct(
         $mailer,
@@ -42,6 +43,7 @@ class SenderService
         $adminEmail,
         $notificateErrorsToAdmin,
         $platformName,
+        $sendPersonName,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
@@ -57,6 +59,7 @@ class SenderService
         $this->adminEmail = $adminEmail;
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
+        $this->sendPersonName = $sendPersonName;
         $this->environment = $environment;
     }
 
@@ -158,6 +161,16 @@ class SenderService
     public function getLocales()
     {
         return $this->locales;
+    }
+
+    /**
+     * Is enabled send person name.
+     *
+     * @return bool
+     */
+    public function isEnabledSendPersonName()
+    {
+        return $this->sendPersonName;
     }
 
     /**
