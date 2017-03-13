@@ -1,1 +1,1 @@
-{% extends 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
+{% extends [app.request.attributes.get('microsite_custom_header'), 'PumukitWebTVBundle:Layout:baseheader.html.twig'] %}

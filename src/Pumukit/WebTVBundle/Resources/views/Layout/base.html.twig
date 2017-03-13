@@ -20,6 +20,9 @@
     {% block stylesheets %}
       <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
       <link href="{{ path('pumukit_webtv_default_css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        {% if app.request.attributes.has('microsite_custom_css') %}
+            <link href="{{ asset(app.request.attributes.get('microsite_custom_css')) }}" type="text/css" rel="stylesheet" media="screen"/>
+        {% endif %}
     {% endblock %}
 
     {% block javascripts %}
