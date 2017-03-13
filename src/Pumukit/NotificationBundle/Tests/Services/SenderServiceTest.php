@@ -46,7 +46,7 @@ class SenderServiceTest extends WebTestCase
         $this->sendPersonName = false;
         $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->sendPersonName, $this->environment);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName, $this->sendPersonName, $this->environment);
     }
 
     public function tearDown()

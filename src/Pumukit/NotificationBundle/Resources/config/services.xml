@@ -8,6 +8,7 @@
         <argument type="service" id="mailer" />
         <argument type="service" id="templating" />
         <argument type="service" id="translator" />
+        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         <argument>%pumukit_notification.enable%</argument>
         <argument>%pumukit_notification.sender_email%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
