@@ -8,6 +8,7 @@
         <argument type="service" id="mailer" />
         <argument type="service" id="templating" />
         <argument type="service" id="translator" />
+        <argument type="service" id="doctrine_mongodb.odm.document_manager" />
         <argument>%pumukit_notification.enable%</argument>
         <argument>%pumukit_notification.sender_email%</argument>
         <argument>%pumukit_notification.sender_name%</argument>
@@ -18,6 +19,7 @@
         <argument>%pumukit_notification.admin_email%</argument>
         <argument>%pumukit_notification.notificate_errors_to_admin%</argument>
         <argument>%pumukit_notification.platform_name%</argument>
+        <argument>%pumukit_notification.send_person_name%</argument>
         <argument>%kernel.environment%</argument>
       </service>
       <service id="pumukit_notification.listener" class="Pumukit\NotificationBundle\Services\JobNotificationService">

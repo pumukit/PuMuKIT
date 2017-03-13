@@ -26,6 +26,7 @@ class PumukitNotificationExtension extends Extension
         $container->setParameter('pumukit_notification.platform_name', $config['platform_name']);
         $container->setParameter('pumukit_notification.sender_name', $config['sender_name']);
         $container->setParameter('pumukit_notification.enable_multi_lang', $config['enable_multi_lang']);
+        $container->setParameter('pumukit_notification.send_person_name', $config['send_person_name']);
         $container->setParameter('pumukit_notification.subject_success', $config['subject_success']);
         $container->setParameter('pumukit_notification.subject_fails', $config['subject_fails']);
         $container->setParameter('pumukit_notification.subject_success_trans', $config['subject_success_trans']);

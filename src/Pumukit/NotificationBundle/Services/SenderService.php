@@ -4,6 +4,7 @@ namespace Pumukit\NotificationBundle\Services;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class SenderService
 {
@@ -27,11 +28,15 @@ class SenderService
     private $translator;
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
+    private $sendPersonName;
+    private $dm;
+    private $personRepo;
 
     public function __construct(
         $mailer,
         EngineInterface $templating,
         TranslatorInterface $translator,
+        DocumentManager $documentManager,
         $enable,
         $senderEmail,
         $senderName,
@@ -42,11 +47,13 @@ class SenderService
         $adminEmail,
         $notificateErrorsToAdmin,
         $platformName,
+        $sendPersonName,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->translator = $translator;
+        $this->dm = $documentManager;
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;
         $this->senderName = $senderName;
@@ -57,7 +64,9 @@ class SenderService
         $this->adminEmail = $adminEmail;
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
+        $this->sendPersonName = $sendPersonName;
         $this->environment = $environment;
+        $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
     }
 
     /**
@@ -161,6 +170,16 @@ class SenderService
     }
 
     /**
+     * Is enabled send person name.
+     *
+     * @return bool
+     */
+    public function isEnabledSendPersonName()
+    {
+        return $this->sendPersonName;
+    }
+
+    /**
      * Send notification.
      *
      * @param $emailTo
@@ -172,7 +191,7 @@ class SenderService
      *
      * @return bool
      */
-    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false)
+    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false, $sendPersonName = false)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
@@ -184,7 +203,8 @@ class SenderService
                     $template,
                     $parameters,
                     $error,
-                    $transConfigSubject
+                    $transConfigSubject,
+                    $sendPersonName
                 );
             }
 
@@ -197,7 +217,8 @@ class SenderService
                     $this->template,
                     $parameters,
                     $error,
-                    $transConfigSubject
+                    $transConfigSubject,
+                    $sendPersonName
                 );
             }
 
@@ -250,10 +271,11 @@ class SenderService
      * @param $parameters
      * @param $error
      * @param $transConfigSubject
+     * @param $sendPersonName
      *
      * @return mixed
      */
-    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject)
+    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject, $sendPersonName)
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToAdmin) {
@@ -266,6 +288,41 @@ class SenderService
             }
         }
 
+        if ($sendPersonName) {
+            if (is_array($emailTo)) {
+                foreach ($emailTo as $email) {
+                    $parameters['person_name'] = $this->getPersonNameFromEmail($email);
+                    $message = $this->getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject);
+                    $aux = $this->mailer->send($message);
+                }
+
+                return $aux;
+            } else {
+                $parameters['person_name'] = $this->getPersonNameFromEmail($emailTo);
+                $message = $this->getMessageToSend($message, $emailTo, $subject, $template, $parameters, $error, $transConfigSubject);
+            }
+        } else {
+            $message = $this->getMessageToSend($message, $emailTo, $subject, $template, $parameters, $error, $transConfigSubject);
+        }
+
+        return $this->mailer->send($message);
+    }
+
+    /**
+     * Get message to send.
+     *
+     * @param $message
+     * @param $emailTo
+     * @param $subject
+     * @param $template
+     * @param $parameters
+     * @param $error
+     * @param $transConfigSubject
+     *
+     * @return Swif_Message
+     */
+    public function getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject)
+    {
         $body = $this->getBodyInMultipleLanguages($template, $parameters, $error, $transConfigSubject);
 
         /* Send to verified emails */
@@ -274,10 +331,10 @@ class SenderService
             ->setSender($this->senderEmail, $this->senderName)
             ->setFrom($this->senderEmail, $this->senderName)
             ->addReplyTo($this->senderEmail, $this->senderName)
-            ->setTo($emailTo)
+            ->setTo($email)
             ->setBody($body, 'text/html');
 
-        return $this->mailer->send($message);
+        return $message;
     }
 
     /**
@@ -358,5 +415,16 @@ class SenderService
         }
 
         return null;
+    }
+
+    private function getPersonNameFromEmail($email)
+    {
+        $personName = $email;
+        $person = $this->personRepo->findOneByEmail($email);
+        if ($person) {
+            $personName = $person->getHName();
+        }
+
+        return $personName;
     }
 }
