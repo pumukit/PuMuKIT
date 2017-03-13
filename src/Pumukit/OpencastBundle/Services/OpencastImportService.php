@@ -98,7 +98,7 @@ class OpencastImportService
             if ($language) {
                 $multimediaObject->setProperty('opencastlanguage', strtolower($language));
             } else {
-                $multimediaObject->setProperty('opencastlanguage', 'en');
+                $multimediaObject->setProperty('opencastlanguage', \Locale::getDefault());
             }
 
             foreach ($this->otherLocales as $locale) {

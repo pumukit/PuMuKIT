@@ -125,7 +125,7 @@ class OpencastService
         $track = $tracks[0];
         $path = $this->getPath($track->getUrl());
 
-        $language = $multimediaObject->getProperty('opencastlanguage') ? strtolower($multimediaObject->getProperty('opencastlanguage')) : 'en';
+        $language = $multimediaObject->getProperty('opencastlanguage') ? strtolower($multimediaObject->getProperty('opencastlanguage')) : \Locale::getDefault();
 
         $vars = $this->defaultVars;
         if ($opencastUrls) {
