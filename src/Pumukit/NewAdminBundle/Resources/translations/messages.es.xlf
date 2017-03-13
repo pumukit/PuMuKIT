@@ -2643,6 +2643,10 @@
         <source>This Series is announced</source>
         <target>Esta serie está anunciada</target>
       </trans-unit>
+      <trans-unit id="8d15a6c805a011e793ae92361f002671" resname="No multimedia object selected">
+                  <source>No multimedia object selected</source>
+                  <target>No has seleccionado ningún objeto multimedia</target>
+                </trans-unit>
     </body>
   </file>
 </xliff>

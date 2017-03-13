@@ -4102,6 +4102,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>This Series is announced</source>
         <target>Esta serie está anunciada</target>
       </trans-unit>
+      <trans-unit id="8d15a6c805a011e793ae92361f002671" resname="No multimedia object selected">
+              <source>Ez da bideorik hautatu</source>
+              <target>Ez da bideorik hautatu</target>
+            </trans-unit>
     </body>
   </file>
 </xliff>
