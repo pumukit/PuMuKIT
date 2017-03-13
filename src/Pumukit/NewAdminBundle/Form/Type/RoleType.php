@@ -22,6 +22,7 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('display', 'checkbox', array('required' => false))
+            ->add('read_only', 'checkbox', array('required' => false))
             ->add('cod', 'text', array(
                                        'attr' => array(
                                                        'pattern' => "^\w*$",

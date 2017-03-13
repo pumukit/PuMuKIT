@@ -1,0 +1,32 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+<table>
+  <tdody>
+    {% for person in people %}
+    <tr>
+      <td><ul><li></li></ul></td>
+      {% if ((role.getCod() == personal_scope_role_code) and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td>
+      {% else %}
+      <td>
+        &nbsp;&nbsp;&nbsp;
+      </td>
+      <td>
+        &nbsp;&nbsp;&nbsp;
+      </td>
+      <td>
+        &nbsp;&nbsp;
+      </td>
+      <td>
+        &nbsp;&nbsp;
+      </td>
+      {% endif %}
+      <td>&nbsp;{% if not is_naked() %}{{ person.id }} - {% endif %}{{ person.getHName() }}</td>
+    </tr>
+    {% else %}
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td>
+    {% endfor %}
+</tbody>
+</table>
+{% else %}
+{% trans %}You don't have enough permissions to access this content.{% endtrans %}
+{% endif %}
