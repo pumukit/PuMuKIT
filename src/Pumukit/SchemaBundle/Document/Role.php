@@ -56,6 +56,13 @@ class Role
     private $display = true;
 
     /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $readOnly = false;
+
+    /**
      * @var string
      *
      * @MongoDB\Raw
@@ -162,6 +169,36 @@ class Role
     public function getDisplay()
     {
         return $this->display;
+    }
+
+    /**
+     * Set readOnly.
+     *
+     * @param bool $readOnly
+     */
+    public function setReadOnly($readOnly)
+    {
+        $this->readOnly = $readOnly;
+    }
+
+    /**
+     * Get readOnly.
+     *
+     * @return bool
+     */
+    public function getReadOnly()
+    {
+        return $this->readOnly;
+    }
+
+    /**
+     * Is readOnly.
+     *
+     * @return bool
+     */
+    public function isReadOnly()
+    {
+        return $this->readOnly;
     }
 
     /**
