@@ -424,10 +424,7 @@ class SenderService
         if ($person) {
             $personName = $person->getHName();
         }
-        if ($personName !== $email) {
-            return $personName;
-        }
 
-        return $email;
+        return $personName;
     }
 }
