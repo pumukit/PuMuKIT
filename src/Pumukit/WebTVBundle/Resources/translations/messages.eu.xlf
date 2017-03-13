@@ -590,7 +590,7 @@
       </trans-unit>
       <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
         <source>Year</source>
-        <target xml:lang="eu" state="translated">Año</target>
+        <target xml:lang="eu" state="translated">Urte</target>
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>
