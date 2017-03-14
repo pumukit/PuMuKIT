@@ -81,6 +81,8 @@ class LDAPUserService
                         $group = $this->getGroup($value, self::EDU_PERSON_AFFILIATION);
                         $this->userService->addGroup($group, $user, true, false);
                         $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\ErrorException $e) {
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
                     } catch (\Exception $e) {
                         $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
                     }
@@ -95,6 +97,8 @@ class LDAPUserService
                         $group = $this->getGroup($value, self::IRISCLASSIFCODE);
                         $this->userService->addGroup($group, $user, true, false);
                         $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\ErrorException $e) {
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
                     } catch (\Exception $e) {
                         $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
                     }
