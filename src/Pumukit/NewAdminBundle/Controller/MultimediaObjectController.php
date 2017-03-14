@@ -328,8 +328,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
 
+        $resource = $this->findOr404($request);
+
         $sessionId = $this->get('session')->get('admin/series/id', null);
-        $series = $factoryService->findSeriesById(null, $sessionId);
+        $series = $factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
@@ -337,7 +339,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $parentTags = $factoryService->getParentTags();
 
-        $resource = $this->findOr404($request);
         $this->get('session')->set('admin/mms/id', $resource->getId());
 
         $translator = $this->get('translator');
@@ -369,12 +370,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
             $mms = $this->getListMultimediaObjects($series);
 
-            return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
-                                 array(
-                                       'series' => $series,
-                                       'mms' => $mms,
-                                       )
-                                 );
+            if (strpos($request->server->get('HTTP_REFERER'), 'mmslist') === false) {
+                return $this->render(
+                    'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                    array(
+                        'series' => $series,
+                        'mms' => $mms,
+                    )
+                );
+            } else {
+                return $this->redirectToRoute('pumukitnewadmin_mms_listall', array(), 301);
+            }
         }
 
         if ($config->isApiRequest()) {
