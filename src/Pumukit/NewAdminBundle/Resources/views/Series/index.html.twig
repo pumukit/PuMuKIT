@@ -85,22 +85,24 @@
 </div>
 
 <script>
+var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'}) }}";
 window.mmobjkeywords = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
-        url: '/api/keywords/mmobj.json',
+        url: url,
         ttl: 1800000
     }
 });
 
 window.mmobjkeywords.initialize();
 
+var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'}) }}";
 window.serieskeywords = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
-        url: '/api/keywords/series.json',
+        url: url,
         ttl: 1800000
     }
 });
