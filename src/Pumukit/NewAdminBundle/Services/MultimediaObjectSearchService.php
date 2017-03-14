@@ -20,6 +20,9 @@ class MultimediaObjectSearchService
         $bAnnounce = '';
         $bChannel = '';
         $bPerson = false;
+        $bRole = false;
+        $personName = '';
+        $roleCode = '';
 
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
@@ -28,10 +31,11 @@ class MultimediaObjectSearchService
                     array('$text' => array('$search' => $value)),
                 );
             } elseif (('person_name' === $property) && ('' !== $value)) {
-                $new_criteria += array('$or' => array(array('people.people._id' => array('$in' => array($value))), array('people.people.name' => array('$regex' => $value, '$options' => 'i'))));
+                $personName = $value;
                 $bPerson = true;
-            } elseif (('person_role' === $property) && ('' !== $value) && $bPerson && ('all' !== $value)) {
-                $new_criteria['people.cod'] = $value;
+            } elseif (('person_role' === $property) && ('' !== $value) && ('all' !== $value)) {
+                $roleCode = $value;
+                $bRole = true;
             } elseif (('channel' === $property) && ('' !== $value)) {
                 if ('all' !== $value) {
                     $bChannel = true;
@@ -60,6 +64,28 @@ class MultimediaObjectSearchService
             }
         } elseif (('' !== $bChannel) && $bChannel) {
             $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue)));
+        }
+
+        if ($bPerson && $bRole && $personName && $roleCode) {
+            $isMongoId = \MongoId::isValid($personName);
+            if ($isMongoId) {
+                $peopleCriteria = new \MongoId($personName);
+                $new_criteria['people'] = array('$elemMatch' => array('cod' => $roleCode, 'people._id' => $peopleCriteria));
+            } else {
+                $peopleCriteria = array('$regex' => $personName, '$options' => 'i');
+                $new_criteria['people'] = array('$elemMatch' => array('cod' => $roleCode, 'people.name' => $peopleCriteria));
+            }
+        } elseif ($bPerson && !$bRole && $personName) {
+            $isMongoId = \MongoId::isValid($personName);
+            if ($isMongoId) {
+                $peopleCriteria = new \MongoId($personName);
+                $new_criteria += array('people.people._id' => $peopleCriteria);
+            } else {
+                $peopleCriteria = array('$regex' => $personName, '$options' => 'i');
+                $new_criteria += array('people.people.name' => $peopleCriteria);
+            }
+        } elseif (!$bPerson && $bRole && $roleCode) {
+            $new_criteria['people.cod'] = $roleCode;
         }
 
         return $new_criteria;
