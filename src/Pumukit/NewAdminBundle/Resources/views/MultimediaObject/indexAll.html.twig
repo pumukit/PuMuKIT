@@ -66,11 +66,13 @@
                     }
                 });
             }
+
+            var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
             window.mmobjkeywords = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 prefetch: {
-                    url: '/api/keywords/mmobj.json',
+                    url: url,
                     ttl: 1800000
                 }
             });
