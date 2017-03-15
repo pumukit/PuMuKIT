@@ -227,12 +227,21 @@ class PersonService
      * Returns people with partial name in it
      *
      * @param string $name
+     * @param array  $exclude
      *
      * @return ArrayCollection
      */
-    public function autoCompletePeopleByName($name)
+    public function autoCompletePeopleByName($name, array $exclude = array())
     {
-        return $this->repoPerson->findByName(new \MongoRegex('/'.$name.'/i'));
+        $qb = $this->repoPerson->createQueryBuilder()
+            ->field('name')->equals(new \MongoRegex('/'.$name.'/i'));
+
+        if ($exclude) {
+            $qb->field('_id')->notIn($exclude);
+        }
+
+        return $qb->getQuery()
+            ->execute();
     }
 
     /**

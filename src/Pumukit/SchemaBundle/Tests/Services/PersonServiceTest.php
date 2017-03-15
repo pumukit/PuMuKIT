@@ -396,17 +396,21 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($personBobby);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->personService->autoCompletePeopleByName('john')));
-        $this->assertEquals($personJohn, $this->personService->autoCompletePeopleByName('john')[0]);
+        $peopleJohn = array_values($this->personService->autoCompletePeopleByName('john')->toArray());
+        $this->assertEquals(1, count($peopleJohn));
+        $this->assertEquals($personJohn, $peopleJohn[0]);
 
-        $this->assertEquals(2, count($this->personService->autoCompletePeopleByName('bob')));
-        $this->assertEquals(array($personBob, $personBobby), $this->personService->autoCompletePeopleByName('bob'));
+        $peopleBob = array_values($this->personService->autoCompletePeopleByName('bob')->toArray());
+        $this->assertEquals(2, count($peopleBob));
+        $this->assertEquals(array($personBob, $personBobby), $peopleBob);
 
-        $this->assertEquals(1, count($this->personService->autoCompletePeopleByName('kat')));
-        $this->assertEquals($personKate, $this->personService->autoCompletePeopleByName('kat')[0]);
+        $peopleKat = array_values($this->personService->autoCompletePeopleByName('kat')->toArray());
+        $this->assertEquals(1, count($peopleKat));
+        $this->assertEquals($personKate, $peopleKat[0]);
 
-        $this->assertEquals(2, count($this->personService->autoCompletePeopleByName('sm')));
-        $this->assertEquals(array($personJohn, $personBobby), $this->personService->autoCompletePeopleByName('sm'));
+        $peopleSm = array_values($this->personService->autoCompletePeopleByName('sm')->toArray());
+        $this->assertEquals(2, count($peopleSm));
+        $this->assertEquals(array($personJohn, $personBobby), $peopleSm);
     }
 
     public function testDeleteRelation()
