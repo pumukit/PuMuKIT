@@ -67,7 +67,7 @@
                 });
             }
 
-            var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'}) }}";
+            var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
             window.mmobjkeywords = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
