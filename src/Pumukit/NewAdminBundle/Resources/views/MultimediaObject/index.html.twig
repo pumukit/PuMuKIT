@@ -7,11 +7,7 @@
   </a>
   <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="{{ path('pumukitnewadmin_series_index') }}">{% trans %}Series{% endtrans %}</a></li>
-      {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-        <li class="active">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
-      {% else %}
-        <li class="active">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
-      {% endif %}
+    <li class="active">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
   </ul>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}" />
