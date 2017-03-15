@@ -28,7 +28,6 @@ class SenderService
     private $translator;
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
-    private $sendPersonName;
     private $dm;
     private $personRepo;
 
@@ -47,7 +46,6 @@ class SenderService
         $adminEmail,
         $notificateErrorsToAdmin,
         $platformName,
-        $sendPersonName,
         $environment = 'dev'
     ) {
         $this->mailer = $mailer;
@@ -64,7 +62,6 @@ class SenderService
         $this->adminEmail = $adminEmail;
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
-        $this->sendPersonName = $sendPersonName;
         $this->environment = $environment;
         $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
     }
@@ -170,16 +167,6 @@ class SenderService
     }
 
     /**
-     * Is enabled send person name.
-     *
-     * @return bool
-     */
-    public function isEnabledSendPersonName()
-    {
-        return $this->sendPersonName;
-    }
-
-    /**
      * Send notification.
      *
      * @param $emailTo
@@ -191,7 +178,7 @@ class SenderService
      *
      * @return bool
      */
-    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false, $sendPersonName = false)
+    public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false)
     {
         $filterEmail = $this->filterEmail($emailTo);
 
@@ -203,8 +190,7 @@ class SenderService
                     $template,
                     $parameters,
                     $error,
-                    $transConfigSubject,
-                    $sendPersonName
+                    $transConfigSubject
                 );
             }
 
@@ -217,8 +203,7 @@ class SenderService
                     $this->template,
                     $parameters,
                     $error,
-                    $transConfigSubject,
-                    $sendPersonName
+                    $transConfigSubject
                 );
             }
 
@@ -271,11 +256,10 @@ class SenderService
      * @param $parameters
      * @param $error
      * @param $transConfigSubject
-     * @param $sendPersonName
      *
      * @return mixed
      */
-    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject, $sendPersonName)
+    private function sendEmailTemplate($emailTo, $subject, $template, $parameters, $error, $transConfigSubject)
     {
         $message = \Swift_Message::newInstance();
         if ($error && $this->notificateErrorsToAdmin) {
@@ -288,20 +272,17 @@ class SenderService
             }
         }
 
-        if ($sendPersonName) {
-            if (is_array($emailTo)) {
-                foreach ($emailTo as $email) {
-                    $parameters['person_name'] = $this->getPersonNameFromEmail($email);
-                    $message = $this->getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject);
-                    $aux = $this->mailer->send($message);
-                }
-
-                return $aux;
-            } else {
-                $parameters['person_name'] = $this->getPersonNameFromEmail($emailTo);
-                $message = $this->getMessageToSend($message, $emailTo, $subject, $template, $parameters, $error, $transConfigSubject);
+        if (is_array($emailTo)) {
+            $aux = 0;
+            foreach ($emailTo as $email) {
+                $parameters['person_name'] = $this->getPersonNameFromEmail($email);
+                $message = $this->getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject);
+                $aux += $this->mailer->send($message);
             }
+
+            return $aux;
         } else {
+            $parameters['person_name'] = $this->getPersonNameFromEmail($emailTo);
             $message = $this->getMessageToSend($message, $emailTo, $subject, $template, $parameters, $error, $transConfigSubject);
         }
 

@@ -82,9 +82,8 @@ class JobNotificationService
             $subject = $this->getSubjectEmail($job, $error);
             $subjectInParameters = $this->getSubjectEmailInParameters($job, $error);
             $parameters = $this->getParametersEmail($job, $multimediaObject, $subjectInParameters);
-            $sendPersonName = $this->senderService->isEnabledSendPersonName();
 
-            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error, true, $sendPersonName);
+            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error, true);
 
             return $output;
         }
