@@ -304,6 +304,9 @@ class DefaultController extends Controller
         $seriesId = null;
         $multimediaObject = null;
         $mmId = null;
+
+        $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
+
         if ($formData) {
             $seriesData = $this->getKeyData('series', $formData);
 
@@ -370,6 +373,15 @@ class DefaultController extends Controller
                     $multimediaObject = $this->createMultimediaObject($multimediaObjectData, $series);
                     $multimediaObject->setDuration($duration);
 
+                    if ($showObjectLicense) {
+                        $license = $this->getKeyData('license', $formData['multimediaobject']);
+                        if ($license && ($license !== '0')) {
+                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], array('license'));
+                        }
+                    }
+
+                    $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
+
                     if ('file' === $filetype) {
                         $selectedPath = $request->get('resource');
                         $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description,
@@ -393,12 +405,6 @@ class DefaultController extends Controller
                             $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                         }
                     }
-                    if ($showObjectLicense) {
-                        $license = $this->getKeyData('license', $formData['multimediaobject']);
-                        if ($license && ($license !== '0')) {
-                            $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], array('license'));
-                        }
-                    }
                 } elseif ('multiple' === $option) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                     $series = $this->getSeries($seriesData);
@@ -415,6 +421,7 @@ class DefaultController extends Controller
                         $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
                         $multimediaObject = $this->createMultimediaObject($titleData, $series);
                         if ($multimediaObject) {
+                            $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
                             try {
                                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
                             } catch (\Exception $e) {
@@ -430,8 +437,6 @@ class DefaultController extends Controller
                         }
                     }
                 }
-                $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
-                $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
             } catch (\Exception $e) {
                 // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
