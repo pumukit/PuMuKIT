@@ -105,7 +105,7 @@ pumukitnewadmin_person_link:
         _controller: pumukitnewadmin.controller.person:linkAction
 
 pumukitnewadmin_person_auto_complete:
-    pattern: /autocomplete
+    pattern: /autocomplete/{mmId}/{roleId}
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.person:autoCompleteAction

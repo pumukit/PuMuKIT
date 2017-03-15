@@ -398,12 +398,15 @@ class PersonController extends AdminController implements NewAdminController
 
     /**
      * Auto complete.
+     *
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
+     * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
      */
-    public function autoCompleteAction(Request $request)
+    public function autoCompleteAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
         $personService = $this->get('pumukitschema.person');
         $name = $request->get('term');
-        $people = $personService->autoCompletePeopleByName($name);
+        $people = $personService->autoCompletePeopleByName($multimediaObject, $role, $name);
 
         $out = [];
         foreach ($people as $p) {
