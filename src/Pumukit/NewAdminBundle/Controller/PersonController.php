@@ -406,7 +406,13 @@ class PersonController extends AdminController implements NewAdminController
     {
         $personService = $this->get('pumukitschema.person');
         $name = $request->get('term');
-        $people = $personService->autoCompletePeopleByName($multimediaObject, $role, $name);
+
+        $excludedPeople = $multimediaObject->getPeopleByRole($role, true);
+        $excludedPeopleIds = array();
+        foreach ($excludedPeople as $person) {
+            $excludedPeopleIds[] = new \MongoId($person->getId());
+        }
+        $people = $personService->autoCompletePeopleByName($name, $excludedPeopleIds);
 
         $out = [];
         foreach ($people as $p) {

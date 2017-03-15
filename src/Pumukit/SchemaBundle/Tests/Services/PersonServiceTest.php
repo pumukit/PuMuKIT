@@ -372,15 +372,7 @@ class PersonServiceTest extends WebTestCase
 
     public function testAutoCompletePeopleByName()
     {
-        $mm = new MultimediaObject();
-        $role = new Role();
-        $role->setCod('test');
-
-        $this->dm->persist($mm);
-        $this->dm->persist($role);
-        $this->dm->flush();
-
-        $this->assertEquals(0, count($this->personService->autoCompletePeopleByName($mm, $role, 'john')));
+        $this->assertEquals(0, count($this->personService->autoCompletePeopleByName('john')));
 
         $personJohn = new Person();
         $nameJohn = 'John Smith';
@@ -404,19 +396,19 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($personBobby);
         $this->dm->flush();
 
-        $peopleJohn = array_values($this->personService->autoCompletePeopleByName($mm, $role, 'john')->toArray());
+        $peopleJohn = array_values($this->personService->autoCompletePeopleByName('john')->toArray());
         $this->assertEquals(1, count($peopleJohn));
         $this->assertEquals($personJohn, $peopleJohn[0]);
 
-        $peopleBob = array_values($this->personService->autoCompletePeopleByName($mm, $role, 'bob')->toArray());
+        $peopleBob = array_values($this->personService->autoCompletePeopleByName('bob')->toArray());
         $this->assertEquals(2, count($peopleBob));
         $this->assertEquals(array($personBob, $personBobby), $peopleBob);
 
-        $peopleKat = array_values($this->personService->autoCompletePeopleByName($mm, $role, 'kat')->toArray());
+        $peopleKat = array_values($this->personService->autoCompletePeopleByName('kat')->toArray());
         $this->assertEquals(1, count($peopleKat));
         $this->assertEquals($personKate, $peopleKat[0]);
 
-        $peopleSm = array_values($this->personService->autoCompletePeopleByName($mm, $role, 'sm')->toArray());
+        $peopleSm = array_values($this->personService->autoCompletePeopleByName('sm')->toArray());
         $this->assertEquals(2, count($peopleSm));
         $this->assertEquals(array($personJohn, $personBobby), $peopleSm);
     }

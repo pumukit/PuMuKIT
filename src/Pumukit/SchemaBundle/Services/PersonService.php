@@ -226,24 +226,21 @@ class PersonService
      *
      * Returns people with partial name in it
      *
-     * @param MultimediaObject $multimediaObject
-     * @param Role             $role
-     * @param string           $name
+     * @param string $name
+     * @param array  $exclude
      *
      * @return ArrayCollection
      */
-    public function autoCompletePeopleByName(MultimediaObject $multimediaObject, Role $role, $name)
+    public function autoCompletePeopleByName($name, array $exclude = array())
     {
-        $people = $multimediaObject->getPeopleByRole($role, true);
-        $peopleIds = array();
-        foreach ($people as $person) {
-            $peopleIds[] = new \MongoId($person->getId());
+        $qb = $this->repoPerson->createQueryBuilder()
+            ->field('name')->equals(new \MongoRegex('/'.$name.'/i'));
+
+        if ($exclude) {
+            $qb->field('_id')->notIn($exclude);
         }
 
-        return $this->repoPerson->createQueryBuilder()
-            ->field('name')->equals(new \MongoRegex('/'.$name.'/i'))
-            ->field('_id')->notIn($peopleIds)
-            ->getQuery()
+        return $qb->getQuery()
             ->execute();
     }
 
