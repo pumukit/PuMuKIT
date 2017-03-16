@@ -11,15 +11,19 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class BasePlayerController extends Controller
+abstract class BasePlayerController extends Controller
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
      * @Template()
      */
-    public function indexAction(MultimediaObject $multimediaObject, Request $request)
-    {
-    }
+    abstract public function indexAction(MultimediaObject $multimediaObject, Request $request);
+
+    /**
+     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex")
+     * @Template()
+     */
+    abstract public function magicIndexAction(MultimediaObject $multimediaObject, Request $request);
 
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
     {
