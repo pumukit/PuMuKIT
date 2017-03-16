@@ -39,6 +39,8 @@ class SeriesController extends Controller implements WebTVController
      */
     public function magicIndexAction(Series $series, Request $request)
     {
+        $request->attributes->set('noindex', true);
+
         $mmobjRepo = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');

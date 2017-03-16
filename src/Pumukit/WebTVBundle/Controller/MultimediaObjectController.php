@@ -77,6 +77,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             return $response;
         }
 
+        $request->attributes->set('noindex', true);
+
         $track = $request->query->has('track_id') ?
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getDisplayTrack();
