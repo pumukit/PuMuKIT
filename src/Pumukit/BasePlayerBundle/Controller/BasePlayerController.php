@@ -23,7 +23,7 @@ abstract class BasePlayerController extends Controller
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex")
      * @Template()
      */
-    abstract public function magicIndexAction(MultimediaObject $multimediaObject, Request $request);
+    abstract public function magicAction(MultimediaObject $multimediaObject, Request $request);
 
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
     {

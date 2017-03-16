@@ -49,7 +49,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
      * @Template("PumukitJWPlayerBundle:JWPlayer:player.html.twig")
      */
-    public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
+    public function magicAction(MultimediaObject $multimediaObject, Request $request)
     {
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
