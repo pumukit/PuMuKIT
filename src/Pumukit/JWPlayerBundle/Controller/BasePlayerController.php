@@ -54,7 +54,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($mmobjService->isPublished($multimediaObject, 'PUCHWEBTV')) {
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
-                return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
+                return $this->redirect($this->generateUrl('pumukit_videoplayer_index', array('id' => $multimediaObject->getId())));
             }
         } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
