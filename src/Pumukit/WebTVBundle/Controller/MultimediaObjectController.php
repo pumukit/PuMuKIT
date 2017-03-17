@@ -48,7 +48,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
     /**
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
-     * @Template()
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -94,6 +93,18 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
                      'multimediaObject' => $multimediaObject,
                      'track' => $track,
                      'magic_url' => true, );
+    }
+
+    /**
+     * @Route("/iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_magiciframe", defaults={"show_hide": true})
+     */
+    public function magicIframeAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        if ($multimediaObject->getStatus() === MultimediaObject::STATUS_HIDDEN) {
+            return $this->forward('PumukitBasePlayerBundle:BasePlayer:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
+        } else {
+            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $multimediaObject->getId())));
+        }
     }
 
     /**

@@ -4,3 +4,4 @@
 User-agent: *
 Disallow: /series/magic/*
 Disallow: /video/magic/*
+Disallow: /iframe/magic/*
