@@ -23,27 +23,31 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             return $response;
         }
 
-        $track = $request->query->has('track_id') ?
-               $multimediaObject->getTrackById($request->query->get('track_id')) :
-               $multimediaObject->getDisplayTrack();
+        $track = null;
 
-        if (!$track) {
-            throw $this->createNotFoundException();
-        }
+        if($request->query->has('track_id')) {
+            $track = $multimediaObject->getTrackById($request->query->get('track_id'));
 
-        if ($track->containsTag('download')) {
-            return $this->redirect($track->getUrl());
+            if (!$track) {
+                throw $this->createNotFoundException();
+            }
+
+            if ($track->containsTag('download')) {
+                return $this->redirect($track->getUrl());
+            }
         }
 
         $this->updateBreadcrumbs($multimediaObject);
 
         $editorChapters = $this->getChapterMarks($multimediaObject);
 
-        return array('autostart' => $request->query->get('autostart', 'true'),
-        'intro' => $this->getIntro($request->query->get('intro')),
-        'multimediaObject' => $multimediaObject,
-        'track' => $track,
-        'editor_chapters' => $editorChapters, );
+        return array(
+            'autostart' => $request->query->get('autostart', 'true'),
+            'intro' => $this->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'track' => $track,
+            'editor_chapters' => $editorChapters,
+        );
     }
 
     /**
@@ -78,12 +82,18 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $request->attributes->set('noindex', true);
 
-        $track = $request->query->has('track_id') ?
-               $multimediaObject->getTrackById($request->query->get('track_id')) :
-               $multimediaObject->getDisplayTrack();
+        $track = null;
 
-        if ($track && $track->containsTag('download')) {
-            return $this->redirect($track->getUrl());
+        if($request->query->has('track_id')) {
+            $track = $multimediaObject->getTrackById($request->query->get('track_id'));
+
+            if (!$track) {
+                throw $this->createNotFoundException();
+            }
+
+            if ($track->containsTag('download')) {
+                return $this->redirect($track->getUrl());
+            }
         }
 
         $this->updateBreadcrumbs($multimediaObject);
