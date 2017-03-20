@@ -40,14 +40,19 @@ class FilterListener
             && $event->isMasterRequest()
                 && $isFilterActivated) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');
+
             if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {
                 $filter->setParameter('status', array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
+            } elseif (isset($routeParams['show_block']) && $routeParams['show_block']) {
+                $filter->setParameter('status', array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE, MultimediaObject::STATUS_BLOCKED)));
             } else {
                 $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
             }
+
             if (!isset($routeParams['track']) || $routeParams['track']) {
                 $filter->setParameter('display_track_tag', 'display');
             }
+
             if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
                 $filter->setParameter('pub_channel_tag', 'PUCHWEBTV');
             }
