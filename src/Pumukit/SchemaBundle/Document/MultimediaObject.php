@@ -219,7 +219,7 @@ class MultimediaObject
 
     public function __construct()
     {
-        $this->secret = new \MongoId();
+        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->tracks = new ArrayCollection();
         $this->pics = new ArrayCollection();
         $this->materials = new ArrayCollection();
@@ -274,7 +274,7 @@ class MultimediaObject
      */
     public function resetSecret()
     {
-        $this->secret = new \MongoId();
+        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
 
         return $this->secret;
     }

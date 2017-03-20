@@ -150,7 +150,7 @@ class Series
 
     public function __construct()
     {
-        $this->secret = new \MongoId();
+        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
         $this->pics = new ArrayCollection();
@@ -190,6 +190,18 @@ class Series
     }
 
     /**
+     * Resets secret.
+     *
+     * @return string
+     */
+    public function resetSecret()
+    {
+        $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+
+        return $this->secret;
+    }
+
+    /**
      * Get type.
      *
      * @return int
@@ -207,18 +219,6 @@ class Series
     public function setType($type)
     {
         return $this->type = $type;
-    }
-
-    /**
-     * Resets secret.
-     *
-     * @return string
-     */
-    public function resetSecret()
-    {
-        $this->secret = new \MongoId();
-
-        return $this->secret;
     }
 
     /**
