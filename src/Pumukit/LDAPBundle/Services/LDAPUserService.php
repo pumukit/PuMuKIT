@@ -44,9 +44,16 @@ class LDAPUserService
             try {
                 $user = $this->newUser($info, $username);
             } catch (\Exception $e) {
-                throw  $e;
+                throw $e;
+            }
+        } else {
+            try {
+                $user = $this->updateUser($info, $user);
+            } catch (\Exception $e) {
+                throw $e;
             }
         }
+        $this->updateGroups($info, $user);
         $this->promoteUser($info, $user);
 
         return $user;
@@ -73,38 +80,6 @@ class LDAPUserService
 
         $this->userService->create($user);
         $this->personService->referencePersonIntoUser($user);
-
-        if (isset($info[self::EDU_PERSON_AFFILIATION][0])) {
-            foreach ($info[self::EDU_PERSON_AFFILIATION] as $key => $value) {
-                if ('count' !== $key) {
-                    try {
-                        $group = $this->getGroup($value, self::EDU_PERSON_AFFILIATION);
-                        $this->userService->addGroup($group, $user, true, false);
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
-                    } catch (\ErrorException $e) {
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
-                    } catch (\Exception $e) {
-                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
-                    }
-                }
-            }
-        }
-
-        if (isset($info[self::IRISCLASSIFCODE][0])) {
-            foreach ($info[self::IRISCLASSIFCODE] as $key => $value) {
-                if ('count' !== $key) {
-                    try {
-                        $group = $this->getGroup($value, self::IRISCLASSIFCODE);
-                        $this->userService->addGroup($group, $user, true, false);
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
-                    } catch (\ErrorException $e) {
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
-                    } catch (\Exception $e) {
-                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
-                    }
-                }
-            }
-        }
 
         return $user;
     }
@@ -151,6 +126,76 @@ class LDAPUserService
             $user->setPermissionProfile($permissionProfileAdmin);
             $this->userService->update($user, true, false);
         }
+    }
+
+    private function updateGroups($info, $user)
+    {
+        $aGroups = array();
+        if (isset($info[self::EDU_PERSON_AFFILIATION][0])) {
+            foreach ($info[self::EDU_PERSON_AFFILIATION] as $key => $value) {
+                if ('count' !== $key) {
+                    try {
+                        $group = $this->getGroup($value, self::EDU_PERSON_AFFILIATION);
+                        $this->userService->addGroup($group, $user, true, false);
+                        $aGroups[] = $group->getKey();
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\ErrorException $e) {
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
+                    } catch (\Exception $e) {
+                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                    }
+                }
+            }
+        }
+
+        if (isset($info[self::IRISCLASSIFCODE][0])) {
+            foreach ($info[self::IRISCLASSIFCODE] as $key => $value) {
+                if ('count' !== $key) {
+                    try {
+                        $group = $this->getGroup($value, self::IRISCLASSIFCODE);
+                        $this->userService->addGroup($group, $user, true, false);
+                        $aGroups[] = $group->getKey();
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                    } catch (\ErrorException $e) {
+                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
+                    } catch (\Exception $e) {
+                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                    }
+                }
+            }
+        }
+
+        foreach ($user->getGroups() as $group) {
+            if ('ldap' === $group->getOrigin()) {
+                if (!in_array($group->getKey(), $aGroups)) {
+                    $this->userService->deleteGroup($group, $user, true, false);
+                    $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Delete group '.$group->getKey().' from user  : '.$e->getMessage());
+                }
+            }
+        }
+
+        return $user;
+    }
+
+    private function updateUser($info, $user)
+    {
+        if (isset($info['mail'][0])) {
+            $user->setEmail($info['mail'][0]);
+        }
+
+        if (isset($info['cn'][0])) {
+            $user->setFullname($info['cn'][0]);
+        }
+
+        $permissionProfile = $this->permissionProfileService->getByName('Viewer');
+        $user->setPermissionProfile($permissionProfile);
+        $user->setOrigin('ldap');
+        $user->setEnabled(true);
+
+        $this->userService->update($user, true, false);
+        $this->personService->referencePersonIntoUser($user);
+
+        return $user;
     }
 
     protected function isAutoPub($info, $username)
