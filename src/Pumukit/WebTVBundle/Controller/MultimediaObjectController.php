@@ -100,11 +100,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function magicIframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($multimediaObject->getStatus() === MultimediaObject::STATUS_HIDDEN) {
-            return $this->forward('PumukitBasePlayerBundle:BasePlayer:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
-        } else {
-            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $multimediaObject->getId())));
-        }
+        return $this->forward('PumukitBasePlayerBundle:BasePlayer:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
     }
 
     /**
