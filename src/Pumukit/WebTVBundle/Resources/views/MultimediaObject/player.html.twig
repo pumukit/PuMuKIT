@@ -10,7 +10,7 @@ $(window).resize(function(){
 </script>
 {% if magic_url is defined and magic_url %}
   {% set url_iframe = path('pumukit_videoplayer_magicindex', {'secret':multimediaObject.secret, 'autostart': autostart})%}
-{% elseif track is defined %}
+{% elseif track is defined and track %}
   {% set url_iframe = path('pumukit_videoplayer_index', {'id':multimediaObject.id, 'track_id':track.id, 'autostart': autostart}) %}
 {% else %}
   {% set url_iframe = path('pumukit_videoplayer_index', {'id':multimediaObject.id, 'autostart': autostart}) %}
