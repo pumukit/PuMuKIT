@@ -340,6 +340,36 @@ class MultimediaObject
     }
 
     /**
+     * Helper function to know if is published.
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return self::STATUS_PUBLISHED === $this->getStatus();
+    }
+
+    /**
+     * Helper function to know if is bloqued.
+     *
+     * @return bool
+     */
+    public function isBlocked()
+    {
+        return self::STATUS_BLOCKED === $this->getStatus();
+    }
+
+    /**
+     * Helper function to know if is hidden.
+     *
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return self::STATUS_HIDDEN === $this->getStatus();
+    }
+
+    /**
      * Helper function to know if is the status a prototype.
      *
      * @return bool
