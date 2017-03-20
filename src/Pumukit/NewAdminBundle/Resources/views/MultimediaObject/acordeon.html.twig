@@ -47,18 +47,18 @@
                                 <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %} :</label>
                                 <div class="row">
                                     <div class="col-md-11 col-md-offset-1">
-                                        {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local"
+                                        {% trans %}From{% endtrans %}:&nbsp;<input type="date"
                                                                                    class="form-control"
-                                                                                   pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)"
-                                                                                   title="Format YYYY-MM-DDThh:mm:ss"
+                                                                                   pattern="(\d\d\d\d)-(\d\d)-(\d\d)"
+                                                                                   title="Format YYYY-MM-DD"
                                                                                    name="criteria[date][from]"
                                                                                    id="filters_date_from"
                                                                                    value="{{ criteria['date']['from']|default("") }}">
                                         <br/>
-                                        {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local"
+                                        {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date"
                                                                                        class="form-control"
-                                                                                       pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)"
-                                                                                       title="Format YYYY-MM-DDThh:mm:ss"
+                                                                                       pattern="(\d\d\d\d)-(\d\d)-(\d\d)"
+                                                                                       title="Format YYYY-MM-DD"
                                                                                        name="criteria[date][to]"
                                                                                        id="filters_date_to"
                                                                                        value="{{ criteria['date']['to']|default("") }}">

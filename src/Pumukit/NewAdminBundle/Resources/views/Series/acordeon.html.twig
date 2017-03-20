@@ -34,18 +34,18 @@
                   <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
                 </div>
               </div> #}
-	          <div class="form-group">
-	            <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+              <div class="form-group">
+                <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                 <div class="row">
-	              <div class="col-md-11 col-md-offset-1">
-	                {% trans %}From{% endtrans %}:&nbsp;<input type="datetime-local" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)" title="Format YYYY-MM-DDThh:mm:ss"
+                  <div class="col-md-11 col-md-offset-1">
+                    {% trans %}From{% endtrans %}:&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
                                                              name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                     <br/>
-	                  {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="datetime-local" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)" title="Format YYYY-MM-DDThh:mm:ss"
+                      {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
                                                                    name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
-	              </div>
+                  </div>
                 </div>
-	          </div>
+              </div>
             </div>
           </div>
         </div>
@@ -61,12 +61,12 @@
           <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
             <div class="panel-body container-fluid">
               <div class="form-group">
- 	            <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
+                <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
                 <div>
-	              <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
-		            <option value="true">{% trans %}Yes{% endtrans %}</option>
-		            <option value="false">{% trans %}No{% endtrans %}</option>
-	              </select>
+                  <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff" selected="selected">{% trans %}Indifferent{% endtrans %}</option>
+                    <option value="true">{% trans %}Yes{% endtrans %}</option>
+                    <option value="false">{% trans %}No{% endtrans %}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -77,8 +77,8 @@
     </fieldset>
 
     <div class="text-right">
-	  <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+      <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
     </div>
   </form>
 </div>
