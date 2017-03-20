@@ -25,7 +25,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $track = null;
 
-        if($request->query->has('track_id')) {
+        if ($request->query->has('track_id')) {
             $track = $multimediaObject->getTrackById($request->query->get('track_id'));
 
             if (!$track) {
@@ -84,7 +84,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $track = null;
 
-        if($request->query->has('track_id')) {
+        if ($request->query->has('track_id')) {
             $track = $multimediaObject->getTrackById($request->query->get('track_id'));
 
             if (!$track) {
