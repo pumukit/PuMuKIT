@@ -100,8 +100,6 @@ class EventController extends AdminController implements NewAdminController
     {
         $config = $this->getConfiguration();
 
-        $sorting = $request->get('sorting');
-
         $criteria = $this->getCriteria($config);
         list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
@@ -257,7 +255,7 @@ class EventController extends AdminController implements NewAdminController
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = array('date' => 1);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/event';
