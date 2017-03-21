@@ -106,13 +106,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
-        if($request->attributes->has('microsite_custom_tag')) {
+        if ($request->attributes->has('microsite_custom_tag')) {
             $sTagCode = $request->attributes->get('microsite_custom_tag');
 
             $dm = $this->get('doctrine_mongodb')->getManager();
             $aTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $sTagCode));
 
-            if($aTag) {
+            if ($aTag) {
                 $mmobj->addTag($aTag);
                 $dm->flush();
             }
