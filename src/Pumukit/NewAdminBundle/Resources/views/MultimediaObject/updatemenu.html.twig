@@ -23,6 +23,17 @@
         <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
       </a>
     </li>
+
+    {% for item in get_extra_menu_items() %}
+      {% if app.user and is_granted(item.accessRole) %}
+        <li>
+          <a href="{{ path(item.uri, {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <i class="{{ item.icon|default('mdi-action-list')}}"></i> {{ item.name | trans }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
     <li>
       <a href="#" onclick="return false;">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
