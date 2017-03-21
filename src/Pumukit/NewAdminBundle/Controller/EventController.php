@@ -255,7 +255,7 @@ class EventController extends AdminController implements NewAdminController
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = array('date' => 1);
+        $sorting = array('date' => -1);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/event';
