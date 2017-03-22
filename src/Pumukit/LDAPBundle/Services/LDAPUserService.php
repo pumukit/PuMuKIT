@@ -22,8 +22,15 @@ class LDAPUserService
     protected $permissionProfile;
     protected $logger;
 
-    public function __construct(DocumentManager $documentManager, UserService $userService, PersonService $personService, LDAPService $LDAPService, PermissionProfileService $permissionProfile, GroupService $groupService, LoggerInterface $logger)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        UserService $userService,
+        PersonService $personService,
+        LDAPService $LDAPService,
+        PermissionProfileService $permissionProfile,
+        GroupService $groupService,
+        LoggerInterface $logger
+    ) {
         $this->dm = $documentManager;
         $this->userService = $userService;
         $this->personService = $personService;
@@ -46,7 +53,7 @@ class LDAPUserService
             } catch (\Exception $e) {
                 throw $e;
             }
-        } else {
+        } elseif ($user->getEmail() !== $info['mail'][0] || $user->getFullname() !== $info['cn'][0]) {
             try {
                 $user = $this->updateUser($info, $user);
             } catch (\Exception $e) {
@@ -140,9 +147,13 @@ class LDAPUserService
                         $aGroups[] = $group->getKey();
                         $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
                     } catch (\ErrorException $e) {
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
+                        $this->logger->info(
+                            __CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage()
+                        );
                     } catch (\Exception $e) {
-                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                        $this->logger->error(
+                            __CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage()
+                        );
                     }
                 }
             }
@@ -157,9 +168,13 @@ class LDAPUserService
                         $aGroups[] = $group->getKey();
                         $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
                     } catch (\ErrorException $e) {
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage());
+                        $this->logger->info(
+                            __CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage()
+                        );
                     } catch (\Exception $e) {
-                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage());
+                        $this->logger->error(
+                            __CLASS__.' ['.__FUNCTION__.'] '.'Error on adding Group '.$value.': '.$e->getMessage()
+                        );
                     }
                 }
             }
@@ -169,7 +184,10 @@ class LDAPUserService
             if ('ldap' === $group->getOrigin()) {
                 if (!in_array($group->getKey(), $aGroups)) {
                     $this->userService->deleteGroup($group, $user, true, false);
-                    $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Delete group '.$group->getKey().' from user  : '.$e->getMessage());
+                    $this->logger->error(
+                        __CLASS__.' ['.__FUNCTION__.'] '.'Delete group '.$group->getKey(
+                        ).' from user  : '.$e->getMessage()
+                    );
                 }
             }
         }
@@ -187,13 +205,7 @@ class LDAPUserService
             $user->setFullname($info['cn'][0]);
         }
 
-        $permissionProfile = $this->permissionProfileService->getByName('Viewer');
-        $user->setPermissionProfile($permissionProfile);
-        $user->setOrigin('ldap');
-        $user->setEnabled(true);
-
         $this->userService->update($user, true, false);
-        $this->personService->referencePersonIntoUser($user);
 
         return $user;
     }
