@@ -376,8 +376,10 @@ class FactoryService
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {
-            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+            if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
+                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                    $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+                }
             }
         }
 
