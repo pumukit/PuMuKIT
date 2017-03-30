@@ -321,7 +321,7 @@ class DefaultController extends Controller
                 $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
             }
             if (!$profile) {
-                throw \Exception('Not exists master profile');
+                throw new \Exception('Not exists master profile');
             }
 
             $priority = $this->getKeyData('priority', $trackData, 2);
