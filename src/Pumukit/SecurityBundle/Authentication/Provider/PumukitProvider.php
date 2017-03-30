@@ -157,7 +157,7 @@ class PumukitProvider implements AuthenticationProviderInterface
 
         if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
             $user->setEmail($attributes[self::CAS_MAIL_KEY]);
-            $dm->persist($object);
+            $dm->persist($user);
             $dm->flush();
         }
     }
