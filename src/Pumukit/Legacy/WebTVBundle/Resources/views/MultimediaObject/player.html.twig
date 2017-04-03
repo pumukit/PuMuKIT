@@ -1,51 +1,16 @@
-{% if track %}
-  {% set captions = captions(multimediaObject) %}
-  {% set captions_block %}
-  {% if captions is not empty %}
-    tracks: [
-    {% for caption in captions %}
-      {
-      file: "{{ asset(caption.url, absolute=true) }}",
-      label: "{{ caption.language|language_name }}",
-      kind: "captions"
-      },
-    {% endfor %}
-    ],
-  {% endif %}
-{% endset %}
-<video id="player1" controls></video>
-<script type="text/javascript">
- jwplayer("player1").setup({
-     {% if intro %}
-     playlist: [{
-         file: "{{ asset(intro, absolute=true) }}",
-         {% if 'true' != autostart %}
-         image: "{{ multimediaObject|first_url_pic(true) }}",
-         {% endif %}
-     },{
-         file: "{{ asset(track.url, absolute=true) }}",
-         {{ captions_block }}
-         {% if ('true' != autostart) or track.isOnlyAudio() %}
-         image: "{{ multimediaObject|first_url_pic(true) }}",
-         {% endif %}
-     }],
-     {% else %}
-     file: "{{ asset(track.url, absolute=true) }}",
-     {{ captions_block }}
-     {% if (('true' != autostart) or track.isOnlyAudio()) %}
-     image: "{{ multimediaObject|first_url_pic(true) }}",
-     {% endif %}
-     {% endif %}
-     startparam: "start",
-     autostart: {{ autostart|default("true") }},
-     repeat: "false",
-     width: {{ width|default("620") }},
-     height: {{ height|default("465") }},
-     logo: { hide: true }
- });
-</script>
+{% if magic_url is defined and magic_url %}
+  {% set url_iframe = path('pumukit_videoplayer_magicindex', {'secret':multimediaObject.secret, 'autostart': autostart})%}
+{% elseif track is defined and track %}
+  {% set url_iframe = path('pumukit_videoplayer_index', {'id':multimediaObject.id, 'track_id':track.id, 'autostart': autostart}) %}
 {% else %}
-<div style="color: white; background: black; width: {{ width|default('620') }}px; height: {{ height|default('465') }}px; text-align: center;vertical-align: middle;display: table-cell;">
-  No track.
-</div>
+  {% set url_iframe = path('pumukit_videoplayer_index', {'id':multimediaObject.id, 'autostart': autostart}) %}
 {% endif %}
+<iframe src="{{ url_iframe|raw }}"
+        id="paellaiframe"
+        frameborder="0"
+        border="0"
+        width="100%"
+        height="350px"
+        scrolling="no"
+        allowfullscreen>
+</iframe>
