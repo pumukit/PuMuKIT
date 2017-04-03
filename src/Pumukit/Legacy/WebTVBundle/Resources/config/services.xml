@@ -8,9 +8,16 @@
         <parameter key="pumukit_web_tv.breadcrumbs_all_title">All</parameter>
         <parameter key="pumukit_web_tv.breadcrumbs_all_route">pumukit_webtv_medialibrary_index</parameter>
         <parameter key="pumukit_web_tv.default_pic">/bundles/pumukitwebtv/images/no_pic.jpg</parameter>
+	<parameter key="show_latest_with_pudenew">true</parameter>
+	<parameter key="pumukit_web_tv.linktagtosearch">false</parameter>
     </parameters>
 
     <services>
+        <service id="pumukit_web_tv.link_service" class="Pumukit\WebTVBundle\Services\LinkService">
+            <argument type="service" id="router" />
+            <argument >%pumukit_web_tv.linktagtosearch%</argument>
+        </service>
+
         <service id="pumukit_web_tv.filter" class="Pumukit\Legacy\WebTVBundle\EventListener\FilterListener">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <tag name="kernel.event_listener" event="kernel.request" />
@@ -22,6 +29,8 @@
           <argument>%pumukit_web_tv.default_pic%</argument>
           <argument type="service" id="pumukitschema.material" />
           <argument type="service" id="pumukitschema.pic" />
+          <argument type="service" id="pumukit_web_tv.link_service" />
+          <argument type="service" id="pumukitschema.mmsduration" />
           <tag name="twig.extension" />
         </service>
 
