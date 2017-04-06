@@ -13,7 +13,6 @@
         <div class="form-group" id="pumukitwizard_track_profile">
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
           {% for key, profile in master_profiles %}
-              {% dump(profile) %}
               {% if profile['wizard'] == true %}
                 <div class="radio">
                   <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
