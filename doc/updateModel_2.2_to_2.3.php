@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class UpgradePumukitCommand extends ContainerAwareCommand
 {
@@ -81,6 +82,11 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         }
     }
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @throws Exception
+     */
     private function updateBroadcast(OutputInterface $output)
     {
         $dbs = $this->getContainer()->getParameter('mongodb_database');
@@ -90,7 +96,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
 
             $aMultimediaObjects = $this->getAllMultimediaObjects();
             if (count($aMultimediaObjects) > 0) {
-                $this->convertBroadcastToEmbeddedBroadcast($aMultimediaObjects, $output);
+                $this->convertBroadcastToEmbeddedBroadcast($output, $aMultimediaObjects);
             }
         } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());
@@ -105,9 +111,10 @@ class UpgradePumukitCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param null $aMultimediaObjects
+     * @param OutputInterface $output
+     * @param array           $aMultimediaObjects
      */
-    private function convertBroadcastToEmbeddedBroadcast($aMultimediaObjects = null, OutputInterface $output)
+    private function convertBroadcastToEmbeddedBroadcast(OutputInterface $output, $aMultimediaObjects)
     {
         if ($aMultimediaObjects) {
             $output->writeln('Started to import embeddedBroadcast');
@@ -139,7 +146,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
     /**
      * @param $oMultimedia
      */
-    private function createEmbeddedBroadcast($oMultimedia)
+    private function createEmbeddedBroadcast(MultimediaObject $oMultimedia)
     {
         $oBroadcast = $oMultimedia->getBroadcast();
         switch ($oBroadcast->getBroadcastTypeId()) {
