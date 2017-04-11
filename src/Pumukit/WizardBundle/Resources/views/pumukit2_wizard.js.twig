@@ -23,6 +23,12 @@ $(function(){
     $('#pumukitwizard_multimediaobject_previous').on('click', function(e){
         if($(this).parent().hasClass('lastdone')){
             var multimediaobjectForm = $('#pumukitwizard_multimediaobject_form')[0];
+            if(multimediaobjectForm == null)
+            {
+                var multimediaobjectForm = $('#pumukitwizard_track_form')[0];
+                var url = "{{ path('pumukitwizard_default_type',{'id': 'null'})|raw }}";
+                window.location.href = url;
+            }
             var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
             var seriesId = $('#pumukitwizard_series_id').val();
             if (!seriesId) {
@@ -122,7 +128,7 @@ $(function(){
     });
 
     $('.pumukitwizard-btn-back').on('click', function(e){
-        $('.lastdone a').last().click()
+        $('.lastdone a').last().click();
     });
 
 });
