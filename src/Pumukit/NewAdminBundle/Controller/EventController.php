@@ -273,7 +273,8 @@ class EventController extends AdminController implements NewAdminController
                 ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
             if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
+                $page = $request->get('page');
+                $session->set($session_namespace.'/page', $page);
             }
 
             // ADDED FROM ADMIN CONTROLLER
