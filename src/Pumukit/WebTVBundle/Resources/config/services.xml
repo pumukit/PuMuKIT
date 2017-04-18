@@ -36,6 +36,19 @@
           <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
         </service>
 
+        <service id="pumukit_web_tv.breadcrumbslistener" class="Pumukit\WebTVBundle\EventListener\BreadcrumbListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="service_container" />
+            <argument type="service" id="router" />
+            <argument type="service" id="session" />
+            <argument type="service" id="translator" />
+            <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
+            <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
+            <argument>%breadcrumbs_home_title%</argument>
+            <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
+            <tag name="kernel.event_listener" event="kernel.controller"/>
+        </service>
+
         <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
         </service>
     </services>

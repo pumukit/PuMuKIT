@@ -25,6 +25,12 @@ parameters:
   show_latest_with_pudenew:  false                        # Set whether to use the PUDENEW tag for 'Recently Added' and 'Latest Uploads'
 
   pumukit_web_tv.cinema_mode: false
+
+  pumukit_breadcrumb.tag: 'LCF9900000'
+  pumukit_breadcrumb.default_route: 'full'        # Full catalog | tag
+  pumukit_breadcrumb.level: 0
+  pumukit_breadcrumb.select: first
+
   pumukit_web_tv.breadcrumbs_all_title: 'All'
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
 
