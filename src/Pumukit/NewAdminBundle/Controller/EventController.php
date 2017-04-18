@@ -286,10 +286,6 @@ class EventController extends AdminController implements NewAdminController
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
                 ->setNormalizeOutOfRangePages(true);
 
-            if ($newEventId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
-                $page = $resources->getNbPages();
-                $session->set($session_namespace.'/page', $page);
-            }
             $resources->setCurrentPage($page);
         } else {
             $resources = $this
