@@ -32,7 +32,7 @@ class BreadcrumbListener
         'pumukit_webtv_medialibrary_index',
         'pumukit_webtv_search_multimediaobjects',
         'pumukit_webtv_search_series',
-        'pumukit_webtv_categories_index'
+        'pumukit_webtv_categories_index',
     );
     private $defaultSeriesLink = 'pumukit_webtv_series_index';
     private $defaultMultimediaLink = 'pumukit_webtv_multimediaobject_index';
@@ -48,14 +48,16 @@ class BreadcrumbListener
     );
     private $needReference = array(
         'pumukit_webtv_multimediaobject_index',
+        'pumukit_webtv_multimediaobject_magicindex',
         'pumukit_webtv_series_index',
+        'pumukit_webtv_series_magicindex',
     );
     private $seriesRoutes = array(
         'pumukit_webtv_series_index',
         'pumukit_webtv_series_magicindex',
     );
     private $multimediaObjectRoutes = array(
-        'pumukit_webtv_multimediaobjects_index',
+        'pumukit_webtv_multimediaobject_index',
         'pumukit_webtv_multimediaobject_magicindex',
     );
     private $firstRoutes = array(
@@ -107,7 +109,13 @@ class BreadcrumbListener
             $this->initBreadcrumb();
 
             if (in_array($request->attributes->get('_route'), $this->needReference) and $request->headers->has('referer')) {
-                $this->session->set('breadcrumb_referer', $request->headers->get('referer'));
+                if (in_array($request->attributes->get('_route'), $this->seriesRoutes)) {
+                    if ($request->headers->get('referer') !== $this->session->get('referer_breadcrumb')) {
+                        $this->session->set('breadcrumb_referer', $request->headers->get('referer'));
+                    }
+                } elseif (!strpos($request->headers->get('referer'), '/series/tag') and !strpos($request->headers->get('referer'), '/series/')) {
+                    $this->session->set('breadcrumb_referer', $request->headers->get('referer'));
+                }
             }
 
             if (in_array($request->attributes->get('_route'), $this->allowRoutes)) {
@@ -115,6 +123,8 @@ class BreadcrumbListener
             }
 
             if (in_array($request->attributes->get('_route'), $this->needReference) and !$request->headers->has('referer')) {
+                $this->addDefaultTagRoute();
+            } elseif (in_array($request->attributes->get('_route'), $this->needReference) and count($this->breadcrumbs) == 2) {
                 $this->addDefaultTagRoute();
             }
 
@@ -141,7 +151,6 @@ class BreadcrumbListener
             }
 
             $request->attributes->set('breadcrumb', $this->breadcrumbs);
-            dump($request->attributes->get('breadcrumb'));
         }
     }
 
@@ -156,7 +165,7 @@ class BreadcrumbListener
 
     private function addWay($request)
     {
-        if ($this->session->get('breadcrumb_referer') and (strpos($this->session->get('breadcrumb_referer'), '/series/tag/') or strpos($this->session->get('breadcrumb_referer'), '/multimediaobjects/tag/'))) {
+        if ($this->session->get('breadcrumb_referer') and (strpos($this->session->get('breadcrumb_referer'), '/series/tag/') or strpos($this->session->get('breadcrumb_referer'), '/multimediaobjects/tag/')) and !in_array($request->attributes->get('_route'), $this->byTagRoutes)) {
             $aReference = explode('/', $this->session->get('breadcrumb_referer'));
             $tagCod = array_pop($aReference);
 
@@ -174,25 +183,27 @@ class BreadcrumbListener
         } elseif ($this->session->get('breadcrumb_referer')) {
             $aReferer = explode('/', $this->session->get('breadcrumb_referer'));
             $sReferer = array_pop($aReferer);
-
             if ('latestuploads' === $sReferer) {
                 $title = $this->container->getParameter($this->firstRoutes['pumukit_webtv_announces_latestuploads']['title']);
                 $link = $this->firstRoutes['pumukit_webtv_announces_latestuploads']['link'];
+                $this->addToBreadcrumb($this->translator->trans($title), $link);
             } elseif (strpos($this->session->get('breadcrumb_referer'), 'mediateca')) {
                 $title = $this->container->getParameter($this->firstRoutes['pumukit_webtv_medialibrary_index']['title']);
                 $link = $this->firstRoutes['pumukit_webtv_medialibrary_index']['link'];
+                $this->addToBreadcrumb($this->translator->trans($title), $link);
             } elseif (strpos($this->session->get('breadcrumb_referer'), 'searchmultimediaobject')) {
                 $title = $this->container->getParameter($this->firstRoutes['pumukit_webtv_search_multimediaobjects']['title']);
                 $link = $this->firstRoutes['pumukit_webtv_search_multimediaobjects']['link'];
+                $this->addToBreadcrumb($this->translator->trans($title), $link);
             } elseif (strpos($this->session->get('breadcrumb_referer'), 'searchseries')) {
                 $title = $this->container->getParameter($this->firstRoutes['pumukit_webtv_search_series']['title']);
                 $link = $this->firstRoutes['pumukit_webtv_search_series']['link'];
+                $this->addToBreadcrumb($this->translator->trans($title), $link);
             } elseif (strpos($this->session->get('breadcrumb_referer'), 'categories')) {
                 $title = $this->container->getParameter($this->firstRoutes['pumukit_webtv_categories_index']['title']);
                 $link = $this->firstRoutes['pumukit_webtv_categories_index']['link'];
+                $this->addToBreadcrumb($this->translator->trans($title), $link);
             }
-
-            $this->addToBreadcrumb($this->translator->trans($title), $link);
         }
     }
 
@@ -234,9 +245,6 @@ class BreadcrumbListener
             $title = $this->container->getParameter('menu.mediateca_title');
             $link = 'pumukit_webtv_medialibrary_index';
             $this->addToBreadcrumb($this->translator->trans($title), $link);
-        } elseif ('tag' === $this->defaultRouteBreadcrumb) {
-            $oTag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $this->parentTag));
-            $this->createTagsBreadcrumb($oTag);
         }
     }
 }

@@ -26,10 +26,10 @@ parameters:
 
   pumukit_web_tv.cinema_mode: false
 
-  pumukit_breadcrumb.tag: 'LCF9900000'
-  pumukit_breadcrumb.default_route: 'full'        # Full catalog | tag
-  pumukit_breadcrumb.level: 0
-  pumukit_breadcrumb.select: first
+  pumukit_breadcrumb.tag: 'ITUNES'                        # Default parent tag
+  pumukit_breadcrumb.default_route: 'full'                # full when access directly a new mmo or serie, the breadcrumb will be full catalog
+  pumukit_breadcrumb.select: first                        # If the tree of tags is too long, select what do you want to show
+  pumukit_breadcrumb.level: 0                             # Number of tags to show (just tags)
 
   pumukit_web_tv.breadcrumbs_all_title: 'All'
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
