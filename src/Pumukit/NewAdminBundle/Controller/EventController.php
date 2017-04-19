@@ -41,12 +41,20 @@ class EventController extends AdminController implements NewAdminController
             $this->get('session')->remove('admin/event/id');
         }
 
+
+        $repo = $this
+              ->get('doctrine_mongodb.odm.document_manager')
+              ->getRepository('PumukitLiveBundle:Event');
+
+        $eventsMonth = $repo->findInMonth($month, $year);
+
         return array(
-                     'events' => $events,
-                     'm' => $month,
-                     'y' => $year,
-                     'calendar' => $calendar,
-                     );
+            'events' => $events,
+            'calendar_all_events' => $eventsMonth,
+            'm' => $month,
+            'y' => $year,
+            'calendar' => $calendar,
+        );
     }
 
     /**
@@ -103,12 +111,19 @@ class EventController extends AdminController implements NewAdminController
         $criteria = $this->getCriteria($config);
         list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
+        $repo = $this
+             ->get('doctrine_mongodb.odm.document_manager')
+             ->getRepository('PumukitLiveBundle:Event');
+
+        $eventsMonth = $repo->findInMonth($month, $year);
+
         return array(
-                     'events' => $events,
-                     'm' => $month,
-                     'y' => $year,
-                     'calendar' => $calendar,
-                     );
+            'events' => $events,
+            'calendar_all_events' => $eventsMonth,
+            'm' => $month,
+            'y' => $year,
+            'calendar' => $calendar,
+        );
     }
 
     /**

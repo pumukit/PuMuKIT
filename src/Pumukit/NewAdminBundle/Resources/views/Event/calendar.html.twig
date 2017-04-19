@@ -27,7 +27,7 @@
           {% if d is not empty %}
             <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
 	        {% set calendar_events = [] %}
-	        {% for event in events %}
+	        {% for event in calendar_all_events %}
               {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
 	            {% set calendar_events = calendar_events|merge([event]) %}
               {% endif %}
