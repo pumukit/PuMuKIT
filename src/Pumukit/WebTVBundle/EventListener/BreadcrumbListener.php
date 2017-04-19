@@ -22,6 +22,17 @@ class BreadcrumbListener
 
     private $basicRoutes = array(
         'pumukit_webtv_index_index',
+        'pumukit_webtv_bytag_series',
+        'pumukit_webtv_bytag_multimediaobjects',
+        'pumukit_webtv_multimediaobject_index',
+        'pumukit_webtv_multimediaobject_magicindex',
+        'pumukit_webtv_series_index',
+        'pumukit_webtv_series_magicindex',
+        'pumukit_webtv_announces_latestuploads',
+        'pumukit_webtv_medialibrary_index',
+        'pumukit_webtv_search_multimediaobjects',
+        'pumukit_webtv_search_series',
+        'pumukit_webtv_categories_index'
     );
     private $defaultSeriesLink = 'pumukit_webtv_series_index';
     private $defaultMultimediaLink = 'pumukit_webtv_multimediaobject_index';
@@ -130,6 +141,7 @@ class BreadcrumbListener
             }
 
             $request->attributes->set('breadcrumb', $this->breadcrumbs);
+            dump($request->attributes->get('breadcrumb'));
         }
     }
 
