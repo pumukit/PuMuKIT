@@ -1,3 +1,5 @@
+
+{% if active == true %}
 <ol class="breadcrumb">
     {% set breadcrumbs =  (app.request.attributes.get('breadcrumb') is not null) ? app.request.attributes.get('breadcrumb') : app.request.attributes.get('request').attributes.get('breadcrumb') %}
     {% for breadcrumb in breadcrumbs %}
@@ -8,3 +10,66 @@
         </li>
     {% endfor %}
 </ol>
+{% else %}
+<ol class="breadcrumb">
+  <li>
+    <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active"{% endif %} >
+      {{ breadcrumbs[0]["title"]}}
+    </a>
+  </li>
+
+  {% if breadcrumbs|length > 1 %}
+    <li>
+      <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="active"{% endif %} >
+        {{ breadcrumbs[1]["title"]}}
+      </a>
+    </li>
+  {% endif %}
+
+  {% if breadcrumbs|length > 2 %}
+    <li>
+      <a id="tvpumukites_breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" {% endif %} >
+        {{ breadcrumbs[2]["title"]}}
+      </a>
+    </li>
+  {% endif %}
+
+  {% if breadcrumbs|length > 3 %}
+    <li id="tvpumukites_breadcrumbs_mmobj">
+      <a id="tvpumukites_breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" {% endif %} >
+        {{ breadcrumbs[3]["title"]}}
+      </a>
+    </li>
+
+
+
+    <script type="text/javascript">
+     $(function(){
+         var breadcrumbs_mmobj = $('#tvpumukites_breadcrumbs_mmobj');
+         var breadcrumbs_series = $('#tvpumukites_breadcrumbs_series_a');
+         var breadcrumbs_mmobja = $('#tvpumukites_breadcrumbs_mmobj_a');
+         if((breadcrumbs_mmobj != null) &&(breadcrumbs_series != null)){
+             var leftOffset = ($('#content').offset()["left"]);
+             var size = ( breadcrumbs_mmobj.offset()["left"] + breadcrumbs_mmobj.width() - leftOffset);
+             var s, m = false;
+             while( size > 910){
+                 if(breadcrumbs_series.text().trim().length > 20){
+                     breadcrumbs_series.text(breadcrumbs_series.text().substring(0, breadcrumbs_series.text().trim().length -1 ));
+                     s = true;
+                 }else{
+                     breadcrumbs_mmobja.text(breadcrumbs_mmobja.text().substring(0, breadcrumbs_mmobja.text().trim().length -1 ));
+                     m = true;
+                 }
+                 var size = ( breadcrumbs_mmobj.offset()["left"] + breadcrumbs_mmobj.width() - leftOffset);
+             }
+             if (m) breadcrumbs_mmobja.append("...");
+             if (s) breadcrumbs_series.append("...");
+         }
+     });
+    </script>
+
+
+  {% endif %}
+
+</ol>
+{% endif %}

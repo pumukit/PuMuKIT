@@ -42,8 +42,6 @@
             <argument type="service" id="router" />
             <argument type="service" id="session" />
             <argument type="service" id="translator" />
-            <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
-            <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
             <argument>%breadcrumbs_home_title%</argument>
             <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
             <tag name="kernel.event_listener" event="kernel.controller"/>
