@@ -41,9 +41,8 @@ class EventRepository extends DocumentRepository
             ->getQuery()->getSingleResult();
     }
 
-
     /**
-     * Find event in a month
+     * Find event in a month.
      */
     public function findInMonth($month, $year)
     {
@@ -57,7 +56,6 @@ class EventRepository extends DocumentRepository
             ->sort('date', 1)
             ->getQuery()->execute();
     }
-
 
     /**
      * Find current events.

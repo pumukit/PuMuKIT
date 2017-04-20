@@ -41,7 +41,6 @@ class EventController extends AdminController implements NewAdminController
             $this->get('session')->remove('admin/event/id');
         }
 
-
         $repo = $this
               ->get('doctrine_mongodb.odm.document_manager')
               ->getRepository('PumukitLiveBundle:Event');
