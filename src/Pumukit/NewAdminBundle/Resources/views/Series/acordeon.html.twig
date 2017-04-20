@@ -1,7 +1,6 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
-  <form autocomplete="off" id="filter_series" class="form"
-        onsubmit="return filter_series(this);">
+  <form autocomplete="off" id="filter_series" class="form">
     <fieldset>
       <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
 
@@ -39,10 +38,10 @@
                 <div class="row">
                   <div class="col-md-11 col-md-offset-1">
                     {% trans %}From{% endtrans %}:&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
-                                                             name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                                                             name="criteria[date][from]" onChange="on_filter_series_list()" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                     <br/>
                       {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
-                                                                   name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+                                                                   name="criteria[date][to]" id="filters_date_to" onChange="on_filter_series_list()" value="{{ criteria['date']['to']|default("") }}">
                   </div>
                 </div>
               </div>
@@ -91,6 +90,17 @@
     $('filters_date_to').value = '';
     $('filters_announce').value = 'diff';
     $('filters_status').value = 'all';
+  }
+
+  function on_filter_series_list(event) {
+      var from_date = $('#filters_date_from');
+      var to_date = $('#filters_date_to');
+      if (to_date.val() != "" && from_date.val() >= to_date.val()) {
+          to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
+      } else {
+          to_date[0].setCustomValidity("");
+      }
+      return false;
   }
 </script>
 

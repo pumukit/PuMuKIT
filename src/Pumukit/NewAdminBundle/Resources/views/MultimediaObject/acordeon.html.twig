@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/mmslist/criteria') %}
 <div class="well" xmlns="http://www.w3.org/1999/html">
-    <form autocomplete="off" id="filter_series" class="form" onsubmit="return filter_multimedia_list(this);">
+    <form autocomplete="off" id="filter_series" class="form">
         <fieldset>
             <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -53,6 +53,7 @@
                                                                                    title="Format YYYY-MM-DD"
                                                                                    name="criteria[date][from]"
                                                                                    id="filters_date_from"
+                                                                                   onChange="on_filter_multimedia_list()"
                                                                                    value="{{ criteria['date']['from']|default("") }}">
                                         <br/>
                                         {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date"
@@ -61,6 +62,7 @@
                                                                                        title="Format YYYY-MM-DD"
                                                                                        name="criteria[date][to]"
                                                                                        id="filters_date_to"
+                                                                                       onChange="on_filter_multimedia_list()"
                                                                                        value="{{ criteria['date']['to']|default("") }}">
                                     </div>
                                 </div>
@@ -88,21 +90,14 @@
 </div>
 
 <script type="text/javascript">
-    function resetSearchForm() {
-        $('filters_title').value = '';
-        $('filters_person').value = '';
-        $('filters_date_from').value = '';
-        $('filters_date_to').value = '';
-        $('filters_announce').value = 'diff';
-        $('filters_status').value = 'all';
-    }
-    function filter_multimedia_list(form) {
+
+    function on_filter_multimedia_list(event) {
         var from_date = $('#filters_date_from');
         var to_date = $('#filters_date_to');
         if (to_date.val() != "" && from_date.val() >= to_date.val()) {
             to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
         } else {
-            $('#list_mms').load('{{ path('pumukitnewadmin_mms_listall')|raw }}', $(form).serialize());
+            to_date[0].setCustomValidity("");
         }
         return false;
     }
