@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class UpgradePumukitCommand extends ContainerAwareCommand
 {
@@ -37,7 +38,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         $this->updateKeywords();
         $output->writeln('Series and MultimediaObject collections updated (keywords)');
 
-        $this->updateBroadcast();
+        $this->updateBroadcast($output);
         $output->writeln('MultimediaObject collection updated (broadcasts)');
     }
 
@@ -81,12 +82,21 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         }
     }
 
-    private function updateBroadcast()
+    /**
+     * @param OutputInterface $output
+     *
+     * @throws Exception
+     */
+    private function updateBroadcast(OutputInterface $output)
     {
+        $dbs = $this->getContainer()->getParameter('mongodb_database');
         try {
+            $addEmbeddedBroadcast = 'db.MultimediaObject.update({},{$set: {"embeddedBroadcast": {"_id": new ObjectId(), "name" : "Public", "type" : "public"}}},{multi:true})';
+            $this->dm->getConnection()->getMongoClient()->$dbs->execute($addEmbeddedBroadcast);
+
             $aMultimediaObjects = $this->getAllMultimediaObjects();
             if (count($aMultimediaObjects) > 0) {
-                $this->convertBroadcastToEmbeddedBroadcast($aMultimediaObjects);
+                $this->convertBroadcastToEmbeddedBroadcast($output, $aMultimediaObjects);
             }
         } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());
@@ -95,51 +105,64 @@ class UpgradePumukitCommand extends ContainerAwareCommand
 
     private function getAllMultimediaObjects()
     {
-        $aMultimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findAll();
+        $aMultimediaObject = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')->getQuery();
 
         return $aMultimediaObject;
     }
 
     /**
-     * @param null $aMultimediaObjects
+     * @param OutputInterface $output
+     * @param array           $aMultimediaObjects
      */
-    private function convertBroadcastToEmbeddedBroadcast($aMultimediaObjects = null)
+    private function convertBroadcastToEmbeddedBroadcast(OutputInterface $output, $aMultimediaObjects)
     {
         if ($aMultimediaObjects) {
+            $output->writeln('Started to import embeddedBroadcast');
+            $progress = new \Symfony\Component\Console\Helper\ProgressBar($output, count($aMultimediaObjects));
+            $iElements = 0;
             foreach ($aMultimediaObjects as $oMultimedia) {
-                $this->createEmbeddedBroadcast($oMultimedia);
+                if ($oMultimedia->getBroadcast()) {
+                    if (Broadcast::BROADCAST_TYPE_PUB == $oMultimedia->getBroadcast()->getBroadcastTypeId()) {
+                        $progress->advance();
+                        continue;
+                    } else {
+                        $this->createEmbeddedBroadcast($oMultimedia);
+                        $progress->advance();
+                        ++$iElements;
+                    }
+                }
+                if (($iElements % 50) == 0) {
+                    $this->dm->flush();
+                    $this->dm->clear();
+                }
             }
+
+            $this->dm->flush();
+            $progress->finish();
+            $output->writeln('');
         }
     }
 
     /**
      * @param $oMultimedia
      */
-    private function createEmbeddedBroadcast($oMultimedia)
+    private function createEmbeddedBroadcast(MultimediaObject $oMultimedia)
     {
-        if ($oBroadcast = $oMultimedia->getBroadcast()) {
-            switch ($oBroadcast->getBroadcastTypeId()) {
-                case Broadcast::BROADCAST_TYPE_PUB:
-                    $sName = EmbeddedBroadcast::NAME_PUBLIC;
-                    $sType = EmbeddedBroadcast::TYPE_PUBLIC;
-                    break;
-                case Broadcast::BROADCAST_TYPE_PRI:
+        $oBroadcast = $oMultimedia->getBroadcast();
+        switch ($oBroadcast->getBroadcastTypeId()) {
+            case Broadcast::BROADCAST_TYPE_PRI:
+                $sName = EmbeddedBroadcast::NAME_PASSWORD;
+                $sType = EmbeddedBroadcast::TYPE_PASSWORD;
+                break;
+            case Broadcast::BROADCAST_TYPE_COR:
+                if ($this->typeLoginName === $oBroadcast->getName()) {
+                    $sName = EmbeddedBroadcast::NAME_LOGIN;
+                    $sType = EmbeddedBroadcast::TYPE_LOGIN;
+                } elseif ($oBroadcast->getPasswd() && !empty($oBroadcast->getPasswd())) {
                     $sName = EmbeddedBroadcast::NAME_PASSWORD;
                     $sType = EmbeddedBroadcast::TYPE_PASSWORD;
-                    break;
-                case Broadcast::BROADCAST_TYPE_COR:
-                    if ($this->typeLoginName === $oBroadcast->getName()) {
-                        $sName = EmbeddedBroadcast::NAME_LOGIN;
-                        $sType = EmbeddedBroadcast::TYPE_LOGIN;
-                    } elseif ($oBroadcast->getPasswd() && !empty($oBroadcast->getPasswd())) {
-                        $sName = EmbeddedBroadcast::NAME_PASSWORD;
-                        $sType = EmbeddedBroadcast::TYPE_PASSWORD;
-                    }
-                    break;
-            }
-        } else {
-            $sName = EmbeddedBroadcast::NAME_PUBLIC;
-            $sType = EmbeddedBroadcast::TYPE_PUBLIC;
+                }
+                break;
         }
 
         $oEmbeddedBroadcast = new EmbeddedBroadcast();
@@ -150,10 +173,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             $oEmbeddedBroadcast->setPassword($oBroadcast->getPasswd());
         }
         $this->dm->persist($oEmbeddedBroadcast);
-
         $oMultimedia->setEmbeddedBroadcast($oEmbeddedBroadcast);
-
-        $this->dm->flush();
     }
 }
 
