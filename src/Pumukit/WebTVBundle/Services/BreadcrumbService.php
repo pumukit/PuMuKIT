@@ -3,11 +3,10 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class BreadcrumbService extends ContainerAware
+class BreadcrumbService
 {
     private $session;
     private $router;
