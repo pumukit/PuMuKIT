@@ -34,6 +34,8 @@ class Permission
     const ADD_OWNER = 'ROLE_ADD_OWNER';
     const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
     const SHOW_CODES = 'ROLE_SHOW_CODES';
+    const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
+    const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
 
     public static $permissionDescription = array(
         self::ACCESS_DASHBOARD => array(
@@ -220,6 +222,20 @@ class Permission
         ),
         self::SHOW_CODES => array(
             'description' => 'Show tag and group codes in the backoffice',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::ROLE_SEND_NOTIFICATION_ERRORS => array(
+            'description' => 'Receive failed job notifications',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::ROLE_SEND_NOTIFICATION_COMPLETE => array(
+            'description' => 'Receive completed broadcast job notifications',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
