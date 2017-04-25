@@ -2,6 +2,7 @@
 
 namespace Pumukit\NotificationBundle\Services;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
@@ -20,10 +21,16 @@ class JobNotificationService
     protected $subjectSuccess;
     protected $subjectFails;
     protected $subjectSuccessTrans;
+    protected $documentManager;
     protected $subjectFailsTrans;
 
-    public function __construct(SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
+    const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
+    const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
+    const PERSONAL_SCOPE_ROLE_CODE = 'owner';
+
+    public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
     {
+        $this->dm = $documentManager;
         $this->senderService = $senderService;
         $this->jobService = $jobService;
         $this->translator = $translator;
@@ -41,6 +48,8 @@ class JobNotificationService
      * On job success.
      *
      * @param JobEvent $event
+     *
+     * @return bool
      */
     public function onJobSuccess(JobEvent $event)
     {
@@ -51,6 +60,8 @@ class JobNotificationService
      * On job error.
      *
      * @param JobEvent $event
+     *
+     * @return bool
      */
     public function onJobError(JobEvent $event)
     {
@@ -74,6 +85,11 @@ class JobNotificationService
                 return;
             }
 
+            $track = $event->getTrack();
+            if (!$error and $track->isMaster()) {
+                return;
+            }
+
             $multimediaObject = $event->getMultimediaObject();
             if (!($emailsTo = $this->getEmails($job, $multimediaObject))) {
                 return;
@@ -83,7 +99,16 @@ class JobNotificationService
             $subjectInParameters = $this->getSubjectEmailInParameters($job, $error);
             $parameters = $this->getParametersEmail($job, $multimediaObject, $subjectInParameters);
 
-            $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error, true);
+            if (!$emailsTo) {
+                return;
+            }
+            if (is_array($emailsTo)) {
+                foreach ($emailsTo as $email) {
+                    $output = $this->senderService->sendNotification($email, $subject, $this->template, $parameters, $error, true);
+                }
+            } else {
+                $output = $this->senderService->sendNotification($emailsTo, $subject, $this->template, $parameters, $error, true);
+            }
 
             return $output;
         }
@@ -189,7 +214,25 @@ class JobNotificationService
      */
     protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {
-        return $job->getEmail();
+        if (Job::STATUS_FINISHED === $job->getStatus()) {
+            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE);
+            foreach ($aPeople as $people) {
+                $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
+                if (in_array(self::ROLE_SEND_NOTIFICATION_COMPLETE, $user->getRoles())) {
+                    $emailsTo[] = $user->getEmail();
+                }
+            }
+        } elseif (Job::STATUS_ERROR === $job->getStatus()) {
+            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE);
+            foreach ($aPeople as $people) {
+                $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
+                if (in_array(self::ROLE_SEND_NOTIFICATION_ERRORS, $user->getRoles())) {
+                    $emailsTo[] = $user->getEmail();
+                }
+            }
+        }
+
+        return $emailsTo;
     }
 
     private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
