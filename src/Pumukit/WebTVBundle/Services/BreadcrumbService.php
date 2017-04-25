@@ -94,7 +94,7 @@ class BreadcrumbService
         ),
     );
 
-    public function __construct(DocumentManager $documentManager, Router $router, Session $session, $translator, $homeTitle = 'home', $parentWeb = null, $breadcrumbTag, $defaultRoute, $breadcrumbLevel, $breadcrumbSelect, $channel1, $channel2, $channel3, $channel4, $channel5, $channel6, $channel7, $announceTitle, $mediatecaTitle, $searchTitle, $categoriesTitle)
+    public function __construct(DocumentManager $documentManager, Router $router, Session $session, $translator, $homeTitle = 'home', $parentWeb = null, $breadcrumbTag = 'ITUNESU', $defaultRoute = 'full', $breadcrumbLevel = 0, $breadcrumbSelect = 'start', $channel1 = 'University', $channel2 = 'Bussiness', $channel3 = 'Natural Sciences', $channel4 = 'Law', $channel5 = 'Humanities', $channel6 = 'Health & Medicine', $channel7 = 'Social Matters & Education', $announceTitle = 'Latest Uploads', $mediatecaTitle = 'Full Catalogue', $searchTitle = 'Multimedia objects search', $categoriesTitle = 'By subject catalogue')
     {
         $this->session = $session;
         $this->router = $router;
