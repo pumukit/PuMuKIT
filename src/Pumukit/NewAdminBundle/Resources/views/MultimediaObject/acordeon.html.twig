@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/mmslist/criteria') %}
 <div class="well" xmlns="http://www.w3.org/1999/html">
-    <form autocomplete="off" id="filter_series" class="form" onsubmit="return filter_multimedia_list(this);">
+    <form autocomplete="off" id="filter_series" class="form">
         <fieldset>
             <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -16,21 +16,53 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %} :</label>
-                                <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
+                                <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}" data-toggle="tooltip" data-placement="left" title="{% trans %}Search by title, subtitle, description or id{% endtrans %}" placeholder="{% trans %}Search by title, subtitle, description or id{% endtrans %}">
                             </div>
 
                             <div class="form-group">
                                 <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %} :</label>
-                                <input type="text" class="form-control" name="criteria[person_name]" id="filters_person_name" value="{{ criteria['person_name']|default("") }}">
+                                <input type="text" class="form-control" name="criteria[person_name]" id="filters_person_name" value="{{ criteria['person_name']|default("") }}" placeholder="{% trans %}Search by name or surname{% endtrans %}">
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group" id="filter_person_role_group" style="display:none">
                                 <label for="filters_person_role" class="control-label">{% trans %}Roles{% endtrans %} :</label>
                                 <select class="form-control" name="criteria[person_role]" id="filters_person_role">
                                     <option value="all">{% trans %}All{% endtrans %}</option>
                                     {% for role in roles %}
-                                        <option value="{{ role.cod }}">{{ role.name }}</option>
+                                        <option value="{{ role.cod }}" {% if criteria is not null and criteria['person_role'] == role.cod %}selected{% endif %}>{{ role.name }}</option>
                                     {% endfor %}
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="accordion_others" class="panel-group" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion_others" href="#collapseOthers"
+                               aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Filter{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseOthers" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="filter_place" class="control-label">{% trans %}Status{% endtrans %} :</label>
+                                <ul style="list-style-type: none;">
+                                    {% for key, value in statusPub %}
+                                        <li>
+                                            {% set checked = '' %}
+                                            {% if criteria['status'] is defined and key in criteria['status'] %}
+                                                {% set checked = 'checked' %}
+                                            {% endif %}
+                                            <input id="{{ value }}" type="checkbox" name="criteria[status][]" value="{{ key }}" {{ checked }} />
+                                            <span>{{ value|trans }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
 
                             <div class="form-group">
@@ -38,7 +70,7 @@
                                 <select class="form-control" name="criteria[channel]" id="filters_person_role">
                                     <option value="all">{% trans %}All{% endtrans %}</option>
                                     {% for channel in pubChannels %}
-                                        <option value="{{ channel.cod }}">{{ channel.title }}</option>
+                                        <option value="{{ channel.cod }}">{{ channel.title|trans }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -53,6 +85,7 @@
                                                                                    title="Format YYYY-MM-DD"
                                                                                    name="criteria[date][from]"
                                                                                    id="filters_date_from"
+                                                                                   onChange="on_filter_multimedia_list()"
                                                                                    value="{{ criteria['date']['from']|default("") }}">
                                         <br/>
                                         {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date"
@@ -61,6 +94,7 @@
                                                                                        title="Format YYYY-MM-DD"
                                                                                        name="criteria[date][to]"
                                                                                        id="filters_date_to"
+                                                                                       onChange="on_filter_multimedia_list()"
                                                                                        value="{{ criteria['date']['to']|default("") }}">
                                     </div>
                                 </div>
@@ -88,22 +122,31 @@
 </div>
 
 <script type="text/javascript">
-    function resetSearchForm() {
-        $('filters_title').value = '';
-        $('filters_person').value = '';
-        $('filters_date_from').value = '';
-        $('filters_date_to').value = '';
-        $('filters_announce').value = 'diff';
-        $('filters_status').value = 'all';
-    }
-    function filter_multimedia_list(form) {
+
+    $(document).ready( function () {
+        var person_search = $('#filters_person_name').val();
+        if(person_search.length != 0) {
+            $('#filter_person_role_group').show();
+            $('#collapseSearch').addClass('in');
+        }
+    });
+
+    function on_filter_multimedia_list(event) {
         var from_date = $('#filters_date_from');
         var to_date = $('#filters_date_to');
         if (to_date.val() != "" && from_date.val() >= to_date.val()) {
             to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
         } else {
-            $('#list_mms').load('{{ path('pumukitnewadmin_mms_listall')|raw }}', $(form).serialize());
+            to_date[0].setCustomValidity("");
         }
         return false;
     }
+
+    $('#filters_person_name').keyup(function() {
+        if($('#filters_person_name').val().length == 0) {
+            $('#filter_person_role_group').hide();
+        } else {
+            $('#filter_person_role_group').show();
+        }
+    });
 </script>
