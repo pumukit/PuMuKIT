@@ -32,12 +32,25 @@ class SimpleController extends Controller
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
+        $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
+        $showSeriesTitle = $this->getParameter('pumukit_wizard.show_simple_series_title');
+
+        $seriesI18nTitle = array();
+        if ($series) {
+            $seriesI18nTitle = $series->getI18nTitle();
+        } elseif (isset($externalData['title'])) {
+            $seriesI18nTitle = $externalData['title'];
+        }
+
         return array(
             'series' => $series,
             'languages' => $languages,
             'show_license' => $licenseService->isEnabled(),
             'license_text' => $licenseContent,
             'externalData' => $externalData,
+            'show_simple_mm_title' => $showMmTitle,
+            'show_simple_series_title' => $showSeriesTitle,
+            'series_i18n_title' => $seriesI18nTitle,
         );
     }
 
@@ -85,8 +98,18 @@ class SimpleController extends Controller
                 $series = $this->createSeries($externalData);
             }
 
-            $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $multimediaObject = $this->createMultimediaObject($title, $series);
+            $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
+            if ($showMmTitle) {
+                $i18nTitle = $request->request->get('multimediaobject_i18n_title', array());
+                if (!array_filter($i18nTitle)) {
+                    $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $i18nTitle = $this->createI18nTitleFromFile($title);
+                }
+            } else {
+                $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $i18nTitle = $this->createI18nTitleFromFile($title);
+            }
+            $multimediaObject = $this->createMultimediaObject($i18nTitle, $series);
             $multimediaObject->setDuration($duration);
 
             $jobService->createTrackFromLocalHardDrive(
@@ -104,14 +127,14 @@ class SimpleController extends Controller
     /**
      * Create Multimedia Object.
      */
-    private function createMultimediaObject($title, Series $series)
+    private function createMultimediaObject($i18nTitle, Series $series)
     {
         $factoryService = $this->get('pumukitschema.factory');
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
-
-        foreach ($this->container->getParameter('pumukit2.locales') as $locale) {
-            $multimediaObject->setTitle($title, $locale);
+        if (!array_filter($i18nTitle)) {
+            $i18nTitle = $factoryService->getDefaultMultimediaObjectI18nTitle();
         }
+        $multimediaObject->setI18nTitle($i18nTitle);
 
         return $multimediaObject;
     }
@@ -152,5 +175,15 @@ class SimpleController extends Controller
         }
 
         return $series;
+    }
+
+    private function createI18nTitleFromFile($title)
+    {
+        $i18nTitle = array();
+        foreach ($this->container->getParameter('pumukit2.locales') as $locale) {
+            $i18nTitle[$locale] = $title;
+        }
+
+        return $i18nTitle;
     }
 }

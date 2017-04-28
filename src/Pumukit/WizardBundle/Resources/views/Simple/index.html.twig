@@ -37,6 +37,12 @@
 
             <fieldset>
               <div class="col-md-6">
+                {% if show_simple_mm_title %}
+                {% include 'PumukitWizardBundle:Simple:multimediaobjecttitle.html.twig' %}
+                {% endif %}
+                {% if show_simple_series_title %}
+                {% include 'PumukitWizardBundle:Simple:seriestitle.html.twig' %}
+                {% endif %}
                 <div class="form-group" id="pumukitwizard_track_language">
                   <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
                   <select id="pumukitwizard_track_language" name="language" class="form-control">
