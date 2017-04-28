@@ -53,6 +53,14 @@ class Configuration implements ConfigurationInterface
           ->defaultFalse()
           ->info('Only valid when parameter reuse_series is set to True. If reuse_admin_series is true, the admin user can reuse only the series he/she created. If reuse_admin_series is set to false, the admin user can reuse any series of PuMuKIT.')
         ->end()
+        ->booleanNode('show_simple_mm_title')
+          ->defaultFalse()
+          ->info('Enable showing Multimedia Object title in Simple Wizard form.')
+        ->end()
+        ->booleanNode('show_simple_series_title')
+          ->defaultFalse()
+          ->info('Enable showing Series title in Simple Wizard form.')
+        ->end()
       ->end();
 
         return $treeBuilder;
