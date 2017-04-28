@@ -18,8 +18,15 @@ class SimpleController extends Controller
     /**
      * @Template()
      */
-    public function indexAction(Series $series, Request $request)
+    public function indexAction(Request $request)
     {
+        $seriesId = $request->get('id');
+        $externalData = $request->get('externalData');
+        $series = $this->getSeries($seriesId);
+        if (!$series) {
+            $series = $this->getSeriesByExternalData($externalData);
+        }
+
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
 
@@ -30,11 +37,19 @@ class SimpleController extends Controller
             'languages' => $languages,
             'show_license' => $licenseService->isEnabled(),
             'license_text' => $licenseContent,
+            'externalData' => $externalData,
         );
     }
 
-    public function uploadAction(Series $series, Request $request)
+    public function uploadAction(Request $request)
     {
+        $seriesId = $request->get('id');
+        $series = $this->getSeries($seriesId);
+        $externalData = $request->get('externalData');
+        if (!$series) {
+            $series = $this->getSeriesByExternalData($externalData);
+        }
+
         $jobService = $this->get('pumukitencoder.job');
         $inspectionService = $this->get('pumukit.inspection');
 
@@ -66,6 +81,10 @@ class SimpleController extends Controller
                 throw new \Exception('The file is not a valid video or audio file (duration is zero)');
             }
 
+            if (!$series) {
+                $series = $this->createSeries($externalData);
+            }
+
             $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $multimediaObject = $this->createMultimediaObject($title, $series);
             $multimediaObject->setDuration($duration);
@@ -95,5 +114,43 @@ class SimpleController extends Controller
         }
 
         return $multimediaObject;
+    }
+
+    /**
+     * Get Series from id.
+     */
+    private function getSeries($seriesId)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:Series');
+
+        return $repo->find($seriesId);
+    }
+
+    /**
+     * Get Series by external data.
+     */
+    private function getSeriesByExternalData($externalData)
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $repo = $dm->getRepository('PumukitSchemaBundle:Series');
+
+        if (isset($externalData['title'])) {
+            return $repo->findOneBy(array('title' => $externalData['title'], 'properties.owners' => $this->getUser()->getId()));
+        }
+
+        return null;
+    }
+
+    private function createSeries($externalData)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        if (isset($externalData['title'])) {
+            $series = $factoryService->createSeries($this->getUser(), $externalData['title']);
+        } else {
+            $series = $factoryService->createSeries($this->getUser());
+        }
+
+        return $series;
     }
 }
