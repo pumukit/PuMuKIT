@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -190,11 +191,15 @@ class SimpleController extends Controller
             $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
             $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, array('simple' => true, 'externalData' => $externalData));
         } catch (\Exception $e) {
-            //TODO Hanle error.
             throw $e;
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())));
+        $response = array(
+            'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())),
+            'mmId' => $multimediaObject->getId(),
+        );
+
+        return new JsonResponse($response);
     }
 
     /**
