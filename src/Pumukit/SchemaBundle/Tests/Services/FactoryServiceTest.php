@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Services\FactoryService;
 
 class FactoryServiceTest extends WebTestCase
 {
@@ -352,5 +353,25 @@ class FactoryServiceTest extends WebTestCase
         }
         $this->assertEquals(count($new->getRoles()), count($src->getRoles()));
         $this->assertEquals(count($new->getTags()), count($src->getTags()));
+    }
+
+    public function testGetDefaultMultimediaObjectI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->factory->getLocales() as $locale) {
+            $i18nTitle[$locale] = FactoryService::DEFAULT_MULTIMEDIAOBJECT_TITLE;
+        }
+
+        $this->assertEquals($i18nTitle, $this->factory->getDefaultMultimediaObjectI18nTitle());
+    }
+
+    public function testGetDefaultSeriesI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->factory->getLocales() as $locale) {
+            $i18nTitle[$locale] = FactoryService::DEFAULT_SERIES_TITLE;
+        }
+
+        $this->assertEquals($i18nTitle, $this->factory->getDefaultSeriesI18nTitle());
     }
 }

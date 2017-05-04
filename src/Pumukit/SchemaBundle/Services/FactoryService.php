@@ -485,6 +485,36 @@ class FactoryService
         return $new;
     }
 
+    /**
+     * Get default Multimedia Object i18n title.
+     *
+     * @return array
+     */
+    public function getDefaultMultimediaObjectI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->locales as $locale) {
+            $i18nTitle[$locale] = self::DEFAULT_MULTIMEDIAOBJECT_TITLE;
+        }
+
+        return $i18nTitle;
+    }
+
+    /**
+     * Get default Series i18n title.
+     *
+     * @return array
+     */
+    public function getDefaultSeriesI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->locales as $locale) {
+            $i18nTitle[$locale] = self::DEFAULT_SERIES_TITLE;
+        }
+
+        return $i18nTitle;
+    }
+
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {

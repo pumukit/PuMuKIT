@@ -30,6 +30,8 @@ class PumukitWizardExtension extends Extension
         $container->setParameter('pumukit_wizard.mandatory_title', $config['mandatory_title']);
         $container->setParameter('pumukit_wizard.reuse_series', $config['reuse_series']);
         $container->setParameter('pumukit_wizard.reuse_admin_series', $config['reuse_admin_series']);
+        $container->setParameter('pumukit_wizard.show_simple_mm_title', $config['show_simple_mm_title']);
+        $container->setParameter('pumukit_wizard.show_simple_series_title', $config['show_simple_series_title']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
