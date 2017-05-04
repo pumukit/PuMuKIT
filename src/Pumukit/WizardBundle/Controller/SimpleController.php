@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 /**
@@ -18,9 +19,76 @@ class SimpleController extends Controller
     /**
      * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Series $series, Request $request)
     {
-        $seriesId = $request->get('id');
+        $licenseService = $this->get('pumukit_wizard.license');
+        $licenseContent = $licenseService->getLicenseContent($request->getLocale());
+
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
+
+        return array(
+            'series' => $series,
+            'languages' => $languages,
+            'show_license' => $licenseService->isEnabled(),
+            'license_text' => $licenseContent,
+        );
+    }
+
+    public function uploadAction(Series $series, Request $request)
+    {
+        $jobService = $this->get('pumukitencoder.job');
+        $inspectionService = $this->get('pumukit.inspection');
+
+        $priority = 2;
+        $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
+        $description = array();
+        $language = $request->request->get('language', $request->getLocale());
+        $file = $request->files->get('resource');
+
+        try {
+            if (!$file) {
+                throw new \Exception('No file found');
+            }
+
+            if (!$file->isValid()) {
+                throw new \Exception($file->getErrorMessage());
+            }
+
+            $filePath = $file->getPathname();
+
+            try {
+                //exception if is not a mediafile (video or audio)
+                $duration = $inspectionService->getDuration($filePath);
+            } catch (\Exception $e) {
+                throw new \Exception('The file is not a valid video or audio file');
+            }
+
+            if (0 == $duration) {
+                throw new \Exception('The file is not a valid video or audio file (duration is zero)');
+            }
+
+            $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $multimediaObject = $this->createMultimediaObject($title, $series);
+            $multimediaObject->setDuration($duration);
+
+            $jobService->createTrackFromLocalHardDrive(
+                $multimediaObject, $file, $profile, $priority, $language, $description,
+                array(), $duration, JobService::ADD_JOB_NOT_CHECKS
+            );
+        } catch (\Exception $e) {
+            //TODO Hanle error.
+            throw $e;
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())));
+    }
+
+    /**
+     * @Template()
+     */
+    public function embedindexAction(Request $request)
+    {
+        $seriesId = $request->get('series');
         $externalData = $request->get('externalData');
         $series = $this->getSeries($seriesId);
         if (!$series) {
@@ -54,7 +122,7 @@ class SimpleController extends Controller
         );
     }
 
-    public function uploadAction(Request $request)
+    public function embeduploadAction(Request $request)
     {
         $seriesId = $request->get('id');
         $series = $this->getSeries($seriesId);
@@ -109,13 +177,18 @@ class SimpleController extends Controller
                 $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $i18nTitle = $this->createI18nTitleFromFile($title);
             }
-            $multimediaObject = $this->createMultimediaObject($i18nTitle, $series);
+            $multimediaObject = $this->createMultimediaObjectWithI18nTitle($i18nTitle, $series);
             $multimediaObject->setDuration($duration);
+
+            $multimediaObject = $this->setExternalProperties($multimediaObject, $externalData);
 
             $jobService->createTrackFromLocalHardDrive(
                 $multimediaObject, $file, $profile, $priority, $language, $description,
                 array(), $duration, JobService::ADD_JOB_NOT_CHECKS
             );
+
+            $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
+            $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, array('simple' => true, 'externalData' => $externalData));
         } catch (\Exception $e) {
             //TODO Hanle error.
             throw $e;
@@ -127,7 +200,22 @@ class SimpleController extends Controller
     /**
      * Create Multimedia Object.
      */
-    private function createMultimediaObject($i18nTitle, Series $series)
+    private function createMultimediaObject($title, Series $series)
+    {
+        $factoryService = $this->get('pumukitschema.factory');
+        $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
+
+        foreach ($this->container->getParameter('pumukit2.locales') as $locale) {
+            $multimediaObject->setTitle($title, $locale);
+        }
+
+        return $multimediaObject;
+    }
+
+    /**
+     * Create Multimedia Object.
+     */
+    private function createMultimediaObjectWithI18nTitle($i18nTitle, Series $series)
     {
         $factoryService = $this->get('pumukitschema.factory');
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
@@ -185,5 +273,19 @@ class SimpleController extends Controller
         }
 
         return $i18nTitle;
+    }
+
+    private function setExternalProperties(MultimediaObject $multimediaObject, $externalData)
+    {
+        if (isset($externalData['properties'])) {
+            foreach ($externalData['properties'] as $key => $value) {
+                $multimediaObject->setProperty($key, $value);
+            }
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $dm->persist($multimediaObject);
+            $dm->flush();
+        }
+
+        return $multimediaObject;
     }
 }

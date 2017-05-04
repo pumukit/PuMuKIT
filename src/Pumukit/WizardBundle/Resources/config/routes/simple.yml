@@ -9,3 +9,15 @@ pumukitwizard_simple_upload:
     methods: [POST]
     defaults:
         _controller: PumukitWizardBundle:Simple:upload
+
+pumukitwizard_simple_embedindex:
+    pattern: /embedindex
+    methods: [GET]
+    defaults:
+        _controller: PumukitWizardBundle:Simple:embedindex
+
+pumukitwizard_simple_embedupload:
+    pattern: /embedupload
+    methods: [POST]
+    defaults:
+        _controller: PumukitWizardBundle:Simple:embedupload

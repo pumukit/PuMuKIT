@@ -15,12 +15,20 @@
           <form id="pumukitwizard_simple_track_form"
                 autocomplete="off"
                 enctype="multipart/form-data"
-                action="{{ path('pumukitwizard_simple_upload', {'id': series.id}) }}" method="POST">
+                {% if series.id is defined %}
+                action="{{ path('pumukitwizard_simple_embedupload', {'id': series.id, 'externalData': externalData}) }}" method="POST">
+                {% else %}
+                action="{{ path('pumukitwizard_simple_embedupload', {'id': 'notId', 'externalData': externalData}) }}" method="POST">
+                {% endif %}
             <input type="hidden" id="pumukitwizard_simple_license_show" value="{{ show_license ? 'true':'false'}}"/>
             <div class="row">
               <div class="col-md-12">
                 <div class="text-right">
+                  {% if series.id is defined %}
                   <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                  {% else %}
+                  <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                  {% endif %}
                   <button type="submit" class="btn btn-primary btn-raised">{% trans %}Upload{% endtrans %}</button>
                 </div>
               </div>
@@ -29,6 +37,12 @@
 
             <fieldset>
               <div class="col-md-6">
+                {% if show_simple_mm_title %}
+                {% include 'PumukitWizardBundle:Simple:multimediaobjecttitle.html.twig' %}
+                {% endif %}
+                {% if show_simple_series_title %}
+                {% include 'PumukitWizardBundle:Simple:seriestitle.html.twig' %}
+                {% endif %}
                 <div class="form-group" id="pumukitwizard_track_language">
                   <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
                   <select id="pumukitwizard_track_language" name="language" class="form-control">
