@@ -214,6 +214,8 @@ class JobNotificationService
      */
     protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {
+        $emailsTo = array();
+
         if (Job::STATUS_FINISHED === $job->getStatus()) {
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE);
             foreach ($aPeople as $people) {
