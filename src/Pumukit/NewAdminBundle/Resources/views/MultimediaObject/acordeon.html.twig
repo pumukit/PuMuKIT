@@ -70,7 +70,7 @@
                                 <select class="form-control" name="criteria[channel]" id="filters_person_role">
                                     <option value="all">{% trans %}All{% endtrans %}</option>
                                     {% for channel in pubChannels %}
-                                        <option value="{{ channel.cod }}">{{ channel.title|trans }}</option>
+                                        <option value="{{ channel.cod }}" {% if criteria is not null and criteria['channel'] == channel.cod %}selected{% endif %}>{{ channel.title|trans }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
