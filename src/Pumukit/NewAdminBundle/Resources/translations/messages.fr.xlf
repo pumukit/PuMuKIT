@@ -2582,7 +2582,7 @@
         <source>Upload new videos</source>
         <target xml:lang="fr" state="needs-translation">Upload new videos</target>
       </trans-unit>
-      <trans-unit id="5032d49ae2d911e6bf01fe55135034f3" resname="Multimedia List">
+      <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
         <source>Multimedia List</source>
         <target xml:lang="fr" state="needs-translation">Multimedia List</target>
       </trans-unit>

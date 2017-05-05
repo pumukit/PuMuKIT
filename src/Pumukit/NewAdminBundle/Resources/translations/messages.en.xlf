@@ -2582,7 +2582,7 @@
         <source>Upload new videos</source>
         <target>Upload new videos</target>
       </trans-unit>
-      <trans-unit id="5032d49ae2d911e6bf01fe55135034f3" resname="Multimedia List">
+      <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
         <source>Multimedia List</source>
         <target>Multimedia List</target>
       </trans-unit>
@@ -2590,10 +2590,26 @@
         <source>This Series is announced</source>
         <target>This Series is announced</target>
       </trans-unit>
-      <trans-unit id="8d15a6c805a011e793ae92361f002671" resname="No multimedia object selected">
-            <source>No multimedia object selected</source>
-            <target>No multimedia object selected</target>
-          </trans-unit>
+      <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
+        <source>No multimedia object selected</source>
+        <target>No multimedia object selected</target>
+      </trans-unit>
+      <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
+        <source>Search by title, subtitle, description or id</source>
+        <target>Search by title, subtitle, description or id</target>
+      </trans-unit>
+      <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
+        <source>Search by name or surname</source>
+        <target>Search by name or surname</target>
+      </trans-unit>
+      <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
+        <source>Filter</source>
+        <target>Filter</target>
+      </trans-unit>
+      <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
+        <source>Manual</source>
+        <target>Manual</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
