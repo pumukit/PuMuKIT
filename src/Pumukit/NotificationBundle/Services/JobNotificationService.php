@@ -217,7 +217,7 @@ class JobNotificationService
         $emailsTo = array();
 
         if (Job::STATUS_FINISHED === $job->getStatus()) {
-            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE);
+            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
                 if (in_array(self::ROLE_SEND_NOTIFICATION_COMPLETE, $user->getRoles())) {
@@ -225,7 +225,8 @@ class JobNotificationService
                 }
             }
         } elseif (Job::STATUS_ERROR === $job->getStatus()) {
-            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE);
+            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
+
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
                 if (in_array(self::ROLE_SEND_NOTIFICATION_ERRORS, $user->getRoles())) {
