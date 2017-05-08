@@ -251,8 +251,8 @@ class SimpleController extends Controller
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:Series');
 
-        if (isset($externalData['title'])) {
-            return $repo->findOneBy(array('title' => $externalData['title'], 'properties.owners' => $this->getUser()->getId()));
+        if (isset($externalData['seriesData']['title'])) {
+            return $repo->findOneBy(array('title' => $externalData['seriesData']['title'], 'properties.owners' => $this->getUser()->getId()));
         }
 
         return null;
@@ -261,8 +261,8 @@ class SimpleController extends Controller
     private function createSeries($externalData)
     {
         $factoryService = $this->get('pumukitschema.factory');
-        if (isset($externalData['title'])) {
-            $series = $factoryService->createSeries($this->getUser(), $externalData['title']);
+        if (isset($externalData['seriesData']['title'])) {
+            $series = $factoryService->createSeries($this->getUser(), $externalData['seriesData']['title']);
         } else {
             $series = $factoryService->createSeries($this->getUser());
         }
@@ -282,8 +282,8 @@ class SimpleController extends Controller
 
     private function setExternalProperties(MultimediaObject $multimediaObject, $externalData)
     {
-        if (isset($externalData['properties'])) {
-            foreach ($externalData['properties'] as $key => $value) {
+        if (isset($externalData['mmobjData']['properties'])) {
+            foreach ($externalData['mmobjData']['properties'] as $key => $value) {
                 $multimediaObject->setProperty($key, $value);
             }
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
