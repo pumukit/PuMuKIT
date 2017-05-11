@@ -35,7 +35,8 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 #Install pumukit2 dependencies
 RUN git clone https://github.com/campusdomar/PuMuKIT2.git /var/www/pumukit2 && \
     cd /var/www/pumukit2 && \
-    git checkout $PUMUKIT_VERSION
+    git checkout $PUMUKIT_VERSION && \
+    composer install -a -n --no-scripts
     
 ADD pumukit-launcher.sh /
 WORKDIR /var/www/pumukit2
