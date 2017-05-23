@@ -19,7 +19,7 @@ class PumukitWizardExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration(array_keys($container->getParameter('pumukitencode.profilelist')));
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pumukit_wizard.show_license', $config['show_license']);
@@ -33,7 +33,19 @@ class PumukitWizardExtension extends Extension
         $container->setParameter('pumukit_wizard.show_simple_mm_title', $config['show_simple_mm_title']);
         $container->setParameter('pumukit_wizard.show_simple_series_title', $config['show_simple_series_title']);
 
+        if (isset($config['simple_default_master_profile'])) {
+            $container->setParameter('pumukit_wizard.simple_default_master_profile', $config['simple_default_master_profile']);
+        }
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration(array_keys($container->getParameter('pumukitencode.profilelist')));
     }
 }
