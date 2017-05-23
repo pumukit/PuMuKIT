@@ -41,7 +41,7 @@ class SimpleController extends Controller
         $inspectionService = $this->get('pumukit.inspection');
 
         $priority = 2;
-        $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
+        $profile = $this->getDefaultMasterProfile();
         $description = array();
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
@@ -136,7 +136,7 @@ class SimpleController extends Controller
         $inspectionService = $this->get('pumukit.inspection');
 
         $priority = 2;
-        $profile = $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
+        $profile = $this->getDefaultMasterProfile();
         $description = array();
         $language = $request->request->get('language', $request->getLocale());
         $file = $request->files->get('resource');
@@ -292,5 +292,14 @@ class SimpleController extends Controller
         }
 
         return $multimediaObject;
+    }
+
+    private function getDefaultMasterProfile()
+    {
+        if ($this->container->hasParameter('pumukit_wizard.simple_default_master_profile')) {
+            return $this->container->getParameter('pumukit_wizard.simple_default_master_profile');
+        }
+
+        return $this->get('pumukitencoder.profile')->getDefaultMasterProfile();
     }
 }
