@@ -109,7 +109,10 @@
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
         <source>Hours</source>
-        <target xml:lang="eu" state="translated">Orduak</target>
+        <target xml:lang="eu" state="translated">Ordu</target>
+        <alt-trans>
+          <target xml:lang="eu">Orduak</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>

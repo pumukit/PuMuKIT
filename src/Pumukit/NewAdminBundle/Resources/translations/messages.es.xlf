@@ -2624,44 +2624,23 @@
         <source>Upload new videos</source>
         <target xml:lang="es-ES" state="translated">Subir nuevos videos</target>
       </trans-unit>
-      <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
+      <trans-unit id="5032d49ae2d911e6bf01fe55135034f3" resname="Multimedia List">
         <source>Multimedia List</source>
         <target xml:lang="es-ES" state="translated">Listado objetos multimedia</target>
         <alt-trans>
           <target xml:lang="es-ES">Listado objectos multimedia</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="22e52e2af80f11e6bc6492361f002671" resname="Expired video list">
-        <source>Expired video list</source>
-        <target xml:lang="es-ES" state="translated">Vídeos caducados</target>
-      </trans-unit>
-      <trans-unit id="22e530bef80f11e6bc6492361f002671" resname="Edit Templates">
-        <source>Edit templates</source>
-        <target xml:lang="es-ES" state="translated">Editar plantillas</target>
-      </trans-unit>
       <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
         <source>This Series is announced</source>
-        <target>Esta serie está anunciada</target>
+        <target xml:lang="es-ES" state="translated">Esta serie está anunciada</target>
       </trans-unit>
-      <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
+      <trans-unit id="8d15a6c805a011e793ae92361f002671" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target>No has seleccionado ningún objeto multimedia</target>
-      </trans-unit>
-      <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
-        <source>Search by title, subtitle, description or id</source>
-        <target>Buscar por título, subtítulo, descripción o id</target>
-      </trans-unit>
-      <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
-        <source>Search by name or surname</source>
-        <target>Buscar por nombre o apellido</target>
-      </trans-unit>
-      <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
-        <source>Filter</source>
-        <target>Filtro</target>
-      </trans-unit>
-      <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
-        <source>Manual</source>
-        <target>Manual</target>
+        <target xml:lang="es-ES" state="translated">No has seleccionado ningún objeto multimedia</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Ningún objeto multimedia seleccionado</target>
+        </alt-trans>
       </trans-unit>
     </body>
   </file>

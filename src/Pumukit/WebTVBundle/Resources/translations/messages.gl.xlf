@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="d163fae6668b451e5ba411e30dd142cd" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target xml:lang="gl" state="needs-translation">PuMuKIT</target>
+        <target xml:lang="gl" state="translated">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
         <source>Audio</source>
-        <target xml:lang="gl" state="needs-translation">Audio</target>
+        <target xml:lang="gl" state="translated">Audio</target>
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
@@ -252,11 +252,11 @@
       </trans-unit>
       <trans-unit id="3b3d06023f6353f8fd05f859b298573e" resname="URL:">
         <source>URL:</source>
-        <target xml:lang="gl" state="needs-translation">URL:</target>
+        <target xml:lang="gl" state="translated">URL:</target>
       </trans-unit>
       <trans-unit id="7610774817c30466188bfb70778b7a48" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target xml:lang="gl" state="needs-translation">IFRAME:</target>
+        <target xml:lang="gl" state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="4994a8ffeba4ac3140beb89e8d41f174" resname="Language">
         <source>Language</source>
@@ -360,7 +360,7 @@
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="gl" state="needs-translation">Email</target>
+        <target xml:lang="gl" state="translated">Email</target>
       </trans-unit>
       <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
@@ -432,7 +432,7 @@
       </trans-unit>
       <trans-unit id="b3e5ff3eb8faf64fda7a6d32de6ade6d" resname="Latest Uploads">
         <source>Latest Uploads</source>
-        <target xml:lang="gl" state="needs-translation">Latest Uploads</target>
+        <target xml:lang="gl" state="translated">Últimos engadidos</target>
       </trans-unit>
       <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
         <source>i18n.one.Series</source>

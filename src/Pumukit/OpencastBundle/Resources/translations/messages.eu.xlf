@@ -50,7 +50,10 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="eu" state="translated">Telesailak</target>
+        <target xml:lang="eu" state="translated">Serieak</target>
+        <alt-trans>
+          <target xml:lang="eu">Telesailak</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
@@ -108,7 +111,10 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="eu" state="translated">Ezerestatu</target>
+        <target xml:lang="eu" state="translated">Ezeztatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Ezerestatu</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="63ca19d0f7bd43783e79c5ff2e2a7b4a" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
         <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
