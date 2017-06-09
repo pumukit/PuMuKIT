@@ -46,7 +46,13 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="eu" state="translated">Ezerestatu</target>
+        <target xml:lang="eu" state="translated">Ezeztatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Ezereztatu</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="eu">Ezerestatu</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
         <source>Use</source>

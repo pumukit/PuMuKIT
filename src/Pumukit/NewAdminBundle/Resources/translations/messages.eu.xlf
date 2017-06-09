@@ -449,7 +449,10 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="eu" state="translated">Ezerestatu</target>
+        <target xml:lang="eu" state="translated">Ezeztatu</target>
+        <alt-trans>
+          <target xml:lang="eu">Ezerestatu</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b30a4f6fc441457200a87665d2dc065e" resname="create new group">
         <source>create new group</source>
@@ -767,7 +770,10 @@
       </trans-unit>
       <trans-unit id="952b7b4c30886da0f3c86a6fd50777a1" resname="modify live channel">
         <source>modify live channel</source>
-        <target xml:lang="eu" state="translated">modificar canal en vivo</target>
+        <target xml:lang="eu" state="translated">zuzeneko katea aldatu</target>
+        <alt-trans>
+          <target xml:lang="eu">modificar canal en vivo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f18a9fa39e74d5489f1e50027ee12352" resname="There was an error in updating the Live channel.">
         <source>There was an error in updating the Live channel.</source>
@@ -2228,7 +2234,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       </trans-unit>
       <trans-unit id="17cd4945a039ee7e45d22752d265efdc" resname="Multimedia Series">
         <source>Multimedia Series</source>
-        <target xml:lang="eu" state="translated">Series Multimedia</target>
+        <target xml:lang="eu" state="translated">Multimedia Serieak</target>
+        <alt-trans>
+          <target xml:lang="eu">Series Multimedia</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b3a7cf9f78321e0612e3de4eb00bdd6d" resname="Create new series">
         <source>Create new series</source>
@@ -3401,7 +3410,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       </trans-unit>
       <trans-unit id="b85eb19c49ad6ae5643c04e2050e9cfd" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
-        <target xml:lang="eu" state="translated">Ha ocurrido un error al crear el canal en vivo.</target>
+        <target xml:lang="eu" state="translated">Arazo bat egon da zuzeneko katea sortzeko orduan.</target>
+        <alt-trans>
+          <target xml:lang="eu">Ha ocurrido un error al crear el canal en vivo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0079f28bf429fca6e8f954f34a29483f" resname="Live channel successfully created.">
         <source>Live channel successfully created.</source>
@@ -3409,7 +3421,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       </trans-unit>
       <trans-unit id="e43d4b8c75dd3765e8be1a1b7b890636" resname="Series type channel successfully created.">
         <source>Series type channel successfully created.</source>
-        <target xml:lang="eu" state="translated">Canal de serie tipo creado correctamente.</target>
+        <target xml:lang="eu" state="translated">Serie motako katea sortua.</target>
+        <alt-trans>
+          <target xml:lang="eu">Canal de serie tipo creado correctamente.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="3c7955415edc493ea8db119150385ef0" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
@@ -4086,26 +4101,18 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Upload new videos</source>
         <target xml:lang="eu" state="translated">Bideo berriak igo</target>
       </trans-unit>
-      <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
+      <trans-unit id="5032d49ae2d911e6bf01fe55135034f3" resname="Multimedia List">
         <source>Multimedia List</source>
         <target xml:lang="eu" state="translated">Multimedia Zerrenda</target>
       </trans-unit>
-      <trans-unit id="22e52e2af80f11e6bc6492361f002671" resname="Expired video list">
-        <source>Expired video list</source>
-        <target xml:lang="eu" state="translated">Iraungitako bideoak</target>
-      </trans-unit>
-      <trans-unit id="22e530bef80f11e6bc6492361f002671" resname="Edit Templates">
-        <source>Edit templates</source>
-        <target xml:lang="eu" state="translated">Txantiloiak editatu</target>
-      </trans-unit>
       <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
         <source>This Series is announced</source>
-        <target>Esta serie está anunciada</target>
+        <target xml:lang="eu" state="translated">Serie hau iragarri da</target>
       </trans-unit>
-      <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
-              <source>No multimedia object selected</source>
-              <target>Ez da bideorik hautatu</target>
-            </trans-unit>
+      <trans-unit id="8d15a6c805a011e793ae92361f002671" resname="No multimedia object selected">
+        <source>No multimedia object selected</source>
+        <target xml:lang="eu" state="translated">Ez da bideorik hautatu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
