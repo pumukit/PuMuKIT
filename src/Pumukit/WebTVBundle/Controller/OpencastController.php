@@ -16,6 +16,10 @@ class OpencastController extends PlayerController implements WebTVController
     public function magicAction(MultimediaObject $multimediaObject, Request $request)
     {
         $array = $this->doAction($multimediaObject, $request);
+        if ($array instanceof Response) {
+            return $array;
+        }
+
         $array['magic_url'] = true;
         $array['cinema_mode'] = $this->getParameter('pumukit_web_tv.cinema_mode');
 
@@ -30,6 +34,10 @@ class OpencastController extends PlayerController implements WebTVController
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $array = $this->doAction($multimediaObject, $request);
+        if ($array instanceof Response) {
+            return $array;
+        }
+
         $array['cinema_mode'] = $this->getParameter('pumukit_web_tv.cinema_mode');
 
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
