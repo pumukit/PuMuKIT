@@ -100,7 +100,6 @@ class ClientService
 
         if (isset($decode['admin']) &&
             filter_var($decode['admin'], FILTER_VALIDATE_URL)) {
-
             $this->adminUrl = $decode['admin'];
         }
 

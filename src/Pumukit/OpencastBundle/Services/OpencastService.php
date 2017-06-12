@@ -20,8 +20,9 @@ class OpencastService
     private $profileService;
     private $multimediaObjectService;
     private $defaultVars;
+    private $errorIfFileNotExist;
 
-    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = array(), array $urlMapping = array(), array $defaultVars = array())
+    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = array(), array $urlMapping = array(), array $defaultVars = array(), $errorIfFileNotExist = true)
     {
         $this->jobService = $jobService;
         $this->profileService = $profileService;
@@ -29,6 +30,7 @@ class OpencastService
         $this->sbsConfiguration = $sbsConfiguration;
         $this->urlPathMapping = $urlMapping;
         $this->defaultVars = $defaultVars;
+        $this->errorIfFileNotExist = $errorIfFileNotExist;
         $this->initSbsConfiguration();
     }
 
@@ -95,6 +97,13 @@ class OpencastService
             if (realpath($path)) {
                 return $path;
             }
+        }
+
+        if ($this->errorIfFileNotExist) {
+            throw new \RuntimeException(sprintf(
+                'Error accessing to the track path of "%s". Check "pumukit_opencast.url_mapping".',
+                $url
+            ));
         }
 
         return null;
