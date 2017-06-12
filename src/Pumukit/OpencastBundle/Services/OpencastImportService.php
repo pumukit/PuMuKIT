@@ -85,7 +85,7 @@ class OpencastImportService
             $properties = $this->getMediaPackageField($mediaPackage, 'id');
             if ($properties) {
                 $multimediaObject->setProperty('opencast', $properties);
-                $multimediaObject->setProperty('opencasturl', $this->opencastClient->getPlayerUrl().'?id='.$properties);
+                $multimediaObject->setProperty("opencasturl", $this->opencastClient->getPlayerUrl() . "?mode=embed&id=" . $properties);
             }
             $multimediaObject->setProperty('opencastinvert', boolval($invert));
 
