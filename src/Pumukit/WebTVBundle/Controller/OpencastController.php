@@ -7,6 +7,7 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OpencastController extends PlayerController implements WebTVController
 {
