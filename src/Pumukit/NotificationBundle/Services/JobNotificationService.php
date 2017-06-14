@@ -25,7 +25,6 @@ class JobNotificationService
     protected $subjectSuccessTrans;
     protected $subjectFailsTrans;
 
-
     const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
     const PERSONAL_SCOPE_ROLE_CODE = 'owner';
