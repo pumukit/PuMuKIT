@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Document\Job;
 
 class TrackServiceTest extends WebTestCase

@@ -11,7 +11,7 @@ use Pumukit\WizardBundle\Event\FormEvent;
 class FormEventDispatcherService
 {
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 

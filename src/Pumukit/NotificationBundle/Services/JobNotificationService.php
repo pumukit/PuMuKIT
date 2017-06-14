@@ -12,17 +12,19 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class JobNotificationService
 {
+    protected $dm;
     protected $senderService;
     protected $jobService;
-    protected $environment;
     protected $translator;
     protected $router;
+    protected $enable;
+    protected $environment;
     protected $template;
     protected $subjectSuccess;
     protected $subjectFails;
     protected $subjectSuccessTrans;
-    protected $documentManager;
     protected $subjectFailsTrans;
+
 
     const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';

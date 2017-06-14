@@ -10,6 +10,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    private $profiles;
+
     /**
      * Constructor.
      */

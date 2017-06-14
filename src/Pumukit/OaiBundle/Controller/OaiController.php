@@ -237,15 +237,12 @@ class OaiController extends Controller
      */
     protected function error($cod, $msg = '')
     {
-        $this->cod = $cod;
-        $this->msg = $msg;
-
         $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
 
-        $error = '<error>'.$this->msg.'</error>';
+        $error = '<error>'.$msg.'</error>';
         $XMLerror = new SimpleXMLExtended($error);
-        $XMLerror->addAttribute('code', $this->cod);
+        $XMLerror->addAttribute('code', $cod);
 
         return $this->genResponse($XMLrequest, $XMLerror);
     }

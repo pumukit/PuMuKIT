@@ -7,7 +7,8 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class StatsService
 {
     private $dm;
-    private $repo;
+    private $repoMmobj;
+    private $repoSeries;
 
     public function __construct(DocumentManager $documentManager)
     {

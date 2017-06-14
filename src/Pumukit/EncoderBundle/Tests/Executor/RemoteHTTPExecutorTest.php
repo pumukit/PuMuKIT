@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\EncoderBundle\Tests\Services;
+namespace Pumukit\EncoderBundle\Tests\Executor;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
