@@ -98,4 +98,9 @@ class BreadcrumbsService
     {
         return $this->breadcrumbs;
     }
+
+    public function setTitle($title)
+    {
+        $this->breadcrumbs[0]['title'] = $title;
+    }
 }
