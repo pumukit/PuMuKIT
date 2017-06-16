@@ -26,10 +26,10 @@
           <div class="input-group">
             <input type="text" ng-model="pmkCtrl.filter.title" ng-disabled="pmkCtrl.view.tabes.objects && pmkCtrl.view.scope!='general'" class="form-control form_daterangepicker"/>
             <div class="input-group-addon no-padding">
-              <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.set_url_parameters('filter');">
+              <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.set_url_parameters('filter');" title="Set URL parameters">
 		<i class="fa fa-search glyphicon glyphicon-search"></i>
 	      </button>
-              <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('filter');">
+              <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('filter');" title="Clear filter">
 		<i class="fa fa-remove glyphicon glyphicon-remove"></i>
 	      </button>
             </div>
@@ -49,10 +49,10 @@
 		 ng-click="pmkCtrl.toggle_daterange()" style="position:absolute; background: rgb(238, 238, 238); width: calc(100% - 84px)"/>
           </span>
           <div class="input-group-addon no-padding">
-            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.toggle_daterange($event)">
+            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.toggle_daterange($event)" title="Toggle date range">
 	      <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
 	    </button>
-            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('datepicker')">
+            <button class="btn btn-default btn-raised" style="padding: 8px 10px" ng-click="pmkCtrl.clear_filter('datepicker')" title="Clear filter">
 	      <i class="fa fa-remove glyphicon glyphicon-remove"></i>
 	    </button>
           </div>
