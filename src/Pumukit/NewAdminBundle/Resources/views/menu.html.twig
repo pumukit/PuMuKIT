@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ path('pumukit_webtv_index_index') }}" style="padding:0px"><img src="{{ asset('/bundles/pumukitnewadmin/images/logo.png') }}"/></a>
+                <a class="navbar-brand" href="{{ path('pumukit_webtv_index_index') }}" style="padding:0px"><img src="{{ asset('/bundles/pumukitnewadmin/images/logo.png') }}" alt="{% trans %}Logo{% endtrans %}"/></a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'PumukitNewAdminBundle:Themes:menu.html.twig'}) }}
