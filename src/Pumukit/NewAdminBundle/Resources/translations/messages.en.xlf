@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
@@ -2609,6 +2612,18 @@
       <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
         <source>Manual</source>
         <target>Manual</target>
+      </trans-unit>
+      <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
+        <source>Filter Series</source>
+        <target>Filter Series</target>
+      </trans-unit>
+      <trans-unit id="d6c848ec0828f35523866749da4c83de" resname="Series publication status">
+        <source>Series publication status</source>
+        <target>Series publication status</target>
+      </trans-unit>
+      <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
+        <source>Menu</source>
+        <target>Menu</target>
       </trans-unit>
     </body>
   </file>
