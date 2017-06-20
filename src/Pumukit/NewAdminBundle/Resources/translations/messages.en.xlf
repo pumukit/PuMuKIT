@@ -2613,6 +2613,10 @@
         <source>Manual</source>
         <target>Manual</target>
       </trans-unit>
+      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
+        <source>Logo</source>
+        <target>Logo</target>
+      </trans-unit>      
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
         <target>Filter Series</target>
