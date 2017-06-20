@@ -445,6 +445,10 @@
         <source>Submit</source>
         <target>Submit</target>
       </trans-unit>
+      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
+        <source>Logo</source>
+        <target>Logo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

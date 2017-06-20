@@ -19,7 +19,7 @@
         <div class="row">
           {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
           <div class="col-sm-6" style="float:right;";>
-            {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' %}
+            {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' with {'id': 'base'} %}
           </div>
         </div>
       </div>

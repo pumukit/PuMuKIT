@@ -1,10 +1,10 @@
 <!--//SEARCH BOX-->
 <div class="search-box">
   <form class="input-group stylish-input-group" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}">
-    <label for="search-box" class="sr-only">Search</label>
-    <input type="text" class="form-control" placeholder="{% trans %} Search {% endtrans %}..." name="search" id="search-box">
+    <label for="search-box-{{ id }}" class="sr-only">Search</label>
+    <input type="text" class="form-control" placeholder="{% trans %} Search {% endtrans %}..." name="search" id="search-box-{{ id }}">
     <span class="input-group-addon">
-      <label for="submit-button" class="sr-only">Submit</label>
+      <label for="submit-button-{{ id }}" class="sr-only">Submit</label>
       <button type="submit" id="submit-button" style="border:0;background:transparent;" title="{% trans %}Submit{% endtrans %}">
         <span class="glyphicon glyphicon-search"></span>
       </button>

@@ -136,7 +136,7 @@
                       "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"}) }}
 
                   {% if not is_naked() %}
-                  <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value">
+                  <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
                     <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                     <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                     <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>

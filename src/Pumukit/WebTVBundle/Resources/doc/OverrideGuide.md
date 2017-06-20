@@ -128,7 +128,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/foot
 Override the `Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/logo.html.twig` template.
 
 ```html
-<img src="{{ asset('bundles/pumukitwebtv/images/webtv/logo80px.png') }}" class="img-responsive" style="max-height:100%">
+<img src="{{ asset('bundles/pumukitwebtv/images/webtv/logo80px.png') }}" class="img-responsive" style="max-height:100%" alt="{% trans %}Logo{% endtrans %}"/>
 ```
 
 
@@ -143,7 +143,7 @@ Add your HTML on `src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/Layout/head
 
 {% embed 'PumukitWebTVBundle:Layout:baseheader.html.twig' %}
   {% block logo_url %}
-     <img src="{{ asset('bundles/pumukitwebtv/images/logo.png') }}" class="img-responsive">
+     <img src="{{ asset('bundles/pumukitwebtv/images/logo.png') }}" class="img-responsive" alt="{% trans %}Logo{% endtrans %}"/>
   {% endblock %}
 {% endembed %}
 
