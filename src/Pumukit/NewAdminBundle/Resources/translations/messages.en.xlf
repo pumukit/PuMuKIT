@@ -2616,6 +2616,22 @@
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
         <target>Logo</target>
+      </trans-unit>      
+      <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
+        <source>Filter Series</source>
+        <target>Filter Series</target>
+      </trans-unit>
+      <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
+        <source>Select the number of series to display per page.</source>
+        <target>Select the number of series to display per page.</target>
+      </trans-unit>
+      <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
+        <source>Select the number of playlists to display per page.</source>
+        <target>Select the number of playlists to display per page.</target>
+      </trans-unit>
+      <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
+        <source>Select the number of multimedia objects to display per page.</source>
+        <target>Select the number of multimedia objects to display per page.</target>
       </trans-unit>
     </body>
   </file>
