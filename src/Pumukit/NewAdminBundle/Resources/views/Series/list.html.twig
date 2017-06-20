@@ -36,7 +36,7 @@
         </td>
         <td headers="th-icons">
           {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}
-          <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" title="{% trans %}Series publication status{% endtrans %}">
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify status of all Multimedia Objects{% endtrans %})"></i>
           </a>
           {% else %}
