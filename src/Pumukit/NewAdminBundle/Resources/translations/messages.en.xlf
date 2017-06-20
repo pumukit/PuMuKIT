@@ -2617,6 +2617,18 @@
         <source>Filter Series</source>
         <target>Filter Series</target>
       </trans-unit>
+      <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
+        <source>Select the number of series to display per page.</source>
+        <target>Select the number of series to display per page.</target>
+      </trans-unit>
+      <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
+        <source>Select the number of playlists to display per page.</source>
+        <target>Select the number of playlists to display per page.</target>
+      </trans-unit>
+      <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
+        <source>Select the number of multimedia objects to display per page.</source>
+        <target>Select the number of multimedia objects to display per page.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

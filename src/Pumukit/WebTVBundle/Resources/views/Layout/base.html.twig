@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="{% block html_class %}{% endblock %}" lang="en">
+<html class="{% block html_class %}{% endblock %}" lang="{{ app.request.getLocale() }}">
   <head>
     {% block meta %}
       <meta name="viewport" content="initial-scale=1">
