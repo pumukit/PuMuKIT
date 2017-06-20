@@ -410,14 +410,18 @@ body.opencast-layout .breadcrumb_wrapper {
 .search-box .input-group input.form-control {
     border-radius: 4px;
 }
-#search-box {
+#search-box-base,
+#search-box-mobile
+#search-box-sticky {
     border-radius: 4px;
     border-right: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     box-shadow: none;
 }
-#search-box:focus {
+#search-box-base:focus,
+#search-box-mobile:focus,
+#search-box-sticky:focus {
     border-color: #ccc;
 }
 .search-form {

@@ -3,15 +3,15 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th width="1%">
+        <th width="1%" id="th-checkbox">
           <div class="checkbox">
             <label>
               <input type="checkbox" onclick="window.click_checkbox_all('series', this.checked)">
             </label>
           </div>
         </th>
-        <th colspan="{{ is_naked() ? 1 : 3 }}" width="4%"></th>
-        <th width="1%">{% trans %}Img{% endtrans %}</th>
+        <th id="th-icons" colspan="{{ is_naked() ? 1 : 3 }}" width="4%"></th>
+        <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
         {% include 'PumukitNewAdminBundle:Series:listth.html.twig' %}
       </tr>
     </thead>
@@ -19,7 +19,7 @@
     <tbody>
       {% for oneseries in series %}
       <tr style="cursor: pointer" {% if(app.session.get('admin/series/id') == oneseries.id ) %} class="success" {% endif %}>
-        <td>
+        <td headers="th-checkbox">
           <div class="checkbox">
             <label>
               <input id="{{ oneseries.id }}" class="series_checkbox" type="checkbox">
@@ -28,13 +28,13 @@
         </td>
 
         {% if not is_naked() %}
-        <td>
+        <td headers="th-icons">
           {% spaceless %}
           <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
           <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
           {% endspaceless %}
         </td>
-        <td>
+        <td headers="th-icons">
           {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}
           <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}({% trans %}Click to modify status of all Multimedia Objects{% endtrans %})"></i>
@@ -44,27 +44,27 @@
           {% endif %}
         </td>
         {% endif %}
-        <td>
+        <td headers="th-icons">
           {% include 'PumukitNewAdminBundle:Series:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
         </td>
-        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+        <td headers="th-img" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           <img class="pic-{{oneseries.id}} preview" src="{{ oneseries|first_url_pic }}" height="23" width="23" alt="{% trans %}Series picture{% endtrans %}"/>
         </td>
-        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+        <td headers="th-title" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
             {{ oneseries.getTitle() }}
           </a>
         </td>
-        <td class="text-nowrap" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+        <td headers="th-date" class="text-nowrap" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           {{ oneseries.getPublicDate()|date('Y-m-d') }}
         </td>
-        <td onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+        <td headers="th-mm" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
           {{ oneseries|count_multimedia_objects }}
         </td>
       </tr>
       {% else %}
       <tr>
-        <td colspan="8">
+        <td headers="th-title" colspan="8">
           {% trans %}There are no series with those values.{% endtrans %}
         </td>
       </tr>
@@ -72,16 +72,16 @@
       {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
       {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
       <tr>
-        <td>&nbsp;</td>
+        <td headers="th-checkbox">&nbsp;</td>
         {% if not is_naked() %}
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td headers="th-icons">&nbsp;</td>
+        <td headers="th-icons">&nbsp;</td>
         {% endif %}
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td headers="th-icons">&nbsp;</td>
+        <td headers="th-img">&nbsp;</td>
+        <td headers="th-title">&nbsp;</td>
+        <td headers="th-date">&nbsp;</td>
+        <td headers="th-mm">&nbsp;</td>
       </tr>
       {% endfor %}
       {% endif %}
@@ -105,7 +105,7 @@
                 {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting}) }}
 
                 {% if not is_naked() %}
-                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_series_index') }}' + '?page=1&paginate=' + this.value">
+                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_series_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of series to display per page.{% endtrans %}">
                   <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                   <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                   <option {% if series.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
