@@ -13,7 +13,7 @@
           <label for="pumukitwizard_series_reuse_i18n_title" class="control-label">{% trans %}Series{% endtrans %}</label>
           <select id="pumukitwizard_series_reuse_i18n_title" name="pumukitwizard_form_data[series][reuse][id]" class="form-control" {{ form_data.series.new is defined ? (form_data.series.new ? 'disabled="disabled"':'') : 'disabled="disabled"' }}>
             {% for oneseries in user_series %}
-            <option value="{{ oneseries.id }}" {{ form_data.series.id is defined ? ((form_data.series.id == oneseries.id)?'selected="selected"':''):''}}>{{ oneseries.getTitle() }}</option>
+            <option value="{{ oneseries['_id']['id'] }}" {{ form_data.series.id is defined ? ((form_data.series.id == oneseries['_id']['id'])?'selected="selected"':''):''}}>{{ oneseries['_id']['title'][app.request.getLocale()] }}</option>
             {% endfor %}
           </select>
         </div>
