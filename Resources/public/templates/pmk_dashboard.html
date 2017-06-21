@@ -44,7 +44,7 @@
 		 ng-model="pmkCtrl.datepicker_mv.model" ranges="pmkCtrl.datepicker_mv.ranges" opens="center" locale="pmkCtrl.datepicker_mv.locale" 
 		 ng-change="pmkCtrl.set_url_parameters('datepicker')" always-show-calendars="true" 
 		 min-date="pmkCtrl.datepicker_mv.min_date" max-date="pmkCtrl.datepicker_mv.max_date" 
-		 linked-calendars="false"/>
+		 linked-calendars="false" aria-labelledby="pmkCtrl_datepicker_label"/>
           <input ng-show="pmkCtrl.check_all_history()" class="form-control form_daterangepicker" type="text" ng-model="pmkCtrl.datepicker_mv.text" 
 		 ng-click="pmkCtrl.toggle_daterange()" style="position:absolute; background: rgb(238, 238, 238); width: calc(100% - 84px)" aria-labelledby="pmkCtrl_datepicker_label"/>
           </span>
