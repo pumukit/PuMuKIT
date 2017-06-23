@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class LDAPUserService
 {
@@ -44,7 +45,7 @@ class LDAPUserService
             try {
                 $user = $this->newUser($info, $username);
             } catch (\Exception $e) {
-                throw  $e;
+                throw new AuthenticationException($e->getMessage());
             }
         }
         $this->promoteUser($info, $user);
