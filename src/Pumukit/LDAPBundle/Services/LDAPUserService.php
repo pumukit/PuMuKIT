@@ -52,7 +52,7 @@ class LDAPUserService
         return $user;
     }
 
-    private function newUser($info, $username)
+    protected function newUser($info, $username)
     {
         $user = new User();
 
@@ -137,7 +137,7 @@ class LDAPUserService
         return $key;
     }
 
-    private function promoteUser($info, $user)
+    protected function promoteUser($info, $user)
     {
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
