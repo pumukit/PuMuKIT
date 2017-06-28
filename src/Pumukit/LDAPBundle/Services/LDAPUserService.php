@@ -22,15 +22,8 @@ class LDAPUserService
     protected $permissionProfile;
     protected $logger;
 
-    public function __construct(
-        DocumentManager $documentManager,
-        UserService $userService,
-        PersonService $personService,
-        LDAPService $LDAPService,
-        PermissionProfileService $permissionProfile,
-        GroupService $groupService,
-        LoggerInterface $logger
-    ) {
+    public function __construct(DocumentManager $documentManager, UserService $userService, PersonService $personService, LDAPService $LDAPService, PermissionProfileService $permissionProfile, GroupService $groupService, LoggerInterface $logger)
+    {
         $this->dm = $documentManager;
         $this->userService = $userService;
         $this->personService = $personService;
@@ -66,7 +59,7 @@ class LDAPUserService
         return $user;
     }
 
-    private function newUser($info, $username)
+    protected function newUser($info, $username)
     {
         $user = new User();
 
@@ -119,7 +112,7 @@ class LDAPUserService
         return $key;
     }
 
-    private function promoteUser($info, $user)
+    protected function promoteUser($info, $user)
     {
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
@@ -135,7 +128,7 @@ class LDAPUserService
         }
     }
 
-    private function updateGroups($info, $user)
+    protected function updateGroups($info, $user)
     {
         $aGroups = array();
         if (isset($info[self::EDU_PERSON_AFFILIATION][0])) {
@@ -195,7 +188,7 @@ class LDAPUserService
         return $user;
     }
 
-    private function updateUser($info, $user)
+    protected function updateUser($info, $user)
     {
         if (isset($info['mail'][0])) {
             $user->setEmail($info['mail'][0]);
