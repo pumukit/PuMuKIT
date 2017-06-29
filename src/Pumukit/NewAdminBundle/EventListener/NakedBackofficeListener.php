@@ -11,7 +11,7 @@ class NakedBackofficeListener
     private $color;
     private $customCssURL;
 
-    public function __construct($domain, $background, $color = '#ED6D00', $customCssURL = null)
+    public function __construct($domain, $background, $color = '#c05800', $customCssURL = null)
     {
         $this->domain = $domain;
         $this->background = $background;
