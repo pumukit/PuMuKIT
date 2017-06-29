@@ -2657,6 +2657,10 @@
         <source>Add external player</source>
         <target xml:lang="hy-AM" state="needs-translation">Add external player</target>
       </trans-unit>
+      <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
+        <source>No external player set</source>
+        <target xml:lang="hy-AM" state="needs-translation">No external player set</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
