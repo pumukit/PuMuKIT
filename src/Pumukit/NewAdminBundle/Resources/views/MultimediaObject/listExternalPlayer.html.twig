@@ -30,12 +30,13 @@
     </fieldset>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <div class="row form-update-external">
-            {{ form_start(form) }}
-            <div class="col-xs-12 col-sm-7 col-md-7">
+            {{ form_start(form, {'attr': {'id': 'externalplayerform'}}) }}
+            <div class="col-xs-12 col-sm-7 col-md-8">
                 {{ form_row(form.url) }}
             </div>
             <div class="col-xs-12 col-sm-2 col-md-2">{{ form_row(form.save) }}</div>
-            <div class="col-xs-12 col-sm-2 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-info" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            <div class="col-xs-12 col-sm-2 col-md-2">{{ form_row(form.delete) }}</div>
+            <div class="col-xs-12 col-sm-2 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
             {{ form_end(form) }}
         </div>
     {% endif %}
@@ -59,5 +60,11 @@
     $('#previewIframe').on('click', function(event) {
         event.preventDefault();
         $('#externalplayer').attr('src',$('#form_url').val());
-    })
+    });
+
+    $('#form_delete').on('click', function(event) {
+        event.preventDefault();
+        $('#form_url').val('');
+        $('#externalplayerform').submit();
+    });
 </script>

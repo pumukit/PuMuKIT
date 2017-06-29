@@ -1160,7 +1160,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', array('id' => $multimediaObject->getId())))
             ->add('url', UrlType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
-            ->add('save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-block btn-primary')))
+            ->add('save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-block btn-pumukit btn-raised')))
+            ->add('delete', SubmitType::class, array('label' => 'delete', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -1174,6 +1175,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $dm->flush();
 
             $this->get('session')->set('admin/series/id', $multimediaObject->getSeries()->getId());
+
             return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId()));
         }
 
