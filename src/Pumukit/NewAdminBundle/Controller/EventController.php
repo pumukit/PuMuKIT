@@ -41,12 +41,19 @@ class EventController extends AdminController implements NewAdminController
             $this->get('session')->remove('admin/event/id');
         }
 
+        $repo = $this
+              ->get('doctrine_mongodb.odm.document_manager')
+              ->getRepository('PumukitLiveBundle:Event');
+
+        $eventsMonth = $repo->findInMonth($month, $year);
+
         return array(
-                     'events' => $events,
-                     'm' => $month,
-                     'y' => $year,
-                     'calendar' => $calendar,
-                     );
+            'events' => $events,
+            'calendar_all_events' => $eventsMonth,
+            'm' => $month,
+            'y' => $year,
+            'calendar' => $calendar,
+        );
     }
 
     /**
@@ -100,17 +107,22 @@ class EventController extends AdminController implements NewAdminController
     {
         $config = $this->getConfiguration();
 
-        $sorting = $request->get('sorting');
-
         $criteria = $this->getCriteria($config);
         list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
 
+        $repo = $this
+             ->get('doctrine_mongodb.odm.document_manager')
+             ->getRepository('PumukitLiveBundle:Event');
+
+        $eventsMonth = $repo->findInMonth($month, $year);
+
         return array(
-                     'events' => $events,
-                     'm' => $month,
-                     'y' => $year,
-                     'calendar' => $calendar,
-                     );
+            'events' => $events,
+            'calendar_all_events' => $eventsMonth,
+            'm' => $month,
+            'y' => $year,
+            'calendar' => $calendar,
+        );
     }
 
     /**
@@ -257,7 +269,7 @@ class EventController extends AdminController implements NewAdminController
      */
     public function getResources(Request $request, $config, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = array('date' => -1);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/event';
@@ -275,7 +287,8 @@ class EventController extends AdminController implements NewAdminController
                 ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
             if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
+                $page = $request->get('page');
+                $session->set($session_namespace.'/page', $page);
             }
 
             // ADDED FROM ADMIN CONTROLLER
@@ -287,10 +300,6 @@ class EventController extends AdminController implements NewAdminController
                 ->setMaxPerPage($config->getPaginationMaxPerPage())
                 ->setNormalizeOutOfRangePages(true);
 
-            if ($newEventId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
-                $page = $resources->getNbPages();
-                $session->set($session_namespace.'/page', $page);
-            }
             $resources->setCurrentPage($page);
         } else {
             $resources = $this

@@ -7,6 +7,7 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OpencastController extends PlayerController implements WebTVController
 {
@@ -16,7 +17,12 @@ class OpencastController extends PlayerController implements WebTVController
     public function magicAction(MultimediaObject $multimediaObject, Request $request)
     {
         $array = $this->doAction($multimediaObject, $request);
+        if ($array instanceof Response) {
+            return $array;
+        }
+
         $array['magic_url'] = true;
+        $array['cinema_mode'] = $this->getParameter('pumukit_web_tv.cinema_mode');
 
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                              $array
@@ -29,6 +35,11 @@ class OpencastController extends PlayerController implements WebTVController
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
         $array = $this->doAction($multimediaObject, $request);
+        if ($array instanceof Response) {
+            return $array;
+        }
+
+        $array['cinema_mode'] = $this->getParameter('pumukit_web_tv.cinema_mode');
 
         return $this->render('PumukitWebTVBundle:MultimediaObject:index.html.twig',
                              $array
@@ -42,7 +53,7 @@ class OpencastController extends PlayerController implements WebTVController
         }
 
         $mmobjService = $this->get('pumukitschema.multimedia_object');
-        if ($this->container->hasParameter('pumukit.opencast.use_redirect') && $this->container->getParameter('pumukit.opencast.use_redirect')) {
+        if ($this->container->hasParameter('pumukit_opencast.use_redirect') && $this->container->getParameter('pumukit_opencast.use_redirect')) {
             $event = new ViewedEvent($multimediaObject, null);
             $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
             if ($invert = $multimediaObject->getProperty('opencastinvert')) {

@@ -98,4 +98,13 @@ class BreadcrumbsService
     {
         return $this->breadcrumbs;
     }
+
+    public function setTitle($title)
+    {
+        if (($this->parentWeb !== null) && (isset($this->breadcrumbs[1]['title']))) {
+            $this->breadcrumbs[1]['title'] = $title;
+        } else {
+            $this->breadcrumbs[0]['title'] = $title;
+        }
+    }
 }

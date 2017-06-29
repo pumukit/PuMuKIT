@@ -1,34 +1,33 @@
-<input type="hidden" name="pumukitnewadmin_series_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/series/type')=='asc'?'desc':'asc' }}"/>
 {% if 'title' == app.session.get('admin/series/sort') %}
-  <th>
+  <th id="th-title">
     <a href="#" id="pumukitnewadmin_series_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
-  <th>
+  <th id="th-title">
     <a href="#" id="pumukitnewadmin_series_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'public_date' == app.session.get('admin/series/sort', 'public_date') %}
-  <th width="8%">
+  <th id="th-date" width="8%">
     <a href="#" id="pumukitnewadmin_series_public_date_sort_selected">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
-  <th width="8%">
+  <th id="th-date" width="8%">
     <a href="#" id="pumukitnewadmin_series_public_date_sort_not_selected">{% trans %}Date{% endtrans %}</a>
   </th>
 {% endif %}
 
 {# TODO fix this sorting
 {% if 'multimedia_objects' == app.session.get('admin/series/sort') %}
-  <th width="1%">
+  <th id="th-mm" width="1%">
     <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_selected">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>  
 {% else %}
-  <th width="1%">
+  <th id="th-mm" width="1%">
     <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_not_selected">{% trans %}Mm.Obj.{% endtrans %}</a>
   </th>
 {% endif %}
 #}
 {# TODO delete this line when fixing the previous sorting #}
-<th width="1%">{% trans %}Mm.Obj.{% endtrans %}</th>
+<th id="th-mm" width="1%">{% trans %}Mm.Obj.{% endtrans %}</th>

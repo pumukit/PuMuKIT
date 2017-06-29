@@ -15,7 +15,7 @@ class JobGeneratorListener
     private $dm;
     private $logger;
     private $jobService;
-    private $profileService;
+    private $profiles;
 
     public function __construct(DocumentManager $documentManager, JobService $jobService, ProfileService $profileService, LoggerInterface $logger)
     {

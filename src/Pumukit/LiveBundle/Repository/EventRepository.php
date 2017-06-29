@@ -42,6 +42,22 @@ class EventRepository extends DocumentRepository
     }
 
     /**
+     * Find event in a month.
+     */
+    public function findInMonth($month, $year)
+    {
+        $start = new \DateTime(sprintf('%s-%s-01', $year, $month));
+        $end = clone $start;
+        $end = $end->modify('+1 month');
+
+        return $this->createQueryBuilder()
+            ->field('date')->gte($start)
+            ->field('date')->lt($end)
+            ->sort('date', 1)
+            ->getQuery()->execute();
+    }
+
+    /**
      * Find current events.
      *
      * @param $limit int|null

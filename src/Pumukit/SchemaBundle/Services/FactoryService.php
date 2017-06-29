@@ -376,8 +376,10 @@ class FactoryService
         }
 
         foreach ($prototype->getRoles() as $embeddedRole) {
-            foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+            if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
+                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                    $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+                }
             }
         }
 
@@ -481,6 +483,36 @@ class FactoryService
         $this->mmsDispatcher->dispatchClone($src, $new);
 
         return $new;
+    }
+
+    /**
+     * Get default Multimedia Object i18n title.
+     *
+     * @return array
+     */
+    public function getDefaultMultimediaObjectI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->locales as $locale) {
+            $i18nTitle[$locale] = self::DEFAULT_MULTIMEDIAOBJECT_TITLE;
+        }
+
+        return $i18nTitle;
+    }
+
+    /**
+     * Get default Series i18n title.
+     *
+     * @return array
+     */
+    public function getDefaultSeriesI18nTitle()
+    {
+        $i18nTitle = array();
+        foreach ($this->locales as $locale) {
+            $i18nTitle[$locale] = self::DEFAULT_SERIES_TITLE;
+        }
+
+        return $i18nTitle;
     }
 
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)

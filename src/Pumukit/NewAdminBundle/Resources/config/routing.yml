@@ -18,6 +18,16 @@ pumukitnewadmin_js:
         sharedAge:    86400
         _format: js
 
+pumukitnewadmin_locale_js:
+    pattern: /admin/pumukit2.{_locale}.js
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitNewAdminBundle::pumukit2.js.twig'
+        maxAge:       86400
+        sharedAge:    86400
+        _format: js
+
 pumukitnewadmin_css:
     pattern: /admin/pumukit2.css
     methods: [GET]

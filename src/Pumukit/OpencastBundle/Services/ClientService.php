@@ -95,14 +95,12 @@ class ClientService
             return $this->adminUrl;
         }
 
-        $output = $this->request('/services/available.json?serviceType=org.opencastproject.episode');
+        $output = $this->request('/info/components.json');
         $decode = $this->decodeJson($output['var']);
-        if (isset($decode['services'])) {
-            if (isset($decode['services']['service'])) {
-                if (isset($decode['services']['service']['host'])) {
-                    $this->adminUrl = $decode['services']['service']['host'];
-                }
-            }
+
+        if (isset($decode['admin']) &&
+            filter_var($decode['admin'], FILTER_VALIDATE_URL)) {
+            $this->adminUrl = $decode['admin'];
         }
 
         return $this->adminUrl;
@@ -207,7 +205,11 @@ class ClientService
         $output = $this->request('/episode/episode.json?id='.$id, array(), 'GET', true);
 
         if ($output['status'] !== 200) {
-            return false;
+            $output = $this->request('/archive/episode.json?id='.$id, array(), 'GET', true);
+
+            if ($output['status'] !== 200) {
+                return false;
+            }
         }
         $decode = $this->decodeJson($output['var']);
 

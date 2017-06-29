@@ -32,7 +32,10 @@
       </trans-unit>
       <trans-unit id="1741e76bc095bfafab0bdd36b2d853b9" resname="Social and Legal sciences">
         <source>Social and Legal sciences</source>
-        <target xml:lang="eu" state="translated">Gizarte eta lege zientziak</target>
+        <target xml:lang="eu" state="translated">Gizartea eta lege zientziak</target>
+        <alt-trans>
+          <target xml:lang="eu">Gizarte eta lege zientziak</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="eu">Ciencias Juridico-Sociales</target>
         </alt-trans>
@@ -590,7 +593,10 @@
       </trans-unit>
       <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
         <source>Year</source>
-        <target xml:lang="eu" state="translated">Urte</target>
+        <target xml:lang="eu" state="translated">Urtea</target>
+        <alt-trans>
+          <target xml:lang="eu">Año</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>

@@ -106,6 +106,18 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
+        if ($request->attributes->has('microsite_custom_tag')) {
+            $sTagCode = $request->attributes->get('microsite_custom_tag');
+
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $aTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $sTagCode));
+
+            if ($aTag) {
+                $mmobj->addTag($aTag);
+                $dm->flush();
+            }
+        }
+
         $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
         return new JsonResponse(array(
@@ -1327,10 +1339,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
 
         $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
+        $statusPub = array(
+            MultimediaObject::STATUS_PUBLISHED => 'Published',
+            MultimediaObject::STATUS_BLOQ => 'Blocked',
+            MultimediaObject::STATUS_HIDE => 'Hidden',
+        );
 
         return array(
             'mms' => $resources,
             'roles' => $aRoles,
+            'statusPub' => $statusPub,
             'pubChannels' => $aChannels,
             'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
             'multimedia_object_label' => $multimediaObjectLabel,

@@ -208,7 +208,10 @@
       </trans-unit>
       <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
         <source>Most viewed</source>
-        <target xml:lang="es-ES" state="translated">Más Vistos</target>
+        <target xml:lang="es-ES" state="translated">Más vistos</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Más Vistos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="945d258623dcac0fa86586d6a0056452" resname="Recently added">
         <source>Recently added</source>

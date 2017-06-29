@@ -16,6 +16,8 @@ class LegacyController extends Controller implements WebTVController
      * @Route("/{_locale}/serial/index/id/{pumukit1id}", requirements={"_locale"=".."})
      * @Route("/{_locale}/serial/{pumukit1id}.html", requirements={"_locale"=".."})
      * @Route("/{_locale}/serial/{pumukit1id}", requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/serial/{pumukit1id}.html")
+     * @Route("/index.php/{_locale}/serial/{pumukit1id}")
      *
      * Parameters:
      * - {_locale} matches the current locale
@@ -43,8 +45,15 @@ class LegacyController extends Controller implements WebTVController
      * @Route("/video/{pumukit1id}", requirements={
      *     "pumukit1id": "\d+"
      * }, defaults={"filter": false})
+     * @Route("/index.php/{_locale}/video/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/index.php/video/{pumukit1id}", requirements={
+     *     "pumukit1id": "\d+"
+     * }, defaults={"filter": false})
      * @Route("/video/index/id/{pumukit1id}.html", defaults={"filter": false})
      * @Route("/video/index/id/{pumukit1id}", defaults={"filter": false})
+     * @Route("/index.php/video/index/id/{pumukit1id}.html", defaults={"filter": false})
+     * @Route("/index.php/video/index/id/{pumukit1id}", defaults={"filter": false})
      *
      * Parameters:
      * - {_locale} matches current locale
@@ -72,6 +81,7 @@ class LegacyController extends Controller implements WebTVController
 
     /**
      * @Route("/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
      *
      * Parameters:
      * - {_locale} matches the current locale

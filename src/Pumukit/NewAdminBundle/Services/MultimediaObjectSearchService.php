@@ -21,6 +21,7 @@ class MultimediaObjectSearchService
         $bChannel = '';
         $bPerson = false;
         $bRole = false;
+        $bStatus = false;
         $personName = '';
         $roleCode = '';
 
@@ -49,6 +50,9 @@ class MultimediaObjectSearchService
                 }
             } elseif (('date' === $property) && ('' !== $value)) {
                 $new_criteria += $this->processDates($value);
+            } elseif (('status' === $property) && ('' !== $value)) {
+                $bStatus = true;
+                $aStatus = $value;
             }
         }
 
@@ -64,6 +68,13 @@ class MultimediaObjectSearchService
             }
         } elseif (('' !== $bChannel) && $bChannel) {
             $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue)));
+        }
+
+        if ($bStatus) {
+            if (!empty($aStatus)) {
+                $aStatus = array_map('intval', $aStatus);
+                $new_criteria['status'] += array('$in' => $aStatus);
+            }
         }
 
         if ($bPerson && $bRole && $personName && $roleCode) {

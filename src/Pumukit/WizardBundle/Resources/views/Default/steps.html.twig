@@ -26,7 +26,7 @@
       {% set i = i + (show_series ? 1 : 0) %}
       {% if access_inbox %}
       <li class="{% if not show_series and not show_license %}first-child-pumukit{% endif %} {% if (step == 1) %}active{% elseif ((step == 2) or ((step == 3) and ('multiple' == option))) %}lastdone{% elseif (step > 2) %}done{% elseif (step < 1) %}future{% endif %}">
-        <a {{ ('single' == option)?'id="pumukitwizard_multimediaobject_previous"':'id="pumukitwizard_track_previous"' }} href="#" style="float:left;clear:left;">
+        <a id="pumukitwizard_multimediaobject_previous" href="#" style="float:left;clear:left;">
           <div class="step-header">{% trans with {'%i%': i} %}Step %i%: Type{% endtrans %}</div>
           <div class="step-body">{% trans %}Choose option type{% endtrans %}</div>
         </a>

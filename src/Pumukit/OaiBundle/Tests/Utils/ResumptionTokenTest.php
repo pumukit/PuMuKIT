@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\OaiBundle\Test\Utils;
+namespace Pumukit\OaiBundle\Tests\Utils;
 
 use Pumukit\OaiBundle\Utils\ResumptionToken;
 

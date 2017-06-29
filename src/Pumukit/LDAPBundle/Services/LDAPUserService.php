@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class LDAPUserService
 {
@@ -44,13 +45,13 @@ class LDAPUserService
             try {
                 $user = $this->newUser($info, $username);
             } catch (\Exception $e) {
-                throw $e;
+                throw new AuthenticationException($e->getMessage());
             }
         } elseif ($user->getEmail() !== $info['mail'][0] || $user->getFullname() !== $info['cn'][0]) {
             try {
                 $user = $this->updateUser($info, $user);
             } catch (\Exception $e) {
-                throw $e;
+                throw new AuthenticationException($e->getMessage());
             }
         }
         $this->updateGroups($info, $user);

@@ -9,7 +9,7 @@ class TemplateController extends ContainerAware implements WebTVController
 {
     public function templateAction($template, $title = null, $maxAge = null, $sharedAge = null, $private = null, Request $request = null)
     {
-        $title = $this->get('translator')->trans($title);
+        $title = $this->container->get('translator')->trans($title);
         $this->container->get('pumukit_web_tv.breadcrumbs')->add($title, $request->get('_route'));
 
         /** @var $response \Symfony\Component\HttpFoundation\Response */

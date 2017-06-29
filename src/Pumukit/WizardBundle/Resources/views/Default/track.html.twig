@@ -12,10 +12,12 @@
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_profile">
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
-          {% for key in master_profiles|keys %}
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
-          </div>
+          {% for key, profile in master_profiles %}
+              {% if profile['wizard'] == true %}
+                <div class="radio">
+                  <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
+                </div>
+              {% endif %}
           {% endfor %}
         </div>
         {% endif %}

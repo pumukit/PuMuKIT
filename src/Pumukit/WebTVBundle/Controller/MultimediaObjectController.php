@@ -47,6 +47,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
+            'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
         );
     }
 
@@ -98,11 +99,16 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $this->updateBreadcrumbs($multimediaObject);
 
+        $editorChapters = $this->getChapterMarks($multimediaObject);
+
         return array('autostart' => $request->query->get('autostart', 'true'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'track' => $track,
-                     'magic_url' => true, );
+                     'magic_url' => true,
+                     'editor_chapters' => $editorChapters,
+                     'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
+        );
     }
 
     /**
@@ -148,7 +154,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request, $secret = false)
     {
-        if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
+        if ($multimediaObject->getProperty('opencasturl') && !$request->query->has('track_id')) {
             if ($secret) {
                 return $this->forward('PumukitWebTVBundle:Opencast:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
             } else {

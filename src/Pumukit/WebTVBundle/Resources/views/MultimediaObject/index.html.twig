@@ -19,4 +19,7 @@
     {% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
     {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
+    {% if cinema_mode is defined and cinema_mode %}
+        <script type="application/javascript">$("#paellaiframe").detach().prependTo(".main-content");</script>
+    {% endif %}
 {% endblock %}

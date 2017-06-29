@@ -9,6 +9,7 @@ class StatsService
 {
     private $dm;
     private $repo;
+    private $repoSeries;
 
     public function __construct(DocumentManager $documentManager)
     {

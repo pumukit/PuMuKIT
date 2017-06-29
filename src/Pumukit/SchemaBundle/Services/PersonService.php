@@ -335,7 +335,7 @@ class PersonService
             foreach ($mmobj->getRoles() as $embeddedRole) {
                 if ($mmobj->containsPersonWithRole($person, $embeddedRole)) {
                     if (!($mmobj->removePersonWithRole($person, $embeddedRole))) {
-                        throw new \Expection('There was an error removing person '.$person->getId().' with role '.$role->getCod().' in multimedia object '.$multimediaObject->getId());
+                        throw new \Exception('There was an error removing person '.$person->getId().' with role '.$role->getCod().' in multimedia object '.$multimediaObject->getId());
                     }
                     $this->dispatcher->dispatchDelete($mmobj, $person, $embeddedRole);
                 }

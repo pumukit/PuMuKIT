@@ -11,6 +11,7 @@ use Pumukit\BasePlayerBundle\Utils\CountableAppendIterator;
 class SeriesPlaylistService
 {
     private $dm;
+    private $mmobjRepo;
 
     public function __construct(DocumentManager $dm)
     {
