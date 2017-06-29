@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -2620,7 +2620,7 @@
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
         <target>Logo</target>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
         <target>Filter Series</target>
@@ -2644,6 +2644,18 @@
       <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
         <target>Select the number of multimedia objects to display per page.</target>
+      </trans-unit>
+      <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
+        <source>External player</source>
+        <target>__External player</target>
+      </trans-unit>
+      <trans-unit id="60efca1186ebc7df207ce79f780146e6" resname="'No external player set'">
+        <source>'No external player set'</source>
+        <target>__'No external player set'</target>
+      </trans-unit>
+      <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
+        <source>Add external player</source>
+        <target>__Add external player</target>
       </trans-unit>
     </body>
   </file>
