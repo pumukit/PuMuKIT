@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}External player{% endtrans %}</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        <div class="form-group">
+            {% if multimediaObject.getProperties()['externalplayer'] is defined %}
+                {% set urlexternal = multimediaObject.getProperties()['externalplayer'] %}
+            {% else %}
+                {% set urlexternal = '' %}
+            {% endif %}
+
+            <iframe id="externalplayer" height="500px" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
+
+            <pre id="multimediaobject_properties_code" style="white-space: pre-wrap;"></pre>
+
+            {% autoescape 'js' %}
+                <script type="text/javascript">
+                    {% if urlexternal != '' %}
+                        var str = JSON.stringify({{ multimediaObject.getProperties()['externalplayer']|json_encode|raw }}, null, 4);
+                    {% else %}
+                        var str = 'No external player set';
+                    {% endif %}
+                    document.getElementById('multimediaobject_properties_code').innerText  = str;
+                </script>
+            {% endautoescape %}
+
+        </div>
+    </fieldset>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="row form-update-external">
+            {{ form_start(form) }}
+            <div class="col-xs-12 col-sm-7 col-md-7">
+                {{ form_row(form.url) }}
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2">{{ form_row(form.save) }}</div>
+            <div class="col-xs-12 col-sm-2 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-info" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            {{ form_end(form) }}
+        </div>
+    {% endif %}
+
+</div>
+<div class="modal-footer" style="margin-top:50px">
+    <hr/>
+    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+</div>
+<script>
+    function resizeFrame(elem){
+        var width = $(elem).width();
+        var height = width/16*9;
+        $(elem).height(height);
+    }
+
+    $(window).resize(function(){
+        resizeFrame($('#externalplayer'));
+    });
+
+    $('#previewIframe').on('click', function(event) {
+        event.preventDefault();
+        $('#externalplayer').attr('src',$('#form_url').val());
+    })
+</script>

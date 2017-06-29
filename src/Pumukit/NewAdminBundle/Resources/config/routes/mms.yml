@@ -227,6 +227,12 @@ pumukitnewadmin_mms_listproperties:
     defaults:
         _controller: pumukitnewadmin.controller.mms:listPropertiesAction
 
+pumukitnewadmin_mms_listexternalproperties:
+    pattern: /{id}/listexternalplayer
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:listExternalPlayerAction
+
 pumukitnewadmin_mms_modal_preview:
     pattern: /{id}/modalpreview
     methods: [GET]
