@@ -28,7 +28,7 @@ class SchemaFilter extends BsonFilter
             $criteria['$or'] = array(
                                      array('tracks' => array('$elemMatch' => array('tags' => $this->getParameter('display_track_tag'), 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
                                      array('properties.opencast' => array('$exists' => true)),
-                                     array('properties.externalplayer' => array('$exists' => true)),
+                                     array('properties.externalplayer' => array('$exists' => true, '$ne' => '')),
                                      );
         }
 

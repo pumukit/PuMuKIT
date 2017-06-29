@@ -1159,7 +1159,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', array('id' => $multimediaObject->getId())))
-            ->add('url', UrlType::class, array('attr' => array('class' => 'form-control')))
+            ->add('url', UrlType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
             ->add('save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-block btn-primary')))
             ->getForm();
 

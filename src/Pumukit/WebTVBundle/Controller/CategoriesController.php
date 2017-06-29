@@ -140,7 +140,7 @@ class CategoriesController extends Controller implements WebTVController
         $criteria['$or'] = array(
              array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
              array('properties.opencast' => array('$exists' => true)),
-             array('properties.externalplayer' => array('$exists' => true)),
+             array('properties.externalplayer' => array('$exists' => true, '$ne' => '')),
         );
         if ($provider !== null) {
             $criteria['$and'] = array(
