@@ -20,7 +20,7 @@
                     {% if urlexternal != '' %}
                         var str = JSON.stringify({{ multimediaObject.getProperties()['externalplayer']|json_encode|raw }}, null, 4);
                     {% else %}
-                        var str = {% trans %}'No external player set'{% endtrans %};
+                        var str = '{% trans %}No external player set{% endtrans %}';
                     {% endif %}
                     document.getElementById('multimediaobject_properties_code').innerText  = str;
                 </script>
