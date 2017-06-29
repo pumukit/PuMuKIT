@@ -62,7 +62,15 @@ class LDAPUserService
 
     protected function newUser($info, $username)
     {
-        $user = new User();
+        $email = $this->getEmail($info);
+
+        $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $email));
+        if (count($user) <= 0) {
+            $user = new User();
+            $user->setEmail($email);
+        } else {
+            throw new AuthenticationException('Duplicated email key');
+        }
 
         if (isset($info['mail'][0])) {
             $user->setEmail($info['mail'][0]);
@@ -180,7 +188,7 @@ class LDAPUserService
                     try {
                         $this->userService->deleteGroup($group, $user, true, false);
                     } catch (\Exception $e) {
-                        $this->logger->error(__CLASS__ . ' [' . __FUNCTION__ . '] ' . 'Delete group ' . $group->getKey() . ' from user  : ' . $e->getMessage());
+                        $this->logger->error(__CLASS__.' ['.__FUNCTION__.'] '.'Delete group '.$group->getKey().' from user  : '.$e->getMessage());
                     }
                 }
             }
@@ -212,5 +220,14 @@ class LDAPUserService
     protected function isAdmin($info, $username)
     {
         return false;
+    }
+
+    public function getEmail($info)
+    {
+        if (isset($info['mail'][0])) {
+            return $info['mail'][0];
+        } else {
+            throw new AuthenticationException('Missing LDAP attribute email');
+        }
     }
 }
