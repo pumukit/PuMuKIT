@@ -125,6 +125,8 @@ class LDAPUserService
     {
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
         $permissionProfileAdmin = $this->permissionProfileService->getByName('Administrator');
+        $permissionProfileIngestor = $this->permissionProfileService->getByName('Ingestor');
+        $permissionProfilePublisher = $this->permissionProfileService->getByName('Publisher');
 
         if ($this->isAutoPub($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAutoPub);
@@ -133,6 +135,16 @@ class LDAPUserService
 
         if ($this->isAdmin($info, $user->getUsername())) {
             $user->setPermissionProfile($permissionProfileAdmin);
+            $this->userService->update($user, true, false);
+        }
+
+        if ($this->isIngestor($info, $user->getUsername())) {
+            $user->setPermissionProfile($permissionProfileIngestor);
+            $this->userService->update($user, true, false);
+        }
+
+        if ($this->isPublisher($info, $user->getUsername())) {
+            $user->setPermissionProfile($permissionProfilePublisher);
             $this->userService->update($user, true, false);
         }
     }
@@ -218,6 +230,16 @@ class LDAPUserService
     }
 
     protected function isAdmin($info, $username)
+    {
+        return false;
+    }
+
+    protected function isIngestor($info, $username)
+    {
+        return false;
+    }
+
+    protected function isPublisher($info, $username)
     {
         return false;
     }
