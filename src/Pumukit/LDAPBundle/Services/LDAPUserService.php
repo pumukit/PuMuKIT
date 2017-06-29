@@ -177,11 +177,11 @@ class LDAPUserService
         foreach ($user->getGroups() as $group) {
             if ('ldap' === $group->getOrigin()) {
                 if (!in_array($group->getKey(), $aGroups)) {
-                    $this->userService->deleteGroup($group, $user, true, false);
-                    $this->logger->error(
-                        __CLASS__.' ['.__FUNCTION__.'] '.'Delete group '.$group->getKey(
-                        ).' from user  : '.$e->getMessage()
-                    );
+                    try {
+                        $this->userService->deleteGroup($group, $user, true, false);
+                    } catch (\Exception $e) {
+                        $this->logger->error(__CLASS__ . ' [' . __FUNCTION__ . '] ' . 'Delete group ' . $group->getKey() . ' from user  : ' . $e->getMessage());
+                    }
                 }
             }
         }
