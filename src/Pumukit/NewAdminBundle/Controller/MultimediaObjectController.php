@@ -1173,7 +1173,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $multimediaObject->setProperty('externalplayer', $data['url']);
             $dm->flush();
 
-            return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getId()));
+            $this->get('session')->set('admin/series/id', $multimediaObject->getSeries()->getId());
+            return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId()));
         }
 
         return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
