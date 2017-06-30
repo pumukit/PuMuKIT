@@ -3,7 +3,7 @@
       {% set status = mm.containsTag(pub) %}
       {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
       <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
-        <label>
+        <label{{ disabled ? ' style="color: #767676;"' : '' }}>
         <input type="checkbox"
                name="pub_{{ pub_type }}[{{ pub.cod }}]"
                id="pub_{{ pub_type }}_{{ pub.cod }}"
