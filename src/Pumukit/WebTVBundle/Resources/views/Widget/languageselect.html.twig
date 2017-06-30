@@ -6,7 +6,19 @@
     <ul class="dropdown-menu">
       {% for lang in languages %}
         <li role="separator" class="divider"></li>
-        <li><a href="{{ path('pumukit_locale', {'locale': lang } ) }}" > {{ lang | language_name }} </a></li>
+        <li>
+            <a href="{{ path('pumukit_locale', {'locale': lang } ) }}" >
+                {% if lang == 'es' %}
+                    Español
+                {% elseif lang == 'eu' %}
+                    Euskara
+                {% elseif lang == 'en' %}
+                    English
+                {% else %}
+                    {{ lang | language_name }}
+                {% endif %}
+            </a>
+        </li>
       {% endfor %}
         <li role="separator" class="divider"></li>
     </ul>

@@ -1,6 +1,16 @@
 <li class="divider"></li>
 {% for lang in languages %}
     <li class="{{ app.request.locale == lang ? 'active' }}">
-      <a href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ lang | language_name }} </a>
+      <a href="{{ path('pumukit_locale', {'locale': lang } ) }}">
+          {% if lang == 'es' %}
+              Español
+          {% elseif lang == 'eu' %}
+              Euskara
+          {% elseif lang == 'en' %}
+              English
+          {% else %}
+              {{ lang | language_name }}
+          {% endif %}
+      </a>
     </li>
 {% endfor %}
