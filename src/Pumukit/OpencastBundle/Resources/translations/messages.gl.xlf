@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="gl" state="needs-translation">Search</target>
+        <target xml:lang="gl" state="translated">Buscar</target>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
         <source>Name</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="gl" state="needs-translation">Date</target>
+        <target xml:lang="gl" state="translated">Data</target>
       </trans-unit>
       <trans-unit id="984c6990081d06520196629b3ce40e54" resname="There are no mediapackages with those values.">
         <source>There are no mediapackages with those values.</source>

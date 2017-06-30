@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -437,6 +440,14 @@
       <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
         <target xml:lang="de" state="needs-translation">i18n.one.Series</target>
+      </trans-unit>
+      <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
+        <source>Submit</source>
+        <target xml:lang="de" state="needs-translation">Submit</target>
+      </trans-unit>
+      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
+        <source>Logo</source>
+        <target xml:lang="de" state="needs-translation">Logo</target>
       </trans-unit>
     </body>
   </file>
