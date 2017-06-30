@@ -1,40 +1,39 @@
-<input type="hidden" name="pumukitnewadmin_group_sort_change_type" id="pumukitnewadmin_group_sort_change_type" value="{{ app.session.get('admin/group/type')=='asc'?'desc':'asc' }}"/>
 {% if 'key' == app.session.get('admin/group/sort') %}
-  <th>
+  <th id="th-key">
     <a href="#" id="pumukitnewadmin_group_key_sort_selected">{% trans %}Key{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
-  <th>
+  <th id="th-key">
     <a href="#" id="pumukitnewadmin_group_key_sort_not_selected">{% trans %}Key{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'name' == app.session.get('admin/group/sort') %}
-  <th>
+  <th id="th-name">
     <a href="#" id="pumukitnewadmin_group_name_sort_selected">{% trans %}Name{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
-  <th>
+  <th id="th-name">
     <a href="#" id="pumukitnewadmin_group_name_sort_not_selected">{% trans %}Name{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'origin' == app.session.get('admin/group/sort') %}
-  <th>
+  <th id="th-origin">
     <a href="#" id="pumukitnewadmin_group_origin_sort_selected">{% trans %}Origin{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
   {% else %}
-  <th>
+  <th id="th-origin">
     <a href="#" id="pumukitnewadmin_group_origin_sort_not_selected">{% trans %}Origin{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'comments' == app.session.get('admin/group/sort') %}
-  <th>
+  <th id="th-comments">
     <a href="#" id="pumukitnewadmin_group_comments_sort_selected">{% trans %}Comments{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
   {% else %}
-  <th>
+  <th id="th-comments">
     <a href="#" id="pumukitnewadmin_group_comments_sort_not_selected">{% trans %}Comments{% endtrans %}</a>
   </th>
 {% endif %}
