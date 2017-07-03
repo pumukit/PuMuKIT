@@ -29,6 +29,7 @@ class MultimediaObjectPubType extends AbstractType
                                            MultimediaObject::STATUS_HIDE => 'Hidden',
                                            ),
                         'disabled' => $options['not_granted_change_status'],
+                        'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
             ;
     }

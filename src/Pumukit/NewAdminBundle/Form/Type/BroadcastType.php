@@ -23,18 +23,24 @@ class BroadcastType extends AbstractType
     {
         $builder
             ->add('name', 'text',
-                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
             ->add('broadcast_type_id', 'choice',
                   array('choices' => array(
                                            Broadcast::BROADCAST_TYPE_PUB => Broadcast::BROADCAST_TYPE_PUB,
                                            Broadcast::BROADCAST_TYPE_PRI => Broadcast::BROADCAST_TYPE_PRI,
                                            Broadcast::BROADCAST_TYPE_COR => Broadcast::BROADCAST_TYPE_COR, ),
+                        'attr' => array('aria-label' => $this->translator->trans('Type', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Type', array(), null, $this->locale), ))
             ->add('passwd', 'text',
                   array('label' => $this->translator->trans('Passwd', array(), null, $this->locale),
+                        'attr' => array('aria-label' => $this->translator->trans('Passwd', array(), null, $this->locale)),
                         'required' => false, ))
             ->add('i18n_description', 'textareai18n',
-                  array('label' => $this->translator->trans('Description', array(), null, $this->locale)));
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

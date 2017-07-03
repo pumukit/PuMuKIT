@@ -23,20 +23,28 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('metatag', 'checkbox', array('required' => false))
-            ->add('display', 'checkbox', array('required' => false))
+            ->add('metatag', 'checkbox',
+                  array('required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Metatag', array(), null, $this->locale))))
+            ->add('display', 'checkbox',
+                  array('required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Display', array(), null, $this->locale))))
             ->add('cod', 'text', array(
                                        'attr' => array(
+                                                       'aria-label' => $this->translator->trans('Cod', array(), null, $this->locale),
                                                        'pattern' => "^\w*$",
                                                        'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                                                        'oninput' => "setCustomValidity('')", ),
                                        'label' => $this->translator->trans('Cod', array(), null, $this->locale), ))
             ->add('i18n_title', 'texti18n',
-                  array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Title', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('style' => 'resize:vertical;',
+                                        'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -45,7 +53,10 @@ class TagType extends AbstractType
             $fields = $tag->getProperty('customfield');
             foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                 $auxField = explode(':', $field);
-                $formOptions = array('mapped' => false, 'required' => false, 'data' => $tag->getProperty($auxField[0]));
+                $formOptions = array('mapped' => false,
+                                     'required' => false,
+                                     'aria-label' => $this->translator->trans($auxField[0], array(), null, $this->locale),
+                                     'data' => $tag->getProperty($auxField[0]));
 
                 try {
                     $event->getForm()->add($auxField[0], isset($auxField[1]) ? $auxField[1] : 'text', $formOptions);

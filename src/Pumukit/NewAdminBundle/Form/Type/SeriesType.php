@@ -31,53 +31,65 @@ class SeriesType extends AbstractType
                         'label_attr' => $this->disablePudenew ? array('class' => 'pmk_disabled_checkbox') : array(),
                         'disabled' => $this->disablePudenew,
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale), ))
             ->add('i18n_title', 'texti18n',
-                  array('label' => $this->translator->trans('Title', array(), null, $this->locale)))
+                  array('attr' => array('aria-label' => $this->translator->trans('Title', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Title', array(), null, $this->locale)))
             ->add('i18n_subtitle', 'texti18n',
                   array(
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Subtitle', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Subtitle', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('style' => 'resize:vertical;',
+                                        'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('i18n_keyword', 'texti18n',
                   array(
                         'required' => false,
-                        'attr' => array('class' => 'series materialtags'),
+                        'attr' => array('class' => 'series materialtags',
+                                        'aria-label' => $this->translator->trans('Keywords', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Keywords', array(), null, $this->locale), ))
             ->add('copyright', 'text',
                   array(
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Copyright', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Copyright', array(), null, $this->locale), ))
             ->add('license', 'license',
                   array(
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('License', array(), null, $this->locale)),
                         'label' => $this->translator->trans('License', array(), null, $this->locale), ))
             ->add('series_type', null,
                   array(
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Channel', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Channel', array(), null, $this->locale), ))
             ->add('public_date', new Html5dateType(),
                   array(
                         'data_class' => 'DateTime',
+                        'attr' => array('aria-label' => $this->translator->trans('Publication Date', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Publication Date', array(), null, $this->locale), ))
             ->add('i18n_header', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;',
+                                        'aria-label' => $this->translator->trans('Header Text', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Header Text', array(), null, $this->locale), ))
             ->add('i18n_footer', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;',
+                                        'aria-label' => $this->translator->trans('Footer Text', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Footer Text', array(), null, $this->locale), ))
             ->add('i18n_line2', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;'),
+                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;',
+                                        'aria-label' => $this->translator->trans('Headline', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale), ))
            ->add('template', 'choice',
                   array(
@@ -86,7 +98,8 @@ class SeriesType extends AbstractType
                                            'multisubserial' => 'multisubserial', ),
                         'empty_data' => null,
                         'mapped' => false,
-                        'attr' => array('groupclass' => 'hidden-naked'),
+                        'attr' => array('groupclass' => 'hidden-naked',
+                                        'aria-label' => $this->translator->trans('Template', array(), null, $this->locale)),
                         'required' => true,
                         'label' => $this->translator->trans('Template', array(), null, $this->locale), ));
 

@@ -25,26 +25,35 @@ class LiveType extends AbstractType
     {
         $builder
             ->add('i18n_name', 'texti18n',
-                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('url', 'url',
-                  array('label' => $this->translator->trans('URL', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('URL', array(), null, $this->locale)))
             ->add('source_name', 'text',
-                  array('label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('STREAM', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
             ->add('passwd', 'text',
                   array(
                       'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
             ->add('broadcasting', 'choice',
                   array(
                         'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
+                        'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
             ->add('live_type', 'choice',
                   array(
+                        'attr' => array('aria-label' => $this->translator->trans('Technology', array(), null, $this->locale)),
                         'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
                         'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
         /*

@@ -21,13 +21,21 @@ class MaterialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
-          ->add('hide', 'checkbox', array('required' => false, 'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
+          ->add('i18n_name', 'texti18n',
+                array('required' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('hide', 'checkbox',
+                array('required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
           ->add('language', 'customlanguage',
                 array(
                       'required' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Language', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Language', array(), null, $this->locale), ))
           ->add('mime_type', 'choice', array(
+                'attr' => array('aria-label' => $this->translator->trans('Type', array(), null, $this->locale)),
                 'choices' => array(
                                    'xxx' => 'xxx - ',
                                    'zip' => 'zip - Compress file',

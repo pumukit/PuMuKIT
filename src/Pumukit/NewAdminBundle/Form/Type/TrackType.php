@@ -24,10 +24,12 @@ class TrackType extends AbstractType
             ->add('i18n_description', 'texti18n',
                   array(
                         'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
           ->add('language', 'customlanguage',
                 array(
                       'required' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ));
     }
 

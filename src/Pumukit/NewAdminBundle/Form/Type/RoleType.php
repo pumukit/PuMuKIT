@@ -21,8 +21,12 @@ class RoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('display', 'checkbox', array('required' => false))
-            ->add('read_only', 'checkbox', array('required' => false))
+            ->add('display', 'checkbox',
+                  array('required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Display', array(), null, $this->locale)),))
+            ->add('read_only', 'checkbox',
+                  array('required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Read only', array(), null, $this->locale)),))
             ->add('cod', 'text', array(
                                        'attr' => array(
                                                        'pattern' => "^\w*$",
@@ -30,13 +34,17 @@ class RoleType extends AbstractType
                                                        'oninput' => "setCustomValidity('')", ),
                                        'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
             ->add('xml', 'text',
-                  array('label' => $this->translator->trans('XML', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('XML', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('XML', array(), null, $this->locale)))
             ->add('i18n_name', 'texti18n',
-                  array('label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
             ->add('i18n_text', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
     }
 

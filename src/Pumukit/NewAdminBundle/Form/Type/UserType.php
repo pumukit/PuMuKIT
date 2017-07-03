@@ -25,10 +25,13 @@ class UserType extends AbstractType
         $builder
             ->add('enabled', 'hidden', array('data' => true))
             ->add('fullname', 'text',
-                  array('label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
+                  array(
+                      'attr' => array('aria-label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
             ->add('username', 'text',
                   array(
                         'attr' => array(
+                            'aria-label' => $this->translator->trans('Username', array(), null, $this->locale),
                             'autocomplete' => 'off',
                             'pattern' => '^[a-zA-Z0-9_\.]{4,16}$',
                             'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
@@ -37,6 +40,7 @@ class UserType extends AbstractType
             ->add('plain_password', 'password',
                   array(
                         'attr' => array(
+                            'aria-label' => $this->translator->trans('Password', array(), null, $this->locale),
                             'autocomplete' => 'off',
                         ),
                         'required' => true,
@@ -52,9 +56,13 @@ class UserType extends AbstractType
             'attr' => array('style' => 'width: 420px')))
           */
             ->add('email', 'email',
-                  array('label' => $this->translator->trans('Email', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Email', array(), null, $this->locale)))
             ->add('permissionProfile', null,
-                  array('label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $user = $event->getData();
@@ -64,6 +72,7 @@ class UserType extends AbstractType
                     array(
                         'mapped' => false,
                         'choices' => array('ROLE_SUPER_ADMIN' => 'System Super Administrator'),
+                        'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
             }
         });
