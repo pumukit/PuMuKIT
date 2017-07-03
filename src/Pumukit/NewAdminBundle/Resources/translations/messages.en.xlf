@@ -2620,7 +2620,7 @@
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
         <target>Logo</target>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
         <target>Filter Series</target>
@@ -2644,6 +2644,78 @@
       <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
         <target>Select the number of multimedia objects to display per page.</target>
+      </trans-unit>
+      <trans-unit id="3b06b8327ad154f97731a498c54e969c" resname="Filter Roles">
+        <source>Filter Roles</source>
+        <target>Filter Roles</target>
+      </trans-unit>
+      <trans-unit id="484df18e26ba1df3a75a5bac50732025" resname="Filter Groups">
+        <source>Filter Groups</source>
+        <target>Filter Groups</target>
+      </trans-unit>
+      <trans-unit id="3d4abcd37d189a465af8b5871abe5ae3" resname="Filter People">
+        <source>Filter People</source>
+        <target>Filter People</target>
+      </trans-unit>
+      <trans-unit id="b7c161bb87bb0308fb25e6f68d0a5632" resname="Thumbnail">
+        <source>Thumbnail</source>
+        <target>Thumbnail</target>
+      </trans-unit>
+      <trans-unit id="344a7f427fb765610ef96eb7bce95257" resname="Editor">
+        <source>Editor</source>
+        <target>Editor</target>
+      </trans-unit>
+      <trans-unit id="cebc3c89f89b41e6d438bf6da6f7b42d" resname="Relations list">
+        <source>Relations list</source>
+        <target>Relations list</target>
+      </trans-unit>
+      <trans-unit id="bb888443b314817bdf461c0fe4f573a6" resname="Modify broadcast profile">
+        <source>Modify broadcast profile</source>
+        <target>Modify broadcast profile</target>
+      </trans-unit>
+      <trans-unit id="fde643d3b82b8ece34fe38ff4661f577" resname="Person with Role list">
+        <source>Person with Role list</source>
+        <target>Person with Role list</target>
+      </trans-unit>
+      <trans-unit id="9b2c85dd7af17d4528bd7489e72c59c5" resname="Spinner">
+        <source>Spinner</source>
+        <target>Spinner</target>
+      </trans-unit>
+      <trans-unit id="a650953bafd6dc61a768cda781e277f9" resname="Update publication">
+        <source>Update publication</source>
+        <target>Update publication</target>
+      </trans-unit>
+      <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
+        <source>Delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="e3dd019a2f171ebdfc167be072e0d752" resname="Submit generate magic URL">
+        <source>Submit generate magic URL</source>
+        <target>Submit generate magic URL</target>
+      </trans-unit>
+      <trans-unit id="c7be32626ba83e9ccb03a3b1e18fbfc7" resname="Read only form">
+        <source>Read only form</source>
+        <target>Read only form</target>
+      </trans-unit>
+      <trans-unit id="c133169dfd93a627eecb7ebcd6f63c5e" resname="Update metadata">
+        <source>Update metadata</source>
+        <target>Update metadata</target>
+      </trans-unit>
+      <trans-unit id="7aa900322ecc74164c8018b89bce2878" resname="Update media">
+        <source>Update media</source>
+        <target>Update media</target>
+      </trans-unit>
+      <trans-unit id="379ebb63ab3604bfd28b923fbe86dd44" resname="Filter Users">
+        <source>Filter Users</source>
+        <target>Filter Users</target>
+      </trans-unit>
+      <trans-unit id="51489c0f747733fb32b3ae6ce8606213" resname="Filter Live Channels">
+        <source>Filter Live Channels</source>
+        <target>Filter Live Channels</target>
+      </trans-unit>
+      <trans-unit id="5101591968e8a19545fab09e442178af" resname="Filter Live Events">
+        <source>Filter Live Events</source>
+        <target>Filter Live Events</target>
       </trans-unit>
     </body>
   </file>
