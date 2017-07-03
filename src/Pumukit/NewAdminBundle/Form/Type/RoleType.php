@@ -23,10 +23,10 @@ class RoleType extends AbstractType
         $builder
             ->add('display', 'checkbox',
                   array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Display', array(), null, $this->locale)),))
+                        'attr' => array('aria-label' => $this->translator->trans('Display', array(), null, $this->locale)), ))
             ->add('read_only', 'checkbox',
                   array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Read only', array(), null, $this->locale)),))
+                        'attr' => array('aria-label' => $this->translator->trans('Read only', array(), null, $this->locale)), ))
             ->add('cod', 'text', array(
                                        'attr' => array(
                                                        'pattern' => "^\w*$",
@@ -36,11 +36,11 @@ class RoleType extends AbstractType
             ->add('xml', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('XML', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('XML', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('XML', array(), null, $this->locale), ))
             ->add('i18n_name', 'texti18n',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('i18n_text', 'textareai18n',
                   array(
                         'required' => false,

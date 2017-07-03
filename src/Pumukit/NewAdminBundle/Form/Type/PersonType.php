@@ -29,7 +29,7 @@ class PersonType extends AbstractType
             ->add('name', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('i18n_post', 'texti18n',
                   array(
                         'required' => false,

@@ -64,7 +64,7 @@ class MultimediaObjectMetaType extends AbstractType
                   array('mapped' => false,
                         'required' => false,
                         'attr' => array('groupclass' => 'hidden-naked',
-                                        'aria-label' => $this->translator->trans('Subseries', array(), null, $this->locale)),
+                                        'aria-label' => $this->translator->trans('Subseries', array(), null, $this->locale), ),
                         'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ))
             ->add('subseriestitle', 'texti18n',
                   array('mapped' => false,

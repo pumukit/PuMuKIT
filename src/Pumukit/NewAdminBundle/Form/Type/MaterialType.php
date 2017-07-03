@@ -24,11 +24,11 @@ class MaterialType extends AbstractType
           ->add('i18n_name', 'texti18n',
                 array('required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
           ->add('hide', 'checkbox',
                 array('required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Hide', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
           ->add('language', 'customlanguage',
                 array(
                       'required' => true,

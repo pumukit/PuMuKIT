@@ -27,7 +27,7 @@ class LiveType extends AbstractType
             ->add('i18n_name', 'texti18n',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
@@ -36,11 +36,11 @@ class LiveType extends AbstractType
             ->add('url', 'url',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('URL', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
             ->add('source_name', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('STREAM', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('STREAM', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('STREAM', array(), null, $this->locale), ))
             ->add('passwd', 'text',
                   array(
                       'required' => false,

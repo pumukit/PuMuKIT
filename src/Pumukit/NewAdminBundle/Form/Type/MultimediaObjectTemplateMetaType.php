@@ -52,7 +52,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                         'required' => false,
                         'attr' => array('groupclass' => 'hidden-naked',
                                         'style' => 'resize:vertical;',
-                                        'aria-label' => $this->translator->trans('Headline', array(), null, $this->locale)),
+                                        'aria-label' => $this->translator->trans('Headline', array(), null, $this->locale), ),
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale), ));
     }
 

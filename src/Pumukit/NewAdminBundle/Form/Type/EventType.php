@@ -25,7 +25,7 @@ class EventType extends AbstractType
             ->add('name', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Event', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Event', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
@@ -34,15 +34,15 @@ class EventType extends AbstractType
             ->add('place', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Location', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Location', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
             ->add('live', null,
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Channels', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
             ->add('schedule', new EventscheduleType(),
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Schedule', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Schedule', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Schedule', array(), null, $this->locale), ))
             ->add('display', 'checkbox',
                   array('required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Announce', array(), null, $this->locale)),

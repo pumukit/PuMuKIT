@@ -25,7 +25,7 @@ class BroadcastType extends AbstractType
             ->add('name', 'text',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('broadcast_type_id', 'choice',
                   array('choices' => array(
                                            Broadcast::BROADCAST_TYPE_PUB => Broadcast::BROADCAST_TYPE_PUB,
@@ -40,7 +40,7 @@ class BroadcastType extends AbstractType
             ->add('i18n_description', 'textareai18n',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

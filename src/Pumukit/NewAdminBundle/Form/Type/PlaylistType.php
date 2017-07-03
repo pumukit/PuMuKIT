@@ -26,7 +26,7 @@ class PlaylistType extends AbstractType
             ->add('i18n_title', 'texti18n',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Title', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Title', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Title', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,

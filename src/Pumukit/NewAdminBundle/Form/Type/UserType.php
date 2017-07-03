@@ -27,7 +27,7 @@ class UserType extends AbstractType
             ->add('fullname', 'text',
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)))
+                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale), ))
             ->add('username', 'text',
                   array(
                         'attr' => array(
@@ -58,11 +58,11 @@ class UserType extends AbstractType
             ->add('email', 'email',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Email', array(), null, $this->locale)))
+                        'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
             ->add('permissionProfile', null,
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)));
+                        'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $user = $event->getData();
