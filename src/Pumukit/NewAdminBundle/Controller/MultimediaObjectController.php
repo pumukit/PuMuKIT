@@ -1161,7 +1161,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', array('id' => $multimediaObject->getId())))
             ->add('url', UrlType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
             ->add('save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-block btn-pumukit btn-raised')))
-            ->add('delete', SubmitType::class, array('label' => 'delete', 'attr' => array('class' => 'btn btn-block btn-danger')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -1178,6 +1177,20 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
+    }
+
+    /**
+     * List the external player properties of a multimedia object in a modal.
+     *
+     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     */
+    public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
+    {
+        $dm = $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $multimediaObject->setProperty('externalplayer', '');
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
 
     /**
