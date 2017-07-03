@@ -1,5 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-    <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
+    <input type="hidden" id="mm_id_ownerrelation" value="{{ mm.id }}"/>
     <div class="panel panel-default">
       <div class="panel-heading">
         {% trans %}OWNERS{% endtrans %}&nbsp;
@@ -9,7 +9,7 @@
         <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Users that can admin this multimedia object{% endtrans %}"></i>
         {% endif %}
       </div>
-      <div class="panel-body" id="group_mm{{ template }}">
+      <div class="panel-body" id="owner_mm{{ template }}">
         <table class="table">
           <thead>
             <tr>
@@ -30,7 +30,7 @@
                 </a>
               </td>
               <td>
-                <a href="#" onclick="is_last_user_relation_to_admin_mm('mm'+'{{ template }}', '{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', 'owner'); return false;">
+                <a href="#" title="{% trans %}Delete{% endtrans %}" onclick="is_last_user_relation_to_admin_mm('mm'+'{{ template }}', '{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', 'owner'); return false;">
                   <i class="mdi-content-clear"></i>
                 </a>
               </td>
