@@ -2706,6 +2706,34 @@
         <source>No external player set</source>
         <target xml:lang="es-ES" state="translated">No se ha definido ningún reproductor externo</target>
       </trans-unit>
+      <trans-unit id="e05cdf66497155c4c1f436baeb7e90d3" resname="External video">
+        <source>External video</source>
+        <target xml:lang="es-ES" state="translated">Video externo</target>
+      </trans-unit>
+      <trans-unit id="afa945de55945c4a8a85f2fdb8b63c5a" resname="No external video set">
+        <source>No external video set</source>
+        <target xml:lang="es-ES" state="translated">No se ha definido ningún video externo</target>
+      </trans-unit>
+      <trans-unit id="6e072be0505bbcb1f91fe4b3a5f60c10" resname="Are you sure you want to delete this external video?">
+        <source>Are you sure you want to delete this external video?</source>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este video externo?</target>
+      </trans-unit>
+      <trans-unit id="90c22a162189a9402836aaa77258f6e0" resname="External video successfully deleted.">
+        <source>External video successfully deleted.</source>
+        <target xml:lang="es-ES" state="translated">El video externo ha sido eliminado correctamente.</target>
+      </trans-unit>
+      <trans-unit id="54e90e15f45ee962db4ae107d05971f5" resname="New video external">
+        <source>New video external</source>
+        <target xml:lang="es-ES" state="translated">Nuevo video externo</target>
+      </trans-unit>
+      <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
+        <source>Edit</source>
+        <target xml:lang="es-ES" state="needs-translation">Edit</target>
+      </trans-unit>
+      <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
+        <source>Delete</source>
+        <target xml:lang="es-ES" state="needs-translation">Delete</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -2660,6 +2660,34 @@
       <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
         <source>No external player set</source>
         <target>__No external player set</target>
+      </trans-unit>
+      <trans-unit id="e05cdf66497155c4c1f436baeb7e90d3" resname="External video">
+        <source>External video</source>
+        <target>__External video</target>
+      </trans-unit>
+      <trans-unit id="afa945de55945c4a8a85f2fdb8b63c5a" resname="No external video set">
+        <source>No external video set</source>
+        <target>__No external video set</target>
+      </trans-unit>
+      <trans-unit id="6e072be0505bbcb1f91fe4b3a5f60c10" resname="Are you sure you want to delete this external video?">
+        <source>Are you sure you want to delete this external video?</source>
+        <target>__Are you sure you want to delete this external video?</target>
+      </trans-unit>
+      <trans-unit id="90c22a162189a9402836aaa77258f6e0" resname="External video successfully deleted.">
+        <source>External video successfully deleted.</source>
+        <target>__External video successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="54e90e15f45ee962db4ae107d05971f5" resname="New video external">
+        <source>New video external</source>
+        <target>__New video external</target>
+      </trans-unit>
+      <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
+        <source>Edit</source>
+        <target>__Edit</target>
+      </trans-unit>
+      <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
+        <source>Delete</source>
+        <target>__Delete</target>
       </trans-unit>
     </body>
   </file>
