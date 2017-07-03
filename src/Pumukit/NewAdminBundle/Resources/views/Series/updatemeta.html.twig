@@ -15,7 +15,7 @@
           return false;"
     action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-    <input type="hidden" name="id" id="series_id" value="{{ series.id }}">
+    <input type="hidden" name="id" id="series_id_updatemeta" value="{{ series.id }}">
 
     <div class="row">
       <div class="col-xs-6">
