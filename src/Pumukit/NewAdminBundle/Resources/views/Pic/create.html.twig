@@ -5,7 +5,7 @@
 
 <div class="modal-body">
 
-  <div id="tv_admin_container">
+  <div id="tv_admin_container_url">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
@@ -44,7 +44,7 @@
   </div>
   <div style="clear:both"></div>
 
-  <div id="tv_admin_container">
+  <div id="tv_admin_container_file">
     <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
