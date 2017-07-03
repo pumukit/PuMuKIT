@@ -2,7 +2,7 @@
 <div class="well">
   <form autocomplete="off" id="filter_groups" onsubmit="$('#list_groups').load('{{ path('pumukitnewadmin_group_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_group_list') }}" method="post">
   <fieldset>
-    <legend>{% trans %}Filter Groups{% endtrans %}</legend>
+    <legend hidden>{% trans %}Filter Groups{% endtrans %}</legend>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">

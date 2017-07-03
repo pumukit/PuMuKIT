@@ -1,6 +1,6 @@
 <div class="well">
   <fieldset class="">
-    <legend>{% trans %}Person with Role list{% endtrans %}</legend>
+    <legend hidden>{% trans %}Person with Role list{% endtrans %}</legend>
     <dl style="margin: 0px">
       {% for role in roles if role.getCod() != personal_scope_role_code %}
       <div class="form-row">
