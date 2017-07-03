@@ -26,7 +26,7 @@
                   return false;"
         action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-    <input type="hidden" name="id" id="id" value="{{ person.id }}">
+    <input type="hidden" name="id" id="person_id_update" value="{{ person.id }}">
     <fieldset>
       {% for child in form %}
         {{ form_row(child) }}

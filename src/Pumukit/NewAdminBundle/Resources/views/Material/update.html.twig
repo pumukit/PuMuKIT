@@ -17,7 +17,7 @@
                   });
                   return false;"
         action="{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}" method="POST">
-    <input type="hidden" name="id" id="id" value="{{ material.id }}" />
+    <input type="hidden" name="id" id="material_id" value="{{ material.id }}" />
     <input type="hidden" name="mmId" id="mmId" value="{{ mmId }}" />
     <fieldset>
       {% for child in form %}

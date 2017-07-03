@@ -18,7 +18,7 @@
                   return false;"
         action="{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}" method="POST">
 
-    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
+    <input type="hidden" name="id" id="mm_id_pub" value="{{ mm.id }}">
     <input type="hidden" name="series_id" id="series_id" value="{{ mm.series.id }}">
 
     <div class="row">
