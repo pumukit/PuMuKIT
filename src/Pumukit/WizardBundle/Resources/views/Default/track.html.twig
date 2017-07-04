@@ -94,12 +94,11 @@
         {% endif %}
         {% if 'single' == form_data.type.option %}
         <div class="form-group" id="pumukitwizard_track_file">
-          <label for="url" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
+          <label for="url" id="pumukitwizard_track_file_label" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
           <div class="input-group">
-            <input type="file" name="resource" id="resource" value="" size="70">
+            <input type="file" name="resource" id="resource" value="" size="70" aria-labelledby="pumukitwizard_track_file_label">
             <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
           </div>
-          <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
           <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
             <strong>
               <i class="mdi-action-info"></i>
@@ -111,14 +110,13 @@
         <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
         </div>
-        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
         {% endif %}
         {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="form-group" id="pumukitwizard_track_directory">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
         </div>
-        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
         {% endif %}
+        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
       </div>
     </fieldset>
     <div class="row">
