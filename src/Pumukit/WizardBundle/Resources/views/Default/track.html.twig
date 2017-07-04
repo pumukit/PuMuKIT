@@ -8,6 +8,7 @@
     <iframe name="iframeUpload" style="display:none" src=""></iframe>
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
     <fieldset class="well">
+      <legend hidden>{% trans %}File{% endtrans %}</legend>
       <div class="col-md-10">
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_profile">

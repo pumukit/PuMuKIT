@@ -7,6 +7,7 @@
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'series'} %}
     <input type="hidden" name="pumukitwizard_form_data[mandatory_title]" id="pumukitwizard_mandatory_title" value="{{ mandatory_title }}">
     <fieldset class="well">
+      <legend hidden>{% trans %}Series{% endtrans %}</legend>
       {% if reuse_series and not same_series and (user_series|length > 0) %}
       <div class="col-md-6">
         <div class="form-group" id="pumukitwizard_series_select_i18n_title">

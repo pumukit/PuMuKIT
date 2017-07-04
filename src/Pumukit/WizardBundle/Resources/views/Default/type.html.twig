@@ -6,6 +6,7 @@
         action="{{ path('pumukitwizard_default_option') }}" method="POST">
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'type'} %}
     <fieldset class="well">
+      <legend hidden>{% trans %}Type{% endtrans %}</legend>
       <div class="form-group" id="pumukitwizard_type_option">
         <label for="pumukitwizard_type_option" class="control-label">{% trans %}Type{% endtrans %}</label>
         {% if form_data.type is defined %}
