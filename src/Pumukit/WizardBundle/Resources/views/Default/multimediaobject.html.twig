@@ -12,14 +12,14 @@
       {# TODO build input fields with for loop #}
       <div class="col-md-10">
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_title">
-          <label for="pumukitwizard_multimediaobject_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobject_i18n_title" id="pumukitwizard_multimediaobject_i18n_title_label" class="control-label">{% trans %}Title{% endtrans %}</label>
           <div>
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -27,14 +27,14 @@
           </div>
         </div>
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_subtitle">
-          <label for="pumukitwizard_multimediaobject_i18n_subtitle" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobject_i18n_subtitle" id="pumukitwizard_multimediaobject_i18n_subtitle_label" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
           <div>
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -42,14 +42,14 @@
           </div>
         </div>
         <div class="form-group" id="pumukitwizard_multimediaobject_i18n_description">
-          <label for="pumukitwizard_multimediaobject_i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobject_i18n_description" id="pumukitwizard_multimediaobject_i18n_description_label" class="control-label">{% trans %}Description{% endtrans %}</label>
           <div>
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -58,7 +58,7 @@
         </div>
         {% if show_object_license %}
         <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_license">
-          <label for="pumukitwizard_multimediaobjectlicense" class="control-label">{% trans %}License{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobjectlicense" id="pumukitwizard_multimediaobject_i18n_license_label" class="control-label">{% trans %}License{% endtrans %}</label>
           <div class="form-control-wrapper">
             {% if object_available_licenses|length > 0 %}
             <select id="pumukitwizard_multimediaobject_license_select" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control">
@@ -73,11 +73,11 @@
             </select>
             {% else %}
             {% if form_data.multimediaobject is defined and form_data.multimediaobject.license is defined %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}">
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ form_data.multimediaobject.license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
             {% elseif object_default_license is not null %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}">
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="{{ object_default_license }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
             {% else %}
-            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="">
+            <input type="text" id="pumukitwizard_multimediaobject_license" name="pumukitwizard_form_data[multimediaobject][license]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_license_label">
             {% endif %}
             <span class="material-input"></span>
             {% endif %}
@@ -86,14 +86,14 @@
         </div>
         {% endif %}
         <div class="form-group col-md-12 row" id="pumukitwizard_multimediaobject_i18n_line2" {% if not is_granted('ROLE_SCOPE_GLOBAL') %} style="display:none"{% endif %}>
-          <label for="pumukitwizard_multimediaobject_i18n_line2" class="control-label">{% trans %}Headline{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobject_i18n_line2" id="pumukitwizard_multimediaobject_i18n_line2_label" class="control-label">{% trans %}Headline{% endtrans %}</label>
           <div>
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -102,7 +102,7 @@
         </div>
         {% if show_tags and (available_tags|length > 0) %}
         <div class="form-group col-md-7 row" id="pumukitwizard_multimediaobject_tag">
-          <label for="pumukitwizard_multimediaobject_tag" class="control-label">{% trans %}Tag{% endtrans %}</label>
+          <label for="pumukitwizard_multimediaobject_tag" id="pumukitwizard_multimediaobject_i18n_tag_label" class="control-label">{% trans %}Tag{% endtrans %}</label>
           <div class="form-control-wrapper">
             <select id="pumukitwizard_multimediaobject_tag_select" name="pumukitwizard_form_data[multimediaobject][tag]" class="form-control">
               <option value="0">{% trans %}Select a tag...{% endtrans %}</option>

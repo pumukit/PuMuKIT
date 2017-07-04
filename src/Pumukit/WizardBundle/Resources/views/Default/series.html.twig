@@ -36,39 +36,39 @@
       {% endif %}
       <div class="col-md-10">
         <div class="form-group" id="pumukitwizard_series_new_i18n_title">
-          <label for="pumukitwizard_series_i18n_title" class="control-label">{% trans %}Title{% endtrans %}</label>
+          <label for="pumukitwizard_series_i18n_title" id="pumukitwizard_series_i18n_title_label" class="control-label">{% trans %}Title{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_title is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_title, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_title, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
           {% endfor %}
         </div>
         <div class="form-group" id="pumukitwizard_series_new_i18n_subtitle">
-          <label for="pumukitwizard_series_i18n_subtitle" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
+          <label for="pumukitwizard_series_i18n_subtitle" id="pumukitwizard_series_i18n_subtitle_label" class="control-label">{% trans %}Subtitle{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_subtitle is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
           {% endfor %}
         </div>
         <div class="form-group" id="pumukitwizard_series_new_i18n_description">
-          <label for="pumukitwizard_series_i18n_description" class="control-label">{% trans %}Description{% endtrans %}</label>
+          <label for="pumukitwizard_series_i18n_description" id="pumukitwizard_series_i18n_description_label" class="control-label">{% trans %}Description{% endtrans %}</label>
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_description is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_description, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_description, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }}>
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>

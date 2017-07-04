@@ -5,7 +5,7 @@
   <form id="pumukitwizard_track_form" autocomplete="off"
         enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitwizard_default_upload') }}" method="POST">
-    <iframe name="iframeUpload" style="display:none" src=""></iframe>
+    <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
     <fieldset class="well">
       <legend hidden>{% trans %}File{% endtrans %}</legend>
@@ -65,7 +65,7 @@
           </div>
         </div>
         {% endif %}
-        <div class="form-group" id="pumukitwizard_track_language">
+        <div class="form-group" id="pumukitwizard_new_track_language">
           <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
           <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
             {% for locale, language in languages %}
