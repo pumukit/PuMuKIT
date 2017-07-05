@@ -5,7 +5,7 @@
         <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
             <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingSearch">
+                    <div class="panel-heading" role="tab">
                         <h2 class="panel-title">
                             <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch"
                                aria-expanded="true" aria-controls="collapseSearch">
@@ -13,7 +13,7 @@
                             </a>
                         </h2>
                     </div>
-                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel">
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %} :</label>
@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %} :</label>
+                                <label for="filters_person_name" class="control-label">{% trans %}Person{% endtrans %} :</label>
                                 <input type="text" class="form-control" name="criteria[person_name]" id="filters_person_name" value="{{ criteria['person_name']|default("") }}" placeholder="{% trans %}Search by name or surname{% endtrans %}">
                             </div>
 
@@ -40,7 +40,7 @@
             </div>
             <div id="accordion_others" class="panel-group" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingSearch">
+                    <div class="panel-heading" role="tab">
                         <h2 class="panel-title">
                             <a class="show" data-toggle="collapse" data-parent="#accordion_others" href="#collapseOthers"
                                aria-expanded="true" aria-controls="collapseSearch">
@@ -48,10 +48,10 @@
                             </a>
                         </h2>
                     </div>
-                    <div id="collapseOthers" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                    <div id="collapseOthers" class="panel-collapse collapse in" role="tabpanel">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="filter_place" class="control-label">{% trans %}Status{% endtrans %} :</label>
+                                <label for="filter_status" class="control-label">{% trans %}Status{% endtrans %} :</label>
                                 <ul style="list-style-type: none;">
                                     {% for key, value in statusPub %}
                                         <li>
@@ -59,7 +59,7 @@
                                             {% if criteria['status'] is defined and key in criteria['status'] %}
                                                 {% set checked = 'checked' %}
                                             {% endif %}
-                                            <input id="{{ value }}" type="checkbox" name="criteria[status][]" value="{{ key }}" {{ checked }} />
+                                            <input id="{{ value }}" type="checkbox" name="criteria[status][]" value="{{ key }}" {{ checked }} aria-label="{{ value }}" />
                                             <span>{{ value|trans }}</span>
                                         </li>
                                     {% endfor %}
@@ -67,8 +67,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="filter_place" class="control-label">{% trans %}Publication Channels{% endtrans %} :</label>
-                                <select class="form-control" name="criteria[channel]" id="filters_person_role">
+                                <label for="filter_channel" class="control-label">{% trans %}Publication Channels{% endtrans %} :</label>
+                                <select class="form-control" name="criteria[channel]" id="filter_channel">
                                     <option value="all">{% trans %}All{% endtrans %}</option>
                                     {% for channel in pubChannels %}
                                         <option value="{{ channel.cod }}" {% if criteria is not null and criteria['channel'] == channel.cod %}selected{% endif %}>{{ channel.title|trans }}</option>
