@@ -10,14 +10,14 @@
       {% for pic in mm.getPics() if pic.getUrl() is not empty %}
         <div class="thumbnail bodyMm">
           <a href="{{ url_mmobj }}">
-            <img src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
+            <img alt="thumbnail" src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
             <div class="thumbnailholder"></div>
           </a>
         </div>
       {% else %}
         <div class="thumbnail bodyMm">
           <a href="{{ url_mmobj }}">
-            <img src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
+            <img alt="thumbnail" src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
             <div class="thumbnailholder"></div>
           </a>
         </div>
