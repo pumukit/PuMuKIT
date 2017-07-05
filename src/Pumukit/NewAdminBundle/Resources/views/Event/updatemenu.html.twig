@@ -1,4 +1,4 @@
-<i class="mdi-navigation-menu" id="list_pics_{{ event.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+<i class="mdi-navigation-menu" id="list_pics_{{ event.id }}_{{ random() }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ event.id }}">
   <li>
     {% if event.getPic() is empty %}
