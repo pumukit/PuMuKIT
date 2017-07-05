@@ -39,7 +39,7 @@
               <i class="mdi-editor-mode-edit"></i>
             </a>
           <td headers="th-icons">
-            <a href="#" onclick="window.submit_delete_role('{{ role.id }}', '{{ role.getNumberPeopleInMultimediaObject() }}'); return false;">
+            <a title="{% trans %}Delete role{% endtrans %}" href="#" onclick="window.submit_delete_role('{{ role.id }}', '{{ role.getNumberPeopleInMultimediaObject() }}'); return false;">
               <i class="mdi-content-clear"></i>
             </a>
           </td>
