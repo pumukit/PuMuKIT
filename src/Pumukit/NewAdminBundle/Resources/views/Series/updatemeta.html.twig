@@ -30,6 +30,7 @@
 
     <div>
       <fieldset>
+        <legend hidden>{% trans %}Update Series Metadata{% endtrans %}</legend>
         <div class="col-lg-7">
           {% for child in form if (child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
             {{ is_naked() and child.vars.id == 'pumukitnewadmin_series_announce' ? '' : form_row(child) }}

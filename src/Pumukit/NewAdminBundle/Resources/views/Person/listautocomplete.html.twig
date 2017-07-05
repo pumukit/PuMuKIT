@@ -6,6 +6,7 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   <fieldset>
+    <legend hidden>{% trans %}Search person{% endtrans %}</legend>
     <div class="form-group">
       <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
       <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control"/>

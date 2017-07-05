@@ -30,6 +30,7 @@
     </div>
 
       <fieldset>
+        <legend hidden>{% trans %}Update metadata{% endtrans %}</legend>
         <div class="col-lg-7">
           {% for child in form_meta %}
             {{ form_row(child) }}
