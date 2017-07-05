@@ -73,7 +73,7 @@ label.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:before,
 label.pmk_disabled_checkbox input[type=checkbox]:disabled~.check:after,
 label.pmk_disabled_checkbox
 {
-  color:gray
+  color:#767676;
 }
 
 .checkbox label .check:before,
@@ -209,8 +209,8 @@ label.pmk_disabled_checkbox
 .pagination > .disabled > a,
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
-  color: #767676;
-  background-color: #ffffff;
+  color: #767676 !important;
+  background-color: #ffffff !important;
   border-color: #dddddd;
   cursor: not-allowed;
 }
@@ -738,4 +738,10 @@ hr.pumukit-green {
 
 .alert-danger{
     background-color: #e13023;
+}
+
+{# A11Y (overwrite bootstrap) #}
+.table>thead>tr>td.success a,.table>tbody>tr>td.success a,.table>tfoot>tr>td.success a,.table>thead>tr>th.success a,.table>tbody>tr>th.success a,.table>tfoot>tr>th.success a,.table>thead>tr.success>td a,.table>tbody>tr.success>td a,.table>tfoot>tr.success>td a,.table>thead>tr.success>th a,.table>tbody>tr.success>th a,.table>tfoot>tr.success>th a {
+    color: #00786d;
+    background-color: #dff0d8;
 }
