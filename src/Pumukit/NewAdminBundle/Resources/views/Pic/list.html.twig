@@ -9,13 +9,13 @@
     </div>
     <div style="text-align : center">
       {% if (0 != index) %}
-      <a href="#" onclick="window.up_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;">&#8592;</a>
+      <a href="#" onclick="window.up_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move up thumbnail{% endtrans %}">&#8592;</a>
       {% endif %}
-      <a href="#" onclick="window.delete_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;">
+      <a href="#" onclick="window.delete_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Delete thumbnail{% endtrans %}">
         <i class="mdi-content-clear"></i>
       </a>
       {% if ((resource.getPics()|length - 1) != index) %}
-      <a href="#" onclick="window.down_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;">&#8594;</a>
+      <a href="#" onclick="window.down_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move down thumbnail{% endtrans %}">&#8594;</a>
       {% endif %}
     </div>
   </div>
