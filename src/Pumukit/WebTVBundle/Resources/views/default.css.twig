@@ -34,7 +34,7 @@
 {% set header_max_width = header_max_width | default(content_max_width) %}
 {% set header_background = header_background | default(default_content_background) %}
 {% set header_font = header_font | default('#000') %}
-{% set label_background = label_background | default('#8A8A8A') %}
+{% set label_background = label_background | default('#767676') %}
 {% set label_font = label_font | default('#fff') %}
 {% set menu_background = menu_background | default(default_light_background) %}
 {% set menu_font_color = menu_font_color | default(default_light_font) %}
@@ -102,7 +102,7 @@ footer {
     text-decoration: none;
 }
 p.disabled {
-    color: grey;
+    color: #767676;
 }
 /*BOOTSTRAP OVERRIDE*/
 .label {
@@ -327,6 +327,12 @@ body.opencast-layout .breadcrumb_wrapper {
     background: {{ mmobj_serie_background }};
     padding: 3% 2%;
 }
+.mmobj_serie a {
+    color: #2d699e; /* fix a11y */
+}
+.mmobj_serie small {
+    color: #656565; /* fix a11y */
+}
 .number-videos.serial {
     position: absolute;
     bottom: 8%;
@@ -432,6 +438,9 @@ body.opencast-layout .breadcrumb_wrapper {
 }
 .search-form .input-group.date {
     width: 100%;
+}
+.search-form a {
+    color: #2d699e; /* fix a11y */
 }
 .input-group-addon {
     background: white;
@@ -787,6 +796,14 @@ a:hover .cover {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
 }
 {# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
+
+
+{# A11Y (overwrite bootstrap) #}
+h1 small,h2 small,h3 small,h4 small,h5 small,h6 small,.h1 small,.h2 small,.h3 small,.h4 small,.h5 small,.h6 small,h1 .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small,.h1 .small,.h2 .small,.h3 .small,.h4 .small,.h5 .small,.h6 .small,
+.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus {
+    color: #767676;
+}
+
 
 {% endautoescape %}
 {% endblock %}
