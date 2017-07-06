@@ -25,6 +25,7 @@
     <input type="hidden" name="mmId" id="mmId" value="{{ multimediaObject.id }}" />
     <input type="hidden" name="preview" id="preview" value="true" />
     <fieldset>
+      <legend hidden>{% trans %}update Opencast track of Multimedia Object{% endtrans %}</legend>
       {% for child in form %}
         {{ form_row(child) }}
       {% endfor %}

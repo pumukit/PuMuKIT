@@ -3,20 +3,20 @@
 
       <thead>
         <tr>
-          <th width="10%"></th>
-          <th >{% trans %}Img{% endtrans %}</th>
-          <th >{% trans %}Id{% endtrans %}</th>
-          <th >{% trans %}Name{% endtrans %}</th>
-          <th >{% trans %}Series{% endtrans %}</th>
-          <th >{% trans %}Duration{% endtrans %}</th>
-          <th width="7%">{% trans %}Date{% endtrans %}</th>
+          <th id="th-actions" width="10%"></th>
+          <th id="th-img">{% trans %}Img{% endtrans %}</th>
+          <th id="th-id">{% trans %}Id{% endtrans %}</th>
+          <th id="th-name">{% trans %}Name{% endtrans %}</th>
+          <th id="th-series">{% trans %}Series{% endtrans %}</th>
+          <th id="th-duration">{% trans %}Duration{% endtrans %}</th>
+          <th id="th-date" width="7%">{% trans %}Date{% endtrans %}</th>
         </tr>
       </thead>
 
       <tbody>
         {% if mediaPackages is empty %}
         <tr>
-          <td colspan="9">
+          <td headers="th-id" colspan="9">
             {% trans %}There are no mediapackages with those values.{% endtrans %}
           </td>
         </tr>
@@ -24,7 +24,7 @@
 
         {% for mediaPackage in mediaPackages %}
         <tr>
-          <td>
+          <td headers="th-actions">
             <a title="{% trans %}play in opencast{% endtrans %}" target="black" href="{{player}}?id={{mediaPackage.id}}">{% trans %}Play{% endtrans %}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {% set import = 'import' %}
             {% for  multimediaObject in multimediaObjects %}
@@ -62,22 +62,22 @@
             {% endif %}
 
           </td>
-          <td>
+          <td headers="th-img">
             <img alt="Mediapackage img" class="mini" src="{{ mediaPackage.attachments.attachment.0.url|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
           </td>
-          <td>
+          <td headers="th-id">
             {{ mediaPackage.id }}
           </td>
-          <td>
+          <td headers="th-name">
             {% if mediaPackage.title is not empty %}{{ mediaPackage.title }}{% endif %}
           </td>
-          <td>
+          <td headers="th-series">
             {{ mediaPackage.seriestitle|default("") }}
           </td>
-          <td>
+          <td headers="th-duration">
             {{ (((mediaPackage.duration)//1000)-3600)|date("H:i:s") }}
           </td>
-          <td>
+          <td headers="th-date">
             {{ mediaPackage.start|date("d-m-Y") }}
           </td>
         </tr>
@@ -86,7 +86,7 @@
 
       <tfoot>
         <tr>
-          <th colspan="10">
+          <td colspan="10">
             <div class="col-md-8">
               {{ mediaPackages.getNbResults }}
               {% transchoice mediaPackages.getNbResults %}
@@ -101,7 +101,7 @@
                 {{ pagerfanta(mediaPackages, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitopencast"}) }}
               </div>
             </div>
-          </th>
+          </td>
         </tr>
       </tfoot>
 
