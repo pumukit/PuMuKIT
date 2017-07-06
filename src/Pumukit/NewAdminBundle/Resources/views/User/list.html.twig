@@ -23,7 +23,7 @@
 
         {% if users is empty %}
         <tr>
-          <td headers="th-icons" colspan="9">
+          <td headers="th-checkbox th-email th-icons th-icons th-icons th-name th-origin th-profile th-username" colspan="9">
             {% trans %}There are no users with those values.{% endtrans %}
           </td>
         </tr>
@@ -91,7 +91,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="9">
+          <td colspan="9" class="foot-td">
             <div class="col-md-8" id="numberUsers">
               {{ users.getNbResults }}
               {% transchoice users.getNbResults %}

@@ -19,7 +19,7 @@
     <tbody>
       {% if events|length == 0 %}
       <tr>
-        <td headers="th-icons" colspan="8">
+        <td headers="th-checkbox th-icons th-icons th-icons th-date th-img th-name th-public" colspan="8">
           {% trans %}There are no live events with those values.{% endtrans %}
         </td>
       </tr>
@@ -67,7 +67,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="8">
+        <td colspan="8" class="foot-td">
           {# TODO review column size to be responsive #}
           {% set column = ((events.getNbPages/5)|round(0, 'floor')) %}
           <div class="col-md-8">

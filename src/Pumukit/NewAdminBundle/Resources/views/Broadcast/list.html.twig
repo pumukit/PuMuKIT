@@ -8,7 +8,7 @@
               <label>
                 <input type="checkbox" onclick="window.click_checkbox_all('broadcast', this.checked)">
               </label>
-            </div>            
+            </div>
           </th>
           <th colspan="3" width="5%"></th>
           <th width="5%">{% trans %}Type{% endtrans %}</th>
@@ -17,7 +17,7 @@
           <th>{% trans %}Mm.Obj.{% endtrans %}</th>
         </tr>
       </thead>
-      
+
       <tbody>
         {% if broadcasts|length == 0 %}
         <tr>
@@ -26,7 +26,7 @@
           </td>
         </tr>
         {% endif %}
-        
+
         {% for broadcast in broadcasts %}
         <tr>
           <td>
@@ -34,23 +34,23 @@
               <label>
                 <input id="{{ broadcast.id }}" class="broadcast_checkbox" type="checkbox" size="1">
               </label>
-            </div>            
+            </div>
           </td>
           <td>
-            <a title="{% trans %}Edit Broadcast{% endtrans %} {{ broadcast.name }}" href="{{ path('pumukitnewadmin_broadcast_update', {'id': broadcast.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">            
-              <i class="mdi-editor-mode-edit"></i>              
+            <a title="{% trans %}Edit Broadcast{% endtrans %} {{ broadcast.name }}" href="{{ path('pumukitnewadmin_broadcast_update', {'id': broadcast.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+              <i class="mdi-editor-mode-edit"></i>
             </a>
           </td>
           <td>
             <a href="#" onclick="window.submit_delete_broadcast('{{ broadcast.id }}', '{{ broadcast.getNumberMultimediaObjects() }}'); return false;">
-              <i class="mdi-content-clear"></i>              
+              <i class="mdi-content-clear"></i>
             </a>
           </td>
           <td>
             <input type="radio" name="radio_broadcast" title="{% trans %}Select this broadcast by default{% endtrans %}"
-	                 value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
-	                 onchange="$.get('{{ path('pumukitnewadmin_broadcast_default', {'id': broadcast.id}) }}', function(){var message = '{% trans %}Default broadcast changed to{% endtrans %} {{ broadcast.getName() }}'; success(message);})"
-	                 >
+                     value="broadcast_{{ broadcast.id }}" {{ broadcast.getDefaultSel()?'checked="checked"':'' }}
+                     onchange="$.get('{{ path('pumukitnewadmin_broadcast_default', {'id': broadcast.id}) }}', function(){var message = '{% trans %}Default broadcast changed to{% endtrans %} {{ broadcast.getName() }}'; success(message);})"
+                     >
           </td>
           <td>
             {{ broadcast.getBroadcastTypeId() }}
@@ -69,22 +69,22 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="9">
-            <div class="col-md-8">            
-              {{ broadcasts.getNbResults }} 
+          <td colspan="9" class="foot-td">
+            <div class="col-md-8">
+              {{ broadcasts.getNbResults }}
               {% transchoice broadcasts.getNbResults %}
-	              {0} broadcasts|{1} broadcast|]1,Inf] broadcasts
- 	            {% endtranschoice %}
-	            {% if app.session.get('admin/broadcast/criteria')|length != 0 %}
+                  {0} broadcasts|{1} broadcast|]1,Inf] broadcasts
+                {% endtranschoice %}
+                {% if app.session.get('admin/broadcast/criteria')|length != 0 %}
                 <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	              {% endif %}
+                  {% endif %}
             </div>
             <div class="col-md-4 text-right">
               <div class="pagerfanta">
                 {{ pagerfanta(broadcasts, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_broadcast_index"}) }}
               </div>
-            </div>                
-          </th>
+            </div>
+          </td>
         </tr>
       </tfoot>
     </table>

@@ -116,7 +116,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="13">
+                    <td colspan="13" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">
                         {% trans %}There are no multimedia objects with those values.{% endtrans %}
                     </td>
                 </tr>
@@ -141,7 +141,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="13">
+                <td colspan="13" class="foot-td">
                     <div class="row">
                         <div class="col-md-6">
                             {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}

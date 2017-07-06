@@ -16,7 +16,7 @@
       <tbody>
         {% if mediaPackages is empty %}
         <tr>
-          <td headers="th-id" colspan="9">
+          <td headers="th-actions th-img th-id th-name th-series th-duration th-date" colspan="9">
             {% trans %}There are no mediapackages with those values.{% endtrans %}
           </td>
         </tr>
@@ -86,7 +86,7 @@
 
       <tfoot>
         <tr>
-          <td colspan="10">
+          <td colspan="10" class="foot-td">
             <div class="col-md-8">
               {{ mediaPackages.getNbResults }}
               {% transchoice mediaPackages.getNbResults %}
