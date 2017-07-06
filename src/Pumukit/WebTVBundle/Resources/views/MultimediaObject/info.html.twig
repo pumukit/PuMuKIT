@@ -91,7 +91,7 @@
       </div>
       <div class="panel-body">
         {% for material in multimediaObject.getMaterials() if not material.getHide() %}
-          <div id="material">
+          <div class="material">
             <span class="glyphicon glyphicon-paperclip"></span>
             <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
           </div>
@@ -100,7 +100,7 @@
         {% endfor %}
         <!--LINKS-->
         {% for link in multimediaObject.getLinks() %}
-          <div id="link" class="link">
+          <div class="link">
             <a target="_blank" href="{{ link.getUrl() }}">
               <span class="glyphicon glyphicon-globe"></span>
               {{ link.getName() }}
