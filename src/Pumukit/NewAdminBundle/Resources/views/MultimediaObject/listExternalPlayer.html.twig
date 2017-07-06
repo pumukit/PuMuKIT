@@ -10,29 +10,19 @@
             {% else %}
                 {% set urlexternal = '' %}
             {% endif %}
-
             <iframe id="externalplayer" height="500px" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
-
-            <pre id="multimediaobject_properties_code" style="white-space: pre-wrap;"></pre>
-
-            {% autoescape 'js' %}
-                <script type="text/javascript">
-                    {% if urlexternal != '' %}
-                        var str = JSON.stringify({{ multimediaObject.getProperties()['externalplayer']|json_encode|raw }}, null, 4);
-                    {% else %}
-                        var str = '{% trans %}No external video set{% endtrans %}';
-                    {% endif %}
-                    document.getElementById('multimediaobject_properties_code').innerText  = str;
-                </script>
-            {% endautoescape %}
-
         </div>
     </fieldset>
     {{ form_start(form, {'attr': {'id': 'externalplayerform'}}) }}
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <div class="row form-update-external">
             <div class="col-xs-12 col-sm-9 col-md-9">
-                {{ form_row(form.url) }}
+                {% set placeholder = 'No external video set' %}
+                {% if urlexternal != '' %}
+                    {{ form_row(form.url, {'value': urlexternal}) }}
+                {% else %}
+                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans }}) }}
+                {% endif %}
             </div>
             <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
         </div>
@@ -72,4 +62,16 @@
         $('#form_url').val('');
         $('#externalplayerform').submit();
     });
+
+
+    $('#externalplayerform').on('submit', function(event) {
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'id' : multimediaObject.id}) }}",
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response){$('#tracks_mms_{{ multimediaObject.id }}').html(response);}
+        });
+        return false;
+    })
 </script>

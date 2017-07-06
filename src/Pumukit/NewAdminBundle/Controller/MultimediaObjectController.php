@@ -1160,7 +1160,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', array('id' => $multimediaObject->getId())))
             ->add('url', UrlType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
-            ->add('save', SubmitType::class, array('label' => 'Save', 'attr' => array('class' => 'btn btn-block btn-pumukit btn-raised')))
+            ->add('save', SubmitType::class, array('label' => 'OK', 'attr' => array('class' => 'btn btn-block btn-pumukit btn-raised')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -1173,7 +1173,23 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $multimediaObject->setProperty('externalplayer', $data['url']);
             $dm->flush();
 
-            return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $multimediaObject->getSeries()->getId()));
+            $jobs = $this->get('pumukitencoder.job')->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
+
+            $notMasterProfiles = $this->get('pumukitencoder.profile')->getProfiles(null, true, false);
+            $allBundles = $this->container->getParameter('kernel.bundles');
+            $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
+
+            return $this->render('PumukitNewAdminBundle:Track:list.html.twig',
+                array(
+                    'mm' => $multimediaObject,
+                    'tracks' => $multimediaObject->getTracks(),
+                    'jobs' => $jobs,
+                    'not_master_profiles' => $notMasterProfiles,
+                    'oc' => '',
+                    'opencast_exists' => $opencastExists,
+                    'reload_links' => $request->query->get('reload_links', false),
+                )
+            );
         }
 
         return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
