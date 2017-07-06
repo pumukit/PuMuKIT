@@ -27,7 +27,9 @@
   <div class="media-body">
     <!-- TITLE & SUBTITLE -->
     <h4 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans )}}"</h4>
-    <h5 class="media-heading"><small>{{ mm.getSubtitle() | default ('') }}</small></h5>
+    {% if mm.getSubtitle() %}
+        <h5 class="media-heading"><small>{{ mm.getSubtitle() | default (' ') }}</small></h5>
+    {% endif %}
 
     <ul class="mmobj_objects">
       <!-- MATTERHORN -->
