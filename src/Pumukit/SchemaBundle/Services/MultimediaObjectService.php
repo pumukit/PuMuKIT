@@ -62,7 +62,9 @@ class MultimediaObjectService
      */
     public function hasPlayableResource($mm)
     {
-        return $mm->getDisplayTrack() || $mm->getProperty('opencast');
+        $externalplayer = $mm->getProperty('externalplayer');
+
+        return $mm->getDisplayTrack() || $mm->getProperty('opencast') || !empty($externalplayer);
     }
 
     /**

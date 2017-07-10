@@ -2,6 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -1145,6 +1147,50 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
         return array('multimediaObject' => $multimediaObject);
+    }
+
+    /**
+     * List the external player properties of a multimedia object in a modal.
+     *
+     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Template
+     */
+    public function listExternalPlayerAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', array('id' => $multimediaObject->getId())))
+            ->add('url', UrlType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
+            ->add('save', SubmitType::class, array('label' => 'OK', 'attr' => array('class' => 'btn btn-block btn-pumukit btn-raised')))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $dm = $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $data['url'] = urldecode($data['url']);
+            $multimediaObject->setProperty('externalplayer', $data['url']);
+            $dm->flush();
+
+            return $this->forward('PumukitNewAdminBundle:Track:list', array('multimediaObject' => $multimediaObject));
+        }
+
+        return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
+    }
+
+    /**
+     * List the external player properties of a multimedia object in a modal.
+     *
+     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     */
+    public function deleteExternalPropertyAction(MultimediaObject $multimediaObject)
+    {
+        $dm = $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $multimediaObject->setProperty('externalplayer', '');
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
     }
 
     /**

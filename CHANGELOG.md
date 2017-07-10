@@ -1,8 +1,11 @@
-#CHANGELOG
+# CHANGELOG
 
 Web version of the changelog in http://pumukit.org/pmk-2-x-release-archive/
 To get the diff for a specific change, go to https://github.com/campusdomar/PuMuKIT2/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
+
+## [2.4.0][Unreleased] (YYYY-MM-DD)
+- Support for multimedia objects with an external player
 
 ## [2.3.0][2.3.0] (2017-06-09)
 - Advanced MOODLE integration.
@@ -40,7 +43,7 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 - Initial concept of technologies
 
 
-[Unreleased]:https://github.com/campusdomar/PuMuKIT2/compare/2.1.0...HEAD
+[Unreleased]:https://github.com/campusdomar/PuMuKIT2/compare/2.3.0...HEAD
 [2.1.0]:https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0
 [2.1.1]:https://github.com/campusdomar/PuMuKIT2/compare/2.1.0...2.1.1
 [2.2.0]:https://github.com/campusdomar/PuMuKIT2/compare/2.1.1...2.2.0

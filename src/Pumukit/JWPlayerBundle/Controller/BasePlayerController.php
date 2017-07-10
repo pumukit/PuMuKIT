@@ -38,6 +38,10 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
+        if ($url = $multimediaObject->getProperty('externalplayer')) {
+            return $this->redirect($url);
+        }
+
         return array('autostart' => $request->query->get('autostart', 'false'),
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
@@ -75,6 +79,10 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         if ($track && $track->containsTag('download')) {
             return $this->redirect($track->getUrl());
+        }
+
+        if ($url = $multimediaObject->getProperty('externalplayer')) {
+            return $this->redirect($url);
         }
 
         return array('autostart' => $request->query->get('autostart', 'false'),

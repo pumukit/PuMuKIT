@@ -1,0 +1,77 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}External video{% endtrans %}</h3>
+</div>
+<div class="modal-body">
+    <fieldset>
+        <div class="form-group">
+            {% if multimediaObject.getProperties()['externalplayer'] is defined %}
+                {% set urlexternal = multimediaObject.getProperties()['externalplayer'] %}
+            {% else %}
+                {% set urlexternal = '' %}
+            {% endif %}
+            <iframe id="externalplayer" height="500px" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
+        </div>
+    </fieldset>
+    {{ form_start(form, {'attr': {'id': 'externalplayerform'}}) }}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="row form-update-external">
+            <div class="col-xs-12 col-sm-9 col-md-9">
+                {% set placeholder = 'No external video set' %}
+                {% if urlexternal != '' %}
+                    {{ form_row(form.url, {'value': urlexternal}) }}
+                {% else %}
+                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans }}) }}
+                {% endif %}
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+        </div>
+    {% endif %}
+    <div class="modal-footer" style="margin-top:50px">
+        <hr/>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="col-md-2 pull-right">
+            {{ form_row(form.save) }}
+        </div>
+        {% endif %}
+        <div class="col-md-2 pull-right">
+            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+
+    </div>
+    {{ form_end(form) }}
+</div>
+<script>
+    function resizeFrame(elem){
+        var width = $(elem).width();
+        var height = width/16*9;
+        $(elem).height(height);
+    }
+
+    $(window).resize(function(){
+        resizeFrame($('#externalplayer'));
+    });
+
+    $('#previewIframe').on('click', function(event) {
+        event.preventDefault();
+        $('#externalplayer').attr('src',$('#form_url').val());
+    });
+
+    $('#form_delete').on('click', function(event) {
+        event.preventDefault();
+        $('#form_url').val('');
+        $('#externalplayerform').submit();
+    });
+
+
+    $('#externalplayerform').on('submit', function(event) {
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'id' : multimediaObject.id}) }}",
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response){$('#tracks_mms_{{ multimediaObject.id }}').html(response);}
+        });
+        return false;
+    })
+</script>
