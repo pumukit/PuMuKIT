@@ -5,7 +5,7 @@
 
 <div class="modal-body">
 
-  <div id="tv_admin_container">
+  <div id="tv_admin_container_url">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form autocomplete="off" onsubmit="$.ajax({
                             url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
@@ -28,11 +28,12 @@
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
       <fieldset>
+        <legend hidden>{% trans %}Write the URL{% endtrans %}</legend>
         <div class="form-group">
           <label for="url">{% trans %}Write the URL{% endtrans %}:</label>
           <div class="">
             <input type="text" name="url" id="url" value="" size="65" class="form-control">
-	        <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
+            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
           </div>
         </div>
       </fieldset>
@@ -44,15 +45,16 @@
   </div>
   <div style="clear:both"></div>
 
-  <div id="tv_admin_container">
+  <div id="tv_admin_container_file">
     <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
       <fieldset>
+        <legend hidden>{% trans %}Add a file{% endtrans %}</legend>
         <div class="form-group">
-	      <label for="file">{% trans %}Add a file{% endtrans %}:</label>
+          <label for="file">{% trans %}Add a file{% endtrans %}:</label>
           <div class="">
-	        <input type="file" name="file" id="file" value="" size="66" class="file">
+            <input type="file" name="file" id="file" value="" size="66" class="file">
           </div>
         </div>
         <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>

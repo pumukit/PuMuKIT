@@ -18,6 +18,7 @@
            onclick='$("#filter_tags_{{ parentId }}").val("").focus(); reset_tags("{{ mmId }}","{{ parentId }}");' />
   </span>
   <img id="tag_filter_{{parentId}}_loader"
+       alt="{% trans %}Spinner{% endtrans %}"
        src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
        style="width:30px; opacity:0"/>
 </div>

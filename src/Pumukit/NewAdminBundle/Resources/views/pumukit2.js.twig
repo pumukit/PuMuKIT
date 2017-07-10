@@ -2101,7 +2101,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
     }
 
     var route = '{{ path('pumukitnewadmin_mms_update_meta', {'id': '__mmId__'}) }}';
-    var mmId = $('#id').val();
+    var mmId = $('#mm_id_meta').val();
 
     route = route.replace('__mmId__', mmId);
 

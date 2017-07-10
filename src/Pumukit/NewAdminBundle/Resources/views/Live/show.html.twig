@@ -6,9 +6,9 @@
   <div>
     <div>
       {% trans %}URL{% endtrans %}:
-      <input type="text" class="form-control" id="show_player_url_iframe" readonly="" onclick="select()" value="{{ url('pumukit_live_id', {'id': live.id}) }}" />
+      <input type="text" class="form-control" id="show_player_url" readonly="" onclick="select()" value="{{ url('pumukit_live_id', {'id': live.id}) }}" aria-label="show_player_url" />
       {% trans %}IFRAME{% endtrans %}:
-      <input type="text" class="form-control" id="show_player_url_iframe" readonly="" onclick="select()" value="{{ url('pumukit_live_iframe_id', {'id': live.id}) }}" />
+      <input type="text" class="form-control" id="show_player_url_iframe" readonly="" onclick="select()" value="{{ url('pumukit_live_iframe_id', {'id': live.id}) }}" aria-label="show_player_url_iframe" />
     </div>
     <div>
       {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ live.getIpSource() }}</span>

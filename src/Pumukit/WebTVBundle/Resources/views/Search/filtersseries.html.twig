@@ -1,11 +1,11 @@
 <form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_series') }}" class="row">
-  <input type="submit" style="display:none"/>
+  <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
   <div class="form-group col-md-4">
     <label for="search">{% trans %}Search{% endtrans %}:</label>
     <div class="input-group">
       <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder="{% trans %}Search{% endtrans %}">
       <div class="input-group-btn">
-        <button type="submit" class="btn btn-default">
+        <button type="submit" class="btn btn-default" title="search">
           <span class="glyphicon glyphicon-search"></span>
         </button>
       </div>

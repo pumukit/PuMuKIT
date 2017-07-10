@@ -14,6 +14,7 @@
   <form autocomplete="off" id="pumukitnewadmin_user_form_update"
         action="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" method="POST">
     <fieldset>
+      <legend hidden>{% trans %}modify user{% endtrans %}</legend>
       <input type="hidden" name="userId" id="userId" value="{{ user.id }}">
       {% for child in form %}
         {{ form_row(child) }}

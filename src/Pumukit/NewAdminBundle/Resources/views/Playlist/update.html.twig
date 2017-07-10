@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-lg-6">
         <form class="form-horizontal">
+          <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
           <fieldset>
             <legend>{{ is_naked() ? 'Playlist Metadata'|trans : 'Metadata'|trans }}</legend>
             <div class="form-group">
@@ -13,7 +14,7 @@
               <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">{% trans %}Preview:{% endtrans %}</label>
               <div class="col-xs-10 input-group hidden-naked">
                 <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}">
-                <span class="input-group-addon"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-addon"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank" title="{% trans %}Preview{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
               </div>
             </div>
           </fieldset>

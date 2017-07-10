@@ -5,9 +5,10 @@
   <form id="pumukitwizard_track_form" autocomplete="off"
         enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitwizard_default_upload') }}" method="POST">
-    <iframe name="iframeUpload" style="display:none" src=""></iframe>
+    <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
     <fieldset class="well">
+      <legend hidden>{% trans %}File{% endtrans %}</legend>
       <div class="col-md-10">
         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <div class="form-group" id="pumukitwizard_track_profile">
@@ -64,7 +65,7 @@
           </div>
         </div>
         {% endif %}
-        <div class="form-group" id="pumukitwizard_track_language">
+        <div class="form-group" id="pumukitwizard_new_track_language">
           <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
           <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
             {% for locale, language in languages %}
@@ -93,12 +94,11 @@
         {% endif %}
         {% if 'single' == form_data.type.option %}
         <div class="form-group" id="pumukitwizard_track_file">
-          <label for="url" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
+          <label for="url" id="pumukitwizard_track_file_label" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
           <div class="input-group">
-            <input type="file" name="resource" id="resource" value="" size="70">
+            <input type="file" name="resource" id="resource" value="" size="70" aria-labelledby="pumukitwizard_track_file_label">
             <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
           </div>
-          <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
           <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
             <strong>
               <i class="mdi-action-info"></i>
@@ -110,14 +110,13 @@
         <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
         </div>
-        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
         {% endif %}
         {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
         <div class="form-group" id="pumukitwizard_track_directory">
           {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
         </div>
-        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
         {% endif %}
+        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
       </div>
     </fieldset>
     <div class="row">

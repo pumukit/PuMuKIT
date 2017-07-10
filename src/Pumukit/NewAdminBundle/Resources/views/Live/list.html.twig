@@ -3,58 +3,58 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-	<th width="1%">
-	  <div class="checkbox">
-	    <label>
+    <th width="1%" id="th-checkbox">
+      <div class="checkbox">
+        <label>
               <input type="checkbox" onclick="window.click_checkbox_all('live', this.checked)">
-	    </label>
-	  </div>
-	</th>
-	<th colspan="2" width="5%"></th>
-	<th>{% trans %}Name{% endtrans %}</th>
-	<th>{% trans %}URL{% endtrans %}</th>
-	<th width="1%">{% trans %}Resolution{% endtrans %}</th>
-	<th width="8%">{% trans %}Type{% endtrans %}</th>
+        </label>
+      </div>
+    </th>
+    <th colspan="2" width="5%" id="th-icons"></th>
+    <th id="th-name">{% trans %}Name{% endtrans %}</th>
+    <th id="th-url">{% trans %}URL{% endtrans %}</th>
+    <th width="1%" id="th-resolution">{% trans %}Resolution{% endtrans %}</th>
+    <th width="8%" id="th-type">{% trans %}Type{% endtrans %}</th>
       </tr>
-    </thead>  
+    </thead>
     <tbody>
       {% if lives|length == 0 %}
       <tr>
-	<td colspan="9">
-	  {% trans %}There are no live channels with those values.{% endtrans %}
-	</td>
+    <td colspan="9" headers="th-checkbox th-icons th-icons th-name th-resolution th-type th-url">
+      {% trans %}There are no live channels with those values.{% endtrans %}
+    </td>
       </tr>
       {% else %}
         {% for live in lives %}
           <tr style="cursor:pointer;" {% if (app.session.get('admin/live/id') == live.id) %} class="success" {% endif %}>
-            <td>
-	          <div class="checkbox">
-	            <label>
+            <td headers="th-checkbox">
+              <div class="checkbox">
+                <label>
                   <input id="{{ live.id }}" class="live_checkbox" type="checkbox">
-	            </label>
-	          </div>
+                </label>
+              </div>
             </td>
-            <td>
-    	      <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-	            <i class="mdi-editor-mode-edit"></i>
-	          </a>
-            </td>
-            <td>
-              <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;">
-	            <i class="mdi-content-clear"></i>
+            <td headers="th-icons">
+              <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                <i class="mdi-editor-mode-edit"></i>
               </a>
             </td>
-            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-	          {{ live.name }}
+            <td headers="th-icons">
+              <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;" title="{% trans %}Delete live channel{% endtrans %}">
+                <i class="mdi-content-clear"></i>
+              </a>
             </td>
-            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-	          {{ live.url }}
+            <td headers="th-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.name }}
             </td>
-            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-	          {{ live.getWidth }}x{{ live.getHeight }}
+            <td headers="th-url" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.url }}
             </td>
-            <td onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-	          {{ live.getLiveType }}
+            <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.getWidth }}x{{ live.getHeight }}
+            </td>
+            <td headers="th-type" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.getLiveType }}
             </td>
           </tr>
         {% endfor %}
@@ -62,17 +62,17 @@
     </tbody>
     <tfoot>
     <tr>
-      <th colspan="9">
+      <td colspan="9" class="foot-td">
         {# TODO review column size to be responsive #}
         {% set column = ((lives.getNbPages/5)|round(0, 'floor')) %}
         <div class="col-md-8">
-          {{ lives.getNbResults }} 
+          {{ lives.getNbResults }}
           {% transchoice lives.getNbResults %}
-	      {0} live channels|{1} live channel|]1,Inf] live channels
-	      {% endtranschoice %}
-	      {% if app.session.get('admin/live/criteria')|length != 0%}
+          {0} live channels|{1} live channel|]1,Inf] live channels
+          {% endtranschoice %}
+          {% if app.session.get('admin/live/criteria')|length != 0%}
           <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-	      {% endif %}
+          {% endif %}
         </div>
         <div class="col-md-4 text-right">
           <div class="pagerfanta">
@@ -80,7 +80,7 @@
             {{ pagerfanta(lives, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_live_index", "routeParams": sorting}) }}
           </div>
         </div>
-      </th>
+      </td>
     </tr>
   </tfoot>
 </table>

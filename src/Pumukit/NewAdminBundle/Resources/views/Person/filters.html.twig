@@ -2,10 +2,11 @@
 <div class="well">
   <form autocomplete="off" class="form-horizontal" id="filter_people" onsubmit="$('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
   <fieldset>
+    <legend hidden>{% trans %}Filter People{% endtrans %}</legend>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
+      <label for="filters_name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/person/criteria') %}
       <div class="col-md-10">
         <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
@@ -13,14 +14,14 @@
     </div>
 
     <div class="form-group">
-      <label for="post" class="col-md-2 control-label">{% trans %}Post{% endtrans %}:</label>
+      <label for="filters_post" class="col-md-2 control-label">{% trans %}Post{% endtrans %}:</label>
       <div class="col-md-10">
         <input type="text" class="reset form-control" name="criteria[post]" id="filters_post" value="{{ criteria['post']|default("") }}">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="letter" class="col-md-2 control-label">{% trans %}Letter{% endtrans %}:</label>
+      <label for="filters_letter" class="col-md-2 control-label">{% trans %}Letter{% endtrans %}:</label>
       <div class="col-md-10">
         <input id="filters_letter" class="reset form-control" type="hidden" value="{{ criteria['letter']|default("") }}" name="criteria[letter]">
         {% for letter in "A".."Z" %}
@@ -28,7 +29,7 @@
         {% endfor %}
       </div>
     </div>
-      
+
   </fieldset>
 
   <div class="text-right">

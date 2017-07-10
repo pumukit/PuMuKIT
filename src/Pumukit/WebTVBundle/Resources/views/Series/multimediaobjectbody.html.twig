@@ -10,14 +10,14 @@
       {% for pic in mm.getPics() if pic.getUrl() is not empty %}
         <div class="thumbnail bodyMm">
           <a href="{{ url_mmobj }}">
-            <img src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
+            <img alt="thumbnail" src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
             <div class="thumbnailholder"></div>
           </a>
         </div>
       {% else %}
         <div class="thumbnail bodyMm">
           <a href="{{ url_mmobj }}">
-            <img src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
+            <img alt="thumbnail" src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
             <div class="thumbnailholder"></div>
           </a>
         </div>
@@ -27,12 +27,14 @@
   <div class="media-body">
     <!-- TITLE & SUBTITLE -->
     <h4 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans )}}"</h4>
-    <h5 class="media-heading"><small>{{ mm.getSubtitle() | default ('') }}</small></h5>
+    {% if mm.getSubtitle() %}
+        <h5 class="media-heading"><small>{{ mm.getSubtitle() | default (' ') }}</small></h5>
+    {% endif %}
 
     <ul class="mmobj_objects">
       <!-- MATTERHORN -->
       {% if mm.getProperty('opencast') is not empty %}
-        <div id="material" class="file matterhorn">
+        <div class="file matterhorn material">
           <a href="{{ url_mmobj }}">
             <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>{% spaceless %}
               {{ mm.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
@@ -73,14 +75,14 @@
       {% endif %}
       <!-- MATERIAL -->
       {% for material in mm.getMaterials() if not material.getHide() %}
-        <div id="material">
+        <div class="material">
           <span class="glyphicon glyphicon-paperclip"></span>
             <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
         </div>
       {% endfor %}
       <!-- LINK -->
       {% for link in mm.getLinks() %}
-        <div id="link" class="link">
+        <div class="link">
           <a target="_blank" href="{{ link.getUrl() }}">
             <span class="glyphicon glyphicon-globe"></span>
             {{ link.getName() }}

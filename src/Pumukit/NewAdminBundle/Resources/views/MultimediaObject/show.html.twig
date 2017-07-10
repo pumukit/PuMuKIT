@@ -13,7 +13,7 @@
   {% else %}
     <div class="well" style="padding: 3px;">
       <div class="embed-responsive embed-responsive-16by9">
-        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{mm.id}} preview" style="width: 100%">
+        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{mm.id}} preview" style="width: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
       </div>
     </div>
   {% endif %}

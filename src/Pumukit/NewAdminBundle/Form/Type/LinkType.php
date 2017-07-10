@@ -21,9 +21,13 @@ class LinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('i18n_name', 'texti18n', array('required' => true, 'label' => $this->translator->trans('Name', array(), null, $this->locale)))
+          ->add('i18n_name', 'texti18n',
+                array('required' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
           ->add('url', 'url', array('required' => true,
-                                    'attr' => array('oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
+                                    'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale),
+                                                    'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
                                                     'onchange' => "setCustomValidity('')", ),
                                     'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
       ;

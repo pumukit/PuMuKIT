@@ -23,13 +23,13 @@
           <input id="embed_code" name="embed_code" rows=1 readonly="readonly" class="form-control" onclick="this.select()"
                  value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>'
                  />
-        </div>            
+        </div>
         <div class="form-group">
           <label for="embed" class="control-label">{% trans %}Video track{% endtrans %}:</label>
           <div class="input-group">
             <input type="text" onclick="this.select()" class="form-control" value="{{ track_url }}" readonly/>
             {% if is_published %}
-              <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+              <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank" title="{% trans %}Video track{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
             {% else %}
               <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
             {% endif %}
@@ -42,7 +42,7 @@
       <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
       <div class="input-group">
         <input type="text" onclick="this.select()" class="form-control" value="{{ series_url }}" readonly/>
-        <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+        <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank" title="{% trans %}Series URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
       </div>
         </div>
     </fieldset>

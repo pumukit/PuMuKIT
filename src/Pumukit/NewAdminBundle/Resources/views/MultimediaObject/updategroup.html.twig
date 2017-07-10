@@ -1,6 +1,6 @@
 <div class="well">
-    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
-    <input type="hidden" name="series_id" id="series_id" value="{{ mm.series.id }}">
+    <input type="hidden" name="id" id="mm_id_group" value="{{ mm.id }}">
+    <input type="hidden" name="series_id" id="series_id_updategroup" value="{{ mm.series.id }}">
     <input type="hidden" name="template" id="template" value="{{ template }}">
     <div class="row">
       <div class="col-xs-6">
@@ -12,7 +12,8 @@
         <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_submit">{% trans %}OK{% endtrans %}</button>
       </div>
     </div>
-  <fieldset class="">
+    <fieldset class="">
+      <legend hidden>{% trans %}Relations list{% endtrans %}</legend>
     <dl style="margin: 0px">
       {% if personal_scope_role %}
       <div class="form-row">

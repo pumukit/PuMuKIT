@@ -27,14 +27,17 @@ class UserUpdateType extends AbstractType
             ->add('enabled', 'hidden', array('data' => true))
             ->add('fullname', 'text',
                   array(
+                      'attr' => array('aria-label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)),
                       'disabled' => !$user->isLocal(),
                       'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale), ))
             ->add('username', 'text',
                   array(
                       'disabled' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Username', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
             ->add('plain_password', 'password',
                   array(
+                      'attr' => array('aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
                       'disabled' => !$user->isLocal(),
                       'attr' => array('autocomplete' => 'off'),
                       'required' => false,
@@ -51,10 +54,12 @@ class UserUpdateType extends AbstractType
           */
             ->add('email', 'email',
                   array(
+                      'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
                       'disabled' => !$user->isLocal(),
                       'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
             ->add('permissionProfile', null,
                   array(
+                      'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
@@ -65,6 +70,7 @@ class UserUpdateType extends AbstractType
                     array(
                         'mapped' => false,
                         'choices' => array('ROLE_SUPER_ADMIN' => 'System Super Administrator'),
+                        'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
             }
         });

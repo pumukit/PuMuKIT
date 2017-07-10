@@ -2,10 +2,11 @@
 <div class="well">
   <form autocomplete="off" id="filter_roles"  action="{{ path('pumukitnewadmin_role_index') }}" method="get">
   <fieldset>
+    <legend hidden>{% trans %}Filter Roles{% endtrans %}</legend>
     <h2>{% trans %}Search{% endtrans %}</h2>
 
     <div class="form-group">
-      <label for="cod" class="control-label">{% trans %}Cod{% endtrans %}:</label>
+      <label for="filters_cod" class="control-label">{% trans %}Cod{% endtrans %}:</label>
       {% set criteria = app.session.get('admin/role/criteria') %}
       <div>
         <input type="text" class="reset form-control" name="criteria[cod]" id="filters_cod" value="{{ criteria['cod']|default("") }}">

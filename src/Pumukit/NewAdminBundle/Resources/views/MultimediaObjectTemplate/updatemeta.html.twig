@@ -13,8 +13,8 @@
                   return false;"
         action="{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries.getId()}) }}" method="POST">
 
-    <input type="hidden" name="id" id="id" value="{{ mm.id }}">
-    <input type="hidden" name="series_id" id="series_id" value="{{ mm.getSeries().getId() }}">
+    <input type="hidden" name="id" id="mmtemplate_id_meta" value="{{ mm.id }}">
+    <input type="hidden" name="series_id" id="series_id_mmtemplate_meta" value="{{ mm.getSeries().getId() }}">
 
     <div class="row">
       <div class="col-xs-6">
@@ -30,6 +30,7 @@
     </div>
 
       <fieldset>
+        <legend hidden>{% trans %}Update metadata{% endtrans %}</legend>
         <div class="col-lg-7">
           {% for child in form_meta %}
             {{ form_row(child) }}

@@ -23,20 +23,29 @@ class EventType extends AbstractType
     {
         $builder
             ->add('name', 'text',
-                  array('label' => $this->translator->trans('Event', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Event', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
                         'required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
+                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('place', 'text',
-                  array('label' => $this->translator->trans('Location', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Location', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
             ->add('live', null,
-                  array('label' => $this->translator->trans('Channels', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
             ->add('schedule', new EventscheduleType(),
-                  array('label' => $this->translator->trans('Schedule', array(), null, $this->locale)))
+                  array(
+                        'attr' => array('aria-label' => $this->translator->trans('Schedule', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Schedule', array(), null, $this->locale), ))
             ->add('display', 'checkbox',
                   array('required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Announce', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Announce', array(), null, $this->locale), ));
     }
 

@@ -9,6 +9,7 @@
     <form autocomplete="off" onsubmit="window.submit_series_change_pub(); return false;"
           action="{{ path('pumukitnewadmin_series_updatepub') }}" method="POST">
       <fieldset>
+        <legend hidden>{% trans %}change broadcast status of multimedia objects inside the series{% endtrans %}</legend>
         <div class="form-group">
           <label for="mm" class="control-label">{% trans %}Multimedia Objects{% endtrans %}:</label>
           <div>

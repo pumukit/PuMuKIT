@@ -17,7 +17,7 @@
             <div class="col-xs-10 input-group hidden-naked">
               <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
               {% if is_published and is_playable %}
-                <span class="input-group-addon"><a href="{{ video_url }}" target="_blank"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-addon"><a href="{{ video_url }}" target="_blank" title="{% trans %}Open URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
               {% else %}
                 <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
               {% endif %}

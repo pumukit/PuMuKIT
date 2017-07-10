@@ -14,36 +14,36 @@
   <table class="table table-striped">
     <tbody>
       <tr>
-        <th>
+        <td>
           {% trans %}Event{% endtrans %}
-        </th>
-        <th>
+        </td>
+        <td>
           {{ event ? event.name : '---' }}</div>
-        </th>
+        </td>
       </tr>
       <tr>
-        <th>
+        <td>
           {% trans %}Place{% endtrans %}
-        </th>
-        <th>
+        </td>
+        <td>
           {{ event ? event.place : '---' }}
-        </th>
+        </td>
       </tr>
       <tr>
-        <th>
+        <td>
           {% trans %}Date{% endtrans %}
-        </th>
-        <th>
+        </td>
+        <td>
           {{ event ? event.date|date('d/m/Y') : '---' }}
-        </th>
+        </td>
       </tr>
       <tr>
-        <th>
+        <td>
           {% trans %}Time{% endtrans %}
-        </th>
-        <th>
+        </td>
+        <td>
           {{ event ? event.date|date('H:i') : '---' }}
-        </th>
+        </td>
       </tr>
     </tbody>
   </table>

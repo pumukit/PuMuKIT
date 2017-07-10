@@ -11,6 +11,7 @@
   {% endif %}
     {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'license'} %}
     <fieldset class="well">
+      <legend hidden>{% trans %}License{% endtrans %}</legend>
       <div class="col-md-12">
         <div class="form-group" id="pumukitwizard_license_text">
           <label for="pumukitwizard_license_accept" class="control-label">{% trans %}License{% endtrans %}:</label>

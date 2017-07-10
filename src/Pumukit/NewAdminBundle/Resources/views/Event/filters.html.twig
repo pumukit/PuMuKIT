@@ -1,24 +1,25 @@
 <div class="well">
   <form autocomplete="off" id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_event_index') }}" method="GET">
     <fieldset>
+      <legend hidden>{% trans %}Filter Live Events{% endtrans %}</legend>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title">{% trans %}Search{% endtrans %}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+            <label for="filters_name" class="control-label">{% trans %}Name{% endtrans %}:</label>
             <div>
               {% set criteria = app.session.get('admin/event/criteria') %}
               <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
             </div>
           </div>
           <div class="form-group">
-            <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+            <label for="filters_date_from" class="control-label">{% trans %}Date{% endtrans %}:</label>
             <div>
-              {% trans %}From{% endtrans %}:&nbsp;<input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+              {% trans %}From{% endtrans %}:&nbsp;<input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}" aria-label="date from">
               <br/>
-              {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+              {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}" aria-label="date to">
             </div>
           </div>
         </div>

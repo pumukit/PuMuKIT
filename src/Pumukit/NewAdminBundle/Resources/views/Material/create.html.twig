@@ -7,7 +7,7 @@
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitnewadmin_material_upload', {'id': mm.id}) }}" method="POST">
-	<input type="hidden" name="id" id="id" value="{{ mm.id }}">
+	<input type="hidden" name="id" id="mm_id_material" value="{{ mm.id }}">
 	<fieldset>
   	  {% for child in form %}
             {{ form_row(child) }}

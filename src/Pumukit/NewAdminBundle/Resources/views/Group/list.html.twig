@@ -1,16 +1,17 @@
 <div class="table-responsive well">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
+  <input type="hidden" name="pumukitnewadmin_group_sort_change_type" id="pumukitnewadmin_group_sort_change_type" value="{{ app.session.get('admin/group/type')=='asc'?'desc':'asc' }}"/>
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th width="1%">
+        <th width="1%" id="th-checkbox">
           <div class="checkbox">
             <label>
               <input type="checkbox" onclick="window.click_checkbox_all('group', this.checked)">
             </label>
           </div>
         </th>
-        <th colspan="3" width="5%"></th>
+        <th colspan="3" width="5%" id="th-icons"></th>
         {% include 'PumukitNewAdminBundle:Group:listth.html.twig' %}
       </tr>
     </thead>
@@ -18,7 +19,7 @@
     <tbody>
       {% if groups|length == 0 %}
       <tr>
-        <td colspan="11">
+        <td colspan="11" headers="th-checkbox th-icons th-icons th-icons th-key th-name th-origin th-comments">
           {% trans %}There are no groups with those values.{% endtrans %}
         </td>
       </tr>
@@ -26,14 +27,14 @@
 
       {% for group in groups %}
       <tr>
-        <td>
+        <td headers="th-checkbox">
           <div class="checkbox">
             <label>
               <input id="{{ group.id }}" class="group_checkbox" type="checkbox" size="1">
             </label>
           </div>
         </td>
-        <td>
+        <td headers="th-icons">
           {% if group.isLocal() %}
           <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
@@ -42,26 +43,26 @@
           <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important;"></i>
           {% endif %}
         </td>
-        <td>
+        <td headers="th-icons">
           <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
           </a>
         </td>
-        <td>
+        <td headers="th-icons">
           <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': false}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             <i class="mdi-action-info"></i>
           </a>
         </td>
-        <td>
+        <td headers="th-key">
           {{ group.getKey()[:10] }}{% if ((group.getKey()|length) > 10 ) %}...{% endif %}
         </td>
-        <td>
+        <td headers="th-name">
           {{ group.getName()[:20] }}{% if ((group.getName()|length) > 20 ) %}...{% endif %}
         </td>
-        <td>
+        <td headers="th-origin">
           {{ group.getOrigin() }}
         </td>
-        <td>
+        <td headers="th-comments">
           {{ group.getComments()[:150] }}{% if ((group.getComments()|length) > 150 ) %}...{% endif %}
         </td>
       </tr>
@@ -69,7 +70,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="9">
+        <td colspan="9" class="foot-td">
             {# TODO review column size to be responsive #}
             {% set column = ((groups.getNbPages/5)|round(0, 'floor')) %}
             <div class="col-md-8">
@@ -87,7 +88,7 @@
                 {{ pagerfanta(groups, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_group_index", "routeParams": sorting}) }}
               </div>
             </div>
-        </th>
+        </td>
       </tr>
     </tfoot>
   </table>
