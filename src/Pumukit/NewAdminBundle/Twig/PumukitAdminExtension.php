@@ -167,18 +167,29 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get language name.
      *
-     * @param string $code
+     * @param string $code      language ISO 639 code
+     * @param bool   $translate Translate the language name or get it in their language. True by default
      *
      * @return string
      */
-    public function getLanguageName($code)
+    public function getLanguageName($code, $translate = true)
     {
         $addonLanguages = CustomLanguageType::$addonLanguages;
 
         if (isset($this->languages[$code])) {
-            return ucfirst($this->languages[$code]);
+            $name = $translate ?
+                  $this->languages[$code] :
+                  Intl::getLanguageBundle()->getLanguageName($code, null, $code);
+
+            return ucfirst($name);
         } elseif (isset($addonLanguages[$code])) {
-            return ucfirst($this->translator->trans($addonLanguages[$code]));
+            $name = $addonLanguages[$code];
+
+            if ($translate) {
+                $name = $this->translator->trans($name);
+            }
+
+            return ucfirst($name);
         }
 
         return $code;
