@@ -235,7 +235,10 @@
       </trans-unit>
       <trans-unit id="95d3955ede02b6910ec9a915e0952e9b" resname="Select any live event.">
         <source>Select any live event.</source>
-        <target xml:lang="es-ES" state="translated">Selecione cualquier evento en vivo.</target>
+        <target xml:lang="es-ES" state="translated">Seleccione cualquier evento en vivo.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Selecione cualquier evento en vivo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
         <source>List</source>
@@ -2597,7 +2600,10 @@
       </trans-unit>
       <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente los grupos en el objeto multimedia.</target>
+        <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el objeto multimedia.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el objeto multimedia.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
@@ -2637,74 +2643,55 @@
       </trans-unit>
       <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target xml:lang="es-ES" state="needs-translation">No multimedia object selected</target>
+        <target xml:lang="es-ES" state="translated">No se ha seleccionado ningún objeto multimedia</target>
       </trans-unit>
       <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by title, subtitle, description or id</target>
+        <target xml:lang="es-ES" state="translated">Buscar por título, subtítulo, descripción o Id</target>
       </trans-unit>
       <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
         <source>Search by name or surname</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by name or surname</target>
+        <target xml:lang="es-ES" state="translated">Buscar por nombre o apellido</target>
       </trans-unit>
       <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
         <source>Filter</source>
-        <target xml:lang="es-ES" state="needs-translation">Filter</target>
+        <target xml:lang="es-ES" state="translated">Filtrar</target>
       </trans-unit>
       <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
         <source>Manual</source>
-        <target xml:lang="es-ES" state="needs-translation">Manual</target>
+        <target xml:lang="es-ES" state="translated">Manual</target>
       </trans-unit>
       <trans-unit id="8d22099edc8511ac766a4ab475e45e9e" resname="Series picture">
         <source>Series picture</source>
-        <target xml:lang="es-ES" state="needs-translation">Series picture</target>
+        <target xml:lang="es-ES" state="translated">Imagen de la serie</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
-        <target xml:lang="es-ES" state="needs-translation">Logo</target>
+        <target xml:lang="es-ES" state="translated">Imagen</target>
       </trans-unit>
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
-        <target xml:lang="es-ES" state="needs-translation">Filter Series</target>
+        <target xml:lang="es-ES" state="translated">Filtrar series</target>
       </trans-unit>
       <trans-unit id="d6c848ec0828f35523866749da4c83de" resname="Series publication status">
         <source>Series publication status</source>
-        <target xml:lang="es-ES" state="needs-translation">Series publication status</target>
+        <target xml:lang="es-ES" state="translated">Estado de publicación de la serie</target>
       </trans-unit>
       <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
         <source>Menu</source>
-        <target xml:lang="es-ES" state="needs-translation">Menu</target>
+        <target xml:lang="es-ES" state="translated">Menú</target>
       </trans-unit>
       <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
         <source>Select the number of series to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of series to display per page.</target>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de series a mostrar por página.</target>
       </trans-unit>
       <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
         <source>Select the number of playlists to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of playlists to display per page.</target>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de listas de reproducción a mostrar por página.</target>
       </trans-unit>
       <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of multimedia objects to display per page.</target>
-      </trans-unit>
-      <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
-        <source>External player</source>
-        <target xml:lang="es-ES" state="translated">Reproductor externo</target>
-      </trans-unit>
-      <trans-unit id="60efca1186ebc7df207ce79f780146e6" resname="'No external player set'">
-        <source>'No external player set'</source>
-        <target xml:lang="es-ES" state="translated">'No se ha definido ningún reproductor externo'</target>
-        <alt-trans>
-          <target xml:lang="es-ES">No se ha definido ningún reproductor externo</target>
-        </alt-trans>
-      </trans-unit>
-      <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
-        <source>Add external player</source>
-        <target xml:lang="es-ES" state="translated">Añadir un reproductor externo</target>
-      </trans-unit>
-      <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
-        <source>No external player set</source>
-        <target xml:lang="es-ES" state="translated">No se ha definido ningún reproductor externo</target>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de objetos multimedia a mostrar por página.</target>
       </trans-unit>
     </body>
   </file>

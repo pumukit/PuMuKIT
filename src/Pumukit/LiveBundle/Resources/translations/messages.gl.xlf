@@ -28,35 +28,35 @@
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="gl" state="needs-translation">No title</target>
+        <target xml:lang="gl" state="translated">Sen título</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="gl" state="needs-translation">Event</target>
+        <target xml:lang="gl" state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
         <source>Place</source>
-        <target xml:lang="gl" state="needs-translation">Place</target>
+        <target xml:lang="gl" state="translated">Lugar</target>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="gl" state="needs-translation">Date</target>
+        <target xml:lang="gl" state="translated">Data</target>
       </trans-unit>
       <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
         <source>Time</source>
-        <target xml:lang="gl" state="needs-translation">Time</target>
+        <target xml:lang="gl" state="translated">Hora</target>
       </trans-unit>
       <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target xml:lang="gl" state="needs-translation">JWPlayer does not support your browser version</target>
+        <target xml:lang="gl" state="translated">JWPlayer non é compatible coa versión do seu navegador</target>
       </trans-unit>
       <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target xml:lang="gl" state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+        <target xml:lang="gl" state="translated">Por favor, empregue a versión 9.0 ou superior ou use outro navegador.</target>
       </trans-unit>
       <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target xml:lang="gl" state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target xml:lang="gl" state="translated">É necesario instalar o plugin Flash. JWPlayer require polo menos a versión 10.1.82.76 de Flash para reproducir.</target>
       </trans-unit>
     </body>
   </file>
