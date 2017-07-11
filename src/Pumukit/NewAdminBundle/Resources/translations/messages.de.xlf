@@ -2645,22 +2645,6 @@
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="de" state="needs-translation">Select the number of multimedia objects to display per page.</target>
       </trans-unit>
-      <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
-        <source>External player</source>
-        <target xml:lang="de" state="needs-translation">External player</target>
-      </trans-unit>
-      <trans-unit id="60efca1186ebc7df207ce79f780146e6" resname="'No external player set'">
-        <source>'No external player set'</source>
-        <target xml:lang="de" state="needs-translation">'No external player set'</target>
-      </trans-unit>
-      <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
-        <source>Add external player</source>
-        <target xml:lang="de" state="needs-translation">Add external player</target>
-      </trans-unit>
-      <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
-        <source>No external player set</source>
-        <target xml:lang="de" state="needs-translation">No external player set</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

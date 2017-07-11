@@ -7,163 +7,163 @@
     <body>
       <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
-        <target xml:lang="gl" state="needs-translation">Audio/Video uploaded successfully</target>
+        <target xml:lang="gl" state="translated">Son/Vídeo subido correctamente</target>
       </trans-unit>
       <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target xml:lang="gl" state="needs-translation">The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</target>
+        <target xml:lang="gl" state="translated">O vídeo debe ser codificado para estar dispoñible na páxina web. Enviaráselle un correo electrónico cando a codificación remate, notificando a dispoñibilidade do seu vídeo.</target>
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="gl" state="needs-translation">SERIES</target>
+        <target xml:lang="gl" state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
         <source>VIDEO</source>
-        <target xml:lang="gl" state="needs-translation">VIDEO</target>
+        <target xml:lang="gl" state="translated">VÍDEO</target>
       </trans-unit>
       <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
         <source>DATE</source>
-        <target xml:lang="gl" state="needs-translation">DATE</target>
+        <target xml:lang="gl" state="translated">DATA</target>
       </trans-unit>
       <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa" resname="Actions">
         <source>Actions</source>
-        <target xml:lang="gl" state="needs-translation">Actions</target>
+        <target xml:lang="gl" state="translated">Accións</target>
       </trans-unit>
       <trans-unit id="4a8a4f3d4d0f09e16347e8a1c4bedb20" resname="Edit Multimedia Object">
         <source>Edit Multimedia Object</source>
-        <target xml:lang="gl" state="needs-translation">Edit Multimedia Object</target>
+        <target xml:lang="gl" state="translated">Editar Obxecto Multimedia</target>
       </trans-unit>
       <trans-unit id="be5b3fae8a55670cb583c472c1db6eec" resname="Back to Series">
         <source>Back to Series</source>
-        <target xml:lang="gl" state="needs-translation">Back to Series</target>
+        <target xml:lang="gl" state="translated">Volver á serie</target>
       </trans-unit>
       <trans-unit id="e11c6540433c2a394c533b8131fc2b46" resname="Create another Multimedia Object in same Series">
         <source>Create another Multimedia Object in same Series</source>
-        <target xml:lang="gl" state="needs-translation">Create another Multimedia Object in same Series</target>
+        <target xml:lang="gl" state="translated">Crear outro Obxecto Multimedia na mesma Serie</target>
       </trans-unit>
       <trans-unit id="b050796730bc9fb6c6cc1c0a671c1803" resname="Create another Multimedia Object in a new Series">
         <source>Create another Multimedia Object in a new Series</source>
-        <target xml:lang="gl" state="needs-translation">Create another Multimedia Object in a new Series</target>
+        <target xml:lang="gl" state="translated">Crear outro Obxecto Multimedia nunha nova Serie</target>
       </trans-unit>
       <trans-unit id="76c4d065fdc391cc3939df61dea1d9b6" resname="Upload another video">
         <source>Upload another video</source>
-        <target xml:lang="gl" state="needs-translation">Upload another video</target>
+        <target xml:lang="gl" state="translated">Subir outro vídeo</target>
       </trans-unit>
       <trans-unit id="56acfb948c5ac0cf6f3d4a195248618a" resname="Upload another Multimedia Object in same Series">
         <source>Upload another Multimedia Object in same Series</source>
-        <target xml:lang="gl" state="needs-translation">Upload another Multimedia Object in same Series</target>
+        <target xml:lang="gl" state="translated">Subir outro Obxecto Multimedia na mesma Serie</target>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="gl" state="needs-translation">Cancel</target>
+        <target xml:lang="gl" state="translated">Cancelar</target>
       </trans-unit>
       <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
         <source>Next</source>
-        <target xml:lang="gl" state="needs-translation">Next</target>
+        <target xml:lang="gl" state="translated">Seguinte</target>
       </trans-unit>
       <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
         <source>Title</source>
-        <target xml:lang="gl" state="needs-translation">Title</target>
+        <target xml:lang="gl" state="translated">Título</target>
       </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
         <source>Description</source>
-        <target xml:lang="gl" state="needs-translation">Description</target>
+        <target xml:lang="gl" state="translated">Descrición</target>
       </trans-unit>
       <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
-        <target xml:lang="gl" state="needs-translation">Subtitle</target>
+        <target xml:lang="gl" state="translated">Subtítulo</target>
       </trans-unit>
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
-        <target xml:lang="gl" state="needs-translation">Headline</target>
+        <target xml:lang="gl" state="translated">Titular</target>
       </trans-unit>
       <trans-unit id="98787e0ea3ebdac853b739123f35ad8d" resname="Step 1: Series">
         <source>Step 1: Series</source>
-        <target xml:lang="gl" state="needs-translation">Step 1: Series</target>
+        <target xml:lang="gl" state="translated">Paso 1: Serie</target>
       </trans-unit>
       <trans-unit id="35bc5fb60ebdee8bbd4b8c68d797cb74" resname="Create a new Series for the Multimedia Object">
         <source>Create a new Series for the Multimedia Object</source>
-        <target xml:lang="gl" state="needs-translation">Create a new Series for the Multimedia Object</target>
+        <target xml:lang="gl" state="translated">Crear unha nova Serie para o Obxecto Multimedia</target>
       </trans-unit>
       <trans-unit id="42c9c567af4142d1cc75f0665952abf0" resname="Step 2: Type">
         <source>Step 2: Type</source>
-        <target xml:lang="gl" state="needs-translation">Step 2: Type</target>
+        <target xml:lang="gl" state="translated">Paso 2: Tipo</target>
       </trans-unit>
       <trans-unit id="076de82c8cf022f48f74f7e9c3c40b1b" resname="Choose option type">
         <source>Choose option type</source>
-        <target xml:lang="gl" state="needs-translation">Choose option type</target>
+        <target xml:lang="gl" state="translated">Elixa unha opción</target>
       </trans-unit>
       <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
         <source>Step</source>
-        <target xml:lang="gl" state="needs-translation">Step</target>
+        <target xml:lang="gl" state="translated">Paso</target>
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
-        <target xml:lang="gl" state="needs-translation">Metadata</target>
+        <target xml:lang="gl" state="translated">Metadatos</target>
       </trans-unit>
       <trans-unit id="c2f27ee4404e902513128c40d208e108" resname="Insert the data for the Multimedia Object">
         <source>Insert the data for the Multimedia Object</source>
-        <target xml:lang="gl" state="needs-translation">Insert the data for the Multimedia Object</target>
+        <target xml:lang="gl" state="translated">Introduza os datos do Obxecto Multimedia</target>
       </trans-unit>
       <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
         <source>File</source>
-        <target xml:lang="gl" state="needs-translation">File</target>
+        <target xml:lang="gl" state="translated">Arquivo</target>
       </trans-unit>
       <trans-unit id="c3e635ca964a04246b5abb062f917280" resname="Upload the multimedia file">
         <source>Upload the multimedia file</source>
-        <target xml:lang="gl" state="needs-translation">Upload the multimedia file</target>
+        <target xml:lang="gl" state="translated">Subir o arquivo multimedia</target>
       </trans-unit>
       <trans-unit id="eafecfd638c10dc2c75c61f8350e3d1c" resname="Step 3: Files">
         <source>Step 3: Files</source>
-        <target xml:lang="gl" state="needs-translation">Step 3: Files</target>
+        <target xml:lang="gl" state="translated">Paso 3: Arquivos</target>
       </trans-unit>
       <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
         <source>Step %i%: Error</source>
-        <target xml:lang="gl" state="needs-translation">Step %i%: Error</target>
+        <target xml:lang="gl" state="translated">Paso %i%: Erro</target>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
-        <target xml:lang="gl" state="needs-translation">Failure in wizard proccess</target>
+        <target xml:lang="gl" state="translated">Fallo no proceso do asistente</target>
       </trans-unit>
       <trans-unit id="2688c6fafa9408f68f3bf46c8fcfaa02" resname="Step %i%: End">
         <source>Step %i%: End</source>
-        <target xml:lang="gl" state="needs-translation">Step %i%: End</target>
+        <target xml:lang="gl" state="translated">Paso %i%: Final</target>
       </trans-unit>
       <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>
-        <target xml:lang="gl" state="needs-translation">Wait for the end of transcoding to be notified</target>
+        <target xml:lang="gl" state="translated">Agarde ao final da transcodificación para ser notificado</target>
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="gl" state="needs-translation">Profile</target>
+        <target xml:lang="gl" state="translated">Perfil</target>
       </trans-unit>
       <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
         <source>Publication Channels</source>
-        <target xml:lang="gl" state="needs-translation">Publication Channels</target>
+        <target xml:lang="gl" state="translated">Canles de publicación</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
-        <target xml:lang="gl" state="needs-translation">Priority</target>
+        <target xml:lang="gl" state="translated">Prioridade</target>
       </trans-unit>
       <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
         <source>Low-Priority</source>
-        <target xml:lang="gl" state="needs-translation">Low-Priority</target>
+        <target xml:lang="gl" state="translated">Baixa prioridade</target>
       </trans-unit>
       <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
         <source>Normal-Priority</source>
-        <target xml:lang="gl" state="needs-translation">Normal-Priority</target>
+        <target xml:lang="gl" state="translated">Prioridade normal</target>
       </trans-unit>
       <trans-unit id="7050cf0d21fcaca51e96bdaf8c6413e0" resname="High-Priority">
         <source>High-Priority</source>
-        <target xml:lang="gl" state="needs-translation">High-Priority</target>
+        <target xml:lang="gl" state="translated">Alta prioridade</target>
       </trans-unit>
       <trans-unit id="cb76fb50035786c968dabe4987c5d5db" resname="Video/Audio language">
         <source>Video/Audio language</source>
-        <target xml:lang="gl" state="needs-translation">Video/Audio language</target>
+        <target xml:lang="gl" state="translated">Idioma de Vídeo/Son</target>
       </trans-unit>
       <trans-unit id="650be61892bf690026089544abbd9d26" resname="Mode">
         <source>Mode</source>
-        <target xml:lang="gl" state="needs-translation">Mode</target>
+        <target xml:lang="gl" state="translated">Modo</target>
       </trans-unit>
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
@@ -171,7 +171,7 @@
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
-        <target xml:lang="gl" state="needs-translation">Local hard drive</target>
+        <target xml:lang="gl" state="translated">Disco duro local</target>
       </trans-unit>
       <trans-unit id="606257a79c31efa1d61589c6a48f5b2e" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
@@ -179,7 +179,7 @@
       </trans-unit>
       <trans-unit id="45c1d7f6167c454c8e40dc9dbe8b9432" resname="Audio/video file">
         <source>Audio/video file</source>
-        <target xml:lang="gl" state="needs-translation">Audio/video file</target>
+        <target xml:lang="gl" state="translated">Arquivo de son/vídeo</target>
       </trans-unit>
       <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
         <source>Under</source>
@@ -187,23 +187,23 @@
       </trans-unit>
       <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
         <source>Progress</source>
-        <target xml:lang="gl" state="needs-translation">Progress</target>
+        <target xml:lang="gl" state="translated">Progreso</target>
       </trans-unit>
       <trans-unit id="e08ad75931308230cd41ec229bf0689e" resname="Empty file field">
         <source>Empty file field</source>
-        <target xml:lang="gl" state="needs-translation">Empty file field</target>
+        <target xml:lang="gl" state="translated">Campo do arquivo baleiro</target>
       </trans-unit>
       <trans-unit id="a1fa27779242b4902f7ae3bdd5c6d508" resname="Type">
         <source>Type</source>
-        <target xml:lang="gl" state="needs-translation">Type</target>
+        <target xml:lang="gl" state="translated">Tipo</target>
       </trans-unit>
       <trans-unit id="473e56fdfc7526af60d45f3b085e7233" resname="Add one single multimedia object">
         <source>Add one single multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Add one single multimedia object</target>
+        <target xml:lang="gl" state="translated">Engadir un único obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="29b0b1445e27d0f0b3316b4c62f0b9d9" resname="Add multiple multimedia objects">
         <source>Add multiple multimedia objects</source>
-        <target xml:lang="gl" state="needs-translation">Add multiple multimedia objects</target>
+        <target xml:lang="gl" state="translated">Engadir varios obxectos multimedia</target>
       </trans-unit>
       <trans-unit id="ac645573724145961004e8cf4ca1f161" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
         <source>The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</source>

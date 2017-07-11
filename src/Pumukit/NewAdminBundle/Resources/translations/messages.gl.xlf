@@ -7,83 +7,83 @@
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
-        <target xml:lang="gl" state="needs-translation">create new broadcast</target>
+        <target xml:lang="gl" state="translated">ocorreu un erro actualizando o perfil de difusión</target>
       </trans-unit>
       <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in creating the Broadcast.</target>
+        <target xml:lang="gl" state="translated">Produciuse un erro creando o perfil de difusión.</target>
       </trans-unit>
       <trans-unit id="4d6f5d583504b7023b52efa2d93f9516" resname="Broadcast successfully created.">
         <source>Broadcast successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Broadcast successfully created.</target>
+        <target xml:lang="gl" state="translated">O perfil de difusión creouse correctamente.</target>
       </trans-unit>
       <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close">
         <source>Close</source>
-        <target xml:lang="gl" state="needs-translation">Close</target>
+        <target xml:lang="gl" state="translated">Pechar</target>
       </trans-unit>
       <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
         <source>Save changes</source>
-        <target xml:lang="gl" state="needs-translation">Save changes</target>
+        <target xml:lang="gl" state="translated">Gardar cambios</target>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
-        <target xml:lang="gl" state="needs-translation">You don't have enough permissions to access this content.</target>
+        <target xml:lang="gl" state="translated">Vostede non ten permisos suficientes para acceder a este contido.</target>
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="gl" state="needs-translation">Search</target>
+        <target xml:lang="gl" state="translated">Buscar</target>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
         <source>Name</source>
-        <target xml:lang="gl" state="needs-translation">Name</target>
+        <target xml:lang="gl" state="translated">Nome</target>
       </trans-unit>
       <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
         <source>reset</source>
-        <target xml:lang="gl" state="needs-translation">reset</target>
+        <target xml:lang="gl" state="translated">reset</target>
       </trans-unit>
       <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
         <source>filter</source>
-        <target xml:lang="gl" state="needs-translation">filter</target>
+        <target xml:lang="gl" state="translated">filtrar</target>
       </trans-unit>
       <trans-unit id="12cd1377e2da59d9aef7dd9dd4932bf1" resname="Broadcast profiles">
         <source>Broadcast profiles</source>
-        <target xml:lang="gl" state="needs-translation">Broadcast profiles</target>
+        <target xml:lang="gl" state="translated">Perfís de difusión</target>
       </trans-unit>
       <trans-unit id="882737e085a883190178a2d6738cd825" resname="Actions on selected items">
         <source>Actions on selected items</source>
-        <target xml:lang="gl" state="needs-translation">Actions on selected items</target>
+        <target xml:lang="gl" state="translated">Accións sobre os elementos elixidos</target>
       </trans-unit>
       <trans-unit id="25b1e58532fdaa3ed86d04f30b943ff8" resname="Select an action...">
         <source>Select an action...</source>
-        <target xml:lang="gl" state="needs-translation">Select an action...</target>
+        <target xml:lang="gl" state="translated">Elixa unha acción...</target>
       </trans-unit>
       <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f" resname="Delete selected">
         <source>Delete selected</source>
-        <target xml:lang="gl" state="needs-translation">Delete selected</target>
+        <target xml:lang="gl" state="translated">Eliminar o elemento elixido</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
-        <target xml:lang="gl" state="needs-translation">New</target>
+        <target xml:lang="gl" state="translated">Novo</target>
       </trans-unit>
       <trans-unit id="a1fa27779242b4902f7ae3bdd5c6d508" resname="Type">
         <source>Type</source>
-        <target xml:lang="gl" state="needs-translation">Type</target>
+        <target xml:lang="gl" state="translated">Tipo</target>
       </trans-unit>
       <trans-unit id="8fd93ea382b6642f13ff291b76f5bc85" resname="Profile Name">
         <source>Profile Name</source>
-        <target xml:lang="gl" state="needs-translation">Profile Name</target>
+        <target xml:lang="gl" state="translated">Nome do perfil</target>
       </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
         <source>Description</source>
-        <target xml:lang="gl" state="needs-translation">Description</target>
+        <target xml:lang="gl" state="translated">Descrición</target>
       </trans-unit>
       <trans-unit id="62a5e490880a92eef74f167d9dc6dca0" resname="Hide">
         <source>Hide</source>
-        <target xml:lang="gl" state="needs-translation">Hide</target>
+        <target xml:lang="gl" state="translated">Oculto</target>
       </trans-unit>
       <trans-unit id="02658c8d8d6f47e0233eec9ea5375fe9" resname="Mm.Obj.">
         <source>Mm.Obj.</source>
-        <target xml:lang="gl" state="needs-translation">Mm.Obj.</target>
+        <target xml:lang="gl" state="translated">Obx. Mm.</target>
       </trans-unit>
       <trans-unit id="c91391b6983c77f7562c2a156a321f07" resname="There are no broadcasts with those values.">
         <source>There are no broadcasts with those values.</source>
@@ -103,15 +103,18 @@
       </trans-unit>
       <trans-unit id="ed3ad9a67a38f55342b301a058878f48" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
         <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
-        <target xml:lang="gl" state="needs-translation">{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</target>
+        <target xml:lang="gl" state="translated">{0} perfís de difusión|{1} perfil de difusión|]1,Inf] perfís de difusión</target>
       </trans-unit>
       <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
         <source>Cancel current search</source>
-        <target xml:lang="gl" state="needs-translation">Cancel current search</target>
+        <target xml:lang="gl" state="translated">Cancelar busca actual</target>
       </trans-unit>
       <trans-unit id="036934cf9842451c835a9981a067d0c3" resname="Cancel search">
         <source>Cancel search</source>
-        <target xml:lang="gl" state="needs-translation">Cancel search</target>
+        <target xml:lang="gl" state="translated">Cancelar busca</target>
+        <alt-trans>
+          <target xml:lang="gl">Cancelar búsqueda</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="71c28f02b6c62ac9e2b3a9f603d2d295" resname="modify broadcast">
         <source>modify broadcast</source>
@@ -127,19 +130,19 @@
       </trans-unit>
       <trans-unit id="2938c7f7e560ed972f8a4f68e80ff834" resname="Dashboard">
         <source>Dashboard</source>
-        <target xml:lang="gl" state="needs-translation">Dashboard</target>
+        <target xml:lang="gl" state="translated">Panel de control</target>
       </trans-unit>
       <trans-unit id="d63a360b4f267dea1f99e94122b29c11" resname="This page uses Javascript to show you a Timeline.">
         <source>This page uses Javascript to show you a Timeline.</source>
-        <target xml:lang="gl" state="needs-translation">This page uses Javascript to show you a Timeline.</target>
+        <target xml:lang="gl" state="translated">Esta páxina emprega Javascript para amosarlle a súa liña temporal.</target>
       </trans-unit>
       <trans-unit id="c5a0f2d6c4f156aeff88cfb6c7a161c8" resname="Please enable Javascript in your browser to see the full page.">
         <source>Please enable Javascript in your browser to see the full page.</source>
-        <target xml:lang="gl" state="needs-translation">Please enable Javascript in your browser to see the full page.</target>
+        <target xml:lang="gl" state="translated">Por favor, habilite Javascript no seu navegador para ver a páxina completa.</target>
       </trans-unit>
       <trans-unit id="2d439011ecebc222e1feb2e3e005c0ac" resname="Thank you.">
         <source>Thank you.</source>
-        <target xml:lang="gl" state="needs-translation">Thank you.</target>
+        <target xml:lang="gl" state="translated">Grazas.</target>
       </trans-unit>
       <trans-unit id="f6e6a1af42cefe6c122ee0801ca42e60" resname="Go to series WebTV page">
         <source>Go to series WebTV page</source>
@@ -147,103 +150,103 @@
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="gl" state="needs-translation">Date</target>
+        <target xml:lang="gl" state="translated">Data</target>
       </trans-unit>
       <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
         <source>Img</source>
-        <target xml:lang="gl" state="needs-translation">Img</target>
+        <target xml:lang="gl" state="translated">Imx</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="gl" state="needs-translation">Event</target>
+        <target xml:lang="gl" state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="3d067bedfe2f4677470dd6ccf64d05ed" resname="Public">
         <source>Public</source>
-        <target xml:lang="gl" state="needs-translation">Public</target>
+        <target xml:lang="gl" state="translated">Público</target>
       </trans-unit>
       <trans-unit id="92f5a4059c183e45b7b5cf4cf5cb80b0" resname="There are no live events with those values.">
         <source>There are no live events with those values.</source>
-        <target xml:lang="gl" state="needs-translation">There are no live events with those values.</target>
+        <target xml:lang="gl" state="translated">Non hai eventos en vivo con eses valores.</target>
       </trans-unit>
       <trans-unit id="6a11c1c2e2c1eee420568e31dc85f72a" resname="Edit Event">
         <source>Edit Event</source>
-        <target xml:lang="gl" state="needs-translation">Edit Event</target>
+        <target xml:lang="gl" state="translated">Editar evento</target>
       </trans-unit>
       <trans-unit id="4ffedae7e1c0e453877d5eb7e9344c96" resname="{0} live events|{1} live event|]1,Inf] live events">
         <source>{0} live events|{1} live event|]1,Inf] live events</source>
-        <target xml:lang="gl" state="needs-translation">{0} live events|{1} live event|]1,Inf] live events</target>
+        <target xml:lang="gl" state="translated">{0} eventos en vivo|{1} evento en vivo|]1,Inf] eventos en vivo</target>
       </trans-unit>
       <trans-unit id="98617021b249af0ace0f84ee92ccc7cd" resname="MONDAY">
         <source>MONDAY</source>
-        <target xml:lang="gl" state="needs-translation">MONDAY</target>
+        <target xml:lang="gl" state="translated">LUNS</target>
       </trans-unit>
       <trans-unit id="5f5140afce13197a89e848004f292f14" resname="TUESDAY">
         <source>TUESDAY</source>
-        <target xml:lang="gl" state="needs-translation">TUESDAY</target>
+        <target xml:lang="gl" state="translated">MARTES</target>
       </trans-unit>
       <trans-unit id="aaebdc947e9f7d4ea362e5dc4fe7f825" resname="WEDNESDAY">
         <source>WEDNESDAY</source>
-        <target xml:lang="gl" state="needs-translation">WEDNESDAY</target>
+        <target xml:lang="gl" state="translated">MÉRCORES</target>
       </trans-unit>
       <trans-unit id="7a61b324afb4dd8b2fb4a38afc34f755" resname="THURSDAY">
         <source>THURSDAY</source>
-        <target xml:lang="gl" state="needs-translation">THURSDAY</target>
+        <target xml:lang="gl" state="translated">XOVES</target>
       </trans-unit>
       <trans-unit id="86fb6d343289267f3e9edb9b7403d936" resname="FRIDAY">
         <source>FRIDAY</source>
-        <target xml:lang="gl" state="needs-translation">FRIDAY</target>
+        <target xml:lang="gl" state="translated">VENRES</target>
       </trans-unit>
       <trans-unit id="fd5ae113ac00b67f69541bc8c7f21ef7" resname="SATURDAY">
         <source>SATURDAY</source>
-        <target xml:lang="gl" state="needs-translation">SATURDAY</target>
+        <target xml:lang="gl" state="translated">SÁBADO</target>
       </trans-unit>
       <trans-unit id="95fa12cb2100ce7081b71f7c44bc12a5" resname="SUNDAY">
         <source>SUNDAY</source>
-        <target xml:lang="gl" state="needs-translation">SUNDAY</target>
+        <target xml:lang="gl" state="translated">DOMINGO</target>
       </trans-unit>
       <trans-unit id="dd1f775e443ff3b9a89270713580a51b" resname="Previous">
         <source>Previous</source>
-        <target xml:lang="gl" state="needs-translation">Previous</target>
+        <target xml:lang="gl" state="translated">Anterior</target>
       </trans-unit>
       <trans-unit id="03219b11d6170520cd434a165300cbde" resname="TODAY">
         <source>TODAY</source>
-        <target xml:lang="gl" state="needs-translation">TODAY</target>
+        <target xml:lang="gl" state="translated">HOXE</target>
       </trans-unit>
       <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
         <source>Next</source>
-        <target xml:lang="gl" state="needs-translation">Next</target>
+        <target xml:lang="gl" state="translated">Seguinte</target>
       </trans-unit>
       <trans-unit id="82aacdd426e82471943619e51c68d471" resname="create new live event">
         <source>create new live event</source>
-        <target xml:lang="gl" state="needs-translation">create new live event</target>
+        <target xml:lang="gl" state="translated">crear un novo evento en vivo</target>
       </trans-unit>
       <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
         <source>From</source>
-        <target xml:lang="gl" state="needs-translation">From</target>
+        <target xml:lang="gl" state="translated">Dende</target>
       </trans-unit>
       <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
         <source>To</source>
-        <target xml:lang="gl" state="needs-translation">To</target>
+        <target xml:lang="gl" state="translated">Ata</target>
       </trans-unit>
       <trans-unit id="72694e6cee9a756862d0e74dc02932f4" resname="Live broadcastings">
         <source>Live broadcastings</source>
-        <target xml:lang="gl" state="needs-translation">Live broadcastings</target>
+        <target xml:lang="gl" state="translated">Transmisións en vivo</target>
       </trans-unit>
       <trans-unit id="ec8643ebf38a237ee57bfab73a826381" resname="Create new live event">
         <source>Create new live event</source>
-        <target xml:lang="gl" state="needs-translation">Create new live event</target>
+        <target xml:lang="gl" state="translated">Crear un novo evento en vivo</target>
       </trans-unit>
       <trans-unit id="95d3955ede02b6910ec9a915e0952e9b" resname="Select any live event.">
         <source>Select any live event.</source>
-        <target xml:lang="gl" state="needs-translation">Select any live event.</target>
+        <target xml:lang="gl" state="translated">Seleccione calquera evento en vivo.</target>
       </trans-unit>
       <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
         <source>List</source>
-        <target xml:lang="gl" state="needs-translation">List</target>
+        <target xml:lang="gl" state="translated">Lista</target>
       </trans-unit>
       <trans-unit id="8ff922bbcd8ad41cdfc48d3c5163b2ab" resname="Calendar">
         <source>Calendar</source>
-        <target xml:lang="gl" state="needs-translation">Calendar</target>
+        <target xml:lang="gl" state="translated">Calendario</target>
       </trans-unit>
       <trans-unit id="96aa8615b9f8a7330695d231603ac9ce" resname="min.">
         <source>min.</source>
@@ -267,27 +270,27 @@
       </trans-unit>
       <trans-unit id="5fbb1856f60cde9ee70de2fb5196fec6" resname="Add thumbnail">
         <source>Add thumbnail</source>
-        <target xml:lang="gl" state="needs-translation">Add thumbnail</target>
+        <target xml:lang="gl" state="translated">Engadir miniatura</target>
       </trans-unit>
       <trans-unit id="697538b685f844a23ffde6524a2bbb98" resname="Delete thumbnail">
         <source>Delete thumbnail</source>
-        <target xml:lang="gl" state="needs-translation">Delete thumbnail</target>
+        <target xml:lang="gl" state="translated">Eliminar miniatura</target>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="gl" state="needs-translation">Cancel</target>
+        <target xml:lang="gl" state="translated">Cancelar</target>
       </trans-unit>
       <trans-unit id="b30a4f6fc441457200a87665d2dc065e" resname="create new group">
         <source>create new group</source>
-        <target xml:lang="gl" state="needs-translation">create new group</target>
+        <target xml:lang="gl" state="translated">crear un novo grupo</target>
       </trans-unit>
       <trans-unit id="f6fb02a5710764376edd77b698cd8c60" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Group successfully created.</target>
+        <target xml:lang="gl" state="translated">O grupo creóuse correctamente.</target>
       </trans-unit>
       <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
-        <target xml:lang="gl" state="needs-translation">External defined users and groups can not be edited here, contact your directory service administrator.</target>
+        <target xml:lang="gl" state="translated">Os usuarios e grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
       </trans-unit>
       <trans-unit id="e8bbbedf873013a5db75bb45b25b30d8" resname="Video Template of Series">
         <source>Video Template of Series</source>
@@ -295,71 +298,71 @@
       </trans-unit>
       <trans-unit id="897356954c2cd3d41b221e3f24f99bba" resname="Key">
         <source>Key</source>
-        <target xml:lang="gl" state="needs-translation">Key</target>
+        <target xml:lang="gl" state="translated">Clave</target>
       </trans-unit>
       <trans-unit id="3edf8ca26a1ec14dd6e91dd277ae1de6" resname="Origin">
         <source>Origin</source>
-        <target xml:lang="gl" state="needs-translation">Origin</target>
+        <target xml:lang="gl" state="translated">Orixe</target>
       </trans-unit>
       <trans-unit id="a37ede293936e29279ed543129451ec3" resname="Groups">
         <source>Groups</source>
-        <target xml:lang="gl" state="needs-translation">Groups</target>
+        <target xml:lang="gl" state="translated">Grupos</target>
       </trans-unit>
       <trans-unit id="2dd035582d170f46a5772e6e5fa27adf" resname="group deletion">
         <source>group deletion</source>
-        <target xml:lang="gl" state="needs-translation">group deletion</target>
+        <target xml:lang="gl" state="translated">borrado de grupos</target>
       </trans-unit>
       <trans-unit id="1dfbcae6b26a494f2698e15b4723076f" resname="group info">
         <source>group info</source>
-        <target xml:lang="gl" state="needs-translation">group info</target>
+        <target xml:lang="gl" state="translated">información do grupo</target>
       </trans-unit>
       <trans-unit id="f7f389b820140a98d5ce7387d6b88c86" resname="Delete Group">
         <source>Delete Group</source>
-        <target xml:lang="gl" state="needs-translation">Delete Group</target>
+        <target xml:lang="gl" state="translated">Borrar grupo</target>
       </trans-unit>
       <trans-unit id="27f2870eaa01c99fc83105240ad15f7f" resname="Delete All">
         <source>Delete All</source>
-        <target xml:lang="gl" state="needs-translation">Delete All</target>
+        <target xml:lang="gl" state="translated">Borrar todo</target>
       </trans-unit>
       <trans-unit id="afac306f409a3cb36b595b3215e24487" resname="There are no groups with those values.">
         <source>There are no groups with those values.</source>
-        <target xml:lang="gl" state="needs-translation">There are no groups with those values.</target>
+        <target xml:lang="gl" state="translated">Non hai grupos con eses valores.</target>
       </trans-unit>
       <trans-unit id="379d5e7e8c9f09972e0915714abad8d3" resname="Edit Group">
         <source>Edit Group</source>
-        <target xml:lang="gl" state="needs-translation">Edit Group</target>
+        <target xml:lang="gl" state="translated">Editar grupo</target>
       </trans-unit>
       <trans-unit id="d1c4c128e19012693c2dbc1b62b812e1" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
-        <target xml:lang="gl" state="needs-translation">External defined groups can not be edited here, contact your directory service administrator.</target>
+        <target xml:lang="gl" state="translated">Os grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
       </trans-unit>
       <trans-unit id="ded7ed1b967339b875bd23238807d82c" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
-        <target xml:lang="gl" state="needs-translation">Delete Group or Group relations</target>
+        <target xml:lang="gl" state="translated">Eliminar o grupo ou as súas relacións</target>
       </trans-unit>
       <trans-unit id="d2e714249fd627e04790876bfa3ba1ab" resname="Group Info">
         <source>Group Info</source>
-        <target xml:lang="gl" state="needs-translation">Group Info</target>
+        <target xml:lang="gl" state="translated">Información do grupo</target>
       </trans-unit>
       <trans-unit id="245cd8faf5826818905bd07388804fdf" resname="{0} groups|{1} group|]1,Inf] groups">
         <source>{0} groups|{1} group|]1,Inf] groups</source>
-        <target xml:lang="gl" state="needs-translation">{0} groups|{1} group|]1,Inf] groups</target>
+        <target xml:lang="gl" state="translated">{0} grupos|{1} grupo|]1,Inf] grupos</target>
       </trans-unit>
       <trans-unit id="8413c683b4b27cc3f4dbd4c90329d8ba" resname="Comments">
         <source>Comments</source>
-        <target xml:lang="gl" state="needs-translation">Comments</target>
+        <target xml:lang="gl" state="translated">Comentarios</target>
       </trans-unit>
       <trans-unit id="98092d5e303819830f8482d98e112af1" resname="modify group">
         <source>modify group</source>
-        <target xml:lang="gl" state="needs-translation">modify group</target>
+        <target xml:lang="gl" state="translated">modificar grupo</target>
       </trans-unit>
       <trans-unit id="54440b69c35bc132e2b95cf7abfd0028" resname="Group successfully updated.">
         <source>Group successfully updated.</source>
-        <target xml:lang="gl" state="needs-translation">Group successfully updated.</target>
+        <target xml:lang="gl" state="translated">O grupo actualizóuse correctamente.</target>
       </trans-unit>
       <trans-unit id="be8545ae7ab0276e15898aae7acfbd7a" resname="Resource">
         <source>Resource</source>
-        <target xml:lang="gl" state="needs-translation">Resource</target>
+        <target xml:lang="gl" state="translated">Recurso</target>
       </trans-unit>
       <trans-unit id="f985bf39894ce069d16c11e12836e2e7" resname="Select a file on the tree">
         <source>Select a file on the tree</source>
@@ -371,11 +374,11 @@
       </trans-unit>
       <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
         <source>not exists</source>
-        <target xml:lang="gl" state="needs-translation">not exists</target>
+        <target xml:lang="gl" state="translated">non existe</target>
       </trans-unit>
       <trans-unit id="845ac28dd1e178e8d2f75b05f2d571a6" resname="is not readable">
         <source>is not readable</source>
-        <target xml:lang="gl" state="needs-translation">is not readable</target>
+        <target xml:lang="gl" state="translated">non é lexible</target>
       </trans-unit>
       <trans-unit id="cfa2df1960c169d484924cd356df30b4" resname="Check the file system permissions">
         <source>Check the file system permissions</source>
@@ -399,7 +402,7 @@
       </trans-unit>
       <trans-unit id="e6ae269f5cb324e453f30997ca5df6c0" resname="Create Link">
         <source>Create Link</source>
-        <target xml:lang="gl" state="needs-translation">Create Link</target>
+        <target xml:lang="gl" state="translated">Crear enlace</target>
       </trans-unit>
       <trans-unit id="4644bba60825f347b0cdc3665d66e7fa" resname="create new live channel">
         <source>create new live channel</source>
@@ -523,19 +526,19 @@
       </trans-unit>
       <trans-unit id="5f7afa50da145d660626f3b4d233cdbe" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
-        <target xml:lang="gl" state="needs-translation">WARNING: You do not have enough permissions to modify admin groups.</target>
+        <target xml:lang="gl" state="translated">Advertencia: Non ten permisos suficientes para modificar os grupos administradores.</target>
       </trans-unit>
       <trans-unit id="dffecb5c02ee376eac36ab3228433c91" resname="BROADCAST GROUPS">
         <source>BROADCAST GROUPS</source>
-        <target xml:lang="gl" state="needs-translation">BROADCAST GROUPS</target>
+        <target xml:lang="gl" state="translated">GRUPOS DE DIFUSIÓN</target>
       </trans-unit>
       <trans-unit id="08f1f32cbd6bf7422568c1c55edf0933" resname="Available Groups">
         <source>Available Groups</source>
-        <target xml:lang="gl" state="needs-translation">Available Groups</target>
+        <target xml:lang="gl" state="translated">Grupos dispoñibles</target>
       </trans-unit>
       <trans-unit id="8af69431de8fce0c665628335343b0a1" resname="Selected Groups">
         <source>Selected Groups</source>
-        <target xml:lang="gl" state="needs-translation">Selected Groups</target>
+        <target xml:lang="gl" state="translated">Grupos seleccionados</target>
       </trans-unit>
       <trans-unit id="cac43f222ca936cb3a04576652ee63d1" resname="BROADCAST PASSWORD">
         <source>BROADCAST PASSWORD</source>
@@ -579,7 +582,7 @@
       </trans-unit>
       <trans-unit id="fea129fd310f01ad2c8d8ead2049eb23" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
-        <target xml:lang="gl" state="needs-translation">Owners &amp; Groups</target>
+        <target xml:lang="gl" state="translated">Propietarios &amp; Grupos</target>
       </trans-unit>
       <trans-unit id="78386ec8f2845742c324a3d7d3e800ff" resname="People">
         <source>People</source>
@@ -631,11 +634,11 @@
       </trans-unit>
       <trans-unit id="1ee1a8f62c601f99eb08919cb1b78788" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
-        <target xml:lang="gl" state="needs-translation">List multimedia objects in descending order of recording date</target>
+        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de gravación en orde descendente</target>
       </trans-unit>
       <trans-unit id="869c932002d911b88a5561bc35bc9709" resname="List multimedia objects in ascending order of recording date">
         <source>List multimedia objects in ascending order of recording date</source>
-        <target xml:lang="gl" state="needs-translation">List multimedia objects in ascending order of recording date</target>
+        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de gravación en orde ascendente</target>
       </trans-unit>
       <trans-unit id="a3b2babf515370667710ada3dbd898e5" resname="Cut multimedia objects">
         <source>Cut multimedia objects</source>
@@ -727,7 +730,7 @@
       </trans-unit>
       <trans-unit id="c08a04d16c7a626ff2a983d0661b089a" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
-        <target xml:lang="gl" state="needs-translation">Mm. Obj.</target>
+        <target xml:lang="gl" state="translated">Obx. Mm.</target>
       </trans-unit>
       <trans-unit id="c11c75432d69f2d8fe1f5ea1e0f7f825" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
@@ -747,15 +750,15 @@
       </trans-unit>
       <trans-unit id="9dd80f55b52725dc671a6d0c7786b320" resname="ADMIN GROUPS">
         <source>ADMIN GROUPS</source>
-        <target xml:lang="gl" state="needs-translation">ADMIN GROUPS</target>
+        <target xml:lang="gl" state="translated">GRUPOS ADMIN</target>
       </trans-unit>
       <trans-unit id="67a30c74a0072860162310c65c78b651" resname="Groups that can admin this series">
         <source>Groups that can admin this series</source>
-        <target xml:lang="gl" state="needs-translation">Groups that can admin this series</target>
+        <target xml:lang="gl" state="translated">Grupos que poden administrar esta serie</target>
       </trans-unit>
       <trans-unit id="62a56ee07100224049d920cd53485de8" resname="Groups that can admin this multimedia object">
         <source>Groups that can admin this multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Groups that can admin this multimedia object</target>
+        <target xml:lang="gl" state="translated">Grupos que poden administrar este obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="a5bb7630479a4aeebc5522fabd149389" resname="Selected Admin Groups">
         <source>Selected Admin Groups</source>
@@ -895,11 +898,11 @@
       </trans-unit>
       <trans-unit id="274a7f30fb025fecfae9ed01cbf410bc" resname="Permission Profiles">
         <source>Permission Profiles</source>
-        <target xml:lang="gl" state="needs-translation">Permission Profiles</target>
+        <target xml:lang="gl" state="translated">Perfil de permisos</target>
       </trans-unit>
       <trans-unit id="0bde587f09316fdaa8b2638470365e0f" resname="{0} permission profiles|{1} permission profile|]1,Inf] permission profiles">
         <source>{0} permission profiles|{1} permission profile|]1,Inf] permission profiles</source>
-        <target xml:lang="gl" state="needs-translation">{0} permission profiles|{1} permission profile|]1,Inf] permission profiles</target>
+        <target xml:lang="gl" state="translated">{0} perfís de permisos|{1} perfil de permisos|]1,Inf] perfís de permisos</target>
       </trans-unit>
       <trans-unit id="3523bed7d1014a7b8cdd5afd1e3ee8da" resname="Press SAVE for changes to take effect">
         <source>Press SAVE for changes to take effect</source>
@@ -1019,7 +1022,7 @@
       </trans-unit>
       <trans-unit id="667c1b8275a93e3f20ff88b55c1334d7" resname="name to search for">
         <source>name to search for</source>
-        <target xml:lang="gl" state="needs-translation">name to search for</target>
+        <target xml:lang="gl" state="translated">nome para a busca</target>
       </trans-unit>
       <trans-unit id="c327b49efdca2668f28cd7b4beee54b3" resname="working">
         <source>working</source>
@@ -1215,7 +1218,7 @@
       </trans-unit>
       <trans-unit id="d896b781caf98a9784c2b5f7ea1e0a5d" resname="Num. Mm.Obj.">
         <source>Num. Mm.Obj.</source>
-        <target xml:lang="gl" state="needs-translation">Num. Mm.Obj.</target>
+        <target xml:lang="gl" state="translated">Num. Obx. Mm.</target>
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
@@ -1559,7 +1562,7 @@
       </trans-unit>
       <trans-unit id="204c0a8bbc7d0e7215e93082aad12c1d" resname="MM. Obj.">
         <source>MM. Obj.</source>
-        <target xml:lang="gl" state="needs-translation">MM. Obj.</target>
+        <target xml:lang="gl" state="translated">Obx. MM.</target>
       </trans-unit>
       <trans-unit id="65b0daa9eeaf0d5db90a42a990d7e134" resname="There are no tags with those values.">
         <source>There are no tags with those values.</source>
@@ -1643,7 +1646,7 @@
       </trans-unit>
       <trans-unit id="07f07b623b4a00b57dc150ff2e59cb92" resname="Mm">
         <source>Mm</source>
-        <target xml:lang="gl" state="needs-translation">Mm</target>
+        <target xml:lang="gl" state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
@@ -1679,7 +1682,7 @@
       </trans-unit>
       <trans-unit id="a6fbb2ce4173b61ca5a2f0450191112c" resname="Output Command">
         <source>Output Command</source>
-        <target xml:lang="gl" state="needs-translation">Output Command</target>
+        <target xml:lang="gl" state="translated">Comando de saída</target>
       </trans-unit>
       <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
         <source>RETRY</source>
@@ -1763,7 +1766,7 @@
       </trans-unit>
       <trans-unit id="367b31a3305562f20d1d0cf93ba10031" resname="GROUPS">
         <source>GROUPS</source>
-        <target xml:lang="gl" state="needs-translation">GROUPS</target>
+        <target xml:lang="gl" state="translated">GRUPOS</target>
       </trans-unit>
       <trans-unit id="2c5386d53666ce6ea4a96cb562060012" resname="User current Groups">
         <source>User current Groups</source>
@@ -1811,7 +1814,7 @@
       </trans-unit>
       <trans-unit id="fb51b403bdd54cec0f0fe19b9ab4c5fc" resname="User Groups">
         <source>User Groups</source>
-        <target xml:lang="gl" state="needs-translation">User Groups</target>
+        <target xml:lang="gl" state="translated">Grupos do usuario</target>
       </trans-unit>
       <trans-unit id="bae41d2524d769cd9de6d6048841d052" resname="{0} users|{1} user|]1,Inf] users">
         <source>{0} users|{1} user|]1,Inf] users</source>
@@ -2007,11 +2010,11 @@
       </trans-unit>
       <trans-unit id="7b6d398bbcb625466c3ae0575d36c27f" resname="Error deleting Group">
         <source>Error deleting Group</source>
-        <target xml:lang="gl" state="needs-translation">Error deleting Group</target>
+        <target xml:lang="gl" state="translated">Erro eliminando o grupo</target>
       </trans-unit>
       <trans-unit id="03937134cedab9078be39a77ee3a48a0" resname="Group">
         <source>Group</source>
-        <target xml:lang="gl" state="needs-translation">Group</target>
+        <target xml:lang="gl" state="translated">Grupo</target>
       </trans-unit>
       <trans-unit id="3103b8cd124a484278c75cbff56243c1" resname="Can not delete all users">
         <source>Can not delete all users</source>
@@ -2031,7 +2034,7 @@
       </trans-unit>
       <trans-unit id="b11b5551b4e0c4fbdc4c40c5ff13cda5" resname="Are you sure you want to delete selected groups?">
         <source>Are you sure you want to delete selected groups?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete selected groups?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar os grupos seleccionados?</target>
       </trans-unit>
       <trans-unit id="bf197646d2caa8ad8bed05aca91bbe47" resname="Multimedia Object cut. Paste it in the desire Series.">
         <source>Multimedia Object cut. Paste it in the desire Series.</source>
@@ -2099,7 +2102,7 @@
       </trans-unit>
       <trans-unit id="2608be85187f57ccbfc0c4358357d5ea" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete all User from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCIÓN: Está vostede seguro de querer eliminar todos os usuarios deste grupo?</target>
       </trans-unit>
       <trans-unit id="dc22dbfd44366a6bfe6556dd6a767dcb" resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
@@ -2131,7 +2134,7 @@
       </trans-unit>
       <trans-unit id="3c7955415edc493ea8db119150385ef0" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</target>
+        <target xml:lang="gl" state="translated">ERRO ao gardar o Obxecto Multimedia: A data de publicación non pode ser menor cá de gravación.</target>
       </trans-unit>
       <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
@@ -2167,7 +2170,7 @@
       </trans-unit>
       <trans-unit id="5ec84436817819fbaf1219b8da9c27f2" resname="Permission Profiles successfully updated.">
         <source>Permission Profiles successfully updated.</source>
-        <target xml:lang="gl" state="needs-translation">Permission Profiles successfully updated.</target>
+        <target xml:lang="gl" state="translated">Perfil de Permisos actualizado correctamente.</target>
       </trans-unit>
       <trans-unit id="a3d650637f548245812dc4c60f39a280" resname="The permission">
         <source>The permission</source>
@@ -2251,7 +2254,7 @@
       </trans-unit>
       <trans-unit id="83a203553faed8d8ecc37700756273be" resname="Permission profiles">
         <source>Permission profiles</source>
-        <target xml:lang="gl" state="needs-translation">Permission profiles</target>
+        <target xml:lang="gl" state="translated">Perfís de permisos</target>
       </trans-unit>
       <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
         <source>Tools</source>
@@ -2359,7 +2362,7 @@
       </trans-unit>
       <trans-unit id="947ba93ec078bdb6d2e549cf6abda63a" resname="Recording Date">
         <source>Recording Date</source>
-        <target xml:lang="gl" state="needs-translation">Recording Date</target>
+        <target xml:lang="gl" state="translated">Data de gravación</target>
       </trans-unit>
       <trans-unit id="c994e942a74632f42cc7c6a620cb4170" resname="Header Text">
         <source>Header Text</source>
@@ -2555,7 +2558,7 @@
       </trans-unit>
       <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
-        <target xml:lang="gl" state="needs-translation">Successfully updated groups in Mm.</target>
+        <target xml:lang="gl" state="translated">Actualizados satisfactoriamente os grupos no obxecto multimedia.</target>
       </trans-unit>
       <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
@@ -2579,7 +2582,7 @@
       </trans-unit>
       <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
-        <target xml:lang="gl" state="needs-translation">Only users in the selected Groups can play the new multimedia objects created from this video template</target>
+        <target xml:lang="gl" state="translated">Tan só os usuarios nos grupos seleccionados poderán reproducir os novos obxectos multimedia creados a partir desta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
         <source>Upload new videos</source>
@@ -2599,11 +2602,11 @@
       </trans-unit>
       <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
-        <target xml:lang="gl" state="needs-translation">Search by title, subtitle, description or id</target>
+        <target xml:lang="gl" state="translated">Buscar por título, subtítulo, descrición ou Id</target>
       </trans-unit>
       <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
         <source>Search by name or surname</source>
-        <target xml:lang="gl" state="needs-translation">Search by name or surname</target>
+        <target xml:lang="gl" state="translated">Buscar por nome ou apelido</target>
       </trans-unit>
       <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
         <source>Filter</source>
@@ -2644,22 +2647,6 @@
       <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="gl" state="needs-translation">Select the number of multimedia objects to display per page.</target>
-      </trans-unit>
-      <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
-        <source>External player</source>
-        <target xml:lang="gl" state="needs-translation">External player</target>
-      </trans-unit>
-      <trans-unit id="60efca1186ebc7df207ce79f780146e6" resname="'No external player set'">
-        <source>'No external player set'</source>
-        <target xml:lang="gl" state="needs-translation">'No external player set'</target>
-      </trans-unit>
-      <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
-        <source>Add external player</source>
-        <target xml:lang="gl" state="needs-translation">Add external player</target>
-      </trans-unit>
-      <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
-        <source>No external player set</source>
-        <target xml:lang="gl" state="needs-translation">No external player set</target>
       </trans-unit>
     </body>
   </file>
