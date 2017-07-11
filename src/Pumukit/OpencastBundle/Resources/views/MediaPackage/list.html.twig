@@ -90,7 +90,7 @@
             <div class="col-md-8">
               {{ mediaPackages.getNbResults }}
               {% transchoice mediaPackages.getNbResults %}
-                  {0} users|{1} mediaPackages|]1,Inf] Media Packages
+                  {0} Media Packages |{1} Media Package|]1,Inf] Media Packages
               {% endtranschoice %}
               {% if app.session.get('admin/mediapackage/criteria')|length != 0 %}
                 <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
