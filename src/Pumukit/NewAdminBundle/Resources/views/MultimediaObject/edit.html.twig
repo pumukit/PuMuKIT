@@ -1,4 +1,4 @@
-{% if mm is not empty %}
+{% if mm is defined %}
 <div class="well">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 

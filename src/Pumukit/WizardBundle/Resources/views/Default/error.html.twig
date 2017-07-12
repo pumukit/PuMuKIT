@@ -18,7 +18,7 @@
     {% trans %}Upload another video{% endtrans %}.
   </a>
 </li>
-{% if series is not empty %}
+{% if series is defined %}
 <li>
   <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}">
     {% trans %}Upload another Multimedia Object in same Series{% endtrans %}

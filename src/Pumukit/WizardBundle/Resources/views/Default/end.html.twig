@@ -6,7 +6,7 @@
     <h4>
       {% trans %}The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.{% endtrans %}
     </h4>
-    {% if mm is not empty %}
+    {% if mm is defined %}
     <div class="well">
       {# TODO CLASS IMAGE
       <div>
@@ -32,11 +32,11 @@
       <div class="col-md-6">
         {% trans %}Main action{% endtrans %}:
         <div style="padding-left: 50px;">
-          {% if series is not empty and mm is not empty %}
+          {% if series is defined and mm is defined %}
           <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.getId()}) }}" class="btn btn-primary btn-raised">
             {% trans %}Edit Multimedia Object{% endtrans %}
           </a>
-          {% elseif series is not empty %}
+          {% elseif series is defined %}
           <a href="{{ path('pumukitnewadmin_mms_index', {'id': series.getId()}) }}" class="btn btn-primary btn-raised">
             {% trans %}Back to Series{% endtrans %}
           </a>
@@ -46,7 +46,7 @@
       <div class="col-md-6">
         {% trans %}Other actions{% endtrans %}:
         <ul>
-          {% if series is not empty %}
+          {% if series is defined %}
           <li>
             <a href="{{ path('pumukitwizard_default_type', {'id': series.getId()}) }}{% if license_enabled %}?pumukitwizard_form_data%5Blicense%5D%5Baccept%5D=on{% endif %}">
               {% trans %}Create another Multimedia Object in same Series{% endtrans %}
