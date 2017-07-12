@@ -50,7 +50,7 @@ jQuery(document).ready(function() {
                     anDate.initialize( date_month, date_year );
                     anDate.decMonth();
                     month_loaded = true;
-                    if( $(window).height() >= $('footer').offset().top ) {
+                    if( $('.main-content').height() <= $(window).height() ) {
                         reloadMoreData();
                     }
                 }
