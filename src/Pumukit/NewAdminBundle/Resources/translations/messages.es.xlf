@@ -1260,7 +1260,10 @@
       </trans-unit>
       <trans-unit id="a6074d93415afc28f99b35ce95401a46" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
-        <target xml:lang="es-ES" state="translated">Serie guardada ERROR</target>
+        <target xml:lang="es-ES" state="translated">ERROR al guardar la Serie</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Serie guardada ERROR</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f098f3495dcf0337cc88d48edcd4c1b9" resname="Series saved OK">
         <source>Series saved OK</source>
@@ -1292,7 +1295,10 @@
       </trans-unit>
       <trans-unit id="4e2db3b9797fbf3266283bc32e626e37" resname="Back to playlist list">
         <source>Back to playlist list</source>
-        <target xml:lang="es-ES" state="translated">Volver a la lista de las listas de reproducción</target>
+        <target xml:lang="es-ES" state="translated">Volver al listado de listas de reproducción</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Volver a la lista de las listas de reproducción</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="16515bd9582b55f6698c1f23267f44ec" resname="Add multimedia object">
         <source>Add multimedia object</source>
@@ -1511,7 +1517,10 @@
       </trans-unit>
       <trans-unit id="3d27fefdc3ee4ae9360ee429c6c6ec10" resname="create new series type">
         <source>create new series type</source>
-        <target xml:lang="es-ES" state="translated">crear nueva serie tipo</target>
+        <target xml:lang="es-ES" state="translated">crear nuevo tipo de serie</target>
+        <alt-trans>
+          <target xml:lang="es-ES">crear nueva serie tipo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f477a6ea644871f63462d22d7dbddade" resname="Series types">
         <source>Series types</source>
@@ -1863,7 +1872,10 @@
       </trans-unit>
       <trans-unit id="eee9f637fd981a6d2f32481c380a22ed" resname="Are you sure you want to delete the user">
         <source>Are you sure you want to delete the user</source>
-        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el usuario</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el usuario?</target>
+        <alt-trans>
+          <target xml:lang="es-ES">¿Está seguro de querer eliminar el usuario</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="17fb2da5396f939202adc1a045fa405d" resname="Error deleting user">
         <source>Error deleting user</source>
@@ -1919,7 +1931,10 @@
       </trans-unit>
       <trans-unit id="76999272eb740b7956a06487d1ee26f0" resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
         <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
-        <target xml:lang="es-ES" state="translated">¿Está seguro de querer sincronizar estas categorías? Se perderán las categorías en otros objetos de esta serie.</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer sincronizar estas categorías? Se perderán las categorías en otros objetos de esta serie?</target>
+        <alt-trans>
+          <target xml:lang="es-ES">¿Está seguro de querer sincronizar estas categorías? Se perderán las categorías en otros objetos de esta serie.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="470608c99219ae88ec43c2b74d929fd8" resname="Are you sure you want to delete this multimedia object?">
         <source>Are you sure you want to delete this multimedia object?</source>
@@ -1967,7 +1982,10 @@
       </trans-unit>
       <trans-unit id="e4f43ec84514c27900e6395df72eb6d2" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
-        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar la lista de reproducción</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar la lista de reproducción?</target>
+        <alt-trans>
+          <target xml:lang="es-ES">¿Está seguro de querer eliminar la lista de reproducción</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f6b4a5e2a897467a97a2e124f518a548" resname="This playlist has">
         <source>This playlist has</source>
@@ -1979,7 +1997,10 @@
       </trans-unit>
       <trans-unit id="563eb67796a6982d00a8ec3c376e611c" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
-        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el perfil de permisos</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el perfil de permisos?</target>
+        <alt-trans>
+          <target xml:lang="es-ES">¿Está seguro de querer eliminar el perfil de permisos</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="a313f0437660f477274a9c86d2bd7b69" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
@@ -2115,7 +2136,10 @@
       </trans-unit>
       <trans-unit id="cb2438bb89acec64f1b97f4027a0f119" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el código</target>
+        <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el código?</target>
+        <alt-trans>
+          <target xml:lang="es-ES">¿Estás seguro de querer eliminar la categoría con el código</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
         <source>Tag</source>

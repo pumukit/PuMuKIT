@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="613b1a00ac381aba783479879e63263c" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
-        <target xml:lang="gl" state="needs-translation">Subscribe to this series podcast (requires iTunes)</target>
+        <target xml:lang="gl" state="translated">Suscribirse ao podcast desta serie (require iTunes)</target>
       </trans-unit>
       <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
         <source>It downloads and subscribes to the full video podcasts of this series.</source>
