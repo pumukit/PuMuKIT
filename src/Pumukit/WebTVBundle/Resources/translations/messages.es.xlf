@@ -452,7 +452,7 @@
       </trans-unit>
       <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
         <source>Submit</source>
-        <target xml:lang="es-ES" state="needs-translation">Submit</target>
+        <target xml:lang="es-ES" state="translated">Enviar</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>

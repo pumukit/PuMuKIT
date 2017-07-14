@@ -71,7 +71,7 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="gl" state="needs-translation">Series</target>
+        <target xml:lang="gl" state="translated">Series</target>
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
@@ -243,11 +243,11 @@
       </trans-unit>
       <trans-unit id="23ce0eb7d180f3dc8391d4af48572d21" resname="Materials">
         <source>Materials</source>
-        <target xml:lang="gl" state="needs-translation">Materials</target>
+        <target xml:lang="gl" state="translated">Materiais</target>
       </trans-unit>
       <trans-unit id="594926470af8adae2a0914a57f89605f" resname="There is no materials">
         <source>There is no materials</source>
-        <target xml:lang="gl" state="needs-translation">There is no materials</target>
+        <target xml:lang="gl" state="translated">Non hai materiais</target>
       </trans-unit>
       <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
         <source>Share this video</source>
@@ -291,7 +291,7 @@
       </trans-unit>
       <trans-unit id="d2e23e955956256bed1752d5f85b0899" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
-        <target xml:lang="gl" state="needs-translation">Log in is required to watch it</target>
+        <target xml:lang="gl" state="translated">Requírese iniciar sesión para ver o vídeo</target>
       </trans-unit>
       <trans-unit id="d4a3404790a7d7c5dc96d18cdaa8850a" resname="Go to back-office">
         <source>Go to back-office</source>
@@ -411,7 +411,7 @@
       </trans-unit>
       <trans-unit id="a657405e3424fc63b9165585e40d2cae" resname="General %title%">
         <source>General %title%</source>
-        <target xml:lang="gl" state="needs-translation">General %title%</target>
+        <target xml:lang="gl" state="translated">%title% xeral</target>
       </trans-unit>
       <trans-unit id="bb6e3e7941f7c00d905c3f11b602dec4" resname="Multimedia objects with tag: %title%">
         <source>Multimedia objects with tag: %title%</source>
@@ -419,7 +419,7 @@
       </trans-unit>
       <trans-unit id="a3546e4e0fce18914e4fc2a38c0a0bc0" resname="Series with tag: %title%">
         <source>Series with tag: %title%</source>
-        <target xml:lang="gl" state="needs-translation">Series with tag: %title%</target>
+        <target xml:lang="gl" state="translated">Series coa categoría: %title%</target>
       </trans-unit>
       <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
         <source>Spanish Sign Language</source>
@@ -439,11 +439,11 @@
       </trans-unit>
       <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target xml:lang="gl" state="needs-translation">i18n.one.Series</target>
+        <target xml:lang="gl" state="translated">Serie</target>
       </trans-unit>
       <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
         <source>Submit</source>
-        <target xml:lang="gl" state="needs-translation">Submit</target>
+        <target xml:lang="gl" state="translated">Enviar</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>

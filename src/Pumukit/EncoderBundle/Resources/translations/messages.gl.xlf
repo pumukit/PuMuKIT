@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
         <source>Times</source>
-        <target xml:lang="gl" state="needs-translation">Times</target>
+        <target xml:lang="gl" state="translated">Data</target>
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
         <source>Created</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
         <source>RETRY</source>
-        <target xml:lang="gl" state="needs-translation">RETRY</target>
+        <target xml:lang="gl" state="translated">REINTENTO</target>
       </trans-unit>
       <trans-unit id="32f68a60cef40faedbc6af20298c1a1e" resname="DELETE">
         <source>DELETE</source>
