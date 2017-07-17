@@ -171,6 +171,13 @@ class MultimediaObject
      *
      * @MongoDB\Raw
      */
+    private $comments = array('en' => '');
+
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
     private $line2 = array('en' => '');
 
     /**
@@ -576,6 +583,59 @@ class MultimediaObject
     public function getI18nDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set comments.
+     *
+     * @param string      $comments
+     * @param string|null $locale
+     */
+    public function setComments($comments, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->comments[$locale] = $comments;
+    }
+
+    /**
+     * Get comments.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getComments($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->comments[$locale])) {
+            return '';
+        }
+
+        return $this->comments[$locale];
+    }
+
+    /**
+     * Set I18n comments.
+     *
+     * @param array $comments
+     */
+    public function setI18nComments(array $comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * Get I18n comments.
+     *
+     * @return array
+     */
+    public function getI18nComments()
+    {
+        return $this->comments;
     }
 
     /**
