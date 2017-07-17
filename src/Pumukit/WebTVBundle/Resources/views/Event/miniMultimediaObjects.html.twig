@@ -1,0 +1,33 @@
+<div class="col-xs-12">
+    {% if events[0] is defined and events[0] is not empty %}
+        {% for event in events[0]['data'] | reverse %}
+            <div class="row">
+                <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_id', {'id' : events[0]['_id'] }) }}'">
+                    <div class="minithumbnail">
+                        <a href="{{ url('pumukit_live_id', {'id' : events[0]['_id'] }) }}">
+                            <div class="media-object play_icon small" alt=""></div>
+                            <img class="media-object thumbnailimg" src="{{ event|first_url_pic(true) }}">
+                            <div class="minithumbnailholder"></div>
+                        </a>
+                    </div>
+                    <div class="miniinfo-wrapper">
+                        <div class="miniinfo">
+                            <div class="title" >
+                                {{ event['event']['name'][app.request.getLocale()] | default('No title') | trans }}
+                            </div>
+                            <br />
+                            <div class="pull-left date">
+                                <small>
+                                    {% trans %}Starts{% endtrans %}:
+                                    {{ event['session']['start'].toDateTime| localizeddate('medium','medium', app.request.getLocale()) }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% trans %}There are no videos with these specifications{% endtrans %}.
+    {% endif %}
+</div>

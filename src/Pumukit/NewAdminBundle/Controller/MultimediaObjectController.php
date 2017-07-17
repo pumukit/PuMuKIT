@@ -4,13 +4,13 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Pumukit\SchemaBundle\Document\EmbeddedSocial;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -255,6 +255,34 @@ class MultimediaObjectController extends SortableAdminController implements NewA
              'is_playable' => $mmService->hasPlayableResource($resource),
              'warning_on_unpublished' => $warningOnUnpublished,
         );
+    }
+
+    /**
+     * Display the form for editing or update the resource.
+     *
+     * @Template("PumukitNewAdminBundle:MultimediaObject:updatesocial.html.twig")
+     */
+    public function updatesocialAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($request->request->get('id')));
+        $method = $request->getMethod();
+        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
+            $social = $multimediaObject->getEmbeddedSocial();
+            if (!$social) {
+                $social = new EmbeddedSocial();
+            }
+            $social->setTwitter($request->request->get('email'));
+            $social->setEmail($request->request->get('twitter'));
+            $dm->persist($social);
+
+            $multimediaObject->setEmbeddedSocial($social);
+
+            $dm->flush();
+        }
+
+        return array('mm' => $multimediaObject);
     }
 
     /**

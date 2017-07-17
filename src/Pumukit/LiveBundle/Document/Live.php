@@ -373,7 +373,8 @@ class Live
     /**
      * Set name.
      *
-     * @param string $name
+     * @param $name
+     * @param null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -385,6 +386,8 @@ class Live
 
     /**
      * Get name.
+     *
+     * @param null $locale
      *
      * @return string
      */
@@ -413,7 +416,7 @@ class Live
     /**
      * Get i18n name.
      *
-     * @return array
+     * @return string
      */
     public function getI18nName()
     {
@@ -424,6 +427,7 @@ class Live
      * Set description.
      *
      * @param string $description
+     * @param null   $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -435,6 +439,8 @@ class Live
 
     /**
      * Get description.
+     *
+     * @param null $locale
      *
      * @return string
      */
@@ -463,7 +469,7 @@ class Live
     /**
      * Get I18n description.
      *
-     * @return array
+     * @return string
      */
     public function getI18nDescription()
     {
@@ -510,8 +516,7 @@ class Live
      */
     public function getResolution()
     {
-        return array('width' => $this->width,
-                     'height' => $this->height, );
+        return array('width' => $this->width, 'height' => $this->height);
     }
 
     /**

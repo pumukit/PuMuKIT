@@ -1,0 +1,179 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}Live broadcastings{% endtrans %}</h1>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="well">
+                <div id="list_events">
+                    {% render(controller('PumukitNewAdminBundle:Events:listEvent')) %}
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <select id="options_events" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                            <option value="default" selected="selected">{% trans %}Select an
+                                action...{% endtrans %}</option>
+                            <option disabled="">---</option>
+                            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukit_new_admin_live_event_create') }}">{% trans %}
+                            New event and series{% endtrans %}</a>
+                        <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" data-toggle="modal" data-backdrop="static" data-target="#seriesModal">{% trans %}
+                            New event from series{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 hidden-xs hidden-sm">
+            <div id="preview_events" class="well">
+                {% if(app.session.has('admin/liveevent/id')) %}
+                    {{ render_hinclude(url('pumukitnewadmin_live_show', {'id': app.session.get('eventID')})) }}
+                {% else %}
+                    {% trans %}Select any live event.{% endtrans %}
+                {% endif %}
+            </div>
+            {% include 'PumukitNewAdminBundle:LiveEvent:filters.html.twig' %}
+        </div>
+    </div>
+
+    <div id="edit_events" class="col-xs-12">
+        {% if(app.session.has('admin/liveevent/id')) %}
+            {{ render(url('pumukit_new_admin_live_event_edit', {'id': app.session.get('admin/liveevent/id')})) }}
+        {% endif %}
+    </div>
+
+    <div class="modal fade" id="seriesModal" tabindex="-1" role="dialog" aria-labelledby="seriesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="" id="form_create_event_by_serie">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">{% trans %}New live event{% endtrans %}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            {% trans %}
+                            Add the name of the series you want to use.
+                            In case this series already exists in the database, a pull-down list will be shown,
+                            where you can select it and use it. If it doesn't exist in the database,
+                            create a new entrance with the written name.
+
+                            {% endtrans %}
+                        </p>
+                        <div class="ui-widget">
+                            <label for="seriesSuggest">{% trans %}Series{% endtrans %}</label>
+                            <input type="text" id="seriesSuggest" name="seriesSuggestAutocomplete" class="form-control"/>
+                            <input type="hidden" id="seriesSuggestValidate" name="seriesSuggest" value="" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-2 col-md-offset-5">
+                            <input class="btn btn-default btn-raised" type="button" value="{% trans %}Cancel{% endtrans %}" data-dismiss="modal">
+                        </div>
+                        <div class="col-md-2 col-md-offset-1">
+                            <input class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Create{% endtrans %}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
+        window.mmobjkeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
+
+        window.mmobjkeywords.initialize();
+
+        var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'})|raw }}";
+        window.serieskeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
+
+        window.serieskeywords.initialize();
+
+        $("#options_events").on('change', function (event) {
+            if ($("#options_events option:selected").val() == 'delete_selected') {
+                if (confirm('Do you want delete this events?')) {
+                    $.ajax({
+                        url: '{{ path('pumukit_new_admin_live_event_delete_selected') }}',
+                        method: 'POST',
+                        data: $('input[name="events_checkbox[]"]:checked'),
+                        success: function () {
+                            var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                            $('#list_events').load(mm);
+
+                            var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                            success(message);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            no_success(errorThrown + ': ' + textStatus);
+                        }
+                    });
+                    return false;
+                }
+            }
+        });
+
+        $("#seriesSuggest").autocomplete({
+            source: "{{ path('pumukit_new_admin_live_event_series_suggest') }}",
+            delay: 250,
+            minLength: 2,
+            select: function (event, ui) {
+                $("#seriesSuggestValidate").val(ui.item.id);
+            }
+        }).autocomplete("instance")._renderItem = function (ul, item) {
+            return $("<li>")
+                .append("<a>" + item.id + " - " + item.title + "<br><span class='form-control'>" + "</span></a>")
+                .appendTo(ul)
+        };
+
+        $("#seriesSuggest").on("input", function(){
+            $("#seriesSuggestValidate").val("");
+        });
+
+        $('#form_create_event_by_serie').on('submit', function(event) {
+            event.preventDefault();
+
+            if('' != $('#seriesSuggestValidate').val()) {
+                $.ajax({
+                    url: '{{ path('pumukit_new_admin_live_event_create') }}',
+                    method: 'POST',
+                    data: $('#seriesSuggestValidate'),
+                    success: function () {
+                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                        $('#list_events').load(mm);
+
+                        $('#seriesSuggestValidate').val("");
+                        $('#seriesModal').hide();
+                        var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                        success(message);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        no_success(errorThrown + ': ' + textStatus);
+                    }
+                });
+                return false;
+            } else {
+                no_success('Check selected serie');
+            }
+        });
+
+    </script>
+{% endblock %}

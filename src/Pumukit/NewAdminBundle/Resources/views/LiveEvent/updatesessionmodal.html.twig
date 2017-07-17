@@ -1,0 +1,65 @@
+{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}Create/Update session{% endtrans %}</h4>
+</div>
+
+{{ form_start(form, {'attr' : {'id': 'event_session_form'}}) }}
+    <div class="modal-body">
+        {% if session_id is defined %}
+            <div class="col-xs-12">
+                <label for="session_id">{% trans %}Session ID{% endtrans %}</label>
+                <input class="form-control" value="{{ session_id }}" id="session_id" disabled />
+            </div>
+            <input type="hidden" value="{{ session_id }}" name="pumukitnewadmin_event_session[id]" />
+        {% endif %}
+        <div class="col-xs-12" style="margin-top:20px">
+            {{ form_row(form.start) }}
+        </div>
+        <div class="col-xs-12" style="margin-top:20px">
+            {{ form_row(form.duration) }}
+        </div>
+        <div class="col-xs-12" style="margin-top:20px">
+            {{ form_row(form.notes, {'attr' : {'style': 'resize: vertical;'}}) }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <input class="btn btn-default btn-raised" type="button" value="{% trans %}Cancel{% endtrans %}" data-dismiss="modal">
+            </div>
+            <div class="col-md-2 col-md-offset-1">
+                <input class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Save{% endtrans %}">
+            </div>
+        </div>
+    </div>
+{{ form_end(form)}}
+
+<script type="text/javascript">
+    $('#event_session_form').on('submit',function(event){
+        event.preventDefault();
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: '{{ path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId() }) }}',
+            method: 'POST',
+            data: $('#event_session_form').serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                    no_success(message);
+                } else {
+                    var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
+                    $('#list_live_events').load(mm);
+                    $('#updatesessionmodal').hide();
+                    var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown + ': ' + textStatus);
+            }
+        });
+        return false;
+    });
+</script>

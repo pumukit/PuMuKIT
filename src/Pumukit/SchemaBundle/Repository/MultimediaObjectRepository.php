@@ -428,6 +428,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
+
     // Find Multimedia Objects with Tags
 
     /**
@@ -522,6 +523,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $qb;
     }
+
     /**
      * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
      *
@@ -984,7 +986,8 @@ class MultimediaObjectRepository extends DocumentRepository
     public function createStandardQueryBuilder()
     {
         return $this->createQueryBuilder()
-          ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
+            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+            ->field('islive')->equals(false);
     }
 
     /**
@@ -1610,5 +1613,252 @@ class MultimediaObjectRepository extends DocumentRepository
         }
 
         return $groupsIds;
+    }
+
+    public function findEventsGroupBy()
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline[] = array('$match' => array(
+            'islive' => true,
+            'embeddedEvent.display' => true,
+            'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+        ));
+
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$_id',
+            'event' => '$embeddedEvent',
+            'islive' => true,
+            'sessions' => '$embeddedEvent.embeddedEventSession',
+            'social' => '$embeddedSocial',
+            'pics' => '$pics',
+            'materials' => '$materials',
+            'seriesTitle' => '$seriesTitle',
+        ));
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array('$match' => array('sessions.start' => array('$exists' => true)));
+
+        $today = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+
+        $pipeline[] = array('$addFields' => array(
+            'session' => '$sessions',
+            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+            'groupBy' => array(
+                '$cond' => array('if' => array('$and' => array(
+                    array('$lte' => array(
+                        new \MongoDate(),
+                        array('$add' => array(
+                                '$sessions.start', array('$multiply' => array('$sessions.duration', 1000)),
+                            ),
+                        ), )),
+                    array('$gte' => array(
+                        new \MongoDate(),
+                        '$sessions.start',
+                        ),
+                    ),
+                    )),
+                    'then' => 'now',
+                    'else' => array(
+                        '$cond' => array('if' => array('$and' => array(
+                                    array('$gte' => array(
+                                        '$sessions.start',
+                                        new \MongoDate(),
+                                    ),
+                                    ),
+                                    array('$lte' => array(
+                                        '$sessions.start',
+                                        new \MongoDate($today),
+                                    ),
+                                    ),
+                                )),
+                        'then' => 'today',
+                        'else' => array(
+                            '$cond' => array('if' => array('$lte' => array(
+                                    new \MongoDate(),
+                                    array('$add' => array(
+                                        '$sessions.start', array('$multiply' => array('$sessions.duration', 1000)),
+                                    )),
+                                )),
+                                'then' => 'future',
+                                'else' => 'past',
+                            ),
+                        ),
+                        ),
+                    ),
+                ),
+            ),
+        ));
+
+        $pipeline[] = array('$group' => array(
+            '_id' => '$groupBy',
+            'data' => array('$addToSet' => array(
+                'event' => '$event',
+                'multimediaObjectId' => '$multimediaObjectId',
+                'social' => '$social',
+                'pics' => '$pics',
+                'material' => '$material',
+                'session' => '$sessions',
+            )),
+        ));
+
+        return $collection->aggregate($pipeline)->toArray();
+    }
+
+    public function findEventsNow()
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $now = new \MongoDate();
+
+        $pipeline[] = array('$match' => array(
+            'islive' => true,
+            'embeddedEvent.display' => true,
+            'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+        ));
+
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$_id',
+            'event' => '$embeddedEvent',
+            'sessions' => '$embeddedEvent.embeddedEventSession',
+            'pics' => '$pics',
+        ));
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array('$addFields' => array(
+            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+        ));
+
+        $pipeline[] = array('$match' => array(
+            'sessions.start' => array('$exists' => true),
+            'sessionEnds' => array('$gte' => $now),
+            'sessions.start' => array('$lte' => $now),
+        ));
+
+        $pipeline[] = array('$addFields' => array(
+            'session' => '$sessions',
+        ));
+
+        $pipeline[] = array('$group' => array(
+            '_id' => '$multimediaObjectId',
+            'data' => array('$addToSet' => array(
+                'event' => '$event',
+                'session' => '$session',
+                'multimediaObjectId' => '$multimediaObjectId',
+                'pics' => '$pics',
+            )),
+        ));
+
+        $pipeline[] = array('$limit' => 10);
+
+        return $collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function findNextEventSessions($multimediaObjectId)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline[] = array('$match' => array(
+            '_id' => new \MongoId($multimediaObjectId),
+            'islive' => true,
+            'embeddedEvent.display' => true,
+            'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+        ));
+
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$_id',
+            'event' => '$embeddedEvent',
+            'sessions' => '$embeddedEvent.embeddedEventSession',
+            'pics' => '$pics',
+        ));
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array('$match' => array(
+                '$and' => array(
+                    array('sessions.start' => array('$exists' => true)),
+                    array('sessions.start' => array('$gt' => new \MongoDate())),
+                ),
+            ),
+        );
+
+        $pipeline[] = array('$addFields' => array(
+            'session' => '$sessions',
+        ));
+
+        $pipeline[] = array('$group' => array(
+            '_id' => '$multimediaObjectId',
+            'data' => array('$addToSet' => array(
+                'event' => '$event',
+                'session' => '$session',
+                'multimediaObjectId' => '$multimediaObjectId',
+                'pics' => '$pics',
+            )),
+        ));
+
+        return $collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function findNowEventSessions($multimediaObjectId)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline[] = array('$match' => array(
+            '_id' => new \MongoId($multimediaObjectId),
+            'islive' => true,
+            'embeddedEvent.display' => true,
+            'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+        ));
+
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$_id',
+            'event' => '$embeddedEvent',
+            'sessions' => '$embeddedEvent.embeddedEventSession',
+        ));
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array('$addFields' => array(
+            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+        ));
+
+        $pipeline[] = array('$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$lt' => new \MongoDate()),
+                'sessionEnds' => array('$gt' => new \MongoDate()),
+            ),
+        );
+
+        $pipeline[] = array('$addFields' => array(
+            'session' => '$sessions',
+        ));
+
+        $pipeline[] = array('$group' => array(
+            '_id' => '$multimediaObjectId',
+            'data' => array('$addToSet' => array(
+                'event' => '$event',
+                'session' => '$session',
+                'multimediaObjectId' => '$multimediaObjectId',
+                'sessionEnds' => '$sessionEnds',
+            )),
+        ));
+
+        return $collection->aggregate($pipeline)->toArray();
     }
 }

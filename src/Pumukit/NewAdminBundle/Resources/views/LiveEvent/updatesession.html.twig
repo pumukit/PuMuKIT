@@ -1,0 +1,28 @@
+<div class="well" style="min-height:500px">
+    <div class="col-xs-12">
+        <div id="list_live_events" class="row">
+            {% include 'PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig' with {'multimediaObject' : multimediaObject} %}
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <a href="#" class="new_session" data-path="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId()}) }}" data-toggle="modal" data-target="#updatesessionmodal">{% trans %}New event session{% endtrans %}</a>
+    </div>
+
+    <br />
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="updatesessionmodal" tabindex="-1" role="dialog" aria-labelledby="updatesessionmodalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-session">
+            {% include 'PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig' %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.new_session').on('click', function(event) {
+        $('.modal-session').load($(this).data('path'));
+    });
+</script>

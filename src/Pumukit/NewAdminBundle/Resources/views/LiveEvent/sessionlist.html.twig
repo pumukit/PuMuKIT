@@ -1,0 +1,61 @@
+<div class="col-xs-12">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <th id="th-edit"></th>
+                <th id="th-id" >ID</th>
+                <th id="th-start">{% trans %}Start{% endtrans %}</th>
+                <th id="th-duration">{% trans %}Duration{% endtrans %}</th>
+                <th id="th-notes">{% trans %}Notes{% endtrans %}</th>
+            </thead>
+            <tbody>
+                {% for session in multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() %}
+                    <tr>
+                        <td>
+                            <a class="edit_session" data-path="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}" href="#" title="{% trans %}Edit session{% endtrans %}" data-session_id="" data-toggle="modal" data-target="#updatesessionmodal">
+                                <i class="mdi-editor-mode-edit"></i>
+                            </a>
+                            <a class="delete_session" data-path='{{ path('pumukit_new_admin_live_event_session_delete', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}' href="#" title="{% trans %}Delete session{% endtrans %}">
+                                <i class="mdi-content-clear"></i>
+                            </a>
+                        </td>
+                        <td header="th-id">{{ session.id  }}</td>
+                        <td header="th-start"> {{ session.start | localizeddate('medium', 'medium') }}</td>
+                        <td header="th-duration"> {{ (session.duration/60) }} {% trans %}min.{% endtrans %}</td>
+                        <td header="th-notes"> {{ session.notes|raw }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.delete_session').on('click',function(event){
+        event.preventDefault();
+        $.ajax({
+            url: $(this).data('path'),
+            method: 'POST',
+            data: $('#event_session_form').serialize(),
+            success: function(response, textStatus, jqXHR){
+                if (jqXHR.responseText.indexOf('modal-header') != -1){
+                    var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                    no_success(message);
+                } else {
+                    var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
+                    $('#list_live_events').load(mm);
+                    var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                no_success(errorThrown + ': ' + textStatus);
+            }
+        });
+        return false;
+    });
+
+    $('.edit_session').on('click', function(event) {
+       $('.modal-session').load($(this).data('path'));
+    });
+</script>

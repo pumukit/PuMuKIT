@@ -1,0 +1,170 @@
+{% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+
+<div class="well" style="min-height:1300px;">
+    {{ form_start(form, {'attr': {'id': 'form_event'}}) }}
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="col-xs-6">
+                    <span id="remember_save_event" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">
+                        {% trans %}Press OK for the change to take effect{% endtrans %}
+                    </span> &nbsp;
+                </div>
+            </div>
+            <div class="col-xs-4 text-right">
+                <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-default btn-raised">
+                    {% trans %}Cancel{% endtrans %}
+                    <div class="ripple-wrapper"></div>
+                </button>
+                <button class="btn btn-pumukit btn-raised" type="submit">{% trans %}OK{% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <fieldset>
+            <div class="form-group">
+                {{ form_row(form.i18n_name) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.i18n_description) }}
+            </div>
+
+            <div class="form-group">
+                <label for="owner">{% trans %}Author{% endtrans %}</label>
+                <input id="owner" type="text" name="pumukitnewadmin_live_event[author]" class="form-control" value="{% if people and people['author'] is defined %}{{ people['author'] }}{% endif %}" />
+            </div>
+
+            <div class="form-group">
+                <label for="producer">{% trans %}Producer{% endtrans %}</label>
+                <input id="producer" type="text" name="pumukitnewadmin_live_event[producer]" class="form-control"  value="{% if people and people['producer'] is defined %}}{{ people['producer'] }}{% endif %}" />
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.date) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.place) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.live) }}
+            </div>
+
+            <div class="form-group">
+                {% set externalURL = '' %}
+                {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty %}
+                    {% set externalURL = 'checked' %}
+                {% endif %}
+                <div class="checkbox">
+                    <strong>{% trans %}External URL{% endtrans %}</strong>
+                    <label for="allowExternalURL">
+                        <input type="checkbox" id="allowExternalURL" name="allowURLExternal" {{ externalURL }}>
+                    </label>
+                </div>
+                <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
+            </div>
+
+            <div class="form-group">
+                <label>{% trans %}Images{% endtrans %}</label>
+                <div id="pic_mms_{{ multimediaObject.getId() }}">
+                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms'} %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {% set contact = '' %}
+                {% if multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not empty %}
+                    {% set contact = 'checked' %}
+                {% endif %}
+                <div class="checkbox">
+                    <strong>{% trans %}Contact{% endtrans %}</strong>
+                    <label for="allowContact">
+                        <input type="checkbox" id="allowContact" {{ contact }}>
+                    </label>
+                </div>
+                <input id="contact" type="email" name="pumukitnewadmin_live_event[contact]" class="form-control" {% if contact != '' %}value="{{ multimediaObject.getEmbeddedSocial().getEmail() }}" {% else %}disabled{% endif %}/>
+            </div>
+
+            <div class="form-group">
+                <label>{% trans %}Attachments{% endtrans %}</label>
+                <div id="materials_mms_{{ multimediaObject.id }}">
+                    {% include 'PumukitNewAdminBundle:Material:list.html.twig' with {'mmId': multimediaObject.id, 'materials': multimediaObject.getMaterials()} %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.display) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.create_serial) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.duration) }}
+            </div>
+
+            <div class="form-group">
+                <label>{% trans %}Broadcast profile{% endtrans %}</label>
+                <div class="row">
+                    {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    {{ form_end(form) }}
+</div>
+
+<script type="text/javascript">
+
+    $('#form_event').on('change', function(e){
+        if (e.target.value != e.target.defaultValue){
+            $('#remember_save_event').css('display', 'inline-block');
+        }
+    });
+
+    $('#form_event').on('submit', function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}',
+            method: 'POST',
+            data: $('#form_event').serialize(),
+            success: function () {
+                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                $('#list_events').load(mm);
+
+                var editmm = "{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}";
+                $('#event').load(editmm);
+                var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                success(message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + textStatus);
+            }
+        });
+        return false;
+    });
+
+    $('#allowContact').on('click', function () {
+        var contact = $('#contact');
+        var isDisabled = contact.prop('disabled');
+        if (isDisabled) {
+            contact.prop('disabled', false);
+        } else {
+            contact.prop('disabled', true);
+        }
+    });
+
+    $('#allowExternalURL').on('click', function () {
+        var externalURL = $('#externalURL');
+        var isDisabled = externalURL.prop('disabled');
+        if (isDisabled) {
+            externalURL.prop('disabled', false);
+        } else {
+            externalURL.prop('disabled', true);
+        }
+    });
+
+</script>

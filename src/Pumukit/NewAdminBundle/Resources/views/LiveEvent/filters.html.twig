@@ -1,0 +1,34 @@
+<div class="well">
+    <form autocomplete="off" id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukit_new_admin_live_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukit_new_admin_live_event_list') }}" method="GET">
+        <fieldset>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{% trans %}Search{% endtrans %}</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+                        <div>
+                            {% set criteria = app.session.get('admin/live/event/criteria') %}
+                            <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+                        <div>
+                            {% trans %}From{% endtrans %}:
+                            &nbsp;<input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                            <br/>
+                            {% trans %}To{% endtrans %}:
+                            &nbsp;&nbsp;<input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="text-right">
+            <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+        </div>
+    </form>
+</div>

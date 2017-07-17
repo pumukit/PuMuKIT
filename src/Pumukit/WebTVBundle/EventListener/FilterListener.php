@@ -56,6 +56,8 @@ class FilterListener
             if (!isset($routeParams['no_channels']) || !$routeParams['no_channels']) {
                 $filter->setParameter('pub_channel_tag', 'PUCHWEBTV');
             }
+
+            $filter->setParameter('islive', false);
         }
     }
 }

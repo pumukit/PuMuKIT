@@ -1,0 +1,27 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
+    {% if multimediaObject.getEmbeddedEvent() is not null %}
+        <div>
+            <p style="text-align:center; font-weight: bolder; font-size: large;">
+                {{ multimediaObject.getEmbeddedEvent().name }}
+            </p>
+            {% if multimediaObject.getEmbeddedEvent().pic %}
+                <div class="pmk-preview">
+                    <div class="pmk-picture">
+                        <div class="pmk-img">
+                            <img src="{{ multimediaObject.getEmbeddedEvent().getPic() }}"/>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ multimediaObject.getEmbeddedEvent().display ? '#FFEAD6' : '#DDD' }}">
+                {{ multimediaObject.getEmbeddedEvent().date| localizeddate('medium', 'none') }}
+                {{ multimediaObject.getEmbeddedEvent().duration }}
+                {% trans %} min.{% endtrans %}
+            </p>
+        </div>
+    {% else %}
+        <p>{% trans %}Select or create any live multimediaObject.getEmbeddedEvent().{% endtrans %}</p>
+    {% endif %}
+{% else %}
+    <p>{% trans %}You don't have enough permissions to access this content.{% endtrans %}</p>
+{% endif %}

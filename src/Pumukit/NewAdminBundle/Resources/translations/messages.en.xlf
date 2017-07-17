@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -2756,6 +2756,134 @@
       <trans-unit id="5101591968e8a19545fab09e442178af" resname="Filter Live Events">
         <source>Filter Live Events</source>
         <target>Filter Live Events</target>
+      </trans-unit>
+      <trans-unit id="f431e17ea0081a3c9e51fc240221ee21" resname="Social">
+        <source>Social</source>
+        <target>Social</target>
+      </trans-unit>
+      <trans-unit id="2491bc9c7d8731e1ae33124093bc7026" resname="Twitter">
+        <source>Twitter</source>
+        <target>Twitter</target>
+      </trans-unit>
+      <trans-unit id="247902875d3f6e09c88fba1ed61da99a" resname="New event session">
+        <source>New event session</source>
+        <target>New event session</target>
+      </trans-unit>
+      <trans-unit id="a517747c3d12f99244ae598910d979c5" resname="Author">
+        <source>Author</source>
+        <target>Author</target>
+      </trans-unit>
+      <trans-unit id="a6ad87aadc206f6491720e309821904a" resname="Producer">
+        <source>Producer</source>
+        <target>Producer</target>
+      </trans-unit>
+      <trans-unit id="48b6dc1949d063860c1765ebd06bbc95" resname="External URL">
+        <source>External URL</source>
+        <target>External URL</target>
+      </trans-unit>
+      <trans-unit id="fff0d600f8a0b5e19e88bfb821dd1157" resname="Images">
+        <source>Images</source>
+        <target>Images</target>
+      </trans-unit>
+      <trans-unit id="bbaff12800505b22a853e8b7f4eb6a22" resname="Contact">
+        <source>Contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="4623202d70bed74448f3c0ea9b6daa19" resname="Event successfully updated.">
+        <source>Event successfully updated.</source>
+        <target>Event successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="360c27f740233cbea8da5fda1b050aaf" resname="Select an&#10;                                action...">
+        <source>Select an
+                                action...</source>
+        <target>Select an
+                                action...</target>
+      </trans-unit>
+      <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
+        <source>Create new series of live events</source>
+        <target>Create new series of live events</target>
+      </trans-unit>
+      <trans-unit id="5695951fa95effcfc41f25d1269bf0ef" resname="New event and series">
+        <source>New event and series</source>
+        <target>New event and series</target>
+      </trans-unit>
+      <trans-unit id="200e4d891cd2c4511d1ffc6f62455b3e" resname="New event from series">
+        <source>New event from series</source>
+        <target>New event from series</target>
+      </trans-unit>
+      <trans-unit id="ad42c8ac63a8ac65621dc340cd762f79" resname="New live event">
+        <source>New live event</source>
+        <target>New live event</target>
+      </trans-unit>
+      <trans-unit id="3a5fc0b60ec1230aa0b2b1f916ef3119" resname="Series videos">
+        <source>Series videos</source>
+        <target>Series videos</target>
+      </trans-unit>
+      <trans-unit id="05f5a4a0111e8f4620214ef9488b2e5e" resname="Create/Update session">
+        <source>Create/Update session</source>
+        <target>Create/Update session</target>
+      </trans-unit>
+      <trans-unit id="f89167d8204a193c6bbeabb68922d448" resname="Session ID">
+        <source>Session ID</source>
+        <target>Session ID</target>
+      </trans-unit>
+      <trans-unit id="4c6daee4c977416c848e86cbc6c6eb66" resname="There was an error in updating the event session.">
+        <source>There was an error in updating the event session.</source>
+        <target>There was an error in updating the event session.</target>
+      </trans-unit>
+      <trans-unit id="f6bcfdbb84d891968be16598655c04fe" resname="Live session successfully updated.">
+        <source>Live session successfully updated.</source>
+        <target>Live session successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="a6122a65eaa676f700ae68d393054a37" resname="Start">
+        <source>Start</source>
+        <target>Start</target>
+      </trans-unit>
+      <trans-unit id="f4c6f851b00d5518bf888815de279aba" resname="Notes">
+        <source>Notes</source>
+        <target>Notes</target>
+      </trans-unit>
+      <trans-unit id="d75f89684706d1a47ae4e4a33a6a6b89" resname="Edit session">
+        <source>Edit session</source>
+        <target>Edit session</target>
+      </trans-unit>
+      <trans-unit id="d92ad9737a70bab90289e538236c3fa3" resname="Delete session">
+        <source>Delete session</source>
+        <target>Delete session</target>
+      </trans-unit>
+      <trans-unit id="c26381104b13cb8ade394b26c9d21007" resname="Change series">
+        <source>Change series</source>
+        <target>Change series</target>
+      </trans-unit>
+      <trans-unit id="b0c372e53a26500185c7045c95972c32" resname="Clone event">
+        <source>Clone event</source>
+        <target>Clone event</target>
+      </trans-unit>
+      <trans-unit id="da8f9efed7257d1d1a2d0e7e145449c1" resname="Delete event">
+        <source>Delete event</source>
+        <target>Delete event</target>
+      </trans-unit>
+      <trans-unit id="eeb694833fc48697d59e1dd2fe3a0547" resname="Delete event and series">
+        <source>Delete event and series</source>
+        <target>Delete event and series</target>
+      </trans-unit>
+      <trans-unit id="13dc519b6de0f5e1e7f97534b1d13ff5" resname="Select or create any live multimediaObject.getEmbeddedEvent().">
+        <source>Select or create any live multimediaObject.getEmbeddedEvent().</source>
+        <target>Select or create any live multimediaObject.getEmbeddedEvent().</target>
+      </trans-unit>
+      <trans-unit id="71c7ae294b7abd866b3fb295b3b9e4a4" resname="Session">
+        <source>Session</source>
+        <target>Session</target>
+      </trans-unit>
+      <trans-unit id="f0192d5298c63afd585b2f29d1170f77" resname="Add the name of the series you want to use.&#10;                            In case this series already exists in the database, a pull-down list will be shown,&#10;                            where you can select it and use it. If it doesn't exist in the database,&#10;                            create a new entrance with the written name.">
+        <source>Add the name of the series you want to use.
+                            In case this series already exists in the database, a pull-down list will be shown,
+                            where you can select it and use it. If it doesn't exist in the database,
+                            create a new entrance with the written name.</source>
+        <target>Add the name of the series you want to use.
+                            In case this series already exists in the database, a pull-down list will be shown,
+                            where you can select it and use it. If it doesn't exist in the database,
+                            create a new entrance with the written name.</target>
       </trans-unit>
     </body>
   </file>

@@ -1,50 +1,50 @@
 {% set event = future_and_not_finished_event(1, live)|first %}
 <div class="panel panel-primary text-center">
-  <div class="panel-heading">
-    {% if event %}
-      {% if ((event.date|date('U')) < ('now'|date('U'))) %}
-        {% trans %}Current live event{% endtrans %}
-      {% else %}
-        {% trans %}Next live event{% endtrans %}
-      {% endif %}
-    {% else %}
-      {% trans %}Next live event{% endtrans %}
-    {% endif %}
-  </div>
-  <table class="table table-striped">
-    <tbody>
-      <tr>
-        <td>
-          {% trans %}Event{% endtrans %}
-        </td>
-        <td>
-          {{ event ? event.name : '---' }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {% trans %}Place{% endtrans %}
-        </td>
-        <td>
-          {{ event ? event.place : '---' }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {% trans %}Date{% endtrans %}
-        </td>
-        <td>
-          {{ event ? event.date|date('d/m/Y') : '---' }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {% trans %}Time{% endtrans %}
-        </td>
-        <td>
-          {{ event ? event.date|date('H:i') : '---' }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="panel-heading">
+        {% if event %}
+            {% if ((event.date|date('U')) < ('now'|date('U'))) %}
+                {% trans %}Current live event{% endtrans %}
+            {% else %}
+                {% trans %}Next live event{% endtrans %}
+            {% endif %}
+        {% else %}
+            {% trans %}Next live event{% endtrans %}
+        {% endif %}
+    </div>
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td>
+                {% trans %}Event{% endtrans %}
+            </td>
+            <td>
+                {{ event ? event.name : '---' }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% trans %}Place{% endtrans %}
+            </td>
+            <td>
+                {{ event ? event.place : '---' }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% trans %}Date{% endtrans %}
+            </td>
+            <td>
+                {{ event ? event.date|date('d/m/Y') : '---' }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% trans %}Time{% endtrans %}
+            </td>
+            <td>
+                {{ event ? event.date|date('H:i') : '---' }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

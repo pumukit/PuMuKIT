@@ -71,7 +71,7 @@ class Material extends Element
     /**
      * Get I18n name.
      *
-     * @return array
+     * @return string
      */
     public function getI18nName()
     {
