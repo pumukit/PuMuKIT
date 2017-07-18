@@ -186,7 +186,10 @@
       </trans-unit>
       <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
         <source>Under</source>
-        <target xml:lang="es-ES" state="translated">Bajo</target>
+        <target xml:lang="es-ES" state="translated">Menor de</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Bajo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
         <source>Progress</source>
@@ -278,7 +281,10 @@
       </trans-unit>
       <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
         <source>Select a tag...</source>
-        <target xml:lang="es-ES" state="translated">Selecione una categoría...</target>
+        <target xml:lang="es-ES" state="translated">Seleccione una categoría...</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Selecione una categoría...</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
         <source>Select a license...</source>

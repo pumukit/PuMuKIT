@@ -424,11 +424,17 @@
       </trans-unit>
       <trans-unit id="bb6e3e7941f7c00d905c3f11b602dec4" resname="Multimedia objects with tag: %title%">
         <source>Multimedia objects with tag: %title%</source>
-        <target xml:lang="es-ES" state="translated">Objetos multimedia con etiqueta: %title%</target>
+        <target xml:lang="es-ES" state="translated">Objetos multimedia con categoría: %title%</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Objetos multimedia con etiqueta: %title%</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="a3546e4e0fce18914e4fc2a38c0a0bc0" resname="Series with tag: %title%">
         <source>Series with tag: %title%</source>
-        <target xml:lang="es-ES" state="translated">Series con etiqueta: %title%</target>
+        <target xml:lang="es-ES" state="translated">Series con categoría: %title%</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Series con etiqueta: %title%</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
         <source>Spanish Sign Language</source>
@@ -452,11 +458,11 @@
       </trans-unit>
       <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
         <source>Submit</source>
-        <target xml:lang="es-ES" state="needs-translation">Submit</target>
+        <target xml:lang="es-ES" state="translated">Enviar</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
-        <target xml:lang="es-ES" state="needs-translation">Logo</target>
+        <target xml:lang="es-ES" state="translated">Imagen</target>
       </trans-unit>
     </body>
   </file>
