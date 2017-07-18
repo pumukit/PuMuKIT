@@ -44,7 +44,10 @@
       </trans-unit>
       <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
         <source>It downloads and subscribes to the full video podcasts of this series.</source>
-        <target xml:lang="es-ES" state="translated">Descargase y suscribirse a todos los podcasts de vídeo de esta serie.</target>
+        <target xml:lang="es-ES" state="translated">Descargarse y suscribirse a todos los podcasts de vídeo de esta serie.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Descargase y suscribirse a todos los podcasts de vídeo de esta serie.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="967205de32bc11bcebfa0f940ad1bc09" resname="Video POD">
         <source>Video POD</source>

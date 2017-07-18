@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="dd2771c80b506d8d4ff74b4ab60edb3d" resname="Podcast info For Series:">
         <source>Podcast info For Series:</source>
-        <target xml:lang="gl" state="needs-translation">Podcast info For Series:</target>
+        <target xml:lang="gl" state="translated">Información de podcast para Series:</target>
       </trans-unit>
       <trans-unit id="ee701975bddf870abb94b7c3c33659a6" resname="It downloads and subscribes to an audio-only podcasts of this series.">
         <source>It downloads and subscribes to an audio-only podcasts of this series.</source>
-        <target xml:lang="gl" state="needs-translation">It downloads and subscribes to an audio-only podcasts of this series.</target>
+        <target xml:lang="gl" state="translated">Descargarse e subscribirse a un podcast, só de son, desta serie.</target>
       </trans-unit>
       <trans-unit id="843903dabb8d6bb0c9ccca82a864a004" resname="Audio POD">
         <source>Audio POD</source>
@@ -40,11 +40,14 @@
       </trans-unit>
       <trans-unit id="613b1a00ac381aba783479879e63263c" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
-        <target xml:lang="gl" state="translated">Suscribirse ao podcast desta serie (require iTunes)</target>
+        <target xml:lang="gl" state="translated">Subscribirse ao podcast desta serie (require iTunes)</target>
+        <alt-trans>
+          <target xml:lang="gl">Suscribirse ao podcast desta serie (require iTunes)</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6c7075f6519b5e126408d86fc4c8a0a5" resname="It downloads and subscribes to the full video podcasts of this series.">
         <source>It downloads and subscribes to the full video podcasts of this series.</source>
-        <target xml:lang="gl" state="needs-translation">It downloads and subscribes to the full video podcasts of this series.</target>
+        <target xml:lang="gl" state="translated">Descargarse e suscribirse a tódolos podcasts de vídeo desta serie.</target>
       </trans-unit>
       <trans-unit id="967205de32bc11bcebfa0f940ad1bc09" resname="Video POD">
         <source>Video POD</source>
@@ -52,7 +55,7 @@
       </trans-unit>
       <trans-unit id="9290d28ab5e949c5456784c27440090b" resname="It downloads and subscribes to the video and audio podcasts of this series.">
         <source>It downloads and subscribes to the video and audio podcasts of this series.</source>
-        <target xml:lang="gl" state="needs-translation">It downloads and subscribes to the video and audio podcasts of this series.</target>
+        <target xml:lang="gl" state="translated">Descárgase e subscríbese aos podcasts de vídeo e son desta serie.</target>
       </trans-unit>
       <trans-unit id="7de670fb5df1ea744e72712d4ea29cbe" resname="All POD">
         <source>All POD</source>

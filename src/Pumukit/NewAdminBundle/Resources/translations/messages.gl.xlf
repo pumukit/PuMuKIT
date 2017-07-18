@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="8fa0d7386b6c6c16d0acfcc76c65946f" resname="create new broadcast">
         <source>create new broadcast</source>
-        <target xml:lang="gl" state="translated">ocorreu un erro actualizando o perfil de difusión</target>
+        <target xml:lang="gl" state="translated">crear un novo perfil de difusión</target>
       </trans-unit>
       <trans-unit id="c02ce872543e9725dd596b42054315e1" resname="There was an error in creating the Broadcast.">
         <source>There was an error in creating the Broadcast.</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f" resname="Delete selected">
         <source>Delete selected</source>
-        <target xml:lang="gl" state="translated">Eliminar o elemento elixido</target>
+        <target xml:lang="gl" state="translated">Eliminalo elemento elixido</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
@@ -286,7 +286,7 @@
       </trans-unit>
       <trans-unit id="f6fb02a5710764376edd77b698cd8c60" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target xml:lang="gl" state="translated">O grupo creóuse correctamente.</target>
+        <target xml:lang="gl" state="translated">O grupo creouse correctamente.</target>
       </trans-unit>
       <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
@@ -338,7 +338,7 @@
       </trans-unit>
       <trans-unit id="ded7ed1b967339b875bd23238807d82c" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
-        <target xml:lang="gl" state="translated">Eliminar o grupo ou as súas relacións</target>
+        <target xml:lang="gl" state="translated">Eliminalo grupo ou as súas relacións</target>
       </trans-unit>
       <trans-unit id="d2e714249fd627e04790876bfa3ba1ab" resname="Group Info">
         <source>Group Info</source>
@@ -358,7 +358,7 @@
       </trans-unit>
       <trans-unit id="54440b69c35bc132e2b95cf7abfd0028" resname="Group successfully updated.">
         <source>Group successfully updated.</source>
-        <target xml:lang="gl" state="translated">O grupo actualizóuse correctamente.</target>
+        <target xml:lang="gl" state="translated">O grupo actualizouse correctamente.</target>
       </trans-unit>
       <trans-unit id="be8545ae7ab0276e15898aae7acfbd7a" resname="Resource">
         <source>Resource</source>
@@ -446,7 +446,7 @@
       </trans-unit>
       <trans-unit id="bc50fcf61628aae2749e54463b42dd4d" resname="Show player at homepage">
         <source>Show player at homepage</source>
-        <target xml:lang="gl" state="translated">Amosar o reprodutor na páxina de inicio</target>
+        <target xml:lang="gl" state="translated">Amosalo reprodutor na páxina de inicio</target>
       </trans-unit>
       <trans-unit id="cb456215c3333db0551bd0788bc258c7" resname="Activated">
         <source>Activated</source>
@@ -474,7 +474,7 @@
       </trans-unit>
       <trans-unit id="f18a9fa39e74d5489f1e50027ee12352" resname="There was an error in updating the Live channel.">
         <source>There was an error in updating the Live channel.</source>
-        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizar o canle en vivo.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizalo o canle en vivo.</target>
       </trans-unit>
       <trans-unit id="f114f4467c71d4e59ec9bebe7e9fd17a" resname="Live channel successfully updated.">
         <source>Live channel successfully updated.</source>
@@ -526,7 +526,7 @@
       </trans-unit>
       <trans-unit id="5f7afa50da145d660626f3b4d233cdbe" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
-        <target xml:lang="gl" state="translated">Advertencia: Non ten permisos suficientes para modificar os grupos administradores.</target>
+        <target xml:lang="gl" state="translated">Advertencia: Non ten permisos suficientes para modificalos grupos administradores.</target>
       </trans-unit>
       <trans-unit id="dffecb5c02ee376eac36ab3228433c91" resname="BROADCAST GROUPS">
         <source>BROADCAST GROUPS</source>
@@ -550,11 +550,11 @@
       </trans-unit>
       <trans-unit id="c1379f85e83c7ae0e84b3bce5737af85" resname="Repeat password">
         <source>Repeat password</source>
-        <target xml:lang="gl" state="translated">Repetir o contrasinal</target>
+        <target xml:lang="gl" state="translated">Repetilo contrasinal</target>
       </trans-unit>
       <trans-unit id="a15e17ae8f6fec2564e0a7eecbe4b7e3" resname="Show/Hide password">
         <source>Show/Hide password</source>
-        <target xml:lang="gl" state="translated">Amosar/Ocultar o contrasinal</target>
+        <target xml:lang="gl" state="translated">Amosalo/Ocultalo contrasinal</target>
       </trans-unit>
       <trans-unit id="e92623649bd6e020b40883a9716d7066" resname="Generate random password">
         <source>Generate random password</source>
@@ -626,19 +626,19 @@
       </trans-unit>
       <trans-unit id="62c5afd627dcf34a49c1a06cb94bd503" resname="List multimedia objects in descending order of publication date">
         <source>List multimedia objects in descending order of publication date</source>
-        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de publicación en orde descendente</target>
+        <target xml:lang="gl" state="translated">Listalos obxectos multimedia por data de publicación en orde descendente</target>
       </trans-unit>
       <trans-unit id="abe024c4d4a6ddd25313bc1267420e45" resname="List multimedia objects in ascending order of publication date">
         <source>List multimedia objects in ascending order of publication date</source>
-        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de publicación en orde ascendente</target>
+        <target xml:lang="gl" state="translated">Listalos obxectos multimedia por data de publicación en orde ascendente</target>
       </trans-unit>
       <trans-unit id="1ee1a8f62c601f99eb08919cb1b78788" resname="List multimedia objects in descending order of recording date">
         <source>List multimedia objects in descending order of recording date</source>
-        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de gravación en orde descendente</target>
+        <target xml:lang="gl" state="translated">Listalos obxectos multimedia por data de gravación en orde descendente</target>
       </trans-unit>
       <trans-unit id="869c932002d911b88a5561bc35bc9709" resname="List multimedia objects in ascending order of recording date">
         <source>List multimedia objects in ascending order of recording date</source>
-        <target xml:lang="gl" state="translated">Listar os obxectos multimedia por data de gravación en orde ascendente</target>
+        <target xml:lang="gl" state="translated">Listalos os obxectos multimedia por data de gravación en orde ascendente</target>
       </trans-unit>
       <trans-unit id="a3b2babf515370667710ada3dbd898e5" resname="Cut multimedia objects">
         <source>Cut multimedia objects</source>
@@ -678,7 +678,7 @@
       </trans-unit>
       <trans-unit id="746885175979f3a91579ce8e8934d9a3" resname="Warning: This link will show a player with no video until a display track is added.">
         <source>Warning: This link will show a player with no video until a display track is added.</source>
-        <target xml:lang="gl" state="translated">Advertencia: Este enlace amosará un reprodutor sen vídeo ata que engadirse unha pista que poida amosarse.</target>
+        <target xml:lang="gl" state="translated">Advertencia: Este enlace amosará un reprodutor sen vídeo ata que engada unha pista que poida amosarse.</target>
       </trans-unit>
       <trans-unit id="4df01400d5b64853ff3b37f4f0f44a1a" resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
         <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
@@ -874,7 +874,7 @@
       </trans-unit>
       <trans-unit id="e9db93e67639a40b42e45e12f5cbf3be" resname="Apply these tags to all multimedia objects of this series.">
         <source>Apply these tags to all multimedia objects of this series.</source>
-        <target xml:lang="gl" state="translated">Empregar estas categorías en todos os obxectos multimedia desta serie.</target>
+        <target xml:lang="gl" state="translated">Empregar estas categorías en tódolos obxectos multimedia desta serie.</target>
       </trans-unit>
       <trans-unit id="41a95201a6491434c5a0f1db23806427" resname="Sync in this series">
         <source>Sync in this series</source>
@@ -934,15 +934,15 @@
       </trans-unit>
       <trans-unit id="b7b2c8893dd7d62ca1dc190fd7e74a9c" resname="update permission profile">
         <source>update permission profile</source>
-        <target xml:lang="gl" state="translated">actualizar o perfil de permisos</target>
+        <target xml:lang="gl" state="translated">actualizalo perfil de permisos</target>
       </trans-unit>
       <trans-unit id="98d180d05e03b05aaef11261f48a73c0" resname="Edit the permission profile">
         <source>Edit the permission profile</source>
-        <target xml:lang="gl" state="translated">Editar o perfil de permisos</target>
+        <target xml:lang="gl" state="translated">Editalo perfil de permisos</target>
       </trans-unit>
       <trans-unit id="ef2f09dd794cb7afb62775c40b23f166" resname="Delete the permission profile">
         <source>Delete the permission profile</source>
-        <target xml:lang="gl" state="translated">Eliminar o perfil de permisos</target>
+        <target xml:lang="gl" state="translated">Eliminalo perfil de permisos</target>
       </trans-unit>
       <trans-unit id="eea12f8def73f982b688e9e43d73dce0" resname="create new person">
         <source>create new person</source>
@@ -982,7 +982,7 @@
       </trans-unit>
       <trans-unit id="74a80a26b2674463238bcb0b39b3379e" resname="Can't delete Person">
         <source>Can't delete Person</source>
-        <target xml:lang="gl" state="translated">Non se pode eliminar a persoa</target>
+        <target xml:lang="gl" state="translated">Non se pode eliminala persoa</target>
       </trans-unit>
       <trans-unit id="9db799f3c2e7d53753a6faca34d59847" resname="There is a referenced User">
         <source>There is a referenced User</source>
@@ -990,7 +990,7 @@
       </trans-unit>
       <trans-unit id="e1536618ab38439ce248c0e96d2b85e5" resname="Cannot delete the data of">
         <source>Cannot delete the data of</source>
-        <target xml:lang="gl" state="translated">Non se poden eliminar os datos de</target>
+        <target xml:lang="gl" state="translated">Non se poden eliminalos datos de</target>
       </trans-unit>
       <trans-unit id="10bcaacd9e075b688fb5cb5e799820c9" resname="multimedia object(s) contain(s) this person">
         <source>multimedia object(s) contain(s) this person</source>
@@ -1002,7 +1002,7 @@
       </trans-unit>
       <trans-unit id="f4d46eec2d41c4ab86e8a4a2a3ccb987" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</source>
-        <target xml:lang="gl" state="translated">Introduza o nome da persoa que quere engadir. No caso de que esa persoa xa exista na base de datos, aparecerá unha lista despregable na cal podrá seleccionala e</target>
+        <target xml:lang="gl" state="translated">Introduza o nome da persoa que quere engadir. No caso de que esa persoa xa exista na base de datos, aparecerá unha lista despregable na cal poderá seleccionala e</target>
       </trans-unit>
       <trans-unit id="98d6ceb3a5d782932eae0aa8bad56de5" resname="use him/her">
         <source>use him/her</source>
@@ -1138,11 +1138,11 @@
       </trans-unit>
       <trans-unit id="674f52e3b0f9da025517ea22383f212c" resname="Update the video to show the thumbnails">
         <source>Update the video to show the thumbnails</source>
-        <target xml:lang="gl" state="translated">Actualice o vídeo para ver as miniaturas</target>
+        <target xml:lang="gl" state="translated">Actualice o vídeo para velas miniaturas</target>
       </trans-unit>
       <trans-unit id="6f122ab955732911807408d6ab9e6fed" resname="Update the event to show the thumbnail">
         <source>Update the event to show the thumbnail</source>
-        <target xml:lang="gl" state="translated">Actualice o evento para amosar a miniatura</target>
+        <target xml:lang="gl" state="translated">Actualice o evento para amosala miniatura</target>
       </trans-unit>
       <trans-unit id="0bb9885b2f22eb2c9f84085fe3ac2255" resname="change broadcast status of multimedia objects inside the series">
         <source>change broadcast status of multimedia objects inside the series</source>
@@ -1238,7 +1238,7 @@
       </trans-unit>
       <trans-unit id="f2b23a160d7d4477a369f93b7e3f05df" resname="Delete the playlist">
         <source>Delete the playlist</source>
-        <target xml:lang="gl" state="translated">Eliminar a lista de reprodución</target>
+        <target xml:lang="gl" state="translated">Eliminala lista de reprodución</target>
       </trans-unit>
       <trans-unit id="a6074d93415afc28f99b35ce95401a46" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
@@ -1250,7 +1250,7 @@
       </trans-unit>
       <trans-unit id="10c31d548ba2ee7e3941cbcf69378cdc" resname="Add the object &quot;%title%&quot; to the playlist">
         <source>Add the object "%title%" to the playlist</source>
-        <target xml:lang="gl" state="translated">Engadir o objxecto "%title%" á lista de reprodución</target>
+        <target xml:lang="gl" state="translated">Engadilo objxecto "%title%" á lista de reprodución</target>
       </trans-unit>
       <trans-unit id="6a2fb61d3618029c43320aad0a4bcf78" resname="Add %num% multimedia objects to the playlist">
         <source>Add %num% multimedia objects to the playlist</source>
@@ -1326,7 +1326,7 @@
       </trans-unit>
       <trans-unit id="9949c8a2c8c52e71890de5cf5a9dac6a" resname="Cod">
         <source>Cod</source>
-        <target xml:lang="gl" state="needs-translation">Cod</target>
+        <target xml:lang="gl" state="translated">Cod</target>
       </trans-unit>
       <trans-unit id="a5cd3ed116608dac017f14c046ea56bf" resname="Roles">
         <source>Roles</source>
@@ -1402,11 +1402,11 @@
       </trans-unit>
       <trans-unit id="212044fb8af62aa57aae184ca36a2be7" resname="Click to modify status of all Multimedia Objects">
         <source>Click to modify status of all Multimedia Objects</source>
-        <target xml:lang="gl" state="translated">Faga clic para modificar o estado de todos os Obxectos Multimedia</target>
+        <target xml:lang="gl" state="translated">Faga clic para modificalo estado de tódolos Obxectos Multimedia</target>
       </trans-unit>
       <trans-unit id="c72112d0922fd42fa94bfd7aae5647a9" resname="Not enough privileges to modify status of all Multimedia Objects">
         <source>Not enough privileges to modify status of all Multimedia Objects</source>
-        <target xml:lang="gl" state="translated">Non ten suficientes privilexios para modificar o estado de todos os Obxectos Multimedia</target>
+        <target xml:lang="gl" state="translated">Non ten suficientes privilexios para modificalo estado de tódolos Obxectos Multimedia</target>
       </trans-unit>
       <trans-unit id="193a985036f40e2437f9a86479f617f2" resname="There are no series with those values.">
         <source>There are no series with those values.</source>
@@ -1445,11 +1445,11 @@
       </trans-unit>
       <trans-unit id="287acf341ae9b6ec834a7880b6208a16" resname="Modify broadcast profile of all multimedia objects in this Series">
         <source>Modify broadcast profile of all multimedia objects in this Series</source>
-        <target xml:lang="gl" state="translated">Modificar o perfil de difusión de todos os obxectos multimedia nesta Serie</target>
+        <target xml:lang="gl" state="translated">Modificalo perfil de difusión de tódolos obxectos multimedia nesta Serie</target>
       </trans-unit>
       <trans-unit id="99454057ff61f40ed0b061d607bc7476" resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
         <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
-        <target xml:lang="gl" state="translated">ADVERTENCIA: Todos os Obxectos Multimedia nesta Serie serán modificados co perfil de difusión elixido.</target>
+        <target xml:lang="gl" state="translated">ADVERTENCIA: Tódolos Obxectos Multimedia nesta Serie serán modificados co perfil de difusión elixido.</target>
       </trans-unit>
       <trans-unit id="f0a27743b1b9a570d8e8d76c9e5bf5ab" resname="Any Internet user can play this multimedia object in the video portal">
         <source>Any Internet user can play this multimedia object in the video portal</source>
@@ -1473,7 +1473,7 @@
       </trans-unit>
       <trans-unit id="95b0cedd46dacd21763538fd6ee2fd24" resname="Delete the series">
         <source>Delete the series</source>
-        <target xml:lang="gl" state="translated">Eliminar a serie</target>
+        <target xml:lang="gl" state="translated">Eliminala serie</target>
       </trans-unit>
       <trans-unit id="d0a747c834d69b4e8ef0ff7e507b9efe" resname="Show configuration">
         <source>Show configuration</source>
@@ -1517,7 +1517,7 @@
       </trans-unit>
       <trans-unit id="0de6b5e6b72e9a91eed9778a20f833d6" resname="Edit seriestype channel">
         <source>Edit seriestype channel</source>
-        <target xml:lang="gl" state="translated">Editar o canal do tipo de serie</target>
+        <target xml:lang="gl" state="translated">Editalo canal do tipo de serie</target>
       </trans-unit>
       <trans-unit id="cee525b9e2d94e7c51c05d7d37dc8a83" resname="{0} series types|{1} series type |]1,Inf] series types">
         <source>{0} series types|{1} series type |]1,Inf] series types</source>
@@ -1525,11 +1525,11 @@
       </trans-unit>
       <trans-unit id="e7ef1f171b86c156054a23ba566a6728" resname="modify series type">
         <source>modify series type</source>
-        <target xml:lang="gl" state="translated">modificar o tipo de serie</target>
+        <target xml:lang="gl" state="translated">modificalo tipo de serie</target>
       </trans-unit>
       <trans-unit id="f48ad79328ffcfdb95218d530002562a" resname="There was an error in updating the series type.">
         <source>There was an error in updating the series type.</source>
-        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizar o tipo de serie.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizalo tipo de serie.</target>
       </trans-unit>
       <trans-unit id="2a46c982ffe210d08adb21dbf7703c27" resname="Series type successfully updated.">
         <source>Series type successfully updated.</source>
@@ -1577,7 +1577,7 @@
       </trans-unit>
       <trans-unit id="3055b191f9efea2478875e16b7acb8f6" resname="There was an error in updating the Tag.">
         <source>There was an error in updating the Tag.</source>
-        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizar a categoría.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizala categoría.</target>
       </trans-unit>
       <trans-unit id="8da94294d519d5bd81773b59e817bf87" resname="Tag successfully updated.">
         <source>Tag successfully updated.</source>
@@ -1613,7 +1613,7 @@
       </trans-unit>
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target xml:lang="gl" state="needs-translation">Inbox on server</target>
+        <target xml:lang="gl" state="translated">Carrtafol de entrada no servidor</target>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
@@ -1665,7 +1665,7 @@
       </trans-unit>
       <trans-unit id="b3ac111fd7521343dd1a3fabce8279c2" resname="Times">
         <source>Times</source>
-        <target xml:lang="gl" state="needs-translation">Times</target>
+        <target xml:lang="gl" state="translated">Hora</target>
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
         <source>Created</source>
@@ -1749,7 +1749,7 @@
       </trans-unit>
       <trans-unit id="630fd5c224192c780dcc650d1bd94bac" resname="Update the web page to show master videos">
         <source>Update the web page to show master videos</source>
-        <target xml:lang="gl" state="translated">Actualizar a páxina para amosar os vídeos mestres</target>
+        <target xml:lang="gl" state="translated">Actualizala páxina para amosalos vídeos mestres</target>
       </trans-unit>
       <trans-unit id="dfaf09345e35103c855afaffa460c33d" resname="New Track added.">
         <source>New Track added.</source>
@@ -1845,51 +1845,51 @@
       </trans-unit>
       <trans-unit id="eee9f637fd981a6d2f32481c380a22ed" resname="Are you sure you want to delete the user">
         <source>Are you sure you want to delete the user</source>
-        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar o usuario</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminalo usuario</target>
       </trans-unit>
       <trans-unit id="17fb2da5396f939202adc1a045fa405d" resname="Error deleting user">
         <source>Error deleting user</source>
-        <target xml:lang="gl" state="needs-translation">Error deleting user</target>
+        <target xml:lang="gl" state="translated">Erro eliminando usuario</target>
       </trans-unit>
       <trans-unit id="8f9bfe9d1345237cb3b2b205864da075" resname="User">
         <source>User</source>
-        <target xml:lang="gl" state="needs-translation">User</target>
+        <target xml:lang="gl" state="translated">Usuario</target>
       </trans-unit>
       <trans-unit id="e1d9719c4816cb12250cc51b94483dc2" resname="successfully deleted.">
         <source>successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">successfully deleted.</target>
+        <target xml:lang="gl" state="translated">eliminado correctamente.</target>
       </trans-unit>
       <trans-unit id="d4a7f68aa54a8fa8eef60fc258123da3" resname="Are you sure you want to delete this broadcast?">
         <source>Are you sure you want to delete this broadcast?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this broadcast?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar este perfíl de difusión?</target>
       </trans-unit>
       <trans-unit id="edc1cf6a82f8ca14569cb7709991bbe9" resname="Broadcast successfully deleted.">
         <source>Broadcast successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Broadcast successfully deleted.</target>
+        <target xml:lang="gl" state="translated">Perfil de difusión eliminado correctamente.</target>
       </trans-unit>
       <trans-unit id="6329db6519784caf2d01b1a77796825c" resname="Impossible to delete, broadcast with">
         <source>Impossible to delete, broadcast with</source>
-        <target xml:lang="gl" state="needs-translation">Impossible to delete, broadcast with</target>
+        <target xml:lang="gl" state="translated">Imposible de eliminar, perfil de difusión con</target>
       </trans-unit>
       <trans-unit id="f87304411b5d4ef37ae8b640d2f28d91" resname="multimedia object(s).">
         <source>multimedia object(s).</source>
-        <target xml:lang="gl" state="needs-translation">multimedia object(s).</target>
+        <target xml:lang="gl" state="translated">obxecto(s) multimedia.</target>
       </trans-unit>
       <trans-unit id="7028d670d8c904d070d7e0288be8196f" resname="Are you sure you want to delete this live channel?">
         <source>Are you sure you want to delete this live channel?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this live channel?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar este canle en vivo?</target>
       </trans-unit>
       <trans-unit id="2341277909075b11f58c191da31c23a4" resname="Live channel successfully deleted.">
         <source>Live channel successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Live channel successfully deleted.</target>
+        <target xml:lang="gl" state="translated">Canle en vivo eliminado correctamente.</target>
       </trans-unit>
       <trans-unit id="c85ade026c48483d072971924a625f36" resname="Are you sure you want to delete this series type?">
         <source>Are you sure you want to delete this series type?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this series type?</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminar esta serie tipo?</target>
       </trans-unit>
       <trans-unit id="28d2f69e53f39af1cba01d6b685d2c53" resname="Series type successfully deleted.">
         <source>Series type successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Series type successfully deleted.</target>
+        <target xml:lang="gl" state="translated">Serie tipo eliminada correctamente.</target>
       </trans-unit>
       <trans-unit id="c3f0668a5a038545688bdc7c6df69379" resname="Are you sure you want to delete this live event?">
         <source>Are you sure you want to delete this live event?</source>
@@ -1933,7 +1933,7 @@
       </trans-unit>
       <trans-unit id="9053cb6cfaedd1ad871000cb2db76a8f" resname="Are you sure you want to delete the series">
         <source>Are you sure you want to delete the series</source>
-        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar a serie</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminala serie</target>
       </trans-unit>
       <trans-unit id="ba0edcf745d31523cb1825234acecfd5" resname="This series has">
         <source>This series has</source>
@@ -1949,10 +1949,7 @@
       </trans-unit>
       <trans-unit id="e4f43ec84514c27900e6395df72eb6d2" resname="Are you sure you want to delete the playlist">
         <source>Are you sure you want to delete the playlist</source>
-        <target xml:lang="gl" state="translated">Está vostede seguro de que desexa eliminar a lista de reprodución</target>
-        <alt-trans>
-          <target xml:lang="gl">Está vostede seguro de que desexa eliminar a lista de reprodución?</target>
-        </alt-trans>
+        <target xml:lang="gl" state="translated">Está vostede seguro de que desexa eliminala lista de reprodución</target>
       </trans-unit>
       <trans-unit id="f6b4a5e2a897467a97a2e124f518a548" resname="This playlist has">
         <source>This playlist has</source>
@@ -1964,55 +1961,55 @@
       </trans-unit>
       <trans-unit id="563eb67796a6982d00a8ec3c376e611c" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
-        <target xml:lang="gl" state="translated">¿Está seguro de querer eliminar o perfil de permisos</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminalo perfil de permisos</target>
       </trans-unit>
       <trans-unit id="a313f0437660f477274a9c86d2bd7b69" resname="Are you sure you want to delete this thumbnail?">
         <source>Are you sure you want to delete this thumbnail?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this thumbnail?</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminar esta miniatura?</target>
       </trans-unit>
       <trans-unit id="72837edbec96fa4410911f8ab42f7249" resname="Thumbnail removed.">
         <source>Thumbnail removed.</source>
-        <target xml:lang="gl" state="needs-translation">Thumbnail removed.</target>
+        <target xml:lang="gl" state="translated">Miniatura eliminada.</target>
       </trans-unit>
       <trans-unit id="3af9fe50987e1253e07a74e3802f6eae" resname="Are you sure you want to delete the relation of">
         <source>Are you sure you want to delete the relation of</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete the relation of</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminala relación de</target>
       </trans-unit>
       <trans-unit id="9cf074e4d98bb763f87daa99bb83fa8f" resname="Error deleting Person">
         <source>Error deleting Person</source>
-        <target xml:lang="gl" state="needs-translation">Error deleting Person</target>
+        <target xml:lang="gl" state="translated">Erro eliminando Persoa</target>
       </trans-unit>
       <trans-unit id="48ebfa4a98c6f22828b8d9879a89fde5" resname="Person successfully removed from Multimedia Object">
         <source>Person successfully removed from Multimedia Object</source>
-        <target xml:lang="gl" state="needs-translation">Person successfully removed from Multimedia Object</target>
+        <target xml:lang="gl" state="translated">A persoa eliminouse do Obxecto Multimedia</target>
       </trans-unit>
       <trans-unit id="38bde29a9a93bf2782b990cb83670012" resname="Are you sure you want to delete this link?">
         <source>Are you sure you want to delete this link?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this link?</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminar este enlace?</target>
       </trans-unit>
       <trans-unit id="043583291040c3f9e4748a7f190f40ba" resname="Are you sure you want to delete this material?">
         <source>Are you sure you want to delete this material?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this material?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar este material?</target>
       </trans-unit>
       <trans-unit id="4fdac8c3ebdea368b2a973a9aeab43e3" resname="Material successfully deleted.">
         <source>Material successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Material successfully deleted.</target>
+        <target xml:lang="gl" state="translated">O material eliminouse correctamente.</target>
       </trans-unit>
       <trans-unit id="699283fa16c69cd7c36cc5e51eaa0738" resname="Are you sure you want to delete this track?">
         <source>Are you sure you want to delete this track?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete this track?</target>
+        <target xml:lang="gl" state="translated">Está seguro de que desexa eliminar esta pista?</target>
       </trans-unit>
       <trans-unit id="5ab37128533de0a7cb2ade2f87de895b" resname="Error extracting thumbnail">
         <source>Error extracting thumbnail</source>
-        <target xml:lang="gl" state="needs-translation">Error extracting thumbnail</target>
+        <target xml:lang="gl" state="translated">Erro ao obter a miniatura</target>
       </trans-unit>
       <trans-unit id="8527935745926a5d29101e1a7eea97ff" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete the data of</target>
+        <target xml:lang="gl" state="translated">Está seguro de querer eliminar os datos de</target>
       </trans-unit>
       <trans-unit id="40bed7cf9b3d4bb3a3d7a7e3eb18c5eb" resname="Person">
         <source>Person</source>
-        <target xml:lang="gl" state="needs-translation">Person</target>
+        <target xml:lang="gl" state="translated">Persoa</target>
       </trans-unit>
       <trans-unit id="7b6d398bbcb625466c3ae0575d36c27f" resname="Error deleting Group">
         <source>Error deleting Group</source>
@@ -2024,7 +2021,7 @@
       </trans-unit>
       <trans-unit id="3103b8cd124a484278c75cbff56243c1" resname="Can not delete all users">
         <source>Can not delete all users</source>
-        <target xml:lang="gl" state="needs-translation">Can not delete all users</target>
+        <target xml:lang="gl" state="translated">Non se pode eliminar tódolos usuarios</target>
       </trans-unit>
       <trans-unit id="729a51874fe901b092899e9e8b31c97a" resname="Are you sure?">
         <source>Are you sure?</source>
@@ -2032,51 +2029,51 @@
       </trans-unit>
       <trans-unit id="41c07df10d923fdcf1e1da0e1bb35874" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object(s) successfully deleted.</target>
+        <target xml:lang="gl" state="translated">Obxecto(s) Multimedia eliminado(s) correctamente.</target>
       </trans-unit>
       <trans-unit id="8425cddbc7fc52e2dafce5c38126770a" resname="Tags with children can not be deleted.">
         <source>Tags with children can not be deleted.</source>
-        <target xml:lang="gl" state="needs-translation">Tags with children can not be deleted.</target>
+        <target xml:lang="gl" state="translated">As categorías con hijos non poden ser eliminadas.</target>
       </trans-unit>
       <trans-unit id="b11b5551b4e0c4fbdc4c40c5ff13cda5" resname="Are you sure you want to delete selected groups?">
         <source>Are you sure you want to delete selected groups?</source>
-        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminar os grupos seleccionados?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminalos grupos seleccionados?</target>
       </trans-unit>
       <trans-unit id="bf197646d2caa8ad8bed05aca91bbe47" resname="Multimedia Object cut. Paste it in the desire Series.">
         <source>Multimedia Object cut. Paste it in the desire Series.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object cut. Paste it in the desire Series.</target>
+        <target xml:lang="gl" state="translated">Corte o Obxecto Multimedia. Pégueo na Serie desexada.</target>
       </trans-unit>
       <trans-unit id="6a139f9d8492bd8b42f3bd0cbc259de2" resname="Multimedia Objects cut. Paste them in the desire Series.">
         <source>Multimedia Objects cut. Paste them in the desire Series.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Objects cut. Paste them in the desire Series.</target>
+        <target xml:lang="gl" state="translated">Corte os Obxectos Multimedia. Pégueos na Serie desexada.</target>
       </trans-unit>
       <trans-unit id="ee2e8056ac92ae0d6d20ccd30aef61e1" resname="Paste multimedia object(s) in this series?">
         <source>Paste multimedia object(s) in this series?</source>
-        <target xml:lang="gl" state="needs-translation">Paste multimedia object(s) in this series?</target>
+        <target xml:lang="gl" state="translated">Pegar obxecto(s) multimedia nesta serie?</target>
       </trans-unit>
       <trans-unit id="a9132a2a3382528cba6eba1fe7aa8c63" resname="Multimedia Object(s) pasted in the Series.">
         <source>Multimedia Object(s) pasted in the Series.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object(s) pasted in the Series.</target>
+        <target xml:lang="gl" state="translated">Obxecto(s) Multimedia pegado(s) na Serie.</target>
       </trans-unit>
       <trans-unit id="53ca7ace79077d650ccd1114d1967ed2" resname="Select any user.">
         <source>Select any user.</source>
-        <target xml:lang="gl" state="needs-translation">Select any user.</target>
+        <target xml:lang="gl" state="translated">Seleccione calquera usuario.</target>
       </trans-unit>
       <trans-unit id="c0d00a748da8ab2d097b1df373d71da9" resname="Users updated.">
         <source>Users updated.</source>
-        <target xml:lang="gl" state="needs-translation">Users updated.</target>
+        <target xml:lang="gl" state="translated">Usuarios actualizados.</target>
       </trans-unit>
       <trans-unit id="a737de563c3997a6084957bafa51b606" resname="From date must be less than to date">
         <source>From date must be less than to date</source>
-        <target xml:lang="gl" state="needs-translation">From date must be less than to date</target>
+        <target xml:lang="gl" state="translated">A data en 'Dende' debe ser anterior á data en 'Ata'</target>
       </trans-unit>
       <trans-unit id="9ff0baa6607db7919e5c36f0c416c66c" resname="Multimedia Object successfully created.">
         <source>Multimedia Object successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object successfully created.</target>
+        <target xml:lang="gl" state="translated">Obxectos Multimedia creados correctamente.</target>
       </trans-unit>
       <trans-unit id="94ddd72e85f403a49de4291c439adb55" resname="Series successfully created.">
         <source>Series successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Series successfully created.</target>
+        <target xml:lang="gl" state="translated">Series creadas correctamente.</target>
       </trans-unit>
       <trans-unit id="bbae6a45c2bc328f59f9b6dccc0eea71" resname="Playlist successfully created.">
         <source>Playlist successfully created.</source>
@@ -2084,59 +2081,59 @@
       </trans-unit>
       <trans-unit id="024f827415850540c9329c81530f7e56" resname="The given URL is not valid">
         <source>The given URL is not valid</source>
-        <target xml:lang="gl" state="needs-translation">The given URL is not valid</target>
+        <target xml:lang="gl" state="translated">A URL proporcionada non é válida</target>
       </trans-unit>
       <trans-unit id="ce7541c126ffbfd173a764a37403f4b8" resname="This directory">
         <source>This directory</source>
-        <target xml:lang="gl" state="needs-translation">This directory</target>
+        <target xml:lang="gl" state="translated">Este directorio</target>
       </trans-unit>
       <trans-unit id="332cc2f9b5e98c611de9770e8751ee5f" resname="Can not delete tag with code">
         <source>Can not delete tag with code</source>
-        <target xml:lang="gl" state="needs-translation">Can not delete tag with code</target>
+        <target xml:lang="gl" state="translated">Non se pode eliminala categoría co código</target>
       </trans-unit>
       <trans-unit id="958bb6db0834f2884df5ee7d8d3afca2" resname="Multimedia Object(s) has/have this tag">
         <source>Multimedia Object(s) has/have this tag</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object(s) has/have this tag</target>
+        <target xml:lang="gl" state="translated">O/Os Obxecto(s) Multimedia ten/teñen esta categoría</target>
       </trans-unit>
       <trans-unit id="cb2438bb89acec64f1b97f4027a0f119" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure you want to delete the tag with code</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro de querer eliminala categoría co código</target>
       </trans-unit>
       <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
         <source>Tag</source>
-        <target xml:lang="gl" state="needs-translation">Tag</target>
+        <target xml:lang="gl" state="translated">Categoría</target>
       </trans-unit>
       <trans-unit id="2608be85187f57ccbfc0c4358357d5ea" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-        <target xml:lang="gl" state="translated">ATENCIÓN: Está vostede seguro de querer eliminar todos os usuarios deste grupo?</target>
+        <target xml:lang="gl" state="translated">ATENCIÓN: Está vostede seguro de querer eliminar tódolos usuarios deste grupo?</target>
       </trans-unit>
       <trans-unit id="dc22dbfd44366a6bfe6556dd6a767dcb" resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCiÓN: Está seguro de querer eliminar tódolos Obxectos Multimedia Administrados deste Grupo?</target>
       </trans-unit>
       <trans-unit id="9b438c64b513e51ba0d094e2b1b82bb6" resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
         <source>ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCiÓN: Está seguro de querer eliminar tódolos Obxectos Multimedia Reproducibles deste Grupo?</target>
       </trans-unit>
       <trans-unit id="82b19eaea40d5e84d03c532e5fcb0551" resname="There was an error in creating the Live event.">
         <source>There was an error in creating the Live event.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in creating the Live event.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro creando o evento en vivo.</target>
       </trans-unit>
       <trans-unit id="c03bb23b13ecc2c19901db10637520ea" resname="Live event successfully created.">
         <source>Live event successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Live event successfully created.</target>
+        <target xml:lang="gl" state="translated">Evento en vivo creado correctamente.</target>
       </trans-unit>
       <trans-unit id="b85eb19c49ad6ae5643c04e2050e9cfd" resname="There was an error in creating the Live channel.">
         <source>There was an error in creating the Live channel.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in creating the Live channel.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao crear o canal en vivo.</target>
       </trans-unit>
       <trans-unit id="0079f28bf429fca6e8f954f34a29483f" resname="Live channel successfully created.">
         <source>Live channel successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Live channel successfully created.</target>
+        <target xml:lang="gl" state="translated">Canle en vivo creado correctamente.</target>
       </trans-unit>
       <trans-unit id="e43d4b8c75dd3765e8be1a1b7b890636" resname="Series type channel successfully created.">
         <source>Series type channel successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Series type channel successfully created.</target>
+        <target xml:lang="gl" state="translated">Canle de serie tipo creado correctamente.</target>
       </trans-unit>
       <trans-unit id="3c7955415edc493ea8db119150385ef0" resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
         <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
@@ -2144,35 +2141,35 @@
       </trans-unit>
       <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
         <source>There was an error in updating the User.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in updating the User.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizalo Usuario.</target>
       </trans-unit>
       <trans-unit id="169a72064864928387ee566ed5b924ba" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target xml:lang="gl" state="needs-translation">User successfully updated.</target>
+        <target xml:lang="gl" state="translated">Usuario actualizado correctamente.</target>
       </trans-unit>
       <trans-unit id="47eb4907c08a86e4b0259c67ab37f4a4" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in creating the User.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao crealo Usuario.</target>
       </trans-unit>
       <trans-unit id="030cde9ec21804cf8da3026d58a5a380" resname="User successfully created.">
         <source>User successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">User successfully created.</target>
+        <target xml:lang="gl" state="translated">Usuario creado correctamente.</target>
       </trans-unit>
       <trans-unit id="79e512ea54e5f43db17fb7c10050322f" resname="There was an error in creating the Permission Profile.">
         <source>There was an error in creating the Permission Profile.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in creating the Permission Profile.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao crealo perfil de permisos.</target>
       </trans-unit>
       <trans-unit id="187de3933caf7d0f824cf6f9c5b6c337" resname="Permission Profile successfully created.">
         <source>Permission Profile successfully created.</source>
-        <target xml:lang="gl" state="needs-translation">Permission Profile successfully created.</target>
+        <target xml:lang="gl" state="translated">Perfil de permisos creado correctamente.</target>
       </trans-unit>
       <trans-unit id="a9b570077359602dde382b40e5173ec8" resname="There was an error in updating the Permission Profile.">
         <source>There was an error in updating the Permission Profile.</source>
-        <target xml:lang="gl" state="needs-translation">There was an error in updating the Permission Profile.</target>
+        <target xml:lang="gl" state="translated">Ocorreu un erro ao actualizalo Perfil de Permisos.</target>
       </trans-unit>
       <trans-unit id="c30206a1ee7a2cdf98cb84b6841b48b0" resname="Permission Profile successfully updated.">
         <source>Permission Profile successfully updated.</source>
-        <target xml:lang="gl" state="needs-translation">Permission Profile successfully updated.</target>
+        <target xml:lang="gl" state="translated">Perfil de Permisos actualizado correctamente.</target>
       </trans-unit>
       <trans-unit id="5ec84436817819fbaf1219b8da9c27f2" resname="Permission Profiles successfully updated.">
         <source>Permission Profiles successfully updated.</source>
@@ -2180,11 +2177,11 @@
       </trans-unit>
       <trans-unit id="a3d650637f548245812dc4c60f39a280" resname="The permission">
         <source>The permission</source>
-        <target xml:lang="gl" state="needs-translation">The permission</target>
+        <target xml:lang="gl" state="translated">O permiso</target>
       </trans-unit>
       <trans-unit id="c650841b9802722b6f156d72099f23ee" resname="is dependent of the permission(s)">
         <source>is dependent of the permission(s)</source>
-        <target xml:lang="gl" state="needs-translation">is dependent of the permission(s)</target>
+        <target xml:lang="gl" state="translated">depende do/dos permiso(s)</target>
       </trans-unit>
       <trans-unit id="a9f964b6bb8a5a322515b7d99969314f" resname="If you click OK you will uncheck all these permissions. Are you sure?">
         <source>If you click OK you will uncheck all these permissions. Are you sure?</source>
@@ -2192,27 +2189,27 @@
       </trans-unit>
       <trans-unit id="7e05819f596fc786d34b03ea3a3c1c42" resname="ATTENTION: Are you sure you want to delete this User from this Group?">
         <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete this User from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCIÓN: Está seguro de querer eliminar este Usuario deste Grupo?</target>
       </trans-unit>
       <trans-unit id="59c2d94d5c2d43c387e4021074e079ac" resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCIÓN: Está seguro de querer eliminar este Obxecto Multimedia Administrado deste Grupo?</target>
       </trans-unit>
       <trans-unit id="6d407c8ae795ae481d0bd26d9fc63b92" resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
         <source>ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</source>
-        <target xml:lang="gl" state="needs-translation">ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</target>
+        <target xml:lang="gl" state="translated">ATENCiÓN: Está seguro de querer eliminar este Obxecto Multimedia Reproducible deste Grupo?</target>
       </trans-unit>
       <trans-unit id="d7d950ec91d4c06845156811a0084853" resname="WARNING: You will no longer have access to this Multimedia Object.">
         <source>WARNING: You will no longer have access to this Multimedia Object.</source>
-        <target xml:lang="gl" state="needs-translation">WARNING: You will no longer have access to this Multimedia Object.</target>
+        <target xml:lang="gl" state="translated">ADVERTENCIA: Deixará de ter acceso a este Obxecto Multimedia.</target>
       </trans-unit>
       <trans-unit id="90e394e53e9896a196e22f4b7d2fa1aa" resname="Any Internet user can play this multimedia object">
         <source>Any Internet user can play this multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Any Internet user can play this multimedia object</target>
+        <target xml:lang="gl" state="translated">Calquera usuario de Internet pode reproducir este obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="d62721a20e444a58b4753aa63a995265" resname="Only users with the defined password can play this multimedia object">
         <source>Only users with the defined password can play this multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Only users with the defined password can play this multimedia object</target>
+        <target xml:lang="gl" state="translated">Só os usuarios co contrasinal definido poderán reproducir este obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="61ee265a4986d33b3abbc8bfa87e82e0" resname="Only logged in users in the system can play this multimedia object">
         <source>Only logged in users in the system can play this multimedia object</source>
@@ -2220,43 +2217,43 @@
       </trans-unit>
       <trans-unit id="6ee1d7777bee7c24bc7764aa031ef762" resname="Only users in the selected Groups can play this multimedia object">
         <source>Only users in the selected Groups can play this multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Only users in the selected Groups can play this multimedia object</target>
+        <target xml:lang="gl" state="translated">Só os usuarios nos Grupos seleccionados poderán reproducir este obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="d5ddfae94fbec629e0f0535615b05fdd" resname="Media Manager">
         <source>Media Manager</source>
-        <target xml:lang="gl" state="needs-translation">Media Manager</target>
+        <target xml:lang="gl" state="translated">Xestor de contidos</target>
       </trans-unit>
       <trans-unit id="452a7601dbc6f2c38aa89e68bda8b603" resname="Stats">
         <source>Stats</source>
-        <target xml:lang="gl" state="needs-translation">Stats</target>
+        <target xml:lang="gl" state="translated">Estadísticas</target>
       </trans-unit>
       <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
-        <target xml:lang="gl" state="needs-translation">Live</target>
+        <target xml:lang="gl" state="translated">Directos</target>
       </trans-unit>
       <trans-unit id="da23c48b10196885e040559efc3bc716" resname="Live Channels">
         <source>Live Channels</source>
-        <target xml:lang="gl" state="needs-translation">Live Channels</target>
+        <target xml:lang="gl" state="translated">Canles de Directo</target>
       </trans-unit>
       <trans-unit id="b707c92b1edc44effce6cb88dfc5c0ef" resname="Live Events">
         <source>Live Events</source>
-        <target xml:lang="gl" state="needs-translation">Live Events</target>
+        <target xml:lang="gl" state="translated">Eventos en Directo</target>
       </trans-unit>
       <trans-unit id="34d6e8ba053900267b682d33ec7a5a80" resname="Encoder jobs">
         <source>Encoder jobs</source>
-        <target xml:lang="gl" state="needs-translation">Encoder jobs</target>
+        <target xml:lang="gl" state="translated">Tarefas de codificación</target>
       </trans-unit>
       <trans-unit id="651ae5789ab776f2fcaf80b5e62801dc" resname="Tables">
         <source>Tables</source>
-        <target xml:lang="gl" state="needs-translation">Tables</target>
+        <target xml:lang="gl" state="translated">Táboas</target>
       </trans-unit>
       <trans-unit id="fe4dbcab9b910577e5035e97ac068dae" resname="Management">
         <source>Management</source>
-        <target xml:lang="gl" state="needs-translation">Management</target>
+        <target xml:lang="gl" state="translated">Administración</target>
       </trans-unit>
       <trans-unit id="3832dee32fb5053c64441a629488b42a" resname="Admin users">
         <source>Admin users</source>
-        <target xml:lang="gl" state="needs-translation">Admin users</target>
+        <target xml:lang="gl" state="translated">Usuarios administradores</target>
       </trans-unit>
       <trans-unit id="83a203553faed8d8ecc37700756273be" resname="Permission profiles">
         <source>Permission profiles</source>
@@ -2264,35 +2261,35 @@
       </trans-unit>
       <trans-unit id="8625e1de7be14c39b1d14dc03d822497" resname="Tools">
         <source>Tools</source>
-        <target xml:lang="gl" state="needs-translation">Tools</target>
+        <target xml:lang="gl" state="translated">Ferramentas</target>
       </trans-unit>
       <trans-unit id="4b8141e27afd35a6ee26d006316d7721" resname="OC-Importer">
         <source>OC-Importer</source>
-        <target xml:lang="gl" state="needs-translation">OC-Importer</target>
+        <target xml:lang="gl" state="translated">Importador OC</target>
       </trans-unit>
       <trans-unit id="f040dc03ee5ceda15a7a4d39ae18d210" resname="My Multimedia Objects">
         <source>My Multimedia Objects</source>
-        <target xml:lang="gl" state="needs-translation">My Multimedia Objects</target>
+        <target xml:lang="gl" state="translated">Os meus Obxectos Multimedia</target>
       </trans-unit>
       <trans-unit id="e622429156edfbdf560c765a86d633ce" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
         <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
-        <target xml:lang="gl" state="needs-translation">{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
+        <target xml:lang="gl" state="translated">{0} |{1} 1 tarefa pendente.  |]1,Inf[ %count% tarefas pendentes.</target>
       </trans-unit>
       <trans-unit id="215f26215b6734e1db7b1473532c0530" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
         <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
-        <target xml:lang="gl" state="needs-translation">{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</target>
+        <target xml:lang="gl" state="translated">{0} |{1} 1 tarefa en execución. |]1,Inf[ %count% tarefas en execución.</target>
       </trans-unit>
       <trans-unit id="b12959058e1e722f9e557ffccfbbf96e" resname="Multimedia object preview">
         <source>Multimedia object preview</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia object preview</target>
+        <target xml:lang="gl" state="translated">Vista previa do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="a179bfbcfd79b846e9321376e49f1397" resname="The multimedia object '%title%' is not playable">
         <source>The multimedia object '%title%' is not playable</source>
-        <target xml:lang="gl" state="needs-translation">The multimedia object '%title%' is not playable</target>
+        <target xml:lang="gl" state="translated">Non se pode reproducir o obxecto multimedia '%title%'</target>
       </trans-unit>
       <trans-unit id="096783234f0908eb8e8cdda7c3e12e75" resname="The multimedia object '%title%' is not published">
         <source>The multimedia object '%title%' is not published</source>
-        <target xml:lang="gl" state="needs-translation">The multimedia object '%title%' is not published</target>
+        <target xml:lang="gl" state="translated">Non se pode publicar o obxecto multimedia '%title%'</target>
       </trans-unit>
       <trans-unit id="01a6cb8dcbd38ae87536e8142909224f" resname="My Moodle Playlists">
         <source>My Moodle Playlists</source>
@@ -2308,11 +2305,11 @@
       </trans-unit>
       <trans-unit id="e499d880b861f4238bf7305842298db6" resname="This user does not own any multimedia objects">
         <source>This user does not own any multimedia objects</source>
-        <target xml:lang="gl" state="needs-translation">This user does not own any multimedia objects</target>
+        <target xml:lang="gl" state="translated">Este usuario non é propietario de ningún obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="0448191f48f4a6fcec112c635d80b132" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Edit multimedia object</target>
+        <target xml:lang="gl" state="translated">Editar obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="56014549547131f0a7aada0a6e2755f3" resname="Delete multimedia object from de playlist">
         <source>Delete multimedia object from de playlist</source>
@@ -2320,15 +2317,15 @@
       </trans-unit>
       <trans-unit id="6aa2a91ae07341251a38ce9baba096c2" resname="My Multimedia Series">
         <source>My Multimedia Series</source>
-        <target xml:lang="gl" state="needs-translation">My Multimedia Series</target>
+        <target xml:lang="gl" state="translated">As miñas Series Multimedia</target>
       </trans-unit>
       <trans-unit id="2b43a6b1eccbd8daef150f773042aa8c" resname="List multimedia objects of the series">
         <source>List multimedia objects of the series</source>
-        <target xml:lang="gl" state="needs-translation">List multimedia objects of the series</target>
+        <target xml:lang="gl" state="translated">Lista de obxectos multimedia da serie</target>
       </trans-unit>
       <trans-unit id="5e79b0d8a06fd5dbe575442ebb51ee65" resname="Go to series">
         <source>Go to series</source>
-        <target xml:lang="gl" state="needs-translation">Go to series</target>
+        <target xml:lang="gl" state="translated">Ir ás series</target>
       </trans-unit>
       <trans-unit id="39985c3fc2a605a19b4b7e1f83b8c543" resname="Go to playlists">
         <source>Go to playlists</source>
@@ -2336,7 +2333,7 @@
       </trans-unit>
       <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target xml:lang="gl" state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+        <target xml:lang="gl" state="translated">Introduza o nombre da persoa que quere engadir. No caso de que esa persoa xa exista na base de datos, aparecerá unha lista despregable na cal poderá seleccionala e &lt;strong&gt;usala&lt;/strong&gt;. Senón existe na base de datos, &lt;strong&gt;cree&lt;/strong&gt; unha nova entrada co nome</target>
       </trans-unit>
       <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
         <source>My Playlists</source>
@@ -2348,23 +2345,23 @@
       </trans-unit>
       <trans-unit id="949eb1e696fd6358006f4828f0dbf865" resname="My Series">
         <source>My Series</source>
-        <target xml:lang="gl" state="needs-translation">My Series</target>
+        <target xml:lang="gl" state="translated">As miñas series</target>
       </trans-unit>
       <trans-unit id="867343577fa1f33caa632a19543bd252" resname="Keywords">
         <source>Keywords</source>
-        <target xml:lang="gl" state="needs-translation">Keywords</target>
+        <target xml:lang="gl" state="translated">Palabras Clave</target>
       </trans-unit>
       <trans-unit id="6016a2b341113bf496b719905398ecd2" resname="Copyright">
         <source>Copyright</source>
-        <target xml:lang="gl" state="needs-translation">Copyright</target>
+        <target xml:lang="gl" state="translated">Dereitos de autor</target>
       </trans-unit>
       <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
         <source>License</source>
-        <target xml:lang="gl" state="needs-translation">License</target>
+        <target xml:lang="gl" state="translated">Licenza</target>
       </trans-unit>
       <trans-unit id="2b3b9b61e8fc6dd332b0ed323c03a6eb" resname="Publication Date">
         <source>Publication Date</source>
-        <target xml:lang="gl" state="needs-translation">Publication Date</target>
+        <target xml:lang="gl" state="translated">Data de publicación</target>
       </trans-unit>
       <trans-unit id="947ba93ec078bdb6d2e549cf6abda63a" resname="Recording Date">
         <source>Recording Date</source>
@@ -2372,195 +2369,195 @@
       </trans-unit>
       <trans-unit id="c994e942a74632f42cc7c6a620cb4170" resname="Header Text">
         <source>Header Text</source>
-        <target xml:lang="gl" state="needs-translation">Header Text</target>
+        <target xml:lang="gl" state="translated">Texto de encabezado</target>
       </trans-unit>
       <trans-unit id="2d0644f36acd270644efd8e35980e7cd" resname="Footer Text">
         <source>Footer Text</source>
-        <target xml:lang="gl" state="needs-translation">Footer Text</target>
+        <target xml:lang="gl" state="translated">Texto do pé de páxina</target>
       </trans-unit>
       <trans-unit id="278c491bdd8a53618c149c4ac790da34" resname="Template">
         <source>Template</source>
-        <target xml:lang="gl" state="needs-translation">Template</target>
+        <target xml:lang="gl" state="translated">Plantilla</target>
       </trans-unit>
       <trans-unit id="930b8c3c83b91181a331f0d737c67476" resname="Subseries">
         <source>Subseries</source>
-        <target xml:lang="gl" state="needs-translation">Subseries</target>
+        <target xml:lang="gl" state="translated">Subseries</target>
       </trans-unit>
       <trans-unit id="4020d50ee12e4b5063fb4137dce9b739" resname="USERS">
         <source>USERS</source>
-        <target xml:lang="gl" state="needs-translation">USERS</target>
+        <target xml:lang="gl" state="translated">USUARIOS</target>
       </trans-unit>
       <trans-unit id="b3e5c110448bc59ded1173ef3c950612" resname="ADMIN MULTIMEDIA OBJECTS">
         <source>ADMIN MULTIMEDIA OBJECTS</source>
-        <target xml:lang="gl" state="needs-translation">ADMIN MULTIMEDIA OBJECTS</target>
+        <target xml:lang="gl" state="translated">ADMINISTRACIÓN DE OBXECTOS MULTIMEDIA</target>
       </trans-unit>
       <trans-unit id="2e8b54f9c9c331f8563bf970ed457a6b" resname="PLAY MULTIMEDIA OBJECTS">
         <source>PLAY MULTIMEDIA OBJECTS</source>
-        <target xml:lang="gl" state="needs-translation">PLAY MULTIMEDIA OBJECTS</target>
+        <target xml:lang="gl" state="translated">REPRODUCIÓN DE OBXECTOS MULTIMEDIA</target>
       </trans-unit>
       <trans-unit id="ea3d36cf90bb480aab9af57ec9ff9c6d" resname="Magic Url">
         <source>Magic Url</source>
-        <target xml:lang="gl" state="needs-translation">Magic Url</target>
+        <target xml:lang="gl" state="translated">Url Máxica</target>
       </trans-unit>
       <trans-unit id="d280bac8163cec97cf883e810414356a" resname="Is part of">
         <source>Is part of</source>
-        <target xml:lang="gl" state="needs-translation">Is part of</target>
+        <target xml:lang="gl" state="translated">Pertence á serie</target>
       </trans-unit>
       <trans-unit id="2b8ba42c8bb3f57b0d36f683bdc7e8ba" resname="No tags">
         <source>No tags</source>
-        <target xml:lang="gl" state="needs-translation">No tags</target>
+        <target xml:lang="gl" state="translated">Sen categorías</target>
       </trans-unit>
       <trans-unit id="3de416b3cae663f5745aba3830466ed8" resname="Login from">
         <source>Login from</source>
-        <target xml:lang="gl" state="needs-translation">Login from</target>
+        <target xml:lang="gl" state="translated">Sesión iniciada dende</target>
       </trans-unit>
       <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
         <source>Logout</source>
-        <target xml:lang="gl" state="needs-translation">Logout</target>
+        <target xml:lang="gl" state="translated">Pechar sesión</target>
       </trans-unit>
       <trans-unit id="ce5768e0e63e0c65fa630b67f203404b" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
-        <target xml:lang="gl" state="needs-translation">Published Multimedia Object(s)</target>
+        <target xml:lang="gl" state="translated">Obxecto(s) multimedia publicado(s)</target>
       </trans-unit>
       <trans-unit id="a5ece1faf05dfd55a81f9ac6eddacfaf" resname="Hidden Multimedia Object(s)">
         <source>Hidden Multimedia Object(s)</source>
-        <target xml:lang="gl" state="needs-translation">Hidden Multimedia Object(s)</target>
+        <target xml:lang="gl" state="translated">Obxecto(s) multimedia oculto(s)</target>
       </trans-unit>
       <trans-unit id="3ce2d527d5d326fcde609139b44ef14f" resname="Blocked Multimedia Object(s)">
         <source>Blocked Multimedia Object(s)</source>
-        <target xml:lang="gl" state="needs-translation">Blocked Multimedia Object(s)</target>
+        <target xml:lang="gl" state="translated">Obxecto(s) Multimedia Bloqueado(s)</target>
       </trans-unit>
       <trans-unit id="c0bd5e93fb36b061318a7a0a0ae0c4af" resname="No tags found with this criteria">
         <source>No tags found with this criteria</source>
-        <target xml:lang="gl" state="needs-translation">No tags found with this criteria</target>
+        <target xml:lang="gl" state="translated">Non hai categorías con este criterio</target>
       </trans-unit>
       <trans-unit id="d1ae987b7c965cbd288021882edf02ce" resname="Insert filter...">
         <source>Insert filter...</source>
-        <target xml:lang="gl" state="needs-translation">Insert filter...</target>
+        <target xml:lang="gl" state="translated">Insira filtro...</target>
       </trans-unit>
       <trans-unit id="e776ae357de310dcfd7159f11188aace" resname="Login since">
         <source>Login since</source>
-        <target xml:lang="gl" state="needs-translation">Login since</target>
+        <target xml:lang="gl" state="translated">Sesión iniciada dende</target>
       </trans-unit>
       <trans-unit id="94562c7a1cc5e4824ab689927f57cc07" resname="Edit non local user">
         <source>Edit non local user</source>
-        <target xml:lang="gl" state="needs-translation">Edit non local user</target>
+        <target xml:lang="gl" state="translated">Editar usuario non local</target>
       </trans-unit>
       <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
         <source>modify non local user</source>
-        <target xml:lang="gl" state="needs-translation">modify non local user</target>
+        <target xml:lang="gl" state="translated">editar usuario non local</target>
       </trans-unit>
       <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
         <source>Error promoting user</source>
-        <target xml:lang="gl" state="needs-translation">Error promoting user</target>
+        <target xml:lang="gl" state="translated">Erro promocionando usuario</target>
       </trans-unit>
       <trans-unit id="ce5bf551379459c1c61d2a204061c455" resname="Location">
         <source>Location</source>
-        <target xml:lang="gl" state="needs-translation">Location</target>
+        <target xml:lang="gl" state="translated">Lugar</target>
       </trans-unit>
       <trans-unit id="14cb425d8170ed04f3d8016d5a0ccf20" resname="Channels">
         <source>Channels</source>
-        <target xml:lang="gl" state="needs-translation">Channels</target>
+        <target xml:lang="gl" state="translated">Canles</target>
       </trans-unit>
       <trans-unit id="25f7347236b51a5eae4ba01a7862cb55" resname="Schedule">
         <source>Schedule</source>
-        <target xml:lang="gl" state="needs-translation">Schedule</target>
+        <target xml:lang="gl" state="translated">Programación</target>
       </trans-unit>
       <trans-unit id="7c4e293d2026ae87797c8368b4e0b50d" resname="Announce">
         <source>Announce</source>
-        <target xml:lang="gl" state="needs-translation">Announce</target>
+        <target xml:lang="gl" state="translated">Anunciado</target>
       </trans-unit>
       <trans-unit id="2f05998d2a71cdc19b7109549bbe2646" resname="STREAM">
         <source>STREAM</source>
-        <target xml:lang="gl" state="needs-translation">STREAM</target>
+        <target xml:lang="gl" state="translated">STREAM</target>
       </trans-unit>
       <trans-unit id="e7e767d7c0e58b16e57d3ab16150db80" resname="Technology">
         <source>Technology</source>
-        <target xml:lang="gl" state="needs-translation">Technology</target>
+        <target xml:lang="gl" state="translated">Tecnoloxía</target>
       </trans-unit>
       <trans-unit id="2b04c55d965ae0389fb7c3cf48ae335a" resname="Qualities">
         <source>Qualities</source>
-        <target xml:lang="gl" state="needs-translation">Qualities</target>
+        <target xml:lang="gl" state="translated">Calidades</target>
       </trans-unit>
       <trans-unit id="3621b45dde403e2543b561294aab35e6" resname="IP source">
         <source>IP source</source>
-        <target xml:lang="gl" state="needs-translation">IP source</target>
+        <target xml:lang="gl" state="translated">IP Orixe</target>
       </trans-unit>
       <trans-unit id="1bd204c5dc85295ede7e6a600ab6b472" resname="Last Added (Announced)">
         <source>Last Added (Announced)</source>
-        <target xml:lang="gl" state="needs-translation">Last Added (Announced)</target>
+        <target xml:lang="gl" state="translated">Últimos Engadidos (Anunciado)</target>
       </trans-unit>
       <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
-        <target xml:lang="gl" state="needs-translation">Subtitle</target>
+        <target xml:lang="gl" state="translated">Subtítulo</target>
       </trans-unit>
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
-        <target xml:lang="gl" state="needs-translation">Headline</target>
+        <target xml:lang="gl" state="translated">Titular</target>
       </trans-unit>
       <trans-unit id="66229fde78c4665849b90f9fedea6881" resname="zip - Compress file">
         <source>zip - Compress file</source>
-        <target xml:lang="gl" state="needs-translation">zip - Compress file</target>
+        <target xml:lang="gl" state="translated">zip - Arquivo comprimido</target>
       </trans-unit>
       <trans-unit id="9c329c025958466cf21139235503c65f" resname="tgz - Compress file">
         <source>tgz - Compress file</source>
-        <target xml:lang="gl" state="needs-translation">tgz - Compress file</target>
+        <target xml:lang="gl" state="translated">tgz - Arquivo comprimido</target>
       </trans-unit>
       <trans-unit id="7ef0e40f79bba5ecf5d9a8000112e0a9" resname="tar - Backup file">
         <source>tar - Backup file</source>
-        <target xml:lang="gl" state="needs-translation">tar - Backup file</target>
+        <target xml:lang="gl" state="translated">tar - Arquivo copia de seguridade</target>
       </trans-unit>
       <trans-unit id="976e82b6f91426ad1e99bb78d7a4930c" resname="swf - Flash file">
         <source>swf - Flash file</source>
-        <target xml:lang="gl" state="needs-translation">swf - Flash file</target>
+        <target xml:lang="gl" state="translated">swf - Arquivo flash</target>
       </trans-unit>
       <trans-unit id="4388686ca3334db76426f4d674fc8115" resname="rar - Compress file">
         <source>rar - Compress file</source>
-        <target xml:lang="gl" state="needs-translation">rar - Compress file</target>
+        <target xml:lang="gl" state="translated">rar - Arquivo comprimido</target>
       </trans-unit>
       <trans-unit id="80116d88597d1535dde025b0388faebb" resname="ppt - Power Point file">
         <source>ppt - Power Point file</source>
-        <target xml:lang="gl" state="needs-translation">ppt - Power Point file</target>
+        <target xml:lang="gl" state="translated">ppt - Arquivo de PowerPoint</target>
       </trans-unit>
       <trans-unit id="ed981faa220300cea4458c0e9deff7da" resname="pps - Power Point file">
         <source>pps - Power Point file</source>
-        <target xml:lang="gl" state="needs-translation">pps - Power Point file</target>
+        <target xml:lang="gl" state="translated">pps - Arquivo de PowerPoint</target>
       </trans-unit>
       <trans-unit id="54a2000339679bb1f54ad06b429bf034" resname="pdf - PDF file">
         <source>pdf - PDF file</source>
-        <target xml:lang="gl" state="needs-translation">pdf - PDF file</target>
+        <target xml:lang="gl" state="translated">pdf - Arquivo PDF</target>
       </trans-unit>
       <trans-unit id="48ec292d136b557b78ea59735b4cec80" resname="mp3 - MP3 file">
         <source>mp3 - MP3 file</source>
-        <target xml:lang="gl" state="needs-translation">mp3 - MP3 file</target>
+        <target xml:lang="gl" state="translated">mp3 - Arquivo MP3</target>
       </trans-unit>
       <trans-unit id="42953541a254c2a2272dd3a9ca48aeb3" resname="gz - Compress file">
         <source>gz - Compress file</source>
-        <target xml:lang="gl" state="needs-translation">gz - Compress file</target>
+        <target xml:lang="gl" state="translated">gz - Arquivo comprimido</target>
       </trans-unit>
       <trans-unit id="8ac9b92d0fb9f8a49d1b1a6f5a12116c" resname="doc - Word file">
         <source>doc - Word file</source>
-        <target xml:lang="gl" state="needs-translation">doc - Word file</target>
+        <target xml:lang="gl" state="translated">doc - Arquivo de Word</target>
       </trans-unit>
       <trans-unit id="77812a51703949b0e06be9f0fd645d6e" resname="srt - Text-captions srt">
         <source>srt - Text-captions srt</source>
-        <target xml:lang="gl" state="needs-translation">srt - Text-captions srt</target>
+        <target xml:lang="gl" state="translated">srt - Subtítulos srt</target>
       </trans-unit>
       <trans-unit id="f161fd04576ad81116f4a76432ea733e" resname="vtt - Video Text Tracks">
         <source>vtt - Video Text Tracks</source>
-        <target xml:lang="gl" state="needs-translation">vtt - Video Text Tracks</target>
+        <target xml:lang="gl" state="translated">vtt - Subtítulos vtt</target>
       </trans-unit>
       <trans-unit id="155b1df1148cc19be298f9507aa3964d" resname="dfxp - Distribution Format Exchange Profile">
         <source>dfxp - Distribution Format Exchange Profile</source>
-        <target xml:lang="gl" state="needs-translation">dfxp - Distribution Format Exchange Profile</target>
+        <target xml:lang="gl" state="translated">dfxp - Arquivo dfxp</target>
       </trans-unit>
       <trans-unit id="31e5ffbe4c0d489a392f12ebeb163c77" resname="IFRAME">
         <source>IFRAME</source>
-        <target xml:lang="gl" state="needs-translation">IFRAME</target>
+        <target xml:lang="gl" state="translated">IFRAME</target>
       </trans-unit>
       <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
-        <target xml:lang="gl" state="needs-translation">Successfully updated groups in User.</target>
+        <target xml:lang="gl" state="translated">Actualizados satisfactoriamente os grupos no usuario.</target>
       </trans-unit>
       <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
@@ -2568,19 +2565,19 @@
       </trans-unit>
       <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
-        <target xml:lang="gl" state="needs-translation">Successfully updated Broadcast.</target>
+        <target xml:lang="gl" state="translated">Actualizada satisfactoriamente a difusión.</target>
       </trans-unit>
       <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-        <target xml:lang="gl" state="needs-translation">Successfully updated Broadcast in all Multimedia Objects.</target>
+        <target xml:lang="gl" state="translated">Actualizada satisfactoriamente a difusión en tódolos obxectos multimedia.</target>
       </trans-unit>
       <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
-        <target xml:lang="gl" state="needs-translation">Any Internet user can play the new multimedia objects created from this video template</target>
+        <target xml:lang="gl" state="translated">Calquera usuario de Internet pode reproducir os novos obxectos multimedia creados a partir desta plantilla de video</target>
       </trans-unit>
       <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe" resname="Only users with the defined password can play the new multimedia objects created from this video template">
         <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
-        <target xml:lang="gl" state="needs-translation">Only users with the defined password can play the new multimedia objects created from this video template</target>
+        <target xml:lang="gl" state="translated">Só os usuarios co contrasinal definido poderán reproducir os novos obxectos multimedia creados a partir desta plantilla de vídeo</target>
       </trans-unit>
       <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
@@ -2592,19 +2589,19 @@
       </trans-unit>
       <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
         <source>Upload new videos</source>
-        <target xml:lang="gl" state="needs-translation">Upload new videos</target>
+        <target xml:lang="gl" state="translated">Subir novos videos</target>
       </trans-unit>
       <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia List</target>
+        <target xml:lang="gl" state="translated">Lista Multimedia</target>
       </trans-unit>
       <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
         <source>This Series is announced</source>
-        <target xml:lang="gl" state="needs-translation">This Series is announced</target>
+        <target xml:lang="gl" state="translated">Esta serie anunciouse</target>
       </trans-unit>
       <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target xml:lang="gl" state="needs-translation">No multimedia object selected</target>
+        <target xml:lang="gl" state="translated">No se seleccionou ningún obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
         <source>Search by title, subtitle, description or id</source>
@@ -2616,27 +2613,27 @@
       </trans-unit>
       <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
         <source>Filter</source>
-        <target xml:lang="gl" state="needs-translation">Filter</target>
+        <target xml:lang="gl" state="translated">Filtrar</target>
       </trans-unit>
       <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
         <source>Manual</source>
-        <target xml:lang="gl" state="needs-translation">Manual</target>
+        <target xml:lang="gl" state="translated">Manual</target>
       </trans-unit>
       <trans-unit id="8d22099edc8511ac766a4ab475e45e9e" resname="Series picture">
         <source>Series picture</source>
-        <target xml:lang="gl" state="needs-translation">Series picture</target>
+        <target xml:lang="gl" state="translated">Imaxe da serie</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
-        <target xml:lang="gl" state="needs-translation">Logo</target>
+        <target xml:lang="gl" state="translated">Imaxe</target>
       </trans-unit>
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
-        <target xml:lang="gl" state="needs-translation">Filter Series</target>
+        <target xml:lang="gl" state="translated">Filtrar series</target>
       </trans-unit>
       <trans-unit id="d6c848ec0828f35523866749da4c83de" resname="Series publication status">
         <source>Series publication status</source>
-        <target xml:lang="gl" state="needs-translation">Series publication status</target>
+        <target xml:lang="gl" state="translated">Estado de publicación da serie</target>
       </trans-unit>
       <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
         <source>Menu</source>
@@ -2644,7 +2641,7 @@
       </trans-unit>
       <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
         <source>Select the number of series to display per page.</source>
-        <target xml:lang="gl" state="needs-translation">Select the number of series to display per page.</target>
+        <target xml:lang="gl" state="translated">Seleccione o número de series a mostrar por páxina.</target>
       </trans-unit>
       <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
         <source>Select the number of playlists to display per page.</source>
@@ -2652,7 +2649,7 @@
       </trans-unit>
       <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
-        <target xml:lang="gl" state="needs-translation">Select the number of multimedia objects to display per page.</target>
+        <target xml:lang="gl" state="translated">Seleccione o número de obxectos multimedia a mostrar por páxina.</target>
       </trans-unit>
     </body>
   </file>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="7df96b18c230f90ada0a9e2307226338" resname="Templates">
         <source>Templates</source>
-        <target xml:lang="gl" state="needs-translation">Templates</target>
+        <target xml:lang="gl" state="translated">Plantillas</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="28b80975b6641681ee6985abaf438677" resname="No templates">
         <source>No templates</source>
-        <target xml:lang="gl" state="needs-translation">No templates</target>
+        <target xml:lang="gl" state="translated">Ningunha plantilla</target>
       </trans-unit>
       <trans-unit id="025d35ee660e2039bb53f0638cc85712" resname="Access Templates section">
         <source>Access Templates section</source>
-        <target xml:lang="gl" state="needs-translation">Access Templates section</target>
+        <target xml:lang="gl" state="translated">Sección para plantillas</target>
       </trans-unit>
     </body>
   </file>

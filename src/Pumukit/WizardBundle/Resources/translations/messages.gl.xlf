@@ -167,7 +167,7 @@
       </trans-unit>
       <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target xml:lang="gl" state="needs-translation">Inbox on server</target>
+        <target xml:lang="gl" state="translated">Bandeixa de entrada no servidor</target>
       </trans-unit>
       <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
         <source>Local hard drive</source>
@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="606257a79c31efa1d61589c6a48f5b2e" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
-        <target xml:lang="gl" state="needs-translation">Inbox directory on server</target>
+        <target xml:lang="gl" state="translated">Cartafol da bandexa de entrada no servidor</target>
       </trans-unit>
       <trans-unit id="45c1d7f6167c454c8e40dc9dbe8b9432" resname="Audio/video file">
         <source>Audio/video file</source>

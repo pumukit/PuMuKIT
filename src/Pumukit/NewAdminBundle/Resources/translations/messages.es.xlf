@@ -2041,7 +2041,10 @@
       </trans-unit>
       <trans-unit id="8527935745926a5d29101e1a7eea97ff" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target xml:lang="es-ES" state="translated">Está seguro de querer eliminar los datos de</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar los datos de</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Está seguro de querer eliminar los datos de</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="40bed7cf9b3d4bb3a3d7a7e3eb18c5eb" resname="Person">
         <source>Person</source>
@@ -2133,10 +2136,7 @@
       </trans-unit>
       <trans-unit id="cb2438bb89acec64f1b97f4027a0f119" resname="Are you sure you want to delete the tag with code">
         <source>Are you sure you want to delete the tag with code</source>
-        <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el código?</target>
-        <alt-trans>
-          <target xml:lang="es-ES">¿Estás seguro de querer eliminar la categoría con el código</target>
-        </alt-trans>
+        <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el código</target>
       </trans-unit>
       <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
         <source>Tag</source>
@@ -2184,7 +2184,10 @@
       </trans-unit>
       <trans-unit id="169a72064864928387ee566ed5b924ba" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target xml:lang="es-ES" state="translated">Usuario actualizado correctamete.</target>
+        <target xml:lang="es-ES" state="translated">Usuario actualizado correctamente.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Usuario actualizado correctamete.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="47eb4907c08a86e4b0259c67ab37f4a4" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
@@ -2378,7 +2381,10 @@
       </trans-unit>
       <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
         </alt-trans>
@@ -2470,7 +2476,10 @@
       </trans-unit>
       <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
         <source>Logout</source>
-        <target xml:lang="es-ES" state="translated">Desconectar</target>
+        <target xml:lang="es-ES" state="translated">Cerrar sesión</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Desconectar</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ce5768e0e63e0c65fa630b67f203404b" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
@@ -2502,7 +2511,10 @@
       </trans-unit>
       <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
         <source>modify non local user</source>
-        <target xml:lang="es-ES" state="translated">Editar usuario no local</target>
+        <target xml:lang="es-ES" state="translated">editar usuario no local</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Editar usuario no local</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
         <source>Error promoting user</source>
@@ -2620,7 +2632,10 @@
       </trans-unit>
       <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente los grupos en el usuario.</target>
+        <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el usuario.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el usuario.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
@@ -2631,11 +2646,17 @@
       </trans-unit>
       <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente la difusión.</target>
+        <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
@@ -2662,7 +2683,7 @@
       </trans-unit>
       <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target xml:lang="es-ES" state="needs-translation">Multimedia List</target>
+        <target xml:lang="es-ES" state="translated">Lista Multimedia</target>
       </trans-unit>
       <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
         <source>This Series is announced</source>
