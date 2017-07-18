@@ -92,10 +92,8 @@ var ctx_draw = canvas_draw.getContext("2d");
 
 
 if(video.readyState == 4){
-  //console.log("readyState is ", video.readyState);
   init_extractpic();
 }else{
-  //console.log("video.addEventListener loadeddata");
   video.addEventListener("loadeddata", init_extractpic, false);
 }
 
