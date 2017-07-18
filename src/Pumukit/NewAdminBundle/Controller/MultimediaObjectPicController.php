@@ -213,7 +213,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                $multimediaObject->getTrackById($request->query->get('track_id')) :
                $multimediaObject->getDisplayTrack();
 
-            if (!$track) {
+            if (!$track || $track->isOnlyAudio()) {
                 throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");
             }
 

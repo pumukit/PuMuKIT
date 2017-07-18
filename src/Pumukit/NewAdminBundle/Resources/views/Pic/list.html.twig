@@ -32,7 +32,7 @@
   </div>
 
   <div style="text-align : center">
-    {% if resource_name == 'mms' and resource.getDisplayTrack() %}
+    {% if resource_name == 'mms' and resource.getDisplayTrack() and not resource.getDisplayTrack().isOnlyAudio() %}
       <a href="{{ path('pumukitnewadmin_mmspic_generate', {'id': resource.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Generate thumbnail{% endtrans %}...</a>
     {% else %}
       <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New thumbnail{% endtrans %}...</a>
