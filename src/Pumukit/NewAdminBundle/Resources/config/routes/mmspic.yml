@@ -14,6 +14,12 @@ pumukitnewadmin_mmspic_create:
         _sylius:
             redirect: pumukitnewadmin_mms_index
 
+pumukitnewadmin_mmspic_generate:
+    pattern: /generate/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mmspic:generateAction
+
 pumukitnewadmin_mmspic_update:
     pattern: /{id}/update
     methods: [GET, POST]

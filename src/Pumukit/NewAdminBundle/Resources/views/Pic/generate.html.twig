@@ -1,0 +1,200 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">{% trans %}generate new thumbnail{% endtrans %}</h4>
+</div>
+
+<div class="modal-body">
+
+  <div id="tv_admin_container">
+    <div class="row">
+      <div class="col-md-5">
+        <!-- PLAYER -->
+        <video id="gen_pic_player" src="{{ track_url(track) }}" controls crossorigin="" style="background: black; width: 100%;"></video>
+      </div>
+      <div class="col-md-2">
+
+        <!-- CONTROLS -->
+        <div class="buttons" id="gen_pic_buttons" style="text-align:center">
+
+          <div class="btn-group btn-group-raised">
+            <button id="prev-frame-button" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">«</button>
+            <button id="next-frame-button" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">»</button>
+          </div>
+
+          {# TODO Add Glyphicons #}
+          <button id="take-img-button" title="Take image." style="margin-top: 35px; padding: 8px" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
+
+
+          <div class="btn-group">
+            <a href="#" data-target="#" class="btn btn-raised dropdown-toggle" data-toggle="dropdown" style="padding: 8px">
+              {% trans %}Take burst{% endtrans %}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="take-burst-button" data-num="10">10 pictures</a></li>
+              <li><a href="#" class="take-burst-button" data-num="30">30 pictures</a></li>
+              <li><a href="#" class="take-burst-button" data-num="50">50 pictures</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-5">
+        <!-- PREVIEW -->
+        <img class="image" style="width: 100%; max-height:100%" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+      <div id="frames" style="overflow-y: scroll; height: 210px; margin-top: 15px;"></div>
+    </div>
+
+  </div>
+  <div style="clear:both"></div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-xs-4">
+        <input type="file" id="file-upload-button" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*" />
+      </div>
+      <div class="col-xs-8">
+        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        <button type="submit" id="gen_pic_submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<canvas id="canvas-draw-frames" style="display:none;"></canvas>
+
+
+<script type="text/javascript">
+
+
+$(function() {
+var video = document.querySelector("#gen_pic_player");
+var img = document.querySelector("#gen_pic_img");
+var prev_frame = document.querySelector("#prev-frame-button");
+var next_frame = document.querySelector("#next-frame-button");
+var take_img = document.querySelector("#take-img-button");
+var take_burst = $(".take-burst-button");
+var canvas_draw = document.querySelector("#canvas-draw-frames");
+var frames = document.querySelector("#frames");
+var sumbit = document.querySelector("#gen_pic_submit");
+var init_img = img.src;
+var upload_img = document.querySelector("#file-upload-button");
+
+var ctx_draw = canvas_draw.getContext("2d");
+
+
+if(video.readyState == 4){
+  //console.log("readyState is ", video.readyState);
+  init_extractpic();
+}else{
+  //console.log("video.addEventListener loadeddata");
+  video.addEventListener("loadeddata", init_extractpic, false);
+}
+
+
+function init_extractpic() {
+  $('#gen_pic_buttons').show();
+  canvas_draw.width = video.videoWidth;
+  canvas_draw.height = video.videoHeight;
+}
+
+
+prev_frame.addEventListener("click", function(){
+  video.currentTime -= 0.25;
+}, false);
+
+next_frame.addEventListener("click", function(){
+  video.currentTime += 0.25;
+}, false);
+
+
+take_img.addEventListener("click", function(){
+  var new_img = take_pic();
+  img.src = new_img.src;
+}, false);
+
+
+function take_pic() {
+  ctx_draw.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+  var new_img = new Image();
+  new_img.classList.add("new_img");
+  new_img.classList.add("btn");
+  new_img.style.padding = "0px"
+  new_img.src = canvas_draw.toDataURL("image/png");
+  new_img.width = 120;
+
+  new_img.addEventListener("click", function(){
+    img.src = this.src;
+  })
+
+  frames.appendChild(new_img);
+  return new_img;
+}
+
+
+take_burst.on("click", function(event){
+  event.preventDefault();
+
+  var TotalTime = Math.ceil(parseInt(video.duration));
+  var interval = TotalTime/parseInt(event.target.dataset.num);
+
+  if ($('.new_img')){
+      $('.new_img').remove();
+      ctx_draw.clearRect(0, 0, canvas_draw.width, canvas_draw.height);
+  }
+
+  video.addEventListener("seeked", burst = function(e){
+    if (!video.seeking) {
+      take_pic();
+      video.currentTime = (video.currentTime + interval);
+      if (video.currentTime >= video.duration - interval) video.removeEventListener("seeked", burst);
+    }
+  });
+
+  video.currentTime = 0;
+});
+
+
+sumbit.addEventListener("click", function(event){
+  event.preventDefault();
+
+  var data = img.src;
+  var init = init_img;
+
+  if (data == init) {
+    $('#myModal').modal('hide');
+    return;
+  }
+
+  var route = "{{ path('pumukitnewadmin_mmspic_generate', {'id': mm.id}) }}";
+  $.post(route, {img:data, mm: '{{ mm.id }}' }, function(data, textStatus, jqXHR){
+    success('{% trans %}Thumbnail generated.{% endtrans %}');
+    upload_mmspic('{{ mm.id }}');
+    $('#myModal').modal('hide');
+  });
+
+});
+
+upload_img.addEventListener("change", function(e){
+  event.preventDefault();
+  var file = e.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+          // Render thumbnail.
+          img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}, false);
+
+
+})
+
+</script>
