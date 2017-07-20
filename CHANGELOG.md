@@ -7,6 +7,7 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 ## [2.4.0][Unreleased] (YYYY-MM-DD)
 - Support for multimedia objects with an external player.
 - Fix WCAG2AA accessibility (a11y) errors.
+- HTML5 thumbnail generator
 
 ## [2.3.0][2.3.0] (2017-06-09)
 - Advanced MOODLE integration.

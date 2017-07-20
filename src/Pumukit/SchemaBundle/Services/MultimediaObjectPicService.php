@@ -103,6 +103,37 @@ class MultimediaObjectPicService
     }
 
     /**
+     * Set a pic from a memory string.
+     */
+    public function addPicMem(MultimediaObject $multimediaObject, $pic, $format = 'png')
+    {
+        $absCurrentDir = $this->getTargetPath($multimediaObject);
+        if (!file_exists($absCurrentDir)) {
+            mkdir($absCurrentDir);
+        }
+        $fileName = uniqid().'.'.$format;
+        $path = $absCurrentDir.'/'.$fileName;
+        while (file_exists($path)) {
+            $fileName = uniqid().'.png';
+            $path = $absCurrentDir.'/'.$fileName;
+        }
+
+        file_put_contents($path, $pic);
+
+        $pic = new Pic();
+        $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
+        $pic->setPath($path);
+
+        $multimediaObject->addPic($pic);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $this->dispatcher->dispatchCreate($multimediaObject, $pic);
+
+        return $multimediaObject;
+    }
+
+    /**
      * Remove Pic from Multimedia Object.
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)

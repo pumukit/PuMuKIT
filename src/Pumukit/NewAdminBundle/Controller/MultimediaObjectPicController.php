@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -185,6 +186,42 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
                      'page' => $page,
                      'total' => $total,
                      );
+    }
+
+    /**
+     * @Template("PumukitNewAdminBundle:Pic:generate.html.twig")
+     */
+    public function generateAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            if (!$request->request->has('img')) {
+                throw new NotFoundHttpException('No exist a img paramater');
+            }
+
+            $base_64 = $request->request->get('img');
+            $decodedData = substr($base_64, 22, strlen($base_64));
+            $format = substr($base_64, strpos($base_64, '/') + 1, strpos($base_64, ';') - 1 - strpos($base_64, '/'));
+
+            $data = base64_decode($decodedData);
+
+            $picService = $this->get('pumukitschema.mmspic');
+            $picService->addPicMem($multimediaObject, $data, $format);
+
+            return new JsonResponse('done');
+        } else {
+            $track = $request->query->has('track_id') ?
+               $multimediaObject->getTrackById($request->query->get('track_id')) :
+               $multimediaObject->getDisplayTrack();
+
+            if (!$track || $track->isOnlyAudio()) {
+                throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");
+            }
+
+            return array(
+                'mm' => $multimediaObject,
+                'track' => $track,
+            );
+        }
     }
 
     /**
