@@ -290,7 +290,10 @@
       </trans-unit>
       <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
-        <target xml:lang="gl" state="translated">Os usuarios e grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        <target xml:lang="gl" state="translated">Os usuarios e grupos definidos externamente non se poden editar aquí, contacte co administrador do seu servizo.</target>
+        <alt-trans>
+          <target xml:lang="gl">Os usuarios e grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="e8bbbedf873013a5db75bb45b25b30d8" resname="Video Template of Series">
         <source>Video Template of Series</source>
@@ -334,7 +337,10 @@
       </trans-unit>
       <trans-unit id="d1c4c128e19012693c2dbc1b62b812e1" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
-        <target xml:lang="gl" state="translated">Os grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        <target xml:lang="gl" state="translated">Os grupos definidos externamente non se poden editar aquí, contacte co administrador do seu servizo.</target>
+        <alt-trans>
+          <target xml:lang="gl">Os grupos definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ded7ed1b967339b875bd23238807d82c" resname="Delete Group or Group relations">
         <source>Delete Group or Group relations</source>
@@ -1757,7 +1763,10 @@
       </trans-unit>
       <trans-unit id="b9ea06dd3a644effbbbc995238bfa38b" resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
         <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
-        <target xml:lang="gl" state="translated">Usuario definido externamente. Os grupos do usuario non poden ser editados. Contacte co administrador do seu servizo.</target>
+        <target xml:lang="gl" state="translated">Usuario definido externamente. Os grupos do usuario non se poden editar. Contacte co administrador do seu servizo.</target>
+        <alt-trans>
+          <target xml:lang="gl">Usuario definido externamente. Os grupos do usuario non poden ser editados. Contacte co administrador do seu servizo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="40c6907f3e993a48f7eb56b81b5c2b02" resname="create new user">
         <source>create new user</source>
@@ -1809,7 +1818,10 @@
       </trans-unit>
       <trans-unit id="95112c45826edfd595dae2617befa51b" resname="External defined users can not be edited here, contact your directory service administrator.">
         <source>External defined users can not be edited here, contact your directory service administrator.</source>
-        <target xml:lang="gl" state="translated">Usuarios definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        <target xml:lang="gl" state="translated">Usuarios definidos externamente non se poden editar aquí, contacte co administrador do seu servizo.</target>
+        <alt-trans>
+          <target xml:lang="gl">Usuarios definidos externamente non poden ser editados aquí, contacte co administrador do seu servizo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4abc357019e1f3bdbd2f10555c7a0f87" resname="External defined users can not be deleted here, contact your directory service administrator.">
         <source>External defined users can not be deleted here, contact your directory service administrator.</source>
@@ -2033,7 +2045,10 @@
       </trans-unit>
       <trans-unit id="8425cddbc7fc52e2dafce5c38126770a" resname="Tags with children can not be deleted.">
         <source>Tags with children can not be deleted.</source>
-        <target xml:lang="gl" state="translated">As categorías con hijos non poden ser eliminadas.</target>
+        <target xml:lang="gl" state="translated">As categorías con hijos non se poden eliminar.</target>
+        <alt-trans>
+          <target xml:lang="gl">As categorías con hijos non poden ser eliminadas.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b11b5551b4e0c4fbdc4c40c5ff13cda5" resname="Are you sure you want to delete selected groups?">
         <source>Are you sure you want to delete selected groups?</source>

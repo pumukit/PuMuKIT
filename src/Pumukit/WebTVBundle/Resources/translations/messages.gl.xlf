@@ -47,7 +47,10 @@
       </trans-unit>
       <trans-unit id="d8b432ad04a16f807bd4f10794c069fa" resname="Record Date">
         <source>Record Date</source>
-        <target xml:lang="gl" state="translated">Data de grabación</target>
+        <target xml:lang="gl" state="translated">Data de gravación</target>
+        <alt-trans>
+          <target xml:lang="gl">Data de grabación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
@@ -235,7 +238,10 @@
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
-        <target xml:lang="gl" state="translated">Data de grabación</target>
+        <target xml:lang="gl" state="translated">Data de gravación</target>
+        <alt-trans>
+          <target xml:lang="gl">Data de grabación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
         <source>Marks:</source>
