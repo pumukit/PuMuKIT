@@ -47,10 +47,7 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="es-ES" state="translated">Serie</target>
-        <alt-trans>
-          <target xml:lang="es-ES">Series</target>
-        </alt-trans>
+        <target xml:lang="es-ES" state="translated">Series</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
