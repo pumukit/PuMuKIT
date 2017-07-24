@@ -20,6 +20,12 @@ pumukitnewadmin_series_create:
         _sylius:
             redirect: pumukitnewadmin_series_index
 
+pumukitnewadmin_series_links:
+    pattern: /{id}/links
+    methods: [GET]
+    defaults:
+        _controller: pumukitnewadmin.controller.series:linksAction
+
 pumukitnewadmin_series_update:
     pattern: /{id}/update
     methods: [GET, POST, DELETE]

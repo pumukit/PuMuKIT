@@ -78,6 +78,16 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
+     * @Template
+     */
+    public function linksAction(Series $resource)
+    {
+        return array(
+            'series' => $resource,
+        );
+    }
+
+    /**
      * Display the form for editing or update the resource.
      */
     public function updateAction(Request $request)
