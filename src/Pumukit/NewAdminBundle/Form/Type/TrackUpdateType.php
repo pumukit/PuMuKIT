@@ -33,6 +33,11 @@ class TrackUpdateType extends AbstractType
                         'required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
+            ->add('allowDownload', 'checkbox',
+                  array(
+                        'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Allow download', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Allow download', array(), null, $this->locale), ))
             ->add('language', 'customlanguage',
                   array(
                         'required' => true,

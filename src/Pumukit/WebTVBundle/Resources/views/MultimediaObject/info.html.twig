@@ -86,22 +86,38 @@
 <br>
 <div class="row">
   <div class="col-sm-6">
-    <!--MATERIALS-->
+
     <div class="panel panel-default">
       <div class="panel-heading">
         {% trans %} Attachments {% endtrans %}
       </div>
       <div class="panel-body">
+        {% set none_attach = true %}
+
+        {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() %}
+        {% set none_attach = false %}
+          <div class="material">
+            <span class="glyphicon glyphicon-facetime-video"></span>
+            <a download href="{{ track_url(track) }}?forcedl=1">
+              {% if track.isOnlyAudio() %}
+                {% trans %}Download this audio{% endtrans %}
+              {% else %}
+                {% trans %}Download this video{% endtrans %}
+              {% endif%}
+            </a>
+          </div>
+        {% endfor %}
+        <!--MATERIALS-->
         {% for material in multimediaObject.getMaterials() if not material.getHide() %}
+        {% set none_attach = false %}
           <div class="material">
             <span class="glyphicon glyphicon-paperclip"></span>
             <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
           </div>
-        {% else %}
-          <strong>{% trans %} There are no attachments {% endtrans %}</strong>
         {% endfor %}
         <!--LINKS-->
         {% for link in multimediaObject.getLinks() %}
+        {% set none_attach = false %}
           <div class="link">
             <a target="_blank" href="{{ link.getUrl() }}">
               <span class="glyphicon glyphicon-globe"></span>
@@ -109,6 +125,9 @@
             </a>
           </div>
         {% endfor %}
+        {% if none_attach %}
+          <strong>{% trans %} There are no attachments {% endtrans %}</strong>
+        {% endif %}
       </div>
     </div>
   </div>
