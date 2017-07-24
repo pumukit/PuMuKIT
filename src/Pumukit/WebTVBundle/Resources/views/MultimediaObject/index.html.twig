@@ -11,7 +11,7 @@
   <div class="col-lg-8 col-md-7">
     <span class="hidden-sm hidden-xs"></br></span>
     {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
-    {% if multimediaObject.getProperty('externalplayer') is defined %}
+    {% if multimediaObject.getProperty('externalplayer') %}
         <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" height="500px" frameborder="0"></iframe>
     {% else %}
         {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}

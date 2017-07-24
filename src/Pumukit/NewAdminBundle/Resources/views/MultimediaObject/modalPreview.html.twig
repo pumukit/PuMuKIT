@@ -10,7 +10,7 @@
         <span class="alert alert-dismissable alert-warning">
           {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
-      {% elseif multimediaObject.getProperty('externalplayer') is defined %}
+      {% elseif multimediaObject.getProperty('externalplayer') %}
           <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" height="500px" frameborder="0"></iframe>
       {% else%}
           <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id}) }}"
@@ -35,4 +35,3 @@
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
   </div>
 </div>
-
