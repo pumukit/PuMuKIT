@@ -82,7 +82,7 @@ class Series
      *
      * @MongoDB\Boolean
      */
-    private $hide = false;
+    private $hide = true;
 
     /**
      * @var datetime
@@ -158,6 +158,7 @@ class Series
     public function __construct()
     {
         $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->hide = false;
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
         $this->pics = new ArrayCollection();

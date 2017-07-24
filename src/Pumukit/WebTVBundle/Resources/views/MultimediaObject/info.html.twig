@@ -52,20 +52,23 @@
     <p class="description">
       {{ multimediaObject.getDescription()|nl2br }}
     </p>
-    {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
-      <div>
-        {% trans %}i18n.one.Series{% endtrans %}:
-        <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
-          {{ multimediaObject.getSeries().getTitle() }}
-        </a>
-      </div>
-    {% else %}
-      <div>
-        {% trans %}i18n.one.Series{% endtrans %}:
-        <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
-          {{ multimediaObject.getSeries().getTitle() }}
-        </a>
-      </div>
+
+    {% if not multimediaObject.getSeries().isHide() %}
+      {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
+        <div>
+          {% trans %}i18n.one.Series{% endtrans %}:
+          <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
+            {{ multimediaObject.getSeries().getTitle() }}
+          </a>
+        </div>
+      {% else %}
+        <div>
+          {% trans %}i18n.one.Series{% endtrans %}:
+          <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
+            {{ multimediaObject.getSeries().getTitle() }}
+          </a>
+        </div>
+      {% endif %}
     {% endif %}
     <!-- PERSONS ACT -->
     <div class="persons">
