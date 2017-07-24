@@ -307,6 +307,16 @@ class Element
     }
 
     /**
+     * Get hide.
+     *
+     * @return bool
+     */
+    public function isHide()
+    {
+        return $this->hide;
+    }
+
+    /**
      * Set description.
      *
      * @param text        $description

@@ -33,6 +33,11 @@ class SeriesType extends AbstractType
                         'required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Last Added (Announced)', array(), null, $this->locale), ))
+            ->add('hide', 'checkbox',
+                  array(
+                        'required' => false,
+                        'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
+                        'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
             ->add('i18n_title', 'texti18n',
                   array('attr' => array('aria-label' => $this->translator->trans('Title', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Title', array(), null, $this->locale), ))
