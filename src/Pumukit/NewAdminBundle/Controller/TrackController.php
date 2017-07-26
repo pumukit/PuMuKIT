@@ -319,8 +319,6 @@ class TrackController extends Controller implements NewAdminController
         $profile = $request->get('profile');
         $priority = 2;
 
-        $trackService = $this->get('pumukitschema.track');
-
         $this->get('pumukitencoder.job')->addJob($track->getPath(), $profile, $priority, $multimediaObject, $track->getLanguage(), $track->getI18nDescription());
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
