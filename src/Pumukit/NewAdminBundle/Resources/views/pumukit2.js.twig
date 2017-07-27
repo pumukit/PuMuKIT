@@ -755,21 +755,29 @@ window.change_select = function(element, selector, pluralName, seriesId)
             );
         break;
 */
+    case 'order_manual':
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 0, 'fieldName': 'rank', 'order': 'asc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_manual');});
+        break;
     case 'order_rec_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'asc'})|raw }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 4, 'fieldName': 'record_date', 'order': 'asc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_rec_date_asc');});
         break;
     case 'order_rec_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'record_date', 'order': 'desc'})|raw }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 3, 'fieldName': 'record_date', 'order': 'desc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_rec_date_desc');});
         break;
     case 'order_pub_date_asc':
-        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'asc'})|raw }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 1, 'fieldName': 'public_date', 'order': 'asc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_pub_date_asc');});
         break;
     case 'order_pub_date_desc':
-        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'fieldName': 'public_date', 'order': 'desc'})|raw }}';
-        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'});
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 2, 'fieldName': 'public_date', 'order': 'desc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_pub_date_desc');});
+        break;
+    case 'order_abc':
+        var route = '{{ path('pumukitnewadmin_mms_reorder', {'seriesId': '__seriesId__', 'sorting': 5, 'fieldName': 'title.es', 'order': 'asc'})|raw }}';
+        $('#list_'+element+'s').load(route.replace('__seriesId__', seriesId), {'_method': 'POST'}, function(){sort_optiont_change('order_abc');});
         break;
     case 'cut_mm':
         var ids = [];
@@ -952,6 +960,18 @@ window.change_select = function(element, selector, pluralName, seriesId)
     selector.val('default');
 }
 
+
+
+function sort_optiont_change(target_val)
+{
+  e = $("#options_mms option[data-type='sort'][data-active='1']");
+  e[0].dataset.active = '0';
+  e.text(e.text().replace("{% trans %}(active){% endtrans %}", ''))
+  e = $("#options_mms option[data-type='sort'][value='" + target_val + "']");
+  e[0].dataset.active = '1';
+  e.text(e.text() + "{% trans %}(active){% endtrans %}");
+
+}
 
 /**
  * Tag tree functions

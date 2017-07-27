@@ -19,6 +19,32 @@ class Series
 
     const TYPE_SERIES = 0;
     const TYPE_PLAYLIST = 1;
+
+    const SORT_MANUAL = 0;
+    const SORT_PUB_ASC = 1;
+    const SORT_PUB_DES = 2;
+    const SORT_REC_DES = 3;
+    const SORT_REC_ASC = 4;
+    const SORT_ALPHAB = 5;
+
+    public static $sortCriteria = array(
+        self::SORT_MANUAL => array('rank' => 'asc'),
+        self::SORT_PUB_ASC => array('public_date' => 'asc'),
+        self::SORT_PUB_DES => array('public_date' => 'des'),
+        self::SORT_REC_DES => array('record_date' => 'des'),
+        self::SORT_REC_ASC => array('record_date' => 'asc'),
+        self::SORT_ALPHAB => array('title.es' => 'asc'), //TODO culture
+    );
+
+    public static $sortText = array(
+        self::SORT_MANUAL => 'manual',
+        self::SORT_PUB_ASC => 'publication date ascending',
+        self::SORT_PUB_DES => 'publication date descending',
+        self::SORT_REC_DES => 'recording date descending',
+        self::SORT_REC_ASC => 'recording date ascending',
+        self::SORT_ALPHAB => 'title',
+    );
+
     /**
      * @MongoDB\Id
      */
@@ -39,6 +65,13 @@ class Series
      * @MongoDB\Integer
      */
     private $type;
+
+    /**
+     * @var int
+     *
+     * @MongoDB\Int
+     */
+    private $sorting = self::SORT_MANUAL;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="SeriesType", inversedBy="series", simple=true, cascade={"persist"})
@@ -219,6 +252,26 @@ class Series
     public function setType($type)
     {
         return $this->type = $type;
+    }
+
+    /**
+     * Get sorting type.
+     *
+     * @return int
+     */
+    public function getSorting()
+    {
+        return $this->sorting;
+    }
+
+    /**
+     * Set sorting type.
+     *
+     * @return int
+     */
+    public function setSorting($sorting)
+    {
+        return $this->sorting = $sorting;
     }
 
     /**

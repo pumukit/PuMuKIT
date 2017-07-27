@@ -7,8 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
+use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesType extends AbstractType
 {
@@ -101,7 +102,15 @@ class SeriesType extends AbstractType
                         'attr' => array('groupclass' => 'hidden-naked',
                                         'aria-label' => $this->translator->trans('Template', array(), null, $this->locale), ),
                         'required' => true,
-                        'label' => $this->translator->trans('Template', array(), null, $this->locale), ));
+                        'label' => $this->translator->trans('Template', array(), null, $this->locale), ))
+           ->add('sorting', 'choice',
+                  array(
+                        'choices' => Series::$sortText,
+                        'empty_data' => null,
+                        'attr' => array('groupclass' => 'hidden-naked',
+                                        'aria-label' => $this->translator->trans('Sorting', array(), null, $this->locale), ),
+                        'required' => true,
+                        'label' => $this->translator->trans('Sorting', array(), null, $this->locale), ));
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $series = $event->getData();
