@@ -69,7 +69,6 @@ class FuncionalTest extends WebTestCase
 
     private function createMultimediaObjectAssignedToSeries($title, Series $series)
     {
-        $rank = 1;
         $status = MultimediaObject::STATUS_PUBLISHED;
         $record_date = new \DateTime();
         $public_date = new \DateTime();
