@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eu" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer">
         <source>Opencast Importer</source>
@@ -205,6 +208,10 @@
         <alt-trans>
           <target xml:lang="eu">Pista actualizada correctamente.</target>
         </alt-trans>
+      </trans-unit>
+      <trans-unit id="8112b5a95e74fc08c9aa975f6ac02fcb" resname="{0} Media Packages |{1} Media Package|]1,Inf] Media Packages">
+        <source>{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</source>
+        <target xml:lang="eu" state="needs-translation">{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</target>
       </trans-unit>
     </body>
   </file>

@@ -34,10 +34,6 @@
         <source>Access Templates section</source>
         <target xml:lang="ka" state="needs-translation">Access Templates section</target>
       </trans-unit>
-      <trans-unit id="244bf476f8ee11e6bc6492361f002671" resname="Text">
-        <source>Text</source>
-        <target xml:lang="ka" state="needs-translation">Text</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

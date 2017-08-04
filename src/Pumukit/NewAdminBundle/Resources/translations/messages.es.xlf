@@ -235,7 +235,10 @@
       </trans-unit>
       <trans-unit id="95d3955ede02b6910ec9a915e0952e9b" resname="Select any live event.">
         <source>Select any live event.</source>
-        <target xml:lang="es-ES" state="translated">Selecione cualquier evento en vivo.</target>
+        <target xml:lang="es-ES" state="translated">Seleccione cualquier evento en vivo.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Selecione cualquier evento en vivo.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
         <source>List</source>
@@ -1257,7 +1260,10 @@
       </trans-unit>
       <trans-unit id="a6074d93415afc28f99b35ce95401a46" resname="Series saved ERROR">
         <source>Series saved ERROR</source>
-        <target xml:lang="es-ES" state="translated">Serie guardada ERROR</target>
+        <target xml:lang="es-ES" state="translated">ERROR al guardar la Serie</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Serie guardada ERROR</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f098f3495dcf0337cc88d48edcd4c1b9" resname="Series saved OK">
         <source>Series saved OK</source>
@@ -1289,7 +1295,10 @@
       </trans-unit>
       <trans-unit id="4e2db3b9797fbf3266283bc32e626e37" resname="Back to playlist list">
         <source>Back to playlist list</source>
-        <target xml:lang="es-ES" state="translated">Volver a la lista de las listas de reproducción</target>
+        <target xml:lang="es-ES" state="translated">Volver al listado de listas de reproducción</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Volver a la lista de las listas de reproducción</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="16515bd9582b55f6698c1f23267f44ec" resname="Add multimedia object">
         <source>Add multimedia object</source>
@@ -1393,7 +1402,10 @@
       </trans-unit>
       <trans-unit id="93cba07454f06a4a960172bbd6e2a435" resname="Yes">
         <source>Yes</source>
-        <target xml:lang="es-ES" state="translated">Si</target>
+        <target xml:lang="es-ES" state="translated">Sí</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Si</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
         <source>No</source>
@@ -1449,7 +1461,10 @@
       </trans-unit>
       <trans-unit id="7a414755f6bc758bb5f195de272838f3" resname="Only logged in Users">
         <source>Only logged in Users</source>
-        <target xml:lang="es-ES" state="translated">Solo usuarios con sesión iniciada</target>
+        <target xml:lang="es-ES" state="translated">Solo usuarios registrados</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Solo usuarios con sesión iniciada</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="es-ES">Sólo usuarios con sesión iniciada</target>
         </alt-trans>
@@ -1476,7 +1491,10 @@
       </trans-unit>
       <trans-unit id="1d8a8e416151ea937a88421fd75deddd" resname="Only logged in users in the system can play this multimedia object in the video portal">
         <source>Only logged in users in the system can play this multimedia object in the video portal</source>
-        <target xml:lang="es-ES" state="translated">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia en el portal de vídeo</target>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir este objeto multimedia en el portal de vídeo</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia en el portal de vídeo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="72e6f8ab577d9cabcf31ee3039a3cd87" resname="Only users in the selected Groups can play this multimedia object in the video portal">
         <source>Only users in the selected Groups can play this multimedia object in the video portal</source>
@@ -1508,7 +1526,10 @@
       </trans-unit>
       <trans-unit id="3d27fefdc3ee4ae9360ee429c6c6ec10" resname="create new series type">
         <source>create new series type</source>
-        <target xml:lang="es-ES" state="translated">crear nueva serie tipo</target>
+        <target xml:lang="es-ES" state="translated">crear nuevo tipo de serie</target>
+        <alt-trans>
+          <target xml:lang="es-ES">crear nueva serie tipo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="f477a6ea644871f63462d22d7dbddade" resname="Series types">
         <source>Series types</source>
@@ -2020,7 +2041,10 @@
       </trans-unit>
       <trans-unit id="8527935745926a5d29101e1a7eea97ff" resname="Are you sure you want to delete the data of">
         <source>Are you sure you want to delete the data of</source>
-        <target xml:lang="es-ES" state="translated">Está seguro de querer eliminar los datos de</target>
+        <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar los datos de</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Está seguro de querer eliminar los datos de</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="40bed7cf9b3d4bb3a3d7a7e3eb18c5eb" resname="Person">
         <source>Person</source>
@@ -2160,7 +2184,10 @@
       </trans-unit>
       <trans-unit id="169a72064864928387ee566ed5b924ba" resname="User successfully updated.">
         <source>User successfully updated.</source>
-        <target xml:lang="es-ES" state="translated">Usuario actualizado correctamete.</target>
+        <target xml:lang="es-ES" state="translated">Usuario actualizado correctamente.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Usuario actualizado correctamete.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="47eb4907c08a86e4b0259c67ab37f4a4" resname="There was an error in creating the User.">
         <source>There was an error in creating the User.</source>
@@ -2228,7 +2255,10 @@
       </trans-unit>
       <trans-unit id="61ee265a4986d33b3abbc8bfa87e82e0" resname="Only logged in users in the system can play this multimedia object">
         <source>Only logged in users in the system can play this multimedia object</source>
-        <target xml:lang="es-ES" state="translated">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia</target>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir este objeto multimedia</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6ee1d7777bee7c24bc7764aa031ef762" resname="Only users in the selected Groups can play this multimedia object">
         <source>Only users in the selected Groups can play this multimedia object</source>
@@ -2351,7 +2381,10 @@
       </trans-unit>
       <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
         </alt-trans>
@@ -2443,7 +2476,10 @@
       </trans-unit>
       <trans-unit id="0323de4f66a1700e2173e9bcdce02715" resname="Logout">
         <source>Logout</source>
-        <target xml:lang="es-ES" state="translated">Desconectar</target>
+        <target xml:lang="es-ES" state="translated">Cerrar sesión</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Desconectar</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ce5768e0e63e0c65fa630b67f203404b" resname="Published Multimedia Object(s)">
         <source>Published Multimedia Object(s)</source>
@@ -2475,7 +2511,10 @@
       </trans-unit>
       <trans-unit id="73c70e17583078f91e501890ec99a642" resname="modify non local user">
         <source>modify non local user</source>
-        <target xml:lang="es-ES" state="translated">Editar usuario no local</target>
+        <target xml:lang="es-ES" state="translated">editar usuario no local</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Editar usuario no local</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="aefe0d787597c71e34dabcbc9494352e" resname="Error promoting user">
         <source>Error promoting user</source>
@@ -2593,19 +2632,31 @@
       </trans-unit>
       <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente los grupos en el usuario.</target>
+        <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el usuario.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el usuario.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
         <source>Successfully updated groups in Mm.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente los grupos en el objeto multimedia.</target>
+        <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el objeto multimedia.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el objeto multimedia.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="0dfec075c2df3cf36090e7b7459bb8cd" resname="Successfully updated Broadcast.">
         <source>Successfully updated Broadcast.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente la difusión.</target>
+        <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="851864904ebf878a7cdc69903621cace" resname="Successfully updated Broadcast in all Multimedia Objects.">
         <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-        <target xml:lang="es-ES" state="translated">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947" resname="Any Internet user can play the new multimedia objects created from this video template">
         <source>Any Internet user can play the new multimedia objects created from this video template</source>
@@ -2617,7 +2668,10 @@
       </trans-unit>
       <trans-unit id="46860ca8477cd97a78801725a8fbf69c" resname="Only logged in users in the system can play the new multimedia objects created from this video template">
         <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
-        <target xml:lang="es-ES" state="translated">Sólo los usuarios logueados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
+        <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6" resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
         <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
@@ -2629,7 +2683,7 @@
       </trans-unit>
       <trans-unit id="e6b03df0c4ef685468aff079a5e83f64" resname="Multimedia List">
         <source>Multimedia List</source>
-        <target xml:lang="es-ES" state="needs-translation">Multimedia List</target>
+        <target xml:lang="es-ES" state="translated">Lista Multimedia</target>
       </trans-unit>
       <trans-unit id="e4123464ad1bfa582a30319f8b92788f" resname="This Series is announced">
         <source>This Series is announced</source>
@@ -2637,55 +2691,7 @@
       </trans-unit>
       <trans-unit id="cc41587bd79ee102ee5460d306295bf0" resname="No multimedia object selected">
         <source>No multimedia object selected</source>
-        <target xml:lang="es-ES" state="needs-translation">No multimedia object selected</target>
-      </trans-unit>
-      <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
-        <source>Search by title, subtitle, description or id</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by title, subtitle, description or id</target>
-      </trans-unit>
-      <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
-        <source>Search by name or surname</source>
-        <target xml:lang="es-ES" state="needs-translation">Search by name or surname</target>
-      </trans-unit>
-      <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
-        <source>Filter</source>
-        <target xml:lang="es-ES" state="needs-translation">Filter</target>
-      </trans-unit>
-      <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
-        <source>Manual</source>
-        <target xml:lang="es-ES" state="needs-translation">Manual</target>
-      </trans-unit>
-      <trans-unit id="8d22099edc8511ac766a4ab475e45e9e" resname="Series picture">
-        <source>Series picture</source>
-        <target xml:lang="es-ES" state="needs-translation">Series picture</target>
-      </trans-unit>
-      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
-        <source>Logo</source>
-        <target xml:lang="es-ES" state="needs-translation">Logo</target>
-      </trans-unit>
-      <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
-        <source>Filter Series</source>
-        <target xml:lang="es-ES" state="needs-translation">Filter Series</target>
-      </trans-unit>
-      <trans-unit id="d6c848ec0828f35523866749da4c83de" resname="Series publication status">
-        <source>Series publication status</source>
-        <target xml:lang="es-ES" state="needs-translation">Series publication status</target>
-      </trans-unit>
-      <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
-        <source>Menu</source>
-        <target xml:lang="es-ES" state="needs-translation">Menu</target>
-      </trans-unit>
-      <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
-        <source>Select the number of series to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of series to display per page.</target>
-      </trans-unit>
-      <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
-        <source>Select the number of playlists to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of playlists to display per page.</target>
-      </trans-unit>
-      <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
-        <source>Select the number of multimedia objects to display per page.</source>
-        <target xml:lang="es-ES" state="needs-translation">Select the number of multimedia objects to display per page.</target>
+        <target xml:lang="es-ES" state="translated">No se ha seleccionado ningún objeto multimedia</target>
       </trans-unit>
       <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
         <source>External player</source>
@@ -2697,6 +2703,54 @@
         <alt-trans>
           <target xml:lang="es-ES">No se ha definido ningún reproductor externo</target>
         </alt-trans>
+      </trans-unit>
+      <trans-unit id="d0e03fc824e7c87bbbf03b6ced44a3bb" resname="Search by title, subtitle, description or id">
+        <source>Search by title, subtitle, description or id</source>
+        <target xml:lang="es-ES" state="translated">Buscar por título, subtítulo, descripción o Id</target>
+      </trans-unit>
+      <trans-unit id="c10c92e9bfae418cb25b872b7eb541c7" resname="Search by name or surname">
+        <source>Search by name or surname</source>
+        <target xml:lang="es-ES" state="translated">Buscar por nombre o apellido</target>
+      </trans-unit>
+      <trans-unit id="d7778d0c64b6ba21494c97f77a66885a" resname="Filter">
+        <source>Filter</source>
+        <target xml:lang="es-ES" state="translated">Filtrar</target>
+      </trans-unit>
+      <trans-unit id="e1ba155a9f2e8c3be94020eef32a0301" resname="Manual">
+        <source>Manual</source>
+        <target xml:lang="es-ES" state="translated">Manual</target>
+      </trans-unit>
+      <trans-unit id="8d22099edc8511ac766a4ab475e45e9e" resname="Series picture">
+        <source>Series picture</source>
+        <target xml:lang="es-ES" state="translated">Imagen de la serie</target>
+      </trans-unit>
+      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
+        <source>Logo</source>
+        <target xml:lang="es-ES" state="translated">Imagen</target>
+      </trans-unit>
+      <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
+        <source>Filter Series</source>
+        <target xml:lang="es-ES" state="translated">Filtrar series</target>
+      </trans-unit>
+      <trans-unit id="d6c848ec0828f35523866749da4c83de" resname="Series publication status">
+        <source>Series publication status</source>
+        <target xml:lang="es-ES" state="translated">Estado de publicación de la serie</target>
+      </trans-unit>
+      <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
+        <source>Menu</source>
+        <target xml:lang="es-ES" state="translated">Menú</target>
+      </trans-unit>
+      <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
+        <source>Select the number of series to display per page.</source>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de series a mostrar por página.</target>
+      </trans-unit>
+      <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9" resname="Select the number of playlists to display per page.">
+        <source>Select the number of playlists to display per page.</source>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de listas de reproducción a mostrar por página.</target>
+      </trans-unit>
+      <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303" resname="Select the number of multimedia objects to display per page.">
+        <source>Select the number of multimedia objects to display per page.</source>
+        <target xml:lang="es-ES" state="translated">Seleccione el número de objetos multimedia a mostrar por página.</target>
       </trans-unit>
       <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
         <source>Add external player</source>
@@ -2728,11 +2782,11 @@
       </trans-unit>
       <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
         <source>Edit</source>
-        <target xml:lang="es-ES" state="needs-translation">Edit</target>
+        <target xml:lang="es-ES">Editar</target>
       </trans-unit>
       <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
         <source>Delete</source>
-        <target xml:lang="es-ES" state="needs-translation">Delete</target>
+        <target xml:lang="es-ES">Borrar</target>
       </trans-unit>
     </body>
   </file>

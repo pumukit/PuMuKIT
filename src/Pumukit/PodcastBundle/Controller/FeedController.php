@@ -272,6 +272,7 @@ class FeedController extends Controller
                 $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
                 $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
                 $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
+                $item->addChild('itunes:image', $this->getAbsoluteUrl($multimediaObject->getFirstUrlPic()), self::ITUNES_DTD_URL);
                 $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
             }
             $dm->clear();

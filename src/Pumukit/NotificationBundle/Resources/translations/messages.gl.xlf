@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
         <source>Id</source>
-        <target xml:lang="gl" state="needs-translation">Id</target>
+        <target xml:lang="gl" state="translated">Id</target>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -12,7 +12,10 @@
       </trans-unit>
       <trans-unit id="66a0a78cd1e3aaed9aa1073b49b48270" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target xml:lang="gl" state="translated">Id do Obxecto Multimedia Object</target>
+        <target xml:lang="gl" state="translated">Id do Obxecto Multimedia</target>
+        <alt-trans>
+          <target xml:lang="gl">Id do Obxecto Multimedia Object</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
@@ -20,7 +23,7 @@
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="gl" state="needs-translation">Cpu</target>
+        <target xml:lang="gl" state="translated">Cpu</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
@@ -56,15 +59,15 @@
       </trans-unit>
       <trans-unit id="a114134ff06747be968e691ea851239f" resname="Multimedia Object Admin Link">
         <source>Multimedia Object Admin Link</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia Object Admin Link</target>
+        <target xml:lang="gl" state="translated">Enlace ao Obxecto Multimedia administrado</target>
       </trans-unit>
       <trans-unit id="0a3573688f840d220e260fed1a22e801" resname="Technical info">
         <source>Technical info</source>
-        <target xml:lang="gl" state="needs-translation">Technical info</target>
+        <target xml:lang="gl" state="translated">Información técnica</target>
       </trans-unit>
       <trans-unit id="4acd6f830ae820b400fa57ff7c5a8a69" resname="Job Id">
         <source>Job Id</source>
-        <target xml:lang="gl" state="needs-translation">Job Id</target>
+        <target xml:lang="gl" state="translated">Id da tarefa</target>
       </trans-unit>
     </body>
   </file>

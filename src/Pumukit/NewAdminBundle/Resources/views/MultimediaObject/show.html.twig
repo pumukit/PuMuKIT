@@ -1,5 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% if mm is not empty %}
+{% if mm is defined %}
 
 <p>
   {% trans %}Is part of {% endtrans %}: <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{mm.series.title}} </a>.

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hy-AM" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer">
         <source>Opencast Importer</source>
@@ -145,6 +148,10 @@
       <trans-unit id="befcc65c57d8bf87d3b1cc3f52dcff0b" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
         <target xml:lang="hy-AM" state="needs-translation">Track successfully updated.</target>
+      </trans-unit>
+      <trans-unit id="8112b5a95e74fc08c9aa975f6ac02fcb" resname="{0} Media Packages |{1} Media Package|]1,Inf] Media Packages">
+        <source>{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</source>
+        <target xml:lang="hy-AM" state="needs-translation">{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</target>
       </trans-unit>
     </body>
   </file>

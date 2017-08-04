@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -28,7 +31,7 @@
       </trans-unit>
       <trans-unit id="a2e767b37fcde6a6ddafb5799deffc0e" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
-        <target xml:lang="gl" state="needs-translation">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</target>
+        <target xml:lang="gl" state="translated">PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet os contidos audiovisuais producidos nunha Institución, Universidade, etc..  PuMuKIT publica os contidos multimedia almacenados na súa base de datos de dous modos diferentes: Xerando un portal WEB, unha WEB-TV e creando fluxos RSS compatibles ARCA.</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
@@ -44,7 +47,10 @@
       </trans-unit>
       <trans-unit id="d8b432ad04a16f807bd4f10794c069fa" resname="Record Date">
         <source>Record Date</source>
-        <target xml:lang="gl" state="translated">Data de grabación</target>
+        <target xml:lang="gl" state="translated">Data de gravación</target>
+        <alt-trans>
+          <target xml:lang="gl">Data de grabación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
@@ -68,7 +74,7 @@
       </trans-unit>
       <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
         <source>Series</source>
-        <target xml:lang="gl" state="needs-translation">Series</target>
+        <target xml:lang="gl" state="translated">Series</target>
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
@@ -232,7 +238,10 @@
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
-        <target xml:lang="gl" state="translated">Data de grabación</target>
+        <target xml:lang="gl" state="translated">Data de gravación</target>
+        <alt-trans>
+          <target xml:lang="gl">Data de grabación</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
         <source>Marks:</source>
@@ -240,11 +249,11 @@
       </trans-unit>
       <trans-unit id="23ce0eb7d180f3dc8391d4af48572d21" resname="Materials">
         <source>Materials</source>
-        <target xml:lang="gl" state="needs-translation">Materials</target>
+        <target xml:lang="gl" state="translated">Materiais</target>
       </trans-unit>
       <trans-unit id="594926470af8adae2a0914a57f89605f" resname="There is no materials">
         <source>There is no materials</source>
-        <target xml:lang="gl" state="needs-translation">There is no materials</target>
+        <target xml:lang="gl" state="translated">Non hai materiais</target>
       </trans-unit>
       <trans-unit id="d2fc53cc95bd888332468705b5cca88d" resname="Share this video">
         <source>Share this video</source>
@@ -288,7 +297,7 @@
       </trans-unit>
       <trans-unit id="d2e23e955956256bed1752d5f85b0899" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
-        <target xml:lang="gl" state="needs-translation">Log in is required to watch it</target>
+        <target xml:lang="gl" state="translated">Requírese iniciar sesión para ver o vídeo</target>
       </trans-unit>
       <trans-unit id="d4a3404790a7d7c5dc96d18cdaa8850a" resname="Go to back-office">
         <source>Go to back-office</source>
@@ -408,27 +417,27 @@
       </trans-unit>
       <trans-unit id="a657405e3424fc63b9165585e40d2cae" resname="General %title%">
         <source>General %title%</source>
-        <target xml:lang="gl" state="needs-translation">General %title%</target>
+        <target xml:lang="gl" state="translated">%title% xeral</target>
       </trans-unit>
       <trans-unit id="bb6e3e7941f7c00d905c3f11b602dec4" resname="Multimedia objects with tag: %title%">
         <source>Multimedia objects with tag: %title%</source>
-        <target xml:lang="gl" state="needs-translation">Multimedia objects with tag: %title%</target>
+        <target xml:lang="gl" state="translated">Obxectos multimedia coa categoría: %title%</target>
       </trans-unit>
       <trans-unit id="a3546e4e0fce18914e4fc2a38c0a0bc0" resname="Series with tag: %title%">
         <source>Series with tag: %title%</source>
-        <target xml:lang="gl" state="needs-translation">Series with tag: %title%</target>
+        <target xml:lang="gl" state="translated">Series coa categoría: %title%</target>
       </trans-unit>
       <trans-unit id="e2687632d3f5cb6e7d6c8078d92296c9" resname="Spanish Sign Language">
         <source>Spanish Sign Language</source>
-        <target xml:lang="gl" state="needs-translation">Spanish Sign Language</target>
+        <target xml:lang="gl" state="translated">lingua de signos española</target>
       </trans-unit>
       <trans-unit id="a266861eb483e0bb66410fff933bf0f9" resname="Sign Language">
         <source>Sign Language</source>
-        <target xml:lang="gl" state="needs-translation">Sign Language</target>
+        <target xml:lang="gl" state="translated">lingua de signos</target>
       </trans-unit>
       <trans-unit id="860b918fdae8371e66c317159ae71dfd" resname="International Sign Language">
         <source>International Sign Language</source>
-        <target xml:lang="gl" state="needs-translation">International Sign Language</target>
+        <target xml:lang="gl" state="translated">lingua de signos internacional</target>
       </trans-unit>
       <trans-unit id="b3e5ff3eb8faf64fda7a6d32de6ade6d" resname="Latest Uploads">
         <source>Latest Uploads</source>
@@ -436,7 +445,15 @@
       </trans-unit>
       <trans-unit id="61e5b3c8bc5458843025de98edf999aa" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target xml:lang="gl" state="needs-translation">i18n.one.Series</target>
+        <target xml:lang="gl" state="translated">Serie</target>
+      </trans-unit>
+      <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
+        <source>Submit</source>
+        <target xml:lang="gl" state="translated">Enviar</target>
+      </trans-unit>
+      <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
+        <source>Logo</source>
+        <target xml:lang="gl" state="translated">Imaxe</target>
       </trans-unit>
     </body>
   </file>

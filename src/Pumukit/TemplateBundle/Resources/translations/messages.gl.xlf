@@ -4,39 +4,35 @@
     <body>
       <trans-unit id="7df96b18c230f90ada0a9e2307226338" resname="Templates">
         <source>Templates</source>
-        <target xml:lang="gl" state="needs-translation">Templates</target>
+        <target xml:lang="gl" state="translated">Plantillas</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
-        <target xml:lang="gl" state="needs-translation">New</target>
+        <target xml:lang="gl" state="translated">Novo</target>
       </trans-unit>
       <trans-unit id="729a51874fe901b092899e9e8b31c97a" resname="Are you sure?">
         <source>Are you sure?</source>
-        <target xml:lang="gl" state="needs-translation">Are you sure?</target>
+        <target xml:lang="gl" state="translated">Está vostede seguro?</target>
       </trans-unit>
       <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
         <source>Delete</source>
-        <target xml:lang="gl" state="needs-translation">Delete</target>
+        <target xml:lang="gl" state="translated">Eliminar</target>
       </trans-unit>
       <trans-unit id="526d688f37a86d3c3f27d0c5016eb71d" resname="Reset">
         <source>Reset</source>
-        <target xml:lang="gl" state="needs-translation">Reset</target>
+        <target xml:lang="gl" state="translated">Reset</target>
       </trans-unit>
       <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
         <source>Save changes</source>
-        <target xml:lang="gl" state="needs-translation">Save changes</target>
+        <target xml:lang="gl" state="translated">Gardar cambios</target>
       </trans-unit>
       <trans-unit id="28b80975b6641681ee6985abaf438677" resname="No templates">
         <source>No templates</source>
-        <target xml:lang="gl" state="needs-translation">No templates</target>
+        <target xml:lang="gl" state="translated">Ningunha plantilla</target>
       </trans-unit>
       <trans-unit id="025d35ee660e2039bb53f0638cc85712" resname="Access Templates section">
         <source>Access Templates section</source>
-        <target xml:lang="gl" state="needs-translation">Access Templates section</target>
-      </trans-unit>
-      <trans-unit id="244bf476f8ee11e6bc6492361f002671" resname="Text">
-        <source>Text</source>
-        <target xml:lang="gl" state="needs-translation">Text</target>
+        <target xml:lang="gl" state="translated">Sección para plantillas</target>
       </trans-unit>
     </body>
   </file>
