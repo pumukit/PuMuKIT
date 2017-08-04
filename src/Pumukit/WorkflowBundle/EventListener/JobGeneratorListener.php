@@ -38,10 +38,14 @@ class JobGeneratorListener
     private function checkMultimediaObject(MultimediaObject $multimediaObject)
     {
         // Only for objects with master
-        if (!$multimediaObject->getMaster(false)) return;
+        if (!$multimediaObject->getMaster(false)) {
+            return;
+        }
 
         // Only for non multi-stream objects
-        if (null != $multimediaObject->getProperty('opencast')) return;
+        if (null != $multimediaObject->getProperty('opencast')) {
+            return;
+        }
 
         $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $tag = $repository->findOneByCod('PUBCHANNELS');
