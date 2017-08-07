@@ -33,10 +33,30 @@
             {% endif %}
 
             <option disabled="">---</option>
-            <option value="order_pub_date_desc">{% trans %}List multimedia objects in descending order of publication date{% endtrans %}</option>
-            <option value="order_pub_date_asc">{% trans %}List multimedia objects in ascending order of publication date{% endtrans %}</option>
-            <option value="order_rec_date_desc">{% trans %}List multimedia objects in descending order of recording date{% endtrans %}</option>
-            <option value="order_rec_date_asc">{% trans %}List multimedia objects in ascending order of recording date{% endtrans %}</option>
+            <option value="order_manual" data-type="sort" {% if series.sorting == constant('SORT_MANUAL', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in a manual order{% endtrans %}
+              {% if series.sorting == constant('SORT_MANUAL', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
+            <option value="order_pub_date_desc" data-type="sort" {% if series.sorting == constant('SORT_PUB_DES', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in descending order of publication date{% endtrans %}
+              {% if series.sorting == constant('SORT_PUB_DES', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
+            <option value="order_pub_date_asc" data-type="sort"{% if series.sorting == constant('SORT_PUB_ASC', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in ascending order of publication date{% endtrans %}
+              {% if series.sorting == constant('SORT_PUB_ASC', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
+            <option value="order_rec_date_desc" data-type="sort" {% if series.sorting == constant('SORT_REC_DES', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in descending order of recording date{% endtrans %}
+              {% if series.sorting == constant('SORT_REC_DES', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
+            <option value="order_rec_date_asc" data-type="sort" {% if series.sorting == constant('SORT_REC_ASC', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in ascending order of recording date{% endtrans %}
+              {% if series.sorting == constant('SORT_REC_ASC', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
+            <option value="order_abc" data-type="sort" {% if series.sorting == constant('SORT_ALPHAB', series) %}data-active="1"{% endif %}>
+              {% trans %}List multimedia objects in ascending order of title{% endtrans %}
+              {% if series.sorting == constant('SORT_ALPHAB', series) %}{% trans %}(active){% endtrans %}{% endif %}
+            </option>
             <option disabled="">---</option>
             <option value="cut_mm">{% trans %}Cut multimedia objects{% endtrans %}</option>
             {% if app.session.has('admin/mms/cut') and app.session.get('admin/mms/cut')%}

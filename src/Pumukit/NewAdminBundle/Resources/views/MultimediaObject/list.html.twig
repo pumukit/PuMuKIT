@@ -10,7 +10,8 @@
             </label>
           </div>
         </th>
-        <th id="th-icons" colspan="{{ is_naked() ? 4 : 5 }}" width="5%"></th>
+        {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) + (is_naked() ? 1 : 0) %}
+        <th id="th-icons" colspan="{{ colspan }}" width="5%"></th>
         <th id="th-video" width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
         <th id="th-title">{% trans %}Title{% endtrans %}</th>
@@ -43,6 +44,7 @@
         <td headers="th-icons">
           {% include 'PumukitNewAdminBundle:MultimediaObject:updatemenu.html.twig' with {'mm': mm} %}
         </td>
+        {% if series.sorting == constant('SORT_MANUAL', series) %}
         <td headers="th-icons">
           {% if mms.getCurrentPage() != 1 or not loop.first %}
           {% spaceless %}
@@ -59,6 +61,7 @@
         {% endspaceless %}
         {% endif %}
         </td>
+        {% endif %}
         <td headers="th-video" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
           <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
         </td>
@@ -101,8 +104,10 @@
         {% if not is_naked() %}
         <td headers="th-icons">&nbsp;</td>
         {% endif %}
+        {% if series.sorting == constant('SORT_MANUAL', series) %}
         <td headers="th-icons">&nbsp;</td>
         <td headers="th-icons">&nbsp;</td>
+        {% endif %}
         <td headers="th-icons">&nbsp;</td>
         <td headers="th-video">&nbsp;</td>
         <td headers="th-img">&nbsp;</td>
