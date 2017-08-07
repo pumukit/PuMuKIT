@@ -94,7 +94,10 @@
       </trans-unit>
       <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
         <source>Audio</source>
-        <target xml:lang="gl" state="translated">Audio</target>
+        <target xml:lang="gl" state="translated">Son</target>
+        <alt-trans>
+          <target xml:lang="gl">Audio</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
@@ -150,7 +153,10 @@
       </trans-unit>
       <trans-unit id="24105bbb65df055ed4fe0eea90c13f75" resname="Video/Audio">
         <source>Video/Audio</source>
-        <target xml:lang="gl" state="translated">Vídeo/Audio</target>
+        <target xml:lang="gl" state="translated">Vídeo/Son</target>
+        <alt-trans>
+          <target xml:lang="gl">Vídeo/Audio</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4d34f1097f6c8b9cee28bca8b78bbee9" resname="Start date">
         <source>Start date</source>
@@ -381,7 +387,10 @@
       </trans-unit>
       <trans-unit id="3c53c398c3e076a5b04c2c94e0e7921c" resname="Total search results:">
         <source>Total search results:</source>
-        <target xml:lang="gl" state="translated">Resultados de búsqueda totais:</target>
+        <target xml:lang="gl" state="translated">Resultados da busca totais:</target>
+        <alt-trans>
+          <target xml:lang="gl">Resultados de búsqueda totais:</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="4a71d7d71737bd12fc51c2bc8024e84a" resname="Not multimedia objects found">
         <source>Not multimedia objects found</source>
@@ -389,7 +398,10 @@
       </trans-unit>
       <trans-unit id="8bd1fd42b739b6b760f57f023580794f" resname="Private audio">
         <source>Private audio</source>
-        <target xml:lang="gl" state="translated">Audio privado</target>
+        <target xml:lang="gl" state="translated">Son privado</target>
+        <alt-trans>
+          <target xml:lang="gl">Audio privado</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="c525e0d86d7e6c4901a1c82950e9d913" resname="Log in with a valid user is required to watch it">
         <source>Log in with a valid user is required to watch it</source>
