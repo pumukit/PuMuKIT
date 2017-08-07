@@ -82,6 +82,13 @@ class Track extends Element
     private $height;
 
     /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $allowDownload = false;
+
+    /**
      * @var int
      *
      * @MongoDB\Int
@@ -379,6 +386,24 @@ class Track extends Element
     public function getNumview()
     {
         return $this->numview;
+    }
+
+    /**
+     * Set allowDownload.
+     *
+     * @param bool $allowDownload
+     */
+    public function setAllowDownload($allowDownload)
+    {
+        $this->allowDownload = $allowDownload;
+    }
+
+    /**
+     * Get allowDownload.
+     */
+    public function getAllowDownload()
+    {
+        return $this->allowDownload;
     }
 
     /**

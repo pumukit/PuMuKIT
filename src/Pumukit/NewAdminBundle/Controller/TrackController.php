@@ -38,11 +38,11 @@ class TrackController extends Controller implements NewAdminController
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
         return array(
-                     'track' => $track,
-                     'form' => $form->createView(),
-                     'mm' => $multimediaObject,
-                     'master_profiles' => $masterProfiles,
-                     );
+            'track' => $track,
+            'form' => $form->createView(),
+            'mm' => $multimediaObject,
+            'master_profiles' => $masterProfiles,
+        );
     }
 
     /**
@@ -70,17 +70,17 @@ class TrackController extends Controller implements NewAdminController
             }
         } catch (\Exception $e) {
             return array(
-                         'mm' => $multimediaObject,
-                         'uploaded' => 'failed',
-                         'message' => 'The file is not a valid video or audio file',
-                         );
+                'mm' => $multimediaObject,
+                'uploaded' => 'failed',
+                'message' => 'The file is not a valid video or audio file',
+            );
         }
 
         return array(
-                     'mm' => $multimediaObject,
-                     'uploaded' => 'success',
-                     'message' => 'New Track added.',
-                     );
+            'mm' => $multimediaObject,
+            'uploaded' => 'success',
+            'message' => 'New Track added.',
+        );
     }
 
     /**
@@ -106,12 +106,13 @@ class TrackController extends Controller implements NewAdminController
         }
 
         return $this->render('PumukitNewAdminBundle:Track:update.html.twig',
-                             array(
-                                   'track' => $track,
-                                   'form' => $form->createView(),
-                                   'mmId' => $multimediaObject->getId(),
-                                   'profiles' => $profiles,
-                                   ));
+            array(
+                'track' => $track,
+                'form' => $form->createView(),
+                'mmId' => $multimediaObject->getId(),
+                'profiles' => $profiles,
+            )
+        );
     }
 
     /**
@@ -125,11 +126,11 @@ class TrackController extends Controller implements NewAdminController
         $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED;
 
         return array(
-                     'track' => $track,
-                     'mm' => $multimediaObject,
-                     'is_playable' => $isPlayable,
-                     'is_published' => $isPublished,
-                     );
+            'track' => $track,
+            'mm' => $multimediaObject,
+            'is_playable' => $isPlayable,
+            'is_published' => $isPublished,
+        );
     }
 
     /**
@@ -195,14 +196,14 @@ class TrackController extends Controller implements NewAdminController
         $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         return array(
-                     'mm' => $multimediaObject,
-                     'tracks' => $multimediaObject->getTracks(),
-                     'jobs' => $jobs,
-                     'not_master_profiles' => $notMasterProfiles,
-                     'oc' => '',
-                     'opencast_exists' => $opencastExists,
-                     'reload_links' => $request->query->get('reload_links', false),
-                     );
+            'mm' => $multimediaObject,
+            'tracks' => $multimediaObject->getTracks(),
+            'jobs' => $jobs,
+            'not_master_profiles' => $notMasterProfiles,
+            'oc' => '',
+            'opencast_exists' => $opencastExists,
+            'reload_links' => $request->query->get('reload_links', false),
+        );
     }
 
     /**
@@ -287,9 +288,9 @@ class TrackController extends Controller implements NewAdminController
         }
 
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+        );
     }
 
     /**
@@ -302,10 +303,10 @@ class TrackController extends Controller implements NewAdminController
         $response = new BinaryFileResponse($track->getPath());
         $response->trustXSendfileTypeHeader();
         $response->setContentDisposition(
-                                         ResponseHeaderBag::DISPOSITION_INLINE,
-                                         basename($track->getPath()),
-                                         iconv('UTF-8', 'ASCII//TRANSLIT', basename($track->getPath()))
-                                         );
+            ResponseHeaderBag::DISPOSITION_INLINE,
+            basename($track->getPath()),
+            iconv('UTF-8', 'ASCII//TRANSLIT', basename($track->getPath()))
+        );
 
         return $response;
     }
