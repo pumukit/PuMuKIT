@@ -36,7 +36,7 @@ class MultimediaObjectMetaType extends AbstractType
                   array('required' => false,
                         'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('i18n_comments', 'textareai18n',
+            ->add('comments', 'textarea',
                 array('required' => false,
                     'attr' => array('style' => 'resize:vertical;'),
                     'label' => $this->translator->trans('Comments', array(), null, $this->locale), ))

@@ -169,9 +169,9 @@ class MultimediaObject
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\String
      */
-    private $comments = array('en' => '');
+    private $comments;
 
     /**
      * @var string
@@ -588,52 +588,19 @@ class MultimediaObject
     /**
      * Set comments.
      *
-     * @param string      $comments
-     * @param string|null $locale
+     * @param string $comments
      */
-    public function setComments($comments, $locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        $this->comments[$locale] = $comments;
-    }
-
-    /**
-     * Get comments.
-     *
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    public function getComments($locale = null)
-    {
-        if ($locale == null) {
-            $locale = $this->locale;
-        }
-        if (!isset($this->comments[$locale])) {
-            return '';
-        }
-
-        return $this->comments[$locale];
-    }
-
-    /**
-     * Set I18n comments.
-     *
-     * @param array $comments
-     */
-    public function setI18nComments(array $comments)
+    public function setComments($comments)
     {
         $this->comments = $comments;
     }
 
     /**
-     * Get I18n comments.
+     * Get comments.
      *
-     * @return array
+     * @return string
      */
-    public function getI18nComments()
+    public function getComments()
     {
         return $this->comments;
     }
