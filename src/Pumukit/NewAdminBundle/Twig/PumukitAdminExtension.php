@@ -278,6 +278,10 @@ class PumukitAdminExtension extends \Twig_Extension
             $iconClass = 'mdi-device-wifi-lock pumukit-blocked';
         }
 
+        if ($series->isHide()) {
+            $iconClass .= ' pumukit-series-hidden';
+        }
+
         return $iconClass;
     }
 

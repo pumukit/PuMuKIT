@@ -111,6 +111,13 @@ class Series
     private $announce = false;
 
     /**
+     * @var bool
+     *
+     * @MongoDB\Boolean
+     */
+    private $hide = true;
+
+    /**
      * @var datetime
      *
      * @MongoDB\Date
@@ -184,6 +191,7 @@ class Series
     public function __construct()
     {
         $this->secret = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->hide = false;
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
         $this->pics = new ArrayCollection();
@@ -374,6 +382,46 @@ class Series
     public function getAnnounce()
     {
         return $this->announce;
+    }
+
+    /**
+     * Get announce.
+     *
+     * @return bool
+     */
+    public function isAnnounce()
+    {
+        return $this->announce;
+    }
+
+    /**
+     * Set hide.
+     *
+     * @param bool $hide
+     */
+    public function setHide($hide)
+    {
+        $this->hide = $hide;
+    }
+
+    /**
+     * Get hide.
+     *
+     * @return bool
+     */
+    public function getHide()
+    {
+        return $this->hide;
+    }
+
+    /**
+     * Get hide.
+     *
+     * @return bool
+     */
+    public function isHide()
+    {
+        return $this->hide;
     }
 
     /**

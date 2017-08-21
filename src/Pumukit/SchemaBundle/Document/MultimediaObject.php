@@ -795,6 +795,12 @@ class MultimediaObject
      */
     public function getSeries()
     {
+        // WORKAROUND: get the object series is it's hidden and the MongoDB filter is enabled.
+        try {
+            $this->series->isHide();
+        } catch (\Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+        }
+
         return $this->series;
     }
 

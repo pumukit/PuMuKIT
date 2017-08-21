@@ -101,13 +101,14 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $editorChapters = $this->getChapterMarks($multimediaObject);
 
-        return array('autostart' => $request->query->get('autostart', 'true'),
-                     'intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject,
-                     'track' => $track,
-                     'magic_url' => true,
-                     'editor_chapters' => $editorChapters,
-                     'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
+        return array(
+            'autostart' => $request->query->get('autostart', 'true'),
+            'intro' => $this->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'track' => $track,
+            'magic_url' => true,
+            'editor_chapters' => $editorChapters,
+            'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
         );
     }
 
@@ -145,8 +146,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     public function relatedAction(MultimediaObject $multimediaObject)
     {
         $mmobjRepo = $this
-        ->get('doctrine_mongodb.odm.document_manager')
-        ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->get('doctrine_mongodb.odm.document_manager')
+          ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
         return array('multimediaObjects' => $relatedMms);

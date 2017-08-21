@@ -6,10 +6,11 @@
                   data: $(this).serialize(),
                   error: function(request, json){var message = '{% trans %}Series saved ERROR{% endtrans %}'; no_success(message);},
                   success: function(response){
-                  $('#list_series').html(response);
-                  $('#preview_series').load('{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}');
-                  var message = '{% trans %}Series saved OK{% endtrans %}';
-                  success(message);
+                    $('#list_series').html(response);
+                    $('#preview_series').load('{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}');
+                    $('#links_series_{{series.id}}').load('{{ path('pumukitnewadmin_series_links', {'id': series.id}) }}');
+                    var message = '{% trans %}Series saved OK{% endtrans %}';
+                    success(message);
                   }
                   });
           return false;"

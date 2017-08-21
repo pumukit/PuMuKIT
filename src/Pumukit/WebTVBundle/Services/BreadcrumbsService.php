@@ -79,7 +79,9 @@ class BreadcrumbsService
                  $this->session->get('breadcrumbs/routeParameters', array()));
         }
 
-        $this->add($series->getTitle(), 'pumukit_webtv_series_index', array('id' => $series->getId()));
+        if (!$series->isHide()) {
+            $this->add($series->getTitle(), 'pumukit_webtv_series_index', array('id' => $series->getId()));
+        }
     }
 
     public function addMultimediaObject(MultimediaObject $multimediaObject)
