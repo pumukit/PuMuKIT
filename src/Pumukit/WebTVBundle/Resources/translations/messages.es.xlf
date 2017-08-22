@@ -464,6 +464,34 @@
         <source>Logo</source>
         <target xml:lang="es-ES" state="translated">Imagen</target>
       </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
+        <source>Send</source>
+        <target xml:lang="es-ES" state="translated">Enviar</target>
+      </trans-unit>
+      <trans-unit id="87f9f735a1d36793ceaecd4e47124b63" resname="Events">
+        <source>Events</source>
+        <target xml:lang="es-ES" state="translated">Eventos</target>
+      </trans-unit>
+      <trans-unit id="161f25f9025f957f236bd529f7d1eb38" resname="Starts">
+        <source>Starts</source>
+        <target xml:lang="es-ES" state="translated">Comienzo</target>
+      </trans-unit>
+      <trans-unit id="8425cc8cae1477d22d87e3ec59ec9326" resname="Next session">
+        <source>Next session</source>
+        <target xml:lang="es-ES" state="translated">Próxima sesión</target>
+      </trans-unit>
+      <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
+        <source>To</source>
+        <target xml:lang="es-ES" state="translated">a</target>
+      </trans-unit>
+      <trans-unit id="18865e2cf56dbad019207ac0af034fe3" resname="Events live">
+        <source>Events live</source>
+        <target xml:lang="es-ES" state="needs-translation">Events live</target>
+      </trans-unit>
+      <trans-unit id="6ce3bdc39e544725038e0e87b771db1e" resname="Questions">
+        <source>Questions</source>
+        <target xml:lang="es-ES" state="translated">Consultas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
