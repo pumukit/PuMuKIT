@@ -1643,9 +1643,16 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $today = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'islive' => '$islive',
+            'sessions' => '$sessions',
+            'social' => '$social',
+            'pics' => '$pics',
+            'materials' => '$materials',
+            'seriesTitle' => '$seriesTitle',
             'session' => '$sessions',
-            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
             'groupBy' => array(
                 '$cond' => array('if' => array('$and' => array(
                     array('$lte' => array(
@@ -1729,7 +1736,11 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = array('$unwind' => '$sessions');
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'sessions' => '$sessions',
+            'pics' => '$pics',
             'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
         ));
 
@@ -1739,7 +1750,12 @@ class MultimediaObjectRepository extends DocumentRepository
             'sessions.start' => array('$lte' => $now),
         ));
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'sessions' => '$sessions',
+            'pics' => '$pics',
+            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
             'session' => '$sessions',
         ));
 
@@ -1792,7 +1808,10 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'pics' => '$pics',
             'session' => '$sessions',
         ));
 
@@ -1834,7 +1853,10 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = array('$unwind' => '$sessions');
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'sessions' => '$sessions',
             'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
         ));
 
@@ -1845,7 +1867,10 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        $pipeline[] = array('$addFields' => array(
+        $pipeline[] = array('$project' => array(
+            'multimediaObjectId' => '$multimediaObjectId',
+            'event' => '$event',
+            'sessions' => '$sessions',
             'session' => '$sessions',
         ));
 
