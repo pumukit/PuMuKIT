@@ -2,9 +2,9 @@
     {% if events[0] is defined and events[0] is not empty %}
         {% for event in events[0]['data'] | reverse %}
             <div class="row">
-                <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_id', {'id' : events[0]['_id'] }) }}'">
+                <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_event_id', {'id' : events[0]['_id'] }) }}'">
                     <div class="minithumbnail">
-                        <a href="{{ url('pumukit_live_id', {'id' : events[0]['_id'] }) }}">
+                        <a href="{{ url('pumukit_live_event_id', {'id' : events[0]['_id'] }) }}">
                             <div class="media-object play_icon small" alt=""></div>
                             <img class="media-object thumbnailimg" src="{{ event|first_url_pic(true) }}">
                             <div class="minithumbnailholder"></div>

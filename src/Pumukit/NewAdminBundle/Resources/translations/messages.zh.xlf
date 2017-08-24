@@ -415,10 +415,6 @@
         <source>create new live channel</source>
         <target xml:lang="zh-TW" state="translated">創建新的直播頻道</target>
       </trans-unit>
-      <trans-unit id="a9e77665b6abe64830336745d22c80e9" resname="Live channels">
-        <source>Live channels</source>
-        <target xml:lang="zh-TW" state="translated">直播頻道</target>
-      </trans-unit>
       <trans-unit id="418623d9ef2cbd1ec0f9d9da294241d3" resname="Create new live channel">
         <source>Create new live channel</source>
         <target xml:lang="zh-TW" state="translated">創建新的直播頻道</target>
@@ -2678,6 +2674,118 @@
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="zh-TW" state="needs-translation">Select the number of multimedia objects to display per page.</target>
       </trans-unit>
+      <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
+        <source>External player</source>
+        <target xml:lang="zh-TW" state="needs-translation">External player</target>
+      </trans-unit>
+      <trans-unit id="60efca1186ebc7df207ce79f780146e6" resname="'No external player set'">
+        <source>'No external player set'</source>
+        <target xml:lang="zh-TW" state="needs-translation">'No external player set'</target>
+      </trans-unit>
+      <trans-unit id="37e096d711c30348e94ce1070fb88abb" resname="Add external player">
+        <source>Add external player</source>
+        <target xml:lang="zh-TW" state="needs-translation">Add external player</target>
+      </trans-unit>
+      <trans-unit id="a0aca9938f0fc26f0d74bd6965ca77ac" resname="No external player set">
+        <source>No external player set</source>
+        <target xml:lang="zh-TW" state="needs-translation">No external player set</target>
+      </trans-unit>
+      <trans-unit id="e05cdf66497155c4c1f436baeb7e90d3" resname="External video">
+        <source>External video</source>
+        <target xml:lang="zh-TW" state="needs-translation">External video</target>
+      </trans-unit>
+      <trans-unit id="afa945de55945c4a8a85f2fdb8b63c5a" resname="No external video set">
+        <source>No external video set</source>
+        <target xml:lang="zh-TW" state="needs-translation">No external video set</target>
+      </trans-unit>
+      <trans-unit id="6e072be0505bbcb1f91fe4b3a5f60c10" resname="Are you sure you want to delete this external video?">
+        <source>Are you sure you want to delete this external video?</source>
+        <target xml:lang="zh-TW" state="needs-translation">Are you sure you want to delete this external video?</target>
+      </trans-unit>
+      <trans-unit id="90c22a162189a9402836aaa77258f6e0" resname="External video successfully deleted.">
+        <source>External video successfully deleted.</source>
+        <target xml:lang="zh-TW" state="needs-translation">External video successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="54e90e15f45ee962db4ae107d05971f5" resname="New video external">
+        <source>New video external</source>
+        <target xml:lang="zh-TW" state="needs-translation">New video external</target>
+      </trans-unit>
+      <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
+        <source>Edit</source>
+        <target xml:lang="zh-TW" state="needs-translation">Edit</target>
+      </trans-unit>
+      <trans-unit id="3b06b8327ad154f97731a498c54e969c" resname="Filter Roles">
+        <source>Filter Roles</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter Roles</target>
+      </trans-unit>
+      <trans-unit id="484df18e26ba1df3a75a5bac50732025" resname="Filter Groups">
+        <source>Filter Groups</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter Groups</target>
+      </trans-unit>
+      <trans-unit id="3d4abcd37d189a465af8b5871abe5ae3" resname="Filter People">
+        <source>Filter People</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter People</target>
+      </trans-unit>
+      <trans-unit id="b7c161bb87bb0308fb25e6f68d0a5632" resname="Thumbnail">
+        <source>Thumbnail</source>
+        <target xml:lang="zh-TW" state="needs-translation">Thumbnail</target>
+      </trans-unit>
+      <trans-unit id="344a7f427fb765610ef96eb7bce95257" resname="Editor">
+        <source>Editor</source>
+        <target xml:lang="zh-TW" state="needs-translation">Editor</target>
+      </trans-unit>
+      <trans-unit id="cebc3c89f89b41e6d438bf6da6f7b42d" resname="Relations list">
+        <source>Relations list</source>
+        <target xml:lang="zh-TW" state="needs-translation">Relations list</target>
+      </trans-unit>
+      <trans-unit id="bb888443b314817bdf461c0fe4f573a6" resname="Modify broadcast profile">
+        <source>Modify broadcast profile</source>
+        <target xml:lang="zh-TW" state="needs-translation">Modify broadcast profile</target>
+      </trans-unit>
+      <trans-unit id="fde643d3b82b8ece34fe38ff4661f577" resname="Person with Role list">
+        <source>Person with Role list</source>
+        <target xml:lang="zh-TW" state="needs-translation">Person with Role list</target>
+      </trans-unit>
+      <trans-unit id="9b2c85dd7af17d4528bd7489e72c59c5" resname="Spinner">
+        <source>Spinner</source>
+        <target xml:lang="zh-TW" state="needs-translation">Spinner</target>
+      </trans-unit>
+      <trans-unit id="a650953bafd6dc61a768cda781e277f9" resname="Update publication">
+        <source>Update publication</source>
+        <target xml:lang="zh-TW" state="needs-translation">Update publication</target>
+      </trans-unit>
+      <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
+        <source>Delete</source>
+        <target xml:lang="zh-TW" state="needs-translation">Delete</target>
+      </trans-unit>
+      <trans-unit id="e3dd019a2f171ebdfc167be072e0d752" resname="Submit generate magic URL">
+        <source>Submit generate magic URL</source>
+        <target xml:lang="zh-TW" state="needs-translation">Submit generate magic URL</target>
+      </trans-unit>
+      <trans-unit id="c7be32626ba83e9ccb03a3b1e18fbfc7" resname="Read only form">
+        <source>Read only form</source>
+        <target xml:lang="zh-TW" state="needs-translation">Read only form</target>
+      </trans-unit>
+      <trans-unit id="c133169dfd93a627eecb7ebcd6f63c5e" resname="Update metadata">
+        <source>Update metadata</source>
+        <target xml:lang="zh-TW" state="needs-translation">Update metadata</target>
+      </trans-unit>
+      <trans-unit id="7aa900322ecc74164c8018b89bce2878" resname="Update media">
+        <source>Update media</source>
+        <target xml:lang="zh-TW" state="needs-translation">Update media</target>
+      </trans-unit>
+      <trans-unit id="379ebb63ab3604bfd28b923fbe86dd44" resname="Filter Users">
+        <source>Filter Users</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter Users</target>
+      </trans-unit>
+      <trans-unit id="51489c0f747733fb32b3ae6ce8606213" resname="Filter Live Channels">
+        <source>Filter Live Channels</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter Live Channels</target>
+      </trans-unit>
+      <trans-unit id="5101591968e8a19545fab09e442178af" resname="Filter Live Events">
+        <source>Filter Live Events</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter Live Events</target>
+      </trans-unit>
       <trans-unit id="f431e17ea0081a3c9e51fc240221ee21" resname="Social">
         <source>Social</source>
         <target xml:lang="zh-TW" state="needs-translation">Social</target>
@@ -2788,10 +2896,6 @@
         <source>Delete event and series</source>
         <target xml:lang="zh-TW" state="needs-translation">Delete event and series</target>
       </trans-unit>
-      <trans-unit id="13dc519b6de0f5e1e7f97534b1d13ff5" resname="Select or create any live multimediaObject.getEmbeddedEvent().">
-        <source>Select or create any live multimediaObject.getEmbeddedEvent().</source>
-        <target xml:lang="zh-TW" state="needs-translation">Select or create any live multimediaObject.getEmbeddedEvent().</target>
-      </trans-unit>
       <trans-unit id="71c7ae294b7abd866b3fb295b3b9e4a4" resname="Session">
         <source>Session</source>
         <target xml:lang="zh-TW" state="needs-translation">Session</target>
@@ -2805,6 +2909,114 @@
                             In case this series already exists in the database, a pull-down list will be shown,
                             where you can select it and use it. If it doesn't exist in the database,
                             create a new entrance with the written name.</target>
+      </trans-unit>
+      <trans-unit id="cf26c0d5b71f36207ad9b694d77ab7c5" resname="Video URL">
+        <source>Video URL</source>
+        <target xml:lang="zh-TW" state="needs-translation">Video URL</target>
+      </trans-unit>
+      <trans-unit id="f6a1a1a57d23db8b1b5ca3ab95a1523a" resname="List multimedia objects in a manual order">
+        <source>List multimedia objects in a manual order</source>
+        <target xml:lang="zh-TW" state="needs-translation">List multimedia objects in a manual order</target>
+      </trans-unit>
+      <trans-unit id="cb8f0f48a862980ccbebe8745aab7300" resname="(active)">
+        <source>(active)</source>
+        <target xml:lang="zh-TW" state="needs-translation">(active)</target>
+      </trans-unit>
+      <trans-unit id="8a2390562ba61b0f6416b585032a68bf" resname="List multimedia objects in ascending order of title">
+        <source>List multimedia objects in ascending order of title</source>
+        <target xml:lang="zh-TW" state="needs-translation">List multimedia objects in ascending order of title</target>
+      </trans-unit>
+      <trans-unit id="7fc19aa52c41ec071f87890327ae5050" resname="Filter playlist">
+        <source>Filter playlist</source>
+        <target xml:lang="zh-TW" state="needs-translation">Filter playlist</target>
+      </trans-unit>
+      <trans-unit id="4f93358ada3faffd24da309cf0e6ee6e" resname="Multimedia Playlist metadata">
+        <source>Multimedia Playlist metadata</source>
+        <target xml:lang="zh-TW" state="needs-translation">Multimedia Playlist metadata</target>
+      </trans-unit>
+      <trans-unit id="db0f481303d58eca53dbb87e35452a30" resname="Warning: This link will give a 404 error while this series is hidden.">
+        <source>Warning: This link will give a 404 error while this series is hidden.</source>
+        <target xml:lang="zh-TW" state="needs-translation">Warning: This link will give a 404 error while this series is hidden.</target>
+      </trans-unit>
+      <trans-unit id="e5a005c3d96b863b567a679c7b85cb70" resname="Magic URL">
+        <source>Magic URL</source>
+        <target xml:lang="zh-TW" state="needs-translation">Magic URL</target>
+      </trans-unit>
+      <trans-unit id="1ac85bf74cc03d4903d3166a7c69c993" resname="Generate a new magic series link">
+        <source>Generate a new magic series link</source>
+        <target xml:lang="zh-TW" state="needs-translation">Generate a new magic series link</target>
+      </trans-unit>
+      <trans-unit id="38d1f3cf744f02f270f3b2b6320bcbfe" resname="Update Series Metadata">
+        <source>Update Series Metadata</source>
+        <target xml:lang="zh-TW" state="needs-translation">Update Series Metadata</target>
+      </trans-unit>
+      <trans-unit id="6e44dd426c4706a72f5707f1cca964e5" resname="Play track">
+        <source>Play track</source>
+        <target xml:lang="zh-TW" state="needs-translation">Play track</target>
+      </trans-unit>
+      <trans-unit id="e363c9e8863649d099a9a041d14fe852" resname="Series URL">
+        <source>Series URL</source>
+        <target xml:lang="zh-TW" state="needs-translation">Series URL</target>
+      </trans-unit>
+      <trans-unit id="339810e8f91682f15e50123368f5db0f" resname="Delete live channel">
+        <source>Delete live channel</source>
+        <target xml:lang="zh-TW" state="needs-translation">Delete live channel</target>
+      </trans-unit>
+      <trans-unit id="bcc18832c544762c1627681056900ad8" resname="generate new thumbnail">
+        <source>generate new thumbnail</source>
+        <target xml:lang="zh-TW" state="needs-translation">generate new thumbnail</target>
+      </trans-unit>
+      <trans-unit id="0afe551a8297755d1a34d9d174722eb0" resname="Prev Frame">
+        <source>Prev Frame</source>
+        <target xml:lang="zh-TW" state="needs-translation">Prev Frame</target>
+      </trans-unit>
+      <trans-unit id="85c95f6a17cbc9bf1e5cf035cb4ab89e" resname="Next Frame">
+        <source>Next Frame</source>
+        <target xml:lang="zh-TW" state="needs-translation">Next Frame</target>
+      </trans-unit>
+      <trans-unit id="036b8c11fad0be8eaf39e0c82f0c4679" resname="Take image">
+        <source>Take image</source>
+        <target xml:lang="zh-TW" state="needs-translation">Take image</target>
+      </trans-unit>
+      <trans-unit id="cd4cb76e5b8bb3c02051cf8efeb8b37d" resname="Take burst">
+        <source>Take burst</source>
+        <target xml:lang="zh-TW" state="needs-translation">Take burst</target>
+      </trans-unit>
+      <trans-unit id="aec967b721d5260f0f65cb2b474c5be3" resname="Upload a local file.">
+        <source>Upload a local file.</source>
+        <target xml:lang="zh-TW" state="needs-translation">Upload a local file.</target>
+      </trans-unit>
+      <trans-unit id="8dc27378e60f7f5f7df6290d2fdaed01" resname="Thumbnail generated.">
+        <source>Thumbnail generated.</source>
+        <target xml:lang="zh-TW" state="needs-translation">Thumbnail generated.</target>
+      </trans-unit>
+      <trans-unit id="6b0d6d0cee3b620d00af51d46e61a6f8" resname="Move up thumbnail">
+        <source>Move up thumbnail</source>
+        <target xml:lang="zh-TW" state="needs-translation">Move up thumbnail</target>
+      </trans-unit>
+      <trans-unit id="af1ab28909c02a58bcf6a1b3f380774d" resname="Move down thumbnail">
+        <source>Move down thumbnail</source>
+        <target xml:lang="zh-TW" state="needs-translation">Move down thumbnail</target>
+      </trans-unit>
+      <trans-unit id="3ed05b4ad0347d3b9cd21ae0a10a2d10" resname="Generate thumbnail">
+        <source>Generate thumbnail</source>
+        <target xml:lang="zh-TW" state="needs-translation">Generate thumbnail</target>
+      </trans-unit>
+      <trans-unit id="55fb895ff1c7a4c0c028bbc8ba891656" resname="Search person">
+        <source>Search person</source>
+        <target xml:lang="zh-TW" state="needs-translation">Search person</target>
+      </trans-unit>
+      <trans-unit id="516b10a278973a17f07da3f0c016af84" resname="Delete User">
+        <source>Delete User</source>
+        <target xml:lang="zh-TW" state="needs-translation">Delete User</target>
+      </trans-unit>
+      <trans-unit id="843e4ccf35d336af3bff5bdd2b6c4eec" resname="Delete role">
+        <source>Delete role</source>
+        <target xml:lang="zh-TW" state="needs-translation">Delete role</target>
+      </trans-unit>
+      <trans-unit id="777cb12b43cac89ac1bce1bbfbe3da7c" resname="Open URL">
+        <source>Open URL</source>
+        <target xml:lang="zh-TW" state="needs-translation">Open URL</target>
       </trans-unit>
     </body>
   </file>

@@ -2,7 +2,7 @@
 {% set col_class = ( col_mapper[cols|default('1')] | default(col_mapper['1'] ) ) %}
 
 <div class="{{ col_class }}">
-    <a href="{{ path('pumukit_live_id', {'id': event['multimediaObjectId']}) }}">
+    <a href="{{ path('pumukit_live_event_id', {'id': event['multimediaObjectId']}) }}">
         <div class="pumukit_mmobj">
             <div class="thumbnail">
                 <img alt="serial_pic" class="serial thumbnailimg" src="{{ event|first_url_pic(true) }}"/>

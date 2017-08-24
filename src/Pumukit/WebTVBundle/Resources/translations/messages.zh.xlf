@@ -489,6 +489,26 @@
         <source>Questions</source>
         <target xml:lang="zh-TW" state="needs-translation">Questions</target>
       </trans-unit>
+      <trans-unit id="a4a7f7bd7fe3e8f903979f1bea6bf9b3" resname="Download this audio">
+        <source>Download this audio</source>
+        <target xml:lang="zh-TW" state="needs-translation">Download this audio</target>
+      </trans-unit>
+      <trans-unit id="176ee76a868757e0c2058ad60d9d7514" resname="Download this video">
+        <source>Download this video</source>
+        <target xml:lang="zh-TW" state="needs-translation">Download this video</target>
+      </trans-unit>
+      <trans-unit id="b3950900a4184826e146e7dd6daa3946" resname="Live events">
+        <source>Live events</source>
+        <target xml:lang="zh-TW" state="needs-translation">Live events</target>
+      </trans-unit>
+      <trans-unit id="625501b6af2270f63b11f383be3dcb70" resname="No live events now.">
+        <source>No live events now.</source>
+        <target xml:lang="zh-TW" state="needs-translation">No live events now.</target>
+      </trans-unit>
+      <trans-unit id="1f9d00c3d18f41c15788bfa93efc9cfe" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
+        <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
+        <target xml:lang="zh-TW" state="needs-translation">There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
