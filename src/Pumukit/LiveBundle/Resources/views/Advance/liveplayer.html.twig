@@ -57,10 +57,13 @@
     var nowSessionsCount = "{{ nowSessions|length }}";
 
     if(nextSessionsCount == 0 && nowSessionsCount == 0) {
-
+        var date = new Date();
+        date.setMinutes(date.getMinutes() + 5);
         $("#directo-{{ id }}").html(image);
-        $(".warning").html("{% trans %}No hay sesiones para este evento{% endtrans %}");
-
+        $(".warning").html("{% trans %}El evento ya se ha celebrado{% endtrans %}");
+        $('#warning').countdown(date).on('finish.countdown', function(event) {
+            location.reload();
+        });
     } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
         var nextSessionStarts = "{% if nextSessions is not empty %}{{ nextSessions[0]['data'][0]['session']['start'].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
         $("#directo-{{ id }}").html(image);

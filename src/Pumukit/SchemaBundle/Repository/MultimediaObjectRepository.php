@@ -1872,6 +1872,7 @@ class MultimediaObjectRepository extends DocumentRepository
             'event' => '$event',
             'sessions' => '$sessions',
             'session' => '$sessions',
+            'sessionEnds' => '$sessionEnds',
         ));
 
         $pipeline[] = array('$group' => array(
