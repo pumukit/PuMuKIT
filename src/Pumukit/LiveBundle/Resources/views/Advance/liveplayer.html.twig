@@ -25,55 +25,44 @@
 
 <script type="text/javascript">
 
+    var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\"";
     {% if mobile_device %}
-    var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\" class=\"img-responsive\">\n" +
-        "    <p class=\"warning\" style=\"position: absolute;\n" +
-        "    top: 15%;\n" +
-        "    color: white;\n" +
-        "    font-weight: bold;\n" +
-        "    font-size: 20px;\n" +
-        "    left:9%;\n" +
-        "    line-height: 34px;\n" +
-        "    text-align: center;\">{% trans %}El evento a&uacute;n no se ha celebrado{% endtrans %}<br/>\n" +
-        "        <span id=\"warning\"></span>\n" +
-        "    </p>";
-
+    var width = 'class="img-responsive">';
+    var style = '<p class="warning" style="position: absolute; top: 15%; color: white; font-weight: bold; font-size: 20px; left:9%; line-height: 34px; text-align: center;">';
     {% else %}
-    var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\" width=\"100%\" class=\"img-responsive\">\n" +
-        "    <p class=\"warning\" style=\"position: absolute;\n" +
-        "    top: 30%;\n" +
-        "    color: white;\n" +
-        "    font-weight: bold;\n" +
-        "    font-size: 20px;\n" +
-        "    left:30%;\n" +
-        "    line-height: 34px;\n" +
-        "    text-align: center;\">{% trans %}El evento a&uacute;n no se ha celebrado{% endtrans %}<br/>\n" +
-        "        <span id=\"warning\"></span>\n" +
-        "    </p>";
-
+    var width = 'width="100%">';
+    var style = '<p class="warning" style="position: absolute; top: 30%; color: white; font-weight: bold; font-size: 20px; left:30%; line-height: 34px; text-align: center;">';
     {% endif %}
+    var image = image + width;
+    var text = "{% trans %}El evento a&uacute;n no se ha celebrado{% endtrans %}";
+    var finalText = '<br/><span id=\"warning\"></span></p>';
+
+    background = image + style + text + finalText;
 
     var nextSessionsCount = "{{ nextSessions|length }}";
     var nowSessionsCount = "{{ nowSessions|length }}";
 
     if(nextSessionsCount == 0 && nowSessionsCount == 0) {
+
+        var text = "{% trans %}El evento ya se ha celebrado{% endtrans %}";
+        background = image + style + text + finalText;
+        $("#directo-{{ id }}").html(background);
+
         var date = new Date();
-        date.setMinutes(date.getMinutes() + 5);
-        $("#directo-{{ id }}").html(image);
-        $(".warning").html("{% trans %}El evento ya se ha celebrado{% endtrans %}");
-        $('#warning').countdown(date).on('finish.countdown', function(event) {
+        $('#warning').countdown(date.setMinutes(date.getMinutes() + 1)).on('finish.countdown', function() {
             location.reload();
         });
+
     } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
         var nextSessionStarts = "{% if nextSessions is not empty %}{{ nextSessions[0]['data'][0]['session']['start'].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
-        $("#directo-{{ id }}").html(image);
+        $("#directo-{{ id }}").html(background);
         $("#warning").countdown(nextSessionStarts, function(event) {
             $(this).text(event.strftime('%-d dias %-H:%M:%S'));
         }).on('finish.countdown', function(event) {
             location.reload();
         });
     } else if (nowSessionsCount > 0) {
-        var nowSessionsEnds = "{% if nowSessions is not empty %}{{ nowSessions[0]['data'][0]['sessionEnds'][0].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
+        var nowSessionsEnds = "{% if nowSessions is not empty %}{{ nowSessions[0]['data'][0]['sessionEnds'].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
         $("#countdownClock").countdown(nowSessionsEnds , function(event) {
             $(this).text(event.strftime('%-d dias %-H:%M:%S'));
         }).on('finish.countdown', function(event) {
