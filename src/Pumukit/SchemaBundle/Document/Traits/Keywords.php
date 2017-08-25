@@ -38,7 +38,7 @@ trait Keywords
             $locale = $this->locale;
         }
         $this->keyword[$locale] = $keyword;
-        $this->keywords[$locale] = array_filter(array_map('trim', explode(',', $keyword)));
+        $this->keywords[$locale] = array_values(array_filter(array_map('trim', explode(',', $keyword))));
     }
 
     /**
@@ -72,7 +72,7 @@ trait Keywords
     {
         $keywords = array();
         foreach ($keyword as $lang => $value) {
-            $keywords[$lang] = array_filter(array_map('trim', explode(',', $value)));
+            $keywords[$lang] = array_values(array_filter(array_map('trim', explode(',', $value))));
         }
 
         $this->keywords = $keywords;
