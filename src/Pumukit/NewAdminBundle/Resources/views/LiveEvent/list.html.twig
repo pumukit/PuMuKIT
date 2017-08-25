@@ -20,8 +20,9 @@
         <tbody>
         {% for multimediaObject in multimediaObjects %}
             {% set showPath = false %}
+            {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
             {% if app.session.has('eventID') %}
-                {% set showPath = path('pumukitnewadmin_live_show', {'id': app.session.get('eventID')}) %}
+                {% set showPath = path('pumukitnewadmin_live_show', {'id': multimediaObject.getEmbeddedEvent().getLive().getId() }) %}
             {% endif %}
             <tr class="active">
                 <td headers="th-checkbox" width="1%">
@@ -39,10 +40,10 @@
                         {% trans %}Series videos{% endtrans %}
                     </a>
                 </td>
-                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id}) }}')"  id="event_{{ multimediaObject.getId() }}">
+                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
                     <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive"/>
                 </td>
-                <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id}) }}')">
+                <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
                 <td headers="th-date" width="12%">{{ multimediaObject.getEmbeddedEvent().date | localizeddate('medium', 'none') }}</td>
