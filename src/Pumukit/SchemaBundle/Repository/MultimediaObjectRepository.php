@@ -1741,7 +1741,7 @@ class MultimediaObjectRepository extends DocumentRepository
             'event' => '$event',
             'sessions' => '$sessions',
             'pics' => '$pics',
-            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+            'sessionEnds' => array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000)))),
         ));
 
         $pipeline[] = array('$match' => array(
@@ -1755,7 +1755,7 @@ class MultimediaObjectRepository extends DocumentRepository
             'event' => '$event',
             'sessions' => '$sessions',
             'pics' => '$pics',
-            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+            'sessionEnds' => array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000)))),
             'session' => '$sessions',
         ));
 
@@ -1857,7 +1857,7 @@ class MultimediaObjectRepository extends DocumentRepository
             'multimediaObjectId' => '$multimediaObjectId',
             'event' => '$event',
             'sessions' => '$sessions',
-            'sessionEnds' => array(array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000))))),
+            'sessionEnds' => array('$add' => array('$sessions.start', array('$multiply' => array('$sessions.duration', 1000)))),
         ));
 
         $pipeline[] = array('$match' => array(
@@ -1884,6 +1884,7 @@ class MultimediaObjectRepository extends DocumentRepository
                 'sessionEnds' => '$sessionEnds',
             )),
         ));
+
 
         return $collection->aggregate($pipeline)->toArray();
     }
