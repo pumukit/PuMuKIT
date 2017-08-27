@@ -18,7 +18,7 @@
                         {% if object.subtitle is not empty %}
                             <abbr title="{{ object.subtitle }}">{{ object.subtitle }}</abbr>
                         {% else %}
-                            {% if object.series.isHide != true %}
+                            {% if not object.getSeries().isHide() %}
                                 <abbr title="{{ object.series.title }}">{{ object.series.title }}</abbr>
                             {% endif %}
                         {% endif %}
