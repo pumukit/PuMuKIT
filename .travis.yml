@@ -1,5 +1,6 @@
 sudo: false
 language: php
+dist: trusty
 
 php:
   - 5.5
@@ -19,7 +20,7 @@ addons:
       - mongodb-org-server
       - mediainfo
       - libav-tools
-      - libavcodec-extra-53
+      - libavcodec-extra-54
 
 before_script:
   - yes '' | pecl -q install -f mongo-${MONGO_VERSION}
