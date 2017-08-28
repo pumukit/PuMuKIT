@@ -69,9 +69,10 @@
           $('.date').removeClass('input-group');
       }
       else {
-          $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});
+          var language = "{{ app.request.getLocale() }}";
+          $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD', locale: language });
           $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
-          $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD'});
+          $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD', locale: language });
           $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
       }
   });

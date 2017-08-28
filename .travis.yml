@@ -1,5 +1,6 @@
 sudo: false
 language: php
+dist: trusty
 
 php:
   - 5.5
@@ -19,7 +20,7 @@ addons:
       - mongodb-org-server
       - mediainfo
       - libav-tools
-      - libavcodec-extra-53
+      - libavcodec-extra-54
 
 before_script:
   - yes '' | pecl -q install -f mongo-${MONGO_VERSION}
@@ -39,7 +40,7 @@ script:
     - php app/console lint:twig app
     - ./bin/travis_checks/check_var_dumps
     - php bin/php-cs-fixer.phar fix src --level=symfony --dry-run -v
-    - phpunit -c app
+    - php bin/phpunit -c app
     - php app/console doctrine:mongodb:schema:create
     - php app/console pumukit:init:repo all --force
 #    - php app/console pumukit:init:example  --force

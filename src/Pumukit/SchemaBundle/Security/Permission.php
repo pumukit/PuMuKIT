@@ -213,13 +213,6 @@ class Permission
                 PermissionProfile::SCOPE_PERSONAL => array(),
             ),
         ),
-        self::INIT_STATUS_PUBLISHED => array(
-            'description' => 'Init Multimedia Objects in published status',
-            'dependencies' => array(
-                PermissionProfile::SCOPE_GLOBAL => array(),
-                PermissionProfile::SCOPE_PERSONAL => array(),
-            ),
-        ),
         self::SHOW_CODES => array(
             'description' => 'Show tag and group codes in the backoffice',
             'dependencies' => array(
@@ -236,6 +229,13 @@ class Permission
         ),
         self::ROLE_SEND_NOTIFICATION_COMPLETE => array(
             'description' => 'Receive completed broadcast job notifications',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::INIT_STATUS_PUBLISHED => array(
+            'description' => 'Init Multimedia Objects in published status',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),

@@ -10,11 +10,14 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class WidgetController extends Controller implements WebTVController
 {
-    /**
-     * @Template()
-     */
+    public static $menuResponse = null;
+
     public function menuAction()
     {
+        if (self::$menuResponse) {
+            return self::$menuResponse;
+        }
+
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
 
@@ -25,13 +28,19 @@ class WidgetController extends Controller implements WebTVController
         $mediatecaTitle = $this->container->getParameter('menu.mediateca_title');
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
-        return array('live_channels' => $channels, 'menu_selected' => $selected, 'menu_stats' => $menuStats,
-        'home_title' => $homeTitle,
-        'announces_title' => $announcesTitle,
-        'search_title' => $searchTitle,
-        'mediateca_title' => $mediatecaTitle,
-        'categories_title' => $categoriesTitle,
-        'menu_stats' => $menuStats, );
+        self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
+            'live_channels' => $channels,
+            'menu_selected' => $selected,
+            'menu_stats' => $menuStats,
+            'home_title' => $homeTitle,
+            'announces_title' => $announcesTitle,
+            'search_title' => $searchTitle,
+            'mediateca_title' => $mediatecaTitle,
+            'categories_title' => $categoriesTitle,
+            'menu_stats' => $menuStats,
+        ));
+
+        return self::$menuResponse;
     }
 
     /**
@@ -52,9 +61,11 @@ class WidgetController extends Controller implements WebTVController
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
 
-        $counts = array('series' => $seriesRepo->countPublic(),
-                        'mms' => $mmRepo->count(),
-                        'hours' => bcdiv($mmRepo->countDuration(), 3600, 2), );
+        $counts = array(
+            'series' => $seriesRepo->countPublic(),
+            'mms' => $mmRepo->count(),
+            'hours' => bcdiv($mmRepo->countDuration(), 3600, 2),
+        );
 
         return array('counts' => $counts);
     }
