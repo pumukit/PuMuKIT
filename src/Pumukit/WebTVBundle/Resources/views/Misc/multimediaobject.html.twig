@@ -2,30 +2,32 @@
 {% set col_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
 {% set col_class = ( col_mapper[cols|default('1')] | default(col_mapper['1'] ) ) %}
 <div class="{{ col_class }}">
-  <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
-    <div class="pumukit_mmobj">
-      <div class="thumbnail">
-        <span class="video-duration">{{ mmobj_duration(object) | duration_string }}</span>
-        <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true) }}"/>
-        <div class="thumbnailholder" ></div>
-      </div>
-      <div class="info-wrapper">
-        <div class="info">
-          <div class="title" title="{{object.description}}">
-            <span class="mmobj_thumbnail_title">{{object.title | default('No title')|trans}}</span>
-          </div>
-          <div class="subtitle">
-            {% if object.subtitle is not empty %}
-              <abbr title="{{object.subtitle}}">{{object.subtitle}}</abbr>
-            {% else %}
-              <abbr title="{{object.series.title}}">{{object.series.title}}</abbr>
-            {% endif %}
-          </div>
-          <div class="date mmobj">
-            {{object.recordDate|date("d/m/Y")}}
-          </div>
+    <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
+        <div class="pumukit_mmobj">
+            <div class="thumbnail">
+                <span class="video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true) }}"/>
+                <div class="thumbnailholder"></div>
+            </div>
+            <div class="info-wrapper">
+                <div class="info">
+                    <div class="title" title="{{ object.description }}">
+                        <span class="mmobj_thumbnail_title">{{ object.title | default('No title')|trans }}</span>
+                    </div>
+                    <div class="subtitle">
+                        {% if object.subtitle is not empty %}
+                            <abbr title="{{ object.subtitle }}">{{ object.subtitle }}</abbr>
+                        {% else %}
+                            {% if not object.getSeries().isHide() %}
+                                <abbr title="{{ object.series.title }}">{{ object.series.title }}</abbr>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="date mmobj">
+                        {{ object.recordDate|date("d/m/Y") }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </a>
+    </a>
 </div>
