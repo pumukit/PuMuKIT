@@ -26,7 +26,7 @@
       </div>
     </div>
     <script>
-     $('#maintenance-{{name}}-toggle').click(function(){
+     $(document.getElementById('maintenance-{{name}}-toggle')).click(function(){
          var url = '';
          var activateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'activate' , 'cpuName': name} ) }}';
          var deactivateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'deactivate' , 'cpuName': name} ) }}';
