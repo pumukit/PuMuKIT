@@ -400,6 +400,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             if (!$notChangePubChannel) {
                 $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
             }
+
+            if(in_array('PUCHYOUTUBE', $request->get('pub_channels'))) {
+
+            }
+
             $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
 
             $this->domainManager->update($resource);
