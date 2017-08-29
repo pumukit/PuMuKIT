@@ -5,7 +5,7 @@
 <li class="">
   <a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}">
     <span class="">
-      {{object.title | default('No title')|trans}}
+      {{object.title | default('No title'|trans)}}
     </span>
     <span class="">
       [{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}]

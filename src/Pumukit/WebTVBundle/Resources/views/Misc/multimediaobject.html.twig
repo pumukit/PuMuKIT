@@ -1,4 +1,4 @@
-<!--Objeto multimedia-->
+<!--Multimedia object-->
 {% set col_mapper = {'1': 'col-md-12', '2': 'col-md-6', '3': 'col-md-4', '4': 'col-md-3'} %}
 {% set col_class = ( col_mapper[cols|default('1')] | default(col_mapper['1'] ) ) %}
 <div class="{{ col_class }}">
@@ -12,7 +12,7 @@
             <div class="info-wrapper">
                 <div class="info">
                     <div class="title" title="{{ object.description }}">
-                        <span class="mmobj_thumbnail_title">{{ object.title | default('No title')|trans }}</span>
+                        <span class="mmobj_thumbnail_title">{{ object.title | default('No title'|trans) }}</span>
                     </div>
                     <div class="subtitle">
                         {% if object.subtitle is not empty %}
