@@ -3,12 +3,13 @@
 namespace Pumukit\NotificationBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
-use Symfony\Component\Routing\RouterInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Security\Permission;
 
 class JobNotificationService
 {
@@ -25,8 +26,6 @@ class JobNotificationService
     protected $subjectSuccessTrans;
     protected $subjectFailsTrans;
 
-    const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
-    const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
     const PERSONAL_SCOPE_ROLE_CODE = 'owner';
 
     public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
@@ -221,7 +220,7 @@ class JobNotificationService
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
-                if ($user && in_array(self::ROLE_SEND_NOTIFICATION_COMPLETE, $user->getRoles())) {
+                if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_COMPLETE) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }
             }
@@ -230,7 +229,7 @@ class JobNotificationService
 
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
-                if ($user && in_array(self::ROLE_SEND_NOTIFICATION_ERRORS, $user->getRoles())) {
+                if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_ERRORS) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }
             }
