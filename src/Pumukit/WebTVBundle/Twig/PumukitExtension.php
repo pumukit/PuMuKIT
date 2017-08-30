@@ -61,14 +61,14 @@ class PumukitExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-                     new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
-                     new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
-                     new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
-                     new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
-                     new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
-                     new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
-                     new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
-                     );
+            new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
+            new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
+            new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
+            new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
+            new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+            new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
+            new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
+        );
     }
 
     /**

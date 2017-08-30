@@ -6,7 +6,7 @@
     <h4>
       {% trans %}The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.{% endtrans %}
     </h4>
-    {% if mm is defined %}
+    {% if mm is defined and mm%}
     <div class="well">
       {# TODO CLASS IMAGE
       <div>
@@ -16,8 +16,9 @@
       #}
       <div>
         <span>{% trans %}SERIES{% endtrans %}: &nbsp;</span>
-        <span>{{ mm.getSeries().getTitle() }}</span>
+        <span>{{ series.getTitle() }}</span>
       </div>
+      {% if option != 'multiple' %}
       <div>
         <span>{% trans %}VIDEO{% endtrans %}: </span>
         <span>{{ mm.getTitle() }}</span>
@@ -26,13 +27,14 @@
         <span>{% trans %}DATE{% endtrans %}: </span>
         <span>{{ mm.getPublicDate()|date('d/m/Y') }}</span>
       </div>
+      {% endif %}
     </div>
     {% endif %}
     <div class="row">
       <div class="col-md-6">
         {% trans %}Main action{% endtrans %}:
         <div style="padding-left: 50px;">
-          {% if series is defined and mm is defined %}
+          {% if series is defined and mm is defined and mm %}
           <a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.getId()}) }}" class="btn btn-primary btn-raised">
             {% trans %}Edit Multimedia Object{% endtrans %}
           </a>
