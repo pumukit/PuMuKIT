@@ -12,8 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Link extends Element
 {
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
@@ -64,7 +63,7 @@ class Link extends Element
     /**
      * Get I18n name.
      *
-     * @return string
+     * @return array
      */
     public function getI18nName()
     {

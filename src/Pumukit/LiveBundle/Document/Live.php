@@ -17,14 +17,12 @@ class Live
 
     /**
      * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
@@ -33,49 +31,42 @@ class Live
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $passwd;
 
     /**
      * @var int
-     *
      * @MongoDB\String
      */
     private $live_type = self::LIVE_TYPE_FMS;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $width = 720;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $height = 576;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $qualities;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $ip_source;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      * @Assert\NotBlank()
      */
@@ -83,28 +74,24 @@ class Live
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $index_play = false;
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $broadcasting = false;
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $debug = false;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      * @Assert\NotBlank()
      */
@@ -112,7 +99,6 @@ class Live
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
@@ -207,7 +193,10 @@ class Live
      */
     public function isValidLiveType()
     {
-        return in_array($this->live_type, array(self::LIVE_TYPE_WMS, self::LIVE_TYPE_FMS));
+        return in_array($this->live_type, array(
+            self::LIVE_TYPE_WMS,
+            self::LIVE_TYPE_FMS,
+        ));
     }
 
     /**
@@ -373,8 +362,8 @@ class Live
     /**
      * Set name.
      *
-     * @param $name
-     * @param null $locale
+     * @param             $name
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -387,7 +376,7 @@ class Live
     /**
      * Get name.
      *
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -516,7 +505,10 @@ class Live
      */
     public function getResolution()
     {
-        return array('width' => $this->width, 'height' => $this->height);
+        return array(
+            'width' => $this->width,
+            'height' => $this->height,
+        );
     }
 
     /**

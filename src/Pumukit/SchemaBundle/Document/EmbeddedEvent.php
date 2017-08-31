@@ -16,77 +16,66 @@ class EmbeddedEvent
 {
     /**
      * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $name;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $description;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $place;
 
     /**
      * @var \Datetime
-     *
      * @MongoDB\Date
      */
     private $date;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
-    private $duration = 0;
+    private $duration;
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $display = true;
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $create_serial = true;
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedEventSession")
      */
     private $embeddedEventSession;
 
     /**
-     * @var Live
-     *
+     * @var DocumentLive
      * @MongoDB\ReferenceOne(targetDocument="Pumukit\LiveBundle\Document\Live")
      */
     private $live;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
@@ -103,6 +92,7 @@ class EmbeddedEvent
 
     public function __construct()
     {
+        $this->duration = 0;
         $this->embeddedEventSession = new ArrayCollection();
         $this->name = array('en' => '');
         $this->description = array('en' => '');
@@ -114,14 +104,6 @@ class EmbeddedEvent
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -180,7 +162,7 @@ class EmbeddedEvent
     /**
      * @param null $locale
      *
-     * @return mixed|string
+     * @return string
      */
     public function getDescription($locale = null)
     {
@@ -195,8 +177,8 @@ class EmbeddedEvent
     }
 
     /**
-     * @param $description
-     * @param null $locale
+     * @param      $description
+     * @param string $locale
      */
     public function setDescription($description, $locale = null)
     {

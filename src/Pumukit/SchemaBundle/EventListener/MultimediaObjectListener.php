@@ -14,17 +14,20 @@ class MultimediaObjectListener
         $this->dm = $dm;
     }
 
+    /**
+     * @param $event
+     */
     public function postUpdate($event)
     {
         $multimediaObject = $event->getMultimediaObject();
 
-        if (isset($multimediaObject->getProperties()['externalplayer'])) {
+        if ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);
         } elseif (0 !== count($multimediaObject->getTracks())) {
-            if (!$multimediaObject->isOnlyAudio()) {
-                $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
-            } elseif ($multimediaObject->isOnlyAudio()) {
+            if ($multimediaObject->isOnlyAudio()) {
                 $multimediaObject->setType(MultimediaObject::TYPE_AUDIO);
+            } else {
+                $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
             }
         } else {
             $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);

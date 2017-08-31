@@ -13,22 +13,19 @@ class EmbeddedSocial
 {
     /**
      * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @MongoDB\Raw
+     * @MongoDB\String
      */
     private $twitter;
 
     /**
      * @var string
-     *
-     * @MongoDB\Raw
+     * @MongoDB\String
      */
     private $email;
 

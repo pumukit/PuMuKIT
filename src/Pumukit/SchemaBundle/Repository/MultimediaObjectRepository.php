@@ -43,7 +43,6 @@ class MultimediaObjectRepository extends DocumentRepository
      * Find multimedia object prototype.
      *
      * @param Series $series
-     * @param array  $status
      *
      * @return MultimediaObject
      */
@@ -1619,6 +1618,8 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $pipeline = array();
 
         $pipeline[] = array('$match' => array(
             'islive' => true,

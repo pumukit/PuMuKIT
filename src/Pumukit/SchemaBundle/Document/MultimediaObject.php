@@ -43,28 +43,24 @@ class MultimediaObject
 
     /**
      * @var int
-     *
      * @MongoDB\Id
      */
     private $id;
 
     /**
      * @var bool
-     *
      * @MongoDB\Bool
      */
     private $islive;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $type;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $secret;
@@ -80,7 +76,6 @@ class MultimediaObject
      *       Do not use this field and do not create setter and/or getter.
      *
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $seriesTitle = array('en' => '');
@@ -90,56 +85,48 @@ class MultimediaObject
      *
      * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
-     *
      * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
      */
     private $broadcast;
 
     /**
      * @var EmbeddedBroadcast
-     *
      * @MongoDB\EmbedOne(targetDocument="EmbeddedBroadcast")
      */
     private $embeddedBroadcast;
 
     /**
      * @var EmbeddedEvent
-     *
      * @MongoDB\EmbedOne(targetDocument="EmbeddedEvent")
      */
     private $embeddedEvent;
 
     /**
      * @var EmbeddedSocial
-     *
      * @MongoDB\EmbedOne(targetDocument="EmbeddedSocial")
      */
     private $embeddedSocial;
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedTag")
      */
     private $tags;
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="Track")
      */
     private $tracks;
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     private $groups;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      * @Gedmo\SortablePosition
      */
@@ -147,84 +134,72 @@ class MultimediaObject
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $status = self::STATUS_NEW;
 
     /**
      * @var date
-     *
      * @MongoDB\Date
      */
     private $record_date;
 
     /**
      * @var date
-     *
      * @MongoDB\Date
      */
     private $public_date;
 
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $title = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $subtitle = array('en' => '');
 
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $comments;
 
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $copyright;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $license;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $duration = 0;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      * @MongoDB\Increment
      */
@@ -232,7 +207,6 @@ class MultimediaObject
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
      */
     private $people;
@@ -493,7 +467,7 @@ class MultimediaObject
     /**
      * Set title.
      *
-     * @param string $title
+     * @param string      $title
      * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
@@ -546,7 +520,7 @@ class MultimediaObject
     /**
      * Set subtitle.
      *
-     * @param string $subtitle
+     * @param string      $subtitle
      * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
@@ -599,7 +573,7 @@ class MultimediaObject
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
@@ -642,7 +616,7 @@ class MultimediaObject
     /**
      * Get I18n description.
      *
-     * @return string
+     * @return array
      */
     public function getI18nDescription()
     {
@@ -672,7 +646,7 @@ class MultimediaObject
     /**
      * Set line2.
      *
-     * @param string $line2
+     * @param string      $line2
      * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
@@ -715,7 +689,7 @@ class MultimediaObject
     /**
      * Get I18n line2.
      *
-     * @return string
+     * @return array
      */
     public function getI18nLine2()
     {
@@ -794,13 +768,13 @@ class MultimediaObject
             $seg = $this->duration % 60;
 
             if ($seg < 10) {
-                $seg = '0' . $seg;
+                $seg = '0'.$seg;
             }
 
             if ($min == 0) {
-                $aux = $seg . "''";
+                $aux = $seg."''";
             } else {
-                $aux = $min . "' " . $seg . "''";
+                $aux = $min."' ".$seg."''";
             }
 
             return $aux;
@@ -907,7 +881,7 @@ class MultimediaObject
      */
     public function isPublicBroadcast()
     {
-        return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
+        return (bool) (!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
@@ -957,7 +931,7 @@ class MultimediaObject
      */
     public function isPublicEmbeddedBroadcast()
     {
-        return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+        return (bool) (!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
     }
 
     /**
@@ -1004,7 +978,6 @@ class MultimediaObject
 
     /**
      * Add tag.
-     *
      * The original string tag logic used array_unique to avoid tag duplication.
      *
      * @param $tag Tag|EmbeddedTag
@@ -1025,7 +998,6 @@ class MultimediaObject
 
     /**
      * Remove tag.
-     *
      * The original string tag logic used array_search to seek the tag element in array.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
@@ -1049,7 +1021,6 @@ class MultimediaObject
 
     /**
      * Contains tag.
-     *
      * The original string tag logic used in_array to check it.
      * This function uses doctrine2 arrayCollection contains function instead.
      *
@@ -1168,8 +1139,6 @@ class MultimediaObject
 
     // End of tags section
 
-    // End of Pic getter - setter etc methods section
-
     /**
      * Add track.
      *
@@ -1236,7 +1205,7 @@ class MultimediaObject
      * Reorder track by id.
      *
      * @param string $trackId
-     * @param bool $up
+     * @param bool   $up
      */
     private function reorderTrackById($trackId, $up = true)
     {
@@ -1455,7 +1424,7 @@ class MultimediaObject
      * @param array $all_tags
      * @param array $not_any_tags
      * @param array $not_all_tags
-     * @param bool $all
+     * @param bool  $all
      *
      * @return array
      */
@@ -1494,7 +1463,7 @@ class MultimediaObject
      * @param array $all_tags
      * @param array $not_any_tags
      * @param array $not_all_tags
-     * @param bool $all
+     * @param bool  $all
      *
      * @return Track|null
      */
@@ -1616,7 +1585,7 @@ class MultimediaObject
      * Contains person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      *
      * @return bool
      */
@@ -1635,7 +1604,7 @@ class MultimediaObject
      * Contains person with all roles.
      *
      * @param Person|EmbeddedPerson $person
-     * @param array $roles
+     * @param array                 $roles
      *
      * @return bool
      */
@@ -1654,7 +1623,7 @@ class MultimediaObject
      * Contains person with any role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param array $roles
+     * @param array                 $roles
      *
      * @return bool
      */
@@ -1673,7 +1642,7 @@ class MultimediaObject
      * Get people in multimedia object by role.
      *
      * @param Role|EmbeddedRole $role
-     * @param bool $always
+     * @param bool              $always
      *
      * @return array
      */
@@ -1686,7 +1655,7 @@ class MultimediaObject
      * Get people in multimedia object by role.
      *
      * @param string $roleCod
-     * @param bool $always to search in all the roles
+     * @param bool   $always  to search in all the roles
      *
      * @return array
      */
@@ -1724,7 +1693,7 @@ class MultimediaObject
      * Add Person with Role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      */
     public function addPersonWithRole($person, $role)
     {
@@ -1743,7 +1712,7 @@ class MultimediaObject
      * Remove Person With Role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      *
      * @return bool TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise
      */
@@ -1769,7 +1738,7 @@ class MultimediaObject
      * Get person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      *
      * @return EmbeddedPerson|bool EmbeddedPerson if found, FALSE otherwise
      */
@@ -1786,7 +1755,7 @@ class MultimediaObject
      * Up person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      */
     public function upPersonWithRole($person, $role)
     {
@@ -1797,7 +1766,7 @@ class MultimediaObject
      * Down person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole $role
+     * @param Role|EmbeddedRole     $role
      */
     public function downPersonWithRole($person, $role)
     {
@@ -1808,8 +1777,8 @@ class MultimediaObject
      * Reorder person with role.
      *
      * @param Person|EmbeddedRole $person
-     * @param Role|EmbeddedRole $role
-     * @param bool $up
+     * @param Role|EmbeddedRole   $role
+     * @param bool                $up
      */
     public function reorderPersonWithRole($person, $role, $up = true)
     {
@@ -1978,11 +1947,12 @@ class MultimediaObject
         $minutes = floor($this->getDuration() / 60);
 
         $seconds = $this->getDuration() % 60;
+
         //if ($seconds < 10 ) $minutes = '0' . $seconds;
 
         return array(
             'minutes' => $minutes,
-            'seconds' => $seconds
+            'seconds' => $seconds,
         );
     }
 

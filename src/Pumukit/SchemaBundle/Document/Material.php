@@ -12,15 +12,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Material extends Element
 {
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $name = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $language;
@@ -71,7 +69,7 @@ class Material extends Element
     /**
      * Get I18n name.
      *
-     * @return string
+     * @return array
      */
     public function getI18nName()
     {
