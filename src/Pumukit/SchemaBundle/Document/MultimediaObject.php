@@ -365,7 +365,7 @@ class MultimediaObject
      *
      * @return int
      */
-    public function getIsLive()
+    public function isLive()
     {
         return $this->islive;
     }
@@ -493,7 +493,7 @@ class MultimediaObject
     /**
      * Set title.
      *
-     * @param string      $title
+     * @param string $title
      * @param string|null $locale
      */
     public function setTitle($title, $locale = null)
@@ -546,7 +546,7 @@ class MultimediaObject
     /**
      * Set subtitle.
      *
-     * @param string      $subtitle
+     * @param string $subtitle
      * @param string|null $locale
      */
     public function setSubtitle($subtitle, $locale = null)
@@ -599,7 +599,7 @@ class MultimediaObject
     /**
      * Set description.
      *
-     * @param string      $description
+     * @param string $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
@@ -672,7 +672,7 @@ class MultimediaObject
     /**
      * Set line2.
      *
-     * @param string      $line2
+     * @param string $line2
      * @param string|null $locale
      */
     public function setLine2($line2, $locale = null)
@@ -794,13 +794,13 @@ class MultimediaObject
             $seg = $this->duration % 60;
 
             if ($seg < 10) {
-                $seg = '0'.$seg;
+                $seg = '0' . $seg;
             }
 
             if ($min == 0) {
-                $aux = $seg."''";
+                $aux = $seg . "''";
             } else {
-                $aux = $min."' ".$seg."''";
+                $aux = $min . "' " . $seg . "''";
             }
 
             return $aux;
@@ -907,7 +907,7 @@ class MultimediaObject
      */
     public function isPublicBroadcast()
     {
-        return (bool) (!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
+        return (bool)(!$this->broadcast || Broadcast::BROADCAST_TYPE_PUB == $this->broadcast->getBroadcastTypeId());
     }
 
     /**
@@ -957,7 +957,7 @@ class MultimediaObject
      */
     public function isPublicEmbeddedBroadcast()
     {
-        return (bool) (!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
+        return (bool)(!$this->embeddedBroadcast || EmbeddedBroadcast::TYPE_PUBLIC === $this->embeddedBroadcast->getType());
     }
 
     /**
@@ -1236,7 +1236,7 @@ class MultimediaObject
      * Reorder track by id.
      *
      * @param string $trackId
-     * @param bool   $up
+     * @param bool $up
      */
     private function reorderTrackById($trackId, $up = true)
     {
@@ -1455,7 +1455,7 @@ class MultimediaObject
      * @param array $all_tags
      * @param array $not_any_tags
      * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return array
      */
@@ -1494,7 +1494,7 @@ class MultimediaObject
      * @param array $all_tags
      * @param array $not_any_tags
      * @param array $not_all_tags
-     * @param bool  $all
+     * @param bool $all
      *
      * @return Track|null
      */
@@ -1616,7 +1616,7 @@ class MultimediaObject
      * Contains person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      *
      * @return bool
      */
@@ -1635,7 +1635,7 @@ class MultimediaObject
      * Contains person with all roles.
      *
      * @param Person|EmbeddedPerson $person
-     * @param array                 $roles
+     * @param array $roles
      *
      * @return bool
      */
@@ -1654,7 +1654,7 @@ class MultimediaObject
      * Contains person with any role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param array                 $roles
+     * @param array $roles
      *
      * @return bool
      */
@@ -1673,7 +1673,7 @@ class MultimediaObject
      * Get people in multimedia object by role.
      *
      * @param Role|EmbeddedRole $role
-     * @param bool              $always
+     * @param bool $always
      *
      * @return array
      */
@@ -1686,7 +1686,7 @@ class MultimediaObject
      * Get people in multimedia object by role.
      *
      * @param string $roleCod
-     * @param bool   $always  to search in all the roles
+     * @param bool $always to search in all the roles
      *
      * @return array
      */
@@ -1724,7 +1724,7 @@ class MultimediaObject
      * Add Person with Role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      */
     public function addPersonWithRole($person, $role)
     {
@@ -1743,7 +1743,7 @@ class MultimediaObject
      * Remove Person With Role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      *
      * @return bool TRUE if this multimedia_object contained the specified person_in_multimedia_object, FALSE otherwise
      */
@@ -1769,7 +1769,7 @@ class MultimediaObject
      * Get person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      *
      * @return EmbeddedPerson|bool EmbeddedPerson if found, FALSE otherwise
      */
@@ -1786,7 +1786,7 @@ class MultimediaObject
      * Up person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      */
     public function upPersonWithRole($person, $role)
     {
@@ -1797,7 +1797,7 @@ class MultimediaObject
      * Down person with role.
      *
      * @param Person|EmbeddedPerson $person
-     * @param Role|EmbeddedRole     $role
+     * @param Role|EmbeddedRole $role
      */
     public function downPersonWithRole($person, $role)
     {
@@ -1808,8 +1808,8 @@ class MultimediaObject
      * Reorder person with role.
      *
      * @param Person|EmbeddedRole $person
-     * @param Role|EmbeddedRole   $role
-     * @param bool                $up
+     * @param Role|EmbeddedRole $role
+     * @param bool $up
      */
     public function reorderPersonWithRole($person, $role, $up = true)
     {
@@ -1980,7 +1980,10 @@ class MultimediaObject
         $seconds = $this->getDuration() % 60;
         //if ($seconds < 10 ) $minutes = '0' . $seconds;
 
-        return array('minutes' => $minutes, 'seconds' => $seconds);
+        return array(
+            'minutes' => $minutes,
+            'seconds' => $seconds
+        );
     }
 
     /**

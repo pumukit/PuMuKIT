@@ -16,8 +16,13 @@ use Pumukit\LiveBundle\Document\Live;
 class DefaultController extends Controller
 {
     /**
+     * @param Live $live
+     * @param Request $request
+     *
      * @Route("/live/{id}", name="pumukit_live_id")
      * @Template("PumukitLiveBundle:Default:index.html.twig")
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Live $live, Request $request)
     {
@@ -27,17 +32,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Live $live
+     * @param Request $request
+     * @param bool $iframe
+     *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitLiveBundle:Default:iframe.html.twig")
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function iframeAction(Live $live, Request $request, $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ?
-                'PumukitLiveBundle:Default:iframepassword.html.twig' :
-                'PumukitLiveBundle:Default:indexpassword.html.twig',
-                array('live' => $live, 'invalid_password' => boolval($request->get('broadcast_password')))
-            );
+            return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array(
+                'live' => $live,
+                'invalid_password' => boolval($request->get('broadcast_password')),
+            ));
         }
         $userAgent = $request->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
@@ -55,7 +65,7 @@ class DefaultController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Request          $request
+     * @param Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      *
@@ -65,7 +75,7 @@ class DefaultController extends Controller
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($multimediaObject->getIsLive()) {
+        if ($multimediaObject->isLive()) {
             $this->updateBreadcrumbs($multimediaObject->getEmbeddedEvent()->getName(), 'pumukit_live_event_id', array('id' => $multimediaObject->getId()));
 
             return $this->iframeEventAction($multimediaObject, $request, false);
@@ -81,8 +91,8 @@ class DefaultController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Request          $request
-     * @param bool             $iframe
+     * @param Request $request
+     * @param bool $iframe
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      *
@@ -93,7 +103,10 @@ class DefaultController extends Controller
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
         if ($multimediaObject->getEmbeddedBroadcast()->getType() === embeddedBroadcast::TYPE_PASSWORD && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array('live' => $multimediaObject->getEmbeddedEvent(), 'invalid_password' => boolval($request->get('broadcast_password'))));
+            return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array(
+                'live' => $multimediaObject->getEmbeddedEvent(),
+                'invalid_password' => boolval($request->get('broadcast_password')),
+            ));
         }
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
@@ -124,7 +137,7 @@ class DefaultController extends Controller
             'mobile_device' => $mobileDevice,
             'isIE' => $isIE,
             'versionIE' => $versionIE,
-            );
+        );
     }
 
     /**
@@ -156,18 +169,25 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Live $live
+     *
      * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
      * @Template("PumukitLiveBundle:Default:playlist.xml.twig")
+     *
+     * @return array
      */
     public function playlistAction(Live $live)
     {
         $intro = $this->container->hasParameter('pumukit2.intro') ? $this->container->getParameter('pumukit2.intro') : null;
 
-        return array('live' => $live, 'intro' => $intro);
+        return array(
+            'live' => $live,
+            'intro' => $intro,
+        );
     }
 
     /**
-     * @param Request          $request
+     * @param Request $request
      * @param MultimediaObject $multimediaObject
      *
      * @return JsonResponse
@@ -190,12 +210,18 @@ class DefaultController extends Controller
             $sent = $this->get('mailer')->send($message);
 
             if ($sent == 0) {
-                $this->get('logger')->error('Live contact: Error enviando mensaje de: ' + $request->request->get('email'));
+                $this->get('logger')->error('Live contact: Error enviando mensaje de: ' . $request->request->get('email'));
             }
 
-            return new JsonResponse(array('success' => true, 'message' => $translator->trans('email send')));
+            return new JsonResponse(array(
+                'success' => true,
+                'message' => $translator->trans('email send'),
+            ));
         } else {
-            return new JsonResponse(array('success' => false, 'message' => $translator->trans('please verify form data')));
+            return new JsonResponse(array(
+                'success' => false,
+                'message' => $translator->trans('please verify form data'),
+            ));
         }
     }
 
@@ -203,7 +229,7 @@ class DefaultController extends Controller
      * @param string $response $request->request->get('g-recaptcha-response')
      * @param string $remoteip optional $request->getClientIp()
      *
-     * @return json
+     * @return jsonResponse | boolean
      */
     private function checkCaptcha($response, $remoteip = '')
     {
@@ -213,7 +239,11 @@ class DefaultController extends Controller
             return false;
         }
 
-        $response = $this->_recaptcha_http_post(array('secret' => $privatekey, 'remoteip' => $remoteip, 'response' => $response));
+        $response = $this->_recaptcha_http_post(array(
+            'secret' => $privatekey,
+            'remoteip' => $remoteip,
+            'response' => $response,
+        ));
 
         $res = json_decode($response);
 
@@ -224,7 +254,6 @@ class DefaultController extends Controller
      * Submits an HTTP POST to a reCAPTCHA server.
      *
      * @param array $data
-     * @param int port
      *
      * @return array response
      */
