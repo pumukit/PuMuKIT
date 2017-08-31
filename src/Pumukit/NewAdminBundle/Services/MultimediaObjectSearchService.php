@@ -56,6 +56,8 @@ class MultimediaObjectSearchService
             }
         }
 
+        $new_criteria['islive'] = false;
+
         if ('' !== $bAnnounce) {
             if (('' !== $bChannel) && $bChannel && $bAnnounce) {
                 $new_criteria += array('$and' => array(array('tags.cod' => $sChannelValue), array('tags.cod' => 'PUDENEW')));

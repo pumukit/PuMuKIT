@@ -464,6 +464,54 @@
         <source>Logo</source>
         <target xml:lang="es-ES" state="translated">Imagen</target>
       </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
+        <source>Send</source>
+        <target xml:lang="es-ES" state="translated">Enviar</target>
+      </trans-unit>
+      <trans-unit id="87f9f735a1d36793ceaecd4e47124b63" resname="Events">
+        <source>Events</source>
+        <target xml:lang="es-ES" state="translated">Eventos</target>
+      </trans-unit>
+      <trans-unit id="161f25f9025f957f236bd529f7d1eb38" resname="Starts">
+        <source>Starts</source>
+        <target xml:lang="es-ES" state="translated">Comienzo</target>
+      </trans-unit>
+      <trans-unit id="8425cc8cae1477d22d87e3ec59ec9326" resname="Next session">
+        <source>Next session</source>
+        <target xml:lang="es-ES" state="translated">Próxima sesión</target>
+      </trans-unit>
+      <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
+        <source>To</source>
+        <target xml:lang="es-ES" state="translated">a</target>
+      </trans-unit>
+      <trans-unit id="18865e2cf56dbad019207ac0af034fe3" resname="Events live">
+        <source>Events live</source>
+        <target xml:lang="es-ES" state="needs-translation">Events live</target>
+      </trans-unit>
+      <trans-unit id="6ce3bdc39e544725038e0e87b771db1e" resname="Questions">
+        <source>Questions</source>
+        <target xml:lang="es-ES" state="translated">Consultas</target>
+      </trans-unit>
+      <trans-unit id="a4a7f7bd7fe3e8f903979f1bea6bf9b3" resname="Download this audio">
+        <source>Download this audio</source>
+        <target xml:lang="es-ES" state="translated">Descargar este audio</target>
+      </trans-unit>
+      <trans-unit id="176ee76a868757e0c2058ad60d9d7514" resname="Download this video">
+        <source>Download this video</source>
+        <target xml:lang="es-ES" state="translated">Descargar este vídeo</target>
+      </trans-unit>
+      <trans-unit id="b3950900a4184826e146e7dd6daa3946" resname="Live events">
+        <source>Live events</source>
+        <target xml:lang="es-ES" state="translated">Eventos en Directo</target>
+      </trans-unit>
+      <trans-unit id="625501b6af2270f63b11f383be3dcb70" resname="No live events now.">
+        <source>No live events now.</source>
+        <target xml:lang="es-ES" state="translated">No hay eventos en directo ahora.</target>
+      </trans-unit>
+      <trans-unit id="1f9d00c3d18f41c15788bfa93efc9cfe" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
+        <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
+        <target xml:lang="es-ES" state="translated">No hay ningún evento en directo programado. Puede localizar eventos en directo finalizados en el catálogo de series o a través del buscador del portal.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

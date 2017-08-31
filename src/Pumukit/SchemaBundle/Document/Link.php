@@ -12,8 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Link extends Element
 {
     /**
-     * @var string
-     *
+     * @var array
      * @MongoDB\Raw
      */
     private $name = array('en' => '');

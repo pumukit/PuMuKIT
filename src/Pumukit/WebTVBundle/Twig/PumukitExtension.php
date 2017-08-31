@@ -48,10 +48,22 @@ class PumukitExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
-            new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
-            new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
-            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
+            new \Twig_SimpleFilter('first_url_pic', array(
+                $this,
+                'getFirstUrlPicFilter',
+            )),
+            new \Twig_SimpleFilter('precinct_fulltitle', array(
+                $this,
+                'getPrecinctFulltitle',
+            )),
+            new \Twig_SimpleFilter('duration_minutes_seconds', array(
+                $this,
+                'getDurationInMinutesSeconds',
+            )),
+            new \Twig_SimpleFilter('duration_string', array(
+                $this,
+                'getDurationString',
+            )),
         );
     }
 
@@ -61,13 +73,42 @@ class PumukitExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
-            new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
-            new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
-            new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
-            new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
-            new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
-            new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
+            new \Twig_SimpleFunction('public_broadcast', array(
+                $this,
+                'getPublicBroadcast',
+            )),
+            new \Twig_SimpleFunction('precinct', array(
+                $this,
+                'getPrecinct',
+            )),
+            new \Twig_SimpleFunction('precinct_of_series', array(
+                $this,
+                'getPrecinctOfSeries',
+            )),
+            new \Twig_SimpleFunction('captions', array(
+                $this,
+                'getCaptions',
+            )),
+            new \Twig_SimpleFunction('iframeurl', array(
+                $this,
+                'getIframeUrl',
+            )),
+            new \Twig_SimpleFunction('path_to_tag', array(
+                $this,
+                'getPathToTag',
+            )),
+            new \Twig_SimpleFunction('mmobj_duration', array(
+                $this,
+                'getMmobjDuration',
+            )),
+            new \Twig_SimpleFunction('next_event_session', array(
+                $this,
+                'getNextEventSession',
+            )),
+            new \Twig_SimpleFunction('live_event_session', array(
+                $this,
+                'getLiveEventSession',
+            )),
         );
     }
 
@@ -80,6 +121,10 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getFirstUrlPicFilter($object, $absolute = false, $hd = true)
     {
+        if (is_array($object)) {
+            $object = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($object['multimediaObjectId'])));
+        }
+
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }
 
@@ -294,8 +339,68 @@ class PumukitExtension extends \Twig_Extension
 
         return $url;
     }
+
     public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null, $parameters = array(), $relative = false)
     {
         return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);
+    }
+
+    /**
+     * Get next event session without sessions that reproducing now.
+     *
+     * @param $event
+     *
+     * @return date
+     */
+    public function getNextEventSession($event)
+    {
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event['_id'])));
+        $embeddedEventSession = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
+
+        $now = new \DateTime();
+
+        $firstSession = '';
+        foreach ($embeddedEventSession as $session) {
+            if ($now < $session->getStart()) {
+                $now->add(new \DateInterval('PT'.$session->getDuration().'S'));
+                if ($now < $session->getStart()) {
+                    $firstSession = $session->getStart();
+                    break;
+                }
+            }
+        }
+
+        return $firstSession;
+    }
+
+    /**
+     * Get next live event session.
+     *
+     * @param $multimediaObject
+     *
+     * @return object
+     */
+    public function getLiveEventSession($multimediaObject)
+    {
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoID($multimediaObject->getId())));
+
+        $now = new \DateTime();
+
+        $sessionData = '';
+        foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
+            if ($now > $session->getStart()) {
+                $sessionEnd = clone $session->getStart();
+                $sessionEnd->add(new \DateInterval('PT'.$session->getDuration().'S'));
+                if ($now < $sessionEnd) {
+                    $sessionData = $session;
+                    break;
+                }
+            } elseif ($now < $session->getStart()) {
+                $sessionData = $session;
+                break;
+            }
+        }
+
+        return $sessionData;
     }
 }

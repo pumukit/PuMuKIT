@@ -38,6 +38,14 @@
             <tag name="kernel.event_listener" event="series.update" method="postUpdate" />
         </service>
 
+        <service id="pumukitschema.schema.multimediaobject" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectListener">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <tag name="kernel.event_listener" event="multimediaobject.update" method="postUpdate" />
+            <tag name="kernel.event_listener" event="track.create" method="postUpdate" />
+            <tag name="kernel.event_listener" event="track.update" method="postUpdate" />
+            <tag name="kernel.event_listener" event="track.delete" method="postUpdate" />
+        </service>
+
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.tag" />

@@ -26,6 +26,7 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.disable_broadcast_creation', $config['disable_broadcast_creation']);
         $container->setParameter('pumukit_new_admin.licenses', $config['licenses']);
         $container->setParameter('pumukit_new_admin.multimedia_object_label', $config['multimedia_object_label']);
+        $container->setParameter('pumukit_new_admin.advance_live_event', $config['advance_live_event']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

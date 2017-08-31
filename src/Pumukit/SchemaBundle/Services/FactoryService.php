@@ -125,6 +125,7 @@ class FactoryService
     {
         $mm = new MultimediaObject();
         $mm->setLocale($this->locales[0]);
+        $mm->setSeries($series);
 
         $mm->setStatus(MultimediaObject::STATUS_PROTOTYPE);
         $embeddedBroadcast = $this->embeddedBroadcastService->createPublicEmbeddedBroadcast();
@@ -138,7 +139,6 @@ class FactoryService
             $mm->setTitle($title, $locale);
         }
 
-        $mm->setSeries($series);
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         return $mm;
@@ -168,6 +168,10 @@ class FactoryService
             }
             $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
         }
+
+        $mm->setSeries($series);
+        $series->addMultimediaObject($mm);
+
         $mm->setPublicDate(new \DateTime('now'));
         $mm->setRecordDate($mm->getPublicDate());
 
@@ -183,8 +187,6 @@ class FactoryService
             }
         }
 
-        $mm->setSeries($series);
-        $series->addMultimediaObject($mm);
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         $this->dm->persist($mm);
@@ -401,6 +403,7 @@ class FactoryService
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
+        $new->setSeries($src->getSeries());
 
         $i18nTitles = array();
         foreach ($src->getI18nTitle() as $key => $val) {
@@ -435,7 +438,6 @@ class FactoryService
             $new->addGroup($group);
         }
 
-        $new->setSeries($src->getSeries());
         $this->dm->persist($new);
         foreach ($src->getPics() as $thumb) {
             $clonedThumb = clone $thumb;

@@ -16,6 +16,9 @@ class Series
 {
     use Traits\Keywords;
     use Traits\Properties;
+    use Traits\Pic {
+        Traits\Pic::__construct as private __PicConstruct;
+    }
 
     const TYPE_SERIES = 0;
     const TYPE_PLAYLIST = 1;
@@ -33,7 +36,8 @@ class Series
         self::SORT_PUB_DES => array('public_date' => 'des'),
         self::SORT_REC_DES => array('record_date' => 'des'),
         self::SORT_REC_ASC => array('record_date' => 'asc'),
-        self::SORT_ALPHAB => array('title.es' => 'asc'), //TODO culture
+        self::SORT_ALPHAB => array('title.es' => 'asc'),
+        //TODO culture
     );
 
     public static $sortText = array(
@@ -52,7 +56,6 @@ class Series
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $secret;
@@ -61,14 +64,12 @@ class Series
      * Flag with TYPE_SERIES or TYPE_PLAYLIST to determine the collection type.
      *
      * @var int
-     *
      * @MongoDB\Integer
      */
     private $type;
 
     /**
      * @var int
-     *
      * @MongoDB\Int
      */
     private $sorting = self::SORT_MANUAL;
@@ -82,100 +83,83 @@ class Series
      * Legacy: It is kept for compatibility issues.
      *
      * @var ArrayCollection
-     *
-     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series", repositoryMethod="findWithoutPrototype", sort={"rank"=1}, simple=true, orphanRemoval=true, cascade="ALL")
+     * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series",
+     *                                                           repositoryMethod="findWithoutPrototype",
+     *                                                           sort={"rank"=1}, simple=true, orphanRemoval=true,
+     *                                                           cascade="ALL")
      * @Serializer\Exclude
      */
     private $multimedia_objects;
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedOne(targetDocument="Playlist")
      * @Serializer\Exclude
      */
     private $playlist;
 
     /**
-     * @var ArrayCollection
-     *
-     * @MongoDB\EmbedMany(targetDocument="Pic")
-     */
-    private $pics;
-
-    /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $announce = false;
 
     /**
      * @var bool
-     *
      * @MongoDB\Boolean
      */
     private $hide = true;
 
     /**
      * @var datetime
-     *
      * @MongoDB\Date
      */
     private $public_date;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $title = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $subtitle = array('en' => '');
 
     /**
      * @var text
-     *
      * @MongoDB\Raw
      */
     private $description = array('en' => '');
 
     /**
      * @var text
-     *
      * @MongoDB\Raw
      */
     private $header = array('en' => '');
 
     /**
      * @var text
-     *
      * @MongoDB\Raw
      */
     private $footer = array('en' => '');
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $copyright;
 
     /**
      * @var string
-     *
      * @MongoDB\String
      */
     private $license;
 
     /**
      * @var string
-     *
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
@@ -194,7 +178,7 @@ class Series
         $this->hide = false;
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
-        $this->pics = new ArrayCollection();
+        $this->__PicConstruct();
     }
 
     public function __toString()
@@ -965,11 +949,7 @@ class Series
      *
      * @return ArrayCollection
      */
-    public function getFilteredMultimediaObjectsWithTags(
-        array $any_tags = array(),
-        array $all_tags = array(),
-        array $not_any_tags = array(),
-        array $not_all_tags = array())
+    public function getFilteredMultimediaObjectsWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array())
     {
         $r = array();
 
@@ -991,157 +971,5 @@ class Series
         }
 
         return $r;
-    }
-
-    /**
-     * Add pic.
-     *
-     * @param Pic $pic
-     */
-    public function addPic(Pic $pic)
-    {
-        $this->pics->add($pic);
-    }
-
-    /**
-     * Remove pic.
-     *
-     * @param Pic $pic
-     */
-    public function removePic(Pic $pic)
-    {
-        $this->pics->removeElement($pic);
-        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
-    }
-
-    /**
-     * Remove pic by id.
-     *
-     * @param string $picId
-     */
-    public function removePicById($picId)
-    {
-        $this->pics = $this->pics->filter(function ($pic) use ($picId) {
-            return $pic->getId() !== $picId;
-        });
-        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
-    }
-
-    /**
-     * Up pic by id.
-     *
-     * @param string $picId
-     */
-    public function upPicById($picId)
-    {
-        $this->reorderPicById($picId, true);
-    }
-
-    /**
-     * Down pic by id.
-     *
-     * @param string $picId
-     */
-    public function downPicById($picId)
-    {
-        $this->reorderPicById($picId, false);
-    }
-
-    /**
-     * Reorder pic by id.
-     *
-     * @param string $picId
-     * @param bool   $up
-     */
-    private function reorderPicById($picId, $up = true)
-    {
-        $snapshot = array_values($this->pics->toArray());
-        $this->pics->clear();
-
-        $out = array();
-        foreach ($snapshot as $key => $pic) {
-            if ($pic->getId() === $picId) {
-                $out[($key * 10) + ($up ? -11 : 11) ] = $pic;
-            } else {
-                $out[$key * 10] = $pic;
-            }
-        }
-
-        ksort($out);
-        foreach ($out as $pic) {
-            $this->pics->add($pic);
-        }
-    }
-
-    /**
-     * Contains pic.
-     *
-     * @param Pic $pic
-     *
-     * @return bool
-     */
-    public function containsPic(Pic $pic)
-    {
-        return $this->pics->contains($pic);
-    }
-
-    /**
-     * Get pics.
-     *
-     * @return ArrayCollection
-     */
-    public function getPics()
-    {
-        return $this->pics;
-    }
-
-    /**
-     * Get first pic, null if none.
-     *
-     * @return Pic
-     */
-    public function getPic()
-    {
-        return $this->pics->get(0);
-    }
-
-    /**
-     * Get pic by id.
-     *
-     * @param $picId
-     *
-     * @return Pic|null
-     */
-    public function getPicById($picId)
-    {
-        foreach ($this->pics as $pic) {
-            if ($pic->getId() == $picId) {
-                return $pic;
-            }
-        }
-
-        return;
-    }
-
-    /**
-     * DEPRECATED: Use PicService, function getFirstUrlPic($object, $absolute, $hd).
-     *
-     * Get first pic url
-     *
-     * @param $default string url returned if series without pics
-     *
-     * @return string
-     */
-    public function getFirstUrlPic($default = '')
-    {
-        $url = $default;
-        foreach ($this->pics as $pic) {
-            if (null !== $pic->getUrl()) {
-                $url = $pic->getUrl();
-                break;
-            }
-        }
-
-        return $url;
     }
 }

@@ -1,0 +1,39 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <h1 class="titulo_widget">{% trans %}Events{% endtrans %}</h1>
+
+    {% if events is empty %}
+        <div class="row">
+            <div class="col-xs-12" style="margin-top:20px;">
+                <p>
+                    {% trans %}
+                    There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.
+                    {% endtrans %}
+                </p>
+            </div>
+        </div>
+    {% else %}
+        {% for key, block in events %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="categories_list" style="list-style-type: none; margin-top: 0px;">
+                            <div class="unedtv_mmobjs unedtv_series">
+                                <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
+                                    <h6 class="uned_announces_title">{{ block['_id'] }}</h6>
+                                    {% for event in block['data'] %}
+                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': event} %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div style="width:100%"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+<div class="well">
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th id="th-checkbox" width="1%">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" onclick="window.click_checkbox_all('events', this.checked)">
+                    </label>
+                </div>
+            </th>
+            <th id="th-icons" width="1%">&nbsp;</th>
+            <th id="th-series" width="10%">{% trans %}Series{% endtrans %}</th>
+            <th id="th-image" width="3%">{% trans %}Img{% endtrans %}</th>
+            <th id="th-title">{% trans %}Event{% endtrans %}</th>
+            <th id="th-date" width="12%">{% trans %}Date{% endtrans %}</th>
+            <th id="th-public" width="2%">{% trans %}Public{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for multimediaObject in multimediaObjects %}
+            {% set showPath = false %}
+            {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
+            {% if app.session.has('eventID') %}
+                {% set showPath = path('pumukitnewadmin_live_show', {'id': multimediaObject.getEmbeddedEvent().getLive().getId() }) %}
+            {% endif %}
+            <tr class="active">
+                <td headers="th-checkbox" width="1%">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="events_checkbox" name="events_checkbox[]" value="{{ multimediaObject.getId() }}">
+                        </label>
+                    </div>
+                </td>
+                <td headers="th-icons" width="1%">
+                    {% include 'PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig' %}
+                </td>
+                <td headers="th-series" width="10%">
+                    <a href="{{ path('pumukitnewadmin_mms_index', {'id' : multimediaObject.getSeries().getId() }) }}" title="{% trans %}Series{% endtrans %}">
+                        {% trans %}Series videos{% endtrans %}
+                    </a>
+                </td>
+                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
+                    <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive"/>
+                </td>
+                <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')">
+                    {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
+                </td>
+                <td headers="th-date" width="12%">{{ multimediaObject.getEmbeddedEvent().date | localizeddate('medium', 'none') }}</td>
+                <td headers="th-public" width="2%">{{ multimediaObject.getEmbeddedEvent().display ? 'Yes' : 'No' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        var eventID = "{{ app.session.get('eventID') }}";
+        if(eventID != null) {
+            $('#event_' + eventID).click();
+        }
+    });
+</script>

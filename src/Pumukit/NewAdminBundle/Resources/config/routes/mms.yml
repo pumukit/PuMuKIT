@@ -38,6 +38,12 @@ pumukitnewadmin_mms_update_pub:
     defaults:
         _controller: pumukitnewadmin.controller.mms:updatepubAction
 
+pumukitnewadmin_mms_update_social:
+    pattern: /{id}/update/social
+    methods: [POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updatesocialAction
+
 pumukitnewadmin_mms_batch_delete:
     pattern: /batch_delete
     methods: [DELETE]

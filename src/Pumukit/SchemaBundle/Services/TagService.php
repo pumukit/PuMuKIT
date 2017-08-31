@@ -89,11 +89,11 @@ class TagService
         } while ($tag = $tag->getParent());
 
         $this->dm->persist($mmobj);
+
         if ($executeFlush) {
             $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($mmobj);
         }
-
-        $this->dispatcher->dispatchUpdate($mmobj);
 
         return $tagAdded;
     }
@@ -145,11 +145,11 @@ class TagService
         } while ($tag = $tag->getParent());
 
         $this->dm->persist($mmobj);
+
         if ($executeFlush) {
             $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($mmobj);
         }
-
-        $this->dispatcher->dispatchUpdate($mmobj);
 
         return $removeTags;
     }

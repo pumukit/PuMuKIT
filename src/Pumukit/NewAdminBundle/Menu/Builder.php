@@ -63,15 +63,29 @@ class Builder extends ContainerAware
             }
         }
 
-        if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-            $live = $menu->addChild('Live');
-            if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-                $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
+        $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event') ? $this->container->getParameter('pumukit_new_admin.advance_live_event') : false;
+        if ($advanceLiveEvent) {
+            if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+                $live = $menu->addChild('Live Events');
+                if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
+                    $live->addChild('Live Events', array('route' => 'pumukit_new_admin_live_event_index'));
+                }
+                if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+                    $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
+                }
             }
-            if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
-                $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'));
+        } else {
+            if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+                $live = $menu->addChild('Live');
+                if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+                    $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
+                }
+                if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
+                    $live->addChild('Live Events', array('route' => 'pumukitnewadmin_event_index'));
+                }
             }
         }
+
         if ($authorizationChecker->isGranted(Permission::ACCESS_JOBS)) {
             $menu->addChild('Encoder jobs', array('route' => 'pumukit_encoder_info'));
         }
