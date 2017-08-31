@@ -99,12 +99,6 @@ class Series
     private $playlist;
 
     /**
-     * @var ArrayCollection
-     * @MongoDB\EmbedMany(targetDocument="Pic")
-     */
-    private $pics;
-
-    /**
      * @var bool
      * @MongoDB\Boolean
      */
@@ -184,7 +178,6 @@ class Series
         $this->hide = false;
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
-        $this->pics = new ArrayCollection();
     }
 
     public function __toString()
