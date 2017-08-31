@@ -16,7 +16,7 @@ use Pumukit\LiveBundle\Document\Live;
 class DefaultController extends Controller
 {
     /**
-     * @param Live $live
+     * @param Live    $live
      * @param Request $request
      *
      * @Route("/live/{id}", name="pumukit_live_id")
@@ -32,9 +32,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Live $live
+     * @param Live    $live
      * @param Request $request
-     * @param bool $iframe
+     * @param bool    $iframe
      *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitLiveBundle:Default:iframe.html.twig")
@@ -65,7 +65,7 @@ class DefaultController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Request $request
+     * @param Request          $request
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      *
@@ -91,8 +91,8 @@ class DefaultController extends Controller
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param Request $request
-     * @param bool $iframe
+     * @param Request          $request
+     * @param bool             $iframe
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      *
@@ -187,7 +187,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request          $request
      * @param MultimediaObject $multimediaObject
      *
      * @return JsonResponse
@@ -203,14 +203,14 @@ class DefaultController extends Controller
             $to = $multimediaObject->getEmbeddedSocial()->getEmail();
 
             $data = $request->request->get('pumukit_multimedia_object_contact');
-            $bodyMail = sprintf("Mail desde contacto de %s\n * Correo: %s\n * Nombre: %s\n * Asunto: %s\n ", $request->getUri(), $data['email'], $data['name'], $data['content']);
+            $bodyMail = sprintf("Email from contact us %s\n * Email: %s\n * Name: %s\n * Subject: %s\n ", $request->getUri(), $data['email'], $data['name'], $data['content']);
 
             $message = \Swift_Message::newInstance();
             $message->setSubject($translator->trans('Contact Live'))->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
             $sent = $this->get('mailer')->send($message);
 
             if ($sent == 0) {
-                $this->get('logger')->error('Live contact: Error enviando mensaje de: ' . $request->request->get('email'));
+                $this->get('logger')->error('Event contact: Error sending message from - '.$request->request->get('email'));
             }
 
             return new JsonResponse(array(
