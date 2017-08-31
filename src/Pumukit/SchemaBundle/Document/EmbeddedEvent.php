@@ -177,7 +177,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param      $description
+     * @param        $description
      * @param string $locale
      */
     public function setDescription($description, $locale = null)
