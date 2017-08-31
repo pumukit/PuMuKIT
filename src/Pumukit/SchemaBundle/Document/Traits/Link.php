@@ -8,6 +8,22 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 trait Link
 {
+    /*
+        Warning - To use trait MATERIAL you must do:
+
+        use Traits\Link {
+            Traits\Link::__construct as private __LinkConstruct;
+        }
+
+        and on class __construct():
+        public function __construct()
+        {
+            ...
+            $this->__LinkConstruct();
+            ...
+        }
+    */
+
     /**
      * @var ArrayCollection
      * @MongoDB\EmbedMany(targetDocument="Link")

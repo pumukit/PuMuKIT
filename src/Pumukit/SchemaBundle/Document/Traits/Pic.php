@@ -9,7 +9,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Pic
 {
     /*
-        TODO:
         Warning - To use trait PIC you must do:
 
         use Traits\Pic {
@@ -27,7 +26,6 @@ trait Pic
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="Pic")
      */
     private $pics;
@@ -169,7 +167,6 @@ trait Pic
 
     /**
      * @deprecated: Use PicService, function getFirstUrlPic($object, $absolute, $hd)
-     *
      * Get first pic url
      *
      * @param $default string url returned if series without pics

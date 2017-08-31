@@ -9,7 +9,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 trait Material
 {
     /*
-        TODO:
         Warning - To use trait MATERIAL you must do:
 
         use Traits\Material {
@@ -27,7 +26,6 @@ trait Material
 
     /**
      * @var ArrayCollection
-     *
      * @MongoDB\EmbedMany(targetDocument="Material")
      */
     private $materials;

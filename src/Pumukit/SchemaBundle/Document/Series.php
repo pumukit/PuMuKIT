@@ -178,6 +178,7 @@ class Series
         $this->hide = false;
         $this->multimedia_objects = new ArrayCollection();
         $this->playlist = new Playlist();
+        $this->__PicConstruct();
     }
 
     public function __toString()
