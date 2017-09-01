@@ -46,11 +46,11 @@ class EventsController extends Controller
     }
 
     /**
-     * Create new event with or without serie.
-     *
      * @param Request $request
      *
      * @return RedirectResponse
+     *
+     * @throws \Exception
      *
      * @Route("create/", name="pumukit_new_admin_live_event_create")
      */
@@ -73,11 +73,17 @@ class EventsController extends Controller
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
         $multimediaObject->setIsLive(true);
 
+        $live = $dm->getRepository('PumukitLiveBundle:Live')->findAll();
+        if (0 == count($live)) {
+            throw new \Exception();
+        }
+
         /* Create default event */
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
         $event->setName($translator->trans('New'), $request->getLocale());
         $event->setCreateSerial(true);
+        $event->setLive($live[0]);
         $dm->persist($event);
 
         $multimediaObject->setEmbeddedEvent($event);

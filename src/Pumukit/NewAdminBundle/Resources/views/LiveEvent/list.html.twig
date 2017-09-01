@@ -56,9 +56,9 @@
 
 <script type="text/javascript">
     $(function(){
-        var eventID = "{{ app.session.get('eventID') }}";
+        var eventID = "{{ path('pumukit_new_admin_live_event_edit', {'id': app.session.get('eventID')}) }}";
         if(eventID != null) {
-            $('#event_' + eventID).click();
+            $('#edit_events').load(eventID);
         }
     });
 </script>
