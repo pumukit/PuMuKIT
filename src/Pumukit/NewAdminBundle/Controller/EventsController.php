@@ -75,7 +75,7 @@ class EventsController extends Controller
 
         $live = $dm->getRepository('PumukitLiveBundle:Live')->findAll();
         if (0 == count($live)) {
-            throw new \Exception();
+            throw new \Exception($translator->trans('There arent defined live channels. Please define one and then create LiveEvent'));
         }
 
         /* Create default event */
