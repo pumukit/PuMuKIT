@@ -22,7 +22,7 @@ use Pumukit\SchemaBundle\Document\Person;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
- * @Route("/admin/liveevent/")
+ * @Route("liveevent/")
  */
 class EventsController extends Controller
 {

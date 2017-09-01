@@ -131,10 +131,6 @@ pumukitnewadmin_live:
     resource: @PumukitNewAdminBundle/Resources/config/routes/live.yml
     prefix: /admin/live
 
-pumukitnewadmin_live_event:
-    resource: "@PumukitNewAdminBundle/Controller/"
-    type:     annotation
-
 pumukitnewadmin_event:
     resource: @PumukitNewAdminBundle/Resources/config/routes/event.yml
     prefix: /admin/event
