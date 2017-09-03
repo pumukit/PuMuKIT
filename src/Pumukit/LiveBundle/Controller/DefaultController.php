@@ -121,7 +121,13 @@ class DefaultController extends Controller
         $locale = $request->getLocale();
 
         $form = $this->createForm(new ContactType($translator, $locale));
-        $captchaPublicKey = $this->container->getParameter('captcha_public_key');
+
+        $activeContact = false;
+        $captchaPublicKey = '';
+        if($this->container->hasParameter('liveevent_contact_and_share') and $this->container->getParameter('liveevent_contact_and_share')) {
+            $captchaPublicKey = $this->container->getParameter('captcha_public_key');
+            $activeContact = true;
+        }
 
         $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
@@ -133,6 +139,7 @@ class DefaultController extends Controller
             'captcha_public_key' => $captchaPublicKey,
             'live' => $multimediaObject->getEmbeddedEvent()->getLive(),
             'contact' => $form->createView(),
+            'activeContact' => $activeContact,
             'success' => -1,
             'mobile_device' => $mobileDevice,
             'isIE' => $isIE,

@@ -65,7 +65,9 @@
 
 <br/>
 
-{% if multimediaObject.getEmbeddedSocial() is defined and multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not null and multimediaObject.getEmbeddedSocial().getEmail() != '' %}
-    {% include 'PumukitWebTVBundle:Event:contact.html.twig' %}
+{% if activeContact %}
+    {% if multimediaObject.getEmbeddedSocial() is defined and multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not null and multimediaObject.getEmbeddedSocial().getEmail() != '' %}
+        {% include 'PumukitWebTVBundle:Event:contact.html.twig' %}
+    {% endif %}
 {% endif %}
 
