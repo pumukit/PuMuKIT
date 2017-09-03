@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
-class EventController extends AdminController implements NewAdminController
+class LegacyEventController extends AdminController implements NewAdminController
 {
     /**
      * @var array
@@ -91,7 +91,7 @@ class EventController extends AdminController implements NewAdminController
             return $this->handleView($this->view($form));
         }
 
-        return $this->render('PumukitNewAdminBundle:Event:create.html.twig',
+        return $this->render('PumukitNewAdminBundle:LegacyEvent:create.html.twig',
                              array(
                                    'event' => $resource,
                                    'form' => $form->createView(),

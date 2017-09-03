@@ -132,11 +132,11 @@ pumukitnewadmin_live:
     prefix: /admin/live
 
 pumukitnewadmin_event:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/event.yml
+    resource: @PumukitNewAdminBundle/Resources/config/routes/legacyevent.yml
     prefix: /admin/event
 
 pumukitnewadmin_eventpic:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/eventpic.yml
+    resource: @PumukitNewAdminBundle/Resources/config/routes/legacyeventpic.yml
     prefix: /admin/eventpic
 
 pumukitnewadmin_permission_profile:
