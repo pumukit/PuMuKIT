@@ -97,11 +97,11 @@ class JobGeneratorListener
             }
 
             if (in_array($pubChannelCod, $targets['force'])) {
-                if ($multimediaObject->isOnlyAudio() && !$profile['audio']) {
+                /*if ($multimediaObject->isOnlyAudio() && !$profile['audio']) {
                     $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using forced target, because a video profile can't be created from an audio",
                                                 $targetProfile, $multimediaObject->getId()));
                     continue;
-                }
+                }*/
 
                 $master = $multimediaObject->getTrackWithTag('master');
                 $this->logger->info(sprintf('JobGeneratorListener creates new job (%s) for multimedia object %s using forced target', $targetProfile, $multimediaObject->getId()));
