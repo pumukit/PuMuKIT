@@ -124,7 +124,7 @@ class DefaultController extends Controller
 
         $activeContact = false;
         $captchaPublicKey = '';
-        if($this->container->hasParameter('liveevent_contact_and_share') and $this->container->getParameter('liveevent_contact_and_share')) {
+        if ($this->container->hasParameter('liveevent_contact_and_share') and $this->container->getParameter('liveevent_contact_and_share')) {
             $captchaPublicKey = $this->container->getParameter('captcha_public_key');
             $activeContact = true;
         }
