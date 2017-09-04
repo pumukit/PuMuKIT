@@ -24,7 +24,7 @@ class EventPicServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitLiveBundle:Event');
-        $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.eventpic');
+        $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.legacyeventpic');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
@@ -107,7 +107,7 @@ class EventPicServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
      */
     public function testInvalidTargetPath()
