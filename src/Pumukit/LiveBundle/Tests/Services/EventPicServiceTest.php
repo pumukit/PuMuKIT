@@ -4,7 +4,7 @@ namespace Pumukit\LiveBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\LiveBundle\Services\EventPicService;
+use Pumukit\LiveBundle\Services\LegacyEventPicService;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -112,7 +112,7 @@ class EventPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $eventPicService = new EventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
+        $eventPicService = new LegacyEventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
     }
 
     private function createLiveChannel()
