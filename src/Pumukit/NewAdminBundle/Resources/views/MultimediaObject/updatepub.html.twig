@@ -63,7 +63,7 @@
                 {% for pub in pub_channels %}
                     {% if pub.getProperty('advanced_configuration') and path_exists(pub.getProperty('advanced_configuration')) %}
                         <div id="youtube_advanced_configuration" style="padding-top:15px; display:none">
-                            {% render(controller(pub.getProperty('path_controller'), {'id' : mm.getId()})) %}
+                            {% render(path( pub.getProperty('advanced_configuration'), {'id' : mm.getId()})) %}
                         </div>
                     {% endif %}
                 {% endfor %}
