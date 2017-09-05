@@ -63,7 +63,7 @@
                 {% for pub in pub_channels %}
                     {% if pub.getProperty('advanced_configuration') and path_exists(pub.getProperty('advanced_configuration')) %}
                         <div id="youtube_advanced_configuration" style="padding-top:15px; display:none">
-                            {% render(controller('PumukitYoutubeBundle:Admin:updateYT', {'id' : mm.getId()})) %}
+                            {% render(controller(pub.getProperty('path_controller'), {'id' : mm.getId()})) %}
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -72,24 +72,3 @@
         </fieldset>
     </form>
 </div>
-
-<script type="text/javascript">
-    $('.form-group').on('click', function() {
-        var active = $('#pub_channels_PUCHYOUTUBE:checked');
-
-        if(active.length >= 1) {
-            $('#youtube_advanced_configuration').show();
-        } else {
-            $('#youtube_advanced_configuration').hide();
-        }
-    });
-    $(document).ready(function(){
-        var active = $('#pub_channels_PUCHYOUTUBE:checked');
-
-        if(active.length >= 1) {
-            $('#youtube_advanced_configuration').show();
-        } else {
-            $('#youtube_advanced_configuration').hide();
-        }
-    });
-</script>
