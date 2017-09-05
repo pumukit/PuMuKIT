@@ -2,6 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\NewAdminBundle\Event\BackofficeEvents;
+use Pumukit\NewAdminBundle\Event\PublicationSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
@@ -400,6 +402,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             if (!$notChangePubChannel) {
                 $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
             }
+
+            $event = new PublicationSubmitEvent($resource, $request);
+            $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
+
             $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
 
             $this->domainManager->update($resource);
