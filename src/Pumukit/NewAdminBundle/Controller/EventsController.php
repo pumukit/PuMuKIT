@@ -321,9 +321,12 @@ class EventsController extends Controller
                 $externalURL = isset($data['externalURL']) ? $data['externalURL'] : '';
                 $event->setUrl($externalURL);
 
-                $live = $dm->getRepository('PumukitLiveBundle:Live')->findOneBy(array('_id' => new \MongoId($data['live'])));
-                $event->setLive($live);
-
+                if (isset($data['live'])) {
+                    $live = $dm->getRepository('PumukitLiveBundle:Live')->findOneBy(
+                        array('_id' => new \MongoId($data['live']))
+                    );
+                    $event->setLive($live);
+                }
                 if (isset($data['contact'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setEmail($data['contact']);

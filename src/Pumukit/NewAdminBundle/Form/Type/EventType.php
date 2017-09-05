@@ -37,6 +37,7 @@ class EventType extends AbstractType
                         'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
             ->add('live', null,
                   array(
+                        'required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
             ->add('schedule', new EventscheduleType(),
