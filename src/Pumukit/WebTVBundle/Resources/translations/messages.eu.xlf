@@ -773,6 +773,14 @@
         <source>Logo</source>
         <target xml:lang="eu" state="needs-translation">Logo</target>
       </trans-unit>
+      <trans-unit id="b658acd7298e4f58058387dbbc4b327d" resname="This page isn't available. Sorry about that.">
+        <source>This page isn't available. Sorry about that.</source>
+        <target>Orria ez dago erabilgarri. Sentitzen dugu.</target>
+      </trans-unit>
+      <trans-unit id="795a273f05736cc8c7b77d3a88bc9bee" resname="Try searching for something else:">
+        <source>Saiatu beste zerbait bilatzen:</source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -449,6 +449,14 @@
         <source>Logo</source>
         <target>Logo</target>
       </trans-unit>
+      <trans-unit id="b658acd7298e4f58058387dbbc4b327d" resname="This page isn't available. Sorry about that.">
+        <source>This page isn't available. Sorry about that.</source>
+        <target>This page isn't available. Sorry about that.</target>
+      </trans-unit>
+      <trans-unit id="795a273f05736cc8c7b77d3a88bc9bee" resname="Try searching for something else:">
+        <source>Try searching for something else:</source>
+        <target>Try searching for something else:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
