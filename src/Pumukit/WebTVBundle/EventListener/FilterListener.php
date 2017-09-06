@@ -37,7 +37,6 @@ class FilterListener
         $deprecatedCheck = false && (false !== strpos($req->attributes->get('_controller'), 'WebTVBundle'));
 
         if (($controller[0] instanceof WebTVController /*deprecated*/ || $deprecatedCheck)
-            && $event->isMasterRequest()
                 && $isFilterActivated) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');
 
