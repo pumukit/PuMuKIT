@@ -2985,6 +2985,26 @@
         <source>Open URL</source>
         <target xml:lang="ja" state="needs-translation">Open URL</target>
       </trans-unit>
+      <trans-unit id="a9e77665b6abe64830336745d22c80e9" resname="Live channels">
+        <source>Live channels</source>
+        <target xml:lang="ja" state="needs-translation">Live channels</target>
+      </trans-unit>
+      <trans-unit id="8ef34c46033be50343a5f60953cf7c48" resname="URL external">
+        <source>URL external</source>
+        <target xml:lang="ja" state="needs-translation">URL external</target>
+      </trans-unit>
+      <trans-unit id="161f25f9025f957f236bd529f7d1eb38" resname="Starts">
+        <source>Starts</source>
+        <target xml:lang="ja" state="needs-translation">Starts</target>
+      </trans-unit>
+      <trans-unit id="7ee4b5a7cf4025b073d5f58abeb637c0" resname="Show event on WebTV portal">
+        <source>Show event on WebTV portal</source>
+        <target xml:lang="ja" state="needs-translation">Show event on WebTV portal</target>
+      </trans-unit>
+      <trans-unit id="be5aadb9b410ebd1f4e2e0db5bb509eb" resname="No sessions defined.">
+        <source>No sessions defined.</source>
+        <target xml:lang="ja" state="needs-translation">No sessions defined.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
