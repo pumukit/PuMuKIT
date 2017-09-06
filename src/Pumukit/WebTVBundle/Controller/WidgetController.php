@@ -37,7 +37,6 @@ class WidgetController extends Controller implements WebTVController
             'search_title' => $searchTitle,
             'mediateca_title' => $mediatecaTitle,
             'categories_title' => $categoriesTitle,
-            'menu_stats' => $menuStats,
         ));
 
         return self::$menuResponse;
