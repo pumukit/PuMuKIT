@@ -793,10 +793,6 @@
         <source>To</source>
         <target xml:lang="eu" state="needs-translation">To</target>
       </trans-unit>
-      <trans-unit id="18865e2cf56dbad019207ac0af034fe3" resname="Events live">
-        <source>Events live</source>
-        <target xml:lang="eu" state="needs-translation">Events live</target>
-      </trans-unit>
       <trans-unit id="6ce3bdc39e544725038e0e87b771db1e" resname="Questions">
         <source>Questions</source>
         <target xml:lang="eu" state="needs-translation">Questions</target>

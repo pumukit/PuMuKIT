@@ -1,23 +1,25 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
     {% if multimediaObject.getEmbeddedEvent() is not null %}
-        <div>
-            <p style="text-align:center; font-weight: bolder; font-size: large;">
-                {{ multimediaObject.getEmbeddedEvent().name }}
-            </p>
-            {% if multimediaObject.getEmbeddedEvent().pic %}
-                <div class="pmk-preview">
-                    <div class="pmk-picture">
-                        <div class="pmk-img">
-                            <img src="{{ multimediaObject.getEmbeddedEvent().getPic() }}"/>
-                        </div>
-                    </div>
-                </div>
+        <p>{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}</p>
+        <div class="well">
+            {% if multimediaObject.getEmbeddedEvent().getLive() is not null and (multimediaObject.getEmbeddedEvent().getUrl() is not defined or multimediaObject.getEmbeddedEvent().getUrl() is empty) %}
+                {% include('PumukitNewAdminBundle:Live:Players/'~multimediaObject.getEmbeddedEvent().getLive().getLiveType()~'.html.twig') with {'live': multimediaObject.getEmbeddedEvent().getLive()} %}
+            {% elseif multimediaObject.getEmbeddedEvent().getUrl() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty %}
+                <p><strong>{% trans %}URL external{% endtrans %}:</strong></p>
+                <input type="text" value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" disabled/>
             {% endif %}
-            <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ multimediaObject.getEmbeddedEvent().display ? '#FFEAD6' : '#DDD' }}">
-                {{ multimediaObject.getEmbeddedEvent().date| localizeddate('medium', 'none') }}
-                {{ multimediaObject.getEmbeddedEvent().duration }}
-                {% trans %} min.{% endtrans %}
-            </p>
+            {% if (multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length) > 0 %}
+                <p style="margin-top:10px;"><strong>{% trans %}Starts{% endtrans %}: </strong></p>
+                {% set session =  live_event_session(multimediaObject) %}
+                <p>{{ session.getStart() | date("d/m/Y H:i:s") }}</p>
+                <p style="margin-top:10px">
+                    <a href="{{ path('pumukit_live_event_id', {'id': multimediaObject.getId()}) }}" title="{% trans %}Show event on WebTV portal{% endtrans %}">
+                        {% trans %}Show event on WebTV portal{% endtrans %}
+                    </a>
+                </p>
+            {% else %}
+                <p>{% trans %}No sessions defined.{% endtrans %}</p>
+            {% endif %}
         </div>
     {% else %}
         <p>{% trans %}Select or create any live event.{% endtrans %}</p>

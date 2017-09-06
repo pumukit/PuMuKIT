@@ -48,22 +48,10 @@ class PumukitExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('first_url_pic', array(
-                $this,
-                'getFirstUrlPicFilter',
-            )),
-            new \Twig_SimpleFilter('precinct_fulltitle', array(
-                $this,
-                'getPrecinctFulltitle',
-            )),
-            new \Twig_SimpleFilter('duration_minutes_seconds', array(
-                $this,
-                'getDurationInMinutesSeconds',
-            )),
-            new \Twig_SimpleFilter('duration_string', array(
-                $this,
-                'getDurationString',
-            )),
+            new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
+            new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
+            new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
+            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
         );
     }
 
@@ -73,42 +61,15 @@ class PumukitExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('public_broadcast', array(
-                $this,
-                'getPublicBroadcast',
-            )),
-            new \Twig_SimpleFunction('precinct', array(
-                $this,
-                'getPrecinct',
-            )),
-            new \Twig_SimpleFunction('precinct_of_series', array(
-                $this,
-                'getPrecinctOfSeries',
-            )),
-            new \Twig_SimpleFunction('captions', array(
-                $this,
-                'getCaptions',
-            )),
-            new \Twig_SimpleFunction('iframeurl', array(
-                $this,
-                'getIframeUrl',
-            )),
-            new \Twig_SimpleFunction('path_to_tag', array(
-                $this,
-                'getPathToTag',
-            )),
-            new \Twig_SimpleFunction('mmobj_duration', array(
-                $this,
-                'getMmobjDuration',
-            )),
-            new \Twig_SimpleFunction('next_event_session', array(
-                $this,
-                'getNextEventSession',
-            )),
-            new \Twig_SimpleFunction('live_event_session', array(
-                $this,
-                'getLiveEventSession',
-            )),
+            new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
+            new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
+            new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
+            new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
+            new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
+            new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
+            new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
+            new \Twig_SimpleFunction('next_event_session', array($this, 'getNextEventSession')),
+            new \Twig_SimpleFunction('live_event_session', array($this, 'getLiveEventSession')),
         );
     }
 
@@ -354,7 +315,12 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getNextEventSession($event)
     {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event['_id'])));
+        if (is_object($event)) {
+            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event->getId())));
+        } else {
+            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event['_id'])));
+        }
+
         $embeddedEventSession = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
 
         $now = new \DateTime();
