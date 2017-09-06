@@ -73,17 +73,11 @@ class EventsController extends Controller
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
         $multimediaObject->setIsLive(true);
 
-        $live = $dm->getRepository('PumukitLiveBundle:Live')->findAll();
-        if (0 == count($live)) {
-            throw new \Exception($translator->trans('There arent defined live channels. Please define one and then create LiveEvent'));
-        }
-
         /* Create default event */
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
         $event->setName($translator->trans('New'), $request->getLocale());
         $event->setCreateSerial(true);
-        $event->setLive($live[0]);
         $dm->persist($event);
 
         $multimediaObject->setEmbeddedEvent($event);
