@@ -36,13 +36,25 @@ class EventsController extends Controller
 
         $aRoles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
         $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
-        $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
+        $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(
+            array('parent.$id' => new \MongoId($aPubChannel->getId()))
+        );
 
-        $statusPub = array(MultimediaObject::STATUS_PUBLISHED => 'Published', MultimediaObject::STATUS_BLOQ => 'Blocked', MultimediaObject::STATUS_HIDE => 'Hidden');
+        $statusPub = array(
+            MultimediaObject::STATUS_PUBLISHED => 'Published',
+            MultimediaObject::STATUS_BLOQ => 'Blocked',
+            MultimediaObject::STATUS_HIDE => 'Hidden',
+        );
 
         $object = array();
 
-        return array('object' => $object, 'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'), 'roles' => $aRoles, 'statusPub' => $statusPub, 'pubChannels' => $aChannels);
+        return array(
+            'object' => $object,
+            'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
+            'roles' => $aRoles,
+            'statusPub' => $statusPub,
+            'pubChannels' => $aChannels,
+        );
     }
 
     /**
@@ -51,7 +63,6 @@ class EventsController extends Controller
      * @return RedirectResponse
      *
      * @throws \Exception
-     *
      * @Route("create/", name="pumukit_new_admin_live_event_create")
      */
     public function createEventAction(Request $request)
@@ -67,7 +78,9 @@ class EventsController extends Controller
             $series = $factoryService->createSeries($this->getUser());
             $dm->persist($series);
         } else {
-            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($series)));
+            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
+                array('_id' => new \MongoId($series))
+            );
         }
 
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
@@ -121,13 +134,13 @@ class EventsController extends Controller
     /**
      * Event options .
      *
-     * @param $type
+     * @param                  $type
      * @param MultimediaObject $multimediaObject
      *
      * @return JsonResponse
-     *
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
+     *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig")
      */
     public function menuOptionsAction($type, MultimediaObject $multimediaObject)
@@ -159,7 +172,6 @@ class EventsController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
-     *
      * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
      */
     public function deleteSelectedEventsAction(Request $request)
@@ -168,7 +180,9 @@ class EventsController extends Controller
 
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+                array('_id' => new \MongoId($multimediaObjectId))
+            );
             $this->deleteEvent($multimediaObject);
         }
 
@@ -252,9 +266,9 @@ class EventsController extends Controller
      * @param MultimediaObject $multimediaObject
      *
      * @return array
-     *
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
+     *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:edit.html.twig")
      */
     public function editEventAction(MultimediaObject $multimediaObject)
@@ -268,7 +282,8 @@ class EventsController extends Controller
      * Form session to create or edit.
      *
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
+     *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updateevent.html.twig")
      *
      * @param Request          $request
@@ -365,7 +380,9 @@ class EventsController extends Controller
         $roleAndPeople = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findPeopleWithRoleCode($roleCod);
         if ($roleAndPeople) {
             foreach ($roleAndPeople as $person) {
-                $personName = $dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(array('_id' => new \MongoId($person)));
+                $personName = $dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(
+                    array('_id' => new \MongoId($person))
+                );
                 if ($personName == $name) {
                     $personExists = true;
                 }
@@ -401,20 +418,33 @@ class EventsController extends Controller
         $form = $this->createForm(new SeriesType($translator, $locale, $disablePudenew), $series);
 
         $exclude_fields = array();
-        $show_later_fields = array('pumukitnewadmin_series_i18n_header', 'pumukitnewadmin_series_i18n_footer', 'pumukitnewadmin_series_i18n_line2', 'pumukitnewadmin_series_template');
-        $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
+        $show_later_fields = array(
+            'pumukitnewadmin_series_i18n_header',
+            'pumukitnewadmin_series_i18n_footer',
+            'pumukitnewadmin_series_i18n_line2',
+            'pumukitnewadmin_series_template',
+        );
+        $showSeriesTypeTab = $this->container->hasParameter(
+                'pumukit2.use_series_channels'
+            ) && $this->container->getParameter('pumukit2.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
 
-        return array('form' => $form->createView(), 'series' => $series, 'exclude_fields' => $exclude_fields, 'show_later_fields' => $show_later_fields);
+        return array(
+            'form' => $form->createView(),
+            'series' => $series,
+            'exclude_fields' => $exclude_fields,
+            'show_later_fields' => $show_later_fields,
+        );
     }
 
     /**
      * Form session to create or edit.
      *
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
+     *                                     "id"}})
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesession.html.twig")
      *
      * @param Request          $request
@@ -441,8 +471,11 @@ class EventsController extends Controller
                 $notes = $data->getNotes();
 
                 if (isset($request->request->get('pumukitnewadmin_event_session')['id'])) {
-                    foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $embeddedEventSession) {
-                        if ($embeddedEventSession->getId() == $request->request->get('pumukitnewadmin_event_session')['id']) {
+                    foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(
+                    ) as $embeddedEventSession) {
+                        if ($embeddedEventSession->getId() == $request->request->get(
+                                'pumukitnewadmin_event_session'
+                            )['id']) {
                             $embeddedEventSession->setStart($start);
                             $embeddedEventSession->setDuration($duration);
                             $embeddedEventSession->setNotes($notes);
@@ -464,7 +497,9 @@ class EventsController extends Controller
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
-            return new JsonResponse(array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()));
+            return new JsonResponse(
+                array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession())
+            );
         }
 
         return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
@@ -500,7 +535,9 @@ class EventsController extends Controller
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($multimediaObject));
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+            new \MongoId($multimediaObject)
+        );
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getId() == $session_id) {
                 $multimediaObject->getEmbeddedEvent()->removeEmbeddedEventSession($session);
@@ -531,7 +568,9 @@ class EventsController extends Controller
 
         $form = $this->createForm(new EmbeddedEventSessionType($translator, $locale));
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($multimediaObject));
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+            new \MongoId($multimediaObject)
+        );
 
         if (!$session_id) {
             return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject);
@@ -553,14 +592,17 @@ class EventsController extends Controller
             $form->get('notes')->setData($sessionData->getNotes());
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'session_id' => $session_id);
+        return array(
+            'form' => $form->createView(),
+            'multimediaObject' => $multimediaObject,
+            'session_id' => $session_id,
+        );
     }
 
     /**
      * @param Request $request
      *
      * @return JsonResponse
-     *
      * @Route("series/suggest/", name="pumukit_new_admin_live_event_series_suggest")
      */
     public function seriesSuggestAction(Request $request)
@@ -568,15 +610,38 @@ class EventsController extends Controller
         $value = $request->query->get('term');
 
         $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
-        $pipeline = array(array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i'))), array('$group' => array('_id' => array('id' => '$_id', 'title' => '$title'))), array('$limit' => 100));
+        $pipeline = array(
+            array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i'))),
+            array('$group' => array('_id' => array('id' => '$_id', 'title' => '$title'))),
+            array('$limit' => 100),
+        );
 
         $series = $aggregate->aggregate($pipeline)->toArray();
 
         $result = array();
         foreach ($series as $key => $dataSeries) {
-            $result[] = array('id' => (string) $dataSeries['_id']['id'], 'title' => $dataSeries['_id']['title'][$request->getLocale()], 'label' => $dataSeries['_id']['title'][$request->getLocale()], 'value' => $dataSeries['_id']['id'].' - '.$dataSeries['_id']['title'][$request->getLocale()]);
+            $result[] = array(
+                'id' => (string) $dataSeries['_id']['id'],
+                'title' => $dataSeries['_id']['title'][$request->getLocale()],
+                'label' => $dataSeries['_id']['title'][$request->getLocale()],
+                'value' => $dataSeries['_id']['id'].' - '.$dataSeries['_id']['title'][$request->getLocale()],
+            );
         }
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return array
+     * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id":
+     *                                     "id"}})
+     * @Template("PumukitNewAdminBundle:LiveEvent:show.html.twig")
+     */
+    public function showAction(MultimediaObject $multimediaObject)
+    {
+        return array('multimediaObject' => $multimediaObject);
     }
 }

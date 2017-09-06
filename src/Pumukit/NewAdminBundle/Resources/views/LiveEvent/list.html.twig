@@ -19,11 +19,8 @@
         </thead>
         <tbody>
         {% for multimediaObject in multimediaObjects %}
-            {% set showPath = false %}
             {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
-            {% if multimediaObject.getEmbeddedEvent().getLive() %}
-                {% set showPath = path('pumukitnewadmin_live_show', {'id': multimediaObject.getEmbeddedEvent().getLive().getId() }) %}
-            {% endif %}
+            {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
             <tr class="active">
                 <td headers="th-checkbox" width="1%">
                     <div class="checkbox">
@@ -40,10 +37,10 @@
                         {% trans %}Series videos{% endtrans %}
                     </a>
                 </td>
-                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, {{ showPath ? "'" ~ showPath ~ "'": 'false' }}, '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
+                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
                     <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive"/>
                 </td>
-                <td headers="th-title" onclick="click_fila_edit_urls('events', this, {{ showPath ?  "'" ~ showPath ~ "'": 'false' }}, '{{ loadPath }}')">
+                <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
                 <td headers="th-date" width="12%">{{ multimediaObject.getEmbeddedEvent().date | localizeddate('medium', 'none') }}</td>
@@ -58,9 +55,12 @@
     $(function(){
         var eventID = "{{ app.session.get('eventID') }}";
         var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__id__'}) }}";
+        var showUrl = "{{ path('pumukit_new_admin_live_event_show', {'id': '__id__'}) }}";
         if(eventID) {
             url = url.replace('__id__', eventID);
+            showUrl = showUrl.replace('__id__', eventID);
             $('#edit_events').load(url);
+            $('#preview_events').load(showUrl);
         }
     });
 </script>
