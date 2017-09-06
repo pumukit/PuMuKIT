@@ -75,19 +75,21 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $track->setSize($size);
 
         foreach ($json->streams as $stream) {
-            switch ((string) $stream->codec_type) {
-                case 'video':
-                    $track->setVcodec((string) $stream->codec_name);
-                    $track->setFramerate((string) $stream->avg_frame_rate);
-                    $track->setWidth(intval($stream->width));
-                    $track->setHeight(intval($stream->height));
-                    $only_audio = false;
-                    break;
+            if (isset($stream->codec_type)) {
+                switch ((string) $stream->codec_type) {
+                    case 'video':
+                        $track->setVcodec((string) $stream->codec_name);
+                        $track->setFramerate((string) $stream->avg_frame_rate);
+                        $track->setWidth(intval($stream->width));
+                        $track->setHeight(intval($stream->height));
+                        $only_audio = false;
+                        break;
 
-                case 'audio':
-                    $track->setAcodec((string) $stream->codec_name);
-                    $track->setChannels(intval($stream->channels));
-                    break;
+                    case 'audio':
+                        $track->setAcodec((string) $stream->codec_name);
+                        $track->setChannels(intval($stream->channels));
+                        break;
+                }
             }
             $track->setOnlyAudio($only_audio);
         }
@@ -97,7 +99,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     {
         if ($json->streams != null) {
             foreach ($json->streams as $stream) {
-                if ($stream->codec_type == 'audio' || $stream->codec_type == 'video') {
+                if ((isset($stream->codec_type)) && ($stream->codec_type == 'audio' || $stream->codec_type == 'video')) {
                     return true;
                 }
             }
