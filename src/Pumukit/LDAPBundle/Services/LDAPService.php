@@ -175,7 +175,7 @@ class LDAPService
      */
     public function getInfoFromEmail($email)
     {
-        return $this->getInfoFrom('email', $email);
+        return $this->getInfoFrom('mail', $email);
     }
 
     /**
