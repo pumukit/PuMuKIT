@@ -36,7 +36,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 
         $info = $this->ldapService->getInfoFrom(self::LDAP_ID_KEY, $username);
         if (!isset($info) || !$info) {
-            throw new \RuntimeException('User not found.');
+            throw new \RuntimeException('User "'.$username.'" not found in LDAP (using LDAP '.self::LDAP_ID_KEY.' attribute).');
         }
 
         $user = $this->ldapUserService->createUser($info, $username);
