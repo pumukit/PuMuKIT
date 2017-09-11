@@ -39,7 +39,7 @@
 <script type="text/javascript">
     $('#event_session_form').on('submit',function(event){
         event.preventDefault();
-        $('#myModal').modal('hide');
+        $('#updatesessionmodal').modal('hide');
         $.ajax({
             url: '{{ path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId() }) }}',
             method: 'POST',
