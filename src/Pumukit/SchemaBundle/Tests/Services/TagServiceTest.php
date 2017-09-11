@@ -352,6 +352,8 @@ class TagServiceTest extends WebTestCase
 
         $tag = $this->tagService->updateTag($tag);
 
+        $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
+
         $multimediaObject = $this->mmobjRepo->find($multimediaObject->getId());
         $tag = $this->tagRepo->find($tag->getId());
 

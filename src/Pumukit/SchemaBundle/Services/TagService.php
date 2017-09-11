@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class TagService
@@ -29,7 +28,9 @@ class TagService
      * @param string           $tagId
      * @param bool             $executeFlush
      *
-     * @return Array[Tag] addded tags
+     * @return array[Tag] addded tags
+     *
+     *@throws \Exception
      */
     public function addTagToMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -48,13 +49,15 @@ class TagService
      * @param string           $tagCod
      * @param bool             $executeFlush
      *
-     * @return Array[Tag] addded tags
+     * @return array[Tag] addded tags
+     *
+     * @throws \Exception
      */
     public function addTagByCodToMultimediaObject(MultimediaObject $mmobj, $tagCod, $executeFlush = true)
     {
         $tag = $this->repository->findOneByCod($tagCod);
         if (!$tag) {
-            throw new \Exception('Tag with id '.$tagId.' not found.');
+            throw new \Exception('Tag with id '.$tag->getId().' not found.');
         }
 
         return $this->addTag($mmobj, $tag, $executeFlush);
@@ -67,7 +70,7 @@ class TagService
      * @param Tag              $tag
      * @param bool             $executeFlush
      *
-     * @return Array[Tag] addded tags
+     * @return array[Tag] addded tags
      */
     public function addTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
     {
@@ -89,11 +92,11 @@ class TagService
         } while ($tag = $tag->getParent());
 
         $this->dm->persist($mmobj);
+
         if ($executeFlush) {
             $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($mmobj);
         }
-
-        $this->dispatcher->dispatchUpdate($mmobj);
 
         return $tagAdded;
     }
@@ -105,7 +108,9 @@ class TagService
      * @param string           $tagId
      * @param bool             $executeFlush
      *
-     * @return Array[Tag] removed tags
+     * @return array[Tag] removed tags
+     *
+     * @throws \Exception
      */
     public function removeTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
     {
@@ -121,10 +126,10 @@ class TagService
      * Remove Tag from Multimedia Object.
      *
      * @param MultimediaObject $mmobj
-     * @param string           $tagId
+     * @param Tag              $tag
      * @param bool             $executeFlush
      *
-     * @return Array[Tag] removed tags
+     * @return array[Tag] removed tags
      */
     public function removeTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
     {
@@ -145,11 +150,11 @@ class TagService
         } while ($tag = $tag->getParent());
 
         $this->dm->persist($mmobj);
+
         if ($executeFlush) {
             $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($mmobj);
         }
-
-        $this->dispatcher->dispatchUpdate($mmobj);
 
         return $removeTags;
     }
@@ -159,8 +164,6 @@ class TagService
      *
      * @param array[MultimediaObject] $mmobjs
      * @param array[string]           $tags
-     *
-     * @return array[Tag] removed tags
      */
     public function resetTags(array $mmobjs, array $tags)
     {
@@ -181,9 +184,9 @@ class TagService
                     $this->dm->persist($tag);
                 }
             }
+            $this->dispatcher->dispatchUpdate($mmobj);
         }
 
-        $this->dispatcher->dispatchUpdate($mmobj);
         $this->dm->flush();
     }
 
@@ -198,14 +201,24 @@ class TagService
     {
         $tag = $this->saveTag($tag);
 
-        foreach ($this->mmobjRepo->findAllByTag($tag) as $mmobj) {
-            foreach ($mmobj->getTags() as $embeddedTag) {
-                if ($tag->getId() === $embeddedTag->getId()) {
-                    $embeddedTag = $this->updateEmbeddedTag($tag, $embeddedTag);
-                    $this->dm->persist($mmobj);
-                }
-            }
-        }
+        $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+
+        $query = $qb
+            ->update()
+            ->multiple(true)
+            ->field('tags._id')->equals(new \MongoId($tag->getId()))
+            ->field('tags.$.title')->set($tag->getI18nTitle())
+            ->field('tags.$.description')->set($tag->getI18nDescription())
+            ->field('tags.$.cod')->set($tag->getCod())
+            ->field('tags.$.metatag')->set($tag->getMetatag())
+            ->field('tags.$.display')->set($tag->getDisplay())
+            ->field('tags.$.updated')->set($tag->getUpdated())
+            ->field('tags.$.slug')->set($tag->getSlug())
+            ->field('tags.$.path')->set($tag->getPath())
+            ->field('tags.$.level')->set($tag->getLevel())
+            ->getQuery();
+        $query->execute();
+
         $this->dm->flush();
 
         return $tag;
@@ -234,6 +247,8 @@ class TagService
      * @param Tag $tag
      *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function deleteTag(Tag $tag)
     {
@@ -246,7 +261,7 @@ class TagService
                 ->multiple(true)
                 ->field('tags')->pull($qb->expr()->field('_id')->equals($tag->getId()))
                 ->getQuery();
-            $aux = $query->execute();
+            $query->execute();
 
             $this->dm->remove($tag);
             $this->dm->flush();
@@ -267,32 +282,6 @@ class TagService
     public function canDeleteTag(Tag $tag)
     {
         return (bool) ((0 == count($tag->getChildren())) && (0 == $tag->getNumberMultimediaObjects()));
-    }
-
-    /**
-     * Update embedded tag.
-     *
-     * @param Tag         $tag
-     * @param EmbeddedTag $embeddedTag
-     *
-     * @return EmbeddedTag
-     */
-    private function updateEmbeddedTag(Tag $tag, EmbeddedTag $embeddedTag)
-    {
-        if (null !== $tag) {
-            $embeddedTag->setI18nTitle($tag->getI18nTitle());
-            $embeddedTag->setI18nDescription($tag->getI18nDescription());
-            $embeddedTag->setSlug($tag->getSlug());
-            $embeddedTag->setCod($tag->getCod());
-            $embeddedTag->setMetatag($tag->getMetatag());
-            $embeddedTag->setDisplay($tag->getDisplay());
-            $embeddedTag->setLocale($tag->getLocale());
-            $embeddedTag->setSlug($tag->getSlug());
-            $embeddedTag->setCreated($tag->getCreated());
-            $embeddedTag->setUpdated($tag->getUpdated());
-        }
-
-        return $embeddedTag;
     }
 
     /**
