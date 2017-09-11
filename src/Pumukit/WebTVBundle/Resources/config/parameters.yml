@@ -25,6 +25,20 @@ parameters:
   show_latest_with_pudenew:  false                        # Set whether to use the PUDENEW tag for 'Recently Added' and 'Latest Uploads'
 
   pumukit_web_tv.cinema_mode: false
+
+  pumukit_breadcrumb.active: false                        # Active or not the new breadcrumb
+  pumukit_breadcrumb.tag: 'ITUNESU'                       # Default parent tag
+  pumukit_breadcrumb.default_route: 'full'                # full when access directly a new mmo or serie, the breadcrumb will be full catalog
+  pumukit_breadcrumb.select: 'start'                      # (start|end) If the tree of tags is too long, select what do you want to show
+  pumukit_breadcrumb.level: 0                             # Number of tags to show (just tags)
+  pumukit_breadcrumb.channel_1:  'University'
+  pumukit_breadcrumb.channel_2:  'Bussiness'
+  pumukit_breadcrumb.channel_3:  'Natural Sciences'
+  pumukit_breadcrumb.channel_4:  'Law'
+  pumukit_breadcrumb.channel_5:  'Humanities'
+  pumukit_breadcrumb.channel_6:  'Health & Medicine'
+  pumukit_breadcrumb.channel_7:  'Social Matters & Education'
+
   pumukit_web_tv.breadcrumbs_all_title: 'All'
   pumukit_web_tv.breadcrumbs_all_route: 'pumukit_webtv_medialibrary_index'
 

@@ -49,7 +49,7 @@ class WidgetController extends Controller implements WebTVController
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
 
-        return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs());
+        return array('breadcrumbs' => $breadcrumbs->getBreadcrumbs(), 'active' => false);
     }
 
     /**
