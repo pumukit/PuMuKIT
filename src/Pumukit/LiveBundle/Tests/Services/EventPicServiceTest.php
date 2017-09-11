@@ -4,7 +4,7 @@ namespace Pumukit\LiveBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\LiveBundle\Services\EventPicService;
+use Pumukit\LiveBundle\Services\LegacyEventPicService;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -24,7 +24,7 @@ class EventPicServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository('PumukitLiveBundle:Event');
-        $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.eventpic');
+        $this->eventPicService = static::$kernel->getContainer()->get('pumukitlive.legacyeventpic');
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
@@ -107,12 +107,12 @@ class EventPicServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
      */
     public function testInvalidTargetPath()
     {
-        $eventPicService = new EventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
+        $eventPicService = new LegacyEventPicService($this->dm, '/non/existing/path', '/uploads/pic', true);
     }
 
     private function createLiveChannel()

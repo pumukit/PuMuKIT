@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\LiveBundle\Document\Event;
 
-class EventPicService
+class LegacyEventPicService
 {
     private $dm;
     private $repo;

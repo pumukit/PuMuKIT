@@ -110,16 +110,16 @@ sylius_resource:
                 controller: Pumukit\NewAdminBundle\Controller\LiveController
         pumukitnewadmin.event:
             driver: doctrine/mongodb-odm
-            templates: PumukitNewAdminBundle:Event
+            templates: PumukitNewAdminBundle:LegacyEvent
             classes:
                 model: Pumukit\LiveBundle\Document\Event
-                controller: Pumukit\NewAdminBundle\Controller\EventController
+                controller: Pumukit\NewAdminBundle\Controller\LegacyEventController
         pumukitnewadmin.eventpic:
             driver: doctrine/mongodb-odm
-            templates: PumukitNewAdminBundle:Pic
+            templates: PumukitNewAdminBundle:LegacyPic
             classes:
                 model: Pumukit\LiveBundle\Document\Event
-                controller: Pumukit\NewAdminBundle\Controller\EventPicController
+                controller: Pumukit\NewAdminBundle\Controller\LegacyEventPicController
         pumukitnewadmin.permissionprofile:
             driver: doctrine/mongodb-odm
             templates: PumukitNewAdminBundle:PermissionProfile
