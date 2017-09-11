@@ -46,12 +46,7 @@
         <!--BREADCRUMBS-->
         <div class="row breadcrumbs_color">
           <div class="breadcrumbs_wrapper" role="navigation">
-              {% set active = (app.request.attributes.get('active_breadcrumb') is not null) ? app.request.attributes.get('active_breadcrumb') : app.request.attributes.get('request').attributes.get('active_breadcrumb') %}
-              {% if active == true %}
-                  {% include 'PumukitWebTVBundle:Widget:breadcrumbs.html.twig' with {'active': active} %}
-              {% else %}
-                  {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
-              {% endif %}
+            {% render(controller('PumukitWebTVBundle:Widget:breadcrumbs')) %}
           </div>
         </div>
         <div class="row pmk-content">

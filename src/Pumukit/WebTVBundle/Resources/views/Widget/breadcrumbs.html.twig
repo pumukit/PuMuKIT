@@ -1,16 +1,3 @@
-
-{% if active == true %}
-<ol class="breadcrumb">
-    {% set breadcrumbs =  (app.request.attributes.get('breadcrumb') is not null) ? app.request.attributes.get('breadcrumb') : app.request.attributes.get('request').attributes.get('breadcrumb') %}
-    {% for breadcrumb in breadcrumbs %}
-        <li>
-            <a {% if loop.last %}id="tvpumukites_breadcrumbs_mmobj_a"{% endif %} href="{{ breadcrumb["link"] }}" class="select">
-                {{ breadcrumb["title"] }}
-            </a>
-        </li>
-    {% endfor %}
-</ol>
-{% else %}
 <ol class="breadcrumb">
   <li>
     <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active"{% endif %} >
@@ -42,4 +29,3 @@
     </li>
   {% endif %}
 </ol>
-{% endif %}

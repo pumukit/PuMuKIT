@@ -36,36 +36,6 @@
           <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
         </service>
 
-        <service id="pumukit_web_tv.breadcrumbslistener" class="Pumukit\WebTVBundle\EventListener\BreadcrumbListener">
-            <argument type="service" id="pumukit_web_tv.breadcrumb" />
-            <argument>%breadcrumbs_home_title%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller"/>
-        </service>
-
-        <service id="pumukit_web_tv.breadcrumb" class="Pumukit\WebTVBundle\Services\BreadcrumbService">
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-            <argument type="service" id="router" />
-            <argument type="service" id="session" />
-            <argument type="service" id="translator" />
-            <argument>%breadcrumbs_home_title%</argument>
-            <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
-            <argument>%pumukit_breadcrumb.tag%</argument>
-            <argument>%pumukit_breadcrumb.default_route%</argument>
-            <argument>%pumukit_breadcrumb.level%</argument>
-            <argument>%pumukit_breadcrumb.select%</argument>
-            <argument>%pumukit_breadcrumb.channel_1%</argument>
-            <argument>%pumukit_breadcrumb.channel_2%</argument>
-            <argument>%pumukit_breadcrumb.channel_3%</argument>
-            <argument>%pumukit_breadcrumb.channel_4%</argument>
-            <argument>%pumukit_breadcrumb.channel_5%</argument>
-            <argument>%pumukit_breadcrumb.channel_6%</argument>
-            <argument>%pumukit_breadcrumb.channel_7%</argument>
-            <argument>%menu.announces_title%</argument>
-            <argument>%menu.mediateca_title%</argument>
-            <argument>%menu.search_title%</argument>
-            <argument>%menu.categories_title%</argument>
-        </service>
-
         <service id="pumukit_web_tv.useragent_parser" class="Pumukit\WebTVBundle\Services\UserAgentParserService">
         </service>
     </services>
