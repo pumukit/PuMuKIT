@@ -23,8 +23,7 @@ class MultimediaObjectListener
 
         if ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);
-        } elseif (0 !== count($multimediaObject->getMaster())) {
-            $track = $multimediaObject->getMaster();
+        } elseif ($track = $multimediaObject->getMaster()) {    
             if ($track->isOnlyAudio()) {
                 $multimediaObject->setType(MultimediaObject::TYPE_AUDIO);
             } else {
