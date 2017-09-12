@@ -1924,17 +1924,11 @@ class MultimediaObject
      */
     public function isOnlyAudio()
     {
-        if (0 == count($this->tracks)) {
+        if (self::TYPE_AUDIO === $this->type) {
+            return true;
+        } else {
             return false;
         }
-
-        foreach ($this->tracks as $track) {
-            if (!$track->isOnlyAudio()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
