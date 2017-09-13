@@ -463,7 +463,7 @@ class JobService
             $multimediaObject = $this->getMultimediaObject($job);  //Necesary to refresh the document
             $this->propService->errorJob($multimediaObject, $job);
             // If the transco is disconnected or there is an authentication issue, we don't want to send more petitions to this transco.
-            if ($e instanceof ExecutorException) {
+            if ($e instanceof ExecutorException && 'prod' == $this->environment) {
                 $cpuName = $job->getCpu();
                 $this->cpuService->activateMaintenance($cpuName);
                 //TODO: Refactor in a service and send email to sysadmin.
