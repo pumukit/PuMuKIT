@@ -19,7 +19,7 @@
                             <div class="pull-left date">
                                 <small>
                                     {% trans %}Starts{% endtrans %}:
-                                    {{ event['session']['start'].toDateTime| localizeddate('medium','medium', app.request.getLocale()) }}
+                                    {{ event['session']['start']|convertMongoDate| localizeddate('medium','medium', app.request.getLocale()) }}
                                 </small>
                             </div>
                         </div>
