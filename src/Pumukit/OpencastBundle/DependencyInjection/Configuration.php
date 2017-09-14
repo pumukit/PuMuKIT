@@ -120,6 +120,10 @@ class Configuration implements ConfigurationInterface
                 ->end()
               ->end()
             ->end()
+            ->scalarNode('default_tag_imported')
+                ->defaultValue('TECHOPENCAST')
+                ->info('Set default tag when imported from opencast to PMK2')
+            ->end()
           ->end()
         ;
 

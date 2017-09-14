@@ -44,6 +44,7 @@ Mandatory:
    - `player` is the Opencast player URL or path (default `/engage/ui/watch.html`). Use `/engage/theodul/ui/core.html` for Opencast 2.x and `/paella/ui/watch.html` if [paella player](http://paellaplayer.upv.es/) is being used.
 
 Optional:
+   - `default_tag_imported` set code of tag that you want to set when imports an mmo to PuMuKIT2 from Opencast.
    - `use_redirect` when set to false, an Opencast video will be displayed inside an iframe into PuMuKIT. Default value: true, the Opencast video is displayed on the Opencast server.
    - `batchimport_inverted` when set to true, the Opencast videos will be imported with presentation and presented inverted, i.e. switching positions. Default value: false.
    - `show_importer_tab` when set to false, the Opencast Importer Tab will not be shown. Useful when the importation is done using batch import command. Default value: true.

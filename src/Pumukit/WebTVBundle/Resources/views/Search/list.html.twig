@@ -16,7 +16,7 @@
       {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
     {% else %}
       {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with{ 'cols': number_cols } %}
-      {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
+      {% set lastDate = object.getRecordDate()|date("d/m/Y") %}
     {% endif %}
     {% else %}
     <div class="row text-center">
