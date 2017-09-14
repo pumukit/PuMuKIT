@@ -27,7 +27,7 @@ class OpencastImportService
     private $otherLocales;
     private $defaultTagImported;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array(), $default_tag_imported)
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array(), $defaultTagImported = 'TECHOPENCAST')
     {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
@@ -38,7 +38,7 @@ class OpencastImportService
         $this->opencastService = $opencastService;
         $this->inspectionService = $inspectionService;
         $this->otherLocales = $otherLocales;
-        $this->defaultTagImported = $default_tag_imported;
+        $this->defaultTagImported = $defaultTagImported;
     }
 
     /**
