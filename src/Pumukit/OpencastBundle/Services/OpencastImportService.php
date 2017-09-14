@@ -25,8 +25,9 @@ class OpencastImportService
     private $opencastService;
     private $inspectionService;
     private $otherLocales;
+    private $defaultTagImported;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array())
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array(), $default_tag_imported)
     {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
@@ -37,6 +38,7 @@ class OpencastImportService
         $this->opencastService = $opencastService;
         $this->inspectionService = $inspectionService;
         $this->otherLocales = $otherLocales;
+        $this->defaultTagImported = $default_tag_imported;
     }
 
     /**
@@ -128,7 +130,7 @@ class OpencastImportService
             }
 
             $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-            $opencastTag = $tagRepo->findOneByCod('TECHOPENCAST');
+            $opencastTag = $tagRepo->findOneByCod($this->defaultTagImported);
             if ($opencastTag) {
                 $tagService = $this->tagService;
                 $tagAdded = $tagService->addTagToMultimediaObject($multimediaObject, $opencastTag->getId());

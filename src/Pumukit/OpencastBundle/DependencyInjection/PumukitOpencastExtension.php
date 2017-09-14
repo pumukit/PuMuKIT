@@ -77,7 +77,9 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit_opencast.client'))
               ->addArgument(new Reference('pumukit_opencast.job'))
               ->addArgument(new Reference('pumukit.inspection'))
-              ->addArgument(new Parameter('pumukit2.locales'));
+              ->addArgument(new Parameter('pumukit2.locales'))
+              ->addArgument(new Parameter('pumukit_opencast.default_tag_imported'))
+            ;
 
             $container
               ->register('pumukit_opencast.workflow', "Pumukit\OpencastBundle\Services\WorkflowService")
@@ -118,6 +120,7 @@ class PumukitOpencastExtension extends Extension
 
         $container->setParameter('pumukit_opencast.scheduler_on_menu', $config['scheduler_on_menu']);
         $container->setParameter('pumukit_opencast.dashboard_on_menu', $config['dashboard_on_menu']);
+        $container->setParameter('pumukit_opencast.default_tag_imported', $config['default_tag_imported']);
 
         $permissions = array(array('role' => 'ROLE_ACCESS_IMPORTER', 'description' => 'Access Importer'));
         $newPermissions = array_merge($container->getParameter('pumukitschema.external_permissions'), $permissions);
