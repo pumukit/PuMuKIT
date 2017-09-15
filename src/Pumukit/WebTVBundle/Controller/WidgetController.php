@@ -19,6 +19,7 @@ class WidgetController extends Controller implements WebTVController
         }
 
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+        $events = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Event')->findNextEvents();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
 
         $menuStats = $this->container->getParameter('menu.show_stats');
@@ -29,6 +30,7 @@ class WidgetController extends Controller implements WebTVController
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
         self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
+            'live_events' => $events,
             'live_channels' => $channels,
             'menu_selected' => $selected,
             'menu_stats' => $menuStats,
