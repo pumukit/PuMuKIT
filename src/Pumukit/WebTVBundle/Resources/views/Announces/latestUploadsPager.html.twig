@@ -9,7 +9,7 @@
     {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols }%}
   {% else %}
     <!-- Multimedia object -->
-    {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols }%}
+    {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols , 'with_publicdate': true}%}
   {% endif %}
 {% endfor %}
 </div>
