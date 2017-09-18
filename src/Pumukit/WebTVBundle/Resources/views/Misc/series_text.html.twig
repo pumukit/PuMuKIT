@@ -8,7 +8,12 @@
       {{object.title | default('No title'|trans)}}
     </span>
     <span class="">
-      [{{object|count_multimedia_objects}} {{object|count_multimedia_objects>1?'videos':'video'}}]
+      {# KEEPING BACKWARDS COMPATIBILITY #}
+      {% if num_mmobjs is not defined %}
+        {% set num_mmobjs = object | count_multimedia_objects %}
+      {% endif %}
+      {# NOTE: These 'videos' field is not internationalized. TODO #}
+      [{{num_mmobjs}} {{num_mmobjs > 1 ? 'videos' : 'video'}}]
     </span>
   </a>
 </li>

@@ -42,6 +42,9 @@ class MediaLibraryController extends Controller implements WebTVController
                     if ($num_mm < 1) {
                         continue;
                     }
+
+                    $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
+
                     $key = substr($serie->getTitle(), 0, 1);
                     if (!isset($result[ $key ])) {
                         $result[$key] = array();
@@ -52,11 +55,20 @@ class MediaLibraryController extends Controller implements WebTVController
             case 'date':
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
+
+                // This is a kick in the butt for production environments. Solutions:
+                //   1. Denormalize database. num_mmobjs field on series.
+                //   2. Do an aggregated search here.
+
+                //Aggregate sounds best :D
                 foreach ($series as $serie) {
                     $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
                     if ($num_mm < 1) {
                         continue;
                     }
+
+                    $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
+
                     $key = $serie->getPublicDate()->format('m/Y');
                     if (!isset($result[ $key ])) {
                         $result[ $key ] = array();
@@ -92,6 +104,9 @@ class MediaLibraryController extends Controller implements WebTVController
                         if ($num_mm < 1) {
                             continue;
                         }
+
+                        $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
+
                         if (!isset($result[ $key ])) {
                             $result[ $key ] = array();
                         }
@@ -107,6 +122,7 @@ class MediaLibraryController extends Controller implements WebTVController
             'tags' => $selectionTags,
             'number_cols' => $numberCols,
             'catalogue_thumbnails' => $hasCatalogueThumbnails,
+            'aggregated_num_mmobjs' => $aggregated_num_mmobjs,
         );
     }
 }
