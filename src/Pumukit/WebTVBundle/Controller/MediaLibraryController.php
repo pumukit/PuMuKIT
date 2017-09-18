@@ -37,13 +37,13 @@ class MediaLibraryController extends Controller implements WebTVController
             case 'alphabetically':
                 $sortField = 'title.'.$request->getLocale();
                 $series = $series_repo->findBy($criteria, array($sortField => 1));
+
+                $aggregated_num_mmobjs = $this->countAllMmobjs($series);
+
                 foreach ($series as $serie) {
-                    $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                    if ($num_mm < 1) {
+                    if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
                         continue;
                     }
-
-                    $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
 
                     $key = substr($serie->getTitle(), 0, 1);
                     if (!isset($result[ $key ])) {
@@ -56,18 +56,12 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
 
-                // This is a kick in the butt for production environments. Solutions:
-                //   1. Denormalize database. num_mmobjs field on series.
-                //   2. Do an aggregated search here.
+                $aggregated_num_mmobjs = $this->countAllMmobjs($series);
 
-                //Aggregate sounds best :D
                 foreach ($series as $serie) {
-                    $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                    if ($num_mm < 1) {
+                    if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
                         continue;
                     }
-
-                    $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
 
                     $key = $serie->getPublicDate()->format('m/Y');
                     if (!isset($result[ $key ])) {
@@ -99,13 +93,13 @@ class MediaLibraryController extends Controller implements WebTVController
                     if (!$series) {
                         continue;
                     }
+
+                    $aggregated_num_mmobjs = $this->countAllMmobjs($series);
+
                     foreach ($series as $serie) {
-                        $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                        if ($num_mm < 1) {
+                        if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
                             continue;
                         }
-
-                        $aggregated_num_mmobjs[$serie->getId()] = $num_mm;
 
                         if (!isset($result[ $key ])) {
                             $result[ $key ] = array();
@@ -124,5 +118,16 @@ class MediaLibraryController extends Controller implements WebTVController
             'catalogue_thumbnails' => $hasCatalogueThumbnails,
             'aggregated_num_mmobjs' => $aggregated_num_mmobjs,
         );
+    }
+
+    public function countAllMmobjs($seriesList) {
+        $aggregated_num_mmobjs = array();
+
+        foreach($seriesList as $oneSeries) {
+            $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($oneSeries);
+            $aggregated_num_mmobjs[$oneSeries->getId()] = $num_mm;
+        }
+
+        return $aggregated_num_mmobjs;
     }
 }
