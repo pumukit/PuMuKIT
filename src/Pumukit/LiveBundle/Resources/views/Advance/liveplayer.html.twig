@@ -54,7 +54,7 @@
         });
 
     } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
-        var nextSessionStarts = "{% if nextSessions is not empty %}{{ nextSessions[0]['data'][0]['session']['start'].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
+        var nextSessionStarts = "{% if nextSessions is not empty %}{{ nextSessions[0]['data'][0]['session']['start']|convertMongoDate| date('Y/m/d H:i:s') }}{% endif %}";
         $("#directo-{{ id }}").html(background);
         $("#warning").countdown(nextSessionStarts, function(event) {
             $(this).text(event.strftime('%-d dias %-H:%M:%S'));
@@ -62,7 +62,7 @@
             location.reload();
         });
     } else if (nowSessionsCount > 0) {
-        var nowSessionsEnds = "{% if nowSessions is not empty %}{{ nowSessions[0]['data'][0]['sessionEnds'].toDateTime()| date('Y/m/d H:i:s') }}{% endif %}";
+        var nowSessionsEnds = "{% if nowSessions is not empty %}{{ nowSessions[0]['data'][0]['sessionEnds']|convertMongoDate| date('Y/m/d H:i:s') }}{% endif %}";
         $("#countdownClock").countdown(nowSessionsEnds , function(event) {
             $(this).text(event.strftime('%-d dias %-H:%M:%S'));
         }).on('finish.countdown', function(event) {
