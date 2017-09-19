@@ -324,14 +324,6 @@ class EventsController extends Controller
 
                 $event = $multimediaObject->getEmbeddedEvent();
 
-                /*foreach($languages as $language) {
-                    $name = (isset($data['i18n_name'][$language])) ?: '';
-                    $event->setName($name, $language);
-
-                    $description = (isset($data['i18n_description'][$language])) ?: '';
-                    $event->setName($description, $language);
-                }*/
-
                 foreach ($data['i18n_name'] as $language => $value) {
                     $event->setName($value, $language);
                 }
