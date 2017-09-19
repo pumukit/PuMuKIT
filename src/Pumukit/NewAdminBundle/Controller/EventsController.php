@@ -69,6 +69,7 @@ class EventsController extends Controller
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
+        $languages = $this->container->getParameter('pumukit2.locales');
 
         $factoryService = $this->get('pumukitschema.factory');
 
@@ -89,7 +90,12 @@ class EventsController extends Controller
         /* Create default event */
         $event = new EmbeddedEvent();
         $event->setDate(new \DateTime());
-        $event->setName($translator->trans('New'), $request->getLocale());
+
+        foreach ($languages as $language) {
+            $event->setName($translator->trans('New'), $language);
+            $event->setDescription('', $language);
+        }
+
         $event->setCreateSerial(true);
         $dm->persist($event);
 
@@ -294,6 +300,7 @@ class EventsController extends Controller
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $languages = $this->container->getParameter('pumukit2.locales');
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -316,12 +323,22 @@ class EventsController extends Controller
                 $data = $request->request->get('pumukitnewadmin_live_event');
 
                 $event = $multimediaObject->getEmbeddedEvent();
+
+                /*foreach($languages as $language) {
+                    $name = (isset($data['i18n_name'][$language])) ?: '';
+                    $event->setName($name, $language);
+
+                    $description = (isset($data['i18n_description'][$language])) ?: '';
+                    $event->setName($description, $language);
+                }*/
+
                 foreach ($data['i18n_name'] as $language => $value) {
                     $event->setName($value, $language);
                 }
                 foreach ($data['i18n_description'] as $language => $value) {
                     $event->setDescription($value, $language);
                 }
+
                 $event->setPlace($data['place']);
                 $event->setDate(new \DateTime($data['date']));
                 $event->setDuration($data['duration']);

@@ -54,9 +54,10 @@ class EventController extends Controller implements WebTVController
     public function nextSessionListAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
 
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($id);
 
-        return array('events' => $events, 'sessionlist' => true);
+        return array('events' => $events, 'sessionlist' => true, 'defaultPic' => $defaultPic);
     }
 }

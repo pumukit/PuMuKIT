@@ -8,7 +8,7 @@
     {% include('PumukitLiveBundle:Default:js.html.twig') %}
 {% endblock %}
 
-{% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
+{% block title %}{{ parent() }} - {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}{% endblock %}
 
 {% block body_without_bar %}
 
