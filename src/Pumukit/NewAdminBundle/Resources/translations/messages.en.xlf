@@ -3006,12 +3006,9 @@
         <target>No sessions defined.</target>
       </trans-unit>
       <trans-unit id="408c624b14b33497a9595c77338e22d9" resname="Publishing&#10;                        Decisions">
-        <source>Publishing Decisions</source>
+        <source>Publishing
+                        Decisions</source>
         <target>Publishing Decisions</target>
-      </trans-unit>
-      <trans-unit id="a9637a2133bfd95fe88813cdfcc13dbc" resname="Advance search form">
-        <source>Advance search form</source>
-        <target>Advance search form</target>
       </trans-unit>
       <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
         <source>ID</source>
@@ -3085,17 +3082,33 @@
         <source>Send</source>
         <target>Send</target>
       </trans-unit>
-      <trans-unit id="44e54cf917f754d8305991577dd9db40" resname="Multimedia Object tag UNESCO saved ERROR">
-        <source>Multimedia Object tag UNESCO saved ERROR</source>
-        <target>Multimedia Object tag UNESCO saved ERROR</target>
+      <trans-unit id="560eafaadc3b4415c0db8c000ae2db1b" resname="Advanced search form">
+        <source>Advanced search form</source>
+        <target>Advanced search form</target>
       </trans-unit>
-      <trans-unit id="0421348c0c20f64df8f5c572304c5468" resname="Multimedia Object tag UNESCO saved OK">
-        <source>Multimedia Object tag UNESCO saved OK</source>
-        <target>Multimedia Object tag UNESCO saved OK</target>
+      <trans-unit id="735f7bed9808abe3b3c6bb67b9634a31" resname="Publication date">
+        <source>Publication date</source>
+        <target>Publication date</target>
       </trans-unit>
-      <trans-unit id="0a86dddc699c7e6fe7f1e43153a5cbee" resname="Advance">
-        <source>Advance</source>
-        <target>Advance</target>
+      <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
+        <source>Recording date</source>
+        <target>Recording date</target>
+      </trans-unit>
+      <trans-unit id="8aa9ef4aefc5f76ad21a3cbeabe55a30" resname="Saving error">
+        <source>Saving error</source>
+        <target>Saving error</target>
+      </trans-unit>
+      <trans-unit id="248336101b461380a4b2391a7625493d" resname="Saved">
+        <source>Saved</source>
+        <target>Saved</target>
+      </trans-unit>
+      <trans-unit id="91563b044939df33670bd362715e334e" resname="Genre">
+        <source>Genre</source>
+        <target>Genre</target>
+      </trans-unit>
+      <trans-unit id="9b6545e4cea9b4ad4979d41bb9170e2b" resname="Advanced">
+        <source>Advanced</source>
+        <target>Advanced</target>
       </trans-unit>
     </body>
   </file>
