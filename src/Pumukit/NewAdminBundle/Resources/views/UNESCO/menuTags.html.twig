@@ -1,0 +1,91 @@
+{% set active = false %}
+{% if app.session.has('admin/unesco/tag') %}
+    {% set active = app.session.get('admin/unesco/tag') %}
+{% endif %}
+
+<ul id="tagList" class="list-unstyled">
+
+    {% for tagDefault in defaultTagOptions %}
+        <li>
+            <a data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}" class="unescoTags" href="#" title="{{ tagDefault['title'] }}" style="color:rgba(0,0,0,.84); text-decoration:none;">
+                <span class="mdi-file-folder"></span> <strong>{{ tagDefault['title'] }} [{{ tagDefault['count'] }}]</strong>
+            </a>
+        </li>
+    {% endfor %}
+
+    {% for parent, tag in tags %}
+        <li data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}" style="cursor:pointer">
+            <span class="mdi-action-list"></span>
+             <strong>{{ parent }}</strong>
+        </li>
+        <ul id="collapse_{{ loop.index }}" class="collapse in draggableTags" style="padding-left:20px;">
+            {% for children in tag %}
+                <li id="children_{{ children.getCod() }}" draggable="true" ondragstart="dragItem(this, '{{ children.getCod() }}', '{{ children.getTitle(app.request.getLocale()) }}', event)" ondragend="dragEnd(this, event)" class="draggableTag" style="list-style-type: none;">
+                    <a class="unescoTags" href="#" draggable="false" data-tag="{{ children.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : children.getCod() }) }}" title="{{ children.getTitle(app.request.getLocale()) }}" onDrop="dropTagItem(this, '{{ children.getCod() }}', event)" onDragEnter="return false" onDragOver="return false">
+                        <span class="mdi-file-folder" draggable="false"></span>
+                        <strong draggable="false">
+                            {{ children.getTitle(app.request.getLocale()) }} [{{ children.getNumberMultimediaObjects() }}]
+                        </strong>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+
+<script type="text/javascript">
+    $('.unescoTags').on('click', function(event) {
+        event.preventDefault();
+        $('#list_mms').load($(this).data('href'));
+    });
+
+    /* From menuTags to preview_mms */
+    function dragItem(item, cod, title, e) {
+        item.style.opacity = '0.4';
+        e.dataTransfer.setData('cod', cod);
+        e.dataTransfer.setData('title', title);
+    }
+
+    function dragEnd(item, e) {
+        item.style.opacity = '';
+    }
+
+    /* From list_mms to menuTags */
+    function dropTagItem(item, cod, e) {
+        var list_mmo = e.dataTransfer.getData('data');
+        var list_mmo = list_mmo.split(",");
+        for (var value of list_mmo) {
+            if(value != '') {
+                updateMultimediaObjectByTag(cod, value);
+            }
+        };
+    }
+
+    function updateMultimediaObjectByTag(cod, mmoid) {
+        var path = "{{ path('pumukitnewadmin_unesco_add_tag', {'tagCod': "__COD__", "multimediaObjectId": "__MMO__" }) }}";
+        var path = path.replace("__COD__", cod);
+        var path = path.replace("__MMO__", mmoid);
+
+        var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
+        var edit = edit.replace("__MMO__", mmoid);
+
+        var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
+        var preview = preview.replace("__MMO__", mmoid);
+        $.ajax({
+            url: path,
+            type: 'GET',
+            error: function (request, json) {
+                var message = '{% trans %}Saving error{% endtrans %}';
+                no_success(message);
+            },
+            success: function (response) {
+                $('#edit_mms').load(edit);
+                $('#preview_mms').load(preview);
+                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+                var message = '{% trans %}Saved{% endtrans %}';
+                success(message);
+            }
+        });
+        return false;
+    }
+</script>

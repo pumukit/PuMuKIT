@@ -39,6 +39,9 @@ class Builder extends ContainerAware
             $mmslist = $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), array('route' => 'pumukitnewadmin_mms_indexall'));
             $mmslist->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_indexall'));
             $mmslist->setDisplayChildren(false);
+
+            $unesco = $mediaManager->addChild('Catalogador UNESCO', array('route' => 'pumukitnewadmin_unesco_index'));
+            $unesco->setDisplayChildren(false);
         }
         if ($authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST)) {
             if (!isset($mediaManager)) {

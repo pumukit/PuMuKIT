@@ -1,0 +1,60 @@
+{% set formBasic = false %}
+{% if app.request.session.has('UNESCO/formbasic') and app.request.session.get('UNESCO/formbasic') != "true" %}
+    {% set formBasic = true %}
+{% endif %}
+{% set criteria = false %}
+{% if app.request.session.has('UNESCO/form') %}
+{% set criteria = app.request.session.get('UNESCO/form') %}
+{% endif %}
+
+<div class="well">
+    <div class="row">
+
+        <form id="#myForm" class="unesco_form" name="advance_form" method="POST" action="{{ path('pumukitnewadmin_unesco_list') }}">
+            <div class="col-xs-12">
+                <div id="basic_form">
+                    {% include 'PumukitNewAdminBundle:UNESCO:basic_form.html.twig' %}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="advance_form collapse {% if formBasic == "false" %}in{% endif %}" id="collapseAdvanceForm">
+                    {% include 'PumukitNewAdminBundle:UNESCO:advance_form.html.twig' %}
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <a class="unescoResetForm" href="#">{% trans %}Reset{% endtrans %}</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#collapseAdvanceForm').on('show.bs.collapse', function () {
+        $('#submitBasicForm').attr('disabled',true);
+    });
+
+    $('#collapseAdvanceForm').on('hide.bs.collapse', function () {
+        $('#submitBasicForm').attr('disabled', false);
+    });
+
+    $('.unesco_form').on('submit',function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: '{{ path('pumukitnewadmin_unesco_addcriteria') }}',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}")
+            },
+            error: function (response) {
+                alert('error');
+            }
+        });
+        return false;
+
+    });
+
+</script>

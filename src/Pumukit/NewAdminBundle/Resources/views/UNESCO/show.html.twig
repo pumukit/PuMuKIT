@@ -1,0 +1,156 @@
+<style type="text/css">
+    .list_unesco.over {
+        border: 2px dashed #000;
+    }
+</style>
+
+<div class="well">
+    <div class="well">
+
+        {% if mm is defined and mm is not null %}
+
+            <p>
+                {% trans %}Is part of {% endtrans %}:
+                <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
+            </p>
+
+            <div>
+                {% set html5_track = mm.getTrackWithTag('html5') %}
+                {% if html5_track and not active_editor %}
+                    <video id="player" src="{{ track_url(html5_track) }}" controls="" style="background: black; width: 100%;">
+                    </video>
+                {% else %}
+                    <div class="well" style="padding: 3px;">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{ mm.id }} preview" style="width: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title-preview panel-title">Tags {{ unescoTag.getTitle() }} </h3>
+                    </div>
+                    <div class="panel-body-preview panel-body">
+                        <div id="list_unesco" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
+
+                            {% for mtag in mm.tags if mtag.level == 3 and mtag.isChildOf(unescoTag) %}
+                                <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="true">
+                                    <span class="label label-default">{{ mtag.title }} |
+                                        <a href="#" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
+                                            <i class="mdi-content-clear"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            {% else %}
+                                <div class="unesco_tags" draggable="true">
+                                    {% trans %}No tags{% endtrans %}.
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <ul>
+                    {% for role in roles if role.getDisplay() %}
+                        {% set actors = mm.getPeopleByRole(role, true) %}
+                        {% if actors|length != 0 %}
+                            <li>{{ role.name }}</li>
+                            <ul>
+                                {% for act in actors %}
+                                    <li>
+                                        {{ role.getText() }}
+                                        {% if act.getWeb() is not empty %}
+                                            <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+                                        {% else %}
+                                            {{ act.getHName() }}
+                                        {% endif %}
+                                        <small>{{ act.getInfo() }}</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+        {% else %}
+            <p>
+                {% trans %}Select any multimedia object.{% endtrans %}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function dropItem(item, e) {
+        var cod = e.dataTransfer.getData('cod');
+        if($('#taglist_' + cod).length == 0) {
+            updateMultimediaObject(cod);
+        }
+    }
+
+    $('.delete_tag_unesco').on('click',function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: $(this).data('href'),
+            type: 'GET',
+            error: function (request, json) {
+                var message = '{% trans %}Saving error{% endtrans %}';
+                no_success(message);
+            },
+            success: function (response) {
+
+                var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
+                var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
+                var edit = edit.replace("__MMO__", mmoid);
+
+                var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
+                var preview = preview.replace("__MMO__", mmoid);
+
+                $('#edit_mms').load(edit);
+                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+                $('#preview_mms').load(preview);
+                var message = '{% trans %}Saved{% endtrans %}';
+                success(message);
+            }
+        });
+        return false;
+    });
+
+    function updateMultimediaObject(cod) {
+        var path = "{{ path('pumukitnewadmin_unesco_add_tag', {'tagCod': "__COD__", "multimediaObjectId": "__MMO__" }) }}";
+        var path = path.replace("__COD__", cod);
+        var path = path.replace("__MMO__", "{{ app.session.get('admin/unesco/id') }}");
+        $.ajax({
+            url: path,
+            type: 'GET',
+            error: function (request, json) {
+                var message = '{% trans %}Saving error{% endtrans %}';
+                no_success(message);
+            },
+            success: function (response) {
+                var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
+                var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
+                var edit = edit.replace("__MMO__", mmoid);
+
+                var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
+                var preview = preview.replace("__MMO__", mmoid);
+
+                $('#edit_mms').load(edit);
+                $('#preview_mms').load(preview);
+                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+                var message = '{% trans %}Saved{% endtrans %}';
+                success(message);
+            }
+        });
+        return false;
+    }
+
+</script>
