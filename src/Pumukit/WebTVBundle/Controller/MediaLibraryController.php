@@ -40,7 +40,7 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'title.'.$request->getLocale();
                 $series = $series_repo->findBy($criteria, array($sortField => 1));
 
-                $aggregatedNumMmobjs = $this->countAllMmobjs($series);
+                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -58,7 +58,7 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
 
-                $aggregatedNumMmobjs = $this->countAllMmobjs($series);
+                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -96,7 +96,7 @@ class MediaLibraryController extends Controller implements WebTVController
                         continue;
                     }
 
-                    $aggregatedNumMmobjs = $this->countAllMmobjs($series);
+                    $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
 
                     foreach ($series as $serie) {
                         if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -120,30 +120,5 @@ class MediaLibraryController extends Controller implements WebTVController
             'catalogue_thumbnails' => $hasCatalogueThumbnails,
             'aggregated_num_mmobjs' => $aggregatedNumMmobjs,
         );
-    }
-
-    public function countAllMmobjs($seriesList) {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
-        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-
-        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
-        $criteria['$or'] = array(
-             array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
-             array('properties.opencast' => array('$exists' => true)),
-        );
-
-        $pipeline = array(
-            array('$match' => $criteria),
-            array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
-        );
-
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
-        $mmobjCount = array();
-        foreach($aggregation as $a) {
-            $mmobjCount[(string)$a['_id']] = $a['count'];
-        }
-
-        return $mmobjCount;
     }
 }
