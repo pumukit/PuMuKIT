@@ -82,10 +82,6 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getFirstUrlPicFilter($object, $absolute = false, $hd = true)
     {
-        if (is_array($object)) {
-            $object = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($object['multimediaObjectId'])));
-        }
-
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
     }
 
@@ -315,22 +311,16 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getNextEventSession($event)
     {
-        if (is_object($event)) {
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event->getId())));
-        } else {
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent._id' => new \MongoID($event['_id'])));
-        }
-
-        $embeddedEventSession = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
+        $embeddedEventSession = $event['embeddedEventSession'];
 
         $now = new \DateTime();
 
         $firstSession = '';
         foreach ($embeddedEventSession as $session) {
-            if ($now < $session->getStart()) {
-                $now->add(new \DateInterval('PT'.$session->getDuration().'S'));
-                if ($now < $session->getStart()) {
-                    $firstSession = $session->getStart();
+            if ($now < $session['start']) {
+                $now->add(new \DateInterval('PT'.$session['duration'].'S'));
+                if ($now < $session['start']) {
+                    $firstSession = $session['start'];
                     break;
                 }
             }
@@ -348,8 +338,6 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getLiveEventSession($multimediaObject)
     {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoID($multimediaObject->getId())));
-
         $now = new \DateTime();
 
         $sessionData = '';

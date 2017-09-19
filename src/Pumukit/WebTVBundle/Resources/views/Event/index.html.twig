@@ -24,7 +24,7 @@
                                 <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
                                     <h6 class="uned_announces_title">{{ block['_id'] }}</h6>
                                     {% for event in block['data'] %}
-                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': event} %}
+                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': event, 'defaultPic' : defaultPic} %}
                                     {% endfor %}
                                 </div>
                             </div>
