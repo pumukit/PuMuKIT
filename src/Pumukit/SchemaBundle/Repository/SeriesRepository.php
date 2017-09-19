@@ -6,7 +6,6 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-
 /**
  * SeriesRepository.
  *
@@ -661,7 +660,7 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
-     * Count number of multimedia objects by series
+     * Count number of multimedia objects by series.
      *
      * @return array() A key/value hash where the key is the series id (string) and the value is the count
      */
@@ -673,10 +672,9 @@ class SeriesRepository extends DocumentRepository
 
         $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
 
-
         dump($seriesList);
         $seriesIds = array();
-        foreach($seriesList as $series) {
+        foreach ($seriesList as $series) {
             $seriesIds[] = new \MongoId($series->getId());
         }
 
@@ -695,11 +693,10 @@ class SeriesRepository extends DocumentRepository
         $aggregation = $multimediaObjectsColl->aggregate($pipeline);
         $mmobjCount = array();
 
-        foreach($aggregation as $a) {
-            $mmobjCount[(string)$a['_id']] = $a['count'];
+        foreach ($aggregation as $a) {
+            $mmobjCount[(string) $a['_id']] = $a['count'];
         }
 
-        dump($mmobjCount);
         return $mmobjCount;
     }
 }
