@@ -5,7 +5,11 @@
     <a href="{{ path('pumukit_live_event_id', {'id': event['multimediaObjectId']}) }}">
         <div class="pumukit_mmobj">
             <div class="thumbnail">
-                <img alt="serial_pic" class="serial thumbnailimg" src="{{ event|first_url_pic(true) }}"/>
+                {% if event['pics'] is defined and (event['pics']|length > 0) %}
+                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ event['pics'][0]['url'] }}"/>
+                {% else %}
+                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ defaultPic }}"/>
+                {% endif %}
                 <div class="thumbnailholder"></div>
             </div>
             <div class="info-wrapper">

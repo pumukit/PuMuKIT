@@ -6,7 +6,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class EventController extends Controller implements WebTVController
 {
@@ -19,6 +18,7 @@ class EventController extends Controller implements WebTVController
     public function indexAction()
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
 
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsGroupBy();
         foreach ($events as $key => $event) {
@@ -27,7 +27,7 @@ class EventController extends Controller implements WebTVController
             }
         }
 
-        return array('events' => $events, 'numberCols' => 2);
+        return array('events' => $events, 'numberCols' => 2, 'defaultPic' => $defaultPic);
     }
 
     /**
@@ -36,26 +36,26 @@ class EventController extends Controller implements WebTVController
     public function liveListAction()
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
 
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
 
-        return array('events' => $events);
+        return array('events' => $events, 'defaultPic' => $defaultPic);
     }
 
     /**
-     * @param MultimediaObject $multimediaObject
+     * @param string $id
      *
      * @return array
      *
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
-     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
      * @Template("PumukitWebTVBundle:Event:nextsessionlist.html.twig")
      */
-    public function nextSessionListAction(MultimediaObject $multimediaObject)
+    public function nextSessionListAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($id);
 
         return array('events' => $events, 'sessionlist' => true);
     }
