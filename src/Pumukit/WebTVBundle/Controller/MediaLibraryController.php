@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+
 class MediaLibraryController extends Controller implements WebTVController
 {
     /**
@@ -38,10 +40,10 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'title.'.$request->getLocale();
                 $series = $series_repo->findBy($criteria, array($sortField => 1));
 
-                $aggregated_num_mmobjs = $this->countAllMmobjs($series);
+                $aggregatedNumMmobjs = $this->countAllMmobjs($series);
 
                 foreach ($series as $serie) {
-                    if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                         continue;
                     }
 
@@ -56,10 +58,10 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
 
-                $aggregated_num_mmobjs = $this->countAllMmobjs($series);
+                $aggregatedNumMmobjs = $this->countAllMmobjs($series);
 
                 foreach ($series as $serie) {
-                    if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                         continue;
                     }
 
@@ -94,10 +96,10 @@ class MediaLibraryController extends Controller implements WebTVController
                         continue;
                     }
 
-                    $aggregated_num_mmobjs = $this->countAllMmobjs($series);
+                    $aggregatedNumMmobjs = $this->countAllMmobjs($series);
 
                     foreach ($series as $serie) {
-                        if ($aggregated_num_mmobjs[$serie->getId()] < 1) {
+                        if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                             continue;
                         }
 
@@ -116,18 +118,32 @@ class MediaLibraryController extends Controller implements WebTVController
             'tags' => $selectionTags,
             'number_cols' => $numberCols,
             'catalogue_thumbnails' => $hasCatalogueThumbnails,
-            'aggregated_num_mmobjs' => $aggregated_num_mmobjs,
+            'aggregated_num_mmobjs' => $aggregatedNumMmobjs,
         );
     }
 
     public function countAllMmobjs($seriesList) {
-        $aggregated_num_mmobjs = array();
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
-        foreach($seriesList as $oneSeries) {
-            $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($oneSeries);
-            $aggregated_num_mmobjs[$oneSeries->getId()] = $num_mm;
+        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
+        $criteria['$or'] = array(
+             array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
+             array('properties.opencast' => array('$exists' => true)),
+        );
+
+        $pipeline = array(
+            array('$match' => $criteria),
+            array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
+        );
+
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $mmobjCount = array();
+        foreach($aggregation as $a) {
+            $mmobjCount[(string)$a['_id']] = $a['count'];
         }
 
-        return $aggregated_num_mmobjs;
+        return $mmobjCount;
     }
 }
