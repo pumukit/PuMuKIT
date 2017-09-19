@@ -21,7 +21,7 @@
                         </td>
                         <td header="th-id">{{ session.id  }}</td>
                         <td header="th-start"> {{ session.start | localizeddate('medium', 'medium') }}</td>
-                        <td header="th-duration"> {{ (session.duration/60) }} {% trans %}min.{% endtrans %}</td>
+                        <td header="th-duration"> {{ (session.duration/60)|number_format(0) }} {% trans %}min.{% endtrans %}</td>
                         <td header="th-notes"> {{ session.notes|raw }}</td>
                     </tr>
                 {% endfor %}
