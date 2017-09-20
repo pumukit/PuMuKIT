@@ -664,7 +664,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return array() A key/value hash where the key is the series id (string) and the value is the count
      */
-    public function countMmobjsBySeries($seriesList)
+    public function countMmobjsBySeries($seriesList = array())
     {
         $dm = $this->getDocumentManager();
 
@@ -672,12 +672,14 @@ class SeriesRepository extends DocumentRepository
 
         $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
 
-        $seriesIds = array();
-        foreach ($seriesList as $series) {
-            $seriesIds[] = new \MongoId($series->getId());
-        }
+        if ($seriesList) {
+            $seriesIds = array();
+            foreach ($seriesList as $series) {
+                $seriesIds[] = new \MongoId($series->getId());
+            }
 
-        $criteria['series'] = array('$in' => $seriesIds);
+            $criteria['series'] = array('$in' => $seriesIds);
+        }
 
         $criteria['$or'] = array(
             array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),

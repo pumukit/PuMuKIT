@@ -56,7 +56,7 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
 
-                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
+                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -94,7 +94,7 @@ class MediaLibraryController extends Controller implements WebTVController
                         continue;
                     }
 
-                    $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
+                    $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
 
                     foreach ($series as $serie) {
                         if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
