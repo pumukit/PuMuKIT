@@ -672,7 +672,6 @@ class SeriesRepository extends DocumentRepository
 
         $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
 
-        dump($seriesList);
         $seriesIds = array();
         foreach ($seriesList as $series) {
             $seriesIds[] = new \MongoId($series->getId());
