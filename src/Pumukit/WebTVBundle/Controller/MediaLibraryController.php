@@ -37,11 +37,14 @@ class MediaLibraryController extends Controller implements WebTVController
             case 'alphabetically':
                 $sortField = 'title.'.$request->getLocale();
                 $series = $series_repo->findBy($criteria, array($sortField => 1));
+
+                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
+
                 foreach ($series as $serie) {
-                    $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                    if ($num_mm < 1) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                         continue;
                     }
+
                     $key = substr($serie->getTitle(), 0, 1);
                     if (!isset($result[ $key ])) {
                         $result[$key] = array();
@@ -52,11 +55,14 @@ class MediaLibraryController extends Controller implements WebTVController
             case 'date':
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
+
+                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
+
                 foreach ($series as $serie) {
-                    $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                    if ($num_mm < 1) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                         continue;
                     }
+
                     $key = $serie->getPublicDate()->format('m/Y');
                     if (!isset($result[ $key ])) {
                         $result[ $key ] = array();
@@ -87,11 +93,14 @@ class MediaLibraryController extends Controller implements WebTVController
                     if (!$series) {
                         continue;
                     }
+
+                    $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries($series);
+
                     foreach ($series as $serie) {
-                        $num_mm = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($serie);
-                        if ($num_mm < 1) {
+                        if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                             continue;
                         }
+
                         if (!isset($result[ $key ])) {
                             $result[ $key ] = array();
                         }
@@ -101,6 +110,13 @@ class MediaLibraryController extends Controller implements WebTVController
                 break;
         }
 
-        return array('objects' => $result, 'sort' => $sort, 'tags' => $selectionTags, 'number_cols' => $numberCols, 'catalogue_thumbnails' => $hasCatalogueThumbnails);
+        return array(
+            'objects' => $result,
+            'sort' => $sort,
+            'tags' => $selectionTags,
+            'number_cols' => $numberCols,
+            'catalogue_thumbnails' => $hasCatalogueThumbnails,
+            'aggregated_num_mmobjs' => $aggregatedNumMmobjs,
+        );
     }
 }

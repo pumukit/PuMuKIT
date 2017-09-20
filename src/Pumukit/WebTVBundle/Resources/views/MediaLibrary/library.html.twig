@@ -6,12 +6,13 @@
     </div>
     <div class="row">
       {% for serie in series  %}
-      {% set object = serie %}
-      {% if catalogue_thumbnails | default(false) %}
-      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
-      {% else %}
-      {% include 'PumukitWebTVBundle:Misc:series_text.html.twig' with {'cols': number_cols } %}
-      {% endif %}
+        {% set object = serie %}
+        {% set num_mmobjs = aggregated_num_mmobjs[serie.id] | default(0) %}
+        {% if catalogue_thumbnails | default(false) %}
+          {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols, 'num_mmobjs': num_mmobjs } %}
+        {% else %}
+          {% include 'PumukitWebTVBundle:Misc:series_text.html.twig' with {'cols': number_cols, 'num_mmobjs': num_mmobjs } %}
+        {% endif %}
       {% endfor %}
     </div>
     {% else %}
