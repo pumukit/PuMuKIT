@@ -59,11 +59,13 @@ class SearchController extends Controller implements WebTVController
         $numberCols = $this->container->getParameter('columns_objs_search');
 
         // --- RETURN ---
-        return array('type' => 'series',
-        'objects' => $pagerfanta,
-        'search_years' => $searchYears,
-        'number_cols' => $numberCols,
-        'total_objects' => $totalObjects, );
+        return array(
+            'type' => 'series',
+            'objects' => $pagerfanta,
+            'search_years' => $searchYears,
+            'number_cols' => $numberCols,
+            'total_objects' => $totalObjects, 
+        );
     }
 
     /**
@@ -123,17 +125,19 @@ class SearchController extends Controller implements WebTVController
         $numberCols = $this->container->getParameter('columns_objs_search');
 
         // --- RETURN ---
-        return array('type' => 'multimediaObject',
-        'template_title' => $templateTitle,
-        'objects' => $pagerfanta,
-        'parent_tag' => $parentTag,
-        'parent_tag_optional' => $parentTagOptional,
-        'tags_found' => $tagsFound,
-        'number_cols' => $numberCols,
-        'languages' => $searchLanguages,
-        'blocked_tag' => $blockedTag,
-        'search_years' => $searchYears,
-        'total_objects' => $totalObjects, );
+        return array(
+            'type' => 'multimediaObject',
+            'template_title' => $templateTitle,
+            'objects' => $pagerfanta,
+            'parent_tag' => $parentTag,
+            'parent_tag_optional' => $parentTagOptional,
+            'tags_found' => $tagsFound,
+            'number_cols' => $numberCols,
+            'languages' => $searchLanguages,
+            'blocked_tag' => $blockedTag,
+            'search_years' => $searchYears,
+            'total_objects' => $totalObjects, 
+        );
     }
 
     private function createPager($objects, $page)
@@ -188,7 +192,7 @@ class SearchController extends Controller implements WebTVController
     private function typeQueryBuilder($queryBuilder, $typeFound)
     {
         if ($typeFound != '') {
-            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'Audio');
+            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'audio');
         }
 
         return $queryBuilder;

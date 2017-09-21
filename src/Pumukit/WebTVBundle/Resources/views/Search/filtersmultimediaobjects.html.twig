@@ -51,8 +51,8 @@
     <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
     <select id="type" name="type" class="form-control"  onchange="submitForm(this);">
       <option value="" {% if app.request.query.get('type') == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-      <option {% if app.request.query.get('type') == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
-      <option {% if app.request.query.get('type') == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
+      <option value="video" {% if app.request.query.get('type') == "Video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
+      <option value="audio" {% if app.request.query.get('type') == "Audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
     </select>
   </div>
   <div class="form-group col-md-2 col-sm-2 col-xs-6">
