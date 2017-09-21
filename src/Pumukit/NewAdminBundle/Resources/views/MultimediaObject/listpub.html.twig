@@ -1,25 +1,30 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% for pub in pubs %}
-      {% set status = mm.containsTag(pub) %}
-      {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
-      <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}">
-        <label{{ disabled ? ' style="color: #767676;"' : '' }}>
-        <input type="checkbox"
-               name="pub_{{ pub_type }}[{{ pub.cod }}]"
-               id="pub_{{ pub_type }}_{{ pub.cod }}"
-               class="pub_channel_input_checkbox"
-               {{ status ? 'checked="checked"' : '' }}
-               {{ disabled ? 'disabled="disabled"' : '' }}
-               />
-        {{ pub.getTitle() }}
+    {% for pub in pubs %}
+        {% set status = mm.containsTag(pub) %}
+        {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
+        <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }}" style="display:table-row">
+            <label{{ disabled ? ' style="color: #767676;"' : '' }}>
+                <input type="checkbox"
+                       name="pub_{{ pub_type }}[{{ pub.cod }}]"
+                       id="pub_{{ pub_type }}_{{ pub.cod }}"
+                       class="pub_channel_input_checkbox"
+                        {{ status ? 'checked="checked"' : '' }}
+                        {{ disabled ? 'disabled="disabled"' : '' }}
+                />
+                {{ pub.getTitle() }}
+                
+                {% if pub.getProperty('modal_path') and path_exists(pub.getProperty('modal_path')) %}
+                    <a title="{% trans %}Edit Pub Channel {% endtrans %} {{ pub.cod }}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-toggle="modal" data-target="#myModal">
+                        <i class="mdi-action-info"></i>
+                    </a>
+                {% endif %}
 
-        {% if pub.getProperty('modal_path') and path_exists(pub.getProperty('modal_path')) %}
-        <a title="{% trans %}Edit Pub Channel {% endtrans %} {{pub.cod}}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-toggle="modal" data-target="#myModal">
-          <i class="mdi-action-info"></i>
-        </a>
+            </label>
+        </div>
+        {% if pub.getProperty('route') and path_exists(pub.getProperty('route')) %}
+            <div id="temporizedPub" style="padding-top:15px;">
+                {% render(path(pub.getProperty('route'), { 'id': mm.id, 'pub': pub.cod } )) %}
+            </div>
         {% endif %}
-
-        </label>
-      </div>
-{% endfor %}
+    {% endfor %}
 {% endif %}
