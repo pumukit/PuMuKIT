@@ -6,16 +6,16 @@
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
   <form autocomplete="off" method="post" target="iframeUpload"
-        action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}" 
+        action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}"
         enctype="multipart/form-data" name="formulario">
-    <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe> 
-      
+    <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
+
     <fieldset>
-      
+
       {{ form_row(form["i18n_description"]) }}
-      
+
       <div class="form-group" id="pumukitnewadmin_track_profile">
-        <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>        
+        <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
         {% for key in master_profiles|keys %}
         <div class="radio">
           <label><input type="radio" name="profile" id="profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
@@ -24,7 +24,7 @@
       </div>
 
       <div class="form-group" id="pumukitnewadmin_track_priority">
-        <label for="priority" class="control-label">{% trans %}Priority{% endtrans %}</label>        
+        <label for="priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
         <div class="radio">
           <label><input type="radio" name="priority" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
@@ -51,11 +51,11 @@
       {% else %}
       <input type="hidden" name="file_type" id="radio_file" value="file"/>
       {% endif %}
-      
+
       <div class="form-group" id="pumukitnewadmin_track_file">
         <label for="url" class="control-label">{% trans %}Resource{% endtrans %}:</label>
         <div class="input-group">
-          <input type="file" name="resource" id="resource" value="" size="70">
+          <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/*">
           <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
           <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
         </div>
