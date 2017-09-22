@@ -32,7 +32,7 @@
           <label for="url">{% trans %}Write the URL{% endtrans %}:</label>
           <div class="">
             <input type="text" name="url" id="url" value="" size="65" class="form-control">
-	        <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
+            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
           </div>
         </div>
       </fieldset>
@@ -50,9 +50,9 @@
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
       <fieldset>
         <div class="form-group">
-	      <label for="file">{% trans %}Add a file{% endtrans %}:</label>
+          <label for="file">{% trans %}Add a file{% endtrans %}:</label>
           <div class="">
-	        <input type="file" name="file" id="file" value="" size="66" class="file">
+            <input type="file" name="file" id="file" value="" size="66" class="file" accept="image/*" >
           </div>
         </div>
         <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>

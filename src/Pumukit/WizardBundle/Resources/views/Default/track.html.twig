@@ -95,7 +95,7 @@
         <div class="form-group" id="pumukitwizard_track_file">
           <label for="url" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
           <div class="input-group">
-            <input type="file" name="resource" id="resource" value="" size="70">
+            <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/*">
             <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
           </div>
           <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
