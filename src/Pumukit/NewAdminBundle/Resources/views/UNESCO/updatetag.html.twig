@@ -1,0 +1,84 @@
+<div id="tv_admin_container_tag" class="well">
+    {% if not template %}
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
+                        id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
+                        data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
+                    {% trans %}Sync in this series{% endtrans %}
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    <div style="max-height:800px;overflow-y:auto;padding: 7px;">
+        {% for parent in parent_tags if parent.getDisplay() and parent.getChildren()|length != 0 and parent.getCod() == 'UNESCO' %}
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ parent.title }}</div>
+                <div class="panel-body" id="tag{{ parent.id }}_mms">
+                    <div class="row"><div class="col-xs-12">
+                            {% include 'PumukitNewAdminBundle:MultimediaObject:tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
+                        </div></div>
+
+                    <div class="col-xs-12" style="overflow:hidden;height: 270px">
+                        {# Available tags #}
+                        <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
+                            {% if (0 != parent.getChildren()|length) %}
+                                {% include 'PumukitNewAdminBundle:UNESCO:listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+                            {% endif %}
+                        </div>
+
+                        <div style="display:none; width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree filter" id="all_tag_{{ parent.id }}_filter">
+                            {# Here is where the filtered tags go when dynamically load using JS #}
+                        </div>
+
+
+                        <div style="float: left; padding: 150px 5px 0px">
+                            <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
+                            <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+                        </div>
+
+                        {# Added tags#}
+                        <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
+                            <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
+                                {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
+                                    <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
+                                       onclick="javascript:return select_tree_tag(this);"
+                                       ondblclick="javascript:del_tree_tag_unesco('{{ embedded_tag.id }}', '{{ mm.id }}');">
+                                        {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+                                            {{ embedded_tag.getCod() }} -
+                                        {% endif %}
+                                        {{ embedded_tag.getTitle() }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div style="height:41px"></div>
+</div>
+
+<script type="text/javascript">
+    function del_tree_tag_unesco(tag_id, mm_id)
+    {
+        var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+        route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
+        $.ajax({
+            url: route,
+            type: 'DELETE',
+            parameters: {'_method': 'DELETE'},
+            success: function(response){
+                for (var i=0; i<response.deleted.length; i++) {
+                    var c = response.deleted[i];
+                    var $_element = $("#select_li_" + c.id);
+                    if ($_element)  $_element.remove();
+                    !response.prototype && inc_num_mm(c.id, -1);
+                }
+                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id': app.session.get('admin/unesco/id')}) }}");
+                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+            }
+        });
+    }
+</script>

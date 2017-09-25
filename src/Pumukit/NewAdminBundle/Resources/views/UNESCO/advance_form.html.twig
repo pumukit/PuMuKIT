@@ -1,0 +1,141 @@
+<br />
+<div class="well">
+    <div class="row">
+        <h4 class="text-center"><strong>{% trans %}Advanced search form{% endtrans %}</strong></h4>
+        <hr />
+
+        <div class="col-md-6">
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="title" class="col-md-3 control-label">{% trans %}Title{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="title" type="text" class="form-control" name="criteria[title]" placeholder="{% trans %}Title{% endtrans %}" />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="Subtitle" class="col-md-3 control-label">{% trans %}Subtitle{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="subtitle" type="text" class="form-control" name="criteria[subtitle]" placeholder="{% trans %}Subtitle{% endtrans %}" />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="keyword" class="col-md-3 control-label">{% trans %}Keyword{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="keyword" type="text" class="form-control" name="criteria[keyword]" placeholder="{% trans %}Keyword{% endtrans %}" />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="initPublicDate" class="col-md-3 control-label">{% trans %}Publication date{% endtrans %}</label>
+                <div class="col-md-4">
+                    <input id="initPublicDate" name="criteria[initPublicDate]" class="form-control" type="date" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="{% trans %}Format YYYY-MM-DD{% endtrans %}">
+                </div>
+                <div class="col-md-4">
+                    <input id="finishPublicDate" name="criteria[finishPublicDate]" class="form-control" type="date" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="{% trans %}Format YYYY-MM-DD{% endtrans %}">
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="initRecordDate" class="col-md-3 control-label">{% trans %}Recording date{% endtrans %}</label>
+                <div class="col-md-4">
+                    <input id="initRecordDate" name="criteria[initRecordDate]" class="form-control" type="date" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="{% trans %}Format YYYY-MM-DD{% endtrans %}">
+                </div>
+                <div class="col-md-4">
+                    <input id="finishRecordDate" name="criteria[finishRecordDate]" class="form-control" type="date" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="{% trans %}Format YYYY-MM-DD{% endtrans %}">
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="Description" class="col-md-3 control-label">{% trans %}Description{% endtrans %}</label>
+                <div class="col-md-9">
+                    <textarea id="Description"  class="form-control" name="criteria[description]" placeholder="{% trans %}Description{% endtrans %}"></textarea>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="display:inline-block; margin-top:15px;">
+                <strong style="margin-left:15px;"> {% trans %}Announce{% endtrans %}</strong>
+                <div class="checkbox" style="display:inline;margin-left:50px;">
+                    <label>
+                        <input id="announce" type="checkbox" name="criteria[announce]" />
+                    </label>
+                </div>
+            </div>
+
+            {% if puderadio %}
+                <div class="clearfix"></div>
+                <div class="form-group" style="display:inline-block; margin-top:15px;">
+                    <strong style="margin-left:15px;"> {{ puderadio.getTitle(app.request.getLocale()) }}</strong>
+                    <div class="checkbox" style="display:inline;margin-left:5px;">
+                        <label>
+                            <input id="puderadio" type="checkbox" name="criteria[puderadio]" />
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if pudetv %}
+                <div class="clearfix"></div>
+                <div class="form-group" style="display:inline-block; margin-top:15px;">
+                    <strong style="margin-left:15px;"> {{ pudetv.getTitle(app.request.getLocale()) }}</strong>
+                    <div class="checkbox" style="display:inline;margin-left:25px;">
+                        <label>
+                            <input id="pudetv" type="checkbox" name="criteria[pudetv]" />
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-6">
+            {% for role in roles %}
+                <div class="clearfix"></div>
+                <div class="form-group" style="margin-top:10px;">
+                    <label for="{{ role.getCod() }}" class="col-md-3 control-label">{{ role.getName(app.request.getLocale()) }}</label>
+                    <div class="col-md-9">
+                        <input type="text" id="{{ role.getCod() }}" class="form-control" name="criteria[roles][{{ role.getCod() }}]" placeholder="{{ role.getName(app.request.getLocale()) }}">
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="broadcast" class="col-md-3 control-label">{% trans %}Broadcast{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="broadcast" name="criteria[broadcast]" class="form-control">
+                        <option value="all">{% trans %}All{% endtrans %}</option>
+                        {% for key, broadcast in broadcasts %}
+                            <option value="{{ key }}">{{ broadcast }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="status" class="col-md-3 control-label">{% trans %}Status{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="status" name="criteria[statusPub]" class="form-control">
+                        <option value="all">{% trans %}All{% endtrans %}</option>
+                        {% for key, status in statusPub %}
+                            <option value="{{ key }}">{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 text-right">
+            <button id="submitAdvanceForm" class="btn btn-pumukit btn-raised" type="submit">{% trans %}Send{% endtrans %}</button>
+        </div>
+    </div>
+</div>

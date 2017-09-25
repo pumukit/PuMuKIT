@@ -1,0 +1,54 @@
+{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% for node in nodes %}
+  {% set children_length = node.getNumberOfChildren() %}
+   <a href="#"
+      onclick="javascript:return select_tree_tag(this);"
+      {% if not node.getMetatag() %} ondblclick="javascript:add_tree_tag_unesco('{{ node.id }}', '{{ mmId }}', '{{ block_tag }}');" {% endif %}
+      class="list-group-item notload
+             tag_li_parent_{{ parent }}
+             c_{{ node.path|replace({ ("|" ~ node.cod ~ "|"): '', '|': ' c_'}) }}
+             {{ (children_length)?'collapsed':'element' }}
+             {{ node.getMetatag()?'metatag' }}
+             {{ (node.getNumberMultimediaObjects()==0)?'nomm' }}">
+
+     {% if not node.getMetatag() %}
+     <span class="badge" id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>
+     {% endif %}
+
+     <span style="padding-left:{{ 10 * (node.level - 3)}}px"
+           {% if children_length %} onclick="javascript:toggle_tree_tag(this, '{{ node.id }}', '{{ mmId }}', '{{ block_tag }}', '{{ node.cod }}')" {% endif %}>
+       <i class="mdi- tag_icon"></i>
+     </span>
+     <span class="tag">
+       {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
+           {{ node.getCod() }} -
+       {% endif %}
+       {{ node.getTitle() }}
+     </span>
+   </a>
+{% endfor %}
+
+<script type="text/javascript">
+$input = $('input#filter_tags_{{block_tag}}')
+if($input && $input.val() != "" && /[0-9a-z\u00E0-\u00FC]{3,}/i.test($input.val())) {
+    $("#all_tag_{{ block_tag }} a span").removeClass("highlighted");
+    $("#all_tag_{{ block_tag }} a span:containsNC(" + $input.val().trim() + ")").addClass("highlighted");
+}
+
+function add_tree_tag_unesco(tag_id, mm_id, block_tag_id)
+{
+    var route = "{{ path('pumukitnewadmin_mms_addtag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
+    route = route.replace('PLACEHOLDER_MM_ID', mm_id).replace('PLACEHOLDER_TAG_ID', tag_id);
+    $.post(route, {"tag": tag_id}, function(data, textStatus, jqXHR){
+        for (var i=0; i < data.added.length; i++) {
+            var c = data.added[i];
+            !data.prototype && inc_num_mm(c.id, 1);
+            var aux = c.group.split("|");
+            if(aux[1] && aux.length > 3) create_element_in_select(c, aux[1], mm_id);
+        }
+        $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id': app.session.get('admin/unesco/id')}) }}");
+        $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+    });
+}
+</script>
+{% endif %}

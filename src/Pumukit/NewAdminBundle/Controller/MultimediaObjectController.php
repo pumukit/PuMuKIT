@@ -275,8 +275,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             if (!$social) {
                 $social = new EmbeddedSocial();
             }
-            $social->setTwitter($request->request->get('email'));
-            $social->setEmail($request->request->get('twitter'));
+            $social->setTwitter($request->request->get('twitter'));
+            $social->setEmail($request->request->get('email'));
             $dm->persist($social);
 
             $multimediaObject->setEmbeddedSocial($social);
@@ -411,13 +411,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $this->domainManager->update($resource);
 
             $this->dispatchUpdate($resource);
-
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($formPub));
             }
 
-            $mms = $this->getListMultimediaObjects($series);
 
+            $mms = $this->getListMultimediaObjects($series);
             if (strpos($request->server->get('HTTP_REFERER'), 'mmslist') === false) {
                 return $this->render(
                     'PumukitNewAdminBundle:MultimediaObject:list.html.twig',

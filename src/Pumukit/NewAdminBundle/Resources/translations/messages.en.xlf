@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -3004,6 +3004,111 @@
       <trans-unit id="be5aadb9b410ebd1f4e2e0db5bb509eb" resname="No sessions defined.">
         <source>No sessions defined.</source>
         <target>No sessions defined.</target>
+      </trans-unit>
+      <trans-unit id="408c624b14b33497a9595c77338e22d9" resname="Publishing&#10;                        Decisions">
+        <source>Publishing
+                        Decisions</source>
+        <target>Publishing Decisions</target>
+      </trans-unit>
+      <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
+        <source>ID</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="3e7eb1f8393ef28d128233b82dae6507" resname="Multimedia object ID">
+        <source>Multimedia object ID</source>
+        <target>Multimedia object ID</target>
+      </trans-unit>
+      <trans-unit id="7041aef9100038ad002de989052c27d7" resname="Series ID">
+        <source>Series ID</source>
+        <target>Series ID</target>
+      </trans-unit>
+      <trans-unit id="9dffbf69ffba8bc38bc4e01abf4b1675" resname="Text">
+        <source>Text</source>
+        <target>Text</target>
+      </trans-unit>
+      <trans-unit id="e1476fd772b021e4b99b55833fd65024" resname="Search by title, subtitle or description">
+        <source>Search by title, subtitle or description</source>
+        <target>Search by title, subtitle or description</target>
+      </trans-unit>
+      <trans-unit id="220f3d3750583b9db48568a0b5b9a5f1" resname="Keyword">
+        <source>Keyword</source>
+        <target>Keyword</target>
+      </trans-unit>
+      <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
+        <source>Up to 5 minutes</source>
+        <target>Up to 5 minutes</target>
+      </trans-unit>
+      <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
+        <source>Up to 10 minutes</source>
+        <target>Up to 10 minutes</target>
+      </trans-unit>
+      <trans-unit id="cf0e47fa01c0301688b0988a34f05556" resname="Up to 30 minutes">
+        <source>Up to 30 minutes</source>
+        <target>Up to 30 minutes</target>
+      </trans-unit>
+      <trans-unit id="0379225ae7d7c577c4fcf72e5cbf026e" resname="Up to 60 minutes">
+        <source>Up to 60 minutes</source>
+        <target>Up to 60 minutes</target>
+      </trans-unit>
+      <trans-unit id="33cfc2709fe67cc82cf324f9c7f57cef" resname="More than 60 minutes">
+        <source>More than 60 minutes</source>
+        <target>More than 60 minutes</target>
+      </trans-unit>
+      <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
+        <source>Year</source>
+        <target>Year</target>
+      </trans-unit>
+      <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
+        <source>Any</source>
+        <target>Any</target>
+      </trans-unit>
+      <trans-unit id="ff4deb04a7094c1c1e7240e1e36517ef" resname="Public date">
+        <source>Public date</source>
+        <target>Public date</target>
+      </trans-unit>
+      <trans-unit id="9903646e7baeca2bb4d01aad1a9a7ae4" resname="Format YYYY-MM-DD">
+        <source>Format YYYY-MM-DD</source>
+        <target>Format YYYY-MM-DD</target>
+      </trans-unit>
+      <trans-unit id="48cfad2e22236fcc79eb86f69a207b75" resname="Record date">
+        <source>Record date</source>
+        <target>Record date</target>
+      </trans-unit>
+      <trans-unit id="be55b6387170df0ca68f41225268e842" resname="Broadcast">
+        <source>Broadcast</source>
+        <target>Broadcast</target>
+      </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
+        <source>Send</source>
+        <target>Send</target>
+      </trans-unit>
+      <trans-unit id="560eafaadc3b4415c0db8c000ae2db1b" resname="Advanced search form">
+        <source>Advanced search form</source>
+        <target>Advanced search form</target>
+      </trans-unit>
+      <trans-unit id="735f7bed9808abe3b3c6bb67b9634a31" resname="Publication date">
+        <source>Publication date</source>
+        <target>Publication date</target>
+      </trans-unit>
+      <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
+        <source>Recording date</source>
+        <target>Recording date</target>
+      </trans-unit>
+      <trans-unit id="8aa9ef4aefc5f76ad21a3cbeabe55a30" resname="Saving error">
+        <source>Saving error</source>
+        <target>Saving error</target>
+      </trans-unit>
+      <trans-unit id="248336101b461380a4b2391a7625493d" resname="Saved">
+        <source>Saved</source>
+        <target>Saved</target>
+      </trans-unit>
+      <trans-unit id="91563b044939df33670bd362715e334e" resname="Genre">
+        <source>Genre</source>
+        <target>Genre</target>
+      </trans-unit>
+      <trans-unit id="9b6545e4cea9b4ad4979d41bb9170e2b" resname="Advanced">
+        <source>Advanced</source>
+        <target>Advanced</target>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,101 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+    <div class="col-md-2">
+        <div class="well" id="tag_list_unesco">
+            {% render(controller('PumukitNewAdminBundle:UNESCO:menuTags')) %}
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div id="advance_search">
+<<<<<<< HEAD
+            {% render(controller('PumukitNewAdminBundle:UNESCO:advancedSearchForm')) %}
+=======
+            {% render(controller('PumukitNewAdminBundle:UNESCO:advanceSearchForm')) %}
+>>>>>>> b2528e224a20e037215338a4834105b1a8b6f577
+        </div>
+        <div id="list_mms">
+            {% render(controller('PumukitNewAdminBundle:UNESCO:list')) %}
+        </div>
+        <div id="edit_mms">
+            {% if(app.session.has('admin/unesco/id')) %}
+                {{ render(url('pumukit_new_admin_unesco_edit', {'id': app.session.get('admin/unesco/id')})) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div id="preview_mms">
+            {% if app.session.has('admin/unesco/id') %}
+                {% render(controller('PumukitNewAdminBundle:UNESCO:show', {'id' : app.session.get('admin/unesco/id')})) %}
+            {% else %}
+                {% render(controller('PumukitNewAdminBundle:UNESCO:show')) %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <img width="35" id="dnd_image_1" src="{{ asset('bundles/pumukitnewadmin/images/DnD/1.gif') }}" />
+        <img width="35" id="dnd_image_2" src="{{ asset('bundles/pumukitnewadmin/images/DnD/2.gif') }}" />
+        <img width="35" id="dnd_image_3" src="{{ asset('bundles/pumukitnewadmin/images/DnD/3.gif') }}" />
+        <img width="35" id="dnd_image_4" src="{{ asset('bundles/pumukitnewadmin/images/DnD/4.gif') }}" />
+        <img width="35" id="dnd_image_5" src="{{ asset('bundles/pumukitnewadmin/images/DnD/5.gif') }}" />
+        <img width="35" id="dnd_image_6" src="{{ asset('bundles/pumukitnewadmin/images/DnD/6.gif') }}" />
+        <img width="35" id="dnd_image_7" src="{{ asset('bundles/pumukitnewadmin/images/DnD/7.gif') }}" />
+        <img width="35" id="dnd_image_8" src="{{ asset('bundles/pumukitnewadmin/images/DnD/8.gif') }}" />
+        <img width="35" id="dnd_image_9" src="{{ asset('bundles/pumukitnewadmin/images/DnD/9.gif') }}" />
+        <img width="35" id="dnd_image_10" src="{{ asset('bundles/pumukitnewadmin/images/DnD/10.gif') }}" />
+        <img width="35" id="dnd_image_11" src="{{ asset('bundles/pumukitnewadmin/images/DnD/11.gif') }}" />
+        <img width="35" id="dnd_image_12" src="{{ asset('bundles/pumukitnewadmin/images/DnD/12.gif') }}" />
+        <img width="35" id="dnd_image_13" src="{{ asset('bundles/pumukitnewadmin/images/DnD/13.gif') }}" />
+        <img width="35" id="dnd_image_14" src="{{ asset('bundles/pumukitnewadmin/images/DnD/14.gif') }}" />
+        <img width="35" id="dnd_image_15" src="{{ asset('bundles/pumukitnewadmin/images/DnD/15.gif') }}" />
+        <img width="35" id="dnd_image_16" src="{{ asset('bundles/pumukitnewadmin/images/DnD/16.gif') }}" />
+    </div>
+
+
+    <script type="text/javascript">
+        var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
+        window.mmobjkeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
+
+        window.mmobjkeywords.initialize();
+
+        var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'})|raw }}";
+        window.serieskeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
+
+        window.serieskeywords.initialize();
+
+        $('.unescoResetForm').on('click',function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '{{ path('pumukitnewadmin_unesco_removesession') }}',
+                method: 'POST',
+                success: function (response) {
+                    $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}")
+                }
+            });
+            return false;
+
+        });
+    </script>
+{% endblock %}
