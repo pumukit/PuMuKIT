@@ -34,6 +34,10 @@
         <source>Access Templates section</source>
         <target xml:lang="ru" state="needs-translation">Access Templates section</target>
       </trans-unit>
+      <trans-unit id="1" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target xml:lang="ru" state="needs-translation">Edit Templates</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

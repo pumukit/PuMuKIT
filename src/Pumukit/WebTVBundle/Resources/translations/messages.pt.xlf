@@ -493,6 +493,50 @@
         <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
         <target xml:lang="pt-PT" state="needs-translation">There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</target>
       </trans-unit>
+      <trans-unit id="b658acd7298e4f58058387dbbc4b327d" resname="This page isn't available. Sorry about that.">
+        <source>This page isn't available. Sorry about that.</source>
+        <target xml:lang="pt-PT" state="needs-translation">This page isn't available. Sorry about that.</target>
+      </trans-unit>
+      <trans-unit id="795a273f05736cc8c7b77d3a88bc9bee" resname="Try searching for something else:">
+        <source>Try searching for something else:</source>
+        <target xml:lang="pt-PT" state="needs-translation">Try searching for something else:</target>
+      </trans-unit>
+      <trans-unit id="7ecbb3f6a2ac11e7abc4cec278b6b50a" resname="Home">
+        <source>Home</source>
+        <target xml:lang="pt-PT" state="needs-translation">Home</target>
+      </trans-unit>
+      <trans-unit id="7ecbb766a2ac11e7abc4cec278b6b50a" resname="By subject catalogue">
+        <source>By subject catalogue</source>
+        <target xml:lang="pt-PT" state="needs-translation">By subject catalogue</target>
+      </trans-unit>
+      <trans-unit id="7ecbb89ca2ac11e7abc4cec278b6b50a" resname="University">
+        <source>University</source>
+        <target xml:lang="pt-PT" state="needs-translation">University</target>
+      </trans-unit>
+      <trans-unit id="7ecbb978a2ac11e7abc4cec278b6b50a" resname="Business">
+        <source>Business</source>
+        <target xml:lang="pt-PT" state="needs-translation">Business</target>
+      </trans-unit>
+      <trans-unit id="7ecbba40a2ac11e7abc4cec278b6b50a" resname="Natural Sciences">
+        <source>Natural Sciences</source>
+        <target xml:lang="pt-PT" state="needs-translation">Natural Sciences</target>
+      </trans-unit>
+      <trans-unit id="7ecbbb08a2ac11e7abc4cec278b6b50a" resname="Health &amp; Medicine">
+        <source>Health &amp; Medicine</source>
+        <target xml:lang="pt-PT" state="needs-translation">Health &amp; Medicine</target>
+      </trans-unit>
+      <trans-unit id="7ecbbf90a2ac11e7abc4cec278b6b50a" resname="Law">
+        <source>Law</source>
+        <target xml:lang="pt-PT" state="needs-translation">Law</target>
+      </trans-unit>
+      <trans-unit id="d17999cea2ac11e7abc4cec278b6b50a" resname="Social Matters &amp; Education">
+        <source>Social Matters &amp; Education</source>
+        <target xml:lang="pt-PT" state="needs-translation">Social Matters &amp; Education</target>
+      </trans-unit>
+      <trans-unit id="c0d3dfeea2ac11e7abc4cec278b6b50a" resname="Subjects">
+        <source>Subjects</source>
+        <target xml:lang="pt-PT" state="needs-translation">Subjects</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

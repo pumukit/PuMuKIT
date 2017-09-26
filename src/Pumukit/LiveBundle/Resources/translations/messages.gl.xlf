@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
     <body>
       <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
         <source>Current live event</source>
@@ -57,6 +60,14 @@
       <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
         <target xml:lang="gl" state="translated">É necesario instalar o plugin Flash. JWPlayer require polo menos a versión 10.1.82.76 de Flash para reproducir.</target>
+      </trans-unit>
+      <trans-unit id="d56cc3fe0db39a01db08f43f90eef01d" resname="The event has not been held yet">
+        <source>The event has not been held yet</source>
+        <target xml:lang="gl" state="needs-translation">The event has not been held yet</target>
+      </trans-unit>
+      <trans-unit id="6cb2e290e1fbd2f5e3fdedb555b3ae69" resname="The event has already been held">
+        <source>The event has already been held</source>
+        <target xml:lang="gl" state="needs-translation">The event has already been held</target>
       </trans-unit>
     </body>
   </file>
