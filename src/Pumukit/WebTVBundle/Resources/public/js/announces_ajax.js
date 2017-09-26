@@ -59,7 +59,7 @@ jQuery(document).ready(function() {
     }
     reloadMoreData();
     $( window ).scroll( function(){
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        if($(window).scrollTop() + window.innerHeight == $(document).height()) {
             reloadMoreData();
         }
     });
