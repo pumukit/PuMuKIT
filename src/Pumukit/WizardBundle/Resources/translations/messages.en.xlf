@@ -317,6 +317,22 @@
         <source>New</source>
         <target>New</target>
       </trans-unit>
+      <trans-unit id="5d2fda977ed0be40ee5c8293be11bb3e" resname="ERROR!!">
+        <source>ERROR!!</source>
+        <target>ERROR!!</target>
+      </trans-unit>
+      <trans-unit id="d4c841f869c6570cbb747ede7870a916" resname="There was an error:">
+        <source>There was an error:</source>
+        <target>There was an error:</target>
+      </trans-unit>
+      <trans-unit id="a2a86c91777e281aab7ce50c73e186e2" resname="Series title">
+        <source>Series title</source>
+        <target>Series title</target>
+      </trans-unit>
+      <trans-unit id="ffeed24e8e4fd763c1d0d02c6e5d6e15" resname="Upload file">
+        <source>Upload file</source>
+        <target>Upload file</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
