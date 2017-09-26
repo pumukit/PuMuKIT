@@ -30,7 +30,7 @@ class MultimediaObjectMetaType extends AbstractType
                         'label' => $this->translator->trans('Title', array(), null, $this->locale), ))
             ->add('i18n_subtitle', 'texti18n',
                   array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Subitle', array(), null, $this->locale)),
+                        'attr' => array('aria-label' => $this->translator->trans('Subtitle', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Subtitle', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array('required' => false,
@@ -50,7 +50,7 @@ class MultimediaObjectMetaType extends AbstractType
                         'label' => $this->translator->trans('Copyright', array(), null, $this->locale), ))
             ->add('license', 'license',
                   array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Licnse', array(), null, $this->locale)),
+                        'attr' => array('aria-label' => $this->translator->trans('License', array(), null, $this->locale)),
                         'label' => $this->translator->trans('License', array(), null, $this->locale), ))
             ->add('public_date', new Html5dateType(),
                   array('data_class' => 'DateTime',

@@ -3097,6 +3097,208 @@
         <source>No sessions defined.</source>
         <target xml:lang="es-ES" state="translated">No hay sesiones definidas.</target>
       </trans-unit>
+      <trans-unit id="408c624b14b33497a9595c77338e22d9" resname="Publishing&#10;                        Decisions">
+        <source>Publishing
+                        Decisions</source>
+        <target xml:lang="es-ES" state="needs-translation">Publishing
+                        Decisions</target>
+      </trans-unit>
+      <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
+        <source>ID</source>
+        <target xml:lang="es-ES" state="translated">ID</target>
+      </trans-unit>
+      <trans-unit id="3e7eb1f8393ef28d128233b82dae6507" resname="Multimedia object ID">
+        <source>Multimedia object ID</source>
+        <target xml:lang="es-ES" state="translated">ID del objeto multimedia</target>
+      </trans-unit>
+      <trans-unit id="7041aef9100038ad002de989052c27d7" resname="Series ID">
+        <source>Series ID</source>
+        <target xml:lang="es-ES" state="translated">ID de la serie</target>
+      </trans-unit>
+      <trans-unit id="9dffbf69ffba8bc38bc4e01abf4b1675" resname="Text">
+        <source>Text</source>
+        <target xml:lang="es-ES" state="translated">Texto</target>
+      </trans-unit>
+      <trans-unit id="e1476fd772b021e4b99b55833fd65024" resname="Search by title, subtitle or description">
+        <source>Search by title, subtitle or description</source>
+        <target xml:lang="es-ES" state="translated">Buscar por título, subtítulo o descripción</target>
+      </trans-unit>
+      <trans-unit id="220f3d3750583b9db48568a0b5b9a5f1" resname="Keyword">
+        <source>Keyword</source>
+        <target xml:lang="es-ES" state="translated">Palabra clave</target>
+      </trans-unit>
+      <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
+        <source>Up to 5 minutes</source>
+        <target xml:lang="es-ES" state="translated">Hasta 5 minutos</target>
+      </trans-unit>
+      <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
+        <source>Up to 10 minutes</source>
+        <target xml:lang="es-ES" state="translated">Hasta 10 minutos</target>
+      </trans-unit>
+      <trans-unit id="cf0e47fa01c0301688b0988a34f05556" resname="Up to 30 minutes">
+        <source>Up to 30 minutes</source>
+        <target xml:lang="es-ES" state="translated">Hasta 30 minutos</target>
+      </trans-unit>
+      <trans-unit id="0379225ae7d7c577c4fcf72e5cbf026e" resname="Up to 60 minutes">
+        <source>Up to 60 minutes</source>
+        <target xml:lang="es-ES" state="translated">Hasta 60 minutos</target>
+      </trans-unit>
+      <trans-unit id="33cfc2709fe67cc82cf324f9c7f57cef" resname="More than 60 minutes">
+        <source>More than 60 minutes</source>
+        <target xml:lang="es-ES" state="translated">Más de 60 minutos</target>
+      </trans-unit>
+      <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
+        <source>Year</source>
+        <target xml:lang="es-ES" state="translated">Año</target>
+      </trans-unit>
+      <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
+        <source>Any</source>
+        <target xml:lang="es-ES" state="needs-translation">Any</target>
+      </trans-unit>
+      <trans-unit id="ff4deb04a7094c1c1e7240e1e36517ef" resname="Public date">
+        <source>Public date</source>
+        <target xml:lang="es-ES" state="needs-translation">Public date</target>
+      </trans-unit>
+      <trans-unit id="9903646e7baeca2bb4d01aad1a9a7ae4" resname="Format YYYY-MM-DD">
+        <source>Format YYYY-MM-DD</source>
+        <target xml:lang="es-ES" state="needs-translation">Format YYYY-MM-DD</target>
+      </trans-unit>
+      <trans-unit id="48cfad2e22236fcc79eb86f69a207b75" resname="Record date">
+        <source>Record date</source>
+        <target xml:lang="es-ES" state="needs-translation">Record date</target>
+      </trans-unit>
+      <trans-unit id="be55b6387170df0ca68f41225268e842" resname="Broadcast">
+        <source>Broadcast</source>
+        <target xml:lang="es-ES" state="translated">Difusión</target>
+      </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
+        <source>Send</source>
+        <target xml:lang="es-ES" state="translated">Enviar</target>
+      </trans-unit>
+      <trans-unit id="560eafaadc3b4415c0db8c000ae2db1b" resname="Advanced search form">
+        <source>Advanced search form</source>
+        <target xml:lang="es-ES" state="needs-translation">Advanced search form</target>
+      </trans-unit>
+      <trans-unit id="735f7bed9808abe3b3c6bb67b9634a31" resname="Publication date">
+        <source>Publication date</source>
+        <target xml:lang="es-ES" state="needs-translation">Publication date</target>
+      </trans-unit>
+      <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
+        <source>Recording date</source>
+        <target xml:lang="es-ES" state="needs-translation">Recording date</target>
+      </trans-unit>
+      <trans-unit id="8aa9ef4aefc5f76ad21a3cbeabe55a30" resname="Saving error">
+        <source>Saving error</source>
+        <target xml:lang="es-ES" state="needs-translation">Saving error</target>
+      </trans-unit>
+      <trans-unit id="248336101b461380a4b2391a7625493d" resname="Saved">
+        <source>Saved</source>
+        <target xml:lang="es-ES" state="needs-translation">Saved</target>
+      </trans-unit>
+      <trans-unit id="91563b044939df33670bd362715e334e" resname="Genre">
+        <source>Genre</source>
+        <target xml:lang="es-ES" state="needs-translation">Genre</target>
+      </trans-unit>
+      <trans-unit id="9b6545e4cea9b4ad4979d41bb9170e2b" resname="Advanced">
+        <source>Advanced</source>
+        <target xml:lang="es-ES" state="needs-translation">Advanced</target>
+      </trans-unit>
+      <trans-unit id="11" resname="Catalogador UNESCO">
+        <source>Catalogador UNESCO</source>
+        <target xml:lang="es-ES" state="needs-translation">Catalogador UNESCO</target>
+      </trans-unit>
+      <trans-unit id="23" resname="Channel">
+        <source>Channel</source>
+        <target xml:lang="es-ES" state="needs-translation">Channel</target>
+      </trans-unit>
+      <trans-unit id="24" resname="Sorting">
+        <source>Sorting</source>
+        <target xml:lang="es-ES" state="needs-translation">Sorting</target>
+      </trans-unit>
+      <trans-unit id="25" resname="Sorting">
+        <source>Sorting</source>
+        <target xml:lang="es-ES" state="needs-translation">Sorting</target>
+      </trans-unit>
+      <trans-unit id="26" resname="date">
+        <source>date</source>
+        <target xml:lang="es-ES" state="needs-translation">date</target>
+      </trans-unit>
+      <trans-unit id="27" resname="date_all">
+        <source>date_all</source>
+        <target xml:lang="es-ES" state="needs-translation">date_all</target>
+      </trans-unit>
+      <trans-unit id="28" resname="date_subserial">
+        <source>date_subserial</source>
+        <target xml:lang="es-ES" state="needs-translation">date_subserial</target>
+      </trans-unit>
+      <trans-unit id="29" resname="subserial">
+        <source>subserial</source>
+        <target xml:lang="es-ES" state="needs-translation">subserial</target>
+      </trans-unit>
+      <trans-unit id="30" resname="multisubserial">
+        <source>multisubserial</source>
+        <target xml:lang="es-ES" state="needs-translation">multisubserial</target>
+      </trans-unit>
+      <trans-unit id="31" resname="manual">
+        <source>manual</source>
+        <target xml:lang="es-ES" state="needs-translation">manual</target>
+      </trans-unit>
+      <trans-unit id="32" resname="publication date ascending">
+        <source>publication date ascending</source>
+        <target xml:lang="es-ES" state="needs-translation">publication date ascending</target>
+      </trans-unit>
+      <trans-unit id="33" resname="publication date descending">
+        <source>publication date descending</source>
+        <target xml:lang="es-ES" state="needs-translation">publication date descending</target>
+      </trans-unit>
+      <trans-unit id="34" resname="recording date descending">
+        <source>recording date descending</source>
+        <target xml:lang="es-ES" state="needs-translation">recording date descending</target>
+      </trans-unit>
+      <trans-unit id="35" resname="recording date ascending">
+        <source>recording date ascending</source>
+        <target xml:lang="es-ES" state="needs-translation">recording date ascending</target>
+      </trans-unit>
+      <trans-unit id="36" resname="title">
+        <source>title</source>
+        <target xml:lang="es-ES" state="needs-translation">title</target>
+      </trans-unit>
+      <trans-unit id="37" resname="WebTV">
+        <source>WebTV</source>
+        <target xml:lang="es-ES" state="needs-translation">WebTV</target>
+      </trans-unit>
+      <trans-unit id="38" resname="Health Sciences">
+        <source>Health Sciences</source>
+        <target xml:lang="es-ES" state="needs-translation">Health Sciences</target>
+      </trans-unit>
+      <trans-unit id="39" resname="Technology">
+        <source>Technology</source>
+        <target xml:lang="es-ES" state="needs-translation">Technology</target>
+      </trans-unit>
+      <trans-unit id="40" resname="Sciences">
+        <source>Sciences</source>
+        <target xml:lang="es-ES" state="needs-translation">Sciences</target>
+      </trans-unit>
+      <trans-unit id="41" resname="Legal">
+        <source>Legal</source>
+        <target xml:lang="es-ES" state="needs-translation">Legal</target>
+      </trans-unit>
+      <trans-unit id="42" resname="Humanities">
+        <source>Humanities</source>
+        <target xml:lang="es-ES" state="needs-translation">Humanities</target>
+      </trans-unit>
+      <trans-unit id="43" resname="Without category">
+        <source>Without category</source>
+        <target xml:lang="es-ES" state="needs-translation">Without category</target>
+      </trans-unit>
+      <trans-unit id="44" resname="Login">
+        <source>Login</source>
+        <target xml:lang="es-ES" state="needs-translation">Login</target>
+      </trans-unit>
+      <trans-unit id="45" resname="Password">
+        <source>Password</source>
+        <target xml:lang="es-ES" state="needs-translation">Password</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -3110,6 +3110,102 @@
         <source>Advanced</source>
         <target>Advanced</target>
       </trans-unit>
+      <trans-unit id="11" resname="Catalogador UNESCO">
+        <source>Catalogador UNESCO</source>
+        <target>Catalogador UNESCO</target>
+      </trans-unit>
+      <trans-unit id="23" resname="Channel">
+        <source>Channel</source>
+        <target>Channel</target>
+      </trans-unit>
+      <trans-unit id="24" resname="Sorting">
+        <source>Sorting</source>
+        <target>Sorting</target>
+      </trans-unit>
+      <trans-unit id="25" resname="Sorting">
+        <source>Sorting</source>
+        <target>Sorting</target>
+      </trans-unit>
+      <trans-unit id="26" resname="date">
+        <source>date</source>
+        <target>date</target>
+      </trans-unit>
+      <trans-unit id="27" resname="date_all">
+        <source>date_all</source>
+        <target>date_all</target>
+      </trans-unit>
+      <trans-unit id="28" resname="date_subserial">
+        <source>date_subserial</source>
+        <target>date_subserial</target>
+      </trans-unit>
+      <trans-unit id="29" resname="subserial">
+        <source>subserial</source>
+        <target>subserial</target>
+      </trans-unit>
+      <trans-unit id="30" resname="multisubserial">
+        <source>multisubserial</source>
+        <target>multisubserial</target>
+      </trans-unit>
+      <trans-unit id="31" resname="manual">
+        <source>manual</source>
+        <target>manual</target>
+      </trans-unit>
+      <trans-unit id="32" resname="publication date ascending">
+        <source>publication date ascending</source>
+        <target>publication date ascending</target>
+      </trans-unit>
+      <trans-unit id="33" resname="publication date descending">
+        <source>publication date descending</source>
+        <target>publication date descending</target>
+      </trans-unit>
+      <trans-unit id="34" resname="recording date descending">
+        <source>recording date descending</source>
+        <target>recording date descending</target>
+      </trans-unit>
+      <trans-unit id="35" resname="recording date ascending">
+        <source>recording date ascending</source>
+        <target>recording date ascending</target>
+      </trans-unit>
+      <trans-unit id="36" resname="title">
+        <source>title</source>
+        <target>title</target>
+      </trans-unit>
+      <trans-unit id="37" resname="WebTV">
+        <source>WebTV</source>
+        <target>WebTV</target>
+      </trans-unit>
+      <trans-unit id="38" resname="Health Sciences">
+        <source>Health Sciences</source>
+        <target>Health Sciences</target>
+      </trans-unit>
+      <trans-unit id="39" resname="Technology">
+        <source>Technology</source>
+        <target>Technology</target>
+      </trans-unit>
+      <trans-unit id="40" resname="Sciences">
+        <source>Sciences</source>
+        <target>Sciences</target>
+      </trans-unit>
+      <trans-unit id="41" resname="Legal">
+        <source>Legal</source>
+        <target>Legal</target>
+      </trans-unit>
+      <trans-unit id="42" resname="Humanities">
+        <source>Humanities</source>
+        <target>Humanities</target>
+      </trans-unit>
+      <trans-unit id="43" resname="Without category">
+        <source>Without category</source>
+        <target>Without category</target>
+      </trans-unit>
+      <trans-unit id="44" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="45" resname="Password">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
