@@ -26,23 +26,23 @@ use Pagerfanta\Pagerfanta;
 class UNESCOController extends Controller implements NewAdminController
 {
     public static $unescoTags = array(
-        'Ciencias de la vida y la salud' => array(
+        'Health Sciences' => array(
             'U310000',
             'U240000',
             'U320000',
             'U610000',
         ),
-        'Tecnologías' => array(
+        'Technology' => array(
             'U330000',
         ),
-        'Ciencias' => array(
+        'Sciences' => array(
             'U210000',
             'U250000',
             'U220000',
             'U120000',
             'U230000',
         ),
-        'Jurídicas' => array(
+        'Legal' => array(
             'U530000',
             'U560000',
             'U590000',
@@ -50,7 +50,7 @@ class UNESCOController extends Controller implements NewAdminController
             'U580000',
             'U630000',
         ),
-        'Humanidades' => array(
+        'Humanities' => array(
             'U510000',
             'U620000',
             'U710000',
@@ -428,11 +428,16 @@ class UNESCOController extends Controller implements NewAdminController
         );
 
         $genreParent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('GENRE');
-        $genres = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($genreParent->getId())));
-        $aGenre = array();
-        foreach ($genres as $genre) {
-            $aGenre[$genre->getCod()] = $genre->getTitle($locale);
+        if($genreParent) {
+            $genres = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($genreParent->getId())));
+            $aGenre = array();
+            foreach ($genres as $genre) {
+                $aGenre[$genre->getCod()] = $genre->getTitle($locale);
+            }
+        } else {
+            $aGenre = array();
         }
+
 
         return array(
             //'form' => $form->createView(),
