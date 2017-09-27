@@ -39,8 +39,7 @@ class SearchController extends Controller implements WebTVController
                             ->execute()->toArray();
         // --- END Get valid series ids ---
         // --- Create QueryBuilder ---
-        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $queryBuilder = $repository_series->createQueryBuilder();
+        $queryBuilder = $this->createSeriesQueryBuilder();
         $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
@@ -96,8 +95,7 @@ class SearchController extends Controller implements WebTVController
         $languageFound = $request->query->get('language');
         // --- END Get Variables --
         // --- Create QueryBuilder ---
-        $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $queryBuilder = $mmobjRepo->createStandardQueryBuilder();
+        $queryBuilder = $this->createMultimediaObjectQueryBuilder();
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->typeQueryBuilder($queryBuilder, $typeFound);
         $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
@@ -304,5 +302,19 @@ class SearchController extends Controller implements WebTVController
         }
 
         return $years;
+    }
+
+    protected function createSeriesQueryBuilder()
+    {
+        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+
+        return $repo->createQueryBuilder();
+    }
+
+    protected function createMultimediaObjectQueryBuilder()
+    {
+        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        return $repo->createStandardQueryBuilder();
     }
 }
