@@ -64,7 +64,7 @@
       {% endfor %}
     </select>
   </div>
-  <div class="form-group col-md-6 col-sm-8 col-xs-12">
+  <div class="form-group col-md-6 col-sm-7 col-xs-12">
     <div class="row">
       {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
       <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
@@ -105,9 +105,9 @@
     </div>
   </div>
 
-  <div class="form-group col-md-2 col-sm-2 col-xs-12">
+  <div class="form-group col-md-2 col-sm-3 col-xs-12">
     <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
-    <input type="button" class="btn btn-default form-control" id="exampleInputEmail1" placeholder="Email" value="{% trans %}Reset filters{% endtrans %}"
+    <input type="button" class="btn btn-default form-control" placeholder="{% trans %}Reset filters{% endtrans %}" value="{% trans %}Reset filters{% endtrans %}"
            onclick="window.location.href=window.location.pathname">
   </div>
 
