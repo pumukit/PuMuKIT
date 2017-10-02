@@ -27,6 +27,7 @@ class PumukitEncoderExtension extends Extension
 
         $container->setParameter('pumukitencode.cpulist', $config['cpus']);
         $container->setParameter('pumukitencode.profilelist', $config['profiles']);
+        $container->setParameter('pumukitencode.target_default_profiles', $config['target_default_profiles']);
         $container->setParameter('pumukitencode.thumbnail.width', $config['thumbnail']['width']);
         $container->setParameter('pumukitencode.thumbnail.height', $config['thumbnail']['height']);
     }

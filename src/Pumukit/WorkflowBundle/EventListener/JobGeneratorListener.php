@@ -23,6 +23,7 @@ class JobGeneratorListener
         $this->jobService = $jobService;
         $this->logger = $logger;
         $this->profiles = $profileService->getProfiles();
+        $this->profileService=$profileService;
     }
 
     public function onJobSuccess(JobEvent $event)
@@ -38,10 +39,11 @@ class JobGeneratorListener
     private function checkMultimediaObject(MultimediaObject $multimediaObject)
     {
         // Only for objects with master
-        if (!$multimediaObject->getMaster(false)) {
+        $master = $multimediaObject->getMaster(false);
+        if (!$master) {
             return;
         }
-
+        
         // Only for non multi-stream objects
         if (null != $multimediaObject->getProperty('opencast')) {
             return;
@@ -53,8 +55,19 @@ class JobGeneratorListener
             return;
         }
 
+        $profile;
+        foreach ($master->getTags() as $profile_tag) {
+            if (strpos($profile_tag, "profile:")!==false) {
+                $profile=$this->profiles[substr($profile_tag, 8)];
+                break;
+            }
+        }
+        if(!$profile){
+            return;
+        }
+
         foreach ($tag->getChildren() as $pubchannel) {
-            if ($multimediaObject->containsTag($pubchannel)) {
+            if ($multimediaObject->containsTag($pubchannel) && strpos($profile["target"], $pubchannel->getCod())===false) {
                 $this->generateJobs($multimediaObject, $pubchannel->getCod());
             }
         }
@@ -66,6 +79,8 @@ class JobGeneratorListener
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
         $jobs = array();
+        $default_profiles = $this->profileService->getDefaultProfiles();
+
         foreach ($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
 
@@ -75,6 +90,18 @@ class JobGeneratorListener
                                             'because it already contains a track created with this profile',
                                             $targetProfile, $multimediaObject->getId()));
                 continue;
+            }
+
+            if (count($default_profiles) !== 0){
+                if(!$default_profiles[$pubChannelCod]){
+                    continue;
+                }
+                if(!$multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]["video"], $targetProfile)===false){
+                    continue;
+                }
+                if($multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]["audio"], $targetProfile)===false){
+                    continue;
+                }
             }
 
             if ((in_array($pubChannelCod, $targets['standard']))
