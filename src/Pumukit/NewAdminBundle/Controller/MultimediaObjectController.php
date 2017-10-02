@@ -415,7 +415,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 return $this->handleView($this->view($formPub));
             }
 
-
             $mms = $this->getListMultimediaObjects($series);
             if (strpos($request->server->get('HTTP_REFERER'), 'mmslist') === false) {
                 return $this->render(

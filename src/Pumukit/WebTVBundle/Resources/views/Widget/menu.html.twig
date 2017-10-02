@@ -24,9 +24,7 @@
         <!-- Live Channels -->
         {% if live_channels['type'] %}
             <!-- Feature with sessions -->
-            {% if live_channels['events'] is empty %}
-                <li>{% trans %}No live events now.{% endtrans %}</li>
-            {% else %}
+            {% if live_channels['events'] is not empty %}
                 {% for live in live_channels['events'] %}
                     <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                         <a href="{{ path('pumukit_live_event_id', {'id': live['data'][0]['multimediaObjectId']}) }}" class="element">
