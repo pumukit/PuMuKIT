@@ -33,8 +33,6 @@ class WidgetController extends Controller implements WebTVController
             $liveEventTypeSession = false;
         }
 
-
-
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
 
         $menuStats = $this->container->getParameter('menu.show_stats');

@@ -428,7 +428,7 @@ class UNESCOController extends Controller implements NewAdminController
         );
 
         $genreParent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('GENRE');
-        if($genreParent) {
+        if ($genreParent) {
             $genres = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($genreParent->getId())));
             $aGenre = array();
             foreach ($genres as $genre) {
@@ -437,7 +437,6 @@ class UNESCOController extends Controller implements NewAdminController
         } else {
             $aGenre = array();
         }
-
 
         return array(
             //'form' => $form->createView(),
