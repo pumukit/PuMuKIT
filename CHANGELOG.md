@@ -4,6 +4,15 @@ Web version of the changelog in http://pumukit.org/pmk-2-x-release-archive/
 To get the diff for a specific change, go to https://github.com/campusdomar/PuMuKIT2/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
+## [2.3.2][2.3.2] (2017-09-15)
+- Configurable imported tag opencast
+
+## [2.3.1][2.3.1] (2017-09-13)
+- Update default permission profiles.
+- Promote viewer user on LDAP integration.
+- Add accessibility.
+- Bug fixes.
+
 ## [2.3.0][2.3.0] (2017-06-09)
 - Advanced MOODLE integration.
 - Micro-Site Support. Create sub-portals (college, library, etc..) in your PuMuKIT video portal
