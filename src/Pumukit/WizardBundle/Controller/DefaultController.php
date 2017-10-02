@@ -75,7 +75,9 @@ class DefaultController extends Controller
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $userSeries = $dm->getRepository('PumukitSchemaBundle:Series')->findUserSeries($user, $reuseAdminSeries);
 
-            usort($userSeries, function($a, $b) use ($request) {return strcmp($a['_id']['title'][$request->getLocale()], $b['_id']['title'][$request->getLocale()]); });
+            usort($userSeries, function ($a, $b) use ($request) {
+                return strcmp($a['_id']['title'][$request->getLocale()], $b['_id']['title'][$request->getLocale()]);
+            });
         }
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
