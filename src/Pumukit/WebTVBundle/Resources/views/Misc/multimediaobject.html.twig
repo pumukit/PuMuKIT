@@ -24,7 +24,11 @@
                         {% endif %}
                     </div>
                     <div class="date mmobj">
-                        {{ object.recordDate|date("d/m/Y") }}
+                        {% if with_publicdate is defined and with_publicdate %}
+                            {{ object.publicDate|date("d/m/Y") }}
+                        {% else %}
+                            {{ object.recordDate|date("d/m/Y") }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

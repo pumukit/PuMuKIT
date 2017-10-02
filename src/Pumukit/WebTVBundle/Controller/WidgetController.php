@@ -25,11 +25,15 @@ class WidgetController extends Controller implements WebTVController
                 }
             }
 
+            $channels = array(); // Not important with advance_live_events
             $liveEventTypeSession = true;
         } else {
-            $events = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+            $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
+            $events = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Event')->findNextEvents();
             $liveEventTypeSession = false;
         }
+
+
 
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
 
@@ -43,8 +47,11 @@ class WidgetController extends Controller implements WebTVController
         self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
             'live_channels' => array(
                 'events' => $events,
+                'channels' => $channels,
                 'type' => $liveEventTypeSession,
             ),
+            'live_events' => $events, // PuMuKIT 2.3.x BC
+            'live_channels' => $channels,  // PuMuKIT 2.3.x BC
             'menu_selected' => $selected,
             'menu_stats' => $menuStats,
             'home_title' => $homeTitle,

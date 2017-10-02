@@ -38,6 +38,10 @@ class FilterListener
 
         if (($controller[0] instanceof WebTVController /*deprecated*/ || $deprecatedCheck)
                 && $isFilterActivated) {
+            if ($this->dm->getFilterCollection()->isEnabled('frontend')) {
+                return;
+            }
+
             $filter = $this->dm->getFilterCollection()->enable('frontend');
 
             if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {

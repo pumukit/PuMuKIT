@@ -9,8 +9,8 @@
 {% if template == "subserial" or template == "date_subserial" %}
   <!-- SUBSERIAL -->
   {% if subserie_title != last_subseriestitle %}
-    <div class="row">
-      <h4 class="text-center"> {{ subserie_title }} </h4>
+    <div class="row subseries_title_wrapper">
+      <h4 class="text-center subseries_title"> {{ subserie_title }} </h4>
     </div>
   {% endif %}
 {% elseif template == "multisubserial" %}

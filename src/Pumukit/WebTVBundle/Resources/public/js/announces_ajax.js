@@ -58,8 +58,8 @@ jQuery(document).ready(function() {
         }
     }
     reloadMoreData();
-    $( window ).scroll( function(){
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + window.innerHeight + $('footer').height() >= $(document).height()) {
             reloadMoreData();
         }
     });

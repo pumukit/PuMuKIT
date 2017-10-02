@@ -68,11 +68,16 @@ class DefaultController extends Controller
         $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
         $reuseSeries = $this->getParameter('pumukit_wizard.reuse_series');
         $userSeries = array();
+
         if ($reuseSeries) {
             $user = $this->getUser();
             $reuseAdminSeries = $this->getParameter('pumukit_wizard.reuse_admin_series');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $userSeries = $dm->getRepository('PumukitSchemaBundle:Series')->findUserSeries($user, $reuseAdminSeries);
+
+            usort($userSeries, function ($a, $b) use ($request) {
+                return strcmp($a['_id']['title'][$request->getLocale()], $b['_id']['title'][$request->getLocale()]);
+            });
         }
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);

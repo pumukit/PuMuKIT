@@ -39,8 +39,7 @@ class SearchController extends Controller implements WebTVController
                             ->execute()->toArray();
         // --- END Get valid series ids ---
         // --- Create QueryBuilder ---
-        $repository_series = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $queryBuilder = $repository_series->createQueryBuilder();
+        $queryBuilder = $this->createSeriesQueryBuilder();
         $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
@@ -59,11 +58,13 @@ class SearchController extends Controller implements WebTVController
         $numberCols = $this->container->getParameter('columns_objs_search');
 
         // --- RETURN ---
-        return array('type' => 'series',
-        'objects' => $pagerfanta,
-        'search_years' => $searchYears,
-        'number_cols' => $numberCols,
-        'total_objects' => $totalObjects, );
+        return array(
+            'type' => 'series',
+            'objects' => $pagerfanta,
+            'search_years' => $searchYears,
+            'number_cols' => $numberCols,
+            'total_objects' => $totalObjects,
+        );
     }
 
     /**
@@ -94,8 +95,7 @@ class SearchController extends Controller implements WebTVController
         $languageFound = $request->query->get('language');
         // --- END Get Variables --
         // --- Create QueryBuilder ---
-        $mmobjRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $queryBuilder = $mmobjRepo->createStandardQueryBuilder();
+        $queryBuilder = $this->createMultimediaObjectQueryBuilder();
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->typeQueryBuilder($queryBuilder, $typeFound);
         $queryBuilder = $this->durationQueryBuilder($queryBuilder, $durationFound);
@@ -123,17 +123,19 @@ class SearchController extends Controller implements WebTVController
         $numberCols = $this->container->getParameter('columns_objs_search');
 
         // --- RETURN ---
-        return array('type' => 'multimediaObject',
-        'template_title' => $templateTitle,
-        'objects' => $pagerfanta,
-        'parent_tag' => $parentTag,
-        'parent_tag_optional' => $parentTagOptional,
-        'tags_found' => $tagsFound,
-        'number_cols' => $numberCols,
-        'languages' => $searchLanguages,
-        'blocked_tag' => $blockedTag,
-        'search_years' => $searchYears,
-        'total_objects' => $totalObjects, );
+        return array(
+            'type' => 'multimediaObject',
+            'template_title' => $templateTitle,
+            'objects' => $pagerfanta,
+            'parent_tag' => $parentTag,
+            'parent_tag_optional' => $parentTagOptional,
+            'tags_found' => $tagsFound,
+            'number_cols' => $numberCols,
+            'languages' => $searchLanguages,
+            'blocked_tag' => $blockedTag,
+            'search_years' => $searchYears,
+            'total_objects' => $totalObjects,
+        );
     }
 
     private function createPager($objects, $page)
@@ -188,7 +190,7 @@ class SearchController extends Controller implements WebTVController
     private function typeQueryBuilder($queryBuilder, $typeFound)
     {
         if ($typeFound != '') {
-            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'Audio');
+            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'audio');
         }
 
         return $queryBuilder;
@@ -300,5 +302,19 @@ class SearchController extends Controller implements WebTVController
         }
 
         return $years;
+    }
+
+    protected function createSeriesQueryBuilder()
+    {
+        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+
+        return $repo->createQueryBuilder();
+    }
+
+    protected function createMultimediaObjectQueryBuilder()
+    {
+        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        return $repo->createStandardQueryBuilder();
     }
 }

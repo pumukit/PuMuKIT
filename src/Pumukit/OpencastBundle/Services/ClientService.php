@@ -193,6 +193,33 @@ class ClientService
     }
 
     /**
+     * Get full media package
+     * from given id.
+     *
+     * @param string $id
+     *
+     * @return array
+     */
+    public function getFullMediapackage($id)
+    {
+        $output = $this->request('/search/episode.json?id='.$id);
+
+        if ($output['status'] !== 200) {
+            return false;
+        }
+        $decode = $this->decodeJson($output['var']);
+
+        if ($decode['search-results']['total'] == 0) {
+            return;
+        }
+        if ($decode['search-results']['limit'] > 1) {
+            return $decode['search-results']['result'][0];
+        } else {
+            return $decode['search-results']['result'];
+        }
+    }
+
+    /**
      * Get media package from archive
      * with given id.
      *

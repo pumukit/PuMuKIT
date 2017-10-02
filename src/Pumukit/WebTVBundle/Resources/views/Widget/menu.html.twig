@@ -36,7 +36,7 @@
             {% endif %}
         {% else %}
             <!-- Feature without sessions -->
-            {% for live in live_channels['events'] %}
+            {% for live in live_channels['channels'] %}
                 <li>
                     <a href="{{ path('pumukit_live_id', {'id': live.id}) }}" class="element">
                         {{ live.name | default('No title'| trans) }}
