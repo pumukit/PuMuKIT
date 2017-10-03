@@ -25,11 +25,11 @@
         {% if advance_live_channels['type'] %}
             <!-- Feature with sessions -->
             {% if advance_live_channels['events'] is not empty %}
-                {% for live in advance_live_channels['events'] %}
+                {% for key, live in advance_live_channels['events'] %}
                     <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                        <a href="{{ path('pumukit_live_event_id', {'id': live['data'][0]['multimediaObjectId']}) }}" class="element">
-                            {{ live['data'][0]['session']['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
-                            {{ live['data'][0]['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
+                        <a href="{{ path('pumukit_live_event_id', {'id': key }) }}" class="element">
+                            {{ live['session'][0]['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
+                            {{ live['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
                         </a>
                     </li>
                 {% endfor %}

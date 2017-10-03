@@ -19,12 +19,31 @@ class WidgetController extends Controller implements WebTVController
         if ($this->container->hasParameter('pumukit_new_admin.advance_live_event') and $this->container->getParameter('pumukit_new_admin.advance_live_event')) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
             $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsGroupBy();
+
+            $menuEvents = array();
             foreach ($events as $key => $event) {
-                if ($event['_id'] == 'past') {
+                if (in_array($event['_id'], array('past', 'future'))) {
                     unset($events[$key]);
+                } elseif ($event['_id'] == 'now') {
+                    foreach ($event['data'] as $session) {
+                        $menuEvents[(string) $session['multimediaObjectId']]['event'] = $session['event'];
+                        $menuEvents[(string) $session['multimediaObjectId']]['session'] = array($session['session']);
+                    }
+                } elseif ($event['_id'] == 'today') {
+                    foreach ($event['data'] as $session) {
+                        if (!array_key_exists((string) $session['multimediaObjectId'], $menuEvents)) {
+                            $menuEvents[(string) $session['multimediaObjectId']]['event'] = $session['event'];
+                            $aSessions[(string) $session['session']['start']] = $session['session'];
+                        }
+                    }
+                    ksort($aSessions);
+                    $menuEvents[(string) $session['multimediaObjectId']]['session'] = array_values(
+                        array_slice($aSessions, 0, 1)
+                    );
                 }
             }
 
+            $events = $menuEvents;
             $channels = array(); // Not important with advance_live_events
             $liveEventTypeSession = true;
         } else {
