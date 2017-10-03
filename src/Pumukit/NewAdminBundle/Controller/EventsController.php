@@ -2,6 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
 use Pumukit\SchemaBundle\Document\Series;
@@ -30,9 +32,13 @@ class EventsController extends Controller
      * @Route("index/", name="pumukit_new_admin_live_event_index")
      * @Template("PumukitNewAdminBundle:LiveEvent:index.html.twig")
      */
-    public function indexEventAction()
+    public function indexEventAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
+
+        if ($request->query->get('page')) {
+            $this->get('session')->set('admin/live/event/page', $request->query->get('page'));
+        }
 
         $aRoles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
         $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
@@ -116,6 +122,8 @@ class EventsController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
+        $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
+
         $criteria['islive'] = true;
         if ($data = $request->query->get('criteria')) {
             if (!empty($data['name'])) {
@@ -134,7 +142,13 @@ class EventsController extends Controller
 
         $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 
-        return array('multimediaObjects' => $multimediaObjects);
+        $adapter = new ArrayAdapter($multimediaObjects);
+        $mms = new Pagerfanta($adapter);
+
+        $mms->setMaxPerPage(10);
+        $mms->setCurrentPage($page);
+
+        return array('multimediaObjects' => $mms);
     }
 
     /**
