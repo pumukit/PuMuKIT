@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -64,7 +65,7 @@ class LiveController extends AdminController implements NewAdminController
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
-        $page = $session->get($session_namespace.'/page', 1);
+        $page = $request->query->get('page') ?: 1;
 
         if ($config->isPaginated()) {
             $resources = $this
