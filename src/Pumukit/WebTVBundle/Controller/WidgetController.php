@@ -43,7 +43,7 @@ class WidgetController extends Controller implements WebTVController
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
         self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
-            'live_channels' => array(
+            'advance_live_channels' => array(
                 'events' => $events,
                 'channels' => $channels,
                 'type' => $liveEventTypeSession,
