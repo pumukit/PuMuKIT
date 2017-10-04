@@ -28,7 +28,7 @@
                 {% for key, live in advance_live_channels['events'] %}
                     <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                         <a href="{{ path('pumukit_live_event_id', {'id': key }) }}" class="element">
-                            {{ live['session'][0]['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
+                            {{ live['sessions'][0]['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
                             {{ live['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
                         </a>
                     </li>

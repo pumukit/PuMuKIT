@@ -18,28 +18,24 @@ class WidgetController extends Controller implements WebTVController
 
         if ($this->container->hasParameter('pumukit_new_admin.advance_live_event') and $this->container->getParameter('pumukit_new_admin.advance_live_event')) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsGroupBy();
-
+            $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsMenu();
             $menuEvents = array();
-            foreach ($events as $key => $event) {
-                if (in_array($event['_id'], array('past', 'future'))) {
-                    unset($events[$key]);
-                } elseif ($event['_id'] == 'now') {
-                    foreach ($event['data'] as $session) {
-                        $menuEvents[(string) $session['multimediaObjectId']]['event'] = $session['event'];
-                        $menuEvents[(string) $session['multimediaObjectId']]['session'] = array($session['session']);
+            $nowOrFuture = false;
+            foreach ($events as $event) {
+                foreach ($event['data'] as $sessionData) {
+                    $start = $sessionData['session']['start']->toDateTime();
+                    $ends = clone $start;
+                    $ends = $ends->add(new \DateInterval('PT'.($sessionData['session']['duration'] / 60).'M'));
+                    if (new \DateTime() < $ends) {
+                        $nowOrFuture = true;
                     }
-                } elseif ($event['_id'] == 'today') {
-                    foreach ($event['data'] as $session) {
-                        if (!array_key_exists((string) $session['multimediaObjectId'], $menuEvents)) {
-                            $menuEvents[(string) $session['multimediaObjectId']]['event'] = $session['event'];
-                            $aSessions[(string) $session['session']['start']] = $session['session'];
-                        }
+
+                    if ($nowOrFuture) {
+                        $menuEvents[(string) $event['_id']] = array();
+                        $menuEvents[(string) $event['_id']]['event'] = $sessionData['event'];
+                        $menuEvents[(string) $event['_id']]['sessions'][] = $sessionData['session'];
+                        $nowOrFuture = false;
                     }
-                    ksort($aSessions);
-                    $menuEvents[(string) $session['multimediaObjectId']]['session'] = array_values(
-                        array_slice($aSessions, 0, 1)
-                    );
                 }
             }
 

@@ -19,10 +19,8 @@
                     </div>
                     <div class="date mmobj">
                         {{ event['event']['description'][app.request.getLocale()] }} <br />
-                        {% if next_event_session(event['event']) != '' %}
-                            {% trans %}Starts {% endtrans %}:
-                            {{ next_event_session(event['event'])|date("d/m/Y") }}
-                        {% endif %}
+                        {% trans %}Starts {% endtrans %}:
+                        {{ event['session']['start']|convertMongoDate| localizeddate('medium','short', app.request.getLocale()) }}
                     </div>
                 </div>
             </div>
