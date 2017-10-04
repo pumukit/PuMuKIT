@@ -54,7 +54,7 @@
         });
 
     } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
-        var nextSessionStarts = "{% if nextSessions is not empty %}{{ nextSessions[0]['data'][0]['session']['start']|convertMongoDate| date('Y/m/d H:i:s') }}{% endif %}";
+        var nextSessionStarts = "{% if nextSessions is not empty %}{{ firstNextSession| date('Y/m/d H:i:s') }}{% endif %}";
         $("#directo-{{ id }}").html(background);
         $("#warning").countdown(nextSessionStarts, function(event) {
             $(this).text(event.strftime('%-d dias %-H:%M:%S'));

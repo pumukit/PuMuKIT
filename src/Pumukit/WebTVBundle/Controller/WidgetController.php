@@ -25,7 +25,7 @@ class WidgetController extends Controller implements WebTVController
                 foreach ($event['data'] as $sessionData) {
                     $start = $sessionData['session']['start']->toDateTime();
                     $ends = clone $start;
-                    $ends = $ends->add(new \DateInterval('PT'.($sessionData['session']['duration'] / 60).'M'));
+                    $ends = $ends->add(new \DateInterval('PT'.(intval($sessionData['session']['duration'] / 60)).'M'.($sessionData['session']['duration'] % 60).'S'));
                     if (new \DateTime() < $ends) {
                         $nowOrFuture = true;
                     }

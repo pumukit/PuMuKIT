@@ -133,8 +133,20 @@ class DefaultController extends Controller
         $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
 
+        $firstNextSession = new \DateTime();
+        $firstNextSession->add(new \DateInterval('P1D'));
+
+        foreach ($nextSessions as $nSession) {
+            foreach ($nSession['data'] as $session) {
+                if (($session['session']['start']->toDateTime() < $firstNextSession) and (new \DateTime() < $session['session']['start']->toDateTime())) {
+                    $firstNextSession = $session['session']['start']->toDateTime();
+                }
+            }
+        }
+
         return array(
             'multimediaObject' => $multimediaObject,
+            'firstNextSession' => $firstNextSession,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
             'captcha_public_key' => $captchaPublicKey,
