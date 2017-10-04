@@ -635,6 +635,9 @@ class JobService
         if ($profile['master']) {
             $track->addTag('master');
         }
+        if ($profile['downloadable']) {
+            $track->setAllowDownload(true);
+        }
         if ($profile['display']) {
             $track->addTag('display');
         }

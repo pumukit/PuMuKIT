@@ -53,6 +53,8 @@ class Configuration implements ConfigurationInterface
                                 ->info('Shown in wizard')->end()
                             ->booleanNode('master')->defaultValue(true)
                                 ->info('The track is master copy')->end()
+                            ->booleanNode('downloadable')->defaultValue(false)
+                                ->info('The track generated is downloadable')->end()
                             //Used in JobGeneratorListener
                             ->scalarNode('target')->defaultValue('')
                                 ->info('Profile is used to generate a new track when a multimedia object is tagged with a publication channel tag name with this value. List of names')->end()
