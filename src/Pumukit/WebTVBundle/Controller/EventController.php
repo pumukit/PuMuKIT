@@ -17,6 +17,9 @@ class EventController extends Controller implements WebTVController
      */
     public function indexAction()
     {
+        $translator = $this->get('translator');
+        $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
+
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
 
@@ -66,5 +69,11 @@ class EventController extends Controller implements WebTVController
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($id);
 
         return array('events' => $events, 'sessionlist' => true, 'defaultPic' => $defaultPic);
+    }
+
+    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+    {
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 }

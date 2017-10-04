@@ -76,7 +76,8 @@ class DefaultController extends Controller
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
         if ($multimediaObject->isLive()) {
-            $this->updateBreadcrumbs($multimediaObject->getEmbeddedEvent()->getName(), 'pumukit_live_event_id', array('id' => $multimediaObject->getId()));
+            $translator = $this->get('translator');
+            $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
         } else {
