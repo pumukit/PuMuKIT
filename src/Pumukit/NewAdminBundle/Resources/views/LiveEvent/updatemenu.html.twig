@@ -30,23 +30,3 @@
         </li>
     </ul>
 </div>
-
-<script type="text/javascript">
-    $('.event_option').on('click', function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: $(this).data('href'),
-            method: 'POST',
-            success: function () {
-                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                $('#list_events').load(mm);
-                var message = '{% trans %}Event successfully updated.{% endtrans %}';
-                success(message);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + textStatus);
-            }
-        });
-        return false;
-    });
-</script>
