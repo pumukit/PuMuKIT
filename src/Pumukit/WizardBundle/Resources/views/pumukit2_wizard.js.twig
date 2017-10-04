@@ -26,8 +26,17 @@ $(function(){
             if(multimediaobjectForm == null)
             {
                 var multimediaobjectForm = $('#pumukitwizard_track_form')[0];
-                var url = "{{ path('pumukitwizard_default_type',{'id': 'null'})|raw }}";
-                window.location.href = url;
+                if (multimediaobjectForm) {
+                    try {
+                        multimediaobjectForm.enctype = "";
+                    } catch (e) {
+                        /* DO NOTHING: IE9 Workaround */
+                    }
+                    multimediaobjectForm.target = "";
+                } else {
+                    var url = "{{ path('pumukitwizard_default_type',{'id': 'null'})|raw }}";
+                    window.location.href = url;
+                }
             }
             var route = "{{ path('pumukitwizard_default_type', {'id': '__seriesId__'})|raw }}";
             var seriesId = $('#pumukitwizard_series_id').val();
