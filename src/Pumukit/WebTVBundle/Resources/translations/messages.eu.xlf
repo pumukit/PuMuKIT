@@ -135,17 +135,11 @@
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos" approved="yes">
         <source>Videos</source>
-        <target xml:lang="eu">Bideoak</target>
-        <alt-trans>
-          <target xml:lang="eu">Vídeos</target>
-        </alt-trans>
+        <target xml:lang="eu">Bideo</target>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours" approved="yes">
         <source>Hours</source>
-        <target xml:lang="eu">Horas</target>
-        <alt-trans>
-          <target xml:lang="eu">Orduak</target>
-        </alt-trans>
+        <target xml:lang="eu">Ordu</target>
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications" approved="yes">
         <source>There are no videos with these specifications</source>
@@ -353,20 +347,11 @@
       </trans-unit>
       <trans-unit id="132482b5ee2d95cfcbe8ae9b288c047b" resname="{0}no videos yet|{1}1 video|]1,Inf[%count% videos">
         <source>{0}no videos yet|{1}1 video|]1,Inf[%count% videos</source>
-        <target xml:lang="eu" state="translated">{0}oraindik ez daude bideorik|{1}1 video|]1,Inf[%count% videos</target>
-        <alt-trans>
-          <target xml:lang="eu">{0}aún no hay vídeos|{1}1 video|]1,Inf[%count% videos</target>
-        </alt-trans>
+        <target xml:lang="eu" state="translated">{0}oraindik ez daude bideorik|{1}bideo 1|]1,Inf[%count% bideo</target>
       </trans-unit>
       <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
         <source>Categories</source>
         <target xml:lang="eu" state="translated">Kategoriak</target>
-        <alt-trans>
-          <target xml:lang="eu">Kategoria</target>
-        </alt-trans>
-        <alt-trans>
-          <target xml:lang="eu">Categorías</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
         <source>Most viewed</source>
