@@ -80,6 +80,11 @@ class Series
     private $series_type;
 
     /**
+     * @MongoDB\ReferenceOne(targetDocument="SeriesStyle", inversedBy="series", simple=true, cascade={"persist"})
+     */
+    private $series_style;
+
+    /**
      * Legacy: It is kept for compatibility issues.
      *
      * @var ArrayCollection
@@ -284,6 +289,26 @@ class Series
     public function getSeriesType()
     {
         return $this->series_type;
+    }
+
+    /**
+     * Set series_style.
+     *
+     * @param SeriesStyle $series_style
+     */
+    public function setSeriesStyle(SeriesStyle $series_style)
+    {
+        $this->series_style = $series_style;
+    }
+
+    /**
+     * Get series_style.
+     *
+     * @return SeriesStyle
+     */
+    public function getSeriesStyle()
+    {
+        return $this->series_style;
     }
 
     /**
