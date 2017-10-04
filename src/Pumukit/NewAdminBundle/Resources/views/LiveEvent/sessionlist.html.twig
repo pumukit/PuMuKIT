@@ -12,6 +12,9 @@
                 {% for session in multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() %}
                     <tr>
                         <td>
+                            <a class="clone_session" data-href="{{ path('pumukit_new_admin_live_event_clone_session', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}">
+                                <i class="mdi-content-content-copy"></i>
+                            </a>
                             <a class="edit_session" data-path="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}" href="#" title="{% trans %}Edit session{% endtrans %}" data-session_id="" data-toggle="modal" data-target="#updatesessionmodal">
                                 <i class="mdi-editor-mode-edit"></i>
                             </a>
@@ -60,4 +63,28 @@
     $('.edit_session').on('click', function(event) {
        $('.modal-session').load($(this).data('path'));
     });
+
+    $('.clone_session').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: $(this).data('href'),
+            method: 'POST',
+            success: function (response, textStatus, jqXHR) {
+                if (jqXHR.responseText.indexOf('modal-header') != -1) {
+                    var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                    no_success(message);
+                } else {
+                    var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
+                    $('#list_live_events').load(mm);
+                    var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + textStatus);
+            }
+
+        });
+        return false;
+    })
 </script>

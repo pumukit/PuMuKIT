@@ -573,6 +573,39 @@ class EventsController extends Controller
     }
 
     /**
+     * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
+     * @Template("PumukitNewAdminBundle:LiveEvent:sessionlist.html.twig")
+     *
+     * @param $multimediaObject
+     * @param $session_id
+     *
+     * @return JsonResponse
+     */
+    public function sessionCloneAction($multimediaObject, $session_id)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+            new \MongoId($multimediaObject)
+        );
+        foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
+            if ($session->getId() == $session_id) {
+                $newSession = new EmbeddedEventSession();
+                $newSession->setDuration($session->getDuration());
+                $date = clone $session->getStart();
+                $date->add(new \DateInterval('P1D'));
+                $newSession->setStart($date);
+                $dm->persist($newSession);
+                $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($newSession);
+            }
+        }
+
+        $dm->flush();
+
+        return new JsonResponse(array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()));
+    }
+
+    /**
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
      *
