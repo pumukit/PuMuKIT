@@ -152,14 +152,14 @@ class ProfileService
             }
         }
     }
-    
+
     /**
-     * Get target default profiles
+     * Get target default profiles.
      */
     public function getDefaultProfiles()
     {
         if (is_null($this->default_profiles)) {
-            throw new \InvalidArgumentException("No target default profiles.");
+            throw new \InvalidArgumentException('No target default profiles.');
         } else {
             return $this->default_profiles;
         }

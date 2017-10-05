@@ -174,9 +174,9 @@ class Configuration implements ConfigurationInterface
      *
      * @param ArrayNodeDefinition $node
      */
-     public function addTargetDefaultProfiles(ArrayNodeDefinition $node)
-     {
-         $node
+    public function addTargetDefaultProfiles(ArrayNodeDefinition $node)
+    {
+        $node
              ->children()
                  ->arrayNode('target_default_profiles')
                     ->normalizeKeys(false)
@@ -191,5 +191,5 @@ class Configuration implements ConfigurationInterface
                  ->end()
              ->end()
          ;
-     }
+    }
 }

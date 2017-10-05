@@ -23,7 +23,7 @@ class JobGeneratorListener
         $this->jobService = $jobService;
         $this->logger = $logger;
         $this->profiles = $profileService->getProfiles();
-        $this->profileService=$profileService;
+        $this->profileService = $profileService;
     }
 
     public function onJobSuccess(JobEvent $event)
@@ -43,7 +43,7 @@ class JobGeneratorListener
         if (!$master) {
             return;
         }
-        
+
         // Only for non multi-stream objects
         if (null != $multimediaObject->getProperty('opencast')) {
             return;
@@ -57,17 +57,17 @@ class JobGeneratorListener
 
         $profile;
         foreach ($master->getTags() as $profile_tag) {
-            if (strpos($profile_tag, "profile:")!==false) {
-                $profile=$this->profiles[substr($profile_tag, 8)];
+            if (strpos($profile_tag, 'profile:') !== false) {
+                $profile = $this->profiles[substr($profile_tag, 8)];
                 break;
             }
         }
-        if(!$profile){
+        if (!$profile) {
             return;
         }
 
         foreach ($tag->getChildren() as $pubchannel) {
-            if ($multimediaObject->containsTag($pubchannel) && strpos($profile["target"], $pubchannel->getCod())===false) {
+            if ($multimediaObject->containsTag($pubchannel) && strpos($profile['target'], $pubchannel->getCod()) === false) {
                 $this->generateJobs($multimediaObject, $pubchannel->getCod());
             }
         }
@@ -92,14 +92,14 @@ class JobGeneratorListener
                 continue;
             }
 
-            if (count($default_profiles) !== 0){
-                if(!$default_profiles[$pubChannelCod]){
+            if (count($default_profiles) !== 0) {
+                if (!$default_profiles[$pubChannelCod]) {
                     continue;
                 }
-                if(!$multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]["video"], $targetProfile)===false){
+                if (!$multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]['video'], $targetProfile) === false) {
                     continue;
                 }
-                if($multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]["audio"], $targetProfile)===false){
+                if ($multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]['audio'], $targetProfile) === false) {
                     continue;
                 }
             }
