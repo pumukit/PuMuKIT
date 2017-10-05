@@ -1,6 +1,8 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 
 {% block body %}
+    <h1>{% trans %}Cat. UNESCO{% endtrans %}</h1>
+    
     <div class="col-md-2">
         <div class="well" id="tag_list_unesco">
             {% render(controller('PumukitNewAdminBundle:UNESCO:menuTags')) %}
@@ -87,7 +89,7 @@
                 url: '{{ path('pumukitnewadmin_unesco_removesession') }}',
                 method: 'POST',
                 success: function (response) {
-                    $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}")
+                    location.reload();
                 }
             });
             return false;
