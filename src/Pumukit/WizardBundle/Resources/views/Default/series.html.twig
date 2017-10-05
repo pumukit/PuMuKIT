@@ -33,6 +33,8 @@
         </div>
       </div>
       {# add checkbox #}
+      {% else %}
+      <input type="hidden" name="pumukitwizard_form_data[series][new]" value="1" />
       {% endif %}
       <div class="col-md-10">
         <div class="form-group" id="pumukitwizard_series_new_i18n_title">
