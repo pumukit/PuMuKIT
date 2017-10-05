@@ -76,9 +76,10 @@ class DefaultController extends Controller
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $sessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $nextSession = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
 
-        if (count($sessions) > 0) {
+        if (count($nextSession) > 0 or count($nowSessions) > 0) {
             $translator = $this->get('translator');
             $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
@@ -142,15 +143,21 @@ class DefaultController extends Controller
         }
 
         $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
-        $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $firstNowSessionEnds = new \DateTime();
+        $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
+        foreach ($nowSessions as $session) {
+            $firstNowSessionEnds = ($session['data'][0]['session']['start']->sec + $session['data'][0]['session']['duration']) * 1000;
+            break;
+        }
 
+        $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
         $firstNextSession = new \DateTime();
         $firstNextSession->add(new \DateInterval('P1D'));
-
+        $date = new \DateTime();
         foreach ($nextSessions as $nSession) {
             foreach ($nSession['data'] as $session) {
-                if (($session['session']['start']->toDateTime() < $firstNextSession) and (new \DateTime() < $session['session']['start']->toDateTime())) {
-                    $firstNextSession = $session['session']['start']->toDateTime();
+                if (($session['session']['start']->sec < $firstNextSession->format('U')) and ($date->format('U') < $session['session']['start']->sec)) {
+                    $firstNextSession = $session['session']['start']->sec * 1000;
                 }
             }
         }
@@ -158,6 +165,7 @@ class DefaultController extends Controller
         return array(
             'multimediaObject' => $multimediaObject,
             'firstNextSession' => $firstNextSession,
+            'firstNowSessionEnds' => $firstNowSessionEnds,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
             'captcha_public_key' => $captchaPublicKey,
