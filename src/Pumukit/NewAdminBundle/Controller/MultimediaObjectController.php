@@ -1111,7 +1111,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $specialTranslationService = $this->get('pumukitschema.special_translation');
-        $broadcasts = $embeddedBroadcastService->getAllTypes();
+        if ($multimediaObject->isLive()) {
+            $broadcasts = $embeddedBroadcastService->getAllTypes(true);
+        } else {
+            $broadcasts = $embeddedBroadcastService->getAllTypes();
+        }
         $allGroups = $this->getAllGroups();
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {

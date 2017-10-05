@@ -128,10 +128,25 @@ class EmbeddedBroadcastService
     /**
      * Get all broadcast types.
      *
+     * @param bool $live
+     *
      * @return array
      */
-    public function getAllTypes()
+    public function getAllTypes($live = false)
     {
+        if ($live) {
+            if ($this->disabledBroadcast) {
+                return array(
+                    EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                );
+            }
+
+            return array(
+                EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+                EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
+            );
+        }
+
         if ($this->disabledBroadcast) {
             return array(
                          EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
