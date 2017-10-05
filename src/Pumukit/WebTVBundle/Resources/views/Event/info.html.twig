@@ -41,7 +41,7 @@
                 {% for material in multimediaObject.getMaterials() if not material.getHide() %}
                     <div id="material">
                         <span class="glyphicon glyphicon-paperclip"></span>
-                        <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                        <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
                     </div>
                 {% else %}
                     <strong>{% trans %} There are no attachments {% endtrans %}</strong>

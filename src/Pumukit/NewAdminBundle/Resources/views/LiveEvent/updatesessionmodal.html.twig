@@ -39,27 +39,35 @@
 <script type="text/javascript">
     $('#event_session_form').on('submit',function(event){
         event.preventDefault();
-        $('#updatesessionmodal').modal('hide');
-        $.ajax({
-            url: '{{ path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId() }) }}',
-            method: 'POST',
-            data: $('#event_session_form').serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
-                    no_success(message);
-                } else {
-                    var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
-                    $('#list_live_events').load(mm);
-                    $('#updatesessionmodal').hide();
-                    var message = '{% trans %}Live session successfully updated.{% endtrans %}';
-                    success(message);
+
+        var start = $('#pumukitnewadmin_event_session_start').val();
+        var end = $('#pumukitnewadmin_event_session_duration').val();
+
+        if(start <= end) {
+            $('#updatesessionmodal').modal('hide');
+            $.ajax({
+                url: '{{ path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId() }) }}',
+                method: 'POST',
+                data: $('#event_session_form').serialize(),
+                success: function (response, textStatus, jqXHR) {
+                    if (jqXHR.responseText.indexOf('modal-header') != -1) {
+                        var message = '{% trans %}There was an error in updating the event session.{% endtrans %}';
+                        no_success(message);
+                    } else {
+                        var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
+                        $('#list_live_events').load(mm);
+                        $('#updatesessionmodal').hide();
+                        var message = '{% trans %}Live session successfully updated.{% endtrans %}';
+                        success(message);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + textStatus);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown + ': ' + textStatus);
-            }
-        });
-        return false;
+            });
+            return false;
+        } else {
+            no_success('{% trans %}Session must start before ends{% endtrans %}');
+        }
     });
 </script>

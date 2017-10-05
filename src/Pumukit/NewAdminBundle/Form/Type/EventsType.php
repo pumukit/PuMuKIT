@@ -48,7 +48,7 @@ class EventsType extends AbstractType
             ->add('display', CheckboxType::class,
                 array(
                     'required' => false,
-                    'label' => $this->translator->trans('Display', array(), null, $this->locale), ))
+                    'label' => $this->translator->trans('Announce', array(), null, $this->locale), ))
             ->add('create_serial', 'hidden',
                 array(
                     'required' => false,

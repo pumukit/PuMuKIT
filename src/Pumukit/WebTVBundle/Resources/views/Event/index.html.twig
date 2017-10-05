@@ -4,7 +4,7 @@
 
     <h1 class="titulo_widget">{% trans %}Events{% endtrans %}</h1>
 
-    {% if events is empty %}
+    {% if eventsNow is empty and eventsToday is empty %}
         <div class="row">
             <div class="col-xs-12" style="margin-top:20px;">
                 <p>
@@ -15,16 +15,16 @@
             </div>
         </div>
     {% else %}
-        {% for key, block in events %}
+        {% if eventsNow|length > 0 %}
             <div class="row">
                 <div class="col-xs-12">
                     <ul>
                         <li class="categories_list" style="list-style-type: none; margin-top: 0px;">
                             <div class="unedtv_mmobjs unedtv_series">
                                 <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
-                                    <h6 class="uned_announces_title">{{ block['_id'] }}</h6>
-                                    {% for event in block['data'] %}
-                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': event, 'defaultPic' : defaultPic} %}
+                                    <h6 class="uned_announces_title">{% trans %}Now events{% endtrans %}</h6>
+                                    {% for eventNow in eventsNow %}
+                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventNow['data'][0], 'defaultPic' : defaultPic} %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -33,7 +33,52 @@
                     </ul>
                 </div>
             </div>
-        {% endfor %}
+        {% endif %}
+
+        {% if eventsToday|length > 0 %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="categories_list" style="list-style-type: none; margin-top: 0px;">
+                            <div class="unedtv_mmobjs unedtv_series">
+                                <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
+                                    <h6 class="uned_announces_title">{% trans %}Today events{% endtrans %}</h6>
+                                    {% for eventToday in eventsToday %}
+                                        {% if eventToday['data'][0] is defined %}
+                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventToday['data'][0], 'defaultPic' : defaultPic} %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div style="width:100%"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if eventsFuture|length > 0 %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="categories_list" style="list-style-type: none; margin-top: 0px;">
+                            <div class="unedtv_mmobjs unedtv_series">
+                                <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
+                                    <h6 class="uned_announces_title">{% trans %}Future events{% endtrans %}</h6>
+                                    {% for eventFuture in eventsFuture %}
+                                        {% if eventFuture['data'][0] is defined %}
+                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventFuture['data'][0], 'defaultPic' : defaultPic} %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div style="width:100%"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
     {% endif %}
 
 {% endblock %}

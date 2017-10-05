@@ -1,5 +1,5 @@
 <div class="well">
-    <table class="table table-responsive">
+    <table class="table  table-striped">
         <thead>
         <tr>
             <th id="th-checkbox" width="1%">
@@ -21,7 +21,7 @@
         {% for multimediaObject in multimediaObjects %}
             {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
             {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
-            <tr class="active">
+            <tr>
                 <td headers="th-checkbox" width="1%">
                     <div class="checkbox">
                         <label>
@@ -47,7 +47,31 @@
                 <td headers="th-public" width="2%">{{ multimediaObject.getEmbeddedEvent().display ? 'Yes' : 'No' }}</td>
             </tr>
         {% endfor %}
+        {% if (multimediaObjects.currentPageResults|length) < 10 %}
+            {% for i in (multimediaObjects.currentPageResults|length) .. 9 %}
+                <tr>
+                    <td colspan="7">&nbsp;</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9" class="foot-td">
+                    <div class="col-md-8">
+                        {{ multimediaObjects|length }} {% trans %}Mm. Obj.{% endtrans %}
+                        {% if app.session.get('admin/live/criteria')|length != 0%}
+                            <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <div class="pagerfanta">
+                            {{ pagerfanta(multimediaObjects, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"}) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
@@ -62,5 +86,24 @@
             $('#edit_events').load(url);
             $('#preview_events').load(showUrl);
         }
+    });
+
+    $('.event_option').on('click', function (event) {
+        event.preventDefault();
+        console.log($(this).data('href'));
+        $.ajax({
+            url: $(this).data('href'),
+            method: 'POST',
+            success: function () {
+                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                $('#list_events').load(mm);
+                var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                success(message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + textStatus);
+            }
+        });
+        return false;
     });
 </script>

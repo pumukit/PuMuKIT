@@ -18,13 +18,28 @@ class WidgetController extends Controller implements WebTVController
 
         if ($this->container->hasParameter('pumukit_new_admin.advance_live_event') and $this->container->getParameter('pumukit_new_admin.advance_live_event')) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsGroupBy();
-            foreach ($events as $key => $event) {
-                if ($event['_id'] == 'past') {
-                    unset($events[$key]);
+            $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsMenu();
+            $menuEvents = array();
+            $nowOrFuture = false;
+            foreach ($events as $event) {
+                foreach ($event['data'] as $sessionData) {
+                    $start = $sessionData['session']['start']->toDateTime();
+                    $ends = clone $start;
+                    $ends = $ends->add(new \DateInterval('PT'.(intval($sessionData['session']['duration'] / 60)).'M'.($sessionData['session']['duration'] % 60).'S'));
+                    if (new \DateTime() < $ends) {
+                        $nowOrFuture = true;
+                    }
+
+                    if ($nowOrFuture) {
+                        $menuEvents[(string) $event['_id']] = array();
+                        $menuEvents[(string) $event['_id']]['event'] = $sessionData['event'];
+                        $menuEvents[(string) $event['_id']]['sessions'][] = $sessionData['session'];
+                        $nowOrFuture = false;
+                    }
                 }
             }
 
+            $events = $menuEvents;
             $channels = array(); // Not important with advance_live_events
             $liveEventTypeSession = true;
         } else {
@@ -43,7 +58,7 @@ class WidgetController extends Controller implements WebTVController
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
         self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
-            'live_channels' => array(
+            'advance_live_channels' => array(
                 'events' => $events,
                 'channels' => $channels,
                 'type' => $liveEventTypeSession,

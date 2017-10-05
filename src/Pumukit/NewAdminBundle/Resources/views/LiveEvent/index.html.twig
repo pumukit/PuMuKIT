@@ -139,11 +139,11 @@
                     method: 'POST',
                     data: $('#seriesSuggestValidate'),
                     success: function () {
+                        $('#seriesModal').modal('hide');
                         var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
                         $('#list_events').load(mm);
 
                         $('#seriesSuggestValidate').val("");
-                        $('#seriesModal').hide();
                         var message = '{% trans %}Event successfully updated.{% endtrans %}';
                         success(message);
                     },

@@ -70,7 +70,10 @@
             url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'id' : multimediaObject.id}) }}",
             type: 'POST',
             data: $(this).serialize(),
-            success: function(response){$('#tracks_mms_{{ multimediaObject.id }}').html(response);}
+            success: function(response){
+                $('#tracks_mms_{{ multimediaObject.id }}').html(response);
+                $('#edit_mms').load();
+            }
         });
         return false;
     })

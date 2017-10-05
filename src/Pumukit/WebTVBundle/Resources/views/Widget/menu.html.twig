@@ -22,21 +22,21 @@
         </li>
 
         <!-- Live Channels -->
-        {% if live_channels['type'] %}
+        {% if advance_live_channels['type'] %}
             <!-- Feature with sessions -->
-            {% if live_channels['events'] is not empty %}
-                {% for live in live_channels['events'] %}
+            {% if advance_live_channels['events'] is not empty %}
+                {% for key, live in advance_live_channels['events'] %}
                     <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                        <a href="{{ path('pumukit_live_event_id', {'id': live['data'][0]['multimediaObjectId']}) }}" class="element">
-                            {{ live['data'][0]['session']['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
-                            {{ live['data'][0]['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
+                        <a href="{{ path('pumukit_live_event_id', {'id': key }) }}" class="element">
+                            {{ live['sessions'][0]['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
+                            {{ live['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
                         </a>
                     </li>
                 {% endfor %}
             {% endif %}
         {% else %}
             <!-- Feature without sessions -->
-            {% for live in live_channels['channels'] %}
+            {% for live in advance_live_channels['channels'] %}
                 <li>
                     <a href="{{ path('pumukit_live_id', {'id': live.id}) }}" class="element">
                         {{ live.name | default('No title'| trans) }}

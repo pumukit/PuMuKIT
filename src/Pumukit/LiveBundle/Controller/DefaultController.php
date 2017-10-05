@@ -75,13 +75,26 @@ class DefaultController extends Controller
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($multimediaObject->isLive()) {
-            $this->updateBreadcrumbs($multimediaObject->getEmbeddedEvent()->getName(), 'pumukit_live_event_id', array('id' => $multimediaObject->getId()));
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $nextSession = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
+
+        if (count($nextSession) > 0 or count($nowSessions) > 0) {
+            $translator = $this->get('translator');
+            $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
         } else {
             $series = $multimediaObject->getSeries();
-            if (1 === count($series->getMultimediaObjects())) {
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+                ->field('tags.cod')->equals('PUCHWEBTV')
+                ->field('series')->equals(new \MongoId($series->getId()))
+                ->getQuery()->execute();
+            if (count($multimediaObjects) == 1) {
+                $multimediaObjects->next();
+                $multimediaObject = $multimediaObjects->current();
+
                 return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
             } else {
                 return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
@@ -130,10 +143,29 @@ class DefaultController extends Controller
         }
 
         $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
+        $firstNowSessionEnds = new \DateTime();
+        $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
+        foreach ($nowSessions as $session) {
+            $firstNowSessionEnds = ($session['data'][0]['session']['start']->sec + $session['data'][0]['session']['duration']) * 1000;
+            break;
+        }
+
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+        $firstNextSession = new \DateTime();
+        $firstNextSession->add(new \DateInterval('P1D'));
+        $date = new \DateTime();
+        foreach ($nextSessions as $nSession) {
+            foreach ($nSession['data'] as $session) {
+                if (($session['session']['start']->sec < $firstNextSession->format('U')) and ($date->format('U') < $session['session']['start']->sec)) {
+                    $firstNextSession = $session['session']['start']->sec * 1000;
+                }
+            }
+        }
 
         return array(
             'multimediaObject' => $multimediaObject,
+            'firstNextSession' => $firstNextSession,
+            'firstNowSessionEnds' => $firstNowSessionEnds,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
             'captcha_public_key' => $captchaPublicKey,
