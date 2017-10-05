@@ -259,8 +259,11 @@ class UNESCOController extends Controller implements NewAdminController
             }
         }
 
-        if (!empty($tag) and $tag[0] != 'all') {
-            $newCriteria['tags.cod'] = array('$all' => $tag);
+        if (!empty($tag)) {
+            array_shift($tag);
+            if (!empty($tag)) {
+                $newCriteria['tags.cod'] = array('$all' => $tag);
+            }
         }
 
         $session->set('UNESCO/form', $criteria);
