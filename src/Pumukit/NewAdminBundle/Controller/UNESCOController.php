@@ -259,7 +259,7 @@ class UNESCOController extends Controller implements NewAdminController
             }
         }
 
-        if (!empty($tag)) {
+        if (!empty($tag) and $tag[0] != 'all') {
             $newCriteria['tags.cod'] = array('$all' => $tag);
         }
 
