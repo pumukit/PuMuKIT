@@ -75,14 +75,25 @@ class DefaultController extends Controller
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($multimediaObject->isLive()) {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $sessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
+
+        if (count($sessions) > 0) {
             $translator = $this->get('translator');
             $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
         } else {
             $series = $multimediaObject->getSeries();
-            if (1 === count($series->getMultimediaObjects())) {
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+                ->field('tags.cod')->equals('PUCHWEBTV')
+                ->field('series')->equals(new \MongoId($series->getId()))
+                ->getQuery()->execute();
+            if (count($multimediaObjects) == 1) {
+                $multimediaObjects->next();
+                $multimediaObject = $multimediaObjects->current();
+
                 return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
             } else {
                 return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
