@@ -34,8 +34,7 @@
                         <h3 class="panel-title-preview panel-title">Tags {{ unescoTag.getTitle() }} </h3>
                     </div>
                     <div class="panel-body-preview panel-body">
-                        <div id="list_unesco" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
-
+                        <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
                             {% for mtag in mm.tags if mtag.level == 3 and mtag.isChildOf(unescoTag) %}
                                 <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="true">
                                     <span class="label label-default">{{ mtag.title }} |
