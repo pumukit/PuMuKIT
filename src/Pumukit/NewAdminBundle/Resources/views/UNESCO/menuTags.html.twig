@@ -5,8 +5,10 @@
 
 <ul id="tagList" class="list-unstyled">
 
+
     {% for tagDefault in defaultTagOptions %}
-        <li style="padding:5px;" id="children_{{ tagDefault['key'] }}" data-tag="{{ tagDefault['key'] }}" draggable="false" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}" class="unescoTags unescoTagsNoSave" >
+        <li style="padding:5px;
+        {% if (app.session.get('admin/unesco/tag') == tagDefault['key']) or (not app.session.get('admin/unesco/tag') and tagDefault['key'] == 2 )%}background-color:#EAEAEA{% endif %}" id="children_{{ tagDefault['key'] }}" data-tag="{{ tagDefault['key'] }}" draggable="false" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}" class="unescoTags unescoTagsNoSave" >
             <a href="#" title="{{ tagDefault['title'] }}" style="color:rgba(0,0,0,.84); text-decoration:none;">
                 <span class="mdi-file-folder"></span> <strong  draggable="false">{{ tagDefault['title'] }} [{{ tagDefault['count'] }}]</strong>
             </a>
