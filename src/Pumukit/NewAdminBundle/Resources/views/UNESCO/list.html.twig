@@ -62,7 +62,7 @@
                 <tr style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
                     <td headers="th-checkbox">
                         <div class="checkbox pumukit-mms-checkbox">
-                            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragend="dragEndCheckbox(this,event)">
+                            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragenter="$('.draggableTag').css('background-color','#beebff');" ondragend="dragEndCheckbox(this,event)">
                                 <input data-id="{{ mm.id }}" id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
                             </label>
                         </div>
@@ -185,6 +185,7 @@
     }
 
     function dragEndCheckbox(item, event) {
+        $('.draggableTag').css('background-color','transparent');
         item.style.opacity = '';
     }
 
