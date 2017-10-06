@@ -21,7 +21,7 @@ class ProfileService
     /**
      * Constructor.
      */
-    public function __construct(array $profiles, array $default_profiles, DocumentManager $documentManager)
+    public function __construct(array $profiles, DocumentManager $documentManager, array $default_profiles = array())
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
