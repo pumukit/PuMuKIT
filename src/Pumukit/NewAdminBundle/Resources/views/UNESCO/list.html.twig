@@ -59,10 +59,10 @@
             <tbody>
             {% for mm in mms %}
 
-                <tr style="cursor: pointer" {% if(app.session.get('admin/mms/id') == mm.id ) %} class="success" {% endif %}>
+                <tr style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
                     <td headers="th-checkbox">
                         <div class="checkbox pumukit-mms-checkbox">
-                            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragend="dragEndCheckbox(this,event)">
+                            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragenter="$('.draggableTag').css('background-color','#beebff');" ondragend="dragEndCheckbox(this,event)">
                                 <input data-id="{{ mm.id }}" id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
                             </label>
                         </div>
@@ -172,7 +172,7 @@
     function getAllDnDChecked(item, event) {
         var data = [];
         var i = 0;
-        $("input:checkbox:checked").each(function() {
+        $("input.mm_checkbox:checkbox:checked").each(function() {
              data.push($(this).data('id'));
              i = i + 1;
         });
@@ -180,12 +180,12 @@
         var dragIcon = document.createElement('img');
         dragIcon.src = document.getElementById('dnd_image_' + i).src;
         dragIcon.width = 35;
-        event.dataTransfer.setDragImage(dragIcon, 0, 0)
-
+        event.dataTransfer.setDragImage(dragIcon, 0, 0);
         event.dataTransfer.setData('data', data);
     }
 
     function dragEndCheckbox(item, event) {
+        $('.draggableTag').css('background-color','transparent');
         item.style.opacity = '';
     }
 
