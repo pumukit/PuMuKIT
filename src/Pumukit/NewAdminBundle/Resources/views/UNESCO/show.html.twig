@@ -13,6 +13,14 @@
                 {% trans %}Is part of {% endtrans %}:
                 <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
             </p>
+            <p>
+                {% trans %}Show video on WebTV{% endtrans %}.
+                {% if mm.getStatus() == 0 %}
+                    <a target="_black" href="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}"></a>.
+                {% elseif mm.getStatus == 2 %}
+                    <a target="_black" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {id: mm.getSecret() }) }}"></a>.
+                {% endif %}
+            </p>
 
             <div>
                 {% set html5_track = mm.getTrackWithTag('html5') %}

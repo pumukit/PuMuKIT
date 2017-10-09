@@ -47,7 +47,7 @@
             {% endif %}
 
             <div id="metaMm" role="tabpanel" class="tab-pane{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}">
-                {% include 'PumukitNewAdminBundle:MultimediaObject:updatemeta.html.twig' with {'mm': mm} %}
+                {% include 'PumukitNewAdminBundle:UNESCO:updatemeta.html.twig' with {'mm': mm} %}
             </div>
 
             {% if not is_naked() %}
