@@ -3,7 +3,6 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pumukit\NewAdminBundle\Form\Type\UNESCOBasicType;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -167,16 +166,21 @@ class UNESCOController extends Controller implements NewAdminController
     }
 
     /**
-     * @Route("/remove/session", name="pumukitnewadmin_unesco_removesession")
+     * @Route("/remove/session/{all}", name="pumukitnewadmin_unesco_removesession")
+     *
+     * @param bool $all
      *
      * @return JsonResponse
      */
-    public function resetSessionAction()
+    public function resetSessionAction($all = true)
     {
         $session = $this->get('session');
-        $session->remove('UNESCO/criteria');
-        $session->remove('UNESCO/form');
-        $session->remove('UNESCO/formbasic');
+        if ($all) {
+            $session->remove('UNESCO/criteria');
+            $session->remove('UNESCO/form');
+            $session->remove('UNESCO/formbasic');
+        }
+
         $session->remove('admin/unesco/tag');
         $session->remove('admin/unesco/page');
         $session->remove('admin/unesco/paginate');
@@ -441,8 +445,11 @@ class UNESCOController extends Controller implements NewAdminController
             $aGenre = array();
         }
 
+        $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
+
         return array(
             //'form' => $form->createView(),
+            'disable_pudenew' => $disablePudenew,
             'genre' => $aGenre,
             'roles' => $roles,
             'statusPub' => $statusPub,
@@ -465,14 +472,22 @@ class UNESCOController extends Controller implements NewAdminController
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
+        $translator = $this->get('translator');
 
         $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
             new \MongoId($multimediaObjectId)
         );
 
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagCod);
+        $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('UNESCO');
+        $removedTags = array();
+        if ($tag->isChildOf($unescoTag)) {
+            $removedTags = $tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
+        }
 
-        $tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
+        if (empty($removedTags)) {
+            return new JsonResponse(array('error' => $translator->trans("Can't delete this tag, delete first children"), JsonResponse::HTTP_BAD_REQUEST));
+        }
 
         return new JsonResponse(array('success'));
     }
@@ -496,6 +511,102 @@ class UNESCOController extends Controller implements NewAdminController
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagCod);
 
         $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+
+        return new JsonResponse(array('success'));
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $option
+     *
+     * @return JsonResponse
+     * @Route("/option/selected/{option}", name="pumukitnewadmin_unesco_options_list")
+     */
+    public function optionsMultimediaObjects(Request $request, $option)
+    {
+        $session = $this->get('session');
+        $session->remove('admin/unesco/tag');
+        $session->remove('admin/unesco/page');
+        $session->remove('admin/unesco/paginate');
+        $session->remove('admin/unesco/id');
+
+        $data = $request->request->get('data');
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        switch ($option) {
+            case 'delete_selected':
+                $factoryService = $this->get('pumukitschema.factory');
+                foreach ($data as $multimediaObjectId) {
+                    $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+                    $factoryService->deleteMultimediaObject($multimediaObject);
+                }
+                break;
+            case 'invert_announce_selected':
+                $tagService = $this->container->get('pumukitschema.tag');
+                $pudeNew = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUDENEW'));
+                foreach ($data as $multimediaObjectId) {
+                    $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+                    if ($multimediaObject->containsTag($pudeNew)) {
+                        $tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
+                    } else {
+                        $tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        return new JsonResponse(array('success'));
+    }
+
+    /**
+     * @param $multimediaObjectId
+     *
+     * @return JsonResponse
+     * @Route("/delete/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_delete")
+     */
+    public function deleteAction($multimediaObjectId)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $session = $this->get('session');
+        $session->remove('admin/unesco/tag');
+        $session->remove('admin/unesco/page');
+        $session->remove('admin/unesco/paginate');
+        $session->remove('admin/unesco/id');
+        $translator = $this->get('translator');
+        $factoryService = $this->get('pumukitschema.factory');
+
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($multimediaObjectId));
+
+        try {
+            $factoryService->deleteMultimediaObject($multimediaObject);
+        } catch (\Exception $exception) {
+            return new JsonResponse(array('error' => $translator->trans("Can't delete this multimediaObject")));
+        }
+
+        return new JsonResponse(array('success'));
+    }
+
+    /**
+     * @param $multimediaObjectId
+     *
+     * @return JsonResponse
+     * @Route("/clone/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_clone")
+     */
+    public function cloneAction($multimediaObjectId)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+        $factoryService = $this->get('pumukitschema.factory');
+
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($multimediaObjectId));
+
+        try {
+            $factoryService->cloneMultimediaObject($multimediaObject);
+        } catch (\Exception $exception) {
+            return new JsonResponse(array('error' => $translator->trans("Can't clone this multimediaObject")));
+        }
 
         return new JsonResponse(array('success'));
     }

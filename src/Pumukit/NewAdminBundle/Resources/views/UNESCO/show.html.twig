@@ -13,6 +13,14 @@
                 {% trans %}Is part of {% endtrans %}:
                 <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
             </p>
+            <p>
+                {% trans %}Show video on WebTV{% endtrans %}.
+                {% if mm.getStatus() == 0 %}
+                    <a target="_black" href="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}"></a>.
+                {% elseif mm.getStatus == 2 %}
+                    <a target="_black" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {id: mm.getSecret() }) }}"></a>.
+                {% endif %}
+            </p>
 
             <div>
                 {% set html5_track = mm.getTrackWithTag('html5') %}
@@ -35,7 +43,7 @@
                     </div>
                     <div class="panel-body-preview panel-body">
                         <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
-                            {% for mtag in mm.tags if mtag.level == 3 and mtag.isChildOf(unescoTag) %}
+                            {% for mtag in mm.tags if mtag.isDescendantOf(unescoTag) %}
                                 <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="true">
                                     <span class="label label-default">{{ mtag.title }} |
                                         <a href="#" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
@@ -114,7 +122,9 @@
                 var preview = preview.replace("__MMO__", mmoid);
 
                 $('#edit_mms').load(edit);
-                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+                count = $('#count_tag_' + cod).text();
+                count = parseInt(count) - 1;
+                $('#count_tag_' + cod).text(count);
                 $('#preview_mms').load(preview);
                 var message = '{% trans %}Saved{% endtrans %}';
                 success(message);
@@ -144,7 +154,9 @@
 
                 $('#edit_mms').load(edit);
                 $('#preview_mms').load(preview);
-                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
+                count = $('#count_tag_' + cod).text();
+                count = parseInt(count) + 1;
+                $('#count_tag_' + cod).text(count);
                 var message = '{% trans %}Saved{% endtrans %}';
                 success(message);
             }
