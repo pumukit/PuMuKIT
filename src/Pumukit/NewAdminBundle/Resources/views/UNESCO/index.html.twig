@@ -108,6 +108,7 @@
                       no_success(response.error);
                     },
                     success: function (response) {
+                        $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
                         $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
                         $('#edit_mms').html('');
                         $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
@@ -115,7 +116,8 @@
                 });
                 return false;
             }
-        }
+        };
+
         window.submit_clone_mms_unesco = function(id)
         {
             if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")) {
@@ -128,11 +130,12 @@
                       no_success(response.error);
                     },
                     success: function (response) {
+                        $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
                         $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
                     }
                 });
                 return false;
             }
-        }
+        };
     </script>
 {% endblock %}
