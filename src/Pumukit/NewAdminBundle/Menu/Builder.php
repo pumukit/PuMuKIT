@@ -69,12 +69,12 @@ class Builder extends ContainerAware
         $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event') ? $this->container->getParameter('pumukit_new_admin.advance_live_event') : false;
         if ($advanceLiveEvent) {
             if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-                $live = $menu->addChild('Live Events');
+                $live = $menu->addChild('Live management');
                 if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
                     $live->addChild('Live Events', array('route' => 'pumukit_new_admin_live_event_index'));
                 }
                 if ($authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-                    $live->addChild('Live Channels', array('route' => 'pumukitnewadmin_live_index'));
+                    $live->addChild('Channel configuration', array('route' => 'pumukitnewadmin_live_index'));
                 }
             }
         } else {

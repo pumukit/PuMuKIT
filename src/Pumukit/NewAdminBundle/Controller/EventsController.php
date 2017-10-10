@@ -115,31 +115,41 @@ class EventsController extends Controller
     /**
      * List events.
      *
-     * @Route("list/event", name="pumukit_new_admin_live_event_list")
+     * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
      */
-    public function listEventAction(Request $request)
+    public function listEventAction(Request $request, $type = null)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-
+        $session = $this->get('session');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['islive'] = true;
-        if ($data = $request->query->get('criteria')) {
+        if($type) {
+            $date = new \MongoDate();
+            if($type === "now") {
+                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
+                    'start' => array('$lte' => $date),
+                    'ends' => array('$gte' => $date),
+                    ));
+            } else {
+                $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
+            }
+        } elseif ($data = $request->query->get('criteria')) {
             if (!empty($data['name'])) {
                 $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
             }
             if ($data['date']['from']) {
                 $date = strtotime($data['date']['from']);
-                $criteria['embeddedEvent.date'] = array('$gte' => new \MongoDate($date));
+                $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gte' => new \MongoDate($date));
             }
             if ($data['date']['to']) {
                 $date = strtotime($data['date']['to']);
-                $criteria['embeddedEvent.date'] = array('$lte' => new \MongoDate($date));
+                $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
             }
-            $this->container->get('session')->set('admin/live/event/criteria', $request->query->get('criteria'));
         }
 
+        $session->set('admin/live/event/criteria', $criteria);
         $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 
         $adapter = new ArrayAdapter($multimediaObjects);
@@ -500,6 +510,7 @@ class EventsController extends Controller
                                 'pumukitnewadmin_event_session'
                             )['id']) {
                             $embeddedEventSession->setStart($start);
+                            $embeddedEventSession->setEnds($end);
                             $embeddedEventSession->setDuration($duration);
                             $embeddedEventSession->setNotes($notes);
                         }
@@ -508,6 +519,7 @@ class EventsController extends Controller
                     $embeddedEventSession = new EmbeddedEventSession();
 
                     $embeddedEventSession->setStart($start);
+                    $embeddedEventSession->setEnds($end);
                     $embeddedEventSession->setDuration($duration);
                     $embeddedEventSession->setNotes($notes);
                     $dm->persist($embeddedEventSession);

@@ -70,6 +70,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
             new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
             new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
+            new \Twig_SimpleFilter('next_session_event', array($this, 'getNextEventSession')),
         );
     }
 
@@ -643,5 +644,36 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getI18nEmbeddedBroadcast(EmbeddedBroadcast $embeddedBroadcast, $locale = 'en')
     {
         return $this->specialTranslationService->getI18nEmbeddedBroadcast($embeddedBroadcast, $locale);
+    }
+
+    /**
+     * Returns session that are reproducing now or the next session to reproduce it
+     * @param $multimediaObject
+     *
+     * @return bool|mixed
+     */
+    public function getNextEventSession($multimediaObject)
+    {
+        if($multimediaObject) {
+            $now = new \DateTime();
+            $now = $now->getTimestamp();
+            $aSessions = array();
+            $event = $multimediaObject->getEmbeddedEvent();
+            foreach($event->getEmbeddedEventSession() as $session) {
+                $sessionStart = clone $session->getStart();
+                $sessionEnds = $sessionStart->add(new \DateInterval('PT' . $session->getDuration() . 'S'));
+                if($session->getStart()->getTimestamp() > $now) {
+                    $aSessions[$session->getStart()->getTimestamp()][] = $session;
+                } elseif(($session->getStart()->getTimestamp() < $now) and ($sessionEnds->getTimestamp() > $now)) {
+                    $aSessions[$session->getStart()->getTimestamp()][] = $session;
+                }
+            }
+            if(!empty($aSessions)) {
+                ksort($aSessions);
+                return array_shift($aSessions);
+            } else {
+                return false;
+            }
+        }
     }
 }

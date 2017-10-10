@@ -10,15 +10,17 @@
             {% endif %}
             {% if (multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length) > 0 %}
                 <p style="margin-top:10px;"><strong>{% trans %}Starts{% endtrans %}: </strong></p>
-                {% set session =  live_event_session(multimediaObject) %}
-                <p>{{ session.getStart() | date("d/m/Y H:i:s") }}</p>
+                {% set session = live_event_session(multimediaObject) %}
+                {% if session|length > 0 %}
+                    <p>{{ session.getStart() | date("d/m/Y H:i:s") }}</p>
+                {% endif %}
                 <p style="margin-top:10px">
                     <a href="{{ path('pumukit_live_event_id', {'id': multimediaObject.getId()}) }}" title="{% trans %}Show event on WebTV portal{% endtrans %}">
                         {% trans %}Show event on WebTV portal{% endtrans %}
                     </a>
                 </p>
             {% else %}
-                <p>{% trans %}No sessions defined.{% endtrans %}</p>
+                <p style="margin-top:10px">{% trans %}No sessions defined.{% endtrans %}</p>
             {% endif %}
         </div>
     {% else %}

@@ -11,7 +11,6 @@ class EventController extends Controller implements WebTVController
 {
     /**
      * @return array()
-     *
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
      * @Template()
      */
@@ -28,8 +27,7 @@ class EventController extends Controller implements WebTVController
         foreach ($eventsToday as $sKey => $event) {
             foreach ($event['data'] as $key => $sessionData) {
                 $start = $sessionData['session']['start']->toDateTime();
-                $ends = clone $start;
-                $ends = $ends->add(new \DateInterval('PT'.(intval($sessionData['session']['duration'] / 60)).'M'.($sessionData['session']['duration'] % 60).'S'));
+                $ends = $sessionData['session']['ends']->toDateTime();
                 if (new \DateTime() > $start and new \DateTime() < $ends) {
                     unset($eventsToday[$sKey]);
                 }
@@ -37,7 +35,13 @@ class EventController extends Controller implements WebTVController
         }
         $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
 
-        return array('eventsToday' => $eventsToday, 'eventsNow' => $eventsNow, 'eventsFuture' => $eventsFuture, 'numberCols' => 2, 'defaultPic' => $defaultPic);
+        return array(
+            'eventsToday' => $eventsToday,
+            'eventsNow' => $eventsNow,
+            'eventsFuture' => $eventsFuture,
+            'numberCols' => 2,
+            'defaultPic' => $defaultPic,
+        );
     }
 
     /**
@@ -57,7 +61,6 @@ class EventController extends Controller implements WebTVController
      * @param string $id
      *
      * @return array
-     *
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
      * @Template("PumukitWebTVBundle:Event:nextsessionlist.html.twig")
      */
