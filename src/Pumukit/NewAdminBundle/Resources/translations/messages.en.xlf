@@ -3206,6 +3206,42 @@
         <source>Password</source>
         <target>Password</target>
       </trans-unit>
+      <trans-unit id="46" resname="Live management">
+        <source>Live management</source>
+        <target>Live management</target>
+      </trans-unit>
+      <trans-unit id="47" resname="Channel configuration">
+        <source>Channel configuration</source>
+        <target>Channel configuration</target>
+      </trans-unit>
+      <trans-unit id="48" resname="Videos VOD">
+        <source>Videos VOD</source>
+        <target>Videos VOD</target>
+      </trans-unit>
+      <trans-unit id="49" resname="Event name">
+        <source>Event name</source>
+        <target>Event name</target>
+      </trans-unit>
+      <trans-unit id="50" resname="Sessions number">
+        <source>Sessions number</source>
+        <target>Sessions number</target>
+      </trans-unit>
+      <trans-unit id="51" resname="Broadcasting date">
+        <source>Broadcasting date</source>
+        <target>Broadcasting date</target>
+      </trans-unit>
+      <trans-unit id="52" resname="sessions">
+        <source>sessions</source>
+        <target>sessions</target>
+      </trans-unit>
+      <trans-unit id="53" resname="No future sessions">
+        <source>No future sessions</source>
+        <target>No future sessions</target>
+      </trans-unit>
+      <trans-unit id="54" resname="Filter by">
+        <source>Filter by</source>
+        <target>Filter by</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
