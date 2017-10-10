@@ -63,11 +63,11 @@
       </trans-unit>
       <trans-unit id="d56cc3fe0db39a01db08f43f90eef01d" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target xml:lang="es-ES" state="needs-translation">The event has not been held yet</target>
+        <target xml:lang="es-ES" state="translated">El evento aún no se ha celebrado</target>
       </trans-unit>
       <trans-unit id="6cb2e290e1fbd2f5e3fdedb555b3ae69" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target xml:lang="es-ES" state="needs-translation">The event has already been held</target>
+        <target xml:lang="es-ES" state="translated">El evento ya se ha celebrado</target>
       </trans-unit>
     </body>
   </file>
