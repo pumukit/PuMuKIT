@@ -26,8 +26,12 @@ class EventController extends Controller implements WebTVController
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
         foreach ($eventsToday as $sKey => $event) {
             foreach ($event['data'] as $key => $sessionData) {
-                $start = $sessionData['session']['start']->toDateTime();
-                $ends = $sessionData['session']['ends']->toDateTime();
+                $secStart = $sessionData['session']['start']->sec;
+                $secEnds = $sessionData['session']['ends']->sec;
+                $dateStart = new \DateTime();
+                $dateEnd = clone $dateStart;
+                $start = $dateStart->setTimestamp($secStart);
+                $ends = $dateEnd->setTimestamp($secEnds);
                 if (new \DateTime() > $start and new \DateTime() < $ends) {
                     unset($eventsToday[$sKey]);
                 }
