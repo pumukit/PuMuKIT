@@ -46,7 +46,10 @@ class LocaleListener implements EventSubscriberInterface
             $request->getSession()->set('_locale', $requestLocale);
         } else {
             if (!$sessionLocale || !in_array($sessionLocale, $this->pumukit2Locales)) {
-                if (in_array($this->defaultLocale, $this->pumukit2Locales)) {
+                $validLocales = array_intersect($request->getLanguages(), $this->pumukit2Locales);
+                if ($validLocales) {
+                    $request->getSession()->set('_locale', current($validLocales));
+                } elseif (in_array($this->defaultLocale, $this->pumukit2Locales)) {
                     $request->getSession()->set('_locale', $this->defaultLocale);
                 } elseif (!empty($this->pumukit2Locales)) {
                     $request->getSession()->set('_locale', $this->pumukit2Locales[0]);
