@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="fr" state="needs-translation">Cancel</target>
+        <target xml:lang="fr" state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="ad8783089f828b927473fb61d51940ec" resname="Use">
         <source>Use</source>

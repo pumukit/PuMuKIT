@@ -3196,7 +3196,7 @@
       </trans-unit>
       <trans-unit id="14c8ae7abbc2945dbfdb555da6627202" resname="UNESCO catalogue">
         <source>UNESCO catalogue</source>
-        <target xml:lang="es-ES" state="needs-translation">UNESCO catalogue</target>
+        <target xml:lang="es-ES" state="translated">Catalogador UNESCO</target>
       </trans-unit>
       <trans-unit id="781dc97dc62331eec3ea9ec4373a3ca8" resname="Channel">
         <source>Channel</source>

@@ -51,19 +51,19 @@
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
-        <target xml:lang="fr" state="needs-translation">Video</target>
+        <target xml:lang="fr" state="translated">Vidéo</target>
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
         <source>Viewed</source>
-        <target xml:lang="fr" state="needs-translation">Viewed</target>
+        <target xml:lang="fr" state="translated">Vu</target>
       </trans-unit>
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
         <source>time</source>
-        <target xml:lang="fr" state="needs-translation">time</target>
+        <target xml:lang="fr" state="translated">temps</target>
       </trans-unit>
       <trans-unit id="f2b798f672d4b42c0359ced11d4f10cd" resname="times">
         <source>times</source>
-        <target xml:lang="fr" state="needs-translation">times</target>
+        <target xml:lang="fr" state="translated">temps</target>
       </trans-unit>
       <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
@@ -95,11 +95,11 @@
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
-        <target xml:lang="fr" state="needs-translation">private</target>
+        <target xml:lang="fr" state="translated">privé</target>
       </trans-unit>
       <trans-unit id="987ec9e1c847709406571048e5a96a18" resname="401 Unauthorized">
         <source>401 Unauthorized</source>
-        <target xml:lang="fr" state="needs-translation">401 Unauthorized</target>
+        <target xml:lang="fr" state="translated">401 non autorisé</target>
       </trans-unit>
       <trans-unit id="bae8ed4159c5b1341ce7fe680c4c572d" resname="No permission to access this video">
         <source>No permission to access this video</source>
@@ -115,11 +115,11 @@
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
-        <target xml:lang="fr" state="needs-translation">Tags</target>
+        <target xml:lang="fr" state="translated">Tags</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="needs-translation">Duration</target>
+        <target xml:lang="fr" state="translated">Durée</target>
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
