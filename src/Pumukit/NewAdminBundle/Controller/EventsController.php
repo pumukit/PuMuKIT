@@ -125,9 +125,9 @@ class EventsController extends Controller
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['islive'] = true;
-        if($type) {
+        if ($type) {
             $date = new \MongoDate();
-            if($type === "now") {
+            if ($type === 'now') {
                 $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
                     'start' => array('$lte' => $date),
                     'ends' => array('$gte' => $date),

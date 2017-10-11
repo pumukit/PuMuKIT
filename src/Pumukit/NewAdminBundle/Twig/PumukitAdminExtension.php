@@ -647,29 +647,31 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Returns session that are reproducing now or the next session to reproduce it
+     * Returns session that are reproducing now or the next session to reproduce it.
+     *
      * @param $multimediaObject
      *
      * @return bool|mixed
      */
     public function getNextEventSession($multimediaObject)
     {
-        if($multimediaObject) {
+        if ($multimediaObject) {
             $now = new \DateTime();
             $now = $now->getTimestamp();
             $aSessions = array();
             $event = $multimediaObject->getEmbeddedEvent();
-            foreach($event->getEmbeddedEventSession() as $session) {
+            foreach ($event->getEmbeddedEventSession() as $session) {
                 $sessionStart = clone $session->getStart();
-                $sessionEnds = $sessionStart->add(new \DateInterval('PT' . $session->getDuration() . 'S'));
-                if($session->getStart()->getTimestamp() > $now) {
+                $sessionEnds = $sessionStart->add(new \DateInterval('PT'.$session->getDuration().'S'));
+                if ($session->getStart()->getTimestamp() > $now) {
                     $aSessions[$session->getStart()->getTimestamp()][] = $session;
-                } elseif(($session->getStart()->getTimestamp() < $now) and ($sessionEnds->getTimestamp() > $now)) {
+                } elseif (($session->getStart()->getTimestamp() < $now) and ($sessionEnds->getTimestamp() > $now)) {
                     $aSessions[$session->getStart()->getTimestamp()][] = $session;
                 }
             }
-            if(!empty($aSessions)) {
+            if (!empty($aSessions)) {
                 ksort($aSessions);
+
                 return array_shift($aSessions);
             } else {
                 return false;
