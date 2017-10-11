@@ -2983,7 +2983,10 @@
       </trans-unit>
       <trans-unit id="8a2390562ba61b0f6416b585032a68bf" resname="List multimedia objects in ascending order of title">
         <source>List multimedia objects in ascending order of title</source>
-        <target xml:lang="es-ES" state="translated">Ordenar objetos multimedia por título en sentido ascendente</target>
+        <target xml:lang="es-ES" state="translated">Ordenar objetos multimedia alfabéticamente</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Ordenar objetos multimedia por título en sentido ascendente</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="7fc19aa52c41ec071f87890327ae5050" resname="Filter playlist">
         <source>Filter playlist</source>
