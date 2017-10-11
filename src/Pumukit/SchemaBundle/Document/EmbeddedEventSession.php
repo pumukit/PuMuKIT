@@ -26,6 +26,13 @@ class EmbeddedEventSession
     private $start;
 
     /**
+     * @var date
+     *
+     * @MongoDB\Date
+     */
+    private $ends;
+
+    /**
      * @var int
      *
      * @MongoDB\Int
@@ -69,6 +76,22 @@ class EmbeddedEventSession
     public function setStart($start)
     {
         $this->start = $start;
+    }
+
+    /**
+     * @return date
+     */
+    public function getEnds()
+    {
+        return $this->ends;
+    }
+
+    /**
+     * @param date $ends
+     */
+    public function setEnds($ends)
+    {
+        $this->ends = $ends;
     }
 
     /**

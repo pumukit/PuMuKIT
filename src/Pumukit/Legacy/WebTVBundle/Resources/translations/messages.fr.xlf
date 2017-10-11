@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="8e8790229c666128fa88ff6e76de8565" resname="Experimental sciences">
         <source>Experimental sciences</source>
-        <target xml:lang="fr" state="needs-translation">Experimental sciences</target>
+        <target xml:lang="fr" state="translated">Sciences expérimentales</target>
       </trans-unit>
       <trans-unit id="5dc3368bd1d6e900406c812bbf1e5a86" resname="Technical science">
         <source>Technical science</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="fr" state="needs-translation">No title</target>
+        <target xml:lang="fr" state="translated">Sans titre</target>
       </trans-unit>
       <trans-unit id="9aeb3ef76717905e375b8c8604d48c11" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
         <source>Viewed</source>
-        <target xml:lang="fr" state="needs-translation">Viewed</target>
+        <target xml:lang="fr" state="translated">Vu</target>
       </trans-unit>
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
         <source>time</source>
@@ -72,15 +72,15 @@
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
-        <target xml:lang="fr" state="needs-translation">Videos</target>
+        <target xml:lang="fr" state="translated">Vidéo</target>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
         <source>Hours</source>
-        <target xml:lang="fr" state="needs-translation">Hours</target>
+        <target xml:lang="fr" state="translated">Heures</target>
       </trans-unit>
       <trans-unit id="cd40fd354c1b02d89c9f06708c17dbce" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target xml:lang="fr" state="needs-translation">There are no videos with these specifications</target>
+        <target xml:lang="fr" state="translated">Aucune vidéo ne correspond à votre recherche</target>
       </trans-unit>
       <trans-unit id="040b059dabb8b53ba029edbccdeb414e" resname="Date of holding">
         <source>Date of holding</source>
@@ -88,15 +88,15 @@
       </trans-unit>
       <trans-unit id="b22f0418e8ac915eb66f829d262d14a2" resname="Audio">
         <source>Audio</source>
-        <target xml:lang="fr" state="needs-translation">Audio</target>
+        <target xml:lang="fr" state="translated">Audio</target>
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
-        <target xml:lang="fr" state="needs-translation">private</target>
+        <target xml:lang="fr" state="translated">privé</target>
       </trans-unit>
       <trans-unit id="987ec9e1c847709406571048e5a96a18" resname="401 Unauthorized">
         <source>401 Unauthorized</source>
-        <target xml:lang="fr" state="needs-translation">401 Unauthorized</target>
+        <target xml:lang="fr" state="translated">401 non autorisé</target>
       </trans-unit>
       <trans-unit id="bae8ed4159c5b1341ce7fe680c4c572d" resname="No permission to access this video">
         <source>No permission to access this video</source>
@@ -108,19 +108,19 @@
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="fr" state="needs-translation">Search</target>
+        <target xml:lang="fr" state="translated">Rechercher</target>
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
-        <target xml:lang="fr" state="needs-translation">Tags</target>
+        <target xml:lang="fr" state="translated">Tags</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="needs-translation">Duration</target>
+        <target xml:lang="fr" state="translated">Durée</target>
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
-        <target xml:lang="fr" state="needs-translation">All</target>
+        <target xml:lang="fr" state="translated">Tout</target>
       </trans-unit>
       <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
@@ -180,11 +180,11 @@
       </trans-unit>
       <trans-unit id="6351030f724f6f42fd11ec9aa6ee8c76" resname="403 Forbidden">
         <source>403 Forbidden</source>
-        <target xml:lang="fr" state="needs-translation">403 Forbidden</target>
+        <target xml:lang="fr" state="translated">403 Interdit</target>
       </trans-unit>
       <trans-unit id="3f23f5e89e88dba25ea0f44e359452b6" resname="Forbidden to access this video">
         <source>Forbidden to access this video</source>
-        <target xml:lang="fr" state="needs-translation">Forbidden to access this video</target>
+        <target xml:lang="fr" state="translated">Accès interdit à cette vidéo</target>
       </trans-unit>
       <trans-unit id="9a19d5d5280f20e67fc97cea5212ebae" resname="Warning: This URL is not for public use.">
         <source>Warning: This URL is not for public use.</source>

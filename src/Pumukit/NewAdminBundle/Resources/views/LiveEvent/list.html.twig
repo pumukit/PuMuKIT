@@ -10,15 +10,17 @@
                 </div>
             </th>
             <th id="th-icons" width="1%">&nbsp;</th>
-            <th id="th-series" width="10%">{% trans %}Series{% endtrans %}</th>
+            <th id="th-videos-vod" width="8%">{% trans %}Videos VOD{% endtrans %}</th>
             <th id="th-image" width="3%">{% trans %}Img{% endtrans %}</th>
-            <th id="th-title">{% trans %}Event{% endtrans %}</th>
-            <th id="th-date" width="12%">{% trans %}Date{% endtrans %}</th>
+            <th id="th-title">{% trans %}Event name{% endtrans %}</th>
+            <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
+            <th id="th-date" width="12%">{% trans %}Broadcasting date{% endtrans %}</th>
             <th id="th-public" width="2%">{% trans %}Public{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
         {% for multimediaObject in multimediaObjects %}
+            {% set series = multimediaObject.getSeries() %}
             {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
             {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
             <tr>
@@ -32,25 +34,35 @@
                 <td headers="th-icons" width="1%">
                     {% include 'PumukitNewAdminBundle:LiveEvent:updatemenu.html.twig' %}
                 </td>
-                <td headers="th-series" width="10%">
-                    <a href="{{ path('pumukitnewadmin_mms_index', {'id' : multimediaObject.getSeries().getId() }) }}" title="{% trans %}Series{% endtrans %}">
-                        {% trans %}Series videos{% endtrans %}
+                <td headers="th-videos-vod" width="12%">
+                    <a href="{{ path('pumukitnewadmin_mms_index', {'id' : series.getId() }) }}" title="{% trans %}Videos VOD{% endtrans %}">
+                        {{ series|count_multimedia_objects }} {% trans %} videos{% endtrans %}
                     </a>
                 </td>
                 <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
-                    <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive"/>
+                    <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive" />
                 </td>
                 <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
-                <td headers="th-date" width="12%">{{ multimediaObject.getEmbeddedEvent().date | localizeddate('medium', 'none') }}</td>
+                <td headers="th-number-sessions" width="8%">
+                    {{ multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length }} {% trans %} sessions{% endtrans %}
+                </td>
+                <td headers="th-date" width="12%">
+                    {% set session = multimediaObject|next_session_event %}
+                    {% if session %}
+                        {{ session[0].getStart() | localizeddate('medium', 'none') }}
+                    {% else %}
+                        {% trans %}No future sessions{% endtrans %}
+                    {% endif %}
+                </td>
                 <td headers="th-public" width="2%">{{ multimediaObject.getEmbeddedEvent().display ? 'Yes' : 'No' }}</td>
             </tr>
         {% endfor %}
         {% if (multimediaObjects.currentPageResults|length) < 10 %}
             {% for i in (multimediaObjects.currentPageResults|length) .. 9 %}
                 <tr>
-                    <td colspan="7">&nbsp;</td>
+                    <td colspan="8">&nbsp;</td>
                 </tr>
             {% endfor %}
         {% endif %}
@@ -59,7 +71,7 @@
             <tr>
                 <td colspan="9" class="foot-td">
                     <div class="col-md-8">
-                        {{ multimediaObjects|length }} {% trans %}Mm. Obj.{% endtrans %}
+                        {{ multimediaObjects|length }} {% trans %}Live events{% endtrans %}
                         {% if app.session.get('admin/live/criteria')|length != 0%}
                             <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
                         {% endif %}

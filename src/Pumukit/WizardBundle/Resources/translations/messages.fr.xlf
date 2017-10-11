@@ -55,23 +55,23 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="fr" state="needs-translation">Cancel</target>
+        <target xml:lang="fr" state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
         <source>Next</source>
-        <target xml:lang="fr" state="needs-translation">Next</target>
+        <target xml:lang="fr" state="translated">Suivant</target>
       </trans-unit>
       <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
         <source>Title</source>
-        <target xml:lang="fr" state="needs-translation">Title</target>
+        <target xml:lang="fr" state="translated">Titre</target>
       </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
         <source>Description</source>
-        <target xml:lang="fr" state="needs-translation">Description</target>
+        <target xml:lang="fr" state="translated">Description</target>
       </trans-unit>
       <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
-        <target xml:lang="fr" state="needs-translation">Subtitle</target>
+        <target xml:lang="fr" state="translated">Sous-titre</target>
       </trans-unit>
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
@@ -95,7 +95,7 @@
       </trans-unit>
       <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
         <source>Step</source>
-        <target xml:lang="fr" state="needs-translation">Step</target>
+        <target xml:lang="fr" state="translated">Étape</target>
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
@@ -107,7 +107,7 @@
       </trans-unit>
       <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
         <source>File</source>
-        <target xml:lang="fr" state="needs-translation">File</target>
+        <target xml:lang="fr" state="translated">Dossier</target>
       </trans-unit>
       <trans-unit id="c3e635ca964a04246b5abb062f917280" resname="Upload the multimedia file">
         <source>Upload the multimedia file</source>
@@ -115,11 +115,11 @@
       </trans-unit>
       <trans-unit id="eafecfd638c10dc2c75c61f8350e3d1c" resname="Step 3: Files">
         <source>Step 3: Files</source>
-        <target xml:lang="fr" state="needs-translation">Step 3: Files</target>
+        <target xml:lang="fr" state="translated">Étape 3: Dossiers</target>
       </trans-unit>
       <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
         <source>Step %i%: Error</source>
-        <target xml:lang="fr" state="needs-translation">Step %i%: Error</target>
+        <target xml:lang="fr" state="translated">Étape %i%: Erreur</target>
       </trans-unit>
       <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="fr" state="needs-translation">Profile</target>
+        <target xml:lang="fr" state="translated">Profil</target>
       </trans-unit>
       <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
         <source>Publication Channels</source>
@@ -187,7 +187,7 @@
       </trans-unit>
       <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
         <source>Progress</source>
-        <target xml:lang="fr" state="needs-translation">Progress</target>
+        <target xml:lang="fr" state="translated">Progression</target>
       </trans-unit>
       <trans-unit id="e08ad75931308230cd41ec229bf0689e" resname="Empty file field">
         <source>Empty file field</source>

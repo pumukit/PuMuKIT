@@ -51,19 +51,19 @@
       </trans-unit>
       <trans-unit id="34e2d1989a1dbf75cd631596133ee5ee" resname="Video">
         <source>Video</source>
-        <target xml:lang="fr" state="needs-translation">Video</target>
+        <target xml:lang="fr" state="translated">Vidéo</target>
       </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe" resname="Viewed">
         <source>Viewed</source>
-        <target xml:lang="fr" state="needs-translation">Viewed</target>
+        <target xml:lang="fr" state="translated">Vu</target>
       </trans-unit>
       <trans-unit id="07cc694b9b3fc636710fa08b6922c42b" resname="time">
         <source>time</source>
-        <target xml:lang="fr" state="needs-translation">time</target>
+        <target xml:lang="fr" state="translated">temps</target>
       </trans-unit>
       <trans-unit id="f2b798f672d4b42c0359ced11d4f10cd" resname="times">
         <source>times</source>
-        <target xml:lang="fr" state="needs-translation">times</target>
+        <target xml:lang="fr" state="translated">temps</target>
       </trans-unit>
       <trans-unit id="46ff8516a0561d872c57da1f6f5db25c" resname="{0}times|{1}time|]1,Inf]times">
         <source>{0}times|{1}time|]1,Inf]times</source>
@@ -95,11 +95,11 @@
       </trans-unit>
       <trans-unit id="2c17c6393771ee3048ae34d6b380c5ec" resname="private">
         <source>private</source>
-        <target xml:lang="fr" state="needs-translation">private</target>
+        <target xml:lang="fr" state="translated">privé</target>
       </trans-unit>
       <trans-unit id="987ec9e1c847709406571048e5a96a18" resname="401 Unauthorized">
         <source>401 Unauthorized</source>
-        <target xml:lang="fr" state="needs-translation">401 Unauthorized</target>
+        <target xml:lang="fr" state="translated">401 non autorisé</target>
       </trans-unit>
       <trans-unit id="bae8ed4159c5b1341ce7fe680c4c572d" resname="No permission to access this video">
         <source>No permission to access this video</source>
@@ -115,11 +115,11 @@
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
-        <target xml:lang="fr" state="needs-translation">Tags</target>
+        <target xml:lang="fr" state="translated">Tags</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="needs-translation">Duration</target>
+        <target xml:lang="fr" state="translated">Durée</target>
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
@@ -501,41 +501,53 @@
         <source>Try searching for something else:</source>
         <target xml:lang="fr" state="needs-translation">Try searching for something else:</target>
       </trans-unit>
-      <trans-unit id="7ecbb3f6a2ac11e7abc4cec278b6b50a" resname="Home">
+      <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
         <source>Home</source>
         <target xml:lang="fr" state="needs-translation">Home</target>
       </trans-unit>
-      <trans-unit id="7ecbb766a2ac11e7abc4cec278b6b50a" resname="By subject catalogue">
+      <trans-unit id="aaf40ad2ab7b5e9a1f5a19c78b6c5bc4" resname="By subject catalogue">
         <source>By subject catalogue</source>
         <target xml:lang="fr" state="needs-translation">By subject catalogue</target>
       </trans-unit>
-      <trans-unit id="7ecbb89ca2ac11e7abc4cec278b6b50a" resname="University">
+      <trans-unit id="50c60ac437e4d4ef19c77bdca5bbcf3b" resname="University">
         <source>University</source>
         <target xml:lang="fr" state="needs-translation">University</target>
       </trans-unit>
-      <trans-unit id="7ecbb978a2ac11e7abc4cec278b6b50a" resname="Business">
+      <trans-unit id="d6e6cb19e3b9c02f89d6cd54cfa7c613" resname="Business">
         <source>Business</source>
         <target xml:lang="fr" state="needs-translation">Business</target>
       </trans-unit>
-      <trans-unit id="7ecbba40a2ac11e7abc4cec278b6b50a" resname="Natural Sciences">
+      <trans-unit id="ebad4be1614b6dfe62375ab4bf370622" resname="Natural Sciences">
         <source>Natural Sciences</source>
         <target xml:lang="fr" state="needs-translation">Natural Sciences</target>
       </trans-unit>
-      <trans-unit id="7ecbbb08a2ac11e7abc4cec278b6b50a" resname="Health &amp; Medicine">
+      <trans-unit id="a5e73d8e9203cea937ad6205c80036f2" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
         <target xml:lang="fr" state="needs-translation">Health &amp; Medicine</target>
       </trans-unit>
-      <trans-unit id="7ecbbf90a2ac11e7abc4cec278b6b50a" resname="Law">
+      <trans-unit id="81588d326cebe6416d3904db93603af1" resname="Law">
         <source>Law</source>
         <target xml:lang="fr" state="needs-translation">Law</target>
       </trans-unit>
-      <trans-unit id="d17999cea2ac11e7abc4cec278b6b50a" resname="Social Matters &amp; Education">
+      <trans-unit id="95948e3320f29c1714d31c3070d1f61b" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
         <target xml:lang="fr" state="needs-translation">Social Matters &amp; Education</target>
       </trans-unit>
-      <trans-unit id="c0d3dfeea2ac11e7abc4cec278b6b50a" resname="Subjects">
+      <trans-unit id="8b2f77e9a7ad8522b915e52c0ec86cbc" resname="Subjects">
         <source>Subjects</source>
         <target xml:lang="fr" state="needs-translation">Subjects</target>
+      </trans-unit>
+      <trans-unit id="fecc878b1691c7658927cc6bb866bfe0" resname="Now events">
+        <source>Now events</source>
+        <target xml:lang="fr" state="needs-translation">Now events</target>
+      </trans-unit>
+      <trans-unit id="60b31b4777e7a98ed15e070053c72e9a" resname="Today events">
+        <source>Today events</source>
+        <target xml:lang="fr" state="needs-translation">Today events</target>
+      </trans-unit>
+      <trans-unit id="bd883caf9d4d144e6c67349123b13937" resname="Future events">
+        <source>Future events</source>
+        <target xml:lang="fr" state="needs-translation">Future events</target>
       </trans-unit>
     </body>
   </file>

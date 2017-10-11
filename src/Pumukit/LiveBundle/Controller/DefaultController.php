@@ -96,8 +96,10 @@ class DefaultController extends Controller
                 $multimediaObject = $multimediaObjects->current();
 
                 return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
-            } else {
+            } elseif (count($multimediaObjects) > 1) {
                 return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
+            } else {
+                return $this->iframeEventAction($multimediaObject, $request, false);
             }
         }
     }
@@ -152,11 +154,12 @@ class DefaultController extends Controller
 
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
         $firstNextSession = new \DateTime();
-        $firstNextSession->add(new \DateInterval('P1D'));
+        $firstNextSession->add(new \DateInterval('P10Y'));
+        $firstNextSession = $firstNextSession->format('U');
         $date = new \DateTime();
         foreach ($nextSessions as $nSession) {
             foreach ($nSession['data'] as $session) {
-                if (($session['session']['start']->sec < $firstNextSession->format('U')) and ($date->format('U') < $session['session']['start']->sec)) {
+                if (($session['session']['start']->sec < $firstNextSession) and ($date->format('U') < $session['session']['start']->sec)) {
                     $firstNextSession = $session['session']['start']->sec * 1000;
                 }
             }

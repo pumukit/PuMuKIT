@@ -3100,8 +3100,7 @@
       <trans-unit id="408c624b14b33497a9595c77338e22d9" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target xml:lang="es-ES" state="needs-translation">Publishing
-                        Decisions</target>
+        <target xml:lang="es-ES" state="translated">Decisiones de publicación</target>
       </trans-unit>
       <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
         <source>ID</source>
@@ -3153,19 +3152,11 @@
       </trans-unit>
       <trans-unit id="ed36a1ef76a59ee3f15180e0441188ad" resname="Any">
         <source>Any</source>
-        <target xml:lang="es-ES" state="needs-translation">Any</target>
-      </trans-unit>
-      <trans-unit id="ff4deb04a7094c1c1e7240e1e36517ef" resname="Public date">
-        <source>Public date</source>
-        <target xml:lang="es-ES" state="needs-translation">Public date</target>
+        <target xml:lang="es-ES" state="translated">Cualquier</target>
       </trans-unit>
       <trans-unit id="9903646e7baeca2bb4d01aad1a9a7ae4" resname="Format YYYY-MM-DD">
         <source>Format YYYY-MM-DD</source>
-        <target xml:lang="es-ES" state="needs-translation">Format YYYY-MM-DD</target>
-      </trans-unit>
-      <trans-unit id="48cfad2e22236fcc79eb86f69a207b75" resname="Record date">
-        <source>Record date</source>
-        <target xml:lang="es-ES" state="needs-translation">Record date</target>
+        <target xml:lang="es-ES" state="translated">Formato YYYY-MM-DD</target>
       </trans-unit>
       <trans-unit id="be55b6387170df0ca68f41225268e842" resname="Broadcast">
         <source>Broadcast</source>
@@ -3177,127 +3168,171 @@
       </trans-unit>
       <trans-unit id="560eafaadc3b4415c0db8c000ae2db1b" resname="Advanced search form">
         <source>Advanced search form</source>
-        <target xml:lang="es-ES" state="needs-translation">Advanced search form</target>
+        <target xml:lang="es-ES" state="translated">Formulario de búsqueda avanzada</target>
       </trans-unit>
       <trans-unit id="735f7bed9808abe3b3c6bb67b9634a31" resname="Publication date">
         <source>Publication date</source>
-        <target xml:lang="es-ES" state="needs-translation">Publication date</target>
+        <target xml:lang="es-ES" state="translated">Fecha de publicación</target>
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
-        <target xml:lang="es-ES" state="needs-translation">Recording date</target>
+        <target xml:lang="es-ES" state="translated">Fecha de grabación</target>
       </trans-unit>
       <trans-unit id="8aa9ef4aefc5f76ad21a3cbeabe55a30" resname="Saving error">
         <source>Saving error</source>
-        <target xml:lang="es-ES" state="needs-translation">Saving error</target>
+        <target xml:lang="es-ES" state="translated">Error al guardar</target>
       </trans-unit>
       <trans-unit id="248336101b461380a4b2391a7625493d" resname="Saved">
         <source>Saved</source>
-        <target xml:lang="es-ES" state="needs-translation">Saved</target>
+        <target xml:lang="es-ES" state="translated">Guardado</target>
       </trans-unit>
       <trans-unit id="91563b044939df33670bd362715e334e" resname="Genre">
         <source>Genre</source>
-        <target xml:lang="es-ES" state="needs-translation">Genre</target>
+        <target xml:lang="es-ES" state="translated">Género</target>
       </trans-unit>
       <trans-unit id="9b6545e4cea9b4ad4979d41bb9170e2b" resname="Advanced">
         <source>Advanced</source>
-        <target xml:lang="es-ES" state="needs-translation">Advanced</target>
+        <target xml:lang="es-ES" state="translated">Avanzado</target>
       </trans-unit>
-      <trans-unit id="11" resname="Catalogador UNESCO">
-        <source>Catalogador UNESCO</source>
-        <target xml:lang="es-ES" state="needs-translation">Catalogador UNESCO</target>
+      <trans-unit id="14c8ae7abbc2945dbfdb555da6627202" resname="UNESCO catalogue">
+        <source>UNESCO catalogue</source>
+        <target xml:lang="es-ES" state="translated">Catalogador UNESCO</target>
       </trans-unit>
-      <trans-unit id="23" resname="Channel">
+      <trans-unit id="781dc97dc62331eec3ea9ec4373a3ca8" resname="Channel">
         <source>Channel</source>
-        <target xml:lang="es-ES" state="needs-translation">Channel</target>
+        <target xml:lang="es-ES" state="translated">Canal</target>
       </trans-unit>
-      <trans-unit id="24" resname="Sorting">
+      <trans-unit id="2808a34767e19b842d906ab8ab6264c6" resname="Sorting">
         <source>Sorting</source>
-        <target xml:lang="es-ES" state="needs-translation">Sorting</target>
+        <target xml:lang="es-ES" state="translated">Ordenar</target>
       </trans-unit>
-      <trans-unit id="25" resname="Sorting">
-        <source>Sorting</source>
-        <target xml:lang="es-ES" state="needs-translation">Sorting</target>
-      </trans-unit>
-      <trans-unit id="26" resname="date">
+      <trans-unit id="5fc732311905cb27e82d67f4f6511f7f" resname="date">
         <source>date</source>
-        <target xml:lang="es-ES" state="needs-translation">date</target>
+        <target xml:lang="es-ES" state="translated">fecha</target>
       </trans-unit>
-      <trans-unit id="27" resname="date_all">
+      <trans-unit id="1c3f5080100896d043243c7b84f9566a" resname="date_all">
         <source>date_all</source>
         <target xml:lang="es-ES" state="needs-translation">date_all</target>
       </trans-unit>
-      <trans-unit id="28" resname="date_subserial">
+      <trans-unit id="65f3af30d48aaae745886265a42ac967" resname="date_subserial">
         <source>date_subserial</source>
-        <target xml:lang="es-ES" state="needs-translation">date_subserial</target>
+        <target xml:lang="es-ES" state="translated">fecha de subserie</target>
       </trans-unit>
-      <trans-unit id="29" resname="subserial">
+      <trans-unit id="bb86e10090011694c26614a2201e3b96" resname="subserial">
         <source>subserial</source>
-        <target xml:lang="es-ES" state="needs-translation">subserial</target>
+        <target xml:lang="es-ES" state="translated">subserie</target>
       </trans-unit>
-      <trans-unit id="30" resname="multisubserial">
+      <trans-unit id="9496dd847cef32fc63b081dde2081af9" resname="multisubserial">
         <source>multisubserial</source>
         <target xml:lang="es-ES" state="needs-translation">multisubserial</target>
       </trans-unit>
-      <trans-unit id="31" resname="manual">
+      <trans-unit id="3c78b35502b2693fefdfc51cba3a53a5" resname="manual">
         <source>manual</source>
-        <target xml:lang="es-ES" state="needs-translation">manual</target>
+        <target xml:lang="es-ES" state="translated">manual</target>
       </trans-unit>
-      <trans-unit id="32" resname="publication date ascending">
+      <trans-unit id="e96804c76c1241cb37034dccf8a34c98" resname="publication date ascending">
         <source>publication date ascending</source>
-        <target xml:lang="es-ES" state="needs-translation">publication date ascending</target>
+        <target xml:lang="es-ES" state="translated">fecha de publicación ascendente</target>
       </trans-unit>
-      <trans-unit id="33" resname="publication date descending">
+      <trans-unit id="5e1c1e83347494831f7eb0fd1fa53f64" resname="publication date descending">
         <source>publication date descending</source>
-        <target xml:lang="es-ES" state="needs-translation">publication date descending</target>
+        <target xml:lang="es-ES" state="translated">fecha de publicación descendente</target>
       </trans-unit>
-      <trans-unit id="34" resname="recording date descending">
+      <trans-unit id="0c3d03275b57d8714411b48fc9676311" resname="recording date descending">
         <source>recording date descending</source>
-        <target xml:lang="es-ES" state="needs-translation">recording date descending</target>
+        <target xml:lang="es-ES" state="translated">fecha de grabación descendente</target>
       </trans-unit>
-      <trans-unit id="35" resname="recording date ascending">
+      <trans-unit id="865bc0883380798573a89cac62d837f6" resname="recording date ascending">
         <source>recording date ascending</source>
-        <target xml:lang="es-ES" state="needs-translation">recording date ascending</target>
+        <target xml:lang="es-ES" state="translated">fecha de grabación ascendente</target>
       </trans-unit>
-      <trans-unit id="36" resname="title">
+      <trans-unit id="d5d3db1765287eef77d7927cc956f50a" resname="title">
         <source>title</source>
-        <target xml:lang="es-ES" state="needs-translation">title</target>
+        <target xml:lang="es-ES" state="translated">título</target>
       </trans-unit>
-      <trans-unit id="37" resname="WebTV">
+      <trans-unit id="cfdc7ab65ff04607ae3c325a29d0dc7d" resname="WebTV">
         <source>WebTV</source>
-        <target xml:lang="es-ES" state="needs-translation">WebTV</target>
+        <target xml:lang="es-ES" state="translated">Portal web</target>
       </trans-unit>
-      <trans-unit id="38" resname="Health Sciences">
+      <trans-unit id="b900119b283c0339c634733d27d98912" resname="Health Sciences">
         <source>Health Sciences</source>
-        <target xml:lang="es-ES" state="needs-translation">Health Sciences</target>
+        <target xml:lang="es-ES" state="translated">Ciencias de la salud</target>
       </trans-unit>
-      <trans-unit id="39" resname="Technology">
-        <source>Technology</source>
-        <target xml:lang="es-ES" state="needs-translation">Technology</target>
-      </trans-unit>
-      <trans-unit id="40" resname="Sciences">
+      <trans-unit id="ed048ecb34024ea59fc19f53a6e55372" resname="Sciences">
         <source>Sciences</source>
-        <target xml:lang="es-ES" state="needs-translation">Sciences</target>
+        <target xml:lang="es-ES" state="translated">Ciencias</target>
       </trans-unit>
-      <trans-unit id="41" resname="Legal">
+      <trans-unit id="a10a9bcd450087de1ce1f80b35f44883" resname="Legal">
         <source>Legal</source>
         <target xml:lang="es-ES" state="needs-translation">Legal</target>
       </trans-unit>
-      <trans-unit id="42" resname="Humanities">
+      <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities">
         <source>Humanities</source>
-        <target xml:lang="es-ES" state="needs-translation">Humanities</target>
+        <target xml:lang="es-ES" state="translated">Humanidades</target>
       </trans-unit>
-      <trans-unit id="43" resname="Without category">
+      <trans-unit id="32bf784d42eda3669c3f86745b26e648" resname="Without category">
         <source>Without category</source>
-        <target xml:lang="es-ES" state="needs-translation">Without category</target>
+        <target xml:lang="es-ES" state="translated">Sin categoría</target>
       </trans-unit>
-      <trans-unit id="44" resname="Login">
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
         <source>Login</source>
         <target xml:lang="es-ES" state="needs-translation">Login</target>
       </trans-unit>
-      <trans-unit id="45" resname="Password">
+      <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
         <source>Password</source>
         <target xml:lang="es-ES" state="needs-translation">Password</target>
+      </trans-unit>
+      <trans-unit id="282df8d32cbd548eb9320674cfc2afd1" resname="Live management">
+        <source>Live management</source>
+        <target xml:lang="es-ES" state="translated">Gestor de directos</target>
+      </trans-unit>
+      <trans-unit id="dd7a7e00cb4b794e096d5471b92e52c3" resname="Channel configuration">
+        <source>Channel configuration</source>
+        <target xml:lang="es-ES" state="translated">Configuración de canales</target>
+      </trans-unit>
+      <trans-unit id="2ec4d7f560996976b4270e5bdb2aee76" resname="Videos VOD">
+        <source>Videos VOD</source>
+        <target xml:lang="es-ES" state="translated">Videos VOD</target>
+      </trans-unit>
+      <trans-unit id="aaa6e61ccb9bc32c365cac9fe5b8fc15" resname="Event name">
+        <source>Event name</source>
+        <target xml:lang="es-ES" state="translated">Nombre del evento</target>
+      </trans-unit>
+      <trans-unit id="215e1dc988de746ecbad24a736ac901f" resname="Sessions number">
+        <source>Sessions number</source>
+        <target xml:lang="es-ES" state="translated">Número de sesiones</target>
+      </trans-unit>
+      <trans-unit id="c50fcc5ea7fd37de3734b3742c938c61" resname="Broadcasting date">
+        <source>Broadcasting date</source>
+        <target xml:lang="es-ES" state="translated">Fecha de emisión</target>
+      </trans-unit>
+      <trans-unit id="161bca2e917335e125291a00fd76a80f" resname="sessions">
+        <source>sessions</source>
+        <target xml:lang="es-ES" state="translated">sesiones</target>
+      </trans-unit>
+      <trans-unit id="204a4c6a93f0fe765ee89354b8508121" resname="No future sessions">
+        <source>No future sessions</source>
+        <target xml:lang="es-ES" state="needs-translation">No future sessions</target>
+      </trans-unit>
+      <trans-unit id="1f0e9c979b965d24aa3c2c4b832c3ba1" resname="Filter by">
+        <source>Filter by</source>
+        <target xml:lang="es-ES" state="translated">Filtrar por</target>
+      </trans-unit>
+      <trans-unit id="0a5845a6f045902cf47206de7ea14027" resname="Show video on WebTV">
+        <source>Show video on WebTV</source>
+        <target xml:lang="es-ES" state="translated">Ver video en portal web</target>
+      </trans-unit>
+      <trans-unit id="b3950900a4184826e146e7dd6daa3946" resname="Live events">
+        <source>Live events</source>
+        <target xml:lang="es-ES" state="translated">Eventos en directo</target>
+      </trans-unit>
+      <trans-unit id="bd883caf9d4d144e6c67349123b13937" resname="Future events">
+        <source>Future events</source>
+        <target xml:lang="es-ES" state="translated">Eventos futuros</target>
+      </trans-unit>
+      <trans-unit id="dc7e360bc9ce52516364423a15a3306e" resname="Session must start before ends">
+        <source>Session must start before ends</source>
+        <target xml:lang="es-ES" state="translated">La sesión debe comenzar antes de acabar</target>
       </trans-unit>
     </body>
   </file>

@@ -1,4 +1,17 @@
 <div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
+            <ul class="list-unstyled">
+                <li>
+                    - <a class="filterSearchEvents" data-type="now" href="#">{% trans %}Live events{% endtrans %}</a>
+                </li>
+                <li>
+                    - <a class="filterSearchEvents" data-type="future" href="#">{% trans %}Future events{% endtrans %}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <form autocomplete="off" id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukit_new_admin_live_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukit_new_admin_live_event_list') }}" method="GET">
         <fieldset>
             <div class="panel panel-default">
@@ -17,10 +30,10 @@
                         <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                         <div>
                             {% trans %}From{% endtrans %}:
-                            &nbsp;<input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                            <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                             <br/>
                             {% trans %}To{% endtrans %}:
-                            &nbsp;&nbsp;<input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+                            <input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
                         </div>
                     </div>
                 </div>
@@ -32,3 +45,18 @@
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    $('.filterSearchEvents').on('click', function(event) {
+        event.preventDefault();
+        var url = "{{ path('pumukit_new_admin_live_event_list', {'type' : '__type__'}) }}";
+        url = url.replace('__type__', $(this).data('type'));
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(response){
+                $('#list_events').html(response);
+            }
+        });
+    })
+</script>

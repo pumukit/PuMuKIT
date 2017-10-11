@@ -15,7 +15,7 @@
             <div class="info-wrapper">
                 <div class="info">
                     <div class="title" title="{{ event['event']['name'][app.request.getLocale()] }}">
-                        <span class="mmobj_thumbnail_title">{{ event['event']['name'][app.request.getLocale()] | default('No title')|trans }}</span>
+                        <span class="mmobj_thumbnail_title">{{ event['event']['name'][app.request.getLocale()] | default('No title'|trans) }}</span>
                     </div>
                     <div class="date mmobj">
                         {{ event['event']['description'][app.request.getLocale()] }} <br />

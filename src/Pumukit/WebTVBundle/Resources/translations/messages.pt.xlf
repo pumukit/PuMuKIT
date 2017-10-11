@@ -501,41 +501,53 @@
         <source>Try searching for something else:</source>
         <target xml:lang="pt-PT" state="needs-translation">Try searching for something else:</target>
       </trans-unit>
-      <trans-unit id="7ecbb3f6a2ac11e7abc4cec278b6b50a" resname="Home">
+      <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
         <source>Home</source>
         <target xml:lang="pt-PT" state="needs-translation">Home</target>
       </trans-unit>
-      <trans-unit id="7ecbb766a2ac11e7abc4cec278b6b50a" resname="By subject catalogue">
+      <trans-unit id="aaf40ad2ab7b5e9a1f5a19c78b6c5bc4" resname="By subject catalogue">
         <source>By subject catalogue</source>
         <target xml:lang="pt-PT" state="needs-translation">By subject catalogue</target>
       </trans-unit>
-      <trans-unit id="7ecbb89ca2ac11e7abc4cec278b6b50a" resname="University">
+      <trans-unit id="50c60ac437e4d4ef19c77bdca5bbcf3b" resname="University">
         <source>University</source>
         <target xml:lang="pt-PT" state="needs-translation">University</target>
       </trans-unit>
-      <trans-unit id="7ecbb978a2ac11e7abc4cec278b6b50a" resname="Business">
+      <trans-unit id="d6e6cb19e3b9c02f89d6cd54cfa7c613" resname="Business">
         <source>Business</source>
         <target xml:lang="pt-PT" state="needs-translation">Business</target>
       </trans-unit>
-      <trans-unit id="7ecbba40a2ac11e7abc4cec278b6b50a" resname="Natural Sciences">
+      <trans-unit id="ebad4be1614b6dfe62375ab4bf370622" resname="Natural Sciences">
         <source>Natural Sciences</source>
         <target xml:lang="pt-PT" state="needs-translation">Natural Sciences</target>
       </trans-unit>
-      <trans-unit id="7ecbbb08a2ac11e7abc4cec278b6b50a" resname="Health &amp; Medicine">
+      <trans-unit id="a5e73d8e9203cea937ad6205c80036f2" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
         <target xml:lang="pt-PT" state="needs-translation">Health &amp; Medicine</target>
       </trans-unit>
-      <trans-unit id="7ecbbf90a2ac11e7abc4cec278b6b50a" resname="Law">
+      <trans-unit id="81588d326cebe6416d3904db93603af1" resname="Law">
         <source>Law</source>
         <target xml:lang="pt-PT" state="needs-translation">Law</target>
       </trans-unit>
-      <trans-unit id="d17999cea2ac11e7abc4cec278b6b50a" resname="Social Matters &amp; Education">
+      <trans-unit id="95948e3320f29c1714d31c3070d1f61b" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
         <target xml:lang="pt-PT" state="needs-translation">Social Matters &amp; Education</target>
       </trans-unit>
-      <trans-unit id="c0d3dfeea2ac11e7abc4cec278b6b50a" resname="Subjects">
+      <trans-unit id="8b2f77e9a7ad8522b915e52c0ec86cbc" resname="Subjects">
         <source>Subjects</source>
         <target xml:lang="pt-PT" state="needs-translation">Subjects</target>
+      </trans-unit>
+      <trans-unit id="fecc878b1691c7658927cc6bb866bfe0" resname="Now events">
+        <source>Now events</source>
+        <target xml:lang="pt-PT" state="needs-translation">Now events</target>
+      </trans-unit>
+      <trans-unit id="60b31b4777e7a98ed15e070053c72e9a" resname="Today events">
+        <source>Today events</source>
+        <target xml:lang="pt-PT" state="needs-translation">Today events</target>
+      </trans-unit>
+      <trans-unit id="bd883caf9d4d144e6c67349123b13937" resname="Future events">
+        <source>Future events</source>
+        <target xml:lang="pt-PT" state="needs-translation">Future events</target>
       </trans-unit>
     </body>
   </file>
