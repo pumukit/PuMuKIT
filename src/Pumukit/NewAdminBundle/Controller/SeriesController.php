@@ -625,7 +625,16 @@ class SeriesController extends AdminController implements NewAdminController
                 }
                 $multimediaObjects = $mmRepo->findBySeries($series);
                 foreach ($multimediaObjects as $multimediaObject) {
-                    $this->modifyBroadcastGroups($multimediaObject, $type, $password, $addGroups, $deleteGroups, false);
+                    if(!$multimediaObject->islive()) {
+                        $this->modifyBroadcastGroups(
+                            $multimediaObject,
+                            $type,
+                            $password,
+                            $addGroups,
+                            $deleteGroups,
+                            false
+                        );
+                    }
                 }
                 $dm->flush();
             } catch (\Exception $e) {
