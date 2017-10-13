@@ -74,6 +74,11 @@ class SeriesType extends AbstractType
                         'required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Channel', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Channel', array(), null, $this->locale), ))
+            ->add('series_style', null,
+                array(
+                    'required' => false,
+                    'attr' => array('aria-label' => $this->translator->trans('Series Style', array(), null, $this->locale)),
+                    'label' => $this->translator->trans('Series Style', array(), null, $this->locale), ))
             ->add('public_date', new Html5dateType(),
                   array(
                         'data_class' => 'DateTime',
