@@ -181,7 +181,12 @@ class SearchController extends Controller implements WebTVController
 
     protected function searchQueryBuilder($queryBuilder, $searchFound)
     {
-        if ($searchFound != '') {
+        $searchFound = trim($searchFound);
+        if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
+            $mRegex = new \MongoRegex("/$searchFound/i");
+            $queryBuilder->addOr($queryBuilder->expr()->field('title.es')->equals($mRegex));
+            $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
+        } elseif ($searchFound != '') {
             $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
         }
 

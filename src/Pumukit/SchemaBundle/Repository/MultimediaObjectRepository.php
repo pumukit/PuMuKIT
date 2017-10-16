@@ -341,8 +341,17 @@ class MultimediaObjectRepository extends DocumentRepository
     public function getIdsWithSeriesTextOrId($text, $limit = 0, $page = 0)
     {
         $qb = $this->createStandardQueryBuilder();
-        $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
-        $qb->addOr($qb->expr()->field('_id')->equals($text));
+
+        $text = trim($text);
+        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $mRegex = new \MongoRegex("/$text/i");
+            $qb->addOr($qb->expr()->field('title.es')->equals($mRegex));
+            $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
+        } else {
+            $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
+            $qb->addOr($qb->expr()->field('_id')->equals($text));
+        }
+
         $qb->distinct('series');
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);

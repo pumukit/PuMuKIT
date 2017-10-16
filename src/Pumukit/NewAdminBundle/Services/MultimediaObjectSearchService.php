@@ -27,9 +27,9 @@ class MultimediaObjectSearchService
 
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
-                $new_criteria['$or'] = array(
-                    array('_id' => array('$in' => array($value))),
-                    array('$text' => array('$search' => $value)),
+                $new_criteria['$or'] = $this->getSearchCriteria(
+                    $value,
+                    array(array('_id' => array('$in' => array($value))))
                 );
             } elseif (('person_name' === $property) && ('' !== $value)) {
                 $personName = $value;
@@ -122,5 +122,19 @@ class MultimediaObjectSearchService
         }
 
         return $criteria;
+    }
+
+    private function getSearchCriteria($text, array $base = array())
+    {
+        $text = trim($text);
+        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $mRegex = new \MongoRegex("/$text/i");
+            $base[] = array('title.es' => $mRegex);
+            $base[] = array('people.people.name' => $mRegex);
+        } else {
+            $base[] = array('$text' => array('$search' => $text));
+        }
+
+        return $base;
     }
 }

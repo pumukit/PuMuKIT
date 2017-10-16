@@ -25,14 +25,14 @@ class SeriesSearchService
                     $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100)->toArray();
                     $ids[] = $value;
 
-                    $new_criteria['$or'] = array(
-                        array('_id' => array('$in' => $ids)),
-                        array('$text' => array('$search' => $value)),
+                    $new_criteria['$or'] = $this->getSearchCriteria(
+                        $value,
+                        array(array('_id' => array('$in' => $ids)))
                     );
                 } else {
-                    $new_criteria['$or'] = array(
-                        array('_id' => $value),
-                        array('$text' => array('$search' => $value)),
+                    $new_criteria['$or'] = $this->getSearchCriteria(
+                        $value,
+                        array(array('_id' => $value))
                     );
                 }
             } elseif (('date' == $property) && ('' !== $value)) {
@@ -71,5 +71,19 @@ class SeriesSearchService
         }
 
         return $criteria;
+    }
+
+    private function getSearchCriteria($text, array $base = array())
+    {
+        $text = trim($text);
+        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $mRegex = new \MongoRegex("/$text/i");
+            $base[] = array('title.es' => $mRegex);
+            $base[] = array('people.people.name' => $mRegex);
+        } else {
+            $base[] = array('$text' => array('$search' => $text));
+        }
+
+        return $base;
     }
 }
