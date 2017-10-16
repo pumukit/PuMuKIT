@@ -39,6 +39,10 @@ class SeriesStylesController extends Controller
 
         $styles = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findAll();
 
+        usort($styles, function ($a, $b) {
+            return strtolower($a->getName()) > strtolower($b->getName());
+        });
+
         return array('styles' => $styles);
     }
 
