@@ -1,0 +1,24 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="well">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Estilos para series</h3>
+                    <hr />
+                </div>
+                <div id="style_list" class="col-md-3">
+                    {% render(controller('PumukitNewAdminBundle:SeriesStyles:list')) %}
+                </div>
+                <div id="style_show" class="col-md-9">
+                    {% if app.session.get('seriesstyle/id') is defined and app.session.get('seriesstyle/id') is not empty %}
+                        {% render(controller('PumukitNewAdminBundle:SeriesStyles:show', {'id' : app.session.get('seriesstyle/id') } )) %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -132,6 +132,11 @@ class Builder extends ContainerAware
             $tools->addChild('OC-Importer', array('route' => 'pumukitopencast'));
         }
 
+        if ($authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $tools = $menu->addChild('Tools');
+            $tools->addChild('Series style', array('route' => 'pumukit_newadmin_series_styles'));
+        }
+
         foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
             if ($authorizationChecker->isGranted($item->getAccessRole())) {
                 if (!$tools) {
