@@ -36,6 +36,7 @@ class Permission
     const SHOW_CODES = 'ROLE_SHOW_CODES';
     const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
+    const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
 
     public static $permissionDescription = array(
         self::ACCESS_DASHBOARD => array(
@@ -236,6 +237,13 @@ class Permission
         ),
         self::INIT_STATUS_PUBLISHED => array(
             'description' => 'Init Multimedia Objects in published status',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::ACCESS_SERIES_STYLE => array(
+            'description' => 'Access Series Styles',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),
