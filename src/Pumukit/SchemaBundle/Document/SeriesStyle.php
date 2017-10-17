@@ -73,4 +73,14 @@ class SeriesStyle
     {
         $this->text = $text;
     }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

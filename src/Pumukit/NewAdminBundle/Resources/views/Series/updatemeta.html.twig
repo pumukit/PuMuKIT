@@ -54,6 +54,7 @@
                  onclick="$('#pumukitnewadmin_series_header_banner').toggle();
                           $('#pumukitnewadmin_series_i18n_header').toggle();
                           $('#pumukitnewadmin_series_i18n_footer').toggle();
+                          $('#pumukitnewadmin_series_series_style').toggle();
                           $('#html_text_arr_1').toggle();
                           $('#html_text_arr_2').toggle();
                           return false;">
@@ -83,6 +84,15 @@
               </div>
             </div>
             {% endfor %}
+
+              {% for child in form if (child.vars.id in ['pumukitnewadmin_series_series_style']) %}
+                <div class="hidden-naked form-group" style="display:none" id="{{ child.vars.id }}">
+                  <label for="header" class="control-label">{{ child.vars.label }}</label>
+                  <div>
+                      {{ form_widget(child) }}
+                  </div>
+                </div>
+              {% endfor %}
 
             {{ form_row(form['i18n_line2']) }}
 

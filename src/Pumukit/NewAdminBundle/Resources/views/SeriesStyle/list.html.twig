@@ -1,0 +1,64 @@
+<p>{% trans %}Seleccione estilo{% endtrans %}:</p>
+<ul class="list-group">
+    {% for style in styles %}
+        <li class="list-group-item" style="padding:10px 15px; background-color:#fff; border: 1px solid #ddd">
+            <a class="show_style" data-id="{{ style.getId() }}" style="text-decoration:none;cursor:pointer;">{{ style.getName() }}</a>
+            <a href="{{ path('pumukit_newadmin_series_styles_delete', {'id' : style.getId() }) }}" class="pull-right" style="text-decoration:none;cursor:pointer;">
+                <i class="mdi-content-clear"></i>
+            </a>
+        </li>
+    {% else %}
+        <li class="list-group-item">
+            <p class="text-warning">No existen estilos definidos.</p>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="col-xs-12">
+    <p>Crear un estilo:</p>
+    <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline">
+        <div class="form-group">
+            <input type="text" name="name" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-pumukit btn-raised">Crear</button>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $('#styleform').on('submit', function(event){
+        event.preventDefault();
+        $.ajax({
+            url: '{{ path('pumukit_newadmin_series_styles_create') }}',
+            type: 'GET',
+            data: $(this).serialize(),
+            error: function (data) {
+                var message = '{% trans %}Style created ERROR{% endtrans %}';
+                no_success(message);
+            },
+            success: function (data) {
+                $('#style_list').load("{{ path('pumukit_newadmin_series_styles_list') }}");
+                var path = "{{ path('pumukit_newadmin_series_styles_show',{'id': '__ID__'}) }}";
+                path = path.replace('__ID__', data.id);
+                $('#style_show').load(path);
+                var message = '{% trans %}Style created OK{% endtrans %}';
+                success(message);
+            }
+        });
+        return false;
+    });
+
+    $('.show_style').on('click', function(event) {
+        event.preventDefault();
+        var path = "{{ path('pumukit_newadmin_series_styles_show',{'id': '__ID__'}) }}";
+        path = path.replace('__ID__', $(this).data('id'));
+        $('#style_show').load(path);
+    });
+
+    $('.delete_style').on('click', function(event) {
+        event.preventDefault();
+        $('#style_list').load("{{ path('pumukit_newadmin_series_styles_list') }}");
+        var path = "{{ path('pumukit_newadmin_series_styles_show') }}";
+        $('#style_show').load(path);
+    });
+</script>
