@@ -65,7 +65,6 @@ class LiveController extends AdminController implements NewAdminController
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
-        $page = $request->query->get('page') ?: 1;
 
         if ($config->isPaginated()) {
             $resources = $this
@@ -75,6 +74,7 @@ class LiveController extends AdminController implements NewAdminController
             if ($request->get('page', null)) {
                 $session->set($session_namespace.'/page', $request->get('page', 1));
             }
+            $page = $session->get($session_namespace.'/page', 1);
 
             if ($request->get('paginate', null)) {
                 $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
