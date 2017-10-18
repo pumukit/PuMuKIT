@@ -101,7 +101,7 @@ EOT
             ->field('properties.'.$type.'_jobs')->exists(true);
 
         if ($pendingJobsId) {
-            $qb->field('properties.'.$type.'_jobs')->notIn($pendingJobsId);
+            $qb->field('properties.'.$type.'_jobs')->notIn(array_keys($pendingJobsId));
         }
 
         $mms = $qb->getQuery()
