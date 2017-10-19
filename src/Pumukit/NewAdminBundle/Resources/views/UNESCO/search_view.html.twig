@@ -1,10 +1,7 @@
-{% set formBasic = false %}
-{% if app.request.session.has('UNESCO/formbasic') and app.request.session.get('UNESCO/formbasic') != "true" %}
-    {% set formBasic = true %}
-{% endif %}
+
 {% set criteria = false %}
 {% if app.request.session.has('UNESCO/form') %}
-{% set criteria = app.request.session.get('UNESCO/form') %}
+    {% set criteria = app.request.session.get('UNESCO/form') %}
 {% endif %}
 
 <div class="well">
@@ -17,7 +14,7 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <div class="advance_form collapse {% if formBasic == "false" %}in{% endif %}" id="collapseAdvanceForm">
+                <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') == "false" %}in{% endif %}" id="collapseAdvanceForm">
                     {% include 'PumukitNewAdminBundle:UNESCO:advance_form.html.twig' %}
                 </div>
             </div>
