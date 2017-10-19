@@ -625,7 +625,7 @@ class SeriesController extends AdminController implements NewAdminController
                 }
                 $multimediaObjects = $mmRepo->findBySeries($series);
                 foreach ($multimediaObjects as $multimediaObject) {
-                    if(!$multimediaObject->islive()) {
+                    if (!$multimediaObject->islive()) {
                         $this->modifyBroadcastGroups(
                             $multimediaObject,
                             $type,

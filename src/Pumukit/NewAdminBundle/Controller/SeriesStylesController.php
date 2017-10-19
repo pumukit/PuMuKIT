@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  *
  * @Route ("/series/styles")
- * @Security("is_granted('ROLE_ADMIN')")
+ * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
  */
 class SeriesStylesController extends Controller
 {
