@@ -147,8 +147,21 @@ class UNESCOController extends Controller implements NewAdminController
             );
         }
 
+        if ($session->has('UNESCO/sort')) {
+            $aSort = $session->get('UNESCO/sort');
+            $sort = ($aSort[1] == 'desc') ? 'asc' : 'desc';
+            $multimediaObjects->sort($aSort[0], $sort);
+        }
+
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
         $adapter = new Pagerfanta($adapter);
+
+        if (!$session->has('admin/unesco/id')) {
+            foreach ($adapter->getCurrentPageResults() as $result) {
+                $session->set('admin/unesco/id', $result->getId());
+                break;
+            }
+        }
 
         $adapter->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
 
@@ -177,6 +190,7 @@ class UNESCOController extends Controller implements NewAdminController
         $session = $this->get('session');
         if ($all) {
             $session->remove('UNESCO/criteria');
+            $session->remove('UNESCO/sort');
             $session->remove('UNESCO/form');
             $session->remove('UNESCO/formbasic');
         }
@@ -204,62 +218,65 @@ class UNESCOController extends Controller implements NewAdminController
         $formBasic = false;
         $newCriteria = array();
         $tag = array();
-        foreach ($criteria as $key => $value) {
-            if (('id' === $key) and !empty($value)) {
-                $newCriteria['_id'] = new \MongoId($value);
-                $formBasic = true;
-            } elseif (('seriesID' === $key) and !empty($value)) {
-                $newCriteria['series'] = new \MongoId($value);
-                $formBasic = true;
-            } elseif ('type' === $key and !empty($value)) {
-                $newCriteria['type'] = $value;
-                $formBasic = true;
-            } elseif ('duration' === $key and !empty($value)) {
-                $newCriteria['track.duration'] = $value;
-                $formBasic = true;
-            } elseif ('year' === $key and !empty($value)) {
-                $newCriteria['year'] = $value;
-                $formBasic = true;
-            } elseif ('text' === $key and !empty($value)) {
-                $newCriteria['$text'] = new \MongoRegex('/.*'.$value.'.*/i');
-                $formBasic = true;
-            } elseif ('broadcast' === $key and !empty($value)) {
-                if ('all' != $value) {
-                    $newCriteria['embeddedBroadcast.type'] = $value;
-                }
-            } elseif ('statusPub' === $key) {
-                if ('all' != $value) {
-                    $newCriteria['status'] = intval($value);
-                }
-            } elseif ('announce' === $key and !empty($value)) {
-                $tag[] = 'PUDENEW';
-            } elseif ('puderadio' === $key and !empty($value)) {
-                $tag[] = 'PUDERADIO';
-            } elseif ('pudetv' === $key and !empty($value)) {
-                $tag[] = 'PUDETV';
-            } elseif ('genre' === $key and !empty($value)) {
-                $tag[] = $value;
-            } elseif ('roles' === $key) {
-                foreach ($value as $key2 => $field) {
-                    if (!empty($field)) {
-                        $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.$field.'.*/i');
+
+        if ($criteria) {
+            foreach ($criteria as $key => $value) {
+                if (('id' === $key) and !empty($value)) {
+                    $newCriteria['_id'] = new \MongoId($value);
+                    $formBasic = true;
+                } elseif (('seriesID' === $key) and !empty($value)) {
+                    $newCriteria['series'] = new \MongoId($value);
+                    $formBasic = true;
+                } elseif ('type' === $key and !empty($value)) {
+                    $newCriteria['type'] = $value;
+                    $formBasic = true;
+                } elseif ('duration' === $key and !empty($value)) {
+                    $newCriteria['track.duration'] = $value;
+                    $formBasic = true;
+                } elseif ('year' === $key and !empty($value)) {
+                    $newCriteria['year'] = $value;
+                    $formBasic = true;
+                } elseif ('text' === $key and !empty($value)) {
+                    $newCriteria['$text'] = new \MongoRegex('/.*'.$value.'.*/i');
+                    $formBasic = true;
+                } elseif ('broadcast' === $key and !empty($value)) {
+                    if ('all' != $value) {
+                        $newCriteria['embeddedBroadcast.type'] = $value;
                     }
+                } elseif ('statusPub' === $key) {
+                    if ('all' != $value) {
+                        $newCriteria['status'] = intval($value);
+                    }
+                } elseif ('announce' === $key and !empty($value)) {
+                    $tag[] = 'PUDENEW';
+                } elseif ('puderadio' === $key and !empty($value)) {
+                    $tag[] = 'PUDERADIO';
+                } elseif ('pudetv' === $key and !empty($value)) {
+                    $tag[] = 'PUDETV';
+                } elseif ('genre' === $key and !empty($value)) {
+                    $tag[] = $value;
+                } elseif ('roles' === $key) {
+                    foreach ($value as $key2 => $field) {
+                        if (!empty($field)) {
+                            $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.$field.'.*/i');
+                        }
+                    }
+                } elseif (in_array(
+                    $key,
+                    array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate')
+                )) {
+                    if ('initPublicDate' === $key and !empty($value)) {
+                        $newCriteria['public_date_init'] = $value;
+                    } elseif ('finishPublicDate' === $key and !empty($value)) {
+                        $newCriteria['public_date_finish'] = $value;
+                    } elseif ('initRecordDate' === $key and !empty($value)) {
+                        $newCriteria['record_date_init'] = $value;
+                    } elseif ('finishRecordDate' === $key and !empty($value)) {
+                        $newCriteria['record_date_finish'] = $value;
+                    }
+                } elseif (!empty($value)) {
+                    $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.$value.'.*/i');
                 }
-            } elseif (in_array(
-                $key,
-                array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate')
-            )) {
-                if ('initPublicDate' === $key and !empty($value)) {
-                    $newCriteria['public_date_init'] = $value;
-                } elseif ('finishPublicDate' === $key and !empty($value)) {
-                    $newCriteria['public_date_finish'] = $value;
-                } elseif ('initRecordDate' === $key and !empty($value)) {
-                    $newCriteria['record_date_init'] = $value;
-                } elseif ('finishRecordDate' === $key and !empty($value)) {
-                    $newCriteria['record_date_finish'] = $value;
-                }
-            } elseif (!empty($value)) {
-                $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.$value.'.*/i');
             }
         }
 
@@ -268,6 +285,17 @@ class UNESCOController extends Controller implements NewAdminController
             if (!empty($tag)) {
                 $newCriteria['tags.cod'] = array('$all' => $tag);
             }
+        }
+
+        if ($request->request->has('sort_type')) {
+            $sort_type = $request->request->get('sort_type');
+            if ($request->request->get('sort_type') == 'title') {
+                $sort_type = 'title.'.$request->getLocale();
+            }
+            $sort = array($sort_type, $request->request->get('sort'));
+
+            $session->set('UNESCO/sort', $sort);
+            $session->set('admin/unesco/type', $request->request->get('sort'));
         }
 
         $session->set('UNESCO/form', $criteria);

@@ -13,45 +13,54 @@
                 <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
                 <th id="th-video" width="1%">{% trans %}Audio/Video{% endtrans %}</th>
                 <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
-                {% if 'series' == app.session.get('admin/mmslist/sort') %}
-                    <th id="th-series" width="15%">
-                        <a href="#" id="pumukitnewadmin_mmo_series_sort_selected">{% trans %}Series{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
-                    </th>
-                {% else %}
-                    <th id="th-series" width="15%">
-                        <a href="#" id="pumukitnewadmin_mmo_series_sort_not_selected">{% trans %}Series{% endtrans %}</a>
-                    </th>
-                {% endif %}
-                {% if 'title' == app.session.get('admin/mmslist/sort') %}
-                    <th id="th-title">
-                        <a href="#" id="pumukitnewadmin_mmo_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
-                    </th>
-                {% else %}
-                    <th id="th-title">
-                        <a href="#" id="pumukitnewadmin_mmo_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
-                    </th>
-                {% endif %}
-                <th id="th-duration" width="1%">{% trans %}Duration{% endtrans %}</th>
-                {% if 'record_date' == app.session.get('admin/mmslist/sort') %}
-                    <th id="th-rec-date" width="1%">
-                        <a href="#" id="pumukitnewadmin_mmo_record_date_sort_selected">{% trans %}RecDate{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
-                    </th>
-                {% else %}
-                    <th id="th-rec-date" width="1%">
-                        <a href="#" id="pumukitnewadmin_mmo_record_date_sort_not_selected">{% trans %}RecDate{% endtrans %}</a>
-                    </th>
-                {% endif %}
-                {% if 'public_date' == app.session.get('admin/mmslist/sort') %}
-                    <th id="th-pub-date" width="1%">
-                        <a href="#" id="pumukitnewadmin_mmo_public_date_sort_selected">{% trans %}PubDate{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
-                    </th>
-                {% else %}
-                    <th id="th-pub-date" width="1%">
-                        <a href="#" id="pumukitnewadmin_mmo_public_date_sort_not_selected">{% trans %}PubDate{% endtrans %}</a>
-                    </th>
-                {% endif %}
 
-                <input type="hidden" name="pumukitnewadmin_mmo_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/mmslist/type')=='asc'?'desc':'asc' }}"/>
+                <th id="th-series" width="15%">
+                    <a href="#" class="sort_unesco" data-id="seriesTitle">
+                        {% trans %}Series{% endtrans %}&nbsp;
+                        {% if app.session.get('UNESCO/sort') is not empty %}
+                            {% if 'seriesTitle' == app.session.get('UNESCO/sort')[0] %}
+                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+
+                <th id="th-title">
+                    <a href="#" class="sort_unesco" data-id="title">
+                        {% trans %}Title{% endtrans %}&nbsp;
+                        {% if app.session.get('UNESCO/sort') is not empty %}
+                            {% set type = app.session.get('UNESCO/sort')[0]|split('.') %}
+                            {% if 'title' == type[0] %}
+                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th id="th-duration" width="1%">{% trans %}Duration{% endtrans %}</th>
+
+                <th id="th-rec-date" width="8%">
+                    <a href="#" class="sort_unesco" data-id="record_date">
+                        {% trans %}RecDate{% endtrans %}&nbsp;
+                        {% if app.session.get('UNESCO/sort') is not empty %}
+                            {% if 'record_date' == app.session.get('UNESCO/sort')[0] %}
+                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+
+                <th id="th-pub-date" width="1%">
+                    <a href="#" class="sort_unesco" data-id="public_date">
+                        {% trans %}PubDate{% endtrans %}&nbsp;
+                        {% if app.session.get('UNESCO/sort') is not empty %}
+                            {% if 'public_date' == app.session.get('UNESCO/sort')[0] %}
+                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+
+                <input type="hidden" name="unesco_short_type" id="pumukitnewadmin_unesco_sort_change_type" value="{{ app.session.get('admin/unesco/type')=='asc'?'desc':'asc' }}"/>
 
             </tr>
             </thead>
@@ -219,5 +228,27 @@
             }
         });
    });
+
+    $('.sort_unesco').on('click',function(event){
+        event.preventDefault();
+
+        var sort = $('#pumukitnewadmin_unesco_sort_change_type').val();
+        var type = $(this).data('id');
+        $.ajax({
+            url: '{{ path('pumukitnewadmin_unesco_addcriteria') }}',
+            method: 'POST',
+            data: {'sort' : sort, 'sort_type': type},
+            success: function (response) {
+                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+                $('#edit_mms').html('');
+                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+            },
+            error: function (response) {
+                alert('error');
+            }
+        });
+        return false;
+
+    })
 
 </script>
