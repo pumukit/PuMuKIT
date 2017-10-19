@@ -67,8 +67,11 @@ class JobGeneratorListener
         }
 
         foreach ($tag->getChildren() as $pubchannel) {
-            if ($multimediaObject->containsTag($pubchannel) && strpos($profile['target'], $pubchannel->getCod()) === false) {
-                $this->generateJobs($multimediaObject, $pubchannel->getCod());
+            if ($multimediaObject->containsTag($pubchannel)) {
+                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && strpos($profile['target'], $pubchannel->getCod()) === false) {
+                    $master->addTag('ENCODED_'.$pubchannel->getCod());
+                    $this->generateJobs($multimediaObject, $pubchannel->getCod());
+                }
             }
         }
     }
