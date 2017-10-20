@@ -193,6 +193,7 @@ class UNESCOController extends Controller implements NewAdminController
             $session->remove('UNESCO/sort');
             $session->remove('UNESCO/form');
             $session->remove('UNESCO/formbasic');
+            $session->remove('admin/unesco/type');
         }
 
         $session->remove('admin/unesco/tag');
