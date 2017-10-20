@@ -147,10 +147,9 @@ class UNESCOController extends Controller implements NewAdminController
             );
         }
 
-        if ($session->has('UNESCO/sort')) {
-            $aSort = $session->get('UNESCO/sort');
-            $sort = ($aSort[1] == 'desc') ? 'asc' : 'desc';
-            $multimediaObjects->sort($aSort[0], $sort);
+        if ($session->has('admin/unesco/element_sort')) {
+            $sort = ($session->get('admin/unesco/type') == 'desc') ? 'asc' : 'desc';
+            $multimediaObjects->sort($session->get('admin/unesco/element_sort'), $sort);
         }
 
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
@@ -190,16 +189,16 @@ class UNESCOController extends Controller implements NewAdminController
         $session = $this->get('session');
         if ($all) {
             $session->remove('UNESCO/criteria');
-            $session->remove('UNESCO/sort');
             $session->remove('UNESCO/form');
             $session->remove('UNESCO/formbasic');
-            $session->remove('admin/unesco/type');
         }
 
         $session->remove('admin/unesco/tag');
         $session->remove('admin/unesco/page');
         $session->remove('admin/unesco/paginate');
         $session->remove('admin/unesco/id');
+        $session->remove('admin/unesco/type');
+        $session->remove('admin/unesco/element_sort');
 
         return new JsonResponse(array('success'));
     }
@@ -293,9 +292,8 @@ class UNESCOController extends Controller implements NewAdminController
             if ($request->request->get('sort_type') == 'title') {
                 $sort_type = 'title.'.$request->getLocale();
             }
-            $sort = array($sort_type, $request->request->get('sort'));
 
-            $session->set('UNESCO/sort', $sort);
+            $session->set('admin/unesco/element_sort', $sort_type);
             $session->set('admin/unesco/type', $request->request->get('sort'));
         }
 

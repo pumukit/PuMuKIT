@@ -17,9 +17,9 @@
                 <th id="th-series" width="15%">
                     <a href="#" class="sort_unesco" data-id="seriesTitle">
                         {% trans %}Series{% endtrans %}&nbsp;
-                        {% if app.session.get('UNESCO/sort') is not empty %}
-                            {% if 'seriesTitle' == app.session.get('UNESCO/sort')[0] %}
-                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+                            {% if 'seriesTitle' == app.session.get('admin/unesco/element_sort') %}
+                                {{ app.session.get('admin/unesco/type')=='desc'?'&#x25B4;':'&#x25BE;' }}
                             {% endif %}
                         {% endif %}
                     </a>
@@ -28,10 +28,10 @@
                 <th id="th-title">
                     <a href="#" class="sort_unesco" data-id="title">
                         {% trans %}Title{% endtrans %}&nbsp;
-                        {% if app.session.get('UNESCO/sort') is not empty %}
-                            {% set type = app.session.get('UNESCO/sort')[0]|split('.') %}
+                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+                            {% set type = app.session.get('admin/unesco/element_sort')|split('.') %}
                             {% if 'title' == type[0] %}
-                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                                {{ app.session.get('admin/unesco/type')=='desc'?'&#x25B4;':'&#x25BE;' }}
                             {% endif %}
                         {% endif %}
                     </a>
@@ -41,9 +41,9 @@
                 <th id="th-rec-date" width="8%">
                     <a href="#" class="sort_unesco" data-id="record_date">
                         {% trans %}RecDate{% endtrans %}&nbsp;
-                        {% if app.session.get('UNESCO/sort') is not empty %}
-                            {% if 'record_date' == app.session.get('UNESCO/sort')[0] %}
-                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+                            {% if 'record_date' == app.session.get('admin/unesco/element_sort') %}
+                                {{ app.session.get('admin/unesco/type')=='desc'?'&#x25B4;':'&#x25BE;' }}
                             {% endif %}
                         {% endif %}
                     </a>
@@ -52,9 +52,9 @@
                 <th id="th-pub-date" width="1%">
                     <a href="#" class="sort_unesco" data-id="public_date">
                         {% trans %}PubDate{% endtrans %}&nbsp;
-                        {% if app.session.get('UNESCO/sort') is not empty %}
-                            {% if 'public_date' == app.session.get('UNESCO/sort')[0] %}
-                                {{ app.session.get('UNESCO/sort')[1]=='desc'?'&#x25B4;':'&#x25BE;' }}
+                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+                            {% if 'public_date' == app.session.get('admin/unesco/element_sort') %}
+                                {{ app.session.get('admin/unesco/type')=='desc'?'&#x25B4;':'&#x25BE;' }}
                             {% endif %}
                         {% endif %}
                     </a>
