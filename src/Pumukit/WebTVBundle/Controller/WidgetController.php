@@ -18,6 +18,15 @@ class WidgetController extends Controller implements WebTVController
             return self::$menuResponse;
         }
 
+        $params = $this->getMenuParameters();
+
+        self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', $params);
+
+        return self::$menuResponse;
+    }
+
+    protected function getMenuParameters()
+    {
         $channels = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live')->findAll();
         $events = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Event')->findNextEvents();
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
@@ -29,7 +38,7 @@ class WidgetController extends Controller implements WebTVController
         $mediatecaTitle = $this->container->getParameter('menu.mediateca_title');
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
-        self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
+        return array(
             'live_events' => $events,
             'live_channels' => $channels,
             'menu_selected' => $selected,
@@ -39,9 +48,7 @@ class WidgetController extends Controller implements WebTVController
             'search_title' => $searchTitle,
             'mediateca_title' => $mediatecaTitle,
             'categories_title' => $categoriesTitle,
-        ));
-
-        return self::$menuResponse;
+        );
     }
 
     /**
