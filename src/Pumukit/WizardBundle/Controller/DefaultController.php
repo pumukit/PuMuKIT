@@ -281,9 +281,9 @@ class DefaultController extends Controller
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
         $factoryService = $this->get('pumukitschema.factory');
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
-        
+
         foreach ($pubChannelsTags as $key => $pubTag) {
-            if("PUCHYOUTUBE" == $pubTag->getCod()) {
+            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
                 unset($pubChannelsTags[$key]);
             }
         }
