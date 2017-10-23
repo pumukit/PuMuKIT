@@ -18,6 +18,11 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 class SimpleController extends Controller
 {
     /**
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function indexAction(Series $series, Request $request)
@@ -35,6 +40,14 @@ class SimpleController extends Controller
         );
     }
 
+    /**
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Exception
+     */
     public function uploadAction(Series $series, Request $request)
     {
         $jobService = $this->get('pumukitencoder.job');
@@ -85,6 +98,10 @@ class SimpleController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function embedindexAction(Request $request)
@@ -123,6 +140,13 @@ class SimpleController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     */
     public function embeduploadAction(Request $request)
     {
         $seriesId = $request->get('id');
@@ -204,6 +228,11 @@ class SimpleController extends Controller
 
     /**
      * Create Multimedia Object.
+     *
+     * @param        $title
+     * @param Series $series
+     *
+     * @return MultimediaObject
      */
     private function createMultimediaObject($title, Series $series)
     {
@@ -219,6 +248,11 @@ class SimpleController extends Controller
 
     /**
      * Create Multimedia Object.
+     *
+     * @param        $i18nTitle
+     * @param Series $series
+     *
+     * @return MultimediaObject
      */
     private function createMultimediaObjectWithI18nTitle($i18nTitle, Series $series)
     {
@@ -234,6 +268,10 @@ class SimpleController extends Controller
 
     /**
      * Get Series from id.
+     *
+     * @param $seriesId
+     *
+     * @return mixed
      */
     private function getSeries($seriesId)
     {
@@ -245,6 +283,10 @@ class SimpleController extends Controller
 
     /**
      * Get Series by external data.
+     *
+     * @param $externalData
+     *
+     * @return null|object
      */
     private function getSeriesByExternalData($externalData)
     {
@@ -258,6 +300,11 @@ class SimpleController extends Controller
         return null;
     }
 
+    /**
+     * @param $externalData
+     *
+     * @return Series
+     */
     private function createSeries($externalData)
     {
         $factoryService = $this->get('pumukitschema.factory');
@@ -270,6 +317,11 @@ class SimpleController extends Controller
         return $series;
     }
 
+    /**
+     * @param $title
+     *
+     * @return array
+     */
     private function createI18nTitleFromFile($title)
     {
         $i18nTitle = array();
@@ -280,6 +332,12 @@ class SimpleController extends Controller
         return $i18nTitle;
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     * @param                  $externalData
+     *
+     * @return MultimediaObject
+     */
     private function setExternalProperties(MultimediaObject $multimediaObject, $externalData)
     {
         if (isset($externalData['mmobjData']['properties'])) {
@@ -294,6 +352,9 @@ class SimpleController extends Controller
         return $multimediaObject;
     }
 
+    /**
+     * @return mixed|null
+     */
     private function getDefaultMasterProfile()
     {
         if ($this->container->hasParameter('pumukit_wizard.simple_default_master_profile')) {
