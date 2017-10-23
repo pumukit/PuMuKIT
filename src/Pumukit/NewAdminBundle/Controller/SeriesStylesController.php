@@ -22,7 +22,6 @@ class SeriesStylesController extends Controller
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
      * @Template("PumukitNewAdminBundle:SeriesStyle:crud.html.twig")
-
      */
     public function menuAction()
     {
@@ -70,6 +69,10 @@ class SeriesStylesController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
      * @Route("/edit", name="pumukit_newadmin_series_styles_edit")
      */
     public function editAction(Request $request)
@@ -95,21 +98,38 @@ class SeriesStylesController extends Controller
     }
 
     /**
+     * @param $id
+     *
+     * @return JsonResponse
+     *
      * @Route("/delete/{id}", name="pumukit_newadmin_series_styles_delete")
      */
     public function deleteAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+        $session = $this->get('session');
 
         $style = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findOneBy(array('_id' => new \MongoId($id)));
 
-        $dm->remove($style);
-        $dm->flush();
+        if ($style) {
+            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
+                array('series_style' => new \MongoId($style->getId()))
+            );
 
-        $session = $this->get('session');
-        $session->set('seriesstyle/id', '');
+            if (!$series) {
+                $dm->remove($style);
+                $dm->flush();
 
-        return $this->redirectToRoute('pumukit_newadmin_series_styles');
+                $session->set('seriesstyle/id', '');
+
+                return new JsonResponse(array('success', 'msg' => $translator->trans('Successfully deleted series style')));
+            } else {
+                return new JsonResponse(array('error', 'msg' => $translator->trans('There are series with this series style')));
+            }
+        } else {
+            return new JsonResponse(array('error', 'msg' => $translator->trans("Series style $style->getId() doesn't exists")));
+        }
     }
 
     /**
