@@ -40,7 +40,9 @@
           </a>
         </td>
         <td>
-          {% if person.getUser() %}
+          {% if app.user and not is_granted('ROLE_SCOPE_GLOBAL') %}
+          <i title="{% trans %}You don't have enough permissions to access this content.{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+          {% elseif person.getUser() %}
           <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
           {% elseif countMmPeople[person.id] != 0 %}
           <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
