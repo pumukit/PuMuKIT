@@ -155,7 +155,11 @@ class EventsController extends Controller
         }
 
         $session->set('admin/live/event/criteria', $criteria);
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $sortField = $session->get('admin/live/event/sort/field', 'embeddedEvent._id');
+        $sortType = $session->get('admin/live/event/sort/type', 'desc');
+        $session->set('admin/live/event/sort/field', $sortField);
+        $session->set('admin/live/event/sort/type', $sortType);
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, array($sortField => $sortType));
 
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
@@ -164,6 +168,36 @@ class EventsController extends Controller
         $mms->setCurrentPage($page);
 
         return array('multimediaObjects' => $mms);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @Route("add/sorting/", name="pumukit_new_admin_live_event_set_sorting")
+     */
+    public function addSessionSorting(Request $request)
+    {
+        $session = $this->get('session');
+
+        if ($request->request->get('field')) {
+            $field = $request->request->get('field');
+            if ('embeddedEvent.name' === $request->request->get('field')) {
+                $field = 'embeddedEvent.name.'.$request->getLocale();
+            }
+            if ($session->has('admin/live/event/sort/field') and $session->get('admin/live/event/sort/field') === $field) {
+                $session->set('admin/live/event/sort/type', (($session->get('admin/live/event/sort/type') == 'desc') ? 'asc' : 'desc'));
+            } else {
+                $session->set('admin/live/event/sort/type', 'desc');
+            }
+
+            $session->set('admin/live/event/sort/field', $field);
+
+            return new JsonResponse(array('success'));
+        }
+
+        return new JsonResponse(array('error'));
     }
 
     /**
