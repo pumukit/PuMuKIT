@@ -115,12 +115,17 @@ class EventsController extends Controller
     /**
      * List events.
      *
+     * @param Request $request
+     * @param null    $type
+     *
+     * @return array
+     *
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
      */
     public function listEventAction(Request $request, $type = null)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
@@ -324,7 +329,6 @@ class EventsController extends Controller
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $languages = $this->container->getParameter('pumukit2.locales');
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -604,9 +608,13 @@ class EventsController extends Controller
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
                 $newSession->setDuration($session->getDuration());
+                $newSession->setNotes($session->getNotes());
                 $date = clone $session->getStart();
+                $dateEnds = clone $session->getEnds();
                 $date->add(new \DateInterval('P1D'));
+                $dateEnds->add(new \DateInterval('P1D'));
                 $newSession->setStart($date);
+                $newSession->setEnds($dateEnds);
                 $dm->persist($newSession);
                 $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($newSession);
             }
