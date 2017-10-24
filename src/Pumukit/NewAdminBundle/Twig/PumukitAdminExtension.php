@@ -512,28 +512,34 @@ class PumukitAdminExtension extends \Twig_Extension
      *
      * @param string $broadcastType
      * @param string $template
+     * @param bool   $islive
      *
      * @return string
      */
-    public function getBroadcastDescription($broadcastType, $template)
+    public function getBroadcastDescription($broadcastType, $template, $islive = false)
     {
         $description = '';
+
+        $changeWord = 'multimedia object';
+        if ($islive) {
+            $changeWord = 'live event';
+        }
         if (($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) && $template) {
             $description = $this->translator->trans('Any Internet user can play the new multimedia objects created from this video template');
         } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) {
-            $description = $this->translator->trans('Any Internet user can play this multimedia object');
+            $description = $this->translator->trans("Any Internet user can play this $changeWord");
         } elseif (($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) && $template) {
             $description = $this->translator->trans('Only users with the defined password can play the new multimedia objects created from this video template');
         } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) {
-            $description = $this->translator->trans('Only users with the defined password can play this multimedia object');
+            $description = $this->translator->trans("Only users with the defined password can play this $changeWord");
         } elseif (($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) && $template) {
             $description = $this->translator->trans('Only logged in users in the system can play the new multimedia objects created from this video template');
         } elseif ($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) {
-            $description = $this->translator->trans('Only logged in users in the system can play this multimedia object');
+            $description = $this->translator->trans("Only logged in users in the system can play this $changeWord");
         } elseif (($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) && $template) {
             $description = $this->translator->trans('Only users in the selected Groups can play the new multimedia objects created from this video template');
         } elseif ($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) {
-            $description = $this->translator->trans('Only users in the selected Groups can play this multimedia object');
+            $description = $this->translator->trans("Only users in the selected Groups can play this $changeWord");
         }
 
         return $description;

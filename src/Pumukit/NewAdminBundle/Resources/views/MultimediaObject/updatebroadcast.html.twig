@@ -3,7 +3,11 @@
   {% if template %}
   <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of videos template{% endtrans %}</h3>
   {% else %}
-  <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of multimedia object{% endtrans %}</h3>
+      {% if mm.islive %}
+          <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of live event{% endtrans %}</h3>
+      {% else %}
+          <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of multimedia object{% endtrans %}</h3>
+      {% endif %}
   {% endif %}
 </div>
 <div class="modal-body">
@@ -22,7 +26,7 @@
                      type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
               {{ broadcast_name|trans }}
             </label>
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{{ broadcast_description(broadcast_type, template) }}"></i>
+            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{{ broadcast_description(broadcast_type, template, mm.islive) }}"></i>
           </div>
             {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
             {% include 'PumukitNewAdminBundle:MultimediaObject:broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
