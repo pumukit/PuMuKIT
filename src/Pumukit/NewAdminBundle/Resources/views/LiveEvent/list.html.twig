@@ -12,9 +12,29 @@
             <th id="th-icons" width="1%">&nbsp;</th>
             <th id="th-videos-vod" width="8%">{% trans %}Videos VOD{% endtrans %}</th>
             <th id="th-image" width="3%">{% trans %}Img{% endtrans %}</th>
-            <th id="th-title">{% trans %}Event name{% endtrans %}</th>
+            <th id="th-title">
+                <a href="#" class="sort_field" data-type="embeddedEvent.name">
+                    {% trans %}Event name{% endtrans %}
+                    {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                        {% set type = app.session.get('admin/live/event/sort/field')|split('.') %}
+                        {% if type[1] is defined and 'name' == type[1] %}
+                            {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
             <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
-            <th id="th-date" width="12%">{% trans %}Broadcasting date{% endtrans %}</th>
+            <th id="th-date" width="12%">
+                <a href="#" class="sort_field" data-type="embeddedEvent._id">
+                    {% trans %}Broadcasting date{% endtrans %}
+                    {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                        {% if 'embeddedEvent._id' == app.session.get('admin/live/event/sort/field') %}
+                            {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
             <th id="th-public" width="2%">{% trans %}Public{% endtrans %}</th>
         </tr>
         </thead>
@@ -102,7 +122,6 @@
 
     $('.event_option').on('click', function (event) {
         event.preventDefault();
-        console.log($(this).data('href'));
         $.ajax({
             url: $(this).data('href'),
             method: 'POST',
@@ -118,4 +137,20 @@
         });
         return false;
     });
+
+    $('.sort_field').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ path('pumukit_new_admin_live_event_set_sorting') }}",
+            method: 'POST',
+            data: {
+                'field' : $(this).data('type')
+            },
+            success: function () {
+                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                $('#list_events').load(mm);
+            }
+        });
+        return false;
+    })
 </script>
