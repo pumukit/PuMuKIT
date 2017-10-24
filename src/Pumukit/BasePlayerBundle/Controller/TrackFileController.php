@@ -14,6 +14,7 @@ class TrackFileController extends Controller
 {
     /**
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
+     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext" )
      */
     public function indexAction($id, Request $request)
     {
