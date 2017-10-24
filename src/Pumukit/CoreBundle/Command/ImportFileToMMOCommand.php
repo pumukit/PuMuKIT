@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Pumukit\CoreBundle\Command;
 
-use Assetic\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -53,7 +51,7 @@ EOT
 
         $filePath = $input->getArgument('file');
         if (!is_file($filePath)) {
-            throw new \Exception('Path is not a file: '. $filePath);
+            throw new \Exception('Path is not a file: '.$filePath);
         }
 
         try {
