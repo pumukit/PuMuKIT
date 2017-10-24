@@ -604,6 +604,7 @@ class EventsController extends Controller
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
                 $newSession->setDuration($session->getDuration());
+                $newSession->setNotes($session->getNotes());
                 $date = clone $session->getStart();
                 $date->add(new \DateInterval('P1D'));
                 $newSession->setStart($date);
