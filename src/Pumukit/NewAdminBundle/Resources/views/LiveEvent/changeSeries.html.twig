@@ -1,0 +1,83 @@
+<form method="POST" action="" id="form_change_event_serie">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{% trans %}Live event{% endtrans %}</h4>
+    </div>
+    <div class="modal-body">
+        <p>
+            {% trans %}
+            Add the name of the series you want to use.
+            In case this series already exists in the database, a pull-down list will be shown,
+            where you can select it and use it. If it doesn't exist in the database,
+            create a new entrance with the written name.
+            {% endtrans %}
+        </p>
+        <div class="ui-widget">
+            {% if multimediaObject is defined and multimediaObject is not null %}
+                <input id="mmo_series_change" name="multimediaObject_change" type="hidden" value="{{ multimediaObject.getId() }}" />
+            {% endif %}
+            <label for="seriesSuggest">{% trans %}Series{% endtrans %}</label>
+            <input type="text" id="seriesSuggest" name="seriesSuggestAutocomplete" class="form-control"/>
+            <input type="hidden" id="seriesSuggestValidate" name="seriesSuggest" value="" class="form-control"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-2 col-md-offset-5">
+            <input class="btn btn-default btn-raised" type="button" value="{% trans %}Cancel{% endtrans %}" data-dismiss="modal">
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            {% if multimediaObject is defined and multimediaObject is not null %}
+                <input class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Change{% endtrans %}">
+            {% else %}
+                <input class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Create{% endtrans %}">
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $("#seriesSuggest").autocomplete({
+        source: "{{ path('pumukit_new_admin_live_event_series_suggest') }}",
+        delay: 250,
+        minLength: 2,
+        select: function (event, ui) {
+            $("#seriesSuggestValidate").val(ui.item.id);
+        }
+    }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li>")
+            .append("<a>" + item.id + " - " + item.title + "<br><span class='form-control'>" + "</span></a>")
+            .appendTo(ul)
+    };
+
+    $('#form_change_event_serie').on('submit', function(event) {
+        event.preventDefault();
+        if('' != $('#seriesSuggestValidate').val()) {
+            var path = "{{ path('pumukit_new_admin_live_event_create') }}";
+            if($('#mmo_series_change').length) {
+                path = "{{ path('pumukitnewadmin_live_event_edit_series', {'multimediaObject': '__ID__'}) }}";
+                path = path.replace('__ID__', $("#mmo_series_change").val());
+            }
+            $.ajax({
+                url: path,
+                method: 'POST',
+                data: $('#seriesSuggestValidate'),
+                success: function () {
+                    $('#myModal').modal('hide');
+                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
+                    $('#list_events').load(mm);
+
+                    $('#seriesSuggestValidate').val("");
+                    var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                    success(message);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    no_success(errorThrown + ': ' + textStatus);
+                }
+            });
+            return false;
+        } else {
+            no_success('Check selected serie');
+        }
+    })
+</script>
