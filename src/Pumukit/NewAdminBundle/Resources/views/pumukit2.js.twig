@@ -2716,12 +2716,12 @@ function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
 }
 
 $(document).on('click', '#pumukitnewadmin_mm_updategroup_submit', function() {
-    var mm_id = $('#mm_id').val();
+    var mm_id = $('#mm_id_ownerrelation').val();
     pumukitnewadmin_mm_updategroup_submit(mm_id, '');
 });
 
 $(document).on('click', '#pumukitnewadmin_mm_template_updategroup_submit', function() {
-    var mm_id = $('#mm_id').val();
+    var mm_id = $('#mm_id_ownerrelation').val();
     pumukitnewadmin_mm_updategroup_submit(mm_id, '_template');
 });
 
@@ -2758,13 +2758,13 @@ function pumukitnewadmin_mm_updategroup_reset(mm_id, template, resource) {
 }
 
 $(document).on('click', '#pumukitnewadmin_mm_updategroup_reset', function() {
-    var mm_id = $('#mm_id').val();
+    var mm_id = $('#mm_id_ownerrelation').val();
     var resource = 'mm';
     pumukitnewadmin_mm_updategroup_reset(mm_id, '', resource);
 });
 
 $(document).on('click', '#pumukitnewadmin_mm_template_updategroup_reset', function() {
-    var mm_id = $('#mm_id').val();
+    var mm_id = $('#mm_id_ownerrelation').val();
     var resource = 'mm_template';
     pumukitnewadmin_mm_updategroup_reset(mm_id, '_template', resource);
 });
