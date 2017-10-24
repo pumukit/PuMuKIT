@@ -26,10 +26,10 @@
 
             <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
             <th id="th-date" width="12%">
-                <a href="#" class="sort_field" data-type="embeddedEvent._id">
+                <a href="#" class="sort_field" data-type="embeddedEvent.date">
                     {% trans %}Broadcasting date{% endtrans %}
                     {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
-                        {% if 'embeddedEvent._id' == app.session.get('admin/live/event/sort/field') %}
+                        {% if 'embeddedEvent.date' == app.session.get('admin/live/event/sort/field') %}
                             {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
                         {% endif %}
                     {% endif %}
