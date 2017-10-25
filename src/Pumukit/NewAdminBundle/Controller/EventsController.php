@@ -115,12 +115,17 @@ class EventsController extends Controller
     /**
      * List events.
      *
+     * @param Request $request
+     * @param null    $type
+     *
+     * @return array
+     *
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      * @Template("PumukitNewAdminBundle:LiveEvent:list.html.twig")
      */
     public function listEventAction(Request $request, $type = null)
     {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
@@ -150,7 +155,11 @@ class EventsController extends Controller
         }
 
         $session->set('admin/live/event/criteria', $criteria);
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $sortField = $session->get('admin/live/event/sort/field', 'embeddedEvent._id');
+        $sortType = $session->get('admin/live/event/sort/type', 'desc');
+        $session->set('admin/live/event/sort/field', $sortField);
+        $session->set('admin/live/event/sort/type', $sortType);
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, array($sortField => $sortType));
 
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
@@ -159,6 +168,36 @@ class EventsController extends Controller
         $mms->setCurrentPage($page);
 
         return array('multimediaObjects' => $mms);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @Route("add/sorting/", name="pumukit_new_admin_live_event_set_sorting")
+     */
+    public function addSessionSorting(Request $request)
+    {
+        $session = $this->get('session');
+
+        if ($request->request->get('field')) {
+            $field = $request->request->get('field');
+            if ('embeddedEvent.name' === $request->request->get('field')) {
+                $field = 'embeddedEvent.name.'.$request->getLocale();
+            }
+            if ($session->has('admin/live/event/sort/field') and $session->get('admin/live/event/sort/field') === $field) {
+                $session->set('admin/live/event/sort/type', (($session->get('admin/live/event/sort/type') == 'desc') ? 'asc' : 'desc'));
+            } else {
+                $session->set('admin/live/event/sort/type', 'desc');
+            }
+
+            $session->set('admin/live/event/sort/field', $field);
+
+            return new JsonResponse(array('success'));
+        }
+
+        return new JsonResponse(array('error'));
     }
 
     /**
@@ -324,7 +363,6 @@ class EventsController extends Controller
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $languages = $this->container->getParameter('pumukit2.locales');
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
@@ -604,9 +642,13 @@ class EventsController extends Controller
             if ($session->getId() == $session_id) {
                 $newSession = new EmbeddedEventSession();
                 $newSession->setDuration($session->getDuration());
+                $newSession->setNotes($session->getNotes());
                 $date = clone $session->getStart();
+                $dateEnds = clone $session->getEnds();
                 $date->add(new \DateInterval('P1D'));
+                $dateEnds->add(new \DateInterval('P1D'));
                 $newSession->setStart($date);
+                $newSession->setEnds($dateEnds);
                 $dm->persist($newSession);
                 $multimediaObject->getEmbeddedEvent()->addEmbeddedEventSession($newSession);
             }

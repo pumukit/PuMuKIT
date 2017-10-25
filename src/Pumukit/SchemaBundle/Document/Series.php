@@ -296,7 +296,7 @@ class Series
      *
      * @param SeriesStyle $series_style
      */
-    public function setSeriesStyle(SeriesStyle $series_style)
+    public function setSeriesStyle(SeriesStyle $series_style = null)
     {
         $this->series_style = $series_style;
     }

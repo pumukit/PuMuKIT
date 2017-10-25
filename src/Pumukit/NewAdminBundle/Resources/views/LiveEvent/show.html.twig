@@ -15,7 +15,7 @@
                     <p>{{ session.getStart() | date("d/m/Y H:i:s") }}</p>
                 {% endif %}
                 <p style="margin-top:10px">
-                    <a href="{{ path('pumukit_live_event_id', {'id': multimediaObject.getId()}) }}" title="{% trans %}Show event on WebTV portal{% endtrans %}">
+                    <a target="_blank" href="{{ path('pumukit_live_event_id', {'id': multimediaObject.getId()}) }}" title="{% trans %}Show event on WebTV portal{% endtrans %}">
                         {% trans %}Show event on WebTV portal{% endtrans %}
                     </a>
                 </p>

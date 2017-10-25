@@ -55,7 +55,7 @@ class TagType extends AbstractType
                 $auxField = explode(':', $field);
                 $formOptions = array('mapped' => false,
                                      'required' => false,
-                                     'aria-label' => $this->translator->trans($auxField[0], array(), null, $this->locale),
+                                     'attr' => array('aria-label' => $this->translator->trans($auxField[0], array(), null, $this->locale)),
                                      'data' => $tag->getProperty($auxField[0]),
                                );
 
