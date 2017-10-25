@@ -10,6 +10,7 @@ class ProfileService
     private $dm;
     private $repo;
     private $profiles;
+    private $default_profiles;
 
     const STREAMSERVER_STORE = 'store';
     const STREAMSERVER_DOWNLOAD = 'download';
@@ -20,11 +21,12 @@ class ProfileService
     /**
      * Constructor.
      */
-    public function __construct(array $profiles, DocumentManager $documentManager)
+    public function __construct(array $profiles, DocumentManager $documentManager, array $default_profiles = array())
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profiles = $profiles;
+        $this->default_profiles = $default_profiles;
 
         $this->validateProfilesDirOut();
     }
@@ -148,6 +150,18 @@ class ProfileService
             if (!$dirOut) {
                 throw new \InvalidArgumentException("The path '".$profile['streamserver']['dir_out']."' for dir_out of the streamserver '".$profile['streamserver']['name']."' doesn't exist.");
             }
+        }
+    }
+
+    /**
+     * Get target default profiles.
+     */
+    public function getDefaultProfiles()
+    {
+        if (is_null($this->default_profiles)) {
+            throw new \InvalidArgumentException('No target default profiles.');
+        } else {
+            return $this->default_profiles;
         }
     }
 }

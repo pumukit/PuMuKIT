@@ -3,7 +3,6 @@
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;

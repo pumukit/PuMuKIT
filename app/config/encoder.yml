@@ -55,6 +55,7 @@ pumukit_encoder:
             display: true
             wizard: true
             master: true
+            target: PUCHWEBTV
             format: mp4
             codec: h264
             mime_type: 'video/x-mp4'
@@ -160,3 +161,12 @@ pumukit_encoder:
             app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
+
+
+    target_default_profiles:
+        PUCHWEBTV:
+            audio: "audio_aac"
+            video: "video_h264"
+        PUCHPODCAST:
+            audio: "audio_aac"
+            video: "video_h264 audio_aac"

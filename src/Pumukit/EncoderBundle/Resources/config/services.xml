@@ -19,6 +19,7 @@
         <service id="pumukitencoder.profile" class="Pumukit\EncoderBundle\Services\ProfileService">
             <argument>%pumukitencode.profilelist%</argument>
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument>%pumukitencode.target_default_profiles%</argument>
         </service>
 
         <service id="pumukitencoder.job" class="Pumukit\EncoderBundle\Services\JobService">
