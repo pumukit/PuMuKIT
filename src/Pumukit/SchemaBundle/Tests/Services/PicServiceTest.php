@@ -3,11 +3,15 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
+use Pumukit\EncoderBundle\Services\ProfileService;
 
 class PicServiceTest extends WebTestCase
 {
@@ -22,6 +26,9 @@ class PicServiceTest extends WebTestCase
     private $defaultAudioSDPic = '/images/audio_sd.jpg';
     private $localhost = 'http://localhost';
     private $webDir;
+    private $listener;
+    private $trackDispatcher;
+    private $trackService;
 
     public function setUp()
     {
@@ -40,6 +47,14 @@ class PicServiceTest extends WebTestCase
         $this->dm->flush();
 
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
+
+        $dispatcher = new EventDispatcher();
+        $this->listener = new MultimediaObjectListener($this->dm);
+        $dispatcher->addListener('multimediaobject.update', array($this->listener, 'postUpdate'));
+        $this->trackDispatcher = static::$kernel->getContainer()
+          ->get('pumukitschema.track_dispatcher');
+        $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
     }
 
     public function tearDown()
@@ -52,9 +67,31 @@ class PicServiceTest extends WebTestCase
         $this->webDir = null;
         $this->localhost = null;
         $this->picService = null;
+        $this->listener = null;
+        $this->trackDispatcher = null;
+        $this->trackService = null;
         gc_collect_cycles();
         parent::tearDown();
     }
+
+    public function testGetDefaultUrlPicForObject()
+    {
+        $pic = new Pic();
+
+        $absolute = false;
+        $this->assertEquals($this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
+
+        $absolute = true;
+        $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
+    }
+
+    public function testGetDefaultPathPicForObject()
+    {
+        $pic = new Pic();
+
+        $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getDefaultPathPicForObject($pic));
+    }
+
 
     public function testGetFirstUrlPic()
     {
@@ -101,10 +138,7 @@ class PicServiceTest extends WebTestCase
 
         $track = new Track();
         $track->setOnlyAudio(false);
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
+        $this->trackService->addTrackToMultimediaObject($mm, $track, true);
 
         $absolute = false;
         $this->assertEquals($this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
@@ -113,8 +147,8 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getFirstUrlPic($mm, $absolute));
 
         $track->setOnlyAudio(true);
-        $this->dm->persist($mm);
-        $this->dm->flush();
+        $track->addTag('master');
+        $this->trackService->updateTrackInMultimediaObject($mm, $track, true);
 
         $absolute = false;
         $hd = true;
@@ -159,17 +193,6 @@ class PicServiceTest extends WebTestCase
 
         $absolute = true;
         $this->assertEquals($this->localhost.$mmUrl2, $this->picService->getFirstUrlPic($mm, $absolute));
-    }
-
-    public function testGetDefaultUrlPicForObject()
-    {
-        $pic = new Pic();
-
-        $absolute = false;
-        $this->assertEquals($this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
-
-        $absolute = true;
-        $this->assertEquals($this->localhost.$this->defaultVideoPic, $this->picService->getDefaultUrlPicForObject($pic, $absolute));
     }
 
     public function testGetFirstPathPic()
@@ -217,16 +240,13 @@ class PicServiceTest extends WebTestCase
 
         $track = new Track();
         $track->setOnlyAudio(false);
-        $mm->addTrack($track);
-
-        $this->dm->persist($mm);
-        $this->dm->flush();
+        $this->trackService->addTrackToMultimediaObject($mm, $track, true);
 
         $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getFirstPathPic($mm));
 
         $track->setOnlyAudio(true);
-        $this->dm->persist($mm);
-        $this->dm->flush();
+        $track->addTag('master');
+        $this->trackService->updateTrackInMultimediaObject($mm, $track, true);
 
         $hd = true;
         $this->assertEquals($this->webDir.$this->defaultAudioHDPic, $this->picService->getFirstPathPic($mm, $hd));
@@ -260,10 +280,59 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($mmPath2, $this->picService->getFirstPathPic($mm));
     }
 
-    public function testGetDefaultPathPicForObject()
+    private function getDemoProfiles()
     {
-        $pic = new Pic();
+        $profiles = array(
+            'MASTER_COPY' => array(
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'framerate' => '0',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'cp "{{input}}" "{{output}}"',
+                'streamserver' => array(
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '127.0.0.1',
+                    'name' => 'Localmaster',
+                    'description' => 'Local masters server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',
+                ),
+                'app' => 'cp',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ),
+            'MASTER_VIDEO_H264' => array(
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'format' => 'mp4',
+                'codec' => 'h264',
+                'mime_type' => 'video/x-mp4',
+                'extension' => 'mp4',
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'bitrate' => '1 Mbps',
+                'framerate' => '25/1',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
+                'streamserver' => array(
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '192.168.5.125',
+                    'name' => 'Download',
+                    'description' => 'Download server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',
+                    'url_out' => 'http://localhost:8000/downloads/',
+                ),
+                'app' => 'avconv',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ),
+        );
 
-        $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getDefaultPathPicForObject($pic));
+        return $profiles;
     }
 }

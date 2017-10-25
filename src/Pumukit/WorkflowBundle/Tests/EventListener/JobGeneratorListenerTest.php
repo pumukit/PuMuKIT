@@ -3,9 +3,12 @@
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\TrackService;
+use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
 
 /**
@@ -47,6 +50,14 @@ class JobGeneratorListenerTest extends WebTestCase
                        ->getMock();
 
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobService, $profileService, $this->logger);
+
+        $dispatcher = new EventDispatcher();
+        $this->listener = new MultimediaObjectListener($this->dm);
+        $dispatcher->addListener('multimediaobject.update', array($this->listener, 'postUpdate'));
+        $this->trackDispatcher = static::$kernel->getContainer()
+          ->get('pumukitschema.track_dispatcher');
+        $profileService = new ProfileService($testProfiles, $this->dm);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
     }
 
     public function tearDown()
@@ -55,6 +66,9 @@ class JobGeneratorListenerTest extends WebTestCase
         $this->dm = null;
         $this->logger = null;
         $this->jobGeneratorListener = null;
+        $this->listener = null;
+        $this->trackDispatcher = null;
+        $this->trackService = null;
         gc_collect_cycles();
         parent::tearDown();
     }
@@ -140,7 +154,7 @@ class JobGeneratorListenerTest extends WebTestCase
         $track->setPath('path');
         $track->setOnlyAudio(true);
         $mmobj = new MultimediaObject();
-        $mmobj->addTrack($track);
+        $this->trackService->addTrackToMultimediaObject($mmobj, $track, true);
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGA'));
         $this->assertEquals(array('audio'), $jobs);
@@ -148,14 +162,16 @@ class JobGeneratorListenerTest extends WebTestCase
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
         $this->assertEquals(array('audio', 'audio2'), $jobs);
 
-        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB'));
-        $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense.
+        /* #15818: See commented text in JobGeneratorListener, function generateJobs */
+        /* $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGB')); */
+        /* $this->assertEquals(array('audio2'), $jobs); //generate a video2 from an audio has no sense. */
 
         $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGP'));
         $this->assertEquals(array(), $jobs); //generate a video from an audio has no sense.
 
-        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP'));
-        $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense.
+        /* #15818: See commented text in JobGeneratorListener, function generateJobs */
+        /* $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGFP')); */
+        /* $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense. */
     }
 
     private function invokeMethod(&$object, $methodName, array $parameters = array())
