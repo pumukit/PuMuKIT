@@ -30,7 +30,11 @@ class CreateMMOCommand extends ContainerAwareCommand
 This command create a multimedia object from a multimedia file path
 
 Basic example:
-<info>php app/console create:multimedia /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
+<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
+
+Complete example:
+<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE</info>
+
 
 EOT
             );

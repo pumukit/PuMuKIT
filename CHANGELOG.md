@@ -9,8 +9,11 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 - Fix WCAG2AA accessibility (a11y) errors.
 - HTML5 thumbnail generator
 
+## [2.3.3](https://github.com/campusdomar/PuMuKIT2/compare/2.3.2...2.3.3) (2017-10-19)
+- Bug fixes.
+
 ## [2.3.2](https://github.com/campusdomar/PuMuKIT2/compare/2.3.1...2.3.2) (2017-09-15)
-- Configurable imported tag opencast
+- Configurable imported tag opencast.
 
 ## [2.3.1](https://github.com/campusdomar/PuMuKIT2/compare/2.3.0...2.3.1) (2017-09-13)
 - Update default permission profiles.

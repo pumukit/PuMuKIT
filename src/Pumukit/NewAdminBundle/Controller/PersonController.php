@@ -551,6 +551,7 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Delete Person.
      *
+     * @Security("is_granted('ROLE_SCOPE_GLOBAL')")
      * @Template("PumukitNewAdminBundle:Person:list.html")
      */
     public function deleteAction(Request $request)
@@ -574,6 +575,8 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Batch delete Person
      * Overwrite to use PersonService.
+     *
+     * @Security("is_granted('ROLE_SCOPE_GLOBAL')")
      */
     public function batchDeleteAction(Request $request)
     {
@@ -585,6 +588,16 @@ class PersonController extends AdminController implements NewAdminController
 
         $personService = $this->get('pumukitschema.person');
         $translator = $this->get('translator');
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        foreach ($ids as $id) {
+            $person = $this->find($id);
+            if (0 !== count($mmRepo->findByPersonId($person->getId()))) {
+                return new Response($translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
+            }
+        }
+
         foreach ($ids as $id) {
             $person = $this->find($id);
             try {

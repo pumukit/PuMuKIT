@@ -16,6 +16,15 @@ class WidgetController extends Controller implements WebTVController
             return self::$menuResponse;
         }
 
+        $params = $this->getMenuParameters();
+
+        self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', $params);
+
+        return self::$menuResponse;
+    }
+
+    protected function getMenuParameters()
+    {
         if ($this->container->hasParameter('pumukit_new_admin.advance_live_event') and $this->container->getParameter('pumukit_new_admin.advance_live_event')) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
             $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsMenu();
@@ -29,7 +38,6 @@ class WidgetController extends Controller implements WebTVController
                     if (new \DateTime() < $ends) {
                         $nowOrFuture = true;
                     }
-
                     if ($nowOrFuture) {
                         $menuEvents[(string) $event['_id']] = array();
                         $menuEvents[(string) $event['_id']]['event'] = $sessionData['event'];
@@ -38,7 +46,6 @@ class WidgetController extends Controller implements WebTVController
                     }
                 }
             }
-
             $events = $menuEvents;
             $channels = array(); // Not important with advance_live_events
             $liveEventTypeSession = true;
@@ -49,7 +56,6 @@ class WidgetController extends Controller implements WebTVController
         }
 
         $selected = $this->container->get('request_stack')->getMasterRequest()->get('_route');
-
         $menuStats = $this->container->getParameter('menu.show_stats');
         $homeTitle = $this->container->getParameter('menu.home_title');
         $announcesTitle = $this->container->getParameter('menu.announces_title');
@@ -57,7 +63,7 @@ class WidgetController extends Controller implements WebTVController
         $mediatecaTitle = $this->container->getParameter('menu.mediateca_title');
         $categoriesTitle = $this->container->getParameter('menu.categories_title');
 
-        self::$menuResponse = $this->render('PumukitWebTVBundle:Widget:menu.html.twig', array(
+        return array(
             'advance_live_channels' => array(
                 'events' => $events,
                 'channels' => $channels,
@@ -72,9 +78,7 @@ class WidgetController extends Controller implements WebTVController
             'search_title' => $searchTitle,
             'mediateca_title' => $mediatecaTitle,
             'categories_title' => $categoriesTitle,
-        ));
-
-        return self::$menuResponse;
+        );
     }
 
     /**
