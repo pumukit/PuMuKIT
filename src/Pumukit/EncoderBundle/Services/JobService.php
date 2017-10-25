@@ -444,10 +444,12 @@ class JobService
             $job->setTimeend(new \DateTime('now'));
             $job->setStatus(Job::STATUS_FINISHED);
 
+            $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
+            $this->dm->refresh($multimediaObject);
+
             $track = $this->createTrackWithJob($job);
             $this->dispatch(true, $job, $track);
 
-            $multimediaObject = $this->getMultimediaObject($job); //Necesary to refresh the document
             $this->propService->finishJob($multimediaObject, $job);
 
             $this->deleteTempFiles($job);
