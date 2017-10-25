@@ -162,7 +162,7 @@
                     <select id="broadcast" name="criteria[broadcast]" class="form-control">
                         <option value="all">{% trans %}All{% endtrans %}</option>
                         {% for key, broadcast in broadcasts %}
-                            <option value="{{ key }}" {% if app.request.session.get('UNESCO/form')['broadcast'] is defined and app.request.session.get('UNESCO/form')['broadcast'] === key %}selected{% endif %}>
+                            <option value="{{ key }}" {% if app.request.session.get('UNESCO/form')['broadcast'] is defined and app.request.session.get('UNESCO/form')['broadcast'] is same as(key) %}selected{% endif %}>
                                 {{ broadcast }}
                             </option>
                         {% endfor %}
@@ -175,11 +175,10 @@
                 <label for="status" class="col-md-3 control-label">{% trans %}Status{% endtrans %}</label>
                 <div class="col-md-9">
                     <select id="status" name="criteria[statusPub]" class="form-control">
-                        {% dump(app.request.session.get('UNESCO/form')['statusPub']) %}
                         {% for key, status in statusPub %}
                             <option value="{{ key }}"
                                     {% if app.request.session.get('UNESCO/form')['statusPub'] is defined and
-                                    app.request.session.get('UNESCO/form')['statusPub'] === key %}
+                                    app.request.session.get('UNESCO/form')['statusPub'] is same as(key) %}
                                         selected
                                     {% endif %}
                             >
