@@ -9,6 +9,9 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 - Fix WCAG2AA accessibility (a11y) errors.
 - HTML5 thumbnail generator
 
+## [2.3.5] (YYYY-MM-DD) Unreleased
+- Bug fixes related to broadcastable_master ([BC note in encoder.yml](https://github.com/campusdomar/PuMuKIT2/commit/5ade04b001ae300646a8e9c810bc2e72e))
+
 ## [2.3.3](https://github.com/campusdomar/PuMuKIT2/compare/2.3.2...2.3.3) (2017-10-19)
 - Bug fixes.
 
