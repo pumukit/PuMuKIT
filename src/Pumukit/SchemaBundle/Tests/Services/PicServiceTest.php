@@ -92,7 +92,6 @@ class PicServiceTest extends WebTestCase
         $this->assertEquals($this->webDir.$this->defaultVideoPic, $this->picService->getDefaultPathPicForObject($pic));
     }
 
-
     public function testGetFirstUrlPic()
     {
         // SERIES SECTION
