@@ -232,7 +232,7 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria['series'] = new \MongoId($value);
                     $formBasic = true;
                 } elseif ('type' === $key and !empty($value)) {
-                    if ('all' != $value) {
+                    if ('all' !== $value) {
                         $newCriteria['type'] = intval($value);
                         $formBasic = true;
                     }
@@ -246,11 +246,11 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria['$text'] = new \MongoRegex('/.*'.$value.'.*/i');
                     $formBasic = true;
                 } elseif ('broadcast' === $key and !empty($value)) {
-                    if ('all' != $value) {
+                    if ('all' !== $value) {
                         $newCriteria['embeddedBroadcast.type'] = $value;
                     }
-                } elseif ('statusPub' === $key) {
-                    if ('all' != $value) {
+                } elseif ('statusPub' === $key and !empty($value)) {
+                    if ('all' !== $value) {
                         $newCriteria['status'] = intval($value);
                     }
                 } elseif ('announce' === $key and !empty($value)) {
@@ -297,7 +297,7 @@ class UNESCOController extends Controller implements NewAdminController
 
         if ($request->request->has('sort_type')) {
             $sort_type = $request->request->get('sort_type');
-            if ($request->request->get('sort_type') == 'title') {
+            if ($request->request->get('sort_type') === 'title') {
                 $sort_type = 'title.'.$request->getLocale();
             }
 
@@ -451,6 +451,7 @@ class UNESCOController extends Controller implements NewAdminController
         $pudeTV = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDETV');
 
         $statusPub = array(
+            'all' => $translator->trans('All'),
             MultimediaObject::STATUS_PUBLISHED => $translator->trans('Published'),
             MultimediaObject::STATUS_BLOQ => $translator->trans('Blocked'),
             MultimediaObject::STATUS_HIDE => $translator->trans('Hidden'),
@@ -710,12 +711,12 @@ class UNESCOController extends Controller implements NewAdminController
             } elseif ('$text' === $key and !empty($field)) {
                 $query->text($field);
             } elseif ('type' === $key and !empty($field)) {
-                if ('all' != $field) {
+                if ('all' !== $field) {
                     $query->field('type')->equals($field);
                 }
             } elseif ('tracks.duration' == $key and !empty($field)) {
                 $query = $this->findDuration($query, $key, $field);
-            } elseif ('year' == $key and !empty($field)) {
+            } elseif ('year' === $key and !empty($field)) {
                 $query = $this->findDuration($query, 'year', $field);
             } else {
                 $query->field($key)->equals($field);
