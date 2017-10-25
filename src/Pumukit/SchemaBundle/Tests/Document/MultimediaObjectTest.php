@@ -626,33 +626,6 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($mm->containsAnyTagWithCodes(array($tag1->getCod())));
     }
 
-    public function testIsOnlyAudio()
-    {
-        $mm = new MultimediaObject();
-
-        $t1 = new Track();
-        $t1->setOnlyAudio(true);
-        $t2 = new Track();
-        $t2->setOnlyAudio(true);
-        $t3 = new Track();
-        $t3->setOnlyAudio(true);
-        $t4 = new Track();
-        $t4->setOnlyAudio(true);
-        $t5 = new Track();
-        $t5->setOnlyAudio(true);
-
-        $mm->addTrack($t3);
-        $mm->addTrack($t2);
-        $mm->addTrack($t1);
-        $mm->addTrack($t4);
-        $mm->addTrack($t5);
-
-        $this->assertTrue($mm->isOnlyAudio());
-
-        $t5->setOnlyAudio(false);
-        $this->assertFalse($mm->isOnlyAudio());
-    }
-
     public function testIsCollection()
     {
         $mm = new MultimediaObject();
@@ -698,28 +671,5 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $mm->setDurationInMinutesAndSeconds($duration_in_minutes_and_seconds2);
         $this->assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
-    }
-
-    public function testGetMaster()
-    {
-        $mm = new MultimediaObject();
-        $track3 = new Track();
-        $track3->addTag('master');
-        $track3->setOnlyAudio(false);
-        $track2 = new Track();
-        $track2->setOnlyAudio(false);
-        $track1 = new Track();
-        $track1->setOnlyAudio(true);
-
-        $this->assertEquals(null, $mm->getMaster());
-        $mm->addTrack($track1);
-        $this->assertEquals($track1, $mm->getMaster());
-        $this->assertEquals(null, $mm->getMaster(false));
-        $mm->addTrack($track2);
-        $this->assertEquals($track2, $mm->getMaster());
-        $this->assertEquals(null, $mm->getMaster(false));
-        $mm->addTrack($track3);
-        $this->assertEquals($track3, $mm->getMaster());
-        $this->assertEquals($track3, $mm->getMaster(false));
     }
 }

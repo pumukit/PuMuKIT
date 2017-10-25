@@ -72,7 +72,6 @@
                 var path = "{{ path('pumukit_newadmin_series_styles_show') }}";
                 $('#style_show').load(path);
                 var message = data.msg;
-                console.log(data);
                 if(data[0] == 'error') {
                     no_success(message);
                 } else {
