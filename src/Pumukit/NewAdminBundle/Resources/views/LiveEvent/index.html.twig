@@ -27,7 +27,7 @@
                     <div class="col-xs-8 text-right">
                         <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukit_new_admin_live_event_create') }}">{% trans %}
                             New event and series{% endtrans %}</a>
-                        <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="#" data-toggle="modal" data-backdrop="static" data-target="#seriesModal">{% trans %}
+                        <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}
                             New event from series{% endtrans %}</a>
                     </div>
                 </div>
@@ -52,43 +52,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="seriesModal" tabindex="-1" role="dialog" aria-labelledby="seriesModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form method="POST" action="" id="form_create_event_by_serie">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">{% trans %}New live event{% endtrans %}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            {% trans %}
-                            Add the name of the series you want to use.
-                            In case this series already exists in the database, a pull-down list will be shown,
-                            where you can select it and use it. If it doesn't exist in the database,
-                            create a new entrance with the written name.
-                            {% endtrans %}
-                        </p>
-                        <div class="ui-widget">
-                            <label for="seriesSuggest">{% trans %}Series{% endtrans %}</label>
-                            <input type="text" id="seriesSuggest" name="seriesSuggestAutocomplete" class="form-control"/>
-                            <input type="hidden" id="seriesSuggestValidate" name="seriesSuggest" value="" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="col-md-2 col-md-offset-5">
-                            <input class="btn btn-default btn-raised" type="button" value="{% trans %}Cancel{% endtrans %}" data-dismiss="modal">
-                        </div>
-                        <div class="col-md-2 col-md-offset-1">
-                            <input class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Create{% endtrans %}">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <script type="text/javascript">
         $("#options_events").on('change', function (event) {
             if ($("#options_events option:selected").val() == 'delete_selected') {
@@ -110,50 +73,6 @@
                     });
                     return false;
                 }
-            }
-        });
-
-        $("#seriesSuggest").autocomplete({
-            source: "{{ path('pumukit_new_admin_live_event_series_suggest') }}",
-            delay: 250,
-            minLength: 2,
-            select: function (event, ui) {
-                $("#seriesSuggestValidate").val(ui.item.id);
-            }
-        }).autocomplete("instance")._renderItem = function (ul, item) {
-            return $("<li>")
-                .append("<a>" + item.id + " - " + item.title + "<br><span class='form-control'>" + "</span></a>")
-                .appendTo(ul)
-        };
-
-        $("#seriesSuggest").on("input", function(){
-            $("#seriesSuggestValidate").val("");
-        });
-
-        $('#form_create_event_by_serie').on('submit', function(event) {
-            event.preventDefault();
-
-            if('' != $('#seriesSuggestValidate').val()) {
-                $.ajax({
-                    url: '{{ path('pumukit_new_admin_live_event_create') }}',
-                    method: 'POST',
-                    data: $('#seriesSuggestValidate'),
-                    success: function () {
-                        $('#seriesModal').modal('hide');
-                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                        $('#list_events').load(mm);
-
-                        $('#seriesSuggestValidate').val("");
-                        var message = '{% trans %}Event successfully updated.{% endtrans %}';
-                        success(message);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        no_success(errorThrown + ': ' + textStatus);
-                    }
-                });
-                return false;
-            } else {
-                no_success('Check selected serie');
             }
         });
 

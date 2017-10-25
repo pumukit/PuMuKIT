@@ -742,6 +742,51 @@ class EventsController extends Controller
     }
 
     /**
+     * @return array
+     *
+     * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
+     * @Template("PumukitNewAdminBundle:LiveEvent:changeSeries.html.twig")
+     */
+    public function seriesChangeModalAction($multimediaObject = null)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        if (isset($multimediaObject)) {
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObject)));
+
+            return array('multimediaObject' => $multimediaObject);
+        }
+
+        return array();
+    }
+
+    /**
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return JsonResponse
+     *
+     * @Route("edit/series/{multimediaObject}", name="pumukitnewadmin_live_event_edit_series")
+     */
+    public function seriesChangeAction(Request $request, MultimediaObject $multimediaObject)
+    {
+        $series = $request->request->get('seriesSuggest');
+        if ($series) {
+            $dm = $this->container->get('doctrine_mongodb')->getManager();
+            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($series)));
+            if ($series) {
+                $multimediaObject->setSeries($series);
+                $dm->flush();
+
+                return new JsonResponse(array('success'));
+            }
+
+            return new JsonResponse(array('error'));
+        }
+
+        return new JsonResponse(array('error'));
+    }
+
+    /**
      * @param MultimediaObject $multimediaObject
      *
      * @return array

@@ -2,7 +2,7 @@
     <i class="mdi-navigation-menu" id="list_pics_{{ multimediaObject.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ multimediaObject.id }}">
         <li>
-            <a title="{% trans %}Change series{% endtrans %}" href="#" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <a href="{{ path('pumukitnewadmin_live_event_change_series', {'multimediaObject': multimediaObject.getId()}) }}" title="{% trans %}Change series{% endtrans %}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
                 <i class="mdi-editor-mode-edit"></i> {% trans %}Change series{% endtrans %}
             </a>
         </li>
