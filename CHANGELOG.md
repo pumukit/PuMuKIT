@@ -4,6 +4,9 @@ Web version of the changelog in http://pumukit.org/pmk-2-x-release-archive/
 To get the diff for a specific change, go to https://github.com/campusdomar/PuMuKIT2/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
+## [2.3.5] (YYYY-MM-DD) Unreleased
+- Bug fixes related to broadcastable_master ([BC note in encoder.yml](https://github.com/campusdomar/PuMuKIT2/commit/5ade04b001ae300646a8e9c810bc2e72e))
+
 ## [2.3.3](https://github.com/campusdomar/PuMuKIT2/compare/2.3.2...2.3.3) (2017-10-19)
 - Bug fixes.
 
