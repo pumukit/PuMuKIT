@@ -28,17 +28,19 @@ class ByUserController extends Controller implements WebTVController
         $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $mmobjs = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, array('record_date' => -1));
-        $this->updateBreadcrumbs($user->getUsername(), 'pumukit_webtv_byuser_multimediaobjects', array('username' => $user->getUsername()));
-        $title = $user->getUsername();
+        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_multimediaobjects', array('fullname' => $user->getFullname()));
+        $title = $user->getFullname();
 
         $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
 
         $title = $this->get('translator')->trans('Multimedia objects with user: %title%', array('%title%' => $title));
 
-        return array('title' => $title,
-                     'objects' => $pagerfanta,
-                     'user' => $user,
-                     'number_cols' => $numberCols, );
+        return array(
+            'title' => $title,
+            'objects' => $pagerfanta,
+            'user' => $user,
+            'number_cols' => $numberCols,
+        );
     }
 
     /**
@@ -55,15 +57,17 @@ class ByUserController extends Controller implements WebTVController
         $series = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, array('public_date' => -1));
 
         $pagerfanta = $this->createPager($series, $request->query->get('page', 1));
-        $this->updateBreadcrumbs($user->getUsername(), 'pumukit_webtv_byuser_series', array('username' => $user->getUsername()));
+        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', array('fullname' => $user->getFullname()));
 
-        $title = $user->getUsername();
+        $title = $user->getFullname();
         $title = $this->get('translator')->trans('Series with user: %title%', array('%title%' => $title));
 
-        return array('title' => $title,
-                     'objects' => $pagerfanta,
-                     'user' => $user,
-                     'number_cols' => $numberCols, );
+        return array(
+            'title' => $title,
+            'objects' => $pagerfanta,
+            'user' => $user,
+            'number_cols' => $numberCols,
+        );
     }
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
