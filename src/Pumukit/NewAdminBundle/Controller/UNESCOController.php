@@ -148,8 +148,12 @@ class UNESCOController extends Controller implements NewAdminController
         }
 
         if ($session->has('admin/unesco/element_sort')) {
-            $sort = ($session->get('admin/unesco/type') == 'desc') ? 'asc' : 'desc';
+            $sort = $session->get('admin/unesco/type');
             $multimediaObjects->sort($session->get('admin/unesco/element_sort'), $sort);
+        } else {
+            $multimediaObjects->sort('public_date', 'desc');
+            $session->set('admin/unesco/type', 'desc');
+            $session->set('admin/unesco/element_sort', 'public_date');
         }
 
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
@@ -210,7 +214,7 @@ class UNESCOController extends Controller implements NewAdminController
      *
      * @return JsonResponse
      */
-    public function addCriteriaSession(Request $request)
+    public function addCriteriaSessionAction(Request $request)
     {
         $session = $this->get('session');
         $criteria = $request->request->get('criteria');
@@ -228,10 +232,12 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria['series'] = new \MongoId($value);
                     $formBasic = true;
                 } elseif ('type' === $key and !empty($value)) {
-                    $newCriteria['type'] = $value;
-                    $formBasic = true;
+                    if ('all' != $value) {
+                        $newCriteria['type'] = intval($value);
+                        $formBasic = true;
+                    }
                 } elseif ('duration' === $key and !empty($value)) {
-                    $newCriteria['track.duration'] = $value;
+                    $newCriteria['tracks.duration'] = $value;
                     $formBasic = true;
                 } elseif ('year' === $key and !empty($value)) {
                     $newCriteria['year'] = $value;
@@ -281,7 +287,9 @@ class UNESCOController extends Controller implements NewAdminController
         }
 
         if (!empty($tag)) {
-            array_shift($tag);
+            if ('all' === $tag[0]) {
+                array_shift($tag);
+            }
             if (!empty($tag)) {
                 $newCriteria['tags.cod'] = array('$all' => $tag);
             }
@@ -345,9 +353,8 @@ class UNESCOController extends Controller implements NewAdminController
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
-            $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Tag')->findOneByCod(
-                    'PUDENEW'
-                )->setDisplay(false);
+            $dm = $this->container->get('doctrine_mongodb')->getManager();
+            $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDENEW')->setDisplay(false);
         }
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -706,7 +713,7 @@ class UNESCOController extends Controller implements NewAdminController
                 if ('all' != $field) {
                     $query->field('type')->equals($field);
                 }
-            } elseif ('track.duration' == $key and !empty($field)) {
+            } elseif ('tracks.duration' == $key and !empty($field)) {
                 $query = $this->findDuration($query, $key, $field);
             } elseif ('year' == $key and !empty($field)) {
                 $query = $this->findDuration($query, 'year', $field);
@@ -787,7 +794,7 @@ class UNESCOController extends Controller implements NewAdminController
      */
     private function findDuration($query, $key, $field)
     {
-        if ('track.duration' === $key) {
+        if ('tracks.duration' === $key) {
             if ($field == '-5') {
                 $query->field($key)->lte(300);
             }

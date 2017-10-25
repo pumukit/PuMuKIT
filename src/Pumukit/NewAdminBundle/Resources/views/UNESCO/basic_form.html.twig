@@ -74,19 +74,21 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-md-4">
-            <label for="type" class="col-md-3 control-label">{% trans %}Genre{% endtrans %}</label>
-            <div class="col-md-9">
-                <select id="genre" name="criteria[genre]" class="form-control">
-                    <option value="all">{% trans %}All{% endtrans %}</option>
-                    {% for key, value in genre %}
-                        <option value="{{ key }}" {% if criteria and  key == criteria['type'] %}selected{% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
+    {% if genre is defined and genre is not null %}
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <label for="type" class="col-md-3 control-label">{% trans %}Genre{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="genre" name="criteria[genre]" class="form-control">
+                        <option value="all">{% trans %}All{% endtrans %}</option>
+                        {% for key, value in genre %}
+                            <option value="{{ key }}" {% if criteria and key == criteria['genre'] %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
 </div>
 
