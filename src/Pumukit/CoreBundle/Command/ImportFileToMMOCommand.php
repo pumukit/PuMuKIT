@@ -2,7 +2,6 @@
 
 namespace Pumukit\CoreBundle\Command;
 
-use Assetic\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +25,7 @@ class ImportFileToMMOCommand extends ContainerAwareCommand
             ->setHelp(<<<'EOT'
 This command import file like a track on a multimedia object
 
-Example complete: 
+Example complete:
 <info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
 
 Basic example:
@@ -36,41 +35,44 @@ EOT
             );
     }
 
-    private function initParameters()
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
+        $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
+        $this->defaultLanguage = $this->getContainer()->getParameter('locale');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->initParameters();
-
         $output->writeln('<info> ***** Add track to multimedia object ***** </info>');
+
+        $filePath = $input->getArgument('file');
+        if (!is_file($filePath)) {
+            throw new \Exception('Path is not a file: '.$filePath);
+        }
+
         try {
-            $oMultimedia = $this->mmobjRepo->findOneBy(
-                array('id' => new \MongoId($input->getArgument('object')))
-            );
-        } catch (Exception $exception) {
-            $output->writeln('<error>'.$exception->getMessage().'</error>');
+            $duration = $this->inspectionService->getDuration($filePath);
+        } catch (\Exception $e) {
+            throw new \Exception('The file is not a valid video or audio file');
         }
 
-        $sPath = $input->getArgument('file');
-        if (is_file($sPath)) {
-            $sProfile = ($input->getOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();
-            $sLanguage = ($input->getOption('language')) ? $input->getOption('language') : null;
-            $sDescription = ($input->getArgument('description')) ? array($input->getArgument('description')) : '';
-
-            try {
-                $oTrack = $this->jobService->createTrack($oMultimedia, $sPath, $sProfile, $sLanguage, $sDescription);
-                $output->writeln('<info> Track '.$oTrack->getId().' was imported succesfully on '.$oMultimedia->getId().'</info>');
-            } catch (Exception $exception) {
-                $output->writeln('<error>'.$exception->getMessage().'</error>');
-            }
-        } else {
-            $output->writeln('<error> Path is not a file: '.$sPath.'</error>');
+        if (0 == $duration) {
+            throw new \Exception('The file is not a valid video or audio file (duration is zero)');
         }
+
+        $multimediaObject = $this->mmobjRepo->findOneBy(
+            array('id' => new \MongoId($input->getArgument('object')))
+        );
+
+        $profile = ($input->hasOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();
+        $language = ($input->hasOption('language')) ? $input->getOption('language') : null;
+        $description = ($input->hasArgument('description')) ? array($this->defaultLanguage => $input->getArgument('description')) : '';
+
+        $track = $this->jobService->createTrack($multimediaObject, $filePath, $profile, $language, $description);
+        $output->writeln('<info> Track '.$track->getId().' was imported succesfully on '.$multimediaObject->getId().'</info>');
     }
 }
