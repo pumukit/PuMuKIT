@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
         $this->addCpusSection($rootNode);
         $this->addProfilesSection($rootNode);
         $this->addThumbnailSection($rootNode);
+        $this->addTargetDefaultProfiles($rootNode);
 
         return $treeBuilder;
     }
@@ -168,5 +169,29 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
+
+    /**
+     * Adds `target_default_profiles` section.
+     *
+     * @param ArrayNodeDefinition $node
+     */
+    public function addTargetDefaultProfiles(ArrayNodeDefinition $node)
+    {
+        $node
+             ->children()
+                 ->arrayNode('target_default_profiles')
+                    ->normalizeKeys(false)
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                     ->children()
+                        ->scalarNode('audio')->defaultValue('')
+                            ->info('Default profile (or profiles) for an audio track')->end()
+                        ->scalarNode('video')->defaultValue('')
+                            ->info('Default profile (or profiles) for a video track')->end()
+                     ->end()
+                 ->end()
+             ->end()
+         ;
     }
 }

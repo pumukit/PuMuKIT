@@ -25,6 +25,7 @@ class ProfileServiceTest extends WebTestCase
 
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
     }
+
     public function tearDown()
     {
         $this->dm->close();
@@ -90,7 +91,7 @@ class ProfileServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage for dir_out of the streamserver
      */
     public function testInvalidTargetPath()

@@ -270,7 +270,7 @@ class JobServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Can't find given profile with name
      */
     public function testExceptionProfileName()
@@ -290,7 +290,7 @@ class JobServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Can't find job with id
      */
     public function testExceptionJobId()
@@ -301,7 +301,7 @@ class JobServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Trying to cancel job
      */
     public function testExceptionCancelJobNotPausedOrWaiting()
