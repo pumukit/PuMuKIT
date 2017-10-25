@@ -55,16 +55,11 @@ class JobGeneratorListener
             return;
         }
 
-        $profile;
-        foreach ($master->getTags() as $profile_tag) {
-            if (strpos($profile_tag, 'profile:') !== false) {
-                $profile = $this->profiles[substr($profile_tag, 8)];
-                break;
-            }
-        }
-        if (!$profile) {
+        $profileName = $master->getProfileName();
+        if (!$profileName || !isset($this->profiles[$profileName])) {
             return;
         }
+        $profile = $this->profiles[$profileName];
 
         foreach ($tag->getChildren() as $pubchannel) {
             if ($multimediaObject->containsTag($pubchannel)) {

@@ -161,64 +161,7 @@ pumukit_encoder:
             app: avconv
             rel_duration_size: 1
             rel_duration_trans: 1
-        delivery_mp4_camera:
-            tags: 'presenter/delivery master'
-            target: PUCHWEBTV PUCHPODCAST
-            nocheckduration: true
-            display: true
-            wizard: false
-            master: true
-            format: mp4
-            codec: h264
-            mime_type: 'video/mp4'
-            extension: mp4
-            resolution_hor: 0
-            resolution_ver: 0
-            bitrate: 1 Mbps
-            framerate: 25
-            channels: 1
-            audio: true
-            bat: |
-                ffmpeg -i "{{input}}" {%% if tracks_audio['other/source'] %%} -i "{{tracks_audio['other/source']}}" -vcodec libx264 -crf 22 -level 3.0 -vprofile baseline -preset veryslow -maxrate 1500k -bufsize 5000k -vf scale='trunc(if(eq(iw,1920),1280,-1)/2)*2':'trunc(if(eq(ih,1080),720,-1)/2)*2' -pix_fmt yuv420p -acodec libfdk_aac -ar 44100 -b:a 128k -f mp4 -threads 0 "{{output}}"
-            streamserver:
-                name: Localhost
-                type: download
-                host: 127.0.0.1
-                description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
-                url_out: "/storage/downloads"
-            app: avconv
-            rel_duration_size: 1
-            rel_duration_trans: 1
-        delivery_mp4_screen:
-            tags: 'presentation/delivery master'
-            target: PUCHWEBTV PUCHPODCAST
-            nocheckduration: true
-            display: true
-            wizard: false
-            master: true
-            format: mp4
-            codec: h264
-            mime_type: 'video/mp4'
-            extension: mp4
-            resolution_hor: 0
-            resolution_ver: 0
-            bitrate: 1 Mbps
-            framerate: 25
-            channels: 1
-            audio: true
-            bat: |
-                ffmpeg -i "{{input}}" {%% if tracks_audio['other/source'] %%} -i "{{tracks_audio['other/source']}}" -vcodec libx264 -crf 21 -level 3.0 -vprofile baseline -preset medium -maxrate 1500k -bufsize 5000k -acodec libfdk_aac -ar 44100 -b:a 128k -f mp4 -threads 0 "{{output}}"
-            streamserver:
-                name: Localhost
-                type: download
-                host: 127.0.0.1
-                description: Local download server
-                dir_out: "%kernel.root_dir%/../web/storage/downloads"
-                url_out: "/storage/downloads"
-            app: avconv
-            rel_duration_size: 1
-            rel_duration_trans: 1
+
 
     target_default_profiles:
         PUCHWEBTV:

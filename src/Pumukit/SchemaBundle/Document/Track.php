@@ -451,4 +451,20 @@ class Track extends Element
     {
         return $this->containsTag('master');
     }
+
+    /**
+     * Return the profiles used to generate the track.
+     *
+     * @return string|null
+     */
+    public function getProfileName()
+    {
+        foreach ($this->getTags() as $tag) {
+            if (strpos($tag, 'profile:') === 0) {
+                return substr($tag, 8);
+            }
+        }
+
+        return null;
+    }
 }
