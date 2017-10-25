@@ -19,20 +19,20 @@
       <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
         <div class="col-xs-6">
           <span style="white-space: nowrap; overflow: hidden;">
-            <label for="start">{% trans %}Start date{% endtrans %}:</label>
+            <label id="start-date" for="start">{% trans %}Start date{% endtrans %}:</label>
             <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
           </span>
           <div class="input-group date date-picker" id='start'>
-            <input type='text' class="form-control"  dataformat="" name="start" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <input type='text' class="form-control"  dataformat="" name="start" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onchange="javascript:submitForm(this);" aria-labelledby="start-date" {{ activated?'':'disabled'}}/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             </span>
           </div>
         </div>
         <div class="col-xs-6">
-          <label for="end">{% trans %}Finish date{% endtrans %}:</label>
+          <label id="end-date" for="end">{% trans %}Finish date{% endtrans %}:</label>
           <div class="input-group date date-picker" id="end">
-            <input type="text" class="form-control"  name="end" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" onchange="javascript:submitForm(this);" {{ activated?'':'disabled'}}/>
+            <input type="text" class="form-control"  name="end" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" onchange="javascript:submitForm(this);" aria-labelledby="end-date" {{ activated?'':'disabled'}}/>
             <div class="input-group-addon">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             </div>
