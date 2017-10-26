@@ -245,7 +245,7 @@ class DefaultController extends Controller
             $to = $multimediaObject->getEmbeddedSocial()->getEmail();
 
             $data = $request->request->get('pumukit_multimedia_object_contact');
-            $bodyMail = sprintf("Email from contact us %s\n * Email: %s\n * Name: %s\n * Subject: %s\n ", $request->getUri(), $data['email'], $data['name'], $data['content']);
+            $bodyMail = sprintf("* Email: %s\n * Name: %s\n * Subject: %s\n ", $data['email'], $data['name'], $data['content']);
 
             $message = \Swift_Message::newInstance();
             $message->setSubject($translator->trans('Contact Live'))->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
