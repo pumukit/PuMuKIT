@@ -159,11 +159,21 @@ class UNESCOController extends Controller implements NewAdminController
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
         $adapter = new Pagerfanta($adapter);
 
-        if (!$session->has('admin/unesco/id')) {
+        if ($adapter->getNbResults() > 0) {
+            $resetCache = true;
             foreach ($adapter->getCurrentPageResults() as $result) {
-                $session->set('admin/unesco/id', $result->getId());
-                break;
+                if ($session->get('admin/unesco/id') == $result->getId()) {
+                    $resetCache = false;
+                }
             }
+            if ($resetCache) {
+                foreach ($adapter->getCurrentPageResults() as $result) {
+                    $session->set('admin/unesco/id', $result->getId());
+                    break;
+                }
+            }
+        } else {
+            $session->remove('admin/unesco/id');
         }
 
         $adapter->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
@@ -303,6 +313,8 @@ class UNESCOController extends Controller implements NewAdminController
 
             $session->set('admin/unesco/element_sort', $sort_type);
             $session->set('admin/unesco/type', $request->request->get('sort'));
+
+            return new JsonResponse(array('success'));
         }
 
         $session->set('UNESCO/form', $criteria);

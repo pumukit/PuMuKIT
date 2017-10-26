@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') == "false" %}in{% endif %}" id="collapseAdvanceForm">
+                <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') is same as(false) %}in{% endif %}" id="collapseAdvanceForm">
                     {% include 'PumukitNewAdminBundle:UNESCO:advance_form.html.twig' %}
                 </div>
             </div>
@@ -44,12 +44,23 @@
             method: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-                $('#edit_mms').html('');
-                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
+                if($('tr.success input.mm_checkbox').length > 0) {
+                    var id = $('tr.success input.mm_checkbox').data('id');
+                    var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
+                    path = path.replace('__ID__', id);
+                    $('#edit_mms').load(path);
+
+                    var url = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__'}) }}";
+                    url = url.replace('__ID__', id);
+                    $('#preview_mms').load(url);
+                } else {
+                    $('#edit_mms').html('');
+                    $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+                }});
             },
             error: function (response) {
-                alert('error');
+                no_success('error');
             }
         });
         return false;
