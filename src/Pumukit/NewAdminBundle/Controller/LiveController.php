@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
@@ -101,8 +100,6 @@ class LiveController extends AdminController implements NewAdminController
 
     /**
      * Delete action.
-     *
-     * @Route("/admin/live/{id}/delete", name="pumukitnewadmin_live_delete")
      */
     public function deleteAction(Request $request)
     {
@@ -113,9 +110,9 @@ class LiveController extends AdminController implements NewAdminController
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $liveEvents = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent.live' => new \MongoId($resourceId)));
+        $liveEvents = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($resourceId)));
         if ($liveEvents) {
-            throw $this->createNotFoundException();
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
