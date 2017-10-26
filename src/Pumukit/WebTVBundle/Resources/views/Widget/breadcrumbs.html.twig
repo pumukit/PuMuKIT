@@ -49,6 +49,9 @@
                 appendSeries = true;
             } else {
                 breadcrumbs_mmobja.text(breadcrumbs_mmobja.text().substring(0, breadcrumbs_mmobja.text().trim().length - 1));
+                if(breadcrumbs_mmobja.text().trim().length < 20) {
+                    break;
+                }
                 appendMultimediaObject = true;
             }
             breadcrumbSeriesTitle = $('.breadcrumb').height();
