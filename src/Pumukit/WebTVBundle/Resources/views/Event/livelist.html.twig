@@ -3,6 +3,10 @@
         {% trans %}Live events{% endtrans %}
     </div>
     <div class="panel-body">
-        {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' %}
+        {% if events|length > 0 %}
+            {% for liveevents in events %}
+                {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' with {'events' : liveevents, 'livelist': true } %}
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
