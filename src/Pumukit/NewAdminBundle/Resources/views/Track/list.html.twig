@@ -139,6 +139,9 @@
          {% for tag in track.getTags() if tag[0:8] != "profile:" and tag[0:11] != "pumukit1id:" %}
            <span class="label label-primary">{{ tag }}</span>
          {% endfor %}
+          {% if not track.getAllowDownload() %}
+              <span class="label label-default">{% trans %}No downloadable{% endtrans %}</span>
+          {% endif %}
       </td>
     </tr>
   {% endfor %}
