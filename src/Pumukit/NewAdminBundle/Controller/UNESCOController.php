@@ -160,11 +160,17 @@ class UNESCOController extends Controller implements NewAdminController
         $adapter = new Pagerfanta($adapter);
 
         if ($adapter->getNbResults() > 0) {
+            $resetCache = true;
             foreach ($adapter->getCurrentPageResults() as $result) {
-                dump($session->get('admin/unesco/id'));
-                dump($result);
-                $session->set('admin/unesco/id', $result->getId());
-                break;
+                if ($session->get('admin/unesco/id') == $result->getId()) {
+                    $resetCache = false;
+                }
+            }
+            if ($resetCache) {
+                foreach ($adapter->getCurrentPageResults() as $result) {
+                    $session->set('admin/unesco/id', $result->getId());
+                    break;
+                }
             }
         } else {
             $session->remove('admin/unesco/id');
@@ -209,25 +215,6 @@ class UNESCOController extends Controller implements NewAdminController
         $session->remove('admin/unesco/element_sort');
 
         return new JsonResponse(array('success'));
-    }
-
-    /**
-     * @Route("/get/mmo_selected", name="pumukitnewadmin_unesco_get_mmo_selected")
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function getMMOSelectedAction(Request $request)
-    {
-        $session = $this->get('session');
-
-        $selected_mmo = $session->has('admin/unesco/id');
-        if($selected_mmo) {
-            $selected_mmo = $session->get('admin/unesco/id');
-        }
-
-        return new JsonResponse(array('success', 'id' => $selected_mmo));
     }
 
     /**

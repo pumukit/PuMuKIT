@@ -44,29 +44,23 @@
             method: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-                $.ajax({
-                   url: "{{ path('pumukitnewadmin_unesco_get_mmo_selected') }}",
-                   method: 'POST',
-                   success: function(response) {
-                       if(response.id) {
-                           console.log('entra en2 ajax');
-                           var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
-                           path = path.replace('__ID__', response.id);
-                           $('#edit_mms').load(path);
-                           var url = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__'}) }}";
-                           url = url.replace('__ID__', response.id);
-                           $('#preview_mms').load(url);
-                       } else {
-                           console.log(' no entra en2 ajax');
-                           $('#edit_mms').html('');
-                           $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
-                       }
-                   }
-                });
+                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
+                if($('tr.success input.mm_checkbox').length > 0) {
+                    var id = $('tr.success input.mm_checkbox').data('id');
+                    var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
+                    path = path.replace('__ID__', id);
+                    $('#edit_mms').load(path);
+
+                    var url = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__'}) }}";
+                    url = url.replace('__ID__', id);
+                    $('#preview_mms').load(url);
+                } else {
+                    $('#edit_mms').html('');
+                    $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+                }});
             },
             error: function (response) {
-                alert('error');
+                no_success('error');
             }
         });
         return false;
