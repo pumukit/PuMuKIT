@@ -97,4 +97,31 @@ class LiveController extends AdminController implements NewAdminController
 
         return $resources;
     }
+
+    /**
+     * Delete action.
+     */
+    public function deleteAction(Request $request)
+    {
+        $config = $this->getConfiguration();
+        $resource = $this->findOr404($request);
+        $resourceId = $resource->getId();
+        $resourceName = $config->getResourceName();
+
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $liveEvents = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($resourceId)));
+        if ($liveEvents) {
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
+            $this->get('session')->remove('admin/'.$resourceName.'/id');
+        }
+
+        $dm->remove($resource);
+        $dm->flush();
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+    }
 }
