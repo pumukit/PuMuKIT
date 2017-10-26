@@ -159,11 +159,15 @@ class UNESCOController extends Controller implements NewAdminController
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
         $adapter = new Pagerfanta($adapter);
 
-        if (!$session->has('admin/unesco/id')) {
+        if ($adapter->getNbResults() > 0) {
             foreach ($adapter->getCurrentPageResults() as $result) {
+                dump($session->get('admin/unesco/id'));
+                dump($result);
                 $session->set('admin/unesco/id', $result->getId());
                 break;
             }
+        } else {
+            $session->remove('admin/unesco/id');
         }
 
         $adapter->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
@@ -205,6 +209,25 @@ class UNESCOController extends Controller implements NewAdminController
         $session->remove('admin/unesco/element_sort');
 
         return new JsonResponse(array('success'));
+    }
+
+    /**
+     * @Route("/get/mmo_selected", name="pumukitnewadmin_unesco_get_mmo_selected")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function getMMOSelectedAction(Request $request)
+    {
+        $session = $this->get('session');
+
+        $selected_mmo = $session->has('admin/unesco/id');
+        if($selected_mmo) {
+            $selected_mmo = $session->get('admin/unesco/id');
+        }
+
+        return new JsonResponse(array('success', 'id' => $selected_mmo));
     }
 
     /**
@@ -303,6 +326,8 @@ class UNESCOController extends Controller implements NewAdminController
 
             $session->set('admin/unesco/element_sort', $sort_type);
             $session->set('admin/unesco/type', $request->request->get('sort'));
+
+            return new JsonResponse(array('success'));
         }
 
         $session->set('UNESCO/form', $criteria);

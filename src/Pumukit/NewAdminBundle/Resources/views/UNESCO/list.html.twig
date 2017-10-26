@@ -240,8 +240,23 @@
             data: {'sort' : sort, 'sort_type': type},
             success: function (response) {
                 $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-                $('#edit_mms').html('');
-                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+                $.ajax({
+                    url: "{{ path('pumukitnewadmin_unesco_get_mmo_selected') }}",
+                    method: 'POST',
+                    success: function(response) {
+                        if(response.id) {
+                            var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
+                            path = path.replace('__ID__', response.id);
+                            $('#edit_mms').load(path);
+                            var url = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__'}) }}";
+                            url = url.replace('__ID__', response.id);
+                            $('#preview_mms').load(url);
+                        } else {
+                            $('#edit_mms').html('');
+                            $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
+                        }
+                    }
+                });
             },
             error: function (response) {
                 alert('error');
