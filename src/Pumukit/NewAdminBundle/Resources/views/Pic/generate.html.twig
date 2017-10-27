@@ -7,7 +7,7 @@
 
   <div id="tv_admin_container">
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-5 text-center">
         <!-- PLAYER -->
         <video id="gen_pic_player" src="{{ track_url(track) }}" controls crossorigin="" style="background: black; width: 100%;"></video>
       </div>
@@ -16,17 +16,17 @@
         <!-- CONTROLS -->
         <div class="buttons" id="gen_pic_buttons" style="text-align:center">
 
-          <div class="btn-group btn-group-raised">
+          <div class="btn-group btn-group-raised" style="margin-top: 0px;">
             <button id="prev-frame-button" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">«</button>
             <button id="next-frame-button" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">»</button>
           </div>
 
           {# TODO Add Glyphicons #}
-          <button id="take-img-button" title="Take image." style="margin-top: 35px; padding: 8px" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
+          <button id="take-img-button" title="Take image." style="margin-top: 35px; padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
 
 
           <div class="btn-group">
-            <a href="#" data-target="#" class="btn btn-raised dropdown-toggle" data-toggle="dropdown" style="padding: 8px">
+            <a href="#" data-target="#" class="btn btn-raised dropdown-toggle" data-toggle="dropdown" style="padding: 8px; ; white-space: normal">
               {% trans %}Take burst{% endtrans %}
               <span class="caret"></span>
             </a>
@@ -40,9 +40,9 @@
         </div>
 
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5 text-center">
         <!-- PREVIEW -->
-        <img class="image" style="width: 100%; max-height:100%" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
+        <img class="image" style="max-width: 100%; max-height:100%" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
       </div>
 
     </div>
@@ -102,6 +102,7 @@ function init_extractpic() {
   $('#gen_pic_buttons').show();
   canvas_draw.width = video.videoWidth;
   canvas_draw.height = video.videoHeight;
+  img.height = video.clientHeight;
 }
 
 
@@ -188,6 +189,19 @@ upload_img.addEventListener("change", function(e){
   reader.onload = function(e) {
           // Render thumbnail.
           img.src = e.target.result;
+
+          var new_img = new Image();
+          new_img.classList.add("new_img");
+          new_img.classList.add("btn");
+          new_img.style.padding = "0px"
+          new_img.src = e.target.result;;
+          new_img.width = 120;
+
+          new_img.addEventListener("click", function(){
+            img.src = this.src;
+          })
+
+          frames.appendChild(new_img);
   };
   reader.readAsDataURL(file);
 }, false);
