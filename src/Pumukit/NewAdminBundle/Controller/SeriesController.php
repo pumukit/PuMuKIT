@@ -25,6 +25,10 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Overwrite to search criteria with date.
      *
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template
      */
     public function indexAction(Request $request)
@@ -53,6 +57,10 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * List action.
      *
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template
      */
     public function listAction(Request $request)
@@ -67,6 +75,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Create new resource.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function createAction(Request $request)
     {
@@ -78,6 +90,10 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
+     * @param Series $resource
+     *
+     * @return array
+     *
      * @Template
      */
     public function linksAction(Series $resource)
@@ -89,6 +105,12 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Display the form for editing or update the resource.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Exception
      */
     public function updateAction(Request $request)
     {
@@ -184,7 +206,7 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function deleteAction(Request $request)
     {
@@ -226,6 +248,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Generate Magic Url action.
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function generateMagicUrlAction(Request $request)
     {
@@ -239,6 +265,10 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Batch delete action
      * Overwrite to delete multimedia objects inside series.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function batchDeleteAction(Request $request)
     {
@@ -282,6 +312,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Batch invert announce selected.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function invertAnnounceAction(Request $request)
     {
@@ -309,6 +343,10 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Change publication form.
      *
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template("PumukitNewAdminBundle:Series:changepub.html.twig")
      */
     public function changePubAction(Request $request)
@@ -323,6 +361,12 @@ class SeriesController extends AdminController implements NewAdminController
 
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
+        foreach ($pubChannels as $key => $pubTag) {
+            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+                unset($pubChannels[$key]);
+            }
+        }
+
         return array(
                      'series' => $series,
                      'mm_status' => $mmStatus,
@@ -332,6 +376,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Update publication form.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updatePubAction(Request $request)
     {
@@ -349,6 +397,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Gets the criteria values.
+     *
+     * @param $config
+     *
+     * @return array
      */
     public function getCriteria($config)
     {
@@ -366,6 +418,11 @@ class SeriesController extends AdminController implements NewAdminController
         return $new_criteria;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     private function getSorting(Request $request)
     {
         $session = $this->get('session');
@@ -387,6 +444,13 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param Request $request
+     * @param         $config
+     * @param         $criteria
+     * @param null    $selectedSeriesId
+     *
+     * @return array|mixed|Pagerfanta
      */
     public function getResources(Request $request, $config, $criteria, $selectedSeriesId = null)
     {
@@ -450,6 +514,8 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Modify Multimedia Objects status.
+     *
+     * @param $values
      */
     private function modifyMultimediaObjectsStatus($values)
     {
@@ -494,7 +560,6 @@ class SeriesController extends AdminController implements NewAdminController
      * reorder series when sort is multimedia_objects.
      *
      * @param ArrayCollection $resources
-     * @param string          $type      'asc'|'desc'
      *
      * @return array $series
      */
@@ -550,6 +615,10 @@ class SeriesController extends AdminController implements NewAdminController
 
     /**
      * Helper for the menu search form.
+     *
+     * @param Request $req
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function searchAction(Request $req)
     {
@@ -565,6 +634,10 @@ class SeriesController extends AdminController implements NewAdminController
      * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
      * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
      * Since this is a series, that means it will check every object for ownerships.
+     *
+     * @param Series $series
+     *
+     * @return bool
      */
     protected function isUserAllowedToDelete(Series $series)
     {
@@ -593,13 +666,16 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Update Broadcast Action.
      *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array|JsonResponse
+     *
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"id" = "id"})
      * @Template("PumukitNewAdminBundle:Series:updatebroadcast.html.twig")
      */
     public function updateBroadcastAction(Series $series, Request $request)
     {
-        $translator = $this->get('translator');
-        $locale = $request->getLocale();
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
@@ -660,6 +736,10 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * List the properties of a series in a modal.
      *
+     * @param Series $series
+     *
+     * @return array
+     *
      * @Template
      */
     public function listPropertiesAction(Series $series)
@@ -707,6 +787,9 @@ class SeriesController extends AdminController implements NewAdminController
         }
     }
 
+    /**
+     * @param Series $series
+     */
     private function getFirstMultimediaObject(Series $series)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');

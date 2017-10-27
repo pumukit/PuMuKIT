@@ -21,6 +21,10 @@ class DefaultController extends Controller
     const SERIES_LIMIT = 30;
 
     /**
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Template()
      */
     public function licenseAction(Request $request)
@@ -53,6 +57,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Template()
      */
     public function seriesAction(Request $request)
@@ -95,6 +103,11 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param         $id
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Template()
      */
     public function typeAction($id, Request $request)
@@ -150,7 +163,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * Option action.
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * Option action
      */
     public function optionAction(Request $request)
     {
@@ -170,6 +187,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function multimediaobjectAction(Request $request)
@@ -239,6 +260,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @Template()
      */
     public function trackAction(Request $request)
@@ -256,6 +281,12 @@ class DefaultController extends Controller
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
         $factoryService = $this->get('pumukitschema.factory');
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
+
+        foreach ($pubChannelsTags as $key => $pubTag) {
+            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+                unset($pubChannelsTags[$key]);
+            }
+        }
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
@@ -277,6 +308,12 @@ class DefaultController extends Controller
 
     /**
      * Upload action.
+     *
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Exception
      *
      * @Template()
      */
@@ -452,7 +489,7 @@ class DefaultController extends Controller
             return array(
                          'uploaded' => 'failed',
                          'message' => 'No data received',
-                         'option' => $option,
+                         'option' => null,
                          'seriesId' => $seriesId,
                          'mmId' => null,
                          'show_series' => $showSeries,
@@ -483,6 +520,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function endAction(Request $request)
@@ -512,6 +553,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function errorAction(Request $request)
@@ -533,6 +578,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Template()
      */
     public function stepsAction(Request $request)
@@ -555,6 +604,12 @@ class DefaultController extends Controller
 
     /**
      * Get key data.
+     *
+     * @param       $key
+     * @param       $formData
+     * @param array $default
+     *
+     * @return array
      */
     private function getKeyData($key, $formData, $default = array())
     {
@@ -563,6 +618,10 @@ class DefaultController extends Controller
 
     /**
      * Get series (new or existing one).
+     *
+     * @param array $seriesData
+     *
+     * @return mixed|Series|void
      */
     private function getSeries($seriesData = array())
     {
@@ -580,6 +639,10 @@ class DefaultController extends Controller
 
     /**
      * Create Series.
+     *
+     * @param array $seriesData
+     *
+     * @return mixed|Series|void
      */
     private function createSeries($seriesData = array())
     {
@@ -603,6 +666,11 @@ class DefaultController extends Controller
 
     /**
      * Create Multimedia Object.
+     *
+     * @param $mmData
+     * @param $series
+     *
+     * @return mixed|MultimediaObject|void
      */
     private function createMultimediaObject($mmData, $series)
     {
@@ -623,6 +691,11 @@ class DefaultController extends Controller
 
     /**
      * Add Tag to Multimedia Object by Code.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $tagCode
+     *
+     * @return array
      */
     private function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
     {
@@ -646,6 +719,12 @@ class DefaultController extends Controller
 
     /**
      * Set data.
+     *
+     * @param $resource
+     * @param $resourceData
+     * @param $keys
+     *
+     * @return mixed
      */
     private function setData($resource, $resourceData, $keys)
     {
@@ -668,6 +747,9 @@ class DefaultController extends Controller
 
     /**
      * Remove Invalid Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param Series           $series
      */
     private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
     {
@@ -680,6 +762,13 @@ class DefaultController extends Controller
     /**
      * Get default field values in data
      * for those important fields that can not be empty.
+     *
+     * @param array  $resourceData
+     * @param string $fieldName
+     * @param string $defaultValue
+     * @param bool   $isI18nField
+     *
+     * @return array
      */
     private function getDefaultFieldValuesInData($resourceData = array(), $fieldName = '', $defaultValue = '', $isI18nField = false)
     {
@@ -701,6 +790,10 @@ class DefaultController extends Controller
     /**
      * Get uppercase field name
      * Converts something like 'i18n_title' into 'I18nTitle'.
+     *
+     * @param string $key
+     *
+     * @return string
      */
     private function getUpperFieldName($key = '')
     {
@@ -714,6 +807,10 @@ class DefaultController extends Controller
 
     /**
      * Find Series in Repository.
+     *
+     * @param $id
+     *
+     * @return mixed
      */
     private function findSeriesById($id)
     {
@@ -725,6 +822,11 @@ class DefaultController extends Controller
 
     /**
      * Complete Form with Series metadata.
+     *
+     * @param        $formData
+     * @param Series $series
+     *
+     * @return array
      */
     private function completeFormWithSeries($formData, Series $series)
     {
@@ -744,6 +846,11 @@ class DefaultController extends Controller
 
     /**
      * Get Same Series value.
+     *
+     * @param array $formData
+     * @param bool  $sameSeriesFromRequest
+     *
+     * @return bool
      */
     private function getSameSeriesValue($formData = array(), $sameSeriesFromRequest = false)
     {
