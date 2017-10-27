@@ -152,6 +152,8 @@ class EventsController extends Controller
                 $date = strtotime($data['date']['to']);
                 $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
             }
+        } elseif($session->has('admin/live/event/criteria')) {
+            $criteria = $session->get('admin/live/event/criteria');
         }
 
         $session->set('admin/live/event/criteria', $criteria);
@@ -198,6 +200,23 @@ class EventsController extends Controller
         }
 
         return new JsonResponse(array('error'));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @Route("remove/session/", name="pumukit_newadmin_live_events_reset_session")
+     */
+    public function removeCriteriaSessionAction(Request $request)
+    {
+        $session = $this->get('session');
+        $session->remove('admin/live/event/sort/field');
+        $session->remove('admin/live/event/sort/type');
+        $session->remove('admin/live/event/criteria');
+
+        return new JsonResponse(array('succcess'));
     }
 
     /**
