@@ -47,12 +47,22 @@ class WidgetController extends Controller implements WebTVController
 
                     if ($nowOrFuture) {
                         $menuEvents[(string) $event['_id']] = array();
+                        $menuEvents[(string) $event['_id']]['sort'] = $sessionStart;
                         $menuEvents[(string) $event['_id']]['event'] = $sessionData['event'];
                         $menuEvents[(string) $event['_id']]['sessions'][] = $sessionData['session'];
                         $nowOrFuture = false;
                     }
                 }
             }
+
+            usort($menuEvents, function ($a, $b) {
+                if ($a['sort'] == $b['sort']) {
+                    return 0;
+                }
+
+                return ($a < $b) ? -1 : 1;
+            });
+
             $events = $menuEvents;
             $channels = array(); // Not important with advance_live_events
             $liveEventTypeSession = true;
