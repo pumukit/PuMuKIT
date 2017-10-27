@@ -85,9 +85,11 @@ class EventsController extends Controller
 
         $series = $request->request->get('seriesSuggest') ? $request->request->get('seriesSuggest') : false;
 
+        $createSeries = false;
         if (!$series) {
             $series = $factoryService->createSeries($this->getUser());
             $dm->persist($series);
+            $createSeries = true;
         } else {
             $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
                 array('_id' => new \MongoId($series))
@@ -96,6 +98,16 @@ class EventsController extends Controller
 
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
         $multimediaObject->setIsLive(true);
+
+        $mmoPicService = $this->get('pumukitschema.mmspic');
+
+        if (!$createSeries) {
+            $seriesPics = $series->getPics();
+            if (count($seriesPics) > 0) {
+                $eventPicSeriesDefault = $series->getPic();
+                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
+            }
+        }
 
         /* Create default event */
         $event = new EmbeddedEvent();
@@ -134,6 +146,7 @@ class EventsController extends Controller
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
+        $eventPicDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['islive'] = true;
@@ -197,7 +210,7 @@ class EventsController extends Controller
             $mms->setCurrentPage($page);
         }
 
-        return array('multimediaObjects' => $mms);
+        return array('multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault);
     }
 
     /**

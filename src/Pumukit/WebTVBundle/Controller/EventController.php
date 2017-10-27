@@ -26,7 +26,7 @@ class EventController extends Controller implements WebTVController
         $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
+        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
         $eventsNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
@@ -38,7 +38,7 @@ class EventController extends Controller implements WebTVController
 
         $page = $request->query->get('page', 1);
 
-        $eventsFuture->setMaxPerPage(2);
+        $eventsFuture->setMaxPerPage(10);
         $eventsFuture->setNormalizeOutOfRangePages(true);
         $eventsFuture->setCurrentPage(intval($page));
 
@@ -57,7 +57,7 @@ class EventController extends Controller implements WebTVController
     public function liveListAction()
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
+        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
 
@@ -74,7 +74,7 @@ class EventController extends Controller implements WebTVController
     public function nextSessionListAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $defaultPic = $this->container->getParameter('pumukitschema.default_video_pic');
+        $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
         $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($id);
 
@@ -117,14 +117,16 @@ class EventController extends Controller implements WebTVController
                     }
                 }
             }
+            $result = array();
+            if (isset($nextSession)) {
+                $data['event'] = $multimediaObject->getEmbeddedEvent();
+                $data['session'] = $nextSession;
+                $data['multimediaObjectId'] = $multimediaObjectId;
 
-            $data['event'] = $multimediaObject->getEmbeddedEvent();
-            $data['session'] = $nextSession;
-            $data['multimediaObjectId'] = $multimediaObjectId;
+                $todayEvents['data'][] = $data;
 
-            $todayEvents['data'][] = $data;
-
-            $result[] = $todayEvents;
+                $result[] = $todayEvents;
+            }
         }
 
         return $result;
