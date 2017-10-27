@@ -1,3 +1,4 @@
+{% set need_reload_status = false %}
 <table><tbody>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% for job in jobs %}
@@ -18,6 +19,10 @@
            onclick="$('#tracks_mms_{{ mm.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;">
             <i class="mdi-content-clear"></i>
         </a>
+        {% endif %}
+
+        {% if not job.isExecuted() %}
+            {% set need_reload_status = true %}
         {% endif %}
 
         <small>{{ job.getStatusText() }}</small>
@@ -220,7 +225,7 @@
 </script>
 {% endif %}
 
-{% if jobs|length != 0 %}
+{% if need_reload_status %}
 <script type="text/javascript">
   {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With')  %}
   $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% spaceless %}
