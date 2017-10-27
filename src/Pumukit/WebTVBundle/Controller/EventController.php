@@ -6,15 +6,21 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class EventController extends Controller implements WebTVController
 {
     /**
-     * @return array()
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $translator = $this->get('translator');
         $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
@@ -26,6 +32,15 @@ class EventController extends Controller implements WebTVController
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
         $eventsToday = $this->getEventsTodayNextSession($eventsToday);
         $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
+
+        $adapter = new ArrayAdapter($eventsFuture);
+        $eventsFuture = new Pagerfanta($adapter);
+
+        $page = $request->query->get('page', 1);
+
+        $eventsFuture->setMaxPerPage(10);
+        $eventsFuture->setNormalizeOutOfRangePages(true);
+        $eventsFuture->setCurrentPage(intval($page));
 
         return array(
             'eventsToday' => $eventsToday,

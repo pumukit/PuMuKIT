@@ -55,7 +55,7 @@ class WidgetController extends Controller implements WebTVController
                 }
             }
 
-            usort($menuEvents, function ($a, $b) {
+            uasort($menuEvents, function ($a, $b) {
                 if ($a['sort'] == $b['sort']) {
                     return 0;
                 }
