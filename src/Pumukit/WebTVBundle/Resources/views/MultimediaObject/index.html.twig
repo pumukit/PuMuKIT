@@ -9,13 +9,13 @@
     <h1 class="title-for-crumbs always-hide">{{ multimediaObject.title|default("No title"|trans) }}</h1>
   </div>
   <div class="col-lg-8 col-md-7">
-    <span class="hidden-sm hidden-xs"></br></span>
+    <span class="hidden-sm hidden-xs"><br/></span>
     {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
     {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
     {% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
   </div>
   <div class="col-lg-4 col-md-5">
-    <span class="hidden-sm hidden-xs"></br></span>
+    <span class="hidden-sm hidden-xs"><br/></span>
     {% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject})) %}
     {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
   </div>
