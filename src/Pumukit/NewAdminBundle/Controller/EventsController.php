@@ -113,6 +113,9 @@ class EventsController extends Controller
         $dm->persist($multimediaObject);
         $dm->flush();
 
+        $session = $this->get('session');
+        $session->set('admin/live/event/id', $multimediaObject->getId());
+
         return $this->redirectToRoute('pumukit_new_admin_live_event_index');
     }
 
