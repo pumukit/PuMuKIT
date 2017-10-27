@@ -38,7 +38,7 @@ class EventController extends Controller implements WebTVController
 
         $page = $request->query->get('page', 1);
 
-        $eventsFuture->setMaxPerPage(10);
+        $eventsFuture->setMaxPerPage(2);
         $eventsFuture->setNormalizeOutOfRangePages(true);
         $eventsFuture->setCurrentPage(intval($page));
 
@@ -94,32 +94,38 @@ class EventController extends Controller implements WebTVController
 
     private function getEventsTodayNextSession($events)
     {
-        $events = $events[0];
-        $multimediaObjectId = $events['_id'];
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        foreach ($events as $event) {
+            $multimediaObjectId = $event['_id'];
+            $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+                array('_id' => new \MongoId($multimediaObjectId))
+            );
 
-        $sessions = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
+            $sessions = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
 
-        $todayEvents = array();
-        $todayEvents['_id'] = $multimediaObjectId;
+            $todayEvents = array();
+            $todayEvents['_id'] = $multimediaObjectId;
 
-        $now = new \DateTime();
-        foreach ($sessions as $session) {
-            if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
-                $nextSession = $session;
-                break;
+            $now = new \DateTime();
+            $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+            foreach ($sessions as $session) {
+                if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
+                    if ($session->getEnds()->getTimestamp() < $todayEnds) {
+                        $nextSession = $session;
+                        break;
+                    }
+                }
             }
+
+            $data['event'] = $multimediaObject->getEmbeddedEvent();
+            $data['session'] = $nextSession;
+            $data['multimediaObjectId'] = $multimediaObjectId;
+
+            $todayEvents['data'][] = $data;
+
+            $result[] = $todayEvents;
         }
-
-        $data['event'] = $multimediaObject->getEmbeddedEvent();
-        $data['session'] = $nextSession;
-        $data['multimediaObjectId'] = $multimediaObjectId;
-
-        $todayEvents['data'][] = $data;
-
-        $result[] = $todayEvents;
 
         return $result;
     }
