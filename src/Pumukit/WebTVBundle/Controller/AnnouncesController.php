@@ -29,8 +29,7 @@ class AnnouncesController extends Controller implements WebTVController
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        $numberCols = $this->container->getParameter('columns_objs_announces');
-        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
+        list($numberCols, $showPudenew) = $this->getParameters();
 
         $announcesService = $this->get('pumukitschema.announce');
 
@@ -52,5 +51,16 @@ class AnnouncesController extends Controller implements WebTVController
         $response->headers->set('X-Date-Year', $date->format('Y'));
 
         return $response;
+    }
+
+    /**
+     * To extends this controller.
+     */
+    protected function getParameters()
+    {
+        return array(
+            $this->container->getParameter('columns_objs_announces'),
+            $this->container->getParameter('show_latest_with_pudenew'),
+        );
     }
 }
