@@ -170,8 +170,29 @@ class EventsController extends Controller
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
 
+        if ($mms->getNbResults() > 0) {
+            $resetCache = true;
+            foreach ($mms->getCurrentPageResults() as $result) {
+                if ($session->get('admin/live/event/id') == $result->getId()) {
+                    $resetCache = false;
+                }
+            }
+            if ($resetCache) {
+                foreach ($mms->getCurrentPageResults() as $result) {
+                    $session->set('admin/live/event/id', $result->getId());
+                    break;
+                }
+            }
+        } else {
+            $session->remove('admin/live/event/id');
+        }
+
         $mms->setMaxPerPage(10);
-        $mms->setCurrentPage($page);
+        if (($mms->getNbPages() < $mms->getCurrentPage()) or ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
+            $mms->setCurrentPage(1);
+        } else {
+            $mms->setCurrentPage($page);
+        }
 
         return array('multimediaObjects' => $mms);
     }
@@ -207,18 +228,18 @@ class EventsController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse
      *
      * @Route("remove/session/", name="pumukit_newadmin_live_events_reset_session")
      */
-    public function removeCriteriaSessionAction(Request $request)
+    public function removeCriteriaSessionAction()
     {
         $session = $this->get('session');
         $session->remove('admin/live/event/sort/field');
         $session->remove('admin/live/event/sort/type');
         $session->remove('admin/live/event/criteria');
+        $session->remove('admin/live/event/id');
+        $session->remove('admin/live/event/page');
 
         return new JsonResponse(array('succcess'));
     }
@@ -244,11 +265,11 @@ class EventsController extends Controller
                     break;
                 case 'delete':
                     $this->deleteEvent($multimediaObject);
-                    $this->container->get('session')->set('eventID', null);
+                    $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 case 'deleteAll':
                     $this->deleteEventAndSeries($multimediaObject);
-                    $this->container->get('session')->set('eventID', null);
+                    $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 default:
                     break;
@@ -294,7 +315,6 @@ class EventsController extends Controller
         $cloneMultimediaObject = $factoryService->cloneMultimediaObject($multimediaObject);
         $cloneMultimediaObject->setIsLive(true);
 
-        // Set embeddedEvent
         $dm->persist($cloneMultimediaObject);
 
         $series = $multimediaObject->getSeries();
@@ -365,7 +385,7 @@ class EventsController extends Controller
      */
     public function editEventAction(MultimediaObject $multimediaObject)
     {
-        $this->container->get('session')->set('eventID', $multimediaObject->getId());
+        $this->container->get('session')->set('admin/live/event/id', $multimediaObject->getId());
 
         return array('multimediaObject' => $multimediaObject);
     }
