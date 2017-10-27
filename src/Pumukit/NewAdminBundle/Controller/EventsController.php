@@ -29,6 +29,10 @@ use Pumukit\SchemaBundle\Document\Person;
 class EventsController extends Controller
 {
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Route("index/", name="pumukit_new_admin_live_event_index")
      * @Template("PumukitNewAdminBundle:LiveEvent:index.html.twig")
      */
@@ -152,7 +156,7 @@ class EventsController extends Controller
                 $date = strtotime($data['date']['to']);
                 $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
             }
-        } elseif($session->has('admin/live/event/criteria')) {
+        } elseif ($session->has('admin/live/event/criteria')) {
             $criteria = $session->get('admin/live/event/criteria');
         }
 
@@ -462,6 +466,14 @@ class EventsController extends Controller
         return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people);
     }
 
+    /**
+     * @param $roleCod
+     * @param $name
+     * @param $multimediaObject
+     * @param $dm
+     *
+     * @return mixed
+     */
     private function addPeopleData($roleCod, $name, $multimediaObject, $dm)
     {
         $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $roleCod));
