@@ -22,13 +22,15 @@
                     <div class="title" title="{{ title }}">
                         <span class="mmobj_thumbnail_title">{{ title | default('No title'|trans) }}</span>
                     </div>
-                    <div class="date mmobj">
+                    <div class="subtitle">
                         {% if event['event'].name is iterable %}
                             {% set description = event['event'].description[app.request.getLocale()] %}
                         {% else %}
                             {% set description = event['event'].description %}
                         {% endif %}
-                        {{ description }} <br />
+                        {{ description }}
+                    </div>
+                    <div class="date mmobj">
                         {% trans %}Starts {% endtrans %}:
                         {% if event['session'].getStart() is defined %}
                             {% set start = event['session'].getStart() | localizeddate('medium','short', app.request.getLocale()) %}
