@@ -41,7 +41,18 @@
         $('.unescoTags').css('background-color','transparent');
         $('.draggableTag').css('background-color','transparent');
         $('#children_' + $(this).data('tag')).css('background-color','#EAEAEA');
-        $('#list_mms').load($(this).data('href'));
+        $('#list_mms').load($(this).data('href'), function() {
+
+            var id = $('.success .checkbox label').first().data('id');
+
+            var preview = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__' }) }}";
+            var preview = preview.replace('__ID__', id);
+            $('#preview_mms').load(preview);
+
+            var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
+            var edit = edit.replace("__MMO__", id);
+            $('#edit_mms').load(edit);
+        });
     });
 
     /* From menuTags to preview_mms */
