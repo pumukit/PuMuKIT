@@ -24,19 +24,7 @@ class EventController extends Controller implements WebTVController
 
         $eventsNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
-        foreach ($eventsToday as $sKey => $event) {
-            foreach ($event['data'] as $key => $sessionData) {
-                $secStart = $sessionData['session']['start']->sec;
-                $secEnds = $sessionData['session']['ends']->sec;
-                $dateStart = new \DateTime();
-                $dateEnd = clone $dateStart;
-                $start = $dateStart->setTimestamp($secStart);
-                $ends = $dateEnd->setTimestamp($secEnds);
-                if (new \DateTime() > $start and new \DateTime() < $ends) {
-                    unset($eventsToday[$sKey]);
-                }
-            }
-        }
+        $eventsToday = $this->getEventsTodayNextSession($eventsToday);
         $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
 
         return array(
@@ -78,9 +66,46 @@ class EventController extends Controller implements WebTVController
         return array('events' => $events, 'sessionlist' => true, 'defaultPic' => $defaultPic);
     }
 
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     */
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);
+    }
+
+    private function getEventsTodayNextSession($events)
+    {
+        $events = $events[0];
+        $multimediaObjectId = $events['_id'];
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+
+        $sessions = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
+
+        $todayEvents = array();
+        $todayEvents['_id'] = $multimediaObjectId;
+
+        $now = new \DateTime();
+        foreach ($sessions as $session) {
+            if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
+                $nextSession = $session;
+                break;
+            }
+        }
+
+        $data['event'] = $multimediaObject->getEmbeddedEvent();
+        $data['session'] = $nextSession;
+        $data['multimediaObjectId'] = $multimediaObjectId;
+
+        $todayEvents['data'][] = $data;
+
+        $result[] = $todayEvents;
+
+        return $result;
     }
 }
