@@ -89,6 +89,7 @@
 
         var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
         var preview = preview.replace("__MMO__", mmoid);
+
         $.ajax({
             url: path,
             type: 'GET',
@@ -102,6 +103,10 @@
                 count = $('#count_tag_' + cod).text();
                 count = parseInt(count) + 1;
                 $('#count_tag_' + cod).text(count);
+
+                $('.success').removeClass('success');
+                $('#tr_' + mmoid).addClass('success');
+
                 var message = '{% trans %}Saved{% endtrans %}';
                 success(message);
             }
