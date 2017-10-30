@@ -29,6 +29,10 @@ use Pumukit\SchemaBundle\Document\Person;
 class EventsController extends Controller
 {
     /**
+     * @param Request $request
+     *
+     * @return array
+     *
      * @Route("index/", name="pumukit_new_admin_live_event_index")
      * @Template("PumukitNewAdminBundle:LiveEvent:index.html.twig")
      */
@@ -81,9 +85,11 @@ class EventsController extends Controller
 
         $series = $request->request->get('seriesSuggest') ? $request->request->get('seriesSuggest') : false;
 
+        $createSeries = false;
         if (!$series) {
             $series = $factoryService->createSeries($this->getUser());
             $dm->persist($series);
+            $createSeries = true;
         } else {
             $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
                 array('_id' => new \MongoId($series))
@@ -92,6 +98,16 @@ class EventsController extends Controller
 
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
         $multimediaObject->setIsLive(true);
+
+        $mmoPicService = $this->get('pumukitschema.mmspic');
+
+        if (!$createSeries) {
+            $seriesPics = $series->getPics();
+            if (count($seriesPics) > 0) {
+                $eventPicSeriesDefault = $series->getPic();
+                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
+            }
+        }
 
         /* Create default event */
         $event = new EmbeddedEvent();
@@ -108,6 +124,9 @@ class EventsController extends Controller
         $multimediaObject->setEmbeddedEvent($event);
         $dm->persist($multimediaObject);
         $dm->flush();
+
+        $session = $this->get('session');
+        $session->set('admin/live/event/id', $multimediaObject->getId());
 
         return $this->redirectToRoute('pumukit_new_admin_live_event_index');
     }
@@ -127,6 +146,7 @@ class EventsController extends Controller
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $session = $this->get('session');
+        $eventPicDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $page = ($this->get('session')->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['islive'] = true;
@@ -152,6 +172,8 @@ class EventsController extends Controller
                 $date = strtotime($data['date']['to']);
                 $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
             }
+        } elseif ($session->has('admin/live/event/criteria')) {
+            $criteria = $session->get('admin/live/event/criteria');
         }
 
         $session->set('admin/live/event/criteria', $criteria);
@@ -164,10 +186,31 @@ class EventsController extends Controller
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
 
-        $mms->setMaxPerPage(10);
-        $mms->setCurrentPage($page);
+        if ($mms->getNbResults() > 0) {
+            $resetCache = true;
+            foreach ($mms->getCurrentPageResults() as $result) {
+                if ($session->get('admin/live/event/id') == $result->getId()) {
+                    $resetCache = false;
+                }
+            }
+            if ($resetCache) {
+                foreach ($mms->getCurrentPageResults() as $result) {
+                    $session->set('admin/live/event/id', $result->getId());
+                    break;
+                }
+            }
+        } else {
+            $session->remove('admin/live/event/id');
+        }
 
-        return array('multimediaObjects' => $mms);
+        $mms->setMaxPerPage(10);
+        if (($mms->getNbPages() < $mms->getCurrentPage()) or ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
+            $mms->setCurrentPage(1);
+        } else {
+            $mms->setCurrentPage($page);
+        }
+
+        return array('multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault);
     }
 
     /**
@@ -201,6 +244,23 @@ class EventsController extends Controller
     }
 
     /**
+     * @return JsonResponse
+     *
+     * @Route("remove/session/", name="pumukit_newadmin_live_events_reset_session")
+     */
+    public function removeCriteriaSessionAction()
+    {
+        $session = $this->get('session');
+        $session->remove('admin/live/event/sort/field');
+        $session->remove('admin/live/event/sort/type');
+        $session->remove('admin/live/event/criteria');
+        $session->remove('admin/live/event/id');
+        $session->remove('admin/live/event/page');
+
+        return new JsonResponse(array('succcess'));
+    }
+
+    /**
      * Event options .
      *
      * @param                  $type
@@ -221,11 +281,11 @@ class EventsController extends Controller
                     break;
                 case 'delete':
                     $this->deleteEvent($multimediaObject);
-                    $this->container->get('session')->set('eventID', null);
+                    $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 case 'deleteAll':
                     $this->deleteEventAndSeries($multimediaObject);
-                    $this->container->get('session')->set('eventID', null);
+                    $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 default:
                     break;
@@ -271,7 +331,6 @@ class EventsController extends Controller
         $cloneMultimediaObject = $factoryService->cloneMultimediaObject($multimediaObject);
         $cloneMultimediaObject->setIsLive(true);
 
-        // Set embeddedEvent
         $dm->persist($cloneMultimediaObject);
 
         $series = $multimediaObject->getSeries();
@@ -342,7 +401,7 @@ class EventsController extends Controller
      */
     public function editEventAction(MultimediaObject $multimediaObject)
     {
-        $this->container->get('session')->set('eventID', $multimediaObject->getId());
+        $this->container->get('session')->set('admin/live/event/id', $multimediaObject->getId());
 
         return array('multimediaObject' => $multimediaObject);
     }
@@ -443,6 +502,14 @@ class EventsController extends Controller
         return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people);
     }
 
+    /**
+     * @param $roleCod
+     * @param $name
+     * @param $multimediaObject
+     * @param $dm
+     *
+     * @return mixed
+     */
     private function addPeopleData($roleCod, $name, $multimediaObject, $dm)
     {
         $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $roleCod));

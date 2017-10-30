@@ -18,32 +18,32 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <select id="options_events" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
-                            <option value="default" selected="selected">{% trans %}Select an
-                                action...{% endtrans %}</option>
+                            <option value="default" selected="selected">
+                                {% trans %}Select an action...{% endtrans %}</option>
                             <option disabled="">---</option>
                             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
                         </select>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukit_new_admin_live_event_create') }}">{% trans %}
-                            New event and series{% endtrans %}</a>
-                        <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}
-                            New event from series{% endtrans %}</a>
+                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukit_new_admin_live_event_create') }}">
+                            {% trans %} New event and series{% endtrans %}</a>
+                        <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                            {% trans %} New event from series{% endtrans %}</a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div id="edit_events" class="col-xs-12">
-                    {% if(app.session.has('admin/liveevent/id')) %}
-                        {{ render(url('pumukit_new_admin_live_event_edit', {'id': app.session.get('admin/liveevent/id')})) }}
+                    {% if(app.session.has('admin/live/event/id')) %}
+                        {{ render(url('pumukit_new_admin_live_event_edit', {'id': app.session.get('admin/live/event/id')})) }}
                     {% endif %}
                 </div>
             </div>
         </div>
         <div class="col-md-2 hidden-xs hidden-sm">
             <div id="preview_events" class="well">
-                {% if(app.session.has('admin/liveevent/id')) %}
-                    {{ render_hinclude(url('pumukitnewadmin_live_show', {'id': app.session.get('eventID')})) }}
+                {% if(app.session.has('admin/live/event/id')) %}
+                    {{ render_hinclude(url('pumukit_new_admin_live_event_show', {'id': app.session.get('admin/live/event/id')})) }}
                 {% else %}
                     {% trans %}Select any live event.{% endtrans %}
                 {% endif %}

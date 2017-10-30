@@ -14,13 +14,30 @@
             </div>
             <div class="info-wrapper">
                 <div class="info">
-                    <div class="title" title="{{ event['event']['name'][app.request.getLocale()] }}">
-                        <span class="mmobj_thumbnail_title">{{ event['event']['name'][app.request.getLocale()] | default('No title'|trans) }}</span>
+                    {% if event['event'].name is iterable %}
+                        {% set title = event['event'].name[app.request.getLocale()] | default('No title'|trans) %}
+                    {% else %}
+                        {% set title = event['event'].getName(app.request.getLocale()) %}
+                    {% endif %}
+                    <div class="title" title="{{ title }}">
+                        <span class="mmobj_thumbnail_title">{{ title }}</span>
+                    </div>
+                    <div class="subtitle">
+                        {% if event['event'].name is iterable %}
+                            {% set description = event['event'].description[app.request.getLocale()] %}
+                        {% else %}
+                            {% set description = event['event'].getDescription(app.request.getLocale()) %}
+                        {% endif %}
+                        {{ description }}
                     </div>
                     <div class="date mmobj">
-                        {{ event['event']['description'][app.request.getLocale()] }} <br />
                         {% trans %}Starts {% endtrans %}:
-                        {{ event['session']['start']|convertMongoDate| localizeddate('medium','short', app.request.getLocale()) }}
+                        {% if event['session'].getStart() is defined %}
+                            {% set start = event['session'].getStart() | localizeddate('medium','short', app.request.getLocale()) %}
+                        {% else %}
+                            {% set start = event['session']['start'] |convertMongoDate| localizeddate('medium','short', app.request.getLocale()) %}
+                        {% endif %}
+                        {{ start }}
                     </div>
                 </div>
             </div>

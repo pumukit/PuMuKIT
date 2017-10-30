@@ -43,7 +43,7 @@
             {% set series = multimediaObject.getSeries() %}
             {% set loadPath = path('pumukit_new_admin_live_event_edit', {'id': multimediaObject.id} ) %}
             {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
-            <tr>
+            <tr {% if app.request.session.has('admin/live/event/id') and app.request.session.get('admin/live/event/id') == multimediaObject.getId() %}class="success"{% endif %}>
                 <td headers="th-checkbox" width="1%">
                     <div class="checkbox">
                         <label>
@@ -60,7 +60,11 @@
                     </a>
                 </td>
                 <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
-                    <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive" />
+                    {% if multimediaObject.getPics()|length > 0 %}
+                        <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive" />
+                    {% else %}
+                        <img src="{{ default_event_pic }}" class="img-responsive" />
+                    {% endif %}
                 </td>
                 <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
@@ -109,12 +113,12 @@
 
 <script type="text/javascript">
     $(function(){
-        var eventID = "{{ app.session.get('eventID') }}";
+        var mmo = "{{ app.session.get('admin/live/event/id') }}";
         var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__id__'}) }}";
         var showUrl = "{{ path('pumukit_new_admin_live_event_show', {'id': '__id__'}) }}";
-        if(eventID) {
-            url = url.replace('__id__', eventID);
-            showUrl = showUrl.replace('__id__', eventID);
+        if(mmo) {
+            url = url.replace('__id__', mmo);
+            showUrl = showUrl.replace('__id__', mmo);
             $('#edit_events').load(url);
             $('#preview_events').load(showUrl);
         }

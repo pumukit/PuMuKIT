@@ -1855,8 +1855,6 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        $pipeline[] = array('$limit' => 10);
-
         return $collection->aggregate($pipeline)->toArray();
     }
 

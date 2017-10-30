@@ -1,10 +1,16 @@
+{% if livelist is defined and livelist %}
+    {% set events = liveevents %}
+{% elseif events[0] is defined and events[0] is not empty %}
+    {% set events = events[0] %}
+{% endif %}
+
 <div class="col-xs-12">
-    {% if events[0] is defined and events[0] is not empty %}
-        {% for event in events[0]['data'] | reverse %}
+    {% if events is defined and events is not empty %}
+        {% for event in events['data'] | reverse %}
             <div class="row">
-                <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_event_id', {'id' : events[0]['_id'] }) }}'">
+                <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}'">
                     <div class="minithumbnail">
-                        <a href="{{ url('pumukit_live_event_id', {'id' : events[0]['_id'] }) }}">
+                        <a href="{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}">
                             <div class="media-object play_icon small" alt=""></div>
                             {% if event['pics'] is defined and (event['pics']|length > 0) %}
                                 <img class="media-object thumbnailimg" src="{{ event['pics'][0]['url'] }}">

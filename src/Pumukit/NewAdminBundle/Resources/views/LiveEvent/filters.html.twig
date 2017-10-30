@@ -40,7 +40,7 @@
             </div>
         </fieldset>
         <div class="text-right">
-            <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
+            <input type="button" class="btn btn-default btn-raised resetSession" value="{% trans %}reset{% endtrans %}">
             <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
     </form>
@@ -56,6 +56,17 @@
             method: 'GET',
             success: function(response){
                 $('#list_events').html(response);
+            }
+        });
+    });
+
+    $('.resetSession').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ path('pumukit_newadmin_live_events_reset_session') }}",
+            method: 'GET',
+            success: function(response){
+                $('#list_events').load("{{ path('pumukit_new_admin_live_event_list') }}");
             }
         });
     })
