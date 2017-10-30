@@ -68,7 +68,7 @@
             <tbody>
             {% for mm in mms %}
 
-                <tr style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
+                <tr id="tr_{{ mm.id }}" style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
                     <td headers="th-checkbox">
                         <div class="checkbox pumukit-mms-checkbox">
                             <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragenter="$('.draggableTag').css('background-color','#beebff');" ondragend="dragEndCheckbox(this,event)">
