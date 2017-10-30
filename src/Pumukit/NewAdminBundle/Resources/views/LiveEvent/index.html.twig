@@ -76,6 +76,13 @@
             }
         });
 
+        $(document).on('click', '#pumukit_new_admin_event_cancel', function(){
+            $('#form_event')[0].reset();
+            $('input.mmobj.materialtags').materialtags('destroy');
+            window.init_mmobj_materialtags();
+            $('#remember_save_event').hide();
+        });
+
         var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
         window.mmobjkeywords = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
