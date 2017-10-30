@@ -30,8 +30,6 @@ class EventController extends Controller implements WebTVController
 
         $eventsNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
-
-        dump($eventsToday);
         $eventsToday = $this->getEventsTodayNextSession($eventsToday);
         $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
 
@@ -127,6 +125,11 @@ class EventController extends Controller implements WebTVController
                 $data['event'] = $multimediaObject->getEmbeddedEvent();
                 $data['session'] = $nextSession;
                 $data['multimediaObjectId'] = $multimediaObjectId;
+                if (isset($event['data'][0]['pics'])) {
+                    $data['pics'] = $event['data'][0]['pics'];
+                } else {
+                    $data['pics'] = array();
+                }
 
                 $todayEvents['data'][] = $data;
 

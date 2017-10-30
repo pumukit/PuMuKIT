@@ -13,9 +13,9 @@
                         <a href="{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}">
                             <div class="media-object play_icon small" alt=""></div>
                             {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                                <img class="media-object thumbnailimg" src="{{ event['pics'][0]['url'] }}">
+                                <img class="media-object thumbnailimg" src="{{ event['pics'][0]['url'] }}" style="height:100%">
                             {% else %}
-                                <img class="media-object thumbnailimg" src="{{ defaultPic }}">
+                                <img class="media-object thumbnailimg" src="{{ defaultPic }}" style="height:100%">
                             {% endif %}
                             <div class="minithumbnailholder"></div>
                         </a>
