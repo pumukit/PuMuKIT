@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\User;
 class ByUserController extends Controller implements WebTVController
 {
     /**
-     * @Route("/multimediaobjects/user/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username": null})
+     * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("PumukitWebTVBundle:ByUser:index.html.twig")
      */
@@ -44,7 +44,7 @@ class ByUserController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/series/user/{username}",  name="pumukit_webtv_byuser_series", defaults={"username": null})
+     * @Route("/users/{username}/series",  name="pumukit_webtv_byuser_series", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template("PumukitWebTVBundle:ByUser:index.html.twig")
      */
