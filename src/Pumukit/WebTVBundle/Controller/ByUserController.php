@@ -33,7 +33,7 @@ class ByUserController extends Controller implements WebTVController
 
         $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
 
-        $title = $this->get('translator')->trans('Multimedia objects with user: %title%', array('%title%' => $title));
+        $title = $this->get('translator')->trans('%title%', array('%title%' => $title));
 
         return array(
             'title' => $title,
@@ -60,7 +60,7 @@ class ByUserController extends Controller implements WebTVController
         $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', array('fullname' => $user->getFullname()));
 
         $title = $user->getFullname();
-        $title = $this->get('translator')->trans('Series with user: %title%', array('%title%' => $title));
+        $title = $this->get('translator')->trans('%title% (Series)', array('%title%' => $title));
 
         return array(
             'title' => $title,
