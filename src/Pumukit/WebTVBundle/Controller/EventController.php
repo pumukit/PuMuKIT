@@ -30,6 +30,8 @@ class EventController extends Controller implements WebTVController
 
         $eventsNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
         $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
+
+        dump($eventsToday);
         $eventsToday = $this->getEventsTodayNextSession($eventsToday);
         $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
 
@@ -94,6 +96,7 @@ class EventController extends Controller implements WebTVController
 
     private function getEventsTodayNextSession($events)
     {
+        $result = array();
         foreach ($events as $event) {
             $multimediaObjectId = $event['_id'];
             $dm = $this->container->get('doctrine_mongodb')->getManager();
@@ -109,6 +112,8 @@ class EventController extends Controller implements WebTVController
 
             $now = new \DateTime();
             $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+
+            $nextSession = null;
             foreach ($sessions as $session) {
                 if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
                     if ($session->getEnds()->getTimestamp() < $todayEnds) {
@@ -117,7 +122,7 @@ class EventController extends Controller implements WebTVController
                     }
                 }
             }
-            $result = array();
+
             if (isset($nextSession)) {
                 $data['event'] = $multimediaObject->getEmbeddedEvent();
                 $data['session'] = $nextSession;
