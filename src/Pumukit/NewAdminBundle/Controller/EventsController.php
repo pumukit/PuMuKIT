@@ -106,6 +106,9 @@ class EventsController extends Controller
             if (count($seriesPics) > 0) {
                 $eventPicSeriesDefault = $series->getPic();
                 $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
+            } else {
+                $eventPicSeriesDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
+                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
             }
         }
 
@@ -160,6 +163,7 @@ class EventsController extends Controller
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
             }
+        } elseif ($data = $request->query->get('criteria')) {
         } elseif ($data = $request->query->get('criteria')) {
             if (!empty($data['name'])) {
                 $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
