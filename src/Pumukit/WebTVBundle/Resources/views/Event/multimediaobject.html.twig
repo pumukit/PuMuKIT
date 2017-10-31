@@ -6,9 +6,9 @@
         <div class="pumukit_mmobj">
             <div class="thumbnail">
                 {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ event['pics'][0]['url'] }}"/>
+                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ event['pics'][0]['url'] }}" style="height:100%"/>
                 {% else %}
-                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ defaultPic }}"/>
+                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ defaultPic }}" style="height:100%"/>
                 {% endif %}
                 <div class="thumbnailholder"></div>
             </div>

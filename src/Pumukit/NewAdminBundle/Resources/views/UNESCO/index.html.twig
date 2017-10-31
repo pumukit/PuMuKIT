@@ -137,5 +137,12 @@
                 return false;
             }
         };
+
+        $(document).on('click', '#pumukitnewadmin_mms_updatemeta_cancel_unesco', function(){
+            $('#pumukitnewadmin_unesco_updatemeta_form')[0].reset();
+            $('input.mmobj.materialtags').materialtags('destroy');
+            window.init_mmobj_materialtags();
+            $('#remember_save_mm').hide();
+        });
     </script>
 {% endblock %}

@@ -94,6 +94,7 @@ class EventController extends Controller implements WebTVController
 
     private function getEventsTodayNextSession($events)
     {
+        $result = array();
         foreach ($events as $event) {
             $multimediaObjectId = $event['_id'];
             $dm = $this->container->get('doctrine_mongodb')->getManager();
@@ -109,6 +110,8 @@ class EventController extends Controller implements WebTVController
 
             $now = new \DateTime();
             $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+
+            $nextSession = null;
             foreach ($sessions as $session) {
                 if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
                     if ($session->getEnds()->getTimestamp() < $todayEnds) {
@@ -117,11 +120,16 @@ class EventController extends Controller implements WebTVController
                     }
                 }
             }
-            $result = array();
+
             if (isset($nextSession)) {
                 $data['event'] = $multimediaObject->getEmbeddedEvent();
                 $data['session'] = $nextSession;
                 $data['multimediaObjectId'] = $multimediaObjectId;
+                if (isset($event['data'][0]['pics'])) {
+                    $data['pics'] = $event['data'][0]['pics'];
+                } else {
+                    $data['pics'] = array();
+                }
 
                 $todayEvents['data'][] = $data;
 

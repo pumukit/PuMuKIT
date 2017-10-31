@@ -106,6 +106,9 @@ class EventsController extends Controller
             if (count($seriesPics) > 0) {
                 $eventPicSeriesDefault = $series->getPic();
                 $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault->getUrl(), false);
+            } else {
+                $eventPicSeriesDefault = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_serie_pic');
+                $mmoPicService->addPicUrl($multimediaObject, $eventPicSeriesDefault, false);
             }
         }
 
@@ -127,6 +130,7 @@ class EventsController extends Controller
 
         $session = $this->get('session');
         $session->set('admin/live/event/id', $multimediaObject->getId());
+        $this->get('session')->set('admin/live/event/page', 1);
 
         return $this->redirectToRoute('pumukit_new_admin_live_event_index');
     }
