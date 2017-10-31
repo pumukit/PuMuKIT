@@ -262,6 +262,18 @@ class Series
     }
 
     /**
+     * Get sorting criteria.
+     *
+     * @return array
+     */
+    public function getSortingCriteria()
+    {
+        return isset(self::$sortCriteria[$this->sorting]) ?
+            self::$sortCriteria[$this->sorting] :
+            self::$sortCriteria[0];
+    }
+
+    /**
      * Set sorting type.
      *
      * @return int
