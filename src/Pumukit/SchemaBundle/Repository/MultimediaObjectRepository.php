@@ -1612,7 +1612,6 @@ class MultimediaObjectRepository extends DocumentRepository
         return $groupsIds;
     }
 
-
     /**
      * Count number of multimedia objects by series.
      *
@@ -1648,7 +1647,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $mmobjCount;
     }
-
 
     /**
      * Count number of multimedia objects by tags.
