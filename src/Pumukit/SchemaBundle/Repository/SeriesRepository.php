@@ -663,41 +663,13 @@ class SeriesRepository extends DocumentRepository
      * Count number of multimedia objects by series.
      *
      * @return array() A key/value hash where the key is the series id (string) and the value is the count
+     *
+     * @deprecated Use MultimediaObjectRepository::countMmobjsBySeries
      */
     public function countMmobjsBySeries($seriesList = array())
     {
-        $dm = $this->getDocumentManager();
-
-        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-
-        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV');
-
-        if ($seriesList) {
-            $seriesIds = array();
-            foreach ($seriesList as $series) {
-                $seriesIds[] = new \MongoId($series->getId());
-            }
-
-            $criteria['series'] = array('$in' => $seriesIds);
-        }
-
-        $criteria['$or'] = array(
-            array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
-            array('properties.opencast' => array('$exists' => true)),
-        );
-
-        $pipeline = array(
-            array('$match' => $criteria),
-            array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
-        );
-
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
-        $mmobjCount = array();
-
-        foreach ($aggregation as $a) {
-            $mmobjCount[(string) $a['_id']] = $a['count'];
-        }
-
-        return $mmobjCount;
+        return $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->countMmobjsBySeries($seriesList);
     }
 }

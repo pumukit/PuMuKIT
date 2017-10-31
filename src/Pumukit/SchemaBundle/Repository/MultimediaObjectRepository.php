@@ -1460,6 +1460,7 @@ class MultimediaObjectRepository extends DocumentRepository
         return $groupsIds;
     }
 
+
     public function findEventsGroupBy()
     {
         $dm = $this->getDocumentManager();
@@ -2080,5 +2081,74 @@ class MultimediaObjectRepository extends DocumentRepository
         );
 
         return $collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * Count number of multimedia objects by series.
+     *
+     * @return array() A key/value hash where the key is the series id (string) and the value is the count
+     */
+    public function countMmobjsBySeries($seriesList = array())
+    {
+        $dm = $this->getDocumentManager();
+
+        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
+        if ($seriesList) {
+            $seriesIds = array();
+            foreach ($seriesList as $series) {
+                $seriesIds[] = new \MongoId($series->getId());
+            }
+
+            $criteria['series'] = array('$in' => $seriesIds);
+        }
+
+        $pipeline = array(
+            array('$match' => $criteria),
+            array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
+        );
+
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $mmobjCount = array();
+
+        foreach ($aggregation as $a) {
+            $mmobjCount[(string) $a['_id']] = $a['count'];
+        }
+
+        return $mmobjCount;
+    }
+
+    /**
+     * Count number of multimedia objects by tags.
+     *
+     * @return array() A key/value hash where the key is the tag cod (string) and the value is the count
+     */
+    public function countMmobjsByTagCods($tagCodsList = array())
+    {
+        $dm = $this->getDocumentManager();
+
+        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
+        if ($tagCodsList) {
+            $criteria['tags'] = array('$in' => $tagCodsList);
+        }
+
+        $pipeline = array(
+            array('$match' => $criteria),
+            array('$project' => array('_id' => '$tags.cod')),
+            array('$unwind' => '$_id'),
+            array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
+        );
+
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $mmobjCount = array();
+
+        foreach ($aggregation as $a) {
+            $mmobjCount[(string) $a['_id']] = $a['count'];
+        }
+
+        return $mmobjCount;
     }
 }
