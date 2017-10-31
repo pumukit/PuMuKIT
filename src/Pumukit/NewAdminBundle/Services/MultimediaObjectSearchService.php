@@ -80,7 +80,14 @@ class MultimediaObjectSearchService
         }
 
         if ($bPerson && $bRole && $personName && $roleCode) {
-            $isMongoId = \MongoId::isValid($personName);
+            $isMongoId = true;
+            try {
+                new \MongoId($personName);
+            } catch (\Exception $exception) {
+                $isMongoId = false;
+            }
+            // Only in Mongo 1.5.0
+            //$isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new \MongoId($personName);
                 $new_criteria['people'] = array('$elemMatch' => array('cod' => $roleCode, 'people._id' => $peopleCriteria));
@@ -89,7 +96,14 @@ class MultimediaObjectSearchService
                 $new_criteria['people'] = array('$elemMatch' => array('cod' => $roleCode, 'people.name' => $peopleCriteria));
             }
         } elseif ($bPerson && !$bRole && $personName) {
-            $isMongoId = \MongoId::isValid($personName);
+            $isMongoId = true;
+            try {
+                new \MongoId($personName);
+            } catch (\Exception $exception) {
+                $isMongoId = false;
+            }
+            // Only in Mongo 1.5.0
+            // $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new \MongoId($personName);
                 $new_criteria += array('people.people._id' => $peopleCriteria);
