@@ -1,56 +1,57 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
-{% for tag in children %}
-  {% set has_children = tag.children|length %}
+    {% for tag in children %}
 
-  <tr class="tv_admin_row_0 c_{{ tag.path|replace({ ("|" ~ tag.cod ~ "|"): '', '|': ' c_'}) }} d_{{ tag.parent.cod|default("")}}" id="row_tag_{{ tag.id }}" data-level="{{ tag.level}}">
-      <td headers="th-checkbox" >
-        <div class="checkbox">
-          <label>
-            <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
-          </label>
-        </div>
-      </td>
-      <td headers="th-icons">
-          <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));">
-            <i class="mdi-content-clear"></i>
-          </a>
-      </td>
-      <td headers="th-icons">
-          <a title="{% trans %}Edit tag {% endtrans %} {{tag.cod}}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-              <i class="mdi-editor-mode-edit"></i>
-          </a>
-      </td>
-      <td headers="th-icons">
-        <a title="{% trans %}Create child tag for{% endtrans %} {{tag.cod}}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-          <i class="mdi-image-add-to-photos"></i>
-        </a>
-      </td>
-      <td headers="th-id">
-        {{ tag.id }}
-      </td>
-      <td headers="th-code-name" class="{{ has_children?'collapsed noload':'element' }}">
-        <span style="padding-left:{{ 10 * tag.level}}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
-          <i class="mdi- tag_icon"></i>
-        </span>
-        {{ tag.cod}} - {{ tag.title}}
-        {#
-          <ul class="tag_tree" >
-              {% for i in  2..tag.level %}
-                  <ul class="tag_tree" ><li class="element" >
-              {% endfor%}
-              <li class="{{ has_children?'collapsed noload':'element' }}" >
-              <span class="icon" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">&nbsp;</span>
-              <span id="info_tag_{{ tag.id }}">{{ tag.cod}} - {{ tag.title}} </span>
-              </li>
-              {% for i in  2..tag.level %}
-                  </li></ul>
-              {% endfor%}
-          </ul>
-          #}
-      </td>
-      <td headers="th-num">
-          {{ tag.getNumberMultimediaObjects() }}
-      </td>
-  </tr>
-{% endfor %}
+        {% set has_children = tag.children|length %}
+
+        <tr class="tv_admin_row_0 c_{{ tag.path|replace({ ("|" ~ tag.cod ~ "|"): '', '|': ' c_'}) }} d_{{ tag.parent.cod|default("") }}" id="row_tag_{{ tag.id }}" data-level="{{ tag.level }}">
+            <td headers="th-checkbox">
+                <div class="checkbox">
+                    <label>
+                        <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+                    </label>
+                </div>
+            </td>
+            <td headers="th-icons">
+                <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));">
+                    <i class="mdi-content-clear"></i>
+                </a>
+            </td>
+            <td headers="th-icons">
+                <a title="{% trans %}Edit tag {% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <i class="mdi-editor-mode-edit"></i>
+                </a>
+            </td>
+            <td headers="th-icons">
+                <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <i class="mdi-image-add-to-photos"></i>
+                </a>
+            </td>
+            <td headers="th-id">
+                {{ tag.id }}
+            </td>
+            <td headers="th-code-name" class="{{ has_children?'collapsed noload':'element' }}">
+            <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
+              <i class="mdi- tag_icon"></i>
+            </span>
+                {{ tag.cod }} - {{ tag.title }}
+                {#
+                  <ul class="tag_tree" >
+                      {% for i in  2..tag.level %}
+                          <ul class="tag_tree" ><li class="element" >
+                      {% endfor%}
+                      <li class="{{ has_children?'collapsed noload':'element' }}" >
+                      <span class="icon" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">&nbsp;</span>
+                      <span id="info_tag_{{ tag.id }}">{{ tag.cod}} - {{ tag.title}} </span>
+                      </li>
+                      {% for i in  2..tag.level %}
+                          </li></ul>
+                      {% endfor%}
+                  </ul>
+                  #}
+            </td>
+            <td headers="th-num">
+                {{ tag.getNumberMultimediaObjects() }}
+            </td>
+        </tr>
+    {% endfor %}
 {% endif %}
