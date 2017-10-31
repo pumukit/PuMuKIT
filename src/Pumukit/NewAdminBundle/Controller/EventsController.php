@@ -164,7 +164,6 @@ class EventsController extends Controller
                 $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
             }
         } elseif ($data = $request->query->get('criteria')) {
-        } elseif ($data = $request->query->get('criteria')) {
             if (!empty($data['name'])) {
                 $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
             }
