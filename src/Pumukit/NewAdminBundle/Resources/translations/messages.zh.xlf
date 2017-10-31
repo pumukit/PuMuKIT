@@ -3276,6 +3276,66 @@
         <source>Session must start before ends</source>
         <target xml:lang="zh-TW" state="needs-translation">Session must start before ends</target>
       </trans-unit>
+      <trans-unit id="a33e4cfc99ad017b0c06278054108189" resname="Modify broadcast profile of videos&#10;            template">
+        <source>Modify broadcast profile of videos
+            template</source>
+        <target xml:lang="zh-TW" state="needs-translation">Modify broadcast profile of videos
+            template</target>
+      </trans-unit>
+      <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717" resname="Modify broadcast profile of live&#10;                event">
+        <source>Modify broadcast profile of live
+                event</source>
+        <target xml:lang="zh-TW" state="needs-translation">Modify broadcast profile of live
+                event</target>
+      </trans-unit>
+      <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031" resname="Modify broadcast profile of multimedia&#10;                object">
+        <source>Modify broadcast profile of multimedia
+                object</source>
+        <target xml:lang="zh-TW" state="needs-translation">Modify broadcast profile of multimedia
+                object</target>
+      </trans-unit>
+      <trans-unit id="f4295a80d088167a35cd118ceb2d311e" resname="Delete error. Live channel channel is associated to live event.">
+        <source>Delete error. Live channel channel is associated to live event.</source>
+        <target xml:lang="zh-TW" state="needs-translation">Delete error. Live channel channel is associated to live event.</target>
+      </trans-unit>
+      <trans-unit id="09e9ac9c330b57bd31a058d19dcccc50" resname="No downloadable">
+        <source>No downloadable</source>
+        <target xml:lang="zh-TW" state="needs-translation">No downloadable</target>
+      </trans-unit>
+      <trans-unit id="ff4c65a71c085467102db18600f14c76" resname="Choose style">
+        <source>Choose style</source>
+        <target xml:lang="zh-TW" state="needs-translation">Choose style</target>
+      </trans-unit>
+      <trans-unit id="9e0f0101465e64cf2675c6341d67a2f0" resname="There aren't defined styles">
+        <source>There aren't defined styles</source>
+        <target xml:lang="zh-TW" state="needs-translation">There aren't defined styles</target>
+      </trans-unit>
+      <trans-unit id="1d411b8de8bf1cccb035a151e744bf57" resname="Style created ERROR">
+        <source>Style created ERROR</source>
+        <target xml:lang="zh-TW" state="needs-translation">Style created ERROR</target>
+      </trans-unit>
+      <trans-unit id="4fef6518049cd4e7d9ee1d6d84464b69" resname="Style created OK">
+        <source>Style created OK</source>
+        <target xml:lang="zh-TW" state="needs-translation">Style created OK</target>
+      </trans-unit>
+      <trans-unit id="20ab190f1bf563c580f21b523d24d4ab" resname="Style edited ERROR">
+        <source>Style edited ERROR</source>
+        <target xml:lang="zh-TW" state="needs-translation">Style edited ERROR</target>
+      </trans-unit>
+      <trans-unit id="4610ae1edd1460a6022ae2c5d7e78819" resname="Live event">
+        <source>Live event</source>
+        <target xml:lang="zh-TW" state="needs-translation">Live event</target>
+      </trans-unit>
+      <trans-unit id="d378c2c63c90e4a8f19c034551167d10" resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
+        <source>Add the name of the series you want to use.
+            In case this series already exists in the database, a pull-down list will be shown,
+            where you can select it and use it. If it doesn't exist in the database,
+            create a new entrance with the written name.</source>
+        <target xml:lang="zh-TW" state="needs-translation">Add the name of the series you want to use.
+            In case this series already exists in the database, a pull-down list will be shown,
+            where you can select it and use it. If it doesn't exist in the database,
+            create a new entrance with the written name.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

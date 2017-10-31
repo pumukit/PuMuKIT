@@ -510,7 +510,7 @@
       </trans-unit>
       <trans-unit id="b658acd7298e4f58058387dbbc4b327d" resname="This page isn't available. Sorry about that.">
         <source>This page isn't available. Sorry about that.</source>
-        <target xml:lang="es-ES" state="needs-translation">This page isn't available. Sorry about that.</target>
+        <target xml:lang="es-ES" state="translated">Esta página no se encuentra disponible. Sentimos las molestias.</target>
       </trans-unit>
       <trans-unit id="795a273f05736cc8c7b77d3a88bc9bee" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
@@ -522,7 +522,7 @@
       </trans-unit>
       <trans-unit id="aaf40ad2ab7b5e9a1f5a19c78b6c5bc4" resname="By subject catalogue">
         <source>By subject catalogue</source>
-        <target xml:lang="es-ES" state="needs-translation">By subject catalogue</target>
+        <target xml:lang="es-ES" state="translated">Catálogo por categorías</target>
       </trans-unit>
       <trans-unit id="50c60ac437e4d4ef19c77bdca5bbcf3b" resname="University">
         <source>University</source>
@@ -554,11 +554,11 @@
       </trans-unit>
       <trans-unit id="fecc878b1691c7658927cc6bb866bfe0" resname="Now events">
         <source>Now events</source>
-        <target xml:lang="es-ES" state="needs-translation">Now events</target>
+        <target xml:lang="es-ES" state="translated">Eventos emitiendo ahora</target>
       </trans-unit>
       <trans-unit id="60b31b4777e7a98ed15e070053c72e9a" resname="Today events">
         <source>Today events</source>
-        <target xml:lang="es-ES" state="needs-translation">Today events</target>
+        <target xml:lang="es-ES" state="translated">Eventos hoy</target>
       </trans-unit>
       <trans-unit id="bd883caf9d4d144e6c67349123b13937" resname="Future events">
         <source>Future events</source>
