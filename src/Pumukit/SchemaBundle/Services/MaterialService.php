@@ -81,6 +81,8 @@ class MaterialService
 
         $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
 
+        $material->setSize($materialFile->getClientSize());
+
         $material->setPath($path);
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
 
