@@ -332,6 +332,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $this->domainManager->update($resource);
 
             $this->dispatchUpdate($resource);
+            $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
 
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($formMeta));
@@ -411,6 +412,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $this->domainManager->update($resource);
 
             $this->dispatchUpdate($resource);
+            $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
             if ($config->isApiRequest()) {
                 return $this->handleView($this->view($formPub));
             }
@@ -659,9 +662,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $page = $session->get('admin/mms/page', 1);
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
-        $sorting = isset(Series::$sortCriteria[$series->getSorting()]) ?
-                 Series::$sortCriteria[$series->getSorting()] :
-                 Series::$sortCriteria[0];
+        $sorting = array('rank' => 'asc');
 
         $mmsQueryBuilder = $this
           ->get('doctrine_mongodb.odm.document_manager')
@@ -918,22 +919,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $dm->persist($series);
         $dm->flush();
 
-        $sorting = array($request->get('fieldName', 'rank') => $request->get('order', 1));
-
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mms = $dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject')
-          ->findOrderedBy($series, $sorting);
-
-        $rank = 1;
-        foreach ($mms as $mm) {
-            $dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
-              ->update()
-              ->field('rank')->set($rank++)
-              ->field('_id')->equals($mm->getId())
-              ->getQuery()
-              ->execute();
-        }
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }

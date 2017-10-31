@@ -87,6 +87,10 @@
             <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
         </service>
 
+        <service id="pumukitschema.sorted_multimedia_object" class="Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
         <service id="pumukitschema.multimedia_object_views" class="Pumukit\SchemaBundle\EventListener\MultimediaObjectViews">
             <argument type="service" id="pumukitschema.multimedia_object" />
             <tag name="kernel.event_listener" event="multimediaobject.view" method="onMultimediaObjectViewed" />
