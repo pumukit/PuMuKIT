@@ -1,5 +1,12 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
+{% block javascripts %}
+{% if scroll_list %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/pumukitwebtv/js/announces_ajax.js') }}" type="text/javascript"></script>
+{% endif %}
+{% endblock %}
+
 {% block body %}
   <div class="row">
     <div class="col-xs-12">
@@ -9,10 +16,19 @@
           <h1 class="title-for-crumbs">{{ title }}</h1>
         </div>
       </div>
+      {% if scroll_list %}
+      <div class="announces" id="announces">
+      </div>
+      <div id="announces_loading" style="display:none"><img class="center-block" src="{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}"/></div>
+      <script type="text/javascript">
+        var url_latestuploads_pager = "{{ path('pumukit_webtv_byuser_objects_pager', {'username': user.username, 'type': type}) }}";
+      </script>
+      {% else %}
       {% include 'PumukitWebTVBundle:ByUser:list.html.twig' %}
       <div class="row">
         {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
       </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

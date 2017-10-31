@@ -3,6 +3,7 @@ parameters:
   catalogue_thumbnails:      true                         # If set to true, the full catalogue will list thumbnails instead of text.
   categories_tag_cod:        ITUNESU                      # Cod of Root Tag to create the Categories page.
   categories.list_general_tags:  true                     # If true, adds a 'general tag' to each category.
+  scroll_list_byuser:        false                        # If true, the list of multimedia objects and series of a user is not paginated.
   columns_objs_announces:    2                            # Number of columns for announces. (Default 1)
   columns_objs_bytag:        2                            # Number of columns for bytag.  (Default 2)
   columns_objs_catalogue:    2                            # Number of columns for full catalogue. (Default 1)
