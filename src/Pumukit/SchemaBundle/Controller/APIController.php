@@ -192,7 +192,7 @@ class APIController extends Controller implements NewAdminController
             'sort' => $sort,
             'live' => $live,
         );
-        
+
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
         return new Response($data);

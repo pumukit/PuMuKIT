@@ -19,7 +19,7 @@ class ChannelController extends Controller implements WebTVController
         4 => 'Law',
         7 => 'Social Matters & Education',
     );
-    
+
     private $tags = array(
         1 => array('PUDEUNI'), //"University",
         2 => array('100'), //"Business",
@@ -27,9 +27,9 @@ class ChannelController extends Controller implements WebTVController
         5 => array('102', '104', '106', '107', '114', '115'), //"Humanities",
         6 => array('103'), //"Health & Medicine",
         4 => array('116'), //"Law",
-        7 => array('110', '111', '112', '113')//"Social Matters & Education",
+        7 => array('110', '111', '112', '113'), //"Social Matters & Education",
     );
-    
+
     /**
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
      * @Template("PumukitWebTVBundle:Channel:index.html.twig")
