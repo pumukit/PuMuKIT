@@ -1460,7 +1460,6 @@ class MultimediaObjectRepository extends DocumentRepository
         return $groupsIds;
     }
 
-
     public function findEventsGroupBy()
     {
         $dm = $this->getDocumentManager();
