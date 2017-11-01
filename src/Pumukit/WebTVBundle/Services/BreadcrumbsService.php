@@ -90,8 +90,10 @@ class BreadcrumbsService
 
     public function add($title, $routeName, array $routeParameters = array())
     {
-        $this->breadcrumbs[] = array('title' => $title,
-                                 'link' => $this->router->generate($routeName, $routeParameters), );
+        $this->breadcrumbs[] = array(
+            'title' => $title,
+            'link' => $this->router->generate($routeName, $routeParameters),
+        );
     }
 
     public function getBreadcrumbs()

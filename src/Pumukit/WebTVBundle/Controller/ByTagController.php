@@ -40,10 +40,12 @@ class ByTagController extends Controller implements WebTVController
 
         $title = $this->get('translator')->trans('Multimedia objects with tag: %title%', array('%title%' => $title));
 
-        return array('title' => $title,
-                     'objects' => $pagerfanta,
-                     'tag' => $tag,
-                     'number_cols' => $numberCols, );
+        return array(
+            'title' => $title,
+            'objects' => $pagerfanta,
+            'tag' => $tag,
+            'number_cols' => $numberCols,
+        );
     }
 
     /**
@@ -63,10 +65,12 @@ class ByTagController extends Controller implements WebTVController
         $title = $tag->getTitle();
         $title = $this->get('translator')->trans('Series with tag: %title%', array('%title%' => $title));
 
-        return array('title' => $title,
-                     'objects' => $pagerfanta,
-                     'tag' => $tag,
-                     'number_cols' => $numberCols, );
+        return array(
+            'title' => $title,
+            'objects' => $pagerfanta,
+            'tag' => $tag,
+            'number_cols' => $numberCols,
+        );
     }
 
     private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())

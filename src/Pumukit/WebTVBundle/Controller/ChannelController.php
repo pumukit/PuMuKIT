@@ -10,22 +10,26 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class ChannelController extends Controller implements WebTVController
 {
-    private $titles = array(1 => 'University',
-                             2 => 'Business',
-                             3 => 'Natural Sciences',
-                             5 => 'Humanities',
-                             6 => 'Health & Medicine',
-                             4 => 'Law',
-                             7 => 'Social Matters & Education', );
-
-    private $tags = array(1 => array('PUDEUNI'), //"University",
-                           2 => array('100'), //"Business",
-                           3 => array('101', '108', '109'), //"Natural Sciences",
-                           5 => array('102', '104', '106', '107', '114', '115'), //"Humanities",
-                           6 => array('103'), //"Health & Medicine",
-                           4 => array('116'), //"Law",
-                           7 => array('110', '111', '112', '113')//"Social Matters & Education",
+    private $titles = array(
+        1 => 'University',
+        2 => 'Business',
+        3 => 'Natural Sciences',
+        5 => 'Humanities',
+        6 => 'Health & Medicine',
+        4 => 'Law',
+        7 => 'Social Matters & Education',
     );
+    
+    private $tags = array(
+        1 => array('PUDEUNI'), //"University",
+        2 => array('100'), //"Business",
+        3 => array('101', '108', '109'), //"Natural Sciences",
+        5 => array('102', '104', '106', '107', '114', '115'), //"Humanities",
+        6 => array('103'), //"Health & Medicine",
+        4 => array('116'), //"Law",
+        7 => array('110', '111', '112', '113')//"Social Matters & Education",
+    );
+    
     /**
      * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
      * @Template("PumukitWebTVBundle:Channel:index.html.twig")
@@ -48,16 +52,20 @@ class ChannelController extends Controller implements WebTVController
             $numMmobjs = $repoMmobj->createBuilderWithTag($tag, array('record_date' => -1))
                                    ->count()->getQuery()->execute();
 
-            $results[] = array('tag' => $tag,
-                               'objects' => $series,
-                               'numMmobjs' => $numMmobjs, );
+            $results[] = array(
+                'tag' => $tag,
+                'objects' => $series,
+                'numMmobjs' => $numMmobjs,
+            );
         }
 
         $this->updateBreadcrumbs($channelTitle, 'pumukit_webtv_channel_series', array('channelNumber' => $channelNumber));
 
-        return array('title' => $channelTitle,
-                     'results' => $results,
-                     'number_cols' => $numberCols, );
+        return array(
+            'title' => $channelTitle,
+            'results' => $results,
+            'number_cols' => $numberCols,
+        );
     }
 
     public function getChannelTitle($channelNumber)
