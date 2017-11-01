@@ -68,10 +68,14 @@ class AnnotationsAPIController extends Controller
             $annotations[] = $ann;
         }
 
-        $data = array('annotations' => array('limit' => $limit,
-                                             'offset' => $offset,
-                                             'total' => $total,
-                                             'annotation' => $annotations, ));
+        $data = array(
+            'annotations' => array(
+                'limit' => $limit,
+                'offset' => $offset,
+                'total' => $total,
+                'annotation' => $annotations,
+            )
+        );
 
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
@@ -85,18 +89,21 @@ class AnnotationsAPIController extends Controller
     public function getByIdAction(Annotation $annotation, Request $request)
     {
         $serializer = $this->get('serializer');
-        $data = array('annotation' => array('annotationId' => $annotation->getId(),
-                                              'mediapackageId' => $annotation->getMultimediaObject(),
-                                              'userId' => $annotation->getUserId(),
-                                              'sessionId' => $annotation->getSession(),
-                                              'inpoint' => $annotation->getInPoint(),
-                                              'outpoint' => $annotation->getOutPoint(),
-                                              'length' => $annotation->getLength(),
-                                              'type' => $annotation->getType(),
-                                              'isPrivate' => $annotation->getIsPrivate(),
-                                              'value' => $annotation->getValue(),
-                                              'created' => $annotation->getCreated(),
-        ));
+        $data = array(
+            'annotation' => array(
+                'annotationId' => $annotation->getId(),
+                'mediapackageId' => $annotation->getMultimediaObject(),
+                'userId' => $annotation->getUserId(),
+                'sessionId' => $annotation->getSession(),
+                'inpoint' => $annotation->getInPoint(),
+                'outpoint' => $annotation->getOutPoint(),
+                'length' => $annotation->getLength(),
+                'type' => $annotation->getType(),
+                'isPrivate' => $annotation->getIsPrivate(),
+                'value' => $annotation->getValue(),
+                'created' => $annotation->getCreated(),
+            )
+        );
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
         return new Response($response);
@@ -139,18 +146,21 @@ class AnnotationsAPIController extends Controller
         $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
 
-        $data = array('annotation' => array('annotationId' => $annotation->getId(),
-                                              'mediapackageId' => $annotation->getMultimediaObject(),
-                                              'userId' => $annotation->getUserId(),
-                                              'sessionId' => $annotation->getSession(),
-                                              'inpoint' => $annotation->getInPoint(),
-                                              'outpoint' => $annotation->getOutPoint(),
-                                              'length' => $annotation->getLength(),
-                                              'type' => $annotation->getType(),
-                                              'isPrivate' => $annotation->getIsPrivate(),
-                                              'value' => $annotation->getValue(),
-                                              'created' => $annotation->getCreated(),
-        ));
+        $data = array(
+            'annotation' => array(
+                'annotationId' => $annotation->getId(),
+                'mediapackageId' => $annotation->getMultimediaObject(),
+                'userId' => $annotation->getUserId(),
+                'sessionId' => $annotation->getSession(),
+                'inpoint' => $annotation->getInPoint(),
+                'outpoint' => $annotation->getOutPoint(),
+                'length' => $annotation->getLength(),
+                'type' => $annotation->getType(),
+                'isPrivate' => $annotation->getIsPrivate(),
+                'value' => $annotation->getValue(),
+                'created' => $annotation->getCreated(),
+            )
+        );
         $response = $serializer->serialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
@@ -173,18 +183,21 @@ class AnnotationsAPIController extends Controller
         $annotation->setValue($value);
         $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->flush();
-        $data = array('annotation' => array('annotationId' => $annotation->getId(),
-                                              'mediapackageId' => $annotation->getMultimediaObject(),
-                                              'userId' => $annotation->getUserId(),
-                                              'sessionId' => $annotation->getSession(),
-                                              'inpoint' => $annotation->getInPoint(),
-                                              'outpoint' => $annotation->getOutPoint(),
-                                              'length' => $annotation->getLength(),
-                                              'type' => $annotation->getType(),
-                                              'isPrivate' => $annotation->getIsPrivate(),
-                                              'value' => $annotation->getValue(),
-                                              'created' => $annotation->getCreated(),
-        ));
+        $data = array(
+            'annotation' => array(
+                'annotationId' => $annotation->getId(),
+                'mediapackageId' => $annotation->getMultimediaObject(),
+                'userId' => $annotation->getUserId(),
+                'sessionId' => $annotation->getSession(),
+                'inpoint' => $annotation->getInPoint(),
+                'outpoint' => $annotation->getOutPoint(),
+                'length' => $annotation->getLength(),
+                'type' => $annotation->getType(),
+                'isPrivate' => $annotation->getIsPrivate(),
+                'value' => $annotation->getValue(),
+                'created' => $annotation->getCreated(),
+            )
+        );
         $response = $serializer->serialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
