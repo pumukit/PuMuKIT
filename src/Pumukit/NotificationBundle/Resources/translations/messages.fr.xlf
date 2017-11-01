@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="fr" state="needs-translation">Profile</target>
+        <target xml:lang="fr" state="translated">Profil</target>
       </trans-unit>
       <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
         <source>Cpu</source>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="needs-translation">Duration</target>
+        <target xml:lang="fr" state="translated">Durée</target>
       </trans-unit>
       <trans-unit id="36961322944d2a6b24a72b0293e873c9" resname="New Duration">
         <source>New Duration</source>

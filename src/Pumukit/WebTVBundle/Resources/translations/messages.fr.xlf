@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="fr" state="needs-translation">No title</target>
+        <target xml:lang="fr" state="translated">Sans titre</target>
       </trans-unit>
       <trans-unit id="9aeb3ef76717905e375b8c8604d48c11" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
@@ -75,7 +75,7 @@
       </trans-unit>
       <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
         <source>Videos</source>
-        <target xml:lang="fr" state="needs-translation">Videos</target>
+        <target xml:lang="fr" state="translated">Vidéos</target>
       </trans-unit>
       <trans-unit id="6a7e73161603d87b26a8eac49dab0a9c" resname="Hours">
         <source>Hours</source>
@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="fr" state="needs-translation">Search</target>
+        <target xml:lang="fr" state="translated">Rechercher</target>
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
@@ -123,27 +123,27 @@
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
-        <target xml:lang="fr" state="needs-translation">All</target>
+        <target xml:lang="fr" state="translated">Tout</target>
       </trans-unit>
       <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
-        <target xml:lang="fr" state="needs-translation">Up to 5 minutes</target>
+        <target xml:lang="fr" state="translated">Jusqu'à 5 minutes</target>
       </trans-unit>
       <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
         <source>Up to 10 minutes</source>
-        <target xml:lang="fr" state="needs-translation">Up to 10 minutes</target>
+        <target xml:lang="fr" state="translated">Jusqu'à 10 minutes</target>
       </trans-unit>
       <trans-unit id="cf0e47fa01c0301688b0988a34f05556" resname="Up to 30 minutes">
         <source>Up to 30 minutes</source>
-        <target xml:lang="fr" state="needs-translation">Up to 30 minutes</target>
+        <target xml:lang="fr" state="translated">Jusqu'à 30 minutes</target>
       </trans-unit>
       <trans-unit id="0379225ae7d7c577c4fcf72e5cbf026e" resname="Up to 60 minutes">
         <source>Up to 60 minutes</source>
-        <target xml:lang="fr" state="needs-translation">Up to 60 minutes</target>
+        <target xml:lang="fr" state="translated">Jusqu'à 60 minutes</target>
       </trans-unit>
       <trans-unit id="33cfc2709fe67cc82cf324f9c7f57cef" resname="More than 60 minutes">
         <source>More than 60 minutes</source>
-        <target xml:lang="fr" state="needs-translation">More than 60 minutes</target>
+        <target xml:lang="fr" state="translated">Plus de 60 minutes</target>
       </trans-unit>
       <trans-unit id="24105bbb65df055ed4fe0eea90c13f75" resname="Video/Audio">
         <source>Video/Audio</source>
@@ -151,15 +151,15 @@
       </trans-unit>
       <trans-unit id="4d34f1097f6c8b9cee28bca8b78bbee9" resname="Start date">
         <source>Start date</source>
-        <target xml:lang="fr" state="needs-translation">Start date</target>
+        <target xml:lang="fr" state="translated">Date de début</target>
       </trans-unit>
       <trans-unit id="70936d272892e3873e7c8c77991e5518" resname="Finish date">
         <source>Finish date</source>
-        <target xml:lang="fr" state="needs-translation">Finish date</target>
+        <target xml:lang="fr" state="translated">Date de fin</target>
       </trans-unit>
       <trans-unit id="268d1dca05a4dd6c3d647a4de01bf9d5" resname="Reset filters">
         <source>Reset filters</source>
-        <target xml:lang="fr" state="needs-translation">Reset filters</target>
+        <target xml:lang="fr" state="translated">Réinitialiser les filtres</target>
       </trans-unit>
       <trans-unit id="7da5e0c74a08ab8ede2f33fa2644c181" resname="Series search">
         <source>Series search</source>
@@ -183,11 +183,11 @@
       </trans-unit>
       <trans-unit id="6351030f724f6f42fd11ec9aa6ee8c76" resname="403 Forbidden">
         <source>403 Forbidden</source>
-        <target xml:lang="fr" state="needs-translation">403 Forbidden</target>
+        <target xml:lang="fr" state="translated">403 Accès interdit</target>
       </trans-unit>
       <trans-unit id="3f23f5e89e88dba25ea0f44e359452b6" resname="Forbidden to access this video">
         <source>Forbidden to access this video</source>
-        <target xml:lang="fr" state="needs-translation">Forbidden to access this video</target>
+        <target xml:lang="fr" state="translated">Accès interdit à cette vidéo</target>
       </trans-unit>
       <trans-unit id="9a19d5d5280f20e67fc97cea5212ebae" resname="Warning: This URL is not for public use.">
         <source>Warning: This URL is not for public use.</source>
@@ -211,31 +211,31 @@
       </trans-unit>
       <trans-unit id="2d31a9042ca0f50dce8ae60553645e5d" resname="Most viewed">
         <source>Most viewed</source>
-        <target xml:lang="fr" state="needs-translation">Most viewed</target>
+        <target xml:lang="fr" state="translated">Les plus populaires</target>
       </trans-unit>
       <trans-unit id="945d258623dcac0fa86586d6a0056452" resname="Recently added">
         <source>Recently added</source>
-        <target xml:lang="fr" state="needs-translation">Recently added</target>
+        <target xml:lang="fr" state="translated">Ajoutés récemment</target>
       </trans-unit>
       <trans-unit id="e5e13447e7fd56ed3179869f274069bb" resname="Full Catalogue">
         <source>Full Catalogue</source>
-        <target xml:lang="fr" state="needs-translation">Full Catalogue</target>
+        <target xml:lang="fr" state="translated">Catalogue complet</target>
       </trans-unit>
       <trans-unit id="33d8042bd735c559cc3206f4bc99aedc" resname="Sort by">
         <source>Sort by</source>
-        <target xml:lang="fr" state="needs-translation">Sort by</target>
+        <target xml:lang="fr" state="translated">Classer par</target>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="fr" state="needs-translation">Date</target>
+        <target xml:lang="fr" state="translated">Date</target>
       </trans-unit>
       <trans-unit id="05602ad27c432a05f26a92b6bc277994" resname="Alphabetically">
         <source>Alphabetically</source>
-        <target xml:lang="fr" state="needs-translation">Alphabetically</target>
+        <target xml:lang="fr" state="translated">Par ordre alphabétique</target>
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
-        <target xml:lang="fr" state="needs-translation">Recording date</target>
+        <target xml:lang="fr" state="translated">Date d'enregistrement</target>
       </trans-unit>
       <trans-unit id="20c95ce3b877c9ea1fa186ac6d47c4a3" resname="Marks:">
         <source>Marks:</source>
@@ -323,15 +323,15 @@
       </trans-unit>
       <trans-unit id="3e0fa00ee2fba747e8419e80c1da2d72" resname="Share on Facebook">
         <source>Share on Facebook</source>
-        <target xml:lang="fr" state="needs-translation">Share on Facebook</target>
+        <target xml:lang="fr" state="translated">Partager sur Facebook</target>
       </trans-unit>
       <trans-unit id="82aeb3b62f0627a4bb4ee48193f254d2" resname="Share on Google +">
         <source>Share on Google +</source>
-        <target xml:lang="fr" state="needs-translation">Share on Google +</target>
+        <target xml:lang="fr" state="translated">Partager sur Google+</target>
       </trans-unit>
       <trans-unit id="1d951d9b21da3a1d8de14c19b3238cf1" resname="Share on Twitter">
         <source>Share on Twitter</source>
-        <target xml:lang="fr" state="needs-translation">Share on Twitter</target>
+        <target xml:lang="fr" state="translated">Partager sur Twitter</target>
       </trans-unit>
       <trans-unit id="318ad6c5b14a4f5c80f83363033e94cc" resname="Select by year">
         <source>Select by year</source>
@@ -347,7 +347,7 @@
       </trans-unit>
       <trans-unit id="537c66b24ef5c83b7382cdc3f34885f2" resname="Year">
         <source>Year</source>
-        <target xml:lang="fr" state="needs-translation">Year</target>
+        <target xml:lang="fr" state="translated">Année</target>
       </trans-unit>
       <trans-unit id="1fdfc5c8c6cd57405ff05809a180ae8b" resname="Select by date range">
         <source>Select by date range</source>
@@ -363,7 +363,7 @@
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="fr" state="needs-translation">Email</target>
+        <target xml:lang="fr" state="translated">E-mail</target>
       </trans-unit>
       <trans-unit id="c532a205df1024f1522fc8921b86723a" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
@@ -403,7 +403,7 @@
       </trans-unit>
       <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
         <source>Log In</source>
-        <target xml:lang="fr" state="needs-translation">Log In</target>
+        <target xml:lang="fr" state="translated">Se connecter</target>
       </trans-unit>
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
@@ -443,19 +443,19 @@
       </trans-unit>
       <trans-unit id="a4d3b161ce1309df1c4e25df28694b7b" resname="Submit">
         <source>Submit</source>
-        <target xml:lang="fr" state="needs-translation">Submit</target>
+        <target xml:lang="fr" state="translated">Envoyer</target>
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
-        <target xml:lang="fr" state="needs-translation">Logo</target>
+        <target xml:lang="fr" state="translated">Logo</target>
       </trans-unit>
       <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
         <source>Send</source>
-        <target xml:lang="fr" state="needs-translation">Send</target>
+        <target xml:lang="fr" state="translated">Envoyer</target>
       </trans-unit>
       <trans-unit id="87f9f735a1d36793ceaecd4e47124b63" resname="Events">
         <source>Events</source>
-        <target xml:lang="fr" state="needs-translation">Events</target>
+        <target xml:lang="fr" state="translated">Événements</target>
       </trans-unit>
       <trans-unit id="161f25f9025f957f236bd529f7d1eb38" resname="Starts">
         <source>Starts</source>
@@ -467,11 +467,11 @@
       </trans-unit>
       <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
         <source>To</source>
-        <target xml:lang="fr" state="needs-translation">To</target>
+        <target xml:lang="fr" state="translated">Pour</target>
       </trans-unit>
       <trans-unit id="6ce3bdc39e544725038e0e87b771db1e" resname="Questions">
         <source>Questions</source>
-        <target xml:lang="fr" state="needs-translation">Questions</target>
+        <target xml:lang="fr" state="translated">Questions</target>
       </trans-unit>
       <trans-unit id="a4a7f7bd7fe3e8f903979f1bea6bf9b3" resname="Download this audio">
         <source>Download this audio</source>
@@ -503,7 +503,7 @@
       </trans-unit>
       <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
         <source>Home</source>
-        <target xml:lang="fr" state="needs-translation">Home</target>
+        <target xml:lang="fr" state="translated">Accueil</target>
       </trans-unit>
       <trans-unit id="aaf40ad2ab7b5e9a1f5a19c78b6c5bc4" resname="By subject catalogue">
         <source>By subject catalogue</source>

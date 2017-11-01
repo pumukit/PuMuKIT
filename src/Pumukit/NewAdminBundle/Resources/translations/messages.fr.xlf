@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="d3d2e617335f08df83599665eef8a418" resname="Close">
         <source>Close</source>
-        <target xml:lang="fr" state="needs-translation">Close</target>
+        <target xml:lang="fr" state="translated">Fermer</target>
       </trans-unit>
       <trans-unit id="daa6b483e9f6ca081ec7e0b4a352f9e9" resname="Save changes">
         <source>Save changes</source>
-        <target xml:lang="fr" state="needs-translation">Save changes</target>
+        <target xml:lang="fr" state="translated">Sauvegarder les modifications</target>
       </trans-unit>
       <trans-unit id="1e90923b480ee935dee9edc36669318b" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="fr" state="needs-translation">Search</target>
+        <target xml:lang="fr" state="translated">Rechercher</target>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
         <source>Name</source>
@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
         <source>reset</source>
-        <target xml:lang="fr" state="needs-translation">reset</target>
+        <target xml:lang="fr" state="translated">réinitialiser</target>
       </trans-unit>
       <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
         <source>filter</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f" resname="Delete selected">
         <source>Delete selected</source>
-        <target xml:lang="fr" state="needs-translation">Delete selected</target>
+        <target xml:lang="fr" state="translated">Supprimer la sélection</target>
       </trans-unit>
       <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
         <source>New</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="2d439011ecebc222e1feb2e3e005c0ac" resname="Thank you.">
         <source>Thank you.</source>
-        <target xml:lang="fr" state="needs-translation">Thank you.</target>
+        <target xml:lang="fr" state="translated">Merci.</target>
       </trans-unit>
       <trans-unit id="f6e6a1af42cefe6c122ee0801ca42e60" resname="Go to series WebTV page">
         <source>Go to series WebTV page</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="fr" state="needs-translation">Event</target>
+        <target xml:lang="fr" state="translated">Événement</target>
       </trans-unit>
       <trans-unit id="3d067bedfe2f4677470dd6ccf64d05ed" resname="Public">
         <source>Public</source>
@@ -207,11 +207,11 @@
       </trans-unit>
       <trans-unit id="03219b11d6170520cd434a165300cbde" resname="TODAY">
         <source>TODAY</source>
-        <target xml:lang="fr" state="needs-translation">TODAY</target>
+        <target xml:lang="fr" state="translated">AUJOURD'HUI</target>
       </trans-unit>
       <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
         <source>Next</source>
-        <target xml:lang="fr" state="needs-translation">Next</target>
+        <target xml:lang="fr" state="translated">Suivant</target>
       </trans-unit>
       <trans-unit id="82aacdd426e82471943619e51c68d471" resname="create new live event">
         <source>create new live event</source>
@@ -219,11 +219,11 @@
       </trans-unit>
       <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
         <source>From</source>
-        <target xml:lang="fr" state="needs-translation">From</target>
+        <target xml:lang="fr" state="translated">De</target>
       </trans-unit>
       <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53" resname="To">
         <source>To</source>
-        <target xml:lang="fr" state="needs-translation">To</target>
+        <target xml:lang="fr" state="translated">Pour</target>
       </trans-unit>
       <trans-unit id="72694e6cee9a756862d0e74dc02932f4" resname="Live broadcastings">
         <source>Live broadcastings</source>
@@ -239,15 +239,15 @@
       </trans-unit>
       <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
         <source>List</source>
-        <target xml:lang="fr" state="needs-translation">List</target>
+        <target xml:lang="fr" state="translated">Liste</target>
       </trans-unit>
       <trans-unit id="8ff922bbcd8ad41cdfc48d3c5163b2ab" resname="Calendar">
         <source>Calendar</source>
-        <target xml:lang="fr" state="needs-translation">Calendar</target>
+        <target xml:lang="fr" state="translated">Calendrier</target>
       </trans-unit>
       <trans-unit id="96aa8615b9f8a7330695d231603ac9ce" resname="min.">
         <source>min.</source>
-        <target xml:lang="fr" state="needs-translation">min.</target>
+        <target xml:lang="fr" state="translated">min.</target>
       </trans-unit>
       <trans-unit id="cc58cd4895e7a86c70d4fa9d9427da40" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -275,15 +275,15 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="fr" state="needs-translation">Cancel</target>
+        <target xml:lang="fr" state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="b30a4f6fc441457200a87665d2dc065e" resname="create new group">
         <source>create new group</source>
-        <target xml:lang="fr" state="needs-translation">create new group</target>
+        <target xml:lang="fr" state="translated">créer un nouveau groupe</target>
       </trans-unit>
       <trans-unit id="f6fb02a5710764376edd77b698cd8c60" resname="Group successfully created.">
         <source>Group successfully created.</source>
-        <target xml:lang="fr" state="needs-translation">Group successfully created.</target>
+        <target xml:lang="fr" state="translated">Le groupe a été créé avec succès.</target>
       </trans-unit>
       <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94" resname="External defined users and groups can not be edited here, contact your directory service administrator.">
         <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
@@ -307,11 +307,11 @@
       </trans-unit>
       <trans-unit id="2dd035582d170f46a5772e6e5fa27adf" resname="group deletion">
         <source>group deletion</source>
-        <target xml:lang="fr" state="needs-translation">group deletion</target>
+        <target xml:lang="fr" state="translated">suppression du groupe</target>
       </trans-unit>
       <trans-unit id="1dfbcae6b26a494f2698e15b4723076f" resname="group info">
         <source>group info</source>
-        <target xml:lang="fr" state="needs-translation">group info</target>
+        <target xml:lang="fr" state="translated">informations sur le groupe</target>
       </trans-unit>
       <trans-unit id="f7f389b820140a98d5ce7387d6b88c86" resname="Delete Group">
         <source>Delete Group</source>
@@ -327,7 +327,7 @@
       </trans-unit>
       <trans-unit id="379d5e7e8c9f09972e0915714abad8d3" resname="Edit Group">
         <source>Edit Group</source>
-        <target xml:lang="fr" state="needs-translation">Edit Group</target>
+        <target xml:lang="fr" state="translated">Éditer le groupe</target>
       </trans-unit>
       <trans-unit id="d1c4c128e19012693c2dbc1b62b812e1" resname="External defined groups can not be edited here, contact your directory service administrator.">
         <source>External defined groups can not be edited here, contact your directory service administrator.</source>
@@ -347,7 +347,7 @@
       </trans-unit>
       <trans-unit id="8413c683b4b27cc3f4dbd4c90329d8ba" resname="Comments">
         <source>Comments</source>
-        <target xml:lang="fr" state="needs-translation">Comments</target>
+        <target xml:lang="fr" state="translated">Commentaires</target>
       </trans-unit>
       <trans-unit id="98092d5e303819830f8482d98e112af1" resname="modify group">
         <source>modify group</source>
@@ -375,7 +375,7 @@
       </trans-unit>
       <trans-unit id="845ac28dd1e178e8d2f75b05f2d571a6" resname="is not readable">
         <source>is not readable</source>
-        <target xml:lang="fr" state="needs-translation">is not readable</target>
+        <target xml:lang="fr" state="translated">n'est pas lisible</target>
       </trans-unit>
       <trans-unit id="cfa2df1960c169d484924cd356df30b4" resname="Check the file system permissions">
         <source>Check the file system permissions</source>
@@ -383,7 +383,7 @@
       </trans-unit>
       <trans-unit id="c3e02d73c1aa4f494501c10da7f3a240" resname="create new link">
         <source>create new link</source>
-        <target xml:lang="fr" state="needs-translation">create new link</target>
+        <target xml:lang="fr" state="translated">créer un nouveau lien</target>
       </trans-unit>
       <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
         <source>OK</source>
@@ -399,7 +399,7 @@
       </trans-unit>
       <trans-unit id="e6ae269f5cb324e453f30997ca5df6c0" resname="Create Link">
         <source>Create Link</source>
-        <target xml:lang="fr" state="needs-translation">Create Link</target>
+        <target xml:lang="fr" state="translated">Créer un lien</target>
       </trans-unit>
       <trans-unit id="4644bba60825f347b0cdc3665d66e7fa" resname="create new live channel">
         <source>create new live channel</source>
@@ -443,11 +443,11 @@
       </trans-unit>
       <trans-unit id="cb456215c3333db0551bd0788bc258c7" resname="Activated">
         <source>Activated</source>
-        <target xml:lang="fr" state="needs-translation">Activated</target>
+        <target xml:lang="fr" state="translated">Activé</target>
       </trans-unit>
       <trans-unit id="43c7582c40594c3fe32a6634ef9dcb07" resname="Deactivated">
         <source>Deactivated</source>
-        <target xml:lang="fr" state="needs-translation">Deactivated</target>
+        <target xml:lang="fr" state="translated">Désactivé</target>
       </trans-unit>
       <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
         <source>Status</source>
@@ -483,11 +483,11 @@
       </trans-unit>
       <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
         <source>File</source>
-        <target xml:lang="fr" state="needs-translation">File</target>
+        <target xml:lang="fr" state="translated">Fichier</target>
       </trans-unit>
       <trans-unit id="c96195be36b2f1276b7dc203ae476b75" resname="URL format not valid">
         <source>URL format not valid</source>
-        <target xml:lang="fr" state="needs-translation">URL format not valid</target>
+        <target xml:lang="fr" state="translated">Format d’URL non valide</target>
       </trans-unit>
       <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
         <source>Under</source>
@@ -515,7 +515,7 @@
       </trans-unit>
       <trans-unit id="a14fa2166ed698f3d04061f57e5ab9b9" resname="loading">
         <source>loading</source>
-        <target xml:lang="fr" state="needs-translation">loading</target>
+        <target xml:lang="fr" state="translated">chargement</target>
       </trans-unit>
       <trans-unit id="5f7afa50da145d660626f3b4d233cdbe" resname="WARNING: You do not have enough permissions to modify admin groups.">
         <source>WARNING: You do not have enough permissions to modify admin groups.</source>
@@ -527,11 +527,11 @@
       </trans-unit>
       <trans-unit id="08f1f32cbd6bf7422568c1c55edf0933" resname="Available Groups">
         <source>Available Groups</source>
-        <target xml:lang="fr" state="needs-translation">Available Groups</target>
+        <target xml:lang="fr" state="translated">Groupes disponibles</target>
       </trans-unit>
       <trans-unit id="8af69431de8fce0c665628335343b0a1" resname="Selected Groups">
         <source>Selected Groups</source>
-        <target xml:lang="fr" state="needs-translation">Selected Groups</target>
+        <target xml:lang="fr" state="translated">Groupes sélectionnés</target>
       </trans-unit>
       <trans-unit id="cac43f222ca936cb3a04576652ee63d1" resname="BROADCAST PASSWORD">
         <source>BROADCAST PASSWORD</source>
@@ -543,19 +543,19 @@
       </trans-unit>
       <trans-unit id="c1379f85e83c7ae0e84b3bce5737af85" resname="Repeat password">
         <source>Repeat password</source>
-        <target xml:lang="fr" state="needs-translation">Repeat password</target>
+        <target xml:lang="fr" state="translated">Confirmation du mot de passe</target>
       </trans-unit>
       <trans-unit id="a15e17ae8f6fec2564e0a7eecbe4b7e3" resname="Show/Hide password">
         <source>Show/Hide password</source>
-        <target xml:lang="fr" state="needs-translation">Show/Hide password</target>
+        <target xml:lang="fr" state="translated">Afficher/masquer le mot de passe</target>
       </trans-unit>
       <trans-unit id="e92623649bd6e020b40883a9716d7066" resname="Generate random password">
         <source>Generate random password</source>
-        <target xml:lang="fr" state="needs-translation">Generate random password</target>
+        <target xml:lang="fr" state="translated">Générer un mot de passe aléatoire</target>
       </trans-unit>
       <trans-unit id="17ace4ce071700524f94b6a640688293" resname="Passwords must match">
         <source>Passwords must match</source>
-        <target xml:lang="fr" state="needs-translation">Passwords must match</target>
+        <target xml:lang="fr" state="translated">Les mots de passent doivent être les mêmes</target>
       </trans-unit>
       <trans-unit id="c57a8997db1db3976eac323c51725bd6" resname="Passwords can not be empty">
         <source>Passwords can not be empty</source>
@@ -563,7 +563,7 @@
       </trans-unit>
       <trans-unit id="6bd6beac1da76b2d2a9c3b7914ba034c" resname="Publication">
         <source>Publication</source>
-        <target xml:lang="fr" state="needs-translation">Publication</target>
+        <target xml:lang="fr" state="translated">Publication</target>
       </trans-unit>
       <trans-unit id="df75a9db403cefe31beed47663622af5" resname="Basic Metadata">
         <source>Basic Metadata</source>
@@ -571,7 +571,7 @@
       </trans-unit>
       <trans-unit id="189f63f277cd73395561651753563065" resname="Tags">
         <source>Tags</source>
-        <target xml:lang="fr" state="needs-translation">Tags</target>
+        <target xml:lang="fr" state="translated">Tags</target>
       </trans-unit>
       <trans-unit id="fea129fd310f01ad2c8d8ead2049eb23" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
@@ -595,11 +595,11 @@
       </trans-unit>
       <trans-unit id="f5cf47ab06d0d98b0d16d10c82d87953" resname="SAVE">
         <source>SAVE</source>
-        <target xml:lang="fr" state="needs-translation">SAVE</target>
+        <target xml:lang="fr" state="translated">SAUVEGARDER</target>
       </trans-unit>
       <trans-unit id="ae7f1fa1a9dc1568a17a5b5490724b0f" resname="SAVE AND CLOSE">
         <source>SAVE AND CLOSE</source>
-        <target xml:lang="fr" state="needs-translation">SAVE AND CLOSE</target>
+        <target xml:lang="fr" state="translated">SAUVEGARDER ET FERMER</target>
       </trans-unit>
       <trans-unit id="2dc1f4cbb55764b7a7749347e0fc529d" resname="EDIT MODE">
         <source>EDIT MODE</source>
@@ -611,7 +611,7 @@
       </trans-unit>
       <trans-unit id="44dfd689352039aac0f6247bf94fa03c" resname="Select an action">
         <source>Select an action</source>
-        <target xml:lang="fr" state="needs-translation">Select an action</target>
+        <target xml:lang="fr" state="translated">Sélectionner une action</target>
       </trans-unit>
       <trans-unit id="38cf4b2cfcce068ad718942069cba590" resname="Announce/Not announce selected">
         <source>Announce/Not announce selected</source>
@@ -643,7 +643,7 @@
       </trans-unit>
       <trans-unit id="19d35f82fd9b3c147060da7225c96e39" resname="Add to playlist">
         <source>Add to playlist</source>
-        <target xml:lang="fr" state="needs-translation">Add to playlist</target>
+        <target xml:lang="fr" state="translated">Ajouter à la playlist</target>
       </trans-unit>
       <trans-unit id="24c9bdf4a3829f90708fac4e945a8c40" resname="Preview show of the series">
         <source>Preview show of the series</source>
@@ -683,11 +683,11 @@
       </trans-unit>
       <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
         <source>Title</source>
-        <target xml:lang="fr" state="needs-translation">Title</target>
+        <target xml:lang="fr" state="translated">Titre</target>
       </trans-unit>
       <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="needs-translation">Duration</target>
+        <target xml:lang="fr" state="translated">Durée</target>
       </trans-unit>
       <trans-unit id="b11befb9b12822f75e5f3d0131e08fec" resname="RecDate">
         <source>RecDate</source>
@@ -775,7 +775,7 @@
       </trans-unit>
       <trans-unit id="ce8ae9da5b7cd6c3df2929543a9af92d" resname="Email">
         <source>Email</source>
-        <target xml:lang="fr" state="needs-translation">Email</target>
+        <target xml:lang="fr" state="translated">E-mail</target>
       </trans-unit>
       <trans-unit id="cc991c5669b278ab24bee4d0c911f3c9" resname="Edit Person">
         <source>Edit Person</source>
@@ -783,11 +783,11 @@
       </trans-unit>
       <trans-unit id="686e697538050e4664636337cc3b834f" resname="Create">
         <source>Create</source>
-        <target xml:lang="fr" state="needs-translation">Create</target>
+        <target xml:lang="fr" state="translated">Créer</target>
       </trans-unit>
       <trans-unit id="22af645d1859cb5ca6da0c484f1f37ea" resname="new">
         <source>new</source>
-        <target xml:lang="fr" state="needs-translation">new</target>
+        <target xml:lang="fr" state="translated">nouveau</target>
       </trans-unit>
       <trans-unit id="ae485e8fbc07ac1e80399bff52d83817" resname="Edit Pub Channel">
         <source>Edit Pub Channel</source>
@@ -807,7 +807,7 @@
       </trans-unit>
       <trans-unit id="526d688f37a86d3c3f27d0c5016eb71d" resname="Reset">
         <source>Reset</source>
-        <target xml:lang="fr" state="needs-translation">Reset</target>
+        <target xml:lang="fr" state="translated">Réinitialiser</target>
       </trans-unit>
       <trans-unit id="eac43c6192e71b67210c7e4310d0f13b" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
@@ -831,7 +831,7 @@
       </trans-unit>
       <trans-unit id="bd908db5ccb07777ced8023dffc802f4" resname="Links">
         <source>Links</source>
-        <target xml:lang="fr" state="needs-translation">Links</target>
+        <target xml:lang="fr" state="translated">Liens</target>
       </trans-unit>
       <trans-unit id="3ad47dc0e9de6e0abf175f67e7cb8d9d" resname="Delete multimedia object">
         <source>Delete multimedia object</source>
@@ -903,7 +903,7 @@
       </trans-unit>
       <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
         <source>Save</source>
-        <target xml:lang="fr" state="needs-translation">Save</target>
+        <target xml:lang="fr" state="translated">Sauvegarder</target>
       </trans-unit>
       <trans-unit id="d08ccf52b4cdd08e41cfb99ec42e0b29" resname="Permissions">
         <source>Permissions</source>
@@ -919,7 +919,7 @@
       </trans-unit>
       <trans-unit id="7a1920d61156abc05a60135aefe8bc67" resname="Default">
         <source>Default</source>
-        <target xml:lang="fr" state="needs-translation">Default</target>
+        <target xml:lang="fr" state="translated">Par défaut</target>
       </trans-unit>
       <trans-unit id="5d113f2038d289f391614c39043629e8" resname="Scope">
         <source>Scope</source>
@@ -1007,7 +1007,7 @@
       </trans-unit>
       <trans-unit id="76ea0bebb3c22822b4f0dd9c9fd021c5" resname="create">
         <source>create</source>
-        <target xml:lang="fr" state="needs-translation">create</target>
+        <target xml:lang="fr" state="translated">créer</target>
       </trans-unit>
       <trans-unit id="869b263ea71b6772696b39c002822945" resname="a new entrance with the written name">
         <source>a new entrance with the written name</source>
@@ -1039,7 +1039,7 @@
       </trans-unit>
       <trans-unit id="551b723eafd6a31d444fcb2f5920fbd3" resname="INFO">
         <source>INFO</source>
-        <target xml:lang="fr" state="needs-translation">INFO</target>
+        <target xml:lang="fr" state="translated">INFOS</target>
       </trans-unit>
       <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
         <source>SERIES</source>
@@ -1095,11 +1095,11 @@
       </trans-unit>
       <trans-unit id="ec211f7c20af43e742bf2570c3cb84f9" resname="Add">
         <source>Add</source>
-        <target xml:lang="fr" state="needs-translation">Add</target>
+        <target xml:lang="fr" state="translated">Ajouter</target>
       </trans-unit>
       <trans-unit id="6b74c9611951bd925533b70e18599ad1" resname="Add a file">
         <source>Add a file</source>
-        <target xml:lang="fr" state="needs-translation">Add a file</target>
+        <target xml:lang="fr" state="translated">Ajouter un fichier</target>
       </trans-unit>
       <trans-unit id="c6172c3b2f539b1866f212c8b79e4936" resname="Select a file on first place. Thank you.">
         <source>Select a file on first place. Thank you.</source>
@@ -1147,19 +1147,19 @@
       </trans-unit>
       <trans-unit id="5fb1f955b45e38e31789286a1790398d" resname="ALL">
         <source>ALL</source>
-        <target xml:lang="fr" state="needs-translation">ALL</target>
+        <target xml:lang="fr" state="translated">TOUT</target>
       </trans-unit>
       <trans-unit id="9b9d8a976b42e0bd66381797644943d5" resname="Published">
         <source>Published</source>
-        <target xml:lang="fr" state="needs-translation">Published</target>
+        <target xml:lang="fr" state="translated">Publié</target>
       </trans-unit>
       <trans-unit id="4ecc0d90eec1cea3e9db96583a1bb9c2" resname="Blocked">
         <source>Blocked</source>
-        <target xml:lang="fr" state="needs-translation">Blocked</target>
+        <target xml:lang="fr" state="translated">Bloqué</target>
       </trans-unit>
       <trans-unit id="7acdf85c69cc3c5305456a293524386e" resname="Hidden">
         <source>Hidden</source>
-        <target xml:lang="fr" state="needs-translation">Hidden</target>
+        <target xml:lang="fr" state="translated">Caché</target>
       </trans-unit>
       <trans-unit id="98d3e521741790e0895166ca674c9ad8" resname="Published: is listed in the Series and can be played with published URL">
         <source>Published: is listed in the Series and can be played with published URL</source>
@@ -1175,7 +1175,7 @@
       </trans-unit>
       <trans-unit id="e0626222614bdee31951d84c64e5e9ff" resname="Select">
         <source>Select</source>
-        <target xml:lang="fr" state="needs-translation">Select</target>
+        <target xml:lang="fr" state="translated">Sélectionner</target>
       </trans-unit>
       <trans-unit id="3e47b75000b0924b6c9ba5759a7cf15d" resname="nothing">
         <source>nothing</source>
@@ -1183,7 +1183,7 @@
       </trans-unit>
       <trans-unit id="a181a603769c1f98ad927e7367c7aa51" resname="all">
         <source>all</source>
-        <target xml:lang="fr" state="needs-translation">all</target>
+        <target xml:lang="fr" state="translated">tout</target>
       </trans-unit>
       <trans-unit id="6f78058d9e836449f256d83bd46a2925" resname="Moodle Playlists">
         <source>Moodle Playlists</source>
@@ -1275,7 +1275,7 @@
       </trans-unit>
       <trans-unit id="4059b0251f66a18cb56f544728796875" resname="Info">
         <source>Info</source>
-        <target xml:lang="fr" state="needs-translation">Info</target>
+        <target xml:lang="fr" state="translated">Informations</target>
       </trans-unit>
       <trans-unit id="31fde7b05ac8952dacf4af8a704074ec" resname="Preview">
         <source>Preview</source>
@@ -1359,7 +1359,7 @@
       </trans-unit>
       <trans-unit id="52ef9633d88a7480b3a938ff9eaa2a25" resname="Others">
         <source>Others</source>
-        <target xml:lang="fr" state="needs-translation">Others</target>
+        <target xml:lang="fr" state="translated">Autres</target>
       </trans-unit>
       <trans-unit id="154f69b52fc414f40367eb43ff046724" resname="Announced">
         <source>Announced</source>
@@ -1371,11 +1371,11 @@
       </trans-unit>
       <trans-unit id="93cba07454f06a4a960172bbd6e2a435" resname="Yes">
         <source>Yes</source>
-        <target xml:lang="fr" state="needs-translation">Yes</target>
+        <target xml:lang="fr" state="translated">Oui</target>
       </trans-unit>
       <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
         <source>No</source>
-        <target xml:lang="fr" state="needs-translation">No</target>
+        <target xml:lang="fr" state="translated">Non</target>
       </trans-unit>
       <trans-unit id="db05535e84f43715a5315c58a3c56807" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
@@ -1479,7 +1479,7 @@
       </trans-unit>
       <trans-unit id="bff13b03e3e759a6dffcbfbf9abefb47" resname="Add banner">
         <source>Add banner</source>
-        <target xml:lang="fr" state="needs-translation">Add banner</target>
+        <target xml:lang="fr" state="translated">Ajouter une bannière</target>
       </trans-unit>
       <trans-unit id="3d27fefdc3ee4ae9360ee429c6c6ec10" resname="create new series type">
         <source>create new series type</source>
@@ -1583,7 +1583,7 @@
       </trans-unit>
       <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="fr" state="needs-translation">Profile</target>
+        <target xml:lang="fr" state="translated">Profil</target>
       </trans-unit>
       <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
         <source>Priority</source>
@@ -1659,11 +1659,11 @@
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6" resname="Created">
         <source>Created</source>
-        <target xml:lang="fr" state="needs-translation">Created</target>
+        <target xml:lang="fr" state="translated">Créé</target>
       </trans-unit>
       <trans-unit id="3bebb2f89180b03fa5ae736665f648d9" resname="started">
         <source>started</source>
-        <target xml:lang="fr" state="needs-translation">started</target>
+        <target xml:lang="fr" state="translated">commencé</target>
       </trans-unit>
       <trans-unit id="a5d7ceb2c59b8cee46c2953fec9abc19" resname="finished">
         <source>finished</source>
@@ -1679,11 +1679,11 @@
       </trans-unit>
       <trans-unit id="c0cc02c3b3d55abb7bfb49ddbb4866c8" resname="RETRY">
         <source>RETRY</source>
-        <target xml:lang="fr" state="needs-translation">RETRY</target>
+        <target xml:lang="fr" state="translated">RÉESSAYER</target>
       </trans-unit>
       <trans-unit id="32f68a60cef40faedbc6af20298c1a1e" resname="DELETE">
         <source>DELETE</source>
-        <target xml:lang="fr" state="needs-translation">DELETE</target>
+        <target xml:lang="fr" state="translated">SUPPRIMER</target>
       </trans-unit>
       <trans-unit id="371ab4ac98728d66b49d1a14ba726292" resname="Encoder Job info">
         <source>Encoder Job info</source>
@@ -1759,7 +1759,7 @@
       </trans-unit>
       <trans-unit id="367b31a3305562f20d1d0cf93ba10031" resname="GROUPS">
         <source>GROUPS</source>
-        <target xml:lang="fr" state="needs-translation">GROUPS</target>
+        <target xml:lang="fr" state="translated">GROUPES</target>
       </trans-unit>
       <trans-unit id="2c5386d53666ce6ea4a96cb562060012" resname="User current Groups">
         <source>User current Groups</source>
@@ -1767,7 +1767,7 @@
       </trans-unit>
       <trans-unit id="f6039d44b29456b20f8f373155ae4973" resname="Username">
         <source>Username</source>
-        <target xml:lang="fr" state="needs-translation">Username</target>
+        <target xml:lang="fr" state="translated">Nom d'utilisateur</target>
       </trans-unit>
       <trans-unit id="f5966f3e50619343ee8abf55c12c5848" resname="Permission Profile">
         <source>Permission Profile</source>
@@ -1775,11 +1775,11 @@
       </trans-unit>
       <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680" resname="All">
         <source>All</source>
-        <target xml:lang="fr" state="needs-translation">All</target>
+        <target xml:lang="fr" state="translated">Tout</target>
       </trans-unit>
       <trans-unit id="f9aae5fda8d810a29f12d1e61b4ab25f" resname="Users">
         <source>Users</source>
-        <target xml:lang="fr" state="needs-translation">Users</target>
+        <target xml:lang="fr" state="translated">Utilisateurs</target>
       </trans-unit>
       <trans-unit id="4c92a50023a9ba4c18040657fb6ff73a" resname="Promote to">
         <source>Promote to</source>
@@ -1787,7 +1787,7 @@
       </trans-unit>
       <trans-unit id="6eeaa66e2f8e6e7cd8629731e1262916" resname="Name and Surname">
         <source>Name and Surname</source>
-        <target xml:lang="fr" state="needs-translation">Name and Surname</target>
+        <target xml:lang="fr" state="translated">Nom et prénom</target>
       </trans-unit>
       <trans-unit id="d48d5ebc32be822ac641864a68faa905" resname="There are no users with those values.">
         <source>There are no users with those values.</source>
@@ -1843,7 +1843,7 @@
       </trans-unit>
       <trans-unit id="8f9bfe9d1345237cb3b2b205864da075" resname="User">
         <source>User</source>
-        <target xml:lang="fr" state="needs-translation">User</target>
+        <target xml:lang="fr" state="translated">Utilisateur</target>
       </trans-unit>
       <trans-unit id="e1d9719c4816cb12250cc51b94483dc2" resname="successfully deleted.">
         <source>successfully deleted.</source>
@@ -1947,7 +1947,7 @@
       </trans-unit>
       <trans-unit id="bfb6800020a06f5986570499d33f3ce5" resname="Playlist">
         <source>Playlist</source>
-        <target xml:lang="fr" state="needs-translation">Playlist</target>
+        <target xml:lang="fr" state="translated">Playlist</target>
       </trans-unit>
       <trans-unit id="563eb67796a6982d00a8ec3c376e611c" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
@@ -2007,7 +2007,7 @@
       </trans-unit>
       <trans-unit id="03937134cedab9078be39a77ee3a48a0" resname="Group">
         <source>Group</source>
-        <target xml:lang="fr" state="needs-translation">Group</target>
+        <target xml:lang="fr" state="translated">Groupe</target>
       </trans-unit>
       <trans-unit id="3103b8cd124a484278c75cbff56243c1" resname="Can not delete all users">
         <source>Can not delete all users</source>
@@ -2015,7 +2015,7 @@
       </trans-unit>
       <trans-unit id="729a51874fe901b092899e9e8b31c97a" resname="Are you sure?">
         <source>Are you sure?</source>
-        <target xml:lang="fr" state="needs-translation">Are you sure?</target>
+        <target xml:lang="fr" state="translated">Êtes-vous sûr ?</target>
       </trans-unit>
       <trans-unit id="41c07df10d923fdcf1e1da0e1bb35874" resname="Multimedia Object(s) successfully deleted.">
         <source>Multimedia Object(s) successfully deleted.</source>
@@ -2091,7 +2091,7 @@
       </trans-unit>
       <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
         <source>Tag</source>
-        <target xml:lang="fr" state="needs-translation">Tag</target>
+        <target xml:lang="fr" state="translated">Tag</target>
       </trans-unit>
       <trans-unit id="2608be85187f57ccbfc0c4358357d5ea" resname="ATTENTION: Are you sure you want to delete all User from this Group?">
         <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
@@ -2215,7 +2215,7 @@
       </trans-unit>
       <trans-unit id="452a7601dbc6f2c38aa89e68bda8b603" resname="Stats">
         <source>Stats</source>
-        <target xml:lang="fr" state="needs-translation">Stats</target>
+        <target xml:lang="fr" state="translated">Statistiques</target>
       </trans-unit>
       <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
@@ -2339,7 +2339,7 @@
       </trans-unit>
       <trans-unit id="867343577fa1f33caa632a19543bd252" resname="Keywords">
         <source>Keywords</source>
-        <target xml:lang="fr" state="needs-translation">Keywords</target>
+        <target xml:lang="fr" state="translated">Mots-clés</target>
       </trans-unit>
       <trans-unit id="6016a2b341113bf496b719905398ecd2" resname="Copyright">
         <source>Copyright</source>
@@ -2375,7 +2375,7 @@
       </trans-unit>
       <trans-unit id="4020d50ee12e4b5063fb4137dce9b739" resname="USERS">
         <source>USERS</source>
-        <target xml:lang="fr" state="needs-translation">USERS</target>
+        <target xml:lang="fr" state="translated">UTILISATEURS</target>
       </trans-unit>
       <trans-unit id="b3e5c110448bc59ded1173ef3c950612" resname="ADMIN MULTIMEDIA OBJECTS">
         <source>ADMIN MULTIMEDIA OBJECTS</source>
@@ -2479,7 +2479,7 @@
       </trans-unit>
       <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
         <source>Subtitle</source>
-        <target xml:lang="fr" state="needs-translation">Subtitle</target>
+        <target xml:lang="fr" state="translated">Sous-titre</target>
       </trans-unit>
       <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
         <source>Headline</source>
@@ -2615,7 +2615,7 @@
       </trans-unit>
       <trans-unit id="8c2857a9ad1d8f31659e35e904e20fa6" resname="Logo">
         <source>Logo</source>
-        <target xml:lang="fr" state="needs-translation">Logo</target>
+        <target xml:lang="fr" state="translated">Logo</target>
       </trans-unit>
       <trans-unit id="11fb779aa72be7f4e5152e1d41b3a186" resname="Filter Series">
         <source>Filter Series</source>
@@ -2627,7 +2627,7 @@
       </trans-unit>
       <trans-unit id="b61541208db7fa7dba42c85224405911" resname="Menu">
         <source>Menu</source>
-        <target xml:lang="fr" state="needs-translation">Menu</target>
+        <target xml:lang="fr" state="translated">Menu</target>
       </trans-unit>
       <trans-unit id="d196df35ab21fefc9490c8f22c4239c6" resname="Select the number of series to display per page.">
         <source>Select the number of series to display per page.</source>
@@ -2679,7 +2679,7 @@
       </trans-unit>
       <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
         <source>Edit</source>
-        <target xml:lang="fr" state="needs-translation">Edit</target>
+        <target xml:lang="fr" state="translated">Éditer</target>
       </trans-unit>
       <trans-unit id="3b06b8327ad154f97731a498c54e969c" resname="Filter Roles">
         <source>Filter Roles</source>
@@ -2699,7 +2699,7 @@
       </trans-unit>
       <trans-unit id="344a7f427fb765610ef96eb7bce95257" resname="Editor">
         <source>Editor</source>
-        <target xml:lang="fr" state="needs-translation">Editor</target>
+        <target xml:lang="fr" state="translated">Éditeur</target>
       </trans-unit>
       <trans-unit id="cebc3c89f89b41e6d438bf6da6f7b42d" resname="Relations list">
         <source>Relations list</source>
@@ -2723,7 +2723,7 @@
       </trans-unit>
       <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
         <source>Delete</source>
-        <target xml:lang="fr" state="needs-translation">Delete</target>
+        <target xml:lang="fr" state="translated">Supprimer</target>
       </trans-unit>
       <trans-unit id="e3dd019a2f171ebdfc167be072e0d752" resname="Submit generate magic URL">
         <source>Submit generate magic URL</source>
@@ -2759,7 +2759,7 @@
       </trans-unit>
       <trans-unit id="2491bc9c7d8731e1ae33124093bc7026" resname="Twitter">
         <source>Twitter</source>
-        <target xml:lang="fr" state="needs-translation">Twitter</target>
+        <target xml:lang="fr" state="translated">Twitter</target>
       </trans-unit>
       <trans-unit id="247902875d3f6e09c88fba1ed61da99a" resname="New event session">
         <source>New event session</source>
@@ -2767,7 +2767,7 @@
       </trans-unit>
       <trans-unit id="a517747c3d12f99244ae598910d979c5" resname="Author">
         <source>Author</source>
-        <target xml:lang="fr" state="needs-translation">Author</target>
+        <target xml:lang="fr" state="translated">Auteur</target>
       </trans-unit>
       <trans-unit id="a6ad87aadc206f6491720e309821904a" resname="Producer">
         <source>Producer</source>
@@ -2779,15 +2779,15 @@
       </trans-unit>
       <trans-unit id="fff0d600f8a0b5e19e88bfb821dd1157" resname="Images">
         <source>Images</source>
-        <target xml:lang="fr" state="needs-translation">Images</target>
+        <target xml:lang="fr" state="translated">Images</target>
       </trans-unit>
       <trans-unit id="bbaff12800505b22a853e8b7f4eb6a22" resname="Contact">
         <source>Contact</source>
-        <target xml:lang="fr" state="needs-translation">Contact</target>
+        <target xml:lang="fr" state="translated">Contact</target>
       </trans-unit>
       <trans-unit id="4623202d70bed74448f3c0ea9b6daa19" resname="Event successfully updated.">
         <source>Event successfully updated.</source>
-        <target xml:lang="fr" state="needs-translation">Event successfully updated.</target>
+        <target xml:lang="fr" state="translated">Événement mis à jour avec succès.</target>
       </trans-unit>
       <trans-unit id="360c27f740233cbea8da5fda1b050aaf" resname="Select an&#10;                                action...">
         <source>Select an
@@ -2853,11 +2853,11 @@
       </trans-unit>
       <trans-unit id="b0c372e53a26500185c7045c95972c32" resname="Clone event">
         <source>Clone event</source>
-        <target xml:lang="fr" state="needs-translation">Clone event</target>
+        <target xml:lang="fr" state="translated">Dupliquer l'évènement</target>
       </trans-unit>
       <trans-unit id="da8f9efed7257d1d1a2d0e7e145449c1" resname="Delete event">
         <source>Delete event</source>
-        <target xml:lang="fr" state="needs-translation">Delete event</target>
+        <target xml:lang="fr" state="translated">Supprimer l'événement</target>
       </trans-unit>
       <trans-unit id="eeb694833fc48697d59e1dd2fe3a0547" resname="Delete event and series">
         <source>Delete event and series</source>
@@ -2975,7 +2975,7 @@
       </trans-unit>
       <trans-unit id="516b10a278973a17f07da3f0c016af84" resname="Delete User">
         <source>Delete User</source>
-        <target xml:lang="fr" state="needs-translation">Delete User</target>
+        <target xml:lang="fr" state="translated">Supprimer l'utilisateur</target>
       </trans-unit>
       <trans-unit id="843e4ccf35d336af3bff5bdd2b6c4eec" resname="Delete role">
         <source>Delete role</source>
@@ -3073,7 +3073,7 @@
       </trans-unit>
       <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
         <source>Send</source>
-        <target xml:lang="fr" state="needs-translation">Send</target>
+        <target xml:lang="fr" state="translated">Envoyer</target>
       </trans-unit>
       <trans-unit id="560eafaadc3b4415c0db8c000ae2db1b" resname="Advanced search form">
         <source>Advanced search form</source>
@@ -3081,7 +3081,7 @@
       </trans-unit>
       <trans-unit id="735f7bed9808abe3b3c6bb67b9634a31" resname="Publication date">
         <source>Publication date</source>
-        <target xml:lang="fr" state="needs-translation">Publication date</target>
+        <target xml:lang="fr" state="translated">Date de publication</target>
       </trans-unit>
       <trans-unit id="fed711884ae4b45839ecd6ef36ae02e6" resname="Recording date">
         <source>Recording date</source>
@@ -3093,7 +3093,7 @@
       </trans-unit>
       <trans-unit id="248336101b461380a4b2391a7625493d" resname="Saved">
         <source>Saved</source>
-        <target xml:lang="fr" state="needs-translation">Saved</target>
+        <target xml:lang="fr" state="translated">Sauvegardé</target>
       </trans-unit>
       <trans-unit id="91563b044939df33670bd362715e334e" resname="Genre">
         <source>Genre</source>
@@ -3101,7 +3101,7 @@
       </trans-unit>
       <trans-unit id="9b6545e4cea9b4ad4979d41bb9170e2b" resname="Advanced">
         <source>Advanced</source>
-        <target xml:lang="fr" state="needs-translation">Advanced</target>
+        <target xml:lang="fr" state="translated">Avancé</target>
       </trans-unit>
       <trans-unit id="14c8ae7abbc2945dbfdb555da6627202" resname="UNESCO catalogue">
         <source>UNESCO catalogue</source>
@@ -3157,7 +3157,7 @@
       </trans-unit>
       <trans-unit id="d5d3db1765287eef77d7927cc956f50a" resname="title">
         <source>title</source>
-        <target xml:lang="fr" state="needs-translation">title</target>
+        <target xml:lang="fr" state="translated">titre</target>
       </trans-unit>
       <trans-unit id="cfdc7ab65ff04607ae3c325a29d0dc7d" resname="WebTV">
         <source>WebTV</source>
@@ -3189,7 +3189,7 @@
       </trans-unit>
       <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
         <source>Password</source>
-        <target xml:lang="fr" state="needs-translation">Password</target>
+        <target xml:lang="fr" state="translated">Mot de passe</target>
       </trans-unit>
       <trans-unit id="282df8d32cbd548eb9320674cfc2afd1" resname="Live management">
         <source>Live management</source>
@@ -3225,7 +3225,7 @@
       </trans-unit>
       <trans-unit id="1f0e9c979b965d24aa3c2c4b832c3ba1" resname="Filter by">
         <source>Filter by</source>
-        <target xml:lang="fr" state="needs-translation">Filter by</target>
+        <target xml:lang="fr" state="translated">Filtrer par</target>
       </trans-unit>
       <trans-unit id="0a5845a6f045902cf47206de7ea14027" resname="Show video on WebTV">
         <source>Show video on WebTV</source>
@@ -3242,6 +3242,66 @@
       <trans-unit id="dc7e360bc9ce52516364423a15a3306e" resname="Session must start before ends">
         <source>Session must start before ends</source>
         <target xml:lang="fr" state="needs-translation">Session must start before ends</target>
+      </trans-unit>
+      <trans-unit id="a33e4cfc99ad017b0c06278054108189" resname="Modify broadcast profile of videos&#10;            template">
+        <source>Modify broadcast profile of videos
+            template</source>
+        <target xml:lang="fr" state="needs-translation">Modify broadcast profile of videos
+            template</target>
+      </trans-unit>
+      <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717" resname="Modify broadcast profile of live&#10;                event">
+        <source>Modify broadcast profile of live
+                event</source>
+        <target xml:lang="fr" state="needs-translation">Modify broadcast profile of live
+                event</target>
+      </trans-unit>
+      <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031" resname="Modify broadcast profile of multimedia&#10;                object">
+        <source>Modify broadcast profile of multimedia
+                object</source>
+        <target xml:lang="fr" state="needs-translation">Modify broadcast profile of multimedia
+                object</target>
+      </trans-unit>
+      <trans-unit id="f4295a80d088167a35cd118ceb2d311e" resname="Delete error. Live channel channel is associated to live event.">
+        <source>Delete error. Live channel channel is associated to live event.</source>
+        <target xml:lang="fr" state="needs-translation">Delete error. Live channel channel is associated to live event.</target>
+      </trans-unit>
+      <trans-unit id="09e9ac9c330b57bd31a058d19dcccc50" resname="No downloadable">
+        <source>No downloadable</source>
+        <target xml:lang="fr" state="needs-translation">No downloadable</target>
+      </trans-unit>
+      <trans-unit id="ff4c65a71c085467102db18600f14c76" resname="Choose style">
+        <source>Choose style</source>
+        <target xml:lang="fr" state="needs-translation">Choose style</target>
+      </trans-unit>
+      <trans-unit id="9e0f0101465e64cf2675c6341d67a2f0" resname="There aren't defined styles">
+        <source>There aren't defined styles</source>
+        <target xml:lang="fr" state="needs-translation">There aren't defined styles</target>
+      </trans-unit>
+      <trans-unit id="1d411b8de8bf1cccb035a151e744bf57" resname="Style created ERROR">
+        <source>Style created ERROR</source>
+        <target xml:lang="fr" state="needs-translation">Style created ERROR</target>
+      </trans-unit>
+      <trans-unit id="4fef6518049cd4e7d9ee1d6d84464b69" resname="Style created OK">
+        <source>Style created OK</source>
+        <target xml:lang="fr" state="needs-translation">Style created OK</target>
+      </trans-unit>
+      <trans-unit id="20ab190f1bf563c580f21b523d24d4ab" resname="Style edited ERROR">
+        <source>Style edited ERROR</source>
+        <target xml:lang="fr" state="needs-translation">Style edited ERROR</target>
+      </trans-unit>
+      <trans-unit id="4610ae1edd1460a6022ae2c5d7e78819" resname="Live event">
+        <source>Live event</source>
+        <target xml:lang="fr" state="needs-translation">Live event</target>
+      </trans-unit>
+      <trans-unit id="d378c2c63c90e4a8f19c034551167d10" resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
+        <source>Add the name of the series you want to use.
+            In case this series already exists in the database, a pull-down list will be shown,
+            where you can select it and use it. If it doesn't exist in the database,
+            create a new entrance with the written name.</source>
+        <target xml:lang="fr" state="needs-translation">Add the name of the series you want to use.
+            In case this series already exists in the database, a pull-down list will be shown,
+            where you can select it and use it. If it doesn't exist in the database,
+            create a new entrance with the written name.</target>
       </trans-unit>
     </body>
   </file>

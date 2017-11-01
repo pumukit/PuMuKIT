@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="bb1ca97ec761fc37101737ba0aa2e7c5" resname="ERROR">
         <source>ERROR</source>
-        <target xml:lang="fr" state="needs-translation">ERROR</target>
+        <target xml:lang="fr" state="translated">ERREUR</target>
       </trans-unit>
       <trans-unit id="a11b072c3d08c062a300f31d69537da5" resname="Execute on the server">
         <source>Execute on the server</source>
@@ -19,23 +19,23 @@
       </trans-unit>
       <trans-unit id="567904efe9e64d9faf3e41ef402cb568" resname="where">
         <source>where</source>
-        <target xml:lang="fr" state="needs-translation">where</target>
+        <target xml:lang="fr" state="translated">où</target>
       </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
         <source>Search</source>
-        <target xml:lang="fr" state="needs-translation">Search</target>
+        <target xml:lang="fr" state="translated">Rechercher</target>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
         <source>Name</source>
-        <target xml:lang="fr" state="needs-translation">Name</target>
+        <target xml:lang="fr" state="translated">Nom</target>
       </trans-unit>
       <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
         <source>reset</source>
-        <target xml:lang="fr" state="needs-translation">reset</target>
+        <target xml:lang="fr" state="translated">réinitialiser</target>
       </trans-unit>
       <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
         <source>filter</source>
-        <target xml:lang="fr" state="needs-translation">filter</target>
+        <target xml:lang="fr" state="translated">filtrer</target>
       </trans-unit>
       <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
         <source>Img</source>
@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="fr" state="needs-translation">Date</target>
+        <target xml:lang="fr" state="translated">Date</target>
       </trans-unit>
       <trans-unit id="984c6990081d06520196629b3ce40e54" resname="There are no mediapackages with those values.">
         <source>There are no mediapackages with those values.</source>
@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="de3c731be5633838089a07179d301d7b" resname="Play">
         <source>Play</source>
-        <target xml:lang="fr" state="needs-translation">Play</target>
+        <target xml:lang="fr" state="translated">Lecture</target>
       </trans-unit>
       <trans-unit id="ad10bb5ab7a1c1883447a5dda931bb47" resname="View on Pumukit">
         <source>View on Pumukit</source>
@@ -75,11 +75,11 @@
       </trans-unit>
       <trans-unit id="858a2b552953bc182248fe9374646398" resname="Imported">
         <source>Imported</source>
-        <target xml:lang="fr" state="needs-translation">Imported</target>
+        <target xml:lang="fr" state="translated">Importé</target>
       </trans-unit>
       <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import">
         <source>Import</source>
-        <target xml:lang="fr" state="needs-translation">Import</target>
+        <target xml:lang="fr" state="translated">Importer</target>
       </trans-unit>
       <trans-unit id="98b21d345c906eb9ab72133821217a43" resname="Import inverted">
         <source>Import inverted</source>
@@ -87,7 +87,7 @@
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="fr" state="needs-translation">Cancel</target>
+        <target xml:lang="fr" state="translated">Annuler</target>
       </trans-unit>
       <trans-unit id="63ca19d0f7bd43783e79c5ff2e2a7b4a" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
         <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
@@ -95,7 +95,7 @@
       </trans-unit>
       <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
         <source>Cancel current search</source>
-        <target xml:lang="fr" state="needs-translation">Cancel current search</target>
+        <target xml:lang="fr" state="translated">Annuler la recherche en cours</target>
       </trans-unit>
       <trans-unit id="036934cf9842451c835a9981a067d0c3" resname="Cancel search">
         <source>Cancel search</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
         <source>OK</source>
-        <target xml:lang="fr" state="needs-translation">OK</target>
+        <target xml:lang="fr" state="translated">OK</target>
       </trans-unit>
       <trans-unit id="a0a7b04286793b4b5812c07b4ec10475" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>

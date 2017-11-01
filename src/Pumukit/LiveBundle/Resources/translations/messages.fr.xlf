@@ -15,39 +15,39 @@
       </trans-unit>
       <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
         <source>EVENT</source>
-        <target xml:lang="fr" state="needs-translation">EVENT</target>
+        <target xml:lang="fr" state="translated">ÉVÉNEMENT</target>
       </trans-unit>
       <trans-unit id="8c756b7e3daff6db3808a377b05a148f" resname="PLACE">
         <source>PLACE</source>
-        <target xml:lang="fr" state="needs-translation">PLACE</target>
+        <target xml:lang="fr" state="translated">LIEU</target>
       </trans-unit>
       <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
         <source>DATE</source>
-        <target xml:lang="fr" state="needs-translation">DATE</target>
+        <target xml:lang="fr" state="translated">DATE</target>
       </trans-unit>
       <trans-unit id="346ff32eaa3c09983fb2ec057816d352" resname="TIME">
         <source>TIME</source>
-        <target xml:lang="fr" state="needs-translation">TIME</target>
+        <target xml:lang="fr" state="translated">HEURE</target>
       </trans-unit>
       <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
         <source>No title</source>
-        <target xml:lang="fr" state="needs-translation">No title</target>
+        <target xml:lang="fr" state="translated">Sans titre</target>
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="fr" state="needs-translation">Event</target>
+        <target xml:lang="fr" state="translated">Événement</target>
       </trans-unit>
       <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
         <source>Place</source>
-        <target xml:lang="fr" state="needs-translation">Place</target>
+        <target xml:lang="fr" state="translated">Lieu</target>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
         <source>Date</source>
-        <target xml:lang="fr" state="needs-translation">Date</target>
+        <target xml:lang="fr" state="translated">Date</target>
       </trans-unit>
       <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
         <source>Time</source>
-        <target xml:lang="fr" state="needs-translation">Time</target>
+        <target xml:lang="fr" state="translated">Heure</target>
       </trans-unit>
       <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
@@ -63,11 +63,11 @@
       </trans-unit>
       <trans-unit id="d56cc3fe0db39a01db08f43f90eef01d" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target xml:lang="fr" state="needs-translation">The event has not been held yet</target>
+        <target xml:lang="fr" state="translated">L'événement n'a pas encore commencé</target>
       </trans-unit>
       <trans-unit id="6cb2e290e1fbd2f5e3fdedb555b3ae69" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target xml:lang="fr" state="needs-translation">The event has already been held</target>
+        <target xml:lang="fr" state="translated">L'évènement a déjà eu lieu</target>
       </trans-unit>
     </body>
   </file>
