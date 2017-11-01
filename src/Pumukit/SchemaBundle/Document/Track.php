@@ -413,8 +413,10 @@ class Track extends Element
      */
     public function getResolution()
     {
-        return array('width' => $this->width,
-                     'height' => $this->height, );
+        return array(
+            'width' => $this->width,
+            'height' => $this->height,
+        );
     }
 
     /**

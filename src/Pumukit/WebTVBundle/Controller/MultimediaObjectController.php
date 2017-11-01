@@ -135,8 +135,9 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
 
-        return array('series' => $series,
-                     'multimediaObjects' => $multimediaObjects,
+        return array(
+            'series' => $series,
+            'multimediaObjects' => $multimediaObjects,
         );
     }
 

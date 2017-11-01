@@ -2131,7 +2131,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
         if ($tagCodsList) {
-            $criteria['tags'] = array('$in' => $tagCodsList);
+            $criteria['tags.cod'] = array('$in' => $tagCodsList);
         }
 
         $pipeline = array(

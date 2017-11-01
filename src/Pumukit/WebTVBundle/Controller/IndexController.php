@@ -51,8 +51,9 @@ class IndexController extends Controller implements WebTVController
             $multimediaObjectsSortedByNumview = $repository->findStandardBy(array(), array('numview' => -1), $limit, 0);
         }
 
-        return array('multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview,
-                     'show_last_month' => $showLastMonth,
+        return array(
+            'multimediaObjectsSortedByNumview' => $multimediaObjectsSortedByNumview,
+            'show_last_month' => $showLastMonth,
         );
     }
 

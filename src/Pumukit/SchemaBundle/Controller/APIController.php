@@ -31,10 +31,12 @@ class APIController extends Controller implements NewAdminController
                                       ->getQuery()
                                       ->execute();
 
-        $counts = array('series' => $totalSeries,
-                        'mms' => $totalMmobjs,
-                        'hours' => $totalHours,
-                        'live_channels' => $totalLiveChannels, );
+        $counts = array(
+            'series' => $totalSeries,
+            'mms' => $totalMmobjs,
+            'hours' => $totalHours,
+            'live_channels' => $totalLiveChannels,
+        );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
@@ -84,12 +86,14 @@ class APIController extends Controller implements NewAdminController
         $total = $qb->count()->getQuery()->execute();
         $mmobjs = $qb_mmobjs->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total,
-                        'limit' => $limit,
-                        'page' => $page,
-                        'criteria' => $criteria,
-                        'sort' => $sort,
-                        'mmobjs' => $mmobjs, );
+        $counts = array(
+            'total' => $total,
+            'limit' => $limit,
+            'page' => $page,
+            'criteria' => $criteria,
+            'sort' => $sort,
+            'mmobjs' => $mmobjs,
+        );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
@@ -134,12 +138,14 @@ class APIController extends Controller implements NewAdminController
         $total = $qb->count()->getQuery()->execute();
         $series = $qb_series->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total,
-                        'limit' => $limit,
-                        'page' => $page,
-                        'criteria' => $criteria,
-                        'sort' => $sort,
-                        'series' => $series, );
+        $counts = array(
+            'total' => $total,
+            'limit' => $limit,
+            'page' => $page,
+            'criteria' => $criteria,
+            'sort' => $sort,
+            'series' => $series,
+        );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
@@ -179,12 +185,14 @@ class APIController extends Controller implements NewAdminController
         $total = $qb->count()->getQuery()->execute();
         $live = $qb_live->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total,
-                        'limit' => $limit,
-                        'criteria' => $criteria,
-                        'sort' => $sort,
-                        'live' => $live, );
-
+        $counts = array(
+            'total' => $total,
+            'limit' => $limit,
+            'criteria' => $criteria,
+            'sort' => $sort,
+            'live' => $live,
+        );
+        
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
         return new Response($data);
