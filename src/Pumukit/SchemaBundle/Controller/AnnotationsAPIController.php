@@ -74,7 +74,7 @@ class AnnotationsAPIController extends Controller
                 'offset' => $offset,
                 'total' => $total,
                 'annotation' => $annotations,
-            )
+            ),
         );
 
         $response = $serializer->serialize($data, $request->getRequestFormat());
@@ -102,7 +102,7 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            )
+            ),
         );
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
@@ -159,7 +159,7 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            )
+            ),
         );
         $response = $serializer->serialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
@@ -196,7 +196,7 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            )
+            ),
         );
         $response = $serializer->serialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());

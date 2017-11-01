@@ -96,7 +96,7 @@ class StatsService
 
         $pipeline[] = array('$match' => array_merge(
             $matchExtra,
-            array($dateName => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate, ))),
+            array($dateName => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
         );
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$'.$dateName);
         $pipeline[] = array('$project' => array('date' => $mongoProjectDate, 'duration' => '$duration'));
