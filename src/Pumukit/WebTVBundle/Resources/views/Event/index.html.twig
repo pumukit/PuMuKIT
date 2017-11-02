@@ -4,7 +4,7 @@
 
     <h1 class="titulo_widget">{% trans %}Events{% endtrans %}</h1>
 
-    {% if eventsNow is empty and eventsToday is empty %}
+    {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
         <div class="row">
             <div class="col-xs-12" style="margin-top:20px;">
                 <p>
