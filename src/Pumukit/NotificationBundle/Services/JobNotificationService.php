@@ -86,7 +86,7 @@ class JobNotificationService
             }
 
             $track = $event->getTrack();
-            if (!$error and ($track->isMaster() && !$track->containsTag('display'))) {
+            if (!$error && ($track->isMaster() && !$track->containsTag('display'))) {
                 return;
             }
 
