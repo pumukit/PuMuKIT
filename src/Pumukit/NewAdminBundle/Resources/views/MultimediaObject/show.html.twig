@@ -1,73 +1,75 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% if mm is defined %}
+    {% if mm is defined %}
 
-<p>
-  {% trans %}Is part of {% endtrans %}: <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{mm.series.title}} </a>.
-</p>
-
-<div>
-  {% set html5_track = mm.getTrackWithTag('html5') %}
-  {% if html5_track and not active_editor %}
-    <video id="player" src="{{ track_url(html5_track)  }}" controls="" style="background: black; width: 100%;">
-    </video>
-  {% else %}
-    <div class="well" style="padding: 3px;">
-      <div class="embed-responsive embed-responsive-16by9">
-        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{mm.id}} preview" style="width: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
-      </div>
-    </div>
-  {% endif %}
-</div>
-
-<div>
-  {% for mtag in mm.tags if mtag.level == 2  %}
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title-preview panel-title">Tags {{mtag.title}} </h3>
-    </div>
-    <div class="panel-body-preview panel-body">
-      {% for tag in mm.tags if tag.isDescendantOf(mtag) %}
-         <span class="label label-default">{{ tag.title }}</span>
-      {% else %}
-         <em>{% trans %}None{% endtrans %}</em>
-      {% endfor %}
-    </div>
-  </div>
-  {% else %}
-    {% trans %}No tags{% endtrans %}.
-  {% endfor %}
-</div>
-
-
-<div>
-<ul>
-{% for role in roles if role.getDisplay() %}
-  {% set actors = mm.getPeopleByRole(role, true) %}
-  {% if actors|length != 0 %}
-  <li>{{ role.name }}</li>
-  <ul>
-    {% for act in actors %}
-      <li>
-        {{ role.getText() }}
-        {% if act.getWeb() is not empty %}
-          <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
-        {% else %}
-          {{ act.getHName() }}
+        {% if not mm.series.ishide %}
+            <p>
+                {% trans %}Is part of {% endtrans %}:
+                <a target="_black" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
+            </p>
         {% endif %}
-        <small>{{ act.getInfo() }}</small>
-      </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-{% endfor %}
-</ul>
-</div>
 
+        <div>
+            {% set html5_track = mm.getTrackWithTag('html5') %}
+            {% if html5_track and not active_editor %}
+                <video id="player" src="{{ track_url(html5_track) }}" controls="" style="background: black; width: 100%;">
+                </video>
+            {% else %}
+                <div class="well" style="padding: 3px;">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img src="{{ mm|first_url_pic(false, false) }}" class="img-responsive pic-{{ mm.id }} preview" style="width: 100%" alt="{% trans %}Thumbnail{% endtrans %}">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div>
+            {% for mtag in mm.tags if mtag.level == 2 %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title-preview panel-title">Tags {{ mtag.title }} </h3>
+                    </div>
+                    <div class="panel-body-preview panel-body">
+                        {% for tag in mm.tags if tag.isDescendantOf(mtag) %}
+                            <span class="label label-default">{{ tag.title }}</span>
+                        {% else %}
+                            <em>{% trans %}None{% endtrans %}</em>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% trans %}No tags{% endtrans %}.
+            {% endfor %}
+        </div>
+
+        <div>
+            <ul>
+                {% for role in roles if role.getDisplay() %}
+                    {% set actors = mm.getPeopleByRole(role, true) %}
+                    {% if actors|length != 0 %}
+                        <li>{{ role.name }}</li>
+                        <ul>
+                            {% for act in actors %}
+                                <li>
+                                    {{ role.getText() }}
+                                    {% if act.getWeb() is not empty %}
+                                        <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+                                    {% else %}
+                                        {{ act.getHName() }}
+                                    {% endif %}
+                                    <small>{{ act.getInfo() }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+    {% else %}
+        <p>
+            {% trans %}Select any multimedia object.{% endtrans %}
+        </p>
+    {% endif %}
 {% else %}
-<p>
-  {% trans %}Select any multimedia object.{% endtrans %}
-</p>
-{% endif %}
-{% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
 {% endif %}
