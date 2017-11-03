@@ -453,8 +453,14 @@ class PersonService
      */
     private function createFromUser(User $user)
     {
-        if ($person = $this->repoPerson->findOneByEmail($user->getEmail())) {
-            return $person;
+        if ($user->getEmail()) {
+            if ($person = $this->repoPerson->findOneByEmail($user->getEmail())) {
+                return $person;
+            }
+        } else {
+            if ($person = $this->repoPerson->findOneByEmail('')) {
+                return $person;
+            }
         }
 
         $person = new Person();
