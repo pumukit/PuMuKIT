@@ -4164,6 +4164,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="eu" state="needs-translation">Select the number of multimedia objects to display per page.</target>
       </trans-unit>
+      <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target>Txantiloiak editatu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
