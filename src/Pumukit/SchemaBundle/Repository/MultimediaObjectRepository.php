@@ -1680,17 +1680,22 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
-        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
-        if ($tagCodsList) {
-            $criteria['tags.cod'] = array('$in' => $tagCodsList);
-        }
-
         $pipeline = array(
-            array('$match' => $criteria),
             array('$project' => array('_id' => '$tags.cod')),
             array('$unwind' => '$_id'),
             array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
         );
+
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
+        if ($criteria) {
+            $precriteria = array('$match' => $criteria);
+            array_unshift($pipeline, $precriteria);
+        }
+
+        if ($tagCodsList) {
+            $precriteria = array('$match' => array('tags.cod' => array('$in' => $tagCodsList)));
+            array_unshift($pipeline, $precriteria);
+        }
 
         $aggregation = $multimediaObjectsColl->aggregate($pipeline);
         $mmobjCount = array();
