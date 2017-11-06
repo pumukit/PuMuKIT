@@ -26,7 +26,7 @@
                         <span class="mdi-file-folder" draggable="false"></span>
                         <span draggable="false">
                             {{ children.getTitle(app.request.getLocale()) }}
-                            [<span id="count_tag_{{ children.getCod() }}">{{ children.getNumberMultimediaObjects() }}</span>]
+                            {% if is_granted('ROLE_SCOPE_GLOBAL') %}[{% endif %}<span id="count_tag_{{ children.getCod() }}" {% if not is_granted('ROLE_SCOPE_GLOBAL') %}style="display:none"{% endif %}>{{ children.getNumberMultimediaObjects() }}</span>{% if is_granted('ROLE_SCOPE_GLOBAL') %}]{% endif %}
                         </span>
                     </a>
                 </li>
