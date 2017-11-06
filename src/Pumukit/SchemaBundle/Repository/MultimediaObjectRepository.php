@@ -122,6 +122,28 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Create query builder of
+     * find multimedia objects by person id
+     * with given role.
+     *
+     * @param string $personId
+     * @param string $roleCod
+     *
+     * @return ArrayCollection
+     */
+    public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod));
+
+        $qb = $this->addSortToQueryBuilder($qb, $sort);
+
+        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
+
+        return $qb;
+    }
+
+    /**
      * Find multimedia objects by person id
      * with given role.
      *
@@ -130,10 +152,9 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findByPersonIdWithRoleCod($personId, $roleCod)
+    public function findByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod));
+        $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0);
 
         return $qb->getQuery()->execute();
     }
@@ -2129,17 +2150,22 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
-        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
-        if ($tagCodsList) {
-            $criteria['tags.cod'] = array('$in' => $tagCodsList);
-        }
-
         $pipeline = array(
-            array('$match' => $criteria),
             array('$project' => array('_id' => '$tags.cod')),
             array('$unwind' => '$_id'),
             array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
         );
+
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
+        if ($criteria) {
+            $precriteria = array('$match' => $criteria);
+            array_unshift($pipeline, $precriteria);
+        }
+
+        if ($tagCodsList) {
+            $precriteria = array('$match' => array('tags.cod' => array('$in' => $tagCodsList)));
+            array_unshift($pipeline, $precriteria);
+        }
 
         $aggregation = $multimediaObjectsColl->aggregate($pipeline);
         $mmobjCount = array();

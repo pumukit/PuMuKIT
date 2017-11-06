@@ -205,6 +205,23 @@ class SeriesRepository extends DocumentRepository
     }
 
     /**
+     * Create builder to Find series
+     * by person id and role cod.
+     *
+     * @param string $personId
+     * @param string $roleCod
+     *
+     * @return ArrayCollection
+     */
+    public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    {
+        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
+
+        return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
+    }
+
+    /**
      * Find series by person id and role cod.
      *
      * @param string $personId
@@ -212,12 +229,11 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findByPersonIdAndRoleCod($personId, $roleCod)
+    public function findByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
+        $qb = $this->createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort, $limit, $page);
 
-        return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->getQuery()->execute();
+        return $qb->getQuery()->execute();
     }
 
     /**
