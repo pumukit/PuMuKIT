@@ -97,7 +97,11 @@ class DefaultController extends Controller
 
                 return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
             } elseif (count($multimediaObjects) > 1) {
-                return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
+                if (!$series->isHide()) {
+                    return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
+                } else {
+                    return $this->iframeEventAction($multimediaObject, $request, false);
+                }
             } else {
                 return $this->iframeEventAction($multimediaObject, $request, false);
             }

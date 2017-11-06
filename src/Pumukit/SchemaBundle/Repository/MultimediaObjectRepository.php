@@ -1481,147 +1481,6 @@ class MultimediaObjectRepository extends DocumentRepository
         return $groupsIds;
     }
 
-    public function findEventsGroupBy()
-    {
-        $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-
-        $pipeline = array();
-
-        $pipeline[] = array(
-            '$match' => array(
-                'islive' => true,
-                'embeddedEvent.display' => true,
-                'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-            ),
-        );
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$_id',
-                'event' => '$embeddedEvent',
-                'islive' => true,
-                'sessions' => '$embeddedEvent.embeddedEventSession',
-                'social' => '$embeddedSocial',
-                'pics' => '$pics',
-                'materials' => '$materials',
-                'seriesTitle' => '$seriesTitle',
-            ),
-        );
-
-        $pipeline[] = array('$unwind' => '$sessions');
-
-        $pipeline[] = array('$match' => array('sessions.start' => array('$exists' => true)));
-
-        $today = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$multimediaObjectId',
-                'event' => '$event',
-                'islive' => '$islive',
-                'sessions' => '$sessions',
-                'social' => '$social',
-                'pics' => '$pics',
-                'materials' => '$materials',
-                'seriesTitle' => '$seriesTitle',
-                'session' => '$sessions',
-                'groupBy' => array(
-                    '$cond' => array(
-                        'if' => array(
-                            '$and' => array(
-                                array(
-                                    '$lte' => array(
-                                        new \MongoDate(),
-                                        array(
-                                            '$add' => array(
-                                                '$sessions.start',
-                                                array(
-                                                    '$multiply' => array(
-                                                        '$sessions.duration',
-                                                        1000,
-                                                    ),
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                                array(
-                                    '$gte' => array(
-                                        new \MongoDate(),
-                                        '$sessions.start',
-                                    ),
-                                ),
-                            ),
-                        ),
-                        'then' => 'now',
-                        'else' => array(
-                            '$cond' => array(
-                                'if' => array(
-                                    '$and' => array(
-                                        array(
-                                            '$gte' => array(
-                                                '$sessions.start',
-                                                new \MongoDate(),
-                                            ),
-                                        ),
-                                        array(
-                                            '$lte' => array(
-                                                '$sessions.start',
-                                                new \MongoDate($today),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                                'then' => 'today',
-                                'else' => array(
-                                    '$cond' => array(
-                                        'if' => array(
-                                            '$lte' => array(
-                                                new \MongoDate(),
-                                                array(
-                                                    '$add' => array(
-                                                        '$sessions.start',
-                                                        array(
-                                                            '$multiply' => array(
-                                                                '$sessions.duration',
-                                                                1000,
-                                                            ),
-                                                        ),
-                                                    ),
-                                                ),
-                                            ),
-                                        ),
-                                        'then' => 'future',
-                                        'else' => 'past',
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
-
-        $pipeline[] = array(
-            '$group' => array(
-                '_id' => '$groupBy',
-                'data' => array(
-                    '$addToSet' => array(
-                        'event' => '$event',
-                        'multimediaObjectId' => '$multimediaObjectId',
-                        'social' => '$social',
-                        'pics' => '$pics',
-                        'material' => '$material',
-                        'session' => '$sessions',
-                    ),
-                ),
-            ),
-        );
-
-        return $collection->aggregate($pipeline)->toArray();
-    }
-
     public function findEventsNow()
     {
         $dm = $this->getDocumentManager();
@@ -1893,7 +1752,6 @@ class MultimediaObjectRepository extends DocumentRepository
             '$match' => array(
                 '_id' => new \MongoId($multimediaObjectId),
                 'islive' => true,
-                'embeddedEvent.display' => true,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
         );
@@ -1959,7 +1817,6 @@ class MultimediaObjectRepository extends DocumentRepository
                 '$match' => array(
                     '_id' => new \MongoId($multimediaObjectId),
                     'islive' => true,
-                    'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
             );

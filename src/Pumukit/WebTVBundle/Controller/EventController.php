@@ -114,7 +114,7 @@ class EventController extends Controller implements WebTVController
             $nextSession = null;
             foreach ($sessions as $session) {
                 if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
-                    if ($session->getEnds()->getTimestamp() < $todayEnds) {
+                    if ($session->getStart()->getTimestamp() < $todayEnds) {
                         $nextSession = $session;
                         break;
                     }

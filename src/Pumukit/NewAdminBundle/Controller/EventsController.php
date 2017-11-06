@@ -164,7 +164,8 @@ class EventsController extends Controller
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
             }
-        } elseif ($data = $request->query->get('criteria')) {
+        } elseif ($request->query->has('criteria')) {
+            $data = $request->query->get('criteria');
             if (!empty($data['name'])) {
                 $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
             }
@@ -181,7 +182,7 @@ class EventsController extends Controller
         }
 
         $session->set('admin/live/event/criteria', $criteria);
-        $sortField = $session->get('admin/live/event/sort/field', 'embeddedEvent._id');
+        $sortField = $session->get('admin/live/event/sort/field', 'embeddedEvent.date');
         $sortType = $session->get('admin/live/event/sort/type', 'desc');
         $session->set('admin/live/event/sort/field', $sortField);
         $session->set('admin/live/event/sort/type', $sortType);
@@ -190,11 +191,19 @@ class EventsController extends Controller
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
 
+        $mms->setMaxPerPage(10)->setNormalizeOutOfRangePages(true);
+        if (($mms->getNbPages() < $mms->getCurrentPage()) or ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
+            $mms->setCurrentPage(1);
+        } else {
+            $mms->setCurrentPage($page);
+        }
+
         if ($mms->getNbResults() > 0) {
             $resetCache = true;
             foreach ($mms->getCurrentPageResults() as $result) {
                 if ($session->get('admin/live/event/id') == $result->getId()) {
                     $resetCache = false;
+                    break;
                 }
             }
             if ($resetCache) {
@@ -205,13 +214,6 @@ class EventsController extends Controller
             }
         } else {
             $session->remove('admin/live/event/id');
-        }
-
-        $mms->setMaxPerPage(10);
-        if (($mms->getNbPages() < $mms->getCurrentPage()) or ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
-            $mms->setCurrentPage(1);
-        } else {
-            $mms->setCurrentPage($page);
         }
 
         return array('multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault);

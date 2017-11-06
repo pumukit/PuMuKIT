@@ -2,6 +2,8 @@
 
 {% block body %}
 
+    {% set eventsNowIds = [] %}
+
     <h1 class="titulo_widget">{% trans %}Events{% endtrans %}</h1>
 
     {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
@@ -24,6 +26,7 @@
                                 <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
                                     <h6 class="uned_announces_title">{% trans %}Now events{% endtrans %}</h6>
                                     {% for eventNow in eventsNow %}
+                                        {% set eventsNowIds = eventsNowIds|merge([eventNow['_id']]) %}
                                         {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventNow['data'][0], 'defaultPic' : defaultPic} %}
                                     {% endfor %}
                                 </div>
@@ -44,7 +47,13 @@
                                 <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
                                     <h6 class="uned_announces_title">{% trans %}Today events{% endtrans %}</h6>
                                     {% for eventToday in eventsToday %}
-                                        {% if eventToday['data'][0] is defined %}
+                                        {% set nowAndToday = false %}
+                                        {% for eventNowId in eventsNowIds %}
+                                            {% if eventToday['_id'] == eventNowId %}
+                                                {% set nowAndToday = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if eventToday['data'][0] is defined and not nowAndToday %}
                                             {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventToday['data'][0], 'defaultPic' : defaultPic} %}
                                         {% endif %}
                                     {% endfor %}
