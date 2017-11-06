@@ -55,6 +55,8 @@
                         no_success(message);
                     } else {
                         var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
+                        var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
+                        $('#list_events').load(pathList);
                         $('#list_live_events').load(mm);
                         $('#updatesessionmodal').hide();
                         var message = '{% trans %}Live session successfully updated.{% endtrans %}';
