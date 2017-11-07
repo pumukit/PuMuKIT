@@ -557,6 +557,9 @@ class UNESCOController extends Controller implements NewAdminController
         );
 
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagCod);
+        if ($multimediaObject->containsTag($tag)) {
+            return new JsonResponse(array('error' => JsonResponse::HTTP_BAD_REQUEST));
+        }
 
         $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
 
