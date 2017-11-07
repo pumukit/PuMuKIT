@@ -36,7 +36,16 @@
                         {% endif %}
                     </a>
                 </th>
-                <th id="th-duration" width="1%">{% trans %}Duration{% endtrans %}</th>
+                <th id="th-duration" width="10%">
+                    <a href="#" class="sort_unesco" data-id="tracks.duration">
+                        {% trans %}Duration{% endtrans %}
+                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+                            {% if 'tracks.duration' ==  app.session.get('admin/unesco/element_sort') %}
+                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
 
                 <th id="th-rec-date" width="10%">
                     <a href="#" class="sort_unesco" data-id="record_date">
