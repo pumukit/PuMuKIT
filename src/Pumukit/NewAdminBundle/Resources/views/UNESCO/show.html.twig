@@ -19,7 +19,7 @@
                         {% trans %}Show video on WebTV{% endtrans %}.
                     </a>.
                 {% elseif mm.getStatus == 2 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
-                    <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {id: mm.getSecret() }) }}">
+                    <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.getSecret() }) }}">
                         {% trans %}Show video on WebTV{% endtrans %}.
                     </a>.
                 {% endif %}
@@ -112,26 +112,26 @@
         $.ajax({
             url: $(this).data('href'),
             type: 'GET',
-            error: function (request, json) {
-                var message = '{% trans %}Saving error{% endtrans %}';
-                no_success(message);
-            },
             success: function (response) {
 
-                var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
-                var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
-                var edit = edit.replace("__MMO__", mmoid);
+                if(response.error) {
+                    no_success(response.error);
+                } else {
+                    var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
+                    var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" }) }}";
+                    var edit = edit.replace("__MMO__", mmoid);
 
-                var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
-                var preview = preview.replace("__MMO__", mmoid);
+                    var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
+                    var preview = preview.replace("__MMO__", mmoid);
 
-                $('#edit_mms').load(edit);
-                count = $('#count_tag_' + cod).text();
-                count = parseInt(count) - 1;
-                $('#count_tag_' + cod).text(count);
-                $('#preview_mms').load(preview);
-                var message = '{% trans %}Saved{% endtrans %}';
-                success(message);
+                    $('#edit_mms').load(edit);
+                    count = $('#count_tag_' + cod).text();
+                    count = parseInt(count) - 1;
+                    $('#count_tag_' + cod).text(count);
+                    $('#preview_mms').load(preview);
+                    var message = '{% trans %}Saved{% endtrans %}';
+                    success(message);
+                }
             }
         });
         return false;
