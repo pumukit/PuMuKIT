@@ -260,7 +260,7 @@ class UNESCOController extends Controller implements NewAdminController
                     if ('all' !== $value) {
                         $newCriteria['embeddedBroadcast.type'] = $value;
                     }
-                } elseif ('statusPub' === $key and !empty($value)) {
+                } elseif ('statusPub' === $key) {
                     if ('all' !== $value) {
                         $newCriteria['status'] = intval($value);
                     }
