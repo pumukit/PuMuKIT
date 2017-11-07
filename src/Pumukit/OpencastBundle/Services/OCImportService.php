@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 
-class OpencastImportService
+class OCImportService
 {
     private $opencastClient;
     private $dm;
