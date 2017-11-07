@@ -91,7 +91,7 @@ class JobGeneratorListener
             }
 
             if (count($default_profiles) !== 0) {
-                if (!$default_profiles[$pubChannelCod]) {
+                if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
                 if (!$multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]['video'], $targetProfile) === false) {
