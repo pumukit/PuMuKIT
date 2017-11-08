@@ -69,6 +69,38 @@
         <source>The event has already been held</source>
         <target xml:lang="fr" state="translated">L'évènement a déjà eu lieu</target>
       </trans-unit>
+      <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
+        <source>Live</source>
+        <target xml:lang="fr" state="needs-translation">Live</target>
+      </trans-unit>
+      <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
+        <source>Private Video</source>
+        <target xml:lang="fr" state="needs-translation">Private Video</target>
+      </trans-unit>
+      <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
+        <source>This video is private with restricted access</source>
+        <target xml:lang="fr" state="needs-translation">This video is private with restricted access</target>
+      </trans-unit>
+      <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
+        <source>Enter a valid password to watch it</source>
+        <target xml:lang="fr" state="needs-translation">Enter a valid password to watch it</target>
+      </trans-unit>
+      <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
+        <source>Introduce a password</source>
+        <target xml:lang="fr" state="needs-translation">Introduce a password</target>
+      </trans-unit>
+      <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
+        <source>Password is not valid</source>
+        <target xml:lang="fr" state="needs-translation">Password is not valid</target>
+      </trans-unit>
+      <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
+        <source>Log In</source>
+        <target xml:lang="fr" state="needs-translation">Log In</target>
+      </trans-unit>
+      <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
+        <source>Enter pass</source>
+        <target xml:lang="fr" state="needs-translation">Enter pass</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

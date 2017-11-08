@@ -333,6 +333,10 @@
         <source>Upload file</source>
         <target xml:lang="ja" state="needs-translation">Upload file</target>
       </trans-unit>
+      <trans-unit id="09038ef8099e1bea60c8397ce2ec6db9" resname="Multimedia Object title">
+        <source>Multimedia Object title</source>
+        <target xml:lang="ja" state="needs-translation">Multimedia Object title</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
