@@ -105,7 +105,7 @@ EOT
         $multimediaObject->setTitle($title);
         $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
-        $track = $this->jobService->createTrack($multimediaObject, $path, $profile, $locale);
+        $track = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, array());
     }
 
     private function getDefaultMasterProfile()
