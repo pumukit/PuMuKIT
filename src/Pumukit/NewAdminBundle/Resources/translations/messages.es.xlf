@@ -2741,6 +2741,7 @@
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="es-ES" state="translated">Seleccione el número de objetos multimedia a mostrar por página.</target>
       </trans-unit>
+<<<<<<< HEAD
       <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
         <source>External player</source>
         <target xml:lang="es-ES" state="translated">Reproductor externo</target>
@@ -3414,6 +3415,10 @@
       <trans-unit id="3" resname="Create series">
         <source>Create series</source>
         <target xml:lang="es-ES" state="needs-translation">Create series</target>
+      </trans-unit>
+      <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target>Editar plantillas</target>
       </trans-unit>
     </body>
   </file>

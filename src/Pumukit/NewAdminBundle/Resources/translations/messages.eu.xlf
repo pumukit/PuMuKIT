@@ -4161,6 +4161,7 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="eu" state="needs-translation">Select the number of multimedia objects to display per page.</target>
       </trans-unit>
+<<<<<<< HEAD
       <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
         <source>External player</source>
         <target xml:lang="eu" state="needs-translation">External player</target>
@@ -4838,6 +4839,10 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       <trans-unit id="3" resname="Create series">
         <source>Create series</source>
         <target xml:lang="eu" state="needs-translation">Create series</target>
+      </trans-unit>
+      <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target>Txantiloiak editatu</target>
       </trans-unit>
     </body>
   </file>

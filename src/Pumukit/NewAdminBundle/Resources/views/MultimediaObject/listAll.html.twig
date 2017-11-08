@@ -31,7 +31,15 @@
                         <a href="#" id="pumukitnewadmin_mmo_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
                     </th>
                 {% endif %}
-                <th id="th-duration" width="1%">{% trans %}Duration{% endtrans %}</th>
+                {% if 'duration' == app.session.get('admin/mmslist/sort') %}
+                    <th id="th-duration" width="1%">
+                        <a href="#" id="pumukitnewadmin_mmo_duration_sort_selected">{% trans %}Duration{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+                    </th>
+                {% else %}
+                    <th id="th-duration">
+                        <a href="#" id="pumukitnewadmin_mmo_duration_sort_not_selected">{% trans %}Duration{% endtrans %}</a>
+                    </th>
+                {% endif %}
                 {% if 'record_date' == app.session.get('admin/mmslist/sort') %}
                     <th id="th-rec-date" width="1%">
                         <a href="#" id="pumukitnewadmin_mmo_record_date_sort_selected">{% trans %}RecDate{% endtrans %}&nbsp;{{ app.session.get('admin/mmslist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
@@ -51,7 +59,7 @@
                     </th>
                 {% endif %}
 
-                <input type="hidden" name="pumukitnewadmin_mmo_sort_change_type" id="pumukitnewadmin_series_sort_change_type" value="{{ app.session.get('admin/mmslist/type')=='asc'?'desc':'asc' }}"/>
+                <input type="hidden" name="pumukitnewadmin_mmo_sort_change_type" id="pumukitnewadmin_mmo_sort_change_type" value="{{ app.session.get('admin/mmslist/type')=='asc'?'desc':'asc' }}"/>
 
             </tr>
             </thead>
