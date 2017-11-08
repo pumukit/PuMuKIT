@@ -100,15 +100,17 @@
             success: function (response) {
                 $('#edit_mms').load(edit);
                 $('#preview_mms').load(preview);
-                count = $('#count_tag_' + cod).text();
-                count = parseInt(count) + 1;
-                $('#count_tag_' + cod).text(count);
+                if(!response.error) {
+                    count = $('#count_tag_' + cod).text();
+                    count = parseInt(count) + 1;
+                    $('#count_tag_' + cod).text(count);
 
-                $('.success').removeClass('success');
-                $('#tr_' + mmoid).addClass('success');
+                    $('.success').removeClass('success');
+                    $('#tr_' + mmoid).addClass('success');
 
-                var message = '{% trans %}Saved{% endtrans %}';
-                success(message);
+                    var message = '{% trans %}Saved{% endtrans %}';
+                    success(message);
+                }
             }
         });
         return false;
