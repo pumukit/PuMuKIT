@@ -178,7 +178,7 @@
                         {% for key, status in statusPub %}
                             <option value="{{ key }}"
                                     {% if app.request.session.get('UNESCO/form')['statusPub'] is defined and
-                                    app.request.session.get('UNESCO/form')['statusPub'] is same as(key) %}
+                                    app.request.session.get('UNESCO/form')['statusPub'] == key %}
                                         selected
                                     {% endif %}
                             >
