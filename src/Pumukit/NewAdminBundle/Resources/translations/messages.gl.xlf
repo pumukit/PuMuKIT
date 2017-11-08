@@ -2666,7 +2666,6 @@
         <source>Select the number of multimedia objects to display per page.</source>
         <target xml:lang="gl" state="translated">Seleccione o número de obxectos multimedia a mostrar por páxina.</target>
       </trans-unit>
-<<<<<<< HEAD
       <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
         <source>External player</source>
         <target xml:lang="gl" state="needs-translation">External player</target>
