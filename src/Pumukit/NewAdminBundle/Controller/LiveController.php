@@ -124,4 +124,56 @@ class LiveController extends AdminController implements NewAdminController
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
     }
+
+    public function batchDeleteAction(Request $request)
+    {
+        $translator = $this->get('translator');
+
+        $ids = $this->getRequest()->get('ids');
+
+        if ('string' === gettype($ids)) {
+            $ids = json_decode($ids, true);
+        }
+
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $aResult = $this->checkEmptyChannels($ids);
+        if (!$aResult['emptyChannels']) {
+            return new Response($translator->trans('There are associated events on channel id'.$aResult['channelId']), Response::HTTP_BAD_REQUEST);
+        }
+
+        $factory = $this->get('pumukitschema.factory');
+        foreach ($ids as $id) {
+            $resource = $this->find($id);
+
+            try {
+                $factory->deleteResource($resource);
+            } catch (\Exception $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            if ($id === $this->get('session')->get('admin/'.$resourceName.'/id')) {
+                $this->get('session')->remove('admin/'.$resourceName.'/id');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+    }
+
+    private function checkEmptyChannels($ids)
+    {
+        $emptyChannels = true;
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        foreach ($ids as $id) {
+            $liveEvents = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($id)));
+            if ($liveEvents) {
+                $emptyChannels = false;
+                $channelId = $id;
+                break;
+            }
+        }
+
+        return array('emptyChannels' => $emptyChannels, 'channelId' => $channelId);
+    }
 }
