@@ -637,6 +637,10 @@
         <source>Cut multimedia objects</source>
         <target>Cut multimedia objects</target>
       </trans-unit>
+      <trans-unit id="d2845160c46c11e7abc4cec278b6b50a" resname="Cut multimedia object">
+        <source>Cut multimedia object</source>
+        <target>Cut multimedia object</target>
+      </trans-unit>
       <trans-unit id="f3d80d25283c5191fcac9573ced74dee" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
         <target>Paste multimedia objects</target>
@@ -3301,6 +3305,22 @@
             In case this series already exists in the database, a pull-down list will be shown,
             where you can select it and use it. If it doesn't exist in the database,
             create a new entrance with the written name.</target>
+      </trans-unit>
+      <trans-unit id="e7439b5ca1f88bed2622be1ba9e317d5" resname="Create date">
+        <source>Create date</source>
+        <target>Create date</target>
+      </trans-unit>
+      <trans-unit id="1" resname="Series style">
+        <source>Series style</source>
+        <target>Series style</target>
+      </trans-unit>
+      <trans-unit id="2" resname="Series Style">
+        <source>Series Style</source>
+        <target>Series Style</target>
+      </trans-unit>
+      <trans-unit id="3" resname="Create series">
+        <source>Create series</source>
+        <target>Create series</target>
       </trans-unit>
     </body>
   </file>
