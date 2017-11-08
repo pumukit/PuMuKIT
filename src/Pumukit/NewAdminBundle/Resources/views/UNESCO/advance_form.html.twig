@@ -175,6 +175,7 @@
                 <label for="status" class="col-md-3 control-label">{% trans %}Status{% endtrans %}</label>
                 <div class="col-md-9">
                     <select id="status" name="criteria[statusPub]" class="form-control">
+                        <option value="-1">{% trans %}All{% endtrans %}</option>
                         {% for key, status in statusPub %}
                             <option value="{{ key }}"
                                     {% if app.request.session.get('UNESCO/form')['statusPub'] is defined and

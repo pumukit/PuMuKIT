@@ -261,7 +261,7 @@ class UNESCOController extends Controller implements NewAdminController
                         $newCriteria['embeddedBroadcast.type'] = $value;
                     }
                 } elseif ('statusPub' === $key) {
-                    if ('all' !== $value) {
+                    if ('-1' !== $value) {
                         $newCriteria['status'] = intval($value);
                     }
                 } elseif ('announce' === $key and !empty($value)) {
@@ -464,7 +464,6 @@ class UNESCOController extends Controller implements NewAdminController
         $pudeTV = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDETV');
 
         $statusPub = array(
-            'all' => $translator->trans('All'),
             MultimediaObject::STATUS_PUBLISHED => $translator->trans('Published'),
             MultimediaObject::STATUS_BLOQ => $translator->trans('Blocked'),
             MultimediaObject::STATUS_HIDE => $translator->trans('Hidden'),
