@@ -68,6 +68,12 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['error_if_file_not_exist']);
 
             $container
+              ->register('pumukit_opencast.series_importer', "Pumukit\OpencastBundle\Services\SeriesImportService")
+              ->addArgument(new Reference('doctrine_mongodb.odm.document_manager'))
+              ->addArgument(new Reference('pumukitschema.factory'))
+              ->addArgument(new Parameter('pumukit2.locales'));
+
+            $container
               ->register('pumukit_opencast.import', "Pumukit\OpencastBundle\Services\OpencastImportService")
               ->addArgument(new Reference('doctrine_mongodb.odm.document_manager'))
               ->addArgument(new Reference('pumukitschema.factory'))
@@ -79,7 +85,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit.inspection'))
               ->addArgument(new Parameter('pumukit2.locales'))
               ->addArgument(new Parameter('pumukit_opencast.default_tag_imported'))
-            ;
+              ->addArgument(new Reference('pumukit_opencast.series_importer'));
 
             $container
               ->register('pumukit_opencast.workflow', "Pumukit\OpencastBundle\Services\WorkflowService")

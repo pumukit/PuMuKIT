@@ -8,7 +8,6 @@ use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\User;
@@ -26,8 +25,9 @@ class OpencastImportService
     private $inspectionService;
     private $otherLocales;
     private $defaultTagImported;
+    private $seriesImportService;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales = array(), $defaultTagImported = 'TECHOPENCAST')
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales, $defaultTagImported, SeriesImportService $seriesImportService)
     {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
@@ -39,6 +39,7 @@ class OpencastImportService
         $this->inspectionService = $inspectionService;
         $this->otherLocales = $otherLocales;
         $this->defaultTagImported = $defaultTagImported;
+        $this->seriesImportService = $seriesImportService;
     }
 
     /**
@@ -56,17 +57,7 @@ class OpencastImportService
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
 
-        $seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
-
-        $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
-        if ($seriesOpencastId) {
-            $series = $seriesRepo->findOneBy(array('properties.opencast' => $seriesOpencastId));
-        } else {
-            $series = $seriesRepo->findOneBy(array('properties.opencast' => 'default'));
-        }
-        if (!$series) {
-            $series = $this->importSeries($mediaPackage, $loggedInUser);
-        }
+        $series = $this->seriesImportService->importSeries($mediaPackage, $loggedInUser);
 
         $onemultimediaobjects = null;
         $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -143,34 +134,6 @@ class OpencastImportService
                 $this->opencastService->genAutoSbs($multimediaObject, $opencastUrls);
             }
         }
-    }
-
-    private function importSeries($mediaPackage, User $loggedInUser = null)
-    {
-        $publicDate = new \DateTime('now');
-
-        $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
-        if ($seriesOpencastId) {
-            $title = $this->getMediaPackageField($mediaPackage, 'seriestitle');
-            $properties = $seriesOpencastId;
-        } else {
-            $title = 'MediaPackages without series';
-            $properties = 'default';
-        }
-
-        $series = $this->factoryService->createSeries($loggedInUser);
-        $series->setPublicDate($publicDate);
-        $series->setTitle($title);
-        foreach ($this->otherLocales as $locale) {
-            $series->setTitle($title, $locale);
-        }
-
-        $series->setProperty('opencast', $properties);
-
-        $this->dm->persist($series);
-        $this->dm->flush();
-
-        return $series;
     }
 
     public function getOpencastUrls($opencastId = '')
