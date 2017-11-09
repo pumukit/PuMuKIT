@@ -138,6 +138,11 @@
                 {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
                                                           "routeParams": {"id": series.id}, "routeName": "pumukitnewadmin_mms_index"}) }}
                 {% if not is_naked() %}
+                <input title="{% trans %}Go to page{% endtrans %}" type="text"
+                       style="width: 25px;text-align:center;cursor:pointer;"
+                       value="{{ mms.getCurrentPage() }}"
+                       onchange="window.location.search = '?page=' + this.value; return false;" />
+
                 <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
                   <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                   <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
