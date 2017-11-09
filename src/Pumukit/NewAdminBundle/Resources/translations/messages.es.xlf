@@ -2871,7 +2871,7 @@
       </trans-unit>
       <trans-unit id="a6ad87aadc206f6491720e309821904a" resname="Producer">
         <source>Producer</source>
-        <target xml:lang="es-ES" state="translated">Productor</target>
+        <target xml:lang="es-ES" state="translated">Realizador</target>
       </trans-unit>
       <trans-unit id="48b6dc1949d063860c1765ebd06bbc95" resname="External URL">
         <source>External URL</source>
