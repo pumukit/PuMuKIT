@@ -157,15 +157,16 @@ class DefaultController extends Controller
         }
 
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
-        $firstNextSession = new \DateTime();
-        $firstNextSession->add(new \DateInterval('P10Y'));
-        $firstNextSession = $firstNextSession->format('U');
+
         $date = new \DateTime();
-        foreach ($nextSessions as $nSession) {
-            foreach ($nSession['data'] as $session) {
-                if (($session['session']['start']->sec < $firstNextSession) and ($date->format('U') < $session['session']['start']->sec)) {
-                    $firstNextSession = $session['session']['start']->sec * 1000;
-                }
+        $firstNextSession = '';
+        foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
+            if ($session->getStart() < $date and $session->getEnds() > $date) {
+                $firstNextSession = $session->getStart()->getTimestamp() * 1000;
+                break;
+            } elseif ($session->getStart() > $date) {
+                $firstNextSession = $session->getStart()->getTimestamp() * 1000;
+                break;
             }
         }
 

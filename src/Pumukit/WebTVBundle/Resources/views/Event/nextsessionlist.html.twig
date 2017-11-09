@@ -3,6 +3,8 @@
         {% trans %}Next session{% endtrans %}
     </div>
     <div class="panel-body">
-        {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' %}
+        {% for event in events %}
+            {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' with {'events': event } %}
+        {% endfor %}
     </div>
 </div>
