@@ -11,7 +11,7 @@
 
             <p>
                 {% trans %}Is part of {% endtrans %}:
-                <a target="_blank" href="{{ url('pumukit_webtv_series_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
+                <a target="_blank" href="{{ url('pumukitnewadmin_mms_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
             </p>
             <p>
                 {% if mm.getStatus() == 0 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
