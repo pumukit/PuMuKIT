@@ -109,6 +109,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
         if ($request->attributes->has('microsite_custom_tag')) {
             $sTagCode = $request->attributes->get('microsite_custom_tag');
@@ -124,10 +125,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $this->get('session')->set('admin/mms/id', $mmobj->getId());
 
-        return new JsonResponse(array(
-                     'seriesId' => $series->getId(),
-                     'mmId' => $mmobj->getId(),
-                     ));
+        return new JsonResponse(
+            array(
+                'seriesId' => $series->getId(),
+                'mmId' => $mmobj->getId(),
+            )
+        );
     }
 
     /**
