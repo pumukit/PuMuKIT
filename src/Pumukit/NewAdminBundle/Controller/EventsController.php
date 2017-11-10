@@ -424,6 +424,7 @@ class EventsController extends Controller
      * @param MultimediaObject $multimediaObject
      *
      * @return array|jsonResponse
+     * @throws \Exception
      */
     public function eventAction(Request $request, MultimediaObject $multimediaObject)
     {
