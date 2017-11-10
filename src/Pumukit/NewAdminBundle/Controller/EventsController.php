@@ -186,7 +186,15 @@ class EventsController extends Controller
         $sortType = $session->get('admin/live/event/sort/type', 'desc');
         $session->set('admin/live/event/sort/field', $sortField);
         $session->set('admin/live/event/sort/type', $sortType);
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, array($sortField => $sortType));
+        if ('embeddedEvent.embeddedEventSession.start' === $sortField) {
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+            $multimediaObjects = $this->reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType);
+        } else {
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+                $criteria,
+                array($sortField => $sortType)
+            );
+        }
 
         $adapter = new ArrayAdapter($multimediaObjects);
         $mms = new Pagerfanta($adapter);
@@ -873,5 +881,55 @@ class EventsController extends Controller
     public function showAction(MultimediaObject $multimediaObject)
     {
         return array('multimediaObject' => $multimediaObject);
+    }
+
+    /**
+     * @param $multimediaObjects
+     * @param $sortType
+     *
+     * @return array
+     */
+    private function reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType)
+    {
+        $date = new \DateTime();
+
+        usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
+            $validSessionA = null;
+            foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
+                if ($sessionA->getStart() > $date) {
+                    $validSessionA = $sessionA->getStart()->getTimestamp();
+                    break;
+                }
+            }
+            $validSessionB = null;
+            foreach ($b->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionB) {
+                if ($sessionB->getStart() > $date) {
+                    $validSessionB = $sessionB->getStart()->getTimestamp();
+                    break;
+                }
+            }
+
+            if (!$validSessionA && !$validSessionB) {
+                return 0;
+            }
+
+            if (!$validSessionA && $validSessionB) {
+                return 1;
+            }
+
+            if ($validSessionA && !$validSessionB) {
+                return -1;
+            }
+
+            if ($validSessionA && $validSessionB) {
+                if ($sortType == 'desc') {
+                    return ($validSessionA < $validSessionB) ? 1 : -1;
+                } else {
+                    return ($validSessionA < $validSessionB) ? -1 : 1;
+                }
+            }
+        });
+
+        return $multimediaObjects;
     }
 }
