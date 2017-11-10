@@ -32,12 +32,12 @@
 
             <div class="form-group">
                 <label for="owner">{% trans %}Author{% endtrans %}</label>
-                <input id="owner" type="text" name="pumukitnewadmin_live_event[author]" class="form-control" value="{% if people and people['author'] is defined %}{{ people['author'] }}{% endif %}" />
+                <input id="owner" type="text" name="pumukitnewadmin_live_event[author]" class="form-control" value="{{ people['author']|default('') }}" />
             </div>
 
             <div class="form-group">
                 <label for="producer">{% trans %}Producer{% endtrans %}</label>
-                <input id="producer" type="text" name="pumukitnewadmin_live_event[producer]" class="form-control"  value="{% if people and people['producer'] is defined %}}{{ people['producer'] }}{% endif %}" />
+                <input id="producer" type="text" name="pumukitnewadmin_live_event[producer]" class="form-control"  value="{{ people['producer']|default('') }}" />
             </div>
 
             <div class="form-group">

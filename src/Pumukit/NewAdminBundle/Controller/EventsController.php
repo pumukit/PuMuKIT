@@ -435,11 +435,12 @@ class EventsController extends Controller
         $form = $this->createForm(new EventsType($translator, $locale), $multimediaObject->getEmbeddedEvent());
 
         /* Get author and producer */
-        $people = false;
+        $people = array();
+
         foreach ($multimediaObject->getRoles() as $role) {
-            if ($role->getCod() == 'Author') {
+            if (($role->getCod() == 'Author') && (isset($role->getPeople()[0]))) {
                 $people['author'] = $role->getPeople()[0]->getName();
-            } elseif ($role->getCod() == 'Producer') {
+            } elseif (($role->getCod() == 'Producer') && (isset($role->getPeople()[0]))) {
                 $people['producer'] = $role->getPeople()[0]->getName();
             }
         }
@@ -487,18 +488,18 @@ class EventsController extends Controller
                     }
                 }
 
-                $author = (isset($data['author'])) ? $data['author'] : false;
-                if (!empty($author)) {
-                    $this->addPeopleData('Author', $author, $multimediaObject, $dm);
+                if (isset($data['author'])) {
+                    $this->addPeopleData('Author', $data['author'], $multimediaObject, $dm);
                 }
 
-                $producer = (isset($data['producer'])) ? $data['producer'] : false;
-                if (!empty($producer)) {
-                    $this->addPeopleData('Producer', $producer, $multimediaObject, $dm);
+                if (isset($data['producer'])) {
+                    $this->addPeopleData('Producer', $data['producer'], $multimediaObject, $dm);
                 }
 
                 $dm->flush();
             } catch (\Exception $e) {
+                throw $e;
+
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
@@ -518,26 +519,26 @@ class EventsController extends Controller
      */
     private function addPeopleData($roleCod, $name, $multimediaObject, $dm)
     {
+        $people = $multimediaObject->getPeopleByRoleCod($roleCod);
         $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $roleCod));
 
-        $personExists = false;
-        $roleAndPeople = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findPeopleWithRoleCode($roleCod);
-        if ($roleAndPeople) {
-            foreach ($roleAndPeople as $person) {
-                $personName = $dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(
-                    array('_id' => new \MongoId($person))
-                );
-                if ($personName == $name) {
-                    $personExists = true;
-                }
-            }
-        }
-
-        if (!$personExists) {
+        if (!$people) {
             $person = new Person();
             $person->setName($name);
             $dm->persist($person);
             $multimediaObject->addPersonWithRole($person, $role);
+        } else {
+            $personService = $this->get('pumukitschema.person');
+
+            $embeddedPerson = $people[0];
+            $person = $personService->findPersonById($embeddedPerson->getId());
+            if ($person) {
+                $person->setName($name);
+                $embeddedPerson->setName($name);
+                $personService->updatePerson($person);
+            } else {
+                throw $this->createNotFoundException('The person does not exist');
+            }
         }
 
         return $multimediaObject;
