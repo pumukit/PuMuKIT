@@ -109,6 +109,7 @@ class EventController extends Controller implements WebTVController
 
             $now = new \DateTime();
             $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+            $todayStart = strtotime(date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y'))));
 
             $nextSession = null;
             foreach ($sessions as $session) {
@@ -116,6 +117,14 @@ class EventController extends Controller implements WebTVController
                     if ($session->getStart()->getTimestamp() < $todayEnds) {
                         $nextSession = $session;
                         break;
+                    }
+                } elseif (($session->getStart()->getTimestamp() > $todayStart) && ($session->getStart()->getTimestamp() < $now->getTimestamp())) {
+                    if ($session->getEnds()->getTimestamp() < $now->getTimestamp()) {
+                        $sessionNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
+                        if (count($sessionNow) == 0) {
+                            $nextSession = $session;
+                            break;
+                        }
                     }
                 }
             }

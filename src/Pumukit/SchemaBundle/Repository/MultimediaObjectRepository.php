@@ -1744,7 +1744,17 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        return $collection->aggregate($pipeline)->toArray();
+        $result = $collection->aggregate($pipeline)->toArray();
+
+        $orderSession = array();
+        foreach ($result as $key => $element) {
+            $orderSession[$element['data'][0]['session']['start']->sec] = $element;
+        }
+        ksort($orderSession);
+        $result = array_values($orderSession);
+
+        return $result;
+        //return $collection->aggregate($pipeline)->toArray();
     }
 
     /**
