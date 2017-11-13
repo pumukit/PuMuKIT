@@ -370,4 +370,24 @@ class EmbeddedEvent
     {
         $this->url = $url;
     }
+
+    /**
+     * Set locale.
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get locale.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 }
