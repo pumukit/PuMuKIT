@@ -250,7 +250,7 @@ class DefaultController extends Controller
             $to = $multimediaObject->getEmbeddedSocial()->getEmail();
 
             $data = $request->request->get('pumukit_multimedia_object_contact');
-            $bodyMail = sprintf("* URL: %s\n * Email: %s\n * Name: %s\n * Content: %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
+            $bodyMail = sprintf(" * URL: %s\n * Email: %s\n * Name: %s\n * Content: %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
             $subject = sprintf('%s - %s: %s',
                 $this->container->getParameter('pumukit2.info')['title'],
