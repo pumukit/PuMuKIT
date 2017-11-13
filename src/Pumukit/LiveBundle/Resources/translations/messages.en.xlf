@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="eu" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -100,6 +100,10 @@
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
         <target>Enter pass</target>
+      </trans-unit>
+      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target>New contact from live event</target>
       </trans-unit>
     </body>
   </file>

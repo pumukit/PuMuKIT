@@ -101,6 +101,10 @@
         <source>Enter pass</source>
         <target xml:lang="es-ES" state="needs-translation">Enter pass</target>
       </trans-unit>
+      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target>Nueva consulta sobre evento en directo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

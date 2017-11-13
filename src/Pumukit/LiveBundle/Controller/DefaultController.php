@@ -2,7 +2,7 @@
 
 namespace Pumukit\LiveBundle\Controller;
 
-use Pumukit\NewAdminBundle\Form\Type\ContactType;
+use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -250,10 +250,16 @@ class DefaultController extends Controller
             $to = $multimediaObject->getEmbeddedSocial()->getEmail();
 
             $data = $request->request->get('pumukit_multimedia_object_contact');
-            $bodyMail = sprintf("* Email: %s\n * Name: %s\n * Subject: %s\n ", $data['email'], $data['name'], $data['content']);
+            $bodyMail = sprintf("* URL: %s\n * Email: %s\n * Name: %s\n * Content: %s\n ", $request->$req->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
+
+            $subject = sprintf('%s - %s: %s',
+                $this->container->getParameter('pumukit2.info')['title'],
+                $translator->trans('New contact from live event'),
+                $multimediaObject->getEmbeddedEvent()->getName()
+            );
 
             $message = \Swift_Message::newInstance();
-            $message->setSubject($translator->trans('Contact Live'))->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
+            $message->setSubject($subject)->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
             $sent = $this->get('mailer')->send($message);
 
             if ($sent == 0) {
