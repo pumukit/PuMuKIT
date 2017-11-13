@@ -24,19 +24,19 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, array(
-                'label' => $this->translator->trans('name', array(), null, $this->locale), 
-                'attr' => array('class' => 'form-control'), 
-                'required' => true
+                'label' => $this->translator->trans('name', array(), null, $this->locale),
+                'attr' => array('class' => 'form-control'),
+                'required' => true,
             ))
             ->add('email', EmailType::class, array(
-                'label' => $this->translator->trans('email', array(), null, $this->locale), 
+                'label' => $this->translator->trans('email', array(), null, $this->locale),
                 'attr' => array('class' => 'form-control'),
-                'required' => true
+                'required' => true,
             ))
             ->add('content', TextareaType::class, array(
-                'label' => $this->translator->trans('content', array(), null, $this->locale), 
-                'attr' => array('class' => 'form-control'), 
-                'required' => true
+                'label' => $this->translator->trans('content', array(), null, $this->locale),
+                'attr' => array('class' => 'form-control'),
+                'required' => true,
             ));
     }
 
