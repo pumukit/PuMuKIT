@@ -905,6 +905,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $this->get('session')->remove('admin/mms/cut');
 
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_list'));
     }
 
@@ -1548,4 +1550,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return (strpos($sRoute, 'all') === false) ? 'mms' : 'mmslist';
     }
+
+    public function topAction(Request $request)
+    {
+        $res = parent::topAction($request);
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
+        return $res;
+    }
+
 }
