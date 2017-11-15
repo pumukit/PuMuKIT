@@ -1558,5 +1558,4 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return $res;
     }
-
 }
