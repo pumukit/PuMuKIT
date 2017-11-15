@@ -79,7 +79,7 @@ class APIController extends Controller implements NewAdminController
             if (isset($criteria['status'])) {
                 if (is_array($criteria['status'])) {
                     $newStatus = array();
-                    foreach($criteria['status'] as $k => $v) {
+                    foreach ($criteria['status'] as $k => $v) {
                         $newStatus[$k] = array_map('intval', (array) $v);
                     }
                     $criteria['status'] = $newStatus;
