@@ -12,8 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Live
 {
-    const LIVE_TYPE_FMS = 'FMS';
-    const LIVE_TYPE_WMS = 'WMS';
+    const LIVE_TYPE_WOWZA = 'WOWZA';
+    const LIVE_TYPE_AMS = 'AMS';
+    const LIVE_TYPE_FMS = 'FMS'; //Kept for backwards compatibility
+    const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
 
     /**
      * @var int
@@ -39,7 +41,7 @@ class Live
      * @var int
      * @MongoDB\String
      */
-    private $live_type = self::LIVE_TYPE_FMS;
+    private $live_type = self::LIVE_TYPE_WOWZA;
 
     /**
      * @var int
@@ -194,6 +196,8 @@ class Live
     public function isValidLiveType()
     {
         return in_array($this->live_type, array(
+            self::LIVE_TYPE_WOWZA,
+            self::LIVE_TYPE_AMS,
             self::LIVE_TYPE_WMS,
             self::LIVE_TYPE_FMS,
         ));

@@ -54,7 +54,12 @@ class LiveType extends AbstractType
             ->add('live_type', 'choice',
                   array(
                         'attr' => array('aria-label' => $this->translator->trans('Technology', array(), null, $this->locale)),
-                        'choices' => array(Live::LIVE_TYPE_FMS => 'FMS', Live::LIVE_TYPE_WMS => 'WMS'),
+                        'choices' => array(
+                            Live::LIVE_TYPE_WOWZA => 'WOWZA',
+                            Live::LIVE_TYPE_AMS => 'Adobe Media Server',
+                            Live::LIVE_TYPE_FMS => 'FMS (deprecated use WOWZA or AMS)',
+                            Live::LIVE_TYPE_WMS => 'WMS (deprecated)',
+                        ),
                         'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
         /*
             ->add('resolution', new LiveresolutionType(),

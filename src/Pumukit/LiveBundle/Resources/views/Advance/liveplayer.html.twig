@@ -94,7 +94,7 @@
                 {% if live is defined and live and event.url is empty %}
                     {% if live.broadcasting %}
                         {% if mobile_device %}
-                            file: "{{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8",
+                            file: "{{ generate_hls_url(live) }}",
                         {% else %}
                             file: "{{ live.url }}/{{ live.sourcename }}",
                         {% endif %}
