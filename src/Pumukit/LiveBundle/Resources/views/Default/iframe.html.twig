@@ -7,7 +7,7 @@ body { margin: 0; padding:0; }
 {% endblock %}
 
 {% block javascripts %}
-  { include('PumukitLiveBundle:Default:js.html.twig') %}
+  {% include('PumukitLiveBundle:Default:js.html.twig') %}
 {% endblock%}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
