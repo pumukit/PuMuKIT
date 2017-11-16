@@ -167,8 +167,6 @@ class APIController extends Controller implements NewAdminController
 
     /**
      * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     *
-     * See "/api/live/lives.json"
      */
     public function liveAction(Request $request)
     {
@@ -207,6 +205,19 @@ class APIController extends Controller implements NewAdminController
         );
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
+
+        return new Response($data);
+    }
+
+    /**
+     * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     */
+    public function localesAction(Request $request)
+    {
+        $serializer = $this->get('serializer');
+
+        $locales = $this->container->getParameter('pumukit2.locales');
+        $data = $serializer->serialize($locales, $request->getRequestFormat());
 
         return new Response($data);
     }
