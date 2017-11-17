@@ -617,12 +617,11 @@ class EventsController extends Controller
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 
-                if (isset($request->request->get('pumukitnewadmin_event_session')['id'])) {
+                $data = $request->request->get('pumukitnewadmin_event_session');
+                if (isset($data['id'])) {
                     foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(
                     ) as $embeddedEventSession) {
-                        if ($embeddedEventSession->getId() == $request->request->get(
-                                'pumukitnewadmin_event_session'
-                            )['id']) {
+                        if ($embeddedEventSession->getId() == $data['id']) {
                             $embeddedEventSession->setStart($start);
                             $embeddedEventSession->setEnds($end);
                             $embeddedEventSession->setDuration($duration);
