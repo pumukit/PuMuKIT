@@ -117,7 +117,7 @@ class DefaultController extends Controller
      *
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitLiveBundle:Advance:iframe.html.twig")
+     * @Template("PumukitLiveBundle:Default:iframe.html.twig")
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
@@ -252,8 +252,9 @@ class DefaultController extends Controller
             $data = $request->request->get('pumukit_multimedia_object_contact');
             $bodyMail = sprintf(" * URL: %s\n * Email: %s\n * Name: %s\n * Content: %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
+            $pumukit2info = $this->container->getParameter('pumukit2.info');
             $subject = sprintf('%s - %s: %s',
-                $this->container->getParameter('pumukit2.info')['title'],
+                $pumukit2info['title'],
                 $translator->trans('New contact from live event'),
                 $multimediaObject->getEmbeddedEvent()->getName()
             );
