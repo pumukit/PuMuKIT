@@ -36,6 +36,18 @@ class EmbeddedEvent
      * @var string
      * @MongoDB\String
      */
+    private $author;
+
+    /**
+     * @var string
+     * @MongoDB\String
+     */
+    private $producer;
+
+    /**
+     * @var string
+     * @MongoDB\String
+     */
     private $place;
 
     /**
@@ -223,6 +235,38 @@ class EmbeddedEvent
     public function setPlace($place)
     {
         $this->place = $place;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProducer()
+    {
+        return $this->producer;
+    }
+
+    /**
+     * @param string $producer
+     */
+    public function setProducer($producer)
+    {
+        $this->producer = $producer;
     }
 
     /**
