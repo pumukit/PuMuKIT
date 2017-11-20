@@ -502,6 +502,7 @@ class EventsController extends Controller
                 $dm->flush();
             } catch (\Exception $e) {
                 throw $e;
+
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
