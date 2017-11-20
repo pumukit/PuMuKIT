@@ -934,6 +934,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function syncTagsAction(Request $request)
     {
+        $all = $request->query->get('all');
+
         $multimediaObjectRepo = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $multimediaObject = $multimediaObjectRepo
@@ -944,8 +946,31 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
-        $tags = $multimediaObject->getTags()->toArray();
-        $this->get('pumukitschema.tag')->resetCategories($mms, $tags);
+
+        if (!$all) {
+            $factoryService = $this->get('pumukitschema.factory');
+            $targetTags = array();
+            $parentTags = $factoryService->getParentTags();
+            $tags = $multimediaObject->getTags();
+
+            foreach ($parentTags as $parentTag) {
+                if ($parentTag->getDisplay() && !$parentTag->getProperty('hide_in_tag_group')) {
+                    foreach ($tags as $tag) {
+                        if (($tag->getCod() == $parentTag->getCod()) || ($tag->isDescendantOf($parentTag))) {
+                            $targetTags[] = $tag;
+                        }
+                    }
+                }
+            }
+
+            if ($targetTags && $parentTags[0]) {
+                $targetTags[] = $parentTags[0]->getParent();
+            }
+        } else {
+            $targetTags = $multimediaObject->getTags()->toArray();
+        }
+
+        $this->get('pumukitschema.tag')->resetCategories($mms, $targetTags);
 
         return new JsonResponse('');
     }
