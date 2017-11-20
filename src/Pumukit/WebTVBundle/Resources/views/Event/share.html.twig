@@ -9,7 +9,7 @@
         <li class="list-group-item">
             <div class="share_url">
                 <span>{% trans %} URL: {% endtrans %}</span>
-                <input type="text" value="{{ url('pumukit_live_event_id', {'id': multimediaObject.id}) }}" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
+                <input type="text" value="{{ url('pumukit_live_event_id', {'id': multimediaObject.id}) }}" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" aria-label="{% trans %}URL{% endtrans %}"/>
             </div>
         </li>
         <li class="list-group-item">
@@ -26,7 +26,7 @@
                             {{- " allowfullscreen" -}}
                     ></iframe>
                 {% endspaceless %}{% endset %}
-                <input type="text" value="{{ iframe_value }}" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly/>
+                <input type="text" value="{{ iframe_value }}" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" aria-label="{% trans %}Iframe{% endtrans %}" readonly/>
             </div>
         </li>
     </ul>
