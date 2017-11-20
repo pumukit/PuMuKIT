@@ -58,7 +58,7 @@
         date = new Date(parseInt(nextSessionStarts));
         $("#directo-{{ id }}").html(background);
         $("#warning").countdown(date, function(event) {
-            $(this).text(event.strftime('%D dias %-H:%M:%S'));
+            $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
         }).on('finish.countdown', function(event) {
             location.reload();
         });
@@ -66,7 +66,7 @@
         var nowSessionsEnds = "{% if nowSessions is not empty %}{{ firstNowSessionEnds }}{% endif %}";
         date = new Date(parseInt(nowSessionsEnds));
         $("#countdownClock").countdown(date , function(event) {
-            $(this).text(event.strftime('%D dias %-H:%M:%S'));
+            $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
         }).on('finish.countdown', function(event) {
             location.reload();
         });

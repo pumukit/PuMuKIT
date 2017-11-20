@@ -105,6 +105,10 @@
         <source>New contact from live event</source>
         <target>Nueva consulta sobre evento en directo</target>
       </trans-unit>
+      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+        <source>days</source>
+        <target>días</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
