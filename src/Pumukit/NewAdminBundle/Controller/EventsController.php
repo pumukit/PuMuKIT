@@ -444,16 +444,9 @@ class EventsController extends Controller
 
         $form = $this->createForm(new EventsType($translator, $locale), $multimediaObject->getEmbeddedEvent());
 
-        /* Get author and producer */
         $people = array();
-
-        foreach ($multimediaObject->getRoles() as $role) {
-            if (($role->getCod() == 'Author') && (isset($role->getPeople()[0]))) {
-                $people['author'] = $role->getPeople()[0]->getName();
-            } elseif (($role->getCod() == 'Producer') && (isset($role->getPeople()[0]))) {
-                $people['producer'] = $role->getPeople()[0]->getName();
-            }
-        }
+        $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
+        $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
         $form->handleRequest($request);
         if ($request->getMethod() === 'POST') {
@@ -499,17 +492,16 @@ class EventsController extends Controller
                 }
 
                 if (isset($data['author'])) {
-                    $this->addPeopleData('Author', $data['author'], $multimediaObject, $dm);
+                    $multimediaObject->getEmbeddedEvent()->setAuthor($data['author']);
                 }
 
                 if (isset($data['producer'])) {
-                    $this->addPeopleData('Producer', $data['producer'], $multimediaObject, $dm);
+                    $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
                 $dm->flush();
             } catch (\Exception $e) {
                 throw $e;
-
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
@@ -625,12 +617,11 @@ class EventsController extends Controller
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 
-                if (isset($request->request->get('pumukitnewadmin_event_session')['id'])) {
+                $data = $request->request->get('pumukitnewadmin_event_session');
+                if (isset($data['id'])) {
                     foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(
                     ) as $embeddedEventSession) {
-                        if ($embeddedEventSession->getId() == $request->request->get(
-                                'pumukitnewadmin_event_session'
-                            )['id']) {
+                        if ($embeddedEventSession->getId() == $data['id']) {
                             $embeddedEventSession->setStart($start);
                             $embeddedEventSession->setEnds($end);
                             $embeddedEventSession->setDuration($duration);

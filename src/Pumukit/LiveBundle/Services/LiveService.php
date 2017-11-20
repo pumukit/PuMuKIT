@@ -7,12 +7,14 @@ use Pumukit\LiveBundle\Document\Live;
 class LiveService
 {
     /**
-     * Generate HLS URL from RTMP url
+     * Generate HLS URL from RTMP url.
      *
      * Original twig template:
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      *
      * @param Live $live
+     *
+     * @return string
      */
     public function generateHlsUrl(Live $live)
     {
