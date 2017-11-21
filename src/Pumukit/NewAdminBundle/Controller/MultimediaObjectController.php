@@ -952,7 +952,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             ->getQuery()->execute()
             ->toArray();
 
-
         if (!$all) {
             $factoryService = $this->get('pumukitschema.factory');
             $targetTags = array();
