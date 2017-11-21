@@ -945,7 +945,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             return new JsonResponse('Not Found', 404);
         }
 
-        $mms = $multimediaObjectRepo->findBySeries($multimediaObject->getSeries())->toArray();
+        $mms = $multimediaObjectRepo
+            ->createQueryBuilder()
+            ->field('islive')->equals(false)
+            ->field('series')->references($multimediaObject->getSeries())
+            ->getQuery()->execute()
+            ->toArray();
+
 
         if (!$all) {
             $factoryService = $this->get('pumukitschema.factory');
