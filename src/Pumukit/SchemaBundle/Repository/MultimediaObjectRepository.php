@@ -1663,6 +1663,8 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
 
+        $pipeline = array();
+
         $pipeline[] = array(
             '$match' => array(
                 'islive' => true,
@@ -1706,6 +1708,12 @@ class MultimediaObjectRepository extends DocumentRepository
             '$match' => array(
                 'sessions.start' => array('$exists' => true),
                 'sessions.start' => array('$gte' => new \MongoDate($todayEnds)),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$sort' => array(
+                'sessions.start' => -1,
             ),
         );
 
