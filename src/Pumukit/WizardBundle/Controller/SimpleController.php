@@ -94,6 +94,8 @@ class SimpleController extends Controller
             throw $e;
         }
 
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
         return $this->redirect($this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())));
     }
 
@@ -217,6 +219,8 @@ class SimpleController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
+
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
 
         $response = array(
             'url' => $this->generateUrl('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId())),
