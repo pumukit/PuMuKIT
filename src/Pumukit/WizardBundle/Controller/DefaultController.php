@@ -497,7 +497,7 @@ class DefaultController extends Controller
             );
         }
 
-        if ($series) {            
+        if ($series) {
             $seriesId = $series->getId();
             $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
         } else {
@@ -577,7 +577,7 @@ class DefaultController extends Controller
             'same_series' => $sameSeries,
         );
     }
-    
+
     /**
      * @param Request $request
      *
