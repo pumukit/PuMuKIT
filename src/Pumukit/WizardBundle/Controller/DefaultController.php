@@ -91,14 +91,14 @@ class DefaultController extends Controller
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
         return array(
-                     'form_data' => $formData,
-                     'license_enable' => $licenseService->isEnabled(),
-                     'mandatory_title' => $mandatoryTitle,
-                     'reuse_series' => $reuseSeries,
-                     'same_series' => $sameSeries,
-                     'user_series' => $userSeries,
-                     'show_tags' => $showTags,
-                     'show_object_license' => $showObjectLicense,
+            'form_data' => $formData,
+            'license_enable' => $licenseService->isEnabled(),
+            'mandatory_title' => $mandatoryTitle,
+            'reuse_series' => $reuseSeries,
+            'same_series' => $sameSeries,
+            'user_series' => $userSeries,
+            'show_tags' => $showTags,
+            'show_object_license' => $showObjectLicense,
         );
     }
 
@@ -152,14 +152,14 @@ class DefaultController extends Controller
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
         return array(
-                     'series_id' => $id,
-                     'form_data' => $formData,
-                     'show_series' => $showSeries,
-                     'license_enable' => $licenseService->isEnabled(),
-                     'same_series' => $sameSeries,
-                     'show_tags' => $showTags,
-                     'show_object_license' => $showObjectLicense,
-                    );
+            'series_id' => $id,
+            'form_data' => $formData,
+            'show_series' => $showSeries,
+            'license_enable' => $licenseService->isEnabled(),
+            'same_series' => $sameSeries,
+            'show_tags' => $showTags,
+            'show_object_license' => $showObjectLicense,
+        );
     }
 
     /**
@@ -246,16 +246,16 @@ class DefaultController extends Controller
         $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
 
         return array(
-                     'form_data' => $formData,
-                     'license_enable' => $licenseService->isEnabled(),
-                     'show_tags' => $showTags,
-                     'available_tags' => $availableTags,
-                     'show_object_license' => $showObjectLicense,
-                     'object_default_license' => $objectDefaultLicense,
-                     'object_available_licenses' => $objectAvailableLicenses,
-                     'mandatory_title' => $mandatoryTitle,
-                     'same_series' => $sameSeries,
-                     'show_series' => $showSeries,
+            'form_data' => $formData,
+            'license_enable' => $licenseService->isEnabled(),
+            'show_tags' => $showTags,
+            'available_tags' => $availableTags,
+            'show_object_license' => $showObjectLicense,
+            'object_default_license' => $objectDefaultLicense,
+            'object_available_licenses' => $objectAvailableLicenses,
+            'mandatory_title' => $mandatoryTitle,
+            'same_series' => $sameSeries,
+            'show_series' => $showSeries,
         );
     }
 
@@ -294,16 +294,16 @@ class DefaultController extends Controller
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
         return array(
-                     'form_data' => $formData,
-                     'master_profiles' => $masterProfiles,
-                     'pub_channels' => $pubChannelsTags,
-                     'languages' => $languages,
-                     'license_enable' => $licenseService->isEnabled(),
-                     'show_tags' => $showTags,
-                     'show_object_license' => $showObjectLicense,
-                     'same_series' => $sameSeries,
-                     'show_series' => $showSeries,
-                     );
+            'form_data' => $formData,
+            'master_profiles' => $masterProfiles,
+            'pub_channels' => $pubChannelsTags,
+            'languages' => $languages,
+            'license_enable' => $licenseService->isEnabled(),
+            'show_tags' => $showTags,
+            'show_object_license' => $showObjectLicense,
+            'same_series' => $sameSeries,
+            'show_series' => $showSeries,
+        );
     }
 
     /**
@@ -475,26 +475,26 @@ class DefaultController extends Controller
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
 
                 return array(
-                             'uploaded' => 'failed',
-                             'message' => $message,
-                             'option' => $option,
-                             'seriesId' => $seriesId,
-                             'mmId' => null,
-                             'show_series' => $showSeries,
-                             'same_series' => $sameSeries,
-                             );
+                    'uploaded' => 'failed',
+                    'message' => $message,
+                    'option' => $option,
+                    'seriesId' => $seriesId,
+                    'mmId' => null,
+                    'show_series' => $showSeries,
+                    'same_series' => $sameSeries,
+                );
             }
         } else {
             // TODO THROW EXCEPTION OR RENDER SPECIFIC TEMPLATE WITH MESSAGE
             return array(
-                         'uploaded' => 'failed',
-                         'message' => 'No data received',
-                         'option' => null,
-                         'seriesId' => $seriesId,
-                         'mmId' => null,
-                         'show_series' => $showSeries,
-                         'same_series' => $sameSeries,
-                         );
+                'uploaded' => 'failed',
+                'message' => 'No data received',
+                'option' => null,
+                'seriesId' => $seriesId,
+                'mmId' => null,
+                'show_series' => $showSeries,
+                'same_series' => $sameSeries,
+            );
         }
 
         if ($series) {
@@ -509,14 +509,14 @@ class DefaultController extends Controller
         }
 
         return array(
-                     'uploaded' => 'success',
-                     'message' => 'Track(s) added',
-                     'option' => $option,
-                     'seriesId' => $seriesId,
-                     'mmId' => $mmId,
-                     'show_series' => $showSeries,
-                     'same_series' => $sameSeries,
-                     );
+            'uploaded' => 'success',
+            'message' => 'Track(s) added',
+            'option' => $option,
+            'seriesId' => $seriesId,
+            'mmId' => $mmId,
+            'show_series' => $showSeries,
+            'same_series' => $sameSeries,
+        );
     }
 
     /**
@@ -542,14 +542,14 @@ class DefaultController extends Controller
         $sameSeries = $request->get('same_series', false);
 
         return array(
-                     'message' => 'success it seems',
-                     'series' => $series,
-                     'mm' => $multimediaObject,
-                     'option' => $option,
-                     'show_series' => $showSeries,
-                     'license_enabled' => $licenseEnabled,
-                     'same_series' => $sameSeries,
-                     );
+            'message' => 'success it seems',
+            'series' => $series,
+            'mm' => $multimediaObject,
+            'option' => $option,
+            'show_series' => $showSeries,
+            'license_enabled' => $licenseEnabled,
+            'same_series' => $sameSeries,
+        );
     }
 
     /**
@@ -569,14 +569,14 @@ class DefaultController extends Controller
         $sameSeries = $request->get('same_series', false);
 
         return array(
-                     'series' => $series,
-                     'message' => $errorMessage,
-                     'option' => $option,
-                     'show_series' => $showSeries,
-                     'same_series' => $sameSeries,
-                     );
+            'series' => $series,
+            'message' => $errorMessage,
+            'option' => $option,
+            'show_series' => $showSeries,
+            'same_series' => $sameSeries,
+        );
     }
-
+    
     /**
      * @param Request $request
      *
@@ -594,12 +594,12 @@ class DefaultController extends Controller
         $sameSeries = $request->get('same_series', false);
 
         return array(
-                     'step' => $step,
-                     'option' => $option,
-                     'show_series' => $showSeries,
-                     'show_license' => $showLicense,
-                     'same_series' => $sameSeries,
-                     );
+            'step' => $step,
+            'option' => $option,
+            'show_series' => $showSeries,
+            'show_license' => $showLicense,
+            'same_series' => $sameSeries,
+        );
     }
 
     /**
