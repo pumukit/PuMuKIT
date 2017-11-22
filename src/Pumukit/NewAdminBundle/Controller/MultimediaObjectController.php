@@ -709,6 +709,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $this->domainManager->update($resource);
 
         $this->addFlash('success', 'up');
+        $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
 
         return $this->redirectToRoute(
             $config->getRedirectRoute('index'),
@@ -1579,13 +1580,5 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sRoute = $request->get('_route');
 
         return (strpos($sRoute, 'all') === false) ? 'mms' : 'mmslist';
-    }
-
-    public function topAction(Request $request)
-    {
-        $res = parent::topAction($request);
-        $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
-
-        return $res;
     }
 }
