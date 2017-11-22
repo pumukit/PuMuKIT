@@ -80,16 +80,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function shortenerAction(MultimediaObject $mm, Request $request)
     {
-        $session = $this->get('session');
-        $paginate = $session->get('admin/mms/paginate', 10);
-
-        $page = (int) ceil($mm->getRank() / $paginate);
-        if ($page < 1) {
-            $page = 1;
-        }
-
-        $session->set('admin/mms/id', $mm->getId());
-        $session->set('admin/mms/page', $page);
+        $this->updateSession($mm);
 
         return $this->redirectToRoute('pumukitnewadmin_mms_index', array('id' => $mm->getSeries()->getId()));
     }
@@ -99,14 +90,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function createAction(Request $request)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $session = $this->get('session');
         $config = $this->getConfiguration();
         $pluralName = $config->getPluralResourceName();
 
         $factoryService = $this->get('pumukitschema.factory');
 
-        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $sessionId = $session->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->get('id'), $sessionId);
-        $this->get('session')->set('admin/series/id', $series->getId());
+        $session->set('admin/series/id', $series->getId());
 
         $mmobj = $factoryService->createMultimediaObject($series, true, $this->getUser());
         $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
@@ -123,7 +116,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         }
 
-        $this->get('session')->set('admin/mms/id', $mmobj->getId());
+        // After reordering the session page is updated
+        $dm->refresh($mmobj);
+        $this->updateSession($mmobj);
 
         return new JsonResponse(
             array(
@@ -381,7 +376,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
-            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+            throw new \Exception('Series with id ' . $request->get('id') . ' or with session id ' . $sessionId . ' not found.');
         }
         $this->get('session')->set('admin/series/id', $series->getId());
 
@@ -484,8 +479,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                           'parent' => $tag->getId(),
                           'mmId' => $request->get('mm_id'),
                           'block_tag' => $request->get('tag_id'),
-                          ))
-          ;
+                          ));
 
         return $this->handleView($view);
     }
@@ -602,9 +596,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parent_path = str_replace('|', "\|", $parent->getPath());
 
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
-        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
-                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
+        $children = $qb->addOr($qb->expr()->field('title.' . $lang)->equals(new \MongoRegex('/.*' . $search_text . '.*/i')))
+                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*' . $search_text . '.*/i')))
+                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/' . $parent_path . '(.+[\|]+)+/')))
                   //->limit(20)
                   ->getQuery()
                   ->execute();
@@ -679,17 +673,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
           ->setMaxPerPage($maxPerPage)
           ->setNormalizeOutOfRangePages(true);
 
-        /*
-          NOTE: Multimedia Objects are sorted by ascending rank.
-          A new MultimediaObject is created with last rank,
-          so it will be at the end of the list.
-          We update the page if a new page is created to show the
-          the new MultimediaObject in new last page.
-        */
-        if ($newMultimediaObjectId && (($mms->getNbResults() / $maxPerPage) > $page)) {
-            $page = $mms->getNbPages();
-            $session->set('admin/mms/page', $page);
-        }
         $mms->setCurrentPage($page);
 
         return $mms;
@@ -854,10 +837,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                              array(
-                                   'series' => $series,
-                                   'mms' => $mms,
-                                   )
-                             );
+                                 'series' => $series,
+                                 'mms' => $mms,
+                             )
+        );
     }
 
     /**
@@ -990,7 +973,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
         $mmId = $request->get('mmId');
-        $parent = $repo->findOneById(''.$request->get('parentId'));
+        $parent = $repo->findOneById('' . $request->get('parentId'));
 
         return $this->render(
             'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
@@ -1509,11 +1492,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $criteria = $this->getRequest()->get('criteria', array());
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$this->getResourceName($this->getRequest()).'/criteria');
+            $this->get('session')->remove('admin/' . $this->getResourceName($this->getRequest()) . '/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$this->getResourceName($this->getRequest()).'/criteria', $criteria);
+            $this->get('session')->set('admin/' . $this->getResourceName($this->getRequest()) . '/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($this->getRequest()).'/criteria', array());
+        $criteria = $this->get('session')->get('admin/' . $this->getResourceName($this->getRequest()) . '/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
 
@@ -1528,7 +1511,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sorting = $this->getSorting($request, $this->getResourceName($request));
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/'.$this->getResourceName($request);
+        $session_namespace = 'admin/' . $this->getResourceName($request);
 
         if ($config->isPaginated()) {
             $resources = $this
@@ -1536,17 +1519,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
             if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
+                $session->set($session_namespace . '/page', $request->get('page', 1));
             }
 
             if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+                $session->set($session_namespace . '/paginate', $request->get('paginate', 10));
             }
 
             $resources
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+                ->setMaxPerPage($session->get($session_namespace . '/paginate', 10))
                 ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
+                ->setCurrentPage($session->get($session_namespace . '/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver
@@ -1561,15 +1544,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $session = $this->get('session');
 
         if ($sorting = $request->get('sorting')) {
-            $session->set('admin/'.$session_namespace.'/type', current($sorting));
-            $session->set('admin/'.$session_namespace.'/sort', key($sorting));
+            $session->set('admin/' . $session_namespace . '/type', current($sorting));
+            $session->set('admin/' . $session_namespace . '/sort', key($sorting));
         }
 
-        $value = $session->get('admin/'.$session_namespace.'/type', 'desc');
-        $key = $session->get('admin/'.$session_namespace.'/sort', 'public_date');
+        $value = $session->get('admin/' . $session_namespace . '/type', 'desc');
+        $key = $session->get('admin/' . $session_namespace . '/sort', 'public_date');
 
         if ($key == 'title') {
-            $key .= '.'.$request->getLocale();
+            $key .= '.' . $request->getLocale();
         }
 
         return  array($key => $value);
@@ -1580,5 +1563,19 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sRoute = $request->get('_route');
 
         return (strpos($sRoute, 'all') === false) ? 'mms' : 'mmslist';
+    }
+
+    private function updateSession(MultimediaObject $mm)
+    {
+        $session = $this->get('session');
+        $paginate = $session->get('admin/mms/paginate', 10);
+
+        $page = (int) ceil($mm->getRank() / $paginate);
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $session->set('admin/mms/page', $page);
+        $session->set('admin/mms/id', $mm->getId());
     }
 }
