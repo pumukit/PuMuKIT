@@ -443,6 +443,18 @@ class EmbeddedTag
     }
 
     /**
+     * Returns true if given node is descendant of tag or the same.
+     *
+     * @param EmbeddedTag|Tag $tag
+     *
+     * @return bool
+     */
+    public function equalsOrDescendantOf($tag)
+    {
+        return substr($this->getPath(), 0, strlen($tag->getPath())) === $tag->getPath();
+    }
+
+    /**
      * Returns true if given node cod is descendant of tag.
      *
      * @param EmbeddedTag|Tag $tag

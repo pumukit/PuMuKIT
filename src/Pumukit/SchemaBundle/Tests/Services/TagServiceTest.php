@@ -253,6 +253,46 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
     }
 
+    public function testSyncTags()
+    {
+        $mmobj1 = $this->createMultimediaObject('mmobj1');
+        $mmobj2 = $this->createMultimediaObject('mmobj2');
+        $mmobj3 = $this->createMultimediaObject('mmobj3');
+        $tag1 = $this->createTag('tag1');
+        $tag11 = $this->createTag('tag11', $tag1);
+        $tag111 = $this->createTag('tag111', $tag11);
+        $tag12 = $this->createTag('tag12', $tag1);
+        $tag2 = $this->createTag('tag2');
+        $tag21 = $this->createTag('tag21', $tag2);
+        $tag22 = $this->createTag('tag22', $tag2);
+        $tag3 = $this->createTag('tag3');
+        $tag31 = $this->createTag('tag31', $tag3);
+        $tag32 = $this->createTag('tag32', $tag3);
+
+        $this->tagService->addTag($mmobj1, $tag1);
+        $this->tagService->addTag($mmobj1, $tag11);
+        $this->tagService->addTag($mmobj1, $tag111);
+        $this->tagService->addTag($mmobj1, $tag2);
+        $this->tagService->addTag($mmobj1, $tag21);
+        $this->tagService->addTag($mmobj1, $tag3);
+        $this->tagService->addTag($mmobj1, $tag31);
+        $this->tagService->addTag($mmobj2, $tag2);
+        $this->tagService->addTag($mmobj3, $tag3);
+        $this->tagService->addTag($mmobj3, $tag32);
+
+        $this->tagService->syncTagsForCollections(
+            array($mmobj1, $mmobj2, $mmobj3),
+            $mmobj1->getTags()->toArray(),
+            array($tag1, $tag2)
+        );
+
+        $this->assertEquals(3, $tag1->getNumberMultimediaObjects());
+        $this->assertEquals(3, $tag2->getNumberMultimediaObjects());
+        $this->assertEquals(3, $tag111->getNumberMultimediaObjects());
+        $this->assertEquals(1, $tag31->getNumberMultimediaObjects());
+        $this->assertEquals(1, $tag32->getNumberMultimediaObjects());
+    }
+
     /**
      * @expectedException         Exception
      * @expectedExceptionMessage  not found
@@ -425,6 +465,30 @@ class TagServiceTest extends WebTestCase
         $this->dm->flush();
 
         return $mmobj;
+    }
+
+    private function createTag($cod, $parentTag = null)
+    {
+        $locale = 'en';
+
+        if (!$parentTag) {
+            $parentTag = $this->tagRepo->findOneByCod('ROOT');
+            if (!$parentTag) {
+                $parentTag = new Tag();
+                $parentTag->setCod('ROOT');
+                $this->dm->persist($parentTag);
+            }
+        }
+
+        $tag = new Tag();
+        $tag->setLocale($locale);
+        $tag->setCod($cod);
+        $tag->setTitle(ucfirst($cod));
+        $tag->setParent($parentTag);
+        $this->dm->persist($tag);
+        $this->dm->flush();
+
+        return $tag;
     }
 
     private function createTagWithTree($cod, $withROOT = true)

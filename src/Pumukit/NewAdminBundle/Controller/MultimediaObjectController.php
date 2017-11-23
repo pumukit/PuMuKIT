@@ -376,7 +376,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sessionId = $this->get('session')->get('admin/series/id', null);
         $series = $factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
-            throw new \Exception('Series with id ' . $request->get('id') . ' or with session id ' . $sessionId . ' not found.');
+            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
         $this->get('session')->set('admin/series/id', $series->getId());
 
@@ -596,9 +596,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parent_path = str_replace('|', "\|", $parent->getPath());
 
         $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
-        $children = $qb->addOr($qb->expr()->field('title.' . $lang)->equals(new \MongoRegex('/.*' . $search_text . '.*/i')))
-                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*' . $search_text . '.*/i')))
-                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/' . $parent_path . '(.+[\|]+)+/')))
+        $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
+                  ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
                   //->limit(20)
                   ->getQuery()
                   ->execute();
@@ -931,35 +931,33 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $mms = $multimediaObjectRepo
             ->createQueryBuilder()
+             ->field('_id')->notEqual($multimediaObject->getId())
             ->field('islive')->equals(false)
             ->field('series')->references($multimediaObject->getSeries())
             ->getQuery()->execute()
             ->toArray();
 
-        if (!$all) {
+        if ($all) {
+            $targetTags = $multimediaObject->getTags()->toArray();
+
+            $this->get('pumukitschema.tag')->resetCategoriesForCollections($mms, $targetTags);
+        } else {
             $factoryService = $this->get('pumukitschema.factory');
-            $targetTags = array();
             $parentTags = $factoryService->getParentTags();
-            $tags = $multimediaObject->getTags();
+            $parentTagsToSync = array();
 
             foreach ($parentTags as $parentTag) {
                 if ($parentTag->getDisplay() && !$parentTag->getProperty('hide_in_tag_group')) {
-                    foreach ($tags as $tag) {
-                        if (($tag->getCod() == $parentTag->getCod()) || ($tag->isDescendantOf($parentTag))) {
-                            $targetTags[] = $tag;
-                        }
-                    }
+                    $parentTagsToSync[] = $parentTag;
                 }
             }
 
-            if ($targetTags && $parentTags[0]) {
-                $targetTags[] = $parentTags[0]->getParent();
-            }
-        } else {
-            $targetTags = $multimediaObject->getTags()->toArray();
+            $this->get('pumukitschema.tag')->syncTagsForCollections(
+                $mms,
+                $multimediaObject->getTags()->toArray(),
+                $parentTagsToSync
+            );
         }
-
-        $this->get('pumukitschema.tag')->resetCategories($mms, $targetTags);
 
         return new JsonResponse('');
     }
@@ -973,7 +971,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
         $mmId = $request->get('mmId');
-        $parent = $repo->findOneById('' . $request->get('parentId'));
+        $parent = $repo->findOneById(''.$request->get('parentId'));
 
         return $this->render(
             'PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig',
@@ -1492,11 +1490,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $criteria = $this->getRequest()->get('criteria', array());
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/' . $this->getResourceName($this->getRequest()) . '/criteria');
+            $this->get('session')->remove('admin/'.$this->getResourceName($this->getRequest()).'/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/' . $this->getResourceName($this->getRequest()) . '/criteria', $criteria);
+            $this->get('session')->set('admin/'.$this->getResourceName($this->getRequest()).'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/' . $this->getResourceName($this->getRequest()) . '/criteria', array());
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($this->getRequest()).'/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
 
@@ -1511,7 +1509,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $sorting = $this->getSorting($request, $this->getResourceName($request));
         $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/' . $this->getResourceName($request);
+        $session_namespace = 'admin/'.$this->getResourceName($request);
 
         if ($config->isPaginated()) {
             $resources = $this
@@ -1519,17 +1517,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
             if ($request->get('page', null)) {
-                $session->set($session_namespace . '/page', $request->get('page', 1));
+                $session->set($session_namespace.'/page', $request->get('page', 1));
             }
 
             if ($request->get('paginate', null)) {
-                $session->set($session_namespace . '/paginate', $request->get('paginate', 10));
+                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
             }
 
             $resources
-                ->setMaxPerPage($session->get($session_namespace . '/paginate', 10))
+                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
                 ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace . '/page', 1));
+                ->setCurrentPage($session->get($session_namespace.'/page', 1));
         } else {
             $resources = $this
                 ->resourceResolver
@@ -1544,15 +1542,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $session = $this->get('session');
 
         if ($sorting = $request->get('sorting')) {
-            $session->set('admin/' . $session_namespace . '/type', current($sorting));
-            $session->set('admin/' . $session_namespace . '/sort', key($sorting));
+            $session->set('admin/'.$session_namespace.'/type', current($sorting));
+            $session->set('admin/'.$session_namespace.'/sort', key($sorting));
         }
 
-        $value = $session->get('admin/' . $session_namespace . '/type', 'desc');
-        $key = $session->get('admin/' . $session_namespace . '/sort', 'public_date');
+        $value = $session->get('admin/'.$session_namespace.'/type', 'desc');
+        $key = $session->get('admin/'.$session_namespace.'/sort', 'public_date');
 
         if ($key == 'title') {
-            $key .= '.' . $request->getLocale();
+            $key .= '.'.$request->getLocale();
         }
 
         return  array($key => $value);
