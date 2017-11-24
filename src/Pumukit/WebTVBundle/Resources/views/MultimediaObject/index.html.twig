@@ -17,7 +17,7 @@
         {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
     {% endif %}
 
-    {% include 'PumukitWebTVBundle:MultimediaObject:info.html.twig' %}
+    {% render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) %}
   </div>
   <div class="col-lg-4 col-md-5">
     <span class="hidden-sm hidden-xs"><br/></span>
