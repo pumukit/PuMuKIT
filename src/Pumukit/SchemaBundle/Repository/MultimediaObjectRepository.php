@@ -1536,6 +1536,12 @@ class MultimediaObjectRepository extends DocumentRepository
         );
 
         $pipeline[] = array(
+            '$sort' => array(
+                'sessions.start' => -1,
+            ),
+        );
+
+        $pipeline[] = array(
             '$project' => array(
                 'multimediaObjectId' => '$multimediaObjectId',
                 'event' => '$event',
@@ -1572,16 +1578,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $pipeline[] = array('$limit' => 10);
 
-        $result = $collection->aggregate($pipeline)->toArray();
-
-        $orderSession = array();
-        foreach ($result as $key => $element) {
-            $orderSession[$element['data'][0]['session']['start']->sec] = $element;
-        }
-        ksort($orderSession);
-        $result = array_values($orderSession);
-
-        return $result;
+        return $collection->aggregate($pipeline)->toArray();
     }
 
     public function findEventsToday()
@@ -1752,17 +1749,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        $result = $collection->aggregate($pipeline)->toArray();
-
-        $orderSession = array();
-        foreach ($result as $key => $element) {
-            $orderSession[$element['data'][0]['session']['start']->sec] = $element;
-        }
-        ksort($orderSession);
-        $result = array_values($orderSession);
-
-        return $result;
-        //return $collection->aggregate($pipeline)->toArray();
+        return $collection->aggregate($pipeline)->toArray();
     }
 
     /**
