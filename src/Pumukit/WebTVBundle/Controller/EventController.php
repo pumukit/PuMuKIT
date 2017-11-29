@@ -29,7 +29,7 @@ class EventController extends Controller implements WebTVController
 
         $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
         $eventsToday = $this->get('pumukitschema.eventsession')->findEventsToday();
-        $eventsToday = $this->getEventsTodayNextSession($eventsToday);
+        $eventsToday = $this->getEventsTodayNextSession($eventsNow, $eventsToday);
         $eventsFuture = $this->get('pumukitschema.eventsession')->findNextEvents();
 
         $adapter = new ArrayAdapter($eventsFuture);
@@ -58,7 +58,7 @@ class EventController extends Controller implements WebTVController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
-        $eventsNow = $dm->get('pumukitschema.eventsession')->findEventsNow();
+        $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
 
         return array('events' => $events, 'defaultPic' => $defaultPic);
     }
@@ -91,58 +91,18 @@ class EventController extends Controller implements WebTVController
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
-    private function getEventsTodayNextSession($events)
+    private function getEventsTodayNextSession($eventsNow, $eventsToday)
     {
+        $now = array_map(function ($e) {
+            return $e['_id'];
+        }, $eventsNow);
+
         $result = array();
-        foreach ($events as $event) {
-            $multimediaObjectId = $event['_id'];
-            $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
-                array('_id' => new \MongoId($multimediaObjectId))
-            );
-
-            $sessions = $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession();
-
-            $todayEvents = array();
-            $todayEvents['_id'] = $multimediaObjectId;
-
-            $now = new \DateTime();
-            $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
-            $todayStart = strtotime(date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y'))));
-
-            $nextSession = null;
-            foreach ($sessions as $session) {
-                if ($session->getStart()->getTimestamp() > $now->getTimestamp()) {
-                    if ($session->getStart()->getTimestamp() < $todayEnds) {
-                        $nextSession = $session;
-                        break;
-                    }
-                } elseif (($session->getStart()->getTimestamp() > $todayStart) && ($session->getStart()->getTimestamp() < $now->getTimestamp())) {
-                    if ($session->getEnds()->getTimestamp() < $now->getTimestamp()) {
-                        $sessionNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
-                        if (count($sessionNow) == 0) {
-                            $nextSession = $session;
-                            break;
-                        }
-                    }
-                }
+        foreach ($eventsToday as $event) {
+            if (in_array($event['_id'], $now)) {
+                continue;
             }
-
-            if (isset($nextSession)) {
-                $data['event'] = $multimediaObject->getEmbeddedEvent();
-                $data['session'] = $nextSession;
-                $data['multimediaObjectId'] = $multimediaObjectId;
-                if (isset($event['data']['pics'])) {
-                    $data['pics'] = $event['data']['pics'];
-                } else {
-                    $data['pics'] = array();
-                }
-
-                $todayEvents['data'][] = $data;
-
-                $result[] = $todayEvents;
-            }
+            $result[] = $event;
         }
 
         return $result;
