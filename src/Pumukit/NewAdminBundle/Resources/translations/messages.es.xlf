@@ -3219,11 +3219,11 @@
       </trans-unit>
       <trans-unit id="1c3f5080100896d043243c7b84f9566a" resname="date_all">
         <source>date_all</source>
-        <target xml:lang="es-ES" state="needs-translation">date_all</target>
+        <target xml:lang="es-ES" state="needs-translation">fecha_todos</target>
       </trans-unit>
       <trans-unit id="65f3af30d48aaae745886265a42ac967" resname="date_subserial">
         <source>date_subserial</source>
-        <target xml:lang="es-ES" state="translated">fecha de subserie</target>
+        <target xml:lang="es-ES" state="translated">fecha_subserie</target>
       </trans-unit>
       <trans-unit id="bb86e10090011694c26614a2201e3b96" resname="subserial">
         <source>subserial</source>
@@ -3231,7 +3231,7 @@
       </trans-unit>
       <trans-unit id="9496dd847cef32fc63b081dde2081af9" resname="multisubserial">
         <source>multisubserial</source>
-        <target xml:lang="es-ES" state="needs-translation">multisubserial</target>
+        <target xml:lang="es-ES" state="needs-translation">multisubserie</target>
       </trans-unit>
       <trans-unit id="3c78b35502b2693fefdfc51cba3a53a5" resname="manual">
         <source>manual</source>
