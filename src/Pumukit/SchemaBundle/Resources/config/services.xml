@@ -242,5 +242,9 @@
             <argument type="service" id="translator" />
         </service>
 
+        <service id="pumukitschema.eventsession" class="Pumukit\SchemaBundle\Services\EmbeddedEventSessionService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
 </container>

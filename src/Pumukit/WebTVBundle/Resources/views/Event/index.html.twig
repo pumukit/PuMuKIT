@@ -27,7 +27,7 @@
                                     <h6 class="uned_announces_title">{% trans %}Now events{% endtrans %}</h6>
                                     {% for eventNow in eventsNow %}
                                         {% set eventsNowIds = eventsNowIds|merge([eventNow['_id']]) %}
-                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventNow['data'][0], 'defaultPic' : defaultPic} %}
+                                        {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventNow['data'], 'defaultPic' : defaultPic} %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -53,8 +53,8 @@
                                                 {% set nowAndToday = true %}
                                             {% endif %}
                                         {% endfor %}
-                                        {% if eventToday['data'][0] is defined and not nowAndToday %}
-                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventToday['data'][0], 'defaultPic' : defaultPic} %}
+                                        {% if eventToday['data'] is defined and not nowAndToday %}
+                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventToday['data'], 'defaultPic' : defaultPic} %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>
@@ -75,8 +75,8 @@
                                 <div class="unedtv_mmobj_categories" style="width: 100%; background-color: #FFF;">
                                     <h6 class="uned_announces_title">{% trans %}Future events{% endtrans %}</h6>
                                     {% for eventFuture in eventsFuture %}
-                                        {% if eventFuture['data'][0] is defined %}
-                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventFuture['data'][0], 'defaultPic' : defaultPic} %}
+                                        {% if eventFuture['data'] is defined %}
+                                            {% include 'PumukitWebTVBundle:Event:multimediaobject.html.twig' with {'cols': numberCols, 'event': eventFuture['data'], 'defaultPic' : defaultPic} %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>

@@ -27,10 +27,10 @@ class EventController extends Controller implements WebTVController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
-        $eventsNow = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
-        $eventsToday = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsToday();
+        $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
+        $eventsToday = $this->get('pumukitschema.eventsession')->findEventsToday();
         $eventsToday = $this->getEventsTodayNextSession($eventsToday);
-        $eventsFuture = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEvents();
+        $eventsFuture = $this->get('pumukitschema.eventsession')->findNextEvents();
 
         $adapter = new ArrayAdapter($eventsFuture);
         $eventsFuture = new Pagerfanta($adapter);
@@ -58,7 +58,7 @@ class EventController extends Controller implements WebTVController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
-        $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsNow();
+        $eventsNow = $dm->get('pumukitschema.eventsession')->findEventsNow();
 
         return array('events' => $events, 'defaultPic' => $defaultPic);
     }
@@ -133,8 +133,8 @@ class EventController extends Controller implements WebTVController
                 $data['event'] = $multimediaObject->getEmbeddedEvent();
                 $data['session'] = $nextSession;
                 $data['multimediaObjectId'] = $multimediaObjectId;
-                if (isset($event['data'][0]['pics'])) {
-                    $data['pics'] = $event['data'][0]['pics'];
+                if (isset($event['data']['pics'])) {
+                    $data['pics'] = $event['data']['pics'];
                 } else {
                     $data['pics'] = array();
                 }
