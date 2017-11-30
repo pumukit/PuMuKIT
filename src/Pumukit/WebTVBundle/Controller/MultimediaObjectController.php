@@ -164,4 +164,22 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             }
         }
     }
+
+    /**
+     * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
+     * @Template("PumukitWebTVBundle:MultimediaObject:info.html.twig")
+     */
+    public function multimediaInfoAction(MultimediaObject $multimediaObject, Request $request)
+    {
+        $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
+        $password = $request->get('broadcast_password');
+        $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
+        if ($response instanceof Response) {
+            return $this->render('PumukitWebTVBundle:MultimediaObject:emptyinfo.html.twig');
+        }
+
+        return array(
+            'multimediaObject' => $multimediaObject,
+        );
+    }
 }
