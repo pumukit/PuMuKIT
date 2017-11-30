@@ -54,7 +54,15 @@ class APIController extends Controller implements NewAdminController
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
-        $criteria = $request->get('criteria') ?: array();
+        try {
+            $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $data = $serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
         $sort = $request->get('sort') ?: array();
         $prototypes = $request->get('prototypes') ?: false;
 
@@ -75,19 +83,6 @@ class APIController extends Controller implements NewAdminController
         }
 
         if ($criteria) {
-            // Map status from string to int
-            if (isset($criteria['status'])) {
-                if (is_array($criteria['status'])) {
-                    $newStatus = array();
-                    foreach ($criteria['status'] as $k => $v) {
-                        $newStatus[$k] = array_map('intval', (array) $v);
-                    }
-                    $criteria['status'] = $newStatus;
-                } else {
-                    $criteria['status'] = (int) $criteria['status'];
-                }
-            }
-
             $qb = $qb->addAnd($criteria);
         }
 
@@ -123,7 +118,16 @@ class APIController extends Controller implements NewAdminController
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
-        $criteria = $request->get('criteria') ?: array();
+
+        try {
+            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $data = $serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
         $sort = $request->get('sort') ?: array();
         $prototypes = $request->get('prototypes') ?: false;
 
@@ -178,7 +182,15 @@ class APIController extends Controller implements NewAdminController
             $limit = 100;
         }
 
-        $criteria = $request->get('criteria') ?: array();
+        try {
+            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+        } catch (\Exception $e) {
+            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $data = $serializer->serialize($error, $request->getRequestFormat());
+
+            return new Response($data, 400);
+        }
+
         $sort = $request->get('sort') ?: array();
 
         $qb = $liveRepo->createQueryBuilder();
@@ -220,5 +232,62 @@ class APIController extends Controller implements NewAdminController
         $data = $serializer->serialize($locales, $request->getRequestFormat());
 
         return new Response($data);
+    }
+
+    /**
+     * Custom case for multimediaobject croteria. For Backward Compatibility (BC).
+     *
+     * @see APIController::getCriteria
+     */
+    private function getMultimediaObjectCriteria($row, $json)
+    {
+        if ($json) {
+            $criteria = json_decode($json, true);
+
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                throw new \InvalidArgumentException(json_last_error_msg());
+            }
+        } else {
+            $criteria = (array) $row;
+
+            if (isset($criteria['status'])) {
+                if (is_array($criteria['status'])) {
+                    $newStatus = array();
+                    foreach ($criteria['status'] as $k => $v) {
+                        $newStatus[$k] = array_map('intval', (array) $v);
+                    }
+                    $criteria['status'] = $newStatus;
+                } else {
+                    $criteria['status'] = (int) $criteria['status'];
+                }
+            }
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * Get criteria to filter objects from the requets.
+     *
+     * JSON criteria has priority over row criteria.
+     *
+     * @param $row
+     * @param $json
+     *
+     * @return array
+     */
+    private function getCriteria($row, $json)
+    {
+        if ($json) {
+            $criteria = json_decode($json, true);
+
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                throw new \InvalidArgumentException(json_last_error_msg());
+            }
+        } else {
+            $criteria = (array) $row;
+        }
+
+        return $criteria;
     }
 }
