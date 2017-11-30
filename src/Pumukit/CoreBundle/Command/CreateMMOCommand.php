@@ -83,6 +83,11 @@ EOT
         }
 
         $seriesTitle = basename(dirname($path));
+
+        if (in_array($seriesTitle, array('INBOX_MASTER_COPY', 'INBOX_MASTER_H264'))) {
+            $seriesTitle = 'AUTOIMPORT';
+        }
+
         $title = substr(basename($path), 0, -4);
 
         try {
