@@ -4,9 +4,7 @@
     </div>
     <div class="panel-body">
         {% if events|length > 0 %}
-            {% for liveevents in events %}
-                {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' with {'events' : liveevents, 'livelist': true } %}
-            {% endfor %}
+            {% include 'PumukitWebTVBundle:Event:miniMultimediaObjects.html.twig' with {'events' : events, 'livelist': true } %}
         {% endif %}
     </div>
 </div>
