@@ -58,7 +58,7 @@ class EventController extends Controller implements WebTVController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
-        $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
+        $events = $this->get('pumukitschema.eventsession')->findEventsNow();
 
         return array('events' => $events, 'defaultPic' => $defaultPic);
     }
