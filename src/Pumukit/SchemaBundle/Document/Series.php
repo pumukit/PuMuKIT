@@ -57,6 +57,7 @@ class Series
     /**
      * @var string
      * @MongoDB\String
+     * @MongoDB\Index
      */
     private $secret;
 
@@ -65,6 +66,7 @@ class Series
      *
      * @var int
      * @MongoDB\Integer
+     * @MongoDB\Index
      */
     private $type;
 
@@ -118,6 +120,7 @@ class Series
     /**
      * @var datetime
      * @MongoDB\Date
+     * @MongoDB\Index
      */
     private $public_date;
 

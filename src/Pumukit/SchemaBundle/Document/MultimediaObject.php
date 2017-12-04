@@ -50,24 +50,28 @@ class MultimediaObject
     /**
      * @var bool
      * @MongoDB\Bool
+     * @MongoDB\Index
      */
     private $islive;
 
     /**
      * @var int
      * @MongoDB\Int
+     * @MongoDB\Index
      */
     private $type;
 
     /**
      * @var string
      * @MongoDB\String
+     * @MongoDB\Index
      */
     private $secret;
 
     /**
      * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
      * @Gedmo\SortableGroup
+     * @MongoDB\Index
      */
     private $series;
 
@@ -141,12 +145,14 @@ class MultimediaObject
     /**
      * @var date
      * @MongoDB\Date
+     * @MongoDB\Index
      */
     private $record_date;
 
     /**
      * @var date
      * @MongoDB\Date
+     * @MongoDB\Index
      */
     private $public_date;
 
