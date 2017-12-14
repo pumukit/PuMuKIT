@@ -11,7 +11,7 @@
             </div>
             <div class="info-wrapper">
                 <div class="info">
-                    <div class="title" title="{{ object.description }}">
+                    <div class="title" title="{{object.title}} {{ object.description ? '\n\n' : '' }} {{ object.description }}">
                         <span class="mmobj_thumbnail_title">{{ object.title | default('No title'|trans) }}</span>
                     </div>
                     <div class="subtitle">
