@@ -172,7 +172,7 @@ class PicService
      *
      * @return string
      */
-    private function getAbsoluteUrlPic($picUrl = '')
+    protected function getAbsoluteUrlPic($picUrl = '')
     {
         if ($picUrl) {
             if ('/' == $picUrl[0]) {
