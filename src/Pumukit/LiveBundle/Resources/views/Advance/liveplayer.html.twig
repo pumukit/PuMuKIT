@@ -17,7 +17,7 @@
                 <a target="_blank" style="color: white; text-decoration: underline; padding: 10px;" href="https://get.adobe.com/flashplayer/">https://get.adobe.com/flashplayer/</a>
             </span>
         </div>
-        <div id="directo-{{ id }}" style="width:100%; margin: 0 auto;"></div>
+        <div id="directo-{{ id }}" style="width:100%; margin: 0 auto; position: relative;"></div>
     </div>
 
     <div id="countdownClock" hidden></div>
@@ -26,13 +26,9 @@
 <script type="text/javascript">
 
     var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\"";
-    {% if mobile_device %}
-    var width = 'class="img-responsive">';
-    var style = '<p class="warning" style="position: absolute; top: 15%; color: white; font-weight: bold; font-size: 20px; left:9%; line-height: 34px; text-align: center;">';
-    {% else %}
     var width = 'width="100%">';
-    var style = '<p class="warning" style="position: absolute; top: 30%; color: white; font-weight: bold; font-size: 20px; left:30%; line-height: 34px; text-align: center;">';
-    {% endif %}
+    var style = '<p class="warning" style="position: absolute; top: 30%; color: white; font-weight: bold; font-size: 20px; width:100%; line-height: 34px; text-align: center;">';
+
     var image = image + width;
     var text = "{% trans %}The event has not been held yet{% endtrans %}";
     var finalText = '<br/><span id=\"warning\"></span></p>';
