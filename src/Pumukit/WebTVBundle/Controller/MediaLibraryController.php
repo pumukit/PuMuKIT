@@ -33,12 +33,12 @@ class MediaLibraryController extends Controller implements WebTVController
         $numberCols = $this->container->getParameter('columns_objs_catalogue');
         $hasCatalogueThumbnails = $this->container->getParameter('catalogue_thumbnails');
 
+        $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
+
         switch ($sort) {
             case 'alphabetically':
                 $sortField = 'title.'.$request->getLocale();
                 $series = $series_repo->findBy($criteria, array($sortField => 1));
-
-                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -56,8 +56,6 @@ class MediaLibraryController extends Controller implements WebTVController
                 $sortField = 'public_date';
                 $series = $series_repo->findBy($criteria, array($sortField => -1));
 
-                $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
-
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
                         continue;
@@ -67,8 +65,21 @@ class MediaLibraryController extends Controller implements WebTVController
                     if (!isset($result[ $key ])) {
                         $result[ $key ] = array();
                     }
-                    $result[ $key ][] = $serie;
+
+                    $title = $serie->getTitle();
+                    if (!isset($result[ $key ][ $title ])) {
+                        $result[ $key ][ $title ] = $serie;
+                    } else {
+                        $result[ $key ][ $title.rand() ] = $serie;
+                    }
                 }
+
+                array_walk($result, function (&$e, $key) {
+                    ksort($e);
+
+                    return array_values($e);
+                });
+
                 break;
             case 'tags':
                 $p_cod = $request->query->get('p_tag', false);
@@ -84,7 +95,8 @@ class MediaLibraryController extends Controller implements WebTVController
                     }
                     $key = $tag->getTitle();
 
-                    $seriesQB = $series_repo->createBuilderWithTag($tag, array('public_date' => -1));
+                    $sortField = 'title.'.$request->getLocale();
+                    $seriesQB = $series_repo->createBuilderWithTag($tag, array($sortField => 1));
                     if ($criteria) {
                         $seriesQB->addAnd($criteria);
                     }
@@ -93,8 +105,6 @@ class MediaLibraryController extends Controller implements WebTVController
                     if (!$series) {
                         continue;
                     }
-
-                    $aggregatedNumMmobjs = $series_repo->countMmobjsBySeries();
 
                     foreach ($series as $serie) {
                         if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
