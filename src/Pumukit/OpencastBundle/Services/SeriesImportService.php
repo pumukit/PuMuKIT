@@ -9,10 +9,16 @@ use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesImportService
 {
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, array $otherLocales = array())
+    private $dm;
+    private $factoryService;
+    private $opencastClient;
+    private $otherLocales;
+
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, ClientService $opencastClient, array $otherLocales = array())
     {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
+        $this->opencastClient = $opencastClient;
         $this->otherLocales = $otherLocales;
     }
 
@@ -26,8 +32,7 @@ class SeriesImportService
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesTitle, $seriesOpencastId, $loggedInUser);
             }
-        } elseif ($this->getMediaPackageField($mediaPackage, 'spatial')) {
-            $seriesOpencastSpatial = $this->getMediaPackageField($mediaPackage, 'spatial');
+        } elseif (($seriesOpencastSpatial = $this->getSpatialField($mediaPackage)) != null) {
             $series = $seriesRepo->findOneBy(array('properties.opencastspatial' => $seriesOpencastSpatial));
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
@@ -67,6 +72,24 @@ class SeriesImportService
         if ($mediaFields && $field) {
             if (isset($mediaFields[$field])) {
                 return $mediaFields[$field];
+            }
+        }
+
+        return null;
+    }
+
+    private function getSpatialField($mp)
+    {
+        $metadata = $this->getMediaPackageField($mp, 'metadata');
+        if (!isset($metadata) || !isset($metadata['catalog'])) {
+            return null;
+        }
+        if (isset($metadata['catalog']['type']) && $metadata['catalog']['type'] === 'dublincore/episode') {
+            return $this->opencastClient->getSpatialField(parse_url($metadata['catalog']['url'])['path']);
+        }
+        foreach ($metadata['catalog'] as $catalog) {
+            if (isset($catalog['type']) && $catalog['type'] === 'dublincore/episode') {
+                return $this->opencastClient->getSpatialField(parse_url($catalog['url'])['path']);
             }
         }
 
