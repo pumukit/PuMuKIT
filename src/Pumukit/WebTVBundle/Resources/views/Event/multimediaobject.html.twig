@@ -4,7 +4,7 @@
 <div class="{{ col_class }}">
     <a href="{{ path('pumukit_live_event_id', {'id': event['multimediaObjectId']}) }}">
         <div class="pumukit_mmobj">
-            <div class="thumbnail">
+            <div class="thumbnail {{ active|default(false) ? 'active'}}">
                 {% if event['pics'] is defined and (event['pics']|length > 0) %}
                     <img alt="serial_pic" class="serial thumbnailimg" src="{{ event['pics'][0]['url'] }}" style="height:100%"/>
                 {% else %}
