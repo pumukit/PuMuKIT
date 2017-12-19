@@ -10,6 +10,9 @@
                 {% else %}
                     <img alt="serial_pic" class="serial thumbnailimg" src="{{ defaultPic }}" style="height:100%"/>
                 {% endif %}
+                {% if active %}
+                    <img alt="play" src="{{ asset('bundles/pumukitwebtv/images/webtv/play.png') }}" style="position: absolute; top: 5px; width: 15px; left: 5px;"/>
+                {% endif %}
                 <div class="thumbnailholder"></div>
             </div>
             <div class="info-wrapper">
