@@ -43,6 +43,7 @@ class EmbeddedTag
      * @var string
      *
      * @MongoDB\String
+     * @MongoDB\Index
      */
     private $cod = '';
 
