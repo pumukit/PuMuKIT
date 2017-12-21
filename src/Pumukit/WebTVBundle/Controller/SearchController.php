@@ -138,7 +138,7 @@ class SearchController extends Controller implements WebTVController
         );
     }
 
-    private function createPager($objects, $page)
+    protected function createPager($objects, $page)
     {
         $limit = $this->container->getParameter('limit_objs_search');
 
@@ -150,7 +150,7 @@ class SearchController extends Controller implements WebTVController
         return $pagerfanta;
     }
 
-    private function getParentTag()
+    protected function getParentTag()
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
@@ -163,7 +163,7 @@ class SearchController extends Controller implements WebTVController
         return $parentTag;
     }
 
-    private function getOptionalParentTag()
+    protected function getOptionalParentTag()
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
 
@@ -178,7 +178,7 @@ class SearchController extends Controller implements WebTVController
 
     // ========= queryBuilder functions ==========
 
-    private function searchQueryBuilder($queryBuilder, $searchFound)
+    protected function searchQueryBuilder($queryBuilder, $searchFound)
     {
         if ($searchFound != '') {
             $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
@@ -187,7 +187,7 @@ class SearchController extends Controller implements WebTVController
         return $queryBuilder;
     }
 
-    private function typeQueryBuilder($queryBuilder, $typeFound)
+    protected function typeQueryBuilder($queryBuilder, $typeFound)
     {
         if ($typeFound != '') {
             $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'audio');
@@ -196,7 +196,7 @@ class SearchController extends Controller implements WebTVController
         return $queryBuilder;
     }
 
-    private function durationQueryBuilder($queryBuilder, $durationFound)
+    protected function durationQueryBuilder($queryBuilder, $durationFound)
     {
         if ($durationFound != '') {
             if ($durationFound == '-5') {
@@ -219,7 +219,7 @@ class SearchController extends Controller implements WebTVController
         return $queryBuilder;
     }
 
-    private function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
+    protected function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
     {
         if ($yearFound) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:01', $yearFound));
@@ -241,7 +241,7 @@ class SearchController extends Controller implements WebTVController
         return $queryBuilder;
     }
 
-    private function languageQueryBuilder($queryBuilder, $languageFound)
+    protected function languageQueryBuilder($queryBuilder, $languageFound)
     {
         if ($languageFound != '') {
             $queryBuilder->field('tracks.language')->equals($languageFound);
@@ -250,7 +250,7 @@ class SearchController extends Controller implements WebTVController
         return $queryBuilder;
     }
 
-    private function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral = false)
+    protected function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral = false)
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         if ($blockedTag !== null) {
@@ -271,7 +271,7 @@ class SearchController extends Controller implements WebTVController
     }
     // ========== END queryBuilder functions =========
 
-    private function getMmobjsYears()
+    protected function getMmobjsYears()
     {
         $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $pipeline = array(
@@ -288,7 +288,7 @@ class SearchController extends Controller implements WebTVController
         return $years;
     }
 
-    private function getSeriesYears()
+    protected function getSeriesYears()
     {
         $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
         $pipeline = array(
