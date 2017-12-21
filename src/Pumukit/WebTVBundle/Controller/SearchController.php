@@ -145,6 +145,7 @@ class SearchController extends Controller implements WebTVController
         $adapter = new DoctrineODMMongoDBAdapter($objects);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($limit);
+        $pagerfanta->setNormalizeOutOfRangePages(true);
         $pagerfanta->setCurrentPage($page);
 
         return $pagerfanta;
