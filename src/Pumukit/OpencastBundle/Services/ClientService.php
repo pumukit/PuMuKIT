@@ -574,4 +574,19 @@ class ClientService
 
         return '["'.implode('","', $roles).'"]';
     }
+
+    public function getSpatialField($url)
+    {
+        $response = $this->request($url);
+        $start = strrpos($response['var'], '<dcterms:spatial>');
+        $end = strrpos($response['var'], '</dcterms:spatial>');
+
+        if (isset($start) && isset($end)) {
+            $start += strlen('<dcterms:spatial>');
+
+            return substr($response['var'], $start, $end - $start);
+        }
+
+        return null;
+    }
 }
