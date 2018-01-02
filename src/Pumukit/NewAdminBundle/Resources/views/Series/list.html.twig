@@ -106,7 +106,7 @@
                 {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting}) }}
 
                 {% if not is_naked() %}
-                <input title="{% trans %}Go to page{% endtrans %}" type="text"
+                <input title="{% trans %}Go to page{% endtrans %}" type="number"
                        style="width: 25px;text-align:center;cursor:pointer;"
                        value="{{ series.getCurrentPage() }}"
                        onchange="window.location.search = '?page=' + this.value; return false;" />

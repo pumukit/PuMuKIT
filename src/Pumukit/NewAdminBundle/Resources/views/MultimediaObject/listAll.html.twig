@@ -164,7 +164,7 @@
                                 {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
                                     "routeName": "pumukitnewadmin_mms_indexall"}) }}
                                 {% if not is_naked() %}
-                                <input title="{% trans %}Go to page{% endtrans %}" type="text"
+                                <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                        style="width: 25px;text-align:center;cursor:pointer;"
                                        value="{{ mms.getCurrentPage() }}"
                                        onchange="window.location.search = '?page=' + this.value; return false;" />

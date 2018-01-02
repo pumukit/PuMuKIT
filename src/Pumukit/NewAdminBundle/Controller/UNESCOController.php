@@ -71,7 +71,10 @@ class UNESCOController extends Controller implements NewAdminController
     public function indexAction(Request $request)
     {
         $session = $this->get('session');
-        $page = $request->query->get('page');
+        $page = (int) $request->query->get('page', 1);
+        if ($page < 1) {
+            $page = 0;
+        }
         $paginate = $request->query->get('paginate');
         if (isset($page)) {
             $session->set('admin/unesco/page', $page);

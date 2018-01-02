@@ -1517,7 +1517,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                 ->getResource($repository, 'createPaginator', array($criteria, $sorting));
 
             if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
+                $page = (int) $request->get('page', 1);
+                if ($page < 1) {
+                    $page = 1;
+                }
+
+                $session->set($session_namespace.'/page', $page);
             }
 
             if ($request->get('paginate', null)) {

@@ -109,7 +109,7 @@
                             <div class="pagerfanta">
                                 {{ pagerfanta(multimediaObjects, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"}) }}
 
-                                <input title="{% trans %}Go to page{% endtrans %}" type="text"
+                                <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                        style="width: 25px;text-align:center;cursor:pointer;"
                                        value="{{ multimediaObjects.getCurrentPage() }}"
                                        onchange="window.location.search = '?page=' + this.value; return false;" />
