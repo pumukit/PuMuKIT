@@ -77,14 +77,14 @@ class FactoryService
     }
 
     /**
-     * Create a new collection (series or playlist) with default values.
+     * Internal method to create a new collection (series or playlist) with default values. Not emit events.
      *
      * @param int  $collectionType
      * @param User $loggedInUser
      *
      * @return Series
      */
-    public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
+    public function doCreateCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
         $series = new Series();
         $series->setLocale($this->locales[0]);
@@ -107,6 +107,21 @@ class FactoryService
         $this->dm->persist($mm);
         $this->dm->persist($series);
         $this->dm->flush();
+
+        return $series;
+    }
+
+    /**
+     * Create a new collection (series or playlist) with default values.
+     *
+     * @param int  $collectionType
+     * @param User $loggedInUser
+     *
+     * @return Series
+     */
+    public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
+    {
+        $series = $this->doCreateCollection($collectionType, $loggedInUser, $title);
 
         $this->seriesDispatcher->dispatchCreate($series);
 
@@ -145,7 +160,7 @@ class FactoryService
     }
 
     /**
-     * Create a new Multimedia Object from Template.
+     * Internla method to create a new Multimedia Object from Template. Not emit events.
      *
      * @param Series $series
      * @param bool   $flush
@@ -153,7 +168,7 @@ class FactoryService
      *
      * @return MultimediaObject
      */
-    public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
+    public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
         $prototype = $this->getMultimediaObjectPrototype($series);
 
@@ -192,6 +207,22 @@ class FactoryService
         if ($flush) {
             $this->dm->flush();
         }
+
+        return $mm;
+    }
+
+    /**
+     * Create a new Multimedia Object from Template.
+     *
+     * @param Series $series
+     * @param bool   $flush
+     * @param User   $loggedInUser
+     *
+     * @return MultimediaObject
+     */
+    public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
+    {
+        $mm = $this->doCreateMultimediaObject($series, $flush, $loggedInUser);
 
         $this->seriesDispatcher->dispatchUpdate($series);
         $this->mmsDispatcher->dispatchCreate($mm);
