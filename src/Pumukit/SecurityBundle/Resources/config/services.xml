@@ -1,40 +1,49 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-      <service id="pumukit.casservice" class="Pumukit\SecurityBundle\Services\CASService">
-        <argument>%pumukit_security.cas_url%</argument>
-        <argument>%pumukit_security.cas_port%</argument>
-        <argument>%pumukit_security.cas_uri%</argument>
-        <argument>%pumukit_security.cas_allowed_ip_clients%</argument>
-        <argument>%kernel.environment%</argument>
-        <argument>%kernel.cache_dir%</argument>
-      </service>
-      
-      <service id="pumukit.security.authentication.provider" class="Pumukit\SecurityBundle\Authentication\Provider\PumukitProvider" public="false">
-        <argument />  <!-- UserProvider -->
-        <argument />  <!-- providerKey -->
-        <argument type="service" id="security.user_checker" />
-        <argument type="service" id="service_container" /> 
-        <argument>%pumukit_security.create_users%</argument>
-        <!--<call method="setUserService"><argument type="service" id="pumukitschema.user" /></call>-->
-      </service>
+        <service id="pumukit.casservice" class="Pumukit\SecurityBundle\Services\CASService">
+            <argument>%pumukit_security.cas_url%</argument>
+            <argument>%pumukit_security.cas_port%</argument>
+            <argument>%pumukit_security.cas_uri%</argument>
+            <argument>%pumukit_security.cas_allowed_ip_clients%</argument>
+            <argument>%kernel.environment%</argument>
+            <argument>%kernel.cache_dir%</argument>
+        </service>
 
-      <service id="pumukit.security.authentication.listener"
+        <service id="pumukit.security.authentication.provider"
+                 class="Pumukit\SecurityBundle\Authentication\Provider\PumukitProvider" public="false">
+            <argument/>  <!-- UserProvider -->
+            <argument/>  <!-- providerKey -->
+            <argument type="service" id="security.user_checker"/>
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="pumukit.casuserservice"/>
+            <argument>%pumukit_security.create_users%</argument>
+            <!--<call method="setUserService"><argument type="service" id="pumukitschema.user" /></call>-->
+        </service>
+
+        <service id="pumukit.security.authentication.listener"
                  class="Pumukit\SecurityBundle\Firewall\PumukitListener"
                  parent="security.authentication.listener.abstract"
-                 abstract="true" />
+                 abstract="true"/>
 
-      <service id="pumukit.security.handler.logout" class="Pumukit\SecurityBundle\Handler\LogoutSuccessHandler">
-        <argument type="collection" />
-        <argument type="service" id="router" />
-        <argument type="service" id="pumukit.casservice" />
-      </service>
+        <service id="pumukit.security.handler.logout" class="Pumukit\SecurityBundle\Handler\LogoutSuccessHandler">
+            <argument type="collection"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="pumukit.casservice"/>
+        </service>
+
+        <service id="pumukit.casuserservice" class="Pumukit\SecurityBundle\Services\CASUserService">
+            <argument type="service" id="pumukitschema.user"/>
+            <argument type="service" id="pumukitschema.person"/>
+            <argument type="service" id="pumukit.casservice"/>
+            <argument type="service" id="pumukitschema.permissionprofile"/>
+            <argument type="service" id="pumukitschema.group"/>
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+        </service>
+
     </services>
-
 
 </container>
