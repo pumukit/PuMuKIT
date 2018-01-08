@@ -43,6 +43,7 @@ class PumukitProvider implements AuthenticationProviderInterface
      * @param TokenInterface $token
      *
      * @return PreAuthenticatedToken|TokenInterface|void
+     *
      * @throws \AuthenticationException
      * @throws \Exception
      */
