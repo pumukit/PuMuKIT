@@ -22,8 +22,14 @@ class PumukitProvider implements AuthenticationProviderInterface
     private $createUsers;
     private $CASUserService;
 
-    public function __construct(UserProviderInterface $userProvider, $providerKey, UserCheckerInterface $userChecker, ContainerInterface $container, CASUserService $CASUserService, $createUsers = true)
-    {
+    public function __construct(
+        UserProviderInterface $userProvider,
+        $providerKey,
+        UserCheckerInterface $userChecker,
+        ContainerInterface $container,
+        CASUserService $CASUserService,
+        $createUsers = true
+    ) {
         $this->userProvider = $userProvider;
         $this->providerKey = $providerKey;
         $this->userChecker = $userChecker;
@@ -37,7 +43,7 @@ class PumukitProvider implements AuthenticationProviderInterface
      * @param TokenInterface $token
      *
      * @return PreAuthenticatedToken|TokenInterface|void
-     *
+     * @throws \AuthenticationException
      * @throws \Exception
      */
     public function authenticate(TokenInterface $token)
@@ -68,7 +74,12 @@ class PumukitProvider implements AuthenticationProviderInterface
         $this->CASUserService->updateUser($user);
         $this->userChecker->checkPostAuth($user);
 
-        $authenticatedToken = new PreAuthenticatedToken($user, $token->getCredentials(), $this->providerKey, $user->getRoles());
+        $authenticatedToken = new PreAuthenticatedToken(
+            $user,
+            $token->getCredentials(),
+            $this->providerKey,
+            $user->getRoles()
+        );
         $authenticatedToken->setAttributes($token->getAttributes());
 
         return $authenticatedToken;

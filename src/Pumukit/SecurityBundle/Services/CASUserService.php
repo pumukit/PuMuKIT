@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class CASUserService
 {
@@ -22,12 +23,12 @@ class CASUserService
 
     const ORIGIN = 'cas';
 
-    private $userService;
-    private $personService;
-    private $casService;
-    private $permissionProfileService;
-    private $groupService;
-    private $dm;
+    protected $userService;
+    protected $personService;
+    protected $casService;
+    protected $permissionProfileService;
+    protected $groupService;
+    protected $dm;
 
     public function __construct(UserService $userService, PersonService $personService, CASService $casService, PermissionProfileService $permissionProfileService, GroupService $groupService, DocumentManager $documentManager)
     {
@@ -44,6 +45,7 @@ class CASUserService
      *
      * @return User
      *
+     * @throws \AuthenticationException
      * @throws \Exception
      */
     public function createDefaultUser($userName)
@@ -78,6 +80,9 @@ class CASUserService
         return $user;
     }
 
+    /**
+     * @param User $user
+     */
     public function updateUser(User $user)
     {
         $attributes = $this->getCASAttributes();
@@ -92,7 +97,7 @@ class CASUserService
     /**
      * @return mixed
      */
-    private function getCASAttributes()
+    protected function getCASAttributes()
     {
         $this->casService->forceAuthentication();
         $attributes = $this->casService->getAttributes();
@@ -114,11 +119,16 @@ class CASUserService
     /**
      * @param $attributes
      *
-     * @return null|string
+     * @return string
      */
     protected function getCASEmail($attributes)
     {
-        return (isset($attributes[self::CAS_MAIL_KEY])) ?: null;
+        $mail = (isset($attributes[self::CAS_MAIL_KEY])) ?: null;
+        if (!$mail) {
+            throw new AuthenticationException("Mail can't be null");
+        }
+
+        return $mail;
     }
 
     /**
