@@ -404,6 +404,7 @@ class FactoryService
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
         $new->setSeries($src->getSeries());
+        $new->setType($src->getType());
 
         $i18nTitles = array();
         foreach ($src->getI18nTitle() as $key => $val) {
