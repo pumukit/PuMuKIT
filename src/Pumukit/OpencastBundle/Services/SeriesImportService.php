@@ -85,11 +85,11 @@ class SeriesImportService
             return null;
         }
         if (isset($metadata['catalog']['type']) && $metadata['catalog']['type'] === 'dublincore/episode') {
-            return $this->opencastClient->getSpatialField(parse_url($metadata['catalog']['url'])['path']);
+            return $this->opencastClient->getSpatialField($metadata['catalog']['url']);
         }
         foreach ($metadata['catalog'] as $catalog) {
             if (isset($catalog['type']) && $catalog['type'] === 'dublincore/episode') {
-                return $this->opencastClient->getSpatialField(parse_url($catalog['url'])['path']);
+                return $this->opencastClient->getSpatialField($catalog['url']);
             }
         }
 
