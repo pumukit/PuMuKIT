@@ -127,6 +127,22 @@
         <source>days</source>
         <target xml:lang="eu" state="needs-translation">days</target>
       </trans-unit>
+      <trans-unit id="c78555b4f9ed11e78c3f9a214cf093ae" resname="Content">
+        <source>Content</source>
+        <target xml:lang="eu" state="needs-translation">Content</target>
+      </trans-unit>
+      <trans-unit id="c7855852f9ed11e78c3f9a214cf093ae" resname="Obsolete browser">
+        <source>Obsolete browser</source>
+        <target xml:lang="eu" state="needs-translation">Obsolete browser</target>
+      </trans-unit>
+      <trans-unit id="c7855992f9ed11e78c3f9a214cf093ae" resname="Iframe">
+        <source>Iframe</source>
+        <target xml:lang="eu" state="needs-translation">Iframe</target>
+      </trans-unit>
+      <trans-unit id="c7855abef9ed11e78c3f9a214cf093ae" resname="Media Thumbnail">
+        <source>Media Thumbnail</source>
+        <target xml:lang="eu" state="needs-translation">Media Thumbnail</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

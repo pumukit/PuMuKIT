@@ -3412,7 +3412,7 @@
       </trans-unit>
       <trans-unit id="3" resname="Create series">
         <source>Create series</source>
-        <target xml:lang="es-ES" state="needs-translation">Create series</target>
+        <target xml:lang="es-ES" state="translated">Crear serie</target>
       </trans-unit>
       <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
         <source>Edit Templates</source>

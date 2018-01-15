@@ -549,26 +549,6 @@
         <source>Future events</source>
         <target xml:lang="de" state="needs-translation">Future events</target>
       </trans-unit>
-      <trans-unit id="06486ed2f6db11e78c3f9a214cf093ae" resname="Unknown">
-        <source>Unknown</source>
-        <target xml:lang="de" state="needs-translation">Unknown</target>
-      </trans-unit>
-      <trans-unit id="0648729cf6db11e78c3f9a214cf093ae" resname="From 0 to 5 minutes">
-        <source>From 0 to 5 minutes</source>
-        <target xml:lang="de" state="needs-translation">From 0 to 5 minutes</target>
-      </trans-unit>
-      <trans-unit id="999bcd5af6db11e78c3f9a214cf093ae" resname="From 5 to 10 minutes">
-        <source>From 5 to 10 minutes</source>
-        <target xml:lang="de" state="needs-translation">From 5 to 10 minutes</target>
-      </trans-unit>
-      <trans-unit id="064874eaf6db11e78c3f9a214cf093ae" resname="From 10 to 30 minutes">
-        <source>From 10 to 30 minutes</source>
-        <target xml:lang="de" state="needs-translation">From 10 to 30 minutes</target>
-      </trans-unit>
-      <trans-unit id="06487a12f6db11e78c3f9a214cf093ae" resname="From 30 to 60 minutes">
-        <source>From 30 to 60 minutes</source>
-        <target xml:lang="de" state="needs-translation">From 30 to 60 minutes</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
