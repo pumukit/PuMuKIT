@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
         <source>Event</source>
-        <target xml:lang="eu" state="translated">Emanaldia</target>
+        <target xml:lang="eu" state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
         <source>Place</source>
@@ -118,6 +118,14 @@
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
         <target xml:lang="eu" state="needs-translation">Enter pass</target>
+      </trans-unit>
+      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target xml:lang="eu" state="needs-translation">New contact from live event</target>
+      </trans-unit>
+      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+        <source>days</source>
+        <target xml:lang="eu" state="needs-translation">days</target>
       </trans-unit>
     </body>
   </file>

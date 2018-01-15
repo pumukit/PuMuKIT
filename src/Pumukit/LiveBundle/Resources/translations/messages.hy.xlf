@@ -101,6 +101,14 @@
         <source>Enter pass</source>
         <target xml:lang="hy-AM" state="needs-translation">Enter pass</target>
       </trans-unit>
+      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target xml:lang="hy-AM" state="needs-translation">New contact from live event</target>
+      </trans-unit>
+      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+        <source>days</source>
+        <target xml:lang="hy-AM" state="needs-translation">days</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -4841,7 +4841,7 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       </trans-unit>
       <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target>Txantiloiak editatu</target>
+        <target xml:lang="eu" state="translated">Txantiloiak editatu</target>
       </trans-unit>
     </body>
   </file>

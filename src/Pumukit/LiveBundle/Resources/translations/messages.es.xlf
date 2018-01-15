@@ -71,59 +71,43 @@
       </trans-unit>
       <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
-        <target xml:lang="es-ES" state="needs-translation">Live</target>
+        <target xml:lang="es-ES" state="translated">Directos</target>
       </trans-unit>
       <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
         <source>Private Video</source>
-        <target xml:lang="es-ES" state="needs-translation">Private Video</target>
+        <target xml:lang="es-ES" state="translated">Vídeo privado</target>
       </trans-unit>
       <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target xml:lang="es-ES" state="needs-translation">This video is private with restricted access</target>
+        <target xml:lang="es-ES" state="translated">Este vídeo es privado con acceso restringido</target>
       </trans-unit>
       <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
-        <target xml:lang="es-ES" state="needs-translation">Enter a valid password to watch it</target>
+        <target xml:lang="es-ES" state="translated">Introduzca una contraseña válida para verlo</target>
       </trans-unit>
       <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target xml:lang="es-ES" state="needs-translation">Introduce a password</target>
+        <target xml:lang="es-ES" state="translated">Introduce la contraseña</target>
       </trans-unit>
       <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
         <source>Password is not valid</source>
-        <target xml:lang="es-ES" state="needs-translation">Password is not valid</target>
+        <target xml:lang="es-ES" state="translated">Contraseña no válida</target>
       </trans-unit>
       <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
         <source>Log In</source>
-        <target xml:lang="es-ES" state="needs-translation">Log In</target>
+        <target xml:lang="es-ES" state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
-        <target xml:lang="es-ES" state="needs-translation">Enter pass</target>
+        <target xml:lang="es-ES" state="translated">Introduce la contraseña</target>
       </trans-unit>
       <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
         <source>New contact from live event</source>
-        <target>Nueva consulta sobre evento en directo</target>
+        <target xml:lang="es-ES" state="translated">Nuevo contacto desde directo</target>
       </trans-unit>
       <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
         <source>days</source>
-        <target>días</target>
-      </trans-unit>
-      <trans-unit id="c78555b4f9ed11e78c3f9a214cf093ae" resname="Content">
-        <source>Content</source>
-        <target>Contenido</target>
-      </trans-unit>
-      <trans-unit id="c7855852f9ed11e78c3f9a214cf093ae" resname="Obsolete browser">
-        <source>Obsolete browser</source>
-        <target>Navegador obsoleto</target>
-      </trans-unit>
-      <trans-unit id="c7855992f9ed11e78c3f9a214cf093ae" resname="Iframe">
-        <source>Iframe</source>
-        <target>Iframe</target>
-      </trans-unit>
-      <trans-unit id="c7855abef9ed11e78c3f9a214cf093ae" resname="Media Thumbnail">
-        <source>Media Thumbnail</source>
-        <target>Media Thumbnail</target>
+        <target xml:lang="es-ES" state="translated">días</target>
       </trans-unit>
     </body>
   </file>
