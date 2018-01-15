@@ -526,7 +526,7 @@
       </trans-unit>
       <trans-unit id="50c60ac437e4d4ef19c77bdca5bbcf3b" resname="University">
         <source>University</source>
-        <target xml:lang="es-ES" state="needs-translation">University</target>
+        <target xml:lang="es-ES" state="translated">Universidad</target>
       </trans-unit>
       <trans-unit id="d6e6cb19e3b9c02f89d6cd54cfa7c613" resname="Business">
         <source>Business</source>

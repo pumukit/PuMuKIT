@@ -3356,6 +3356,10 @@
         <source>Create series</source>
         <target xml:lang="zh-TW" state="needs-translation">Create series</target>
       </trans-unit>
+      <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target xml:lang="zh-TW" state="needs-translation">Edit Templates</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -645,7 +645,7 @@
       </trans-unit>
       <trans-unit id="d2845160c46c11e7abc4cec278b6b50a" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target xml:lang="es-ES" state="needs-translation">Cut multimedia object</target>
+        <target xml:lang="es-ES" state="translated">Cortar objeto multimedia</target>
       </trans-unit>
       <trans-unit id="f3d80d25283c5191fcac9573ced74dee" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
@@ -2871,7 +2871,7 @@
       </trans-unit>
       <trans-unit id="a6ad87aadc206f6491720e309821904a" resname="Producer">
         <source>Producer</source>
-        <target xml:lang="es-ES" state="translated">Realizador</target>
+        <target xml:lang="es-ES" state="translated">Productor</target>
       </trans-unit>
       <trans-unit id="48b6dc1949d063860c1765ebd06bbc95" resname="External URL">
         <source>External URL</source>
@@ -3219,11 +3219,14 @@
       </trans-unit>
       <trans-unit id="1c3f5080100896d043243c7b84f9566a" resname="date_all">
         <source>date_all</source>
-        <target xml:lang="es-ES" state="needs-translation">fecha_todos</target>
+        <target xml:lang="es-ES" state="translated">fecha_todos</target>
       </trans-unit>
       <trans-unit id="65f3af30d48aaae745886265a42ac967" resname="date_subserial">
         <source>date_subserial</source>
         <target xml:lang="es-ES" state="translated">fecha_subserie</target>
+        <alt-trans>
+          <target xml:lang="es-ES">fecha de subserie</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="bb86e10090011694c26614a2201e3b96" resname="subserial">
         <source>subserial</source>
@@ -3231,7 +3234,7 @@
       </trans-unit>
       <trans-unit id="9496dd847cef32fc63b081dde2081af9" resname="multisubserial">
         <source>multisubserial</source>
-        <target xml:lang="es-ES" state="needs-translation">multisubserie</target>
+        <target xml:lang="es-ES" state="translated">multisubserie</target>
       </trans-unit>
       <trans-unit id="3c78b35502b2693fefdfc51cba3a53a5" resname="manual">
         <source>manual</source>
@@ -3271,7 +3274,7 @@
       </trans-unit>
       <trans-unit id="a10a9bcd450087de1ce1f80b35f44883" resname="Legal">
         <source>Legal</source>
-        <target xml:lang="es-ES" state="needs-translation">Legal</target>
+        <target xml:lang="es-ES" state="translated">Legal</target>
       </trans-unit>
       <trans-unit id="b115d9cc059510376c77ed4edd343902" resname="Humanities">
         <source>Humanities</source>
@@ -3283,7 +3286,7 @@
       </trans-unit>
       <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
         <source>Login</source>
-        <target xml:lang="es-ES" state="needs-translation">Login</target>
+        <target xml:lang="es-ES" state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="dc647eb65e6711e155375218212b3964" resname="Password">
         <source>Password</source>
@@ -3349,8 +3352,7 @@
       <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717" resname="Modify broadcast profile of live&#10;                event">
         <source>Modify broadcast profile of live
                 event</source>
-        <target xml:lang="es-ES" state="needs-translation">Modify broadcast profile of live
-                event</target>
+        <target xml:lang="es-ES" state="translated">Modificar Perfil de difusión del directo</target>
       </trans-unit>
       <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031" resname="Modify broadcast profile of multimedia&#10;                object">
         <source>Modify broadcast profile of multimedia
@@ -3394,30 +3396,27 @@
             In case this series already exists in the database, a pull-down list will be shown,
             where you can select it and use it. If it doesn't exist in the database,
             create a new entrance with the written name.</source>
-        <target xml:lang="es-ES" state="needs-translation">Add the name of the series you want to use.
-            In case this series already exists in the database, a pull-down list will be shown,
-            where you can select it and use it. If it doesn't exist in the database,
-            create a new entrance with the written name.</target>
+        <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.</target>
       </trans-unit>
       <trans-unit id="e7439b5ca1f88bed2622be1ba9e317d5" resname="Create date">
         <source>Create date</source>
-        <target xml:lang="es-ES" state="needs-translation">Create date</target>
+        <target xml:lang="es-ES" state="translated">Fecha de creación</target>
       </trans-unit>
       <trans-unit id="1" resname="Series style">
         <source>Series style</source>
-        <target xml:lang="es-ES" state="needs-translation">Series style</target>
+        <target xml:lang="es-ES" state="translated">Estilo de series</target>
       </trans-unit>
       <trans-unit id="2" resname="Series Style">
         <source>Series Style</source>
-        <target xml:lang="es-ES" state="needs-translation">Series Style</target>
+        <target xml:lang="es-ES" state="translated">Estilo de Series</target>
       </trans-unit>
       <trans-unit id="3" resname="Create series">
         <source>Create series</source>
-        <target xml:lang="es-ES" state="needs-translation">Create series</target>
+        <target xml:lang="es-ES" state="translated">Crear serie</target>
       </trans-unit>
       <trans-unit id="39c121c9cde45339d3f5bac7459577e7" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target>Editar plantillas</target>
+        <target xml:lang="es-ES" state="translated">Editar Plantillas</target>
       </trans-unit>
     </body>
   </file>

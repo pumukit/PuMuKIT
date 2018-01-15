@@ -101,6 +101,30 @@
         <source>Enter pass</source>
         <target xml:lang="ru" state="needs-translation">Enter pass</target>
       </trans-unit>
+      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+        <source>New contact from live event</source>
+        <target xml:lang="ru" state="needs-translation">New contact from live event</target>
+      </trans-unit>
+      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+        <source>days</source>
+        <target xml:lang="ru" state="needs-translation">days</target>
+      </trans-unit>
+      <trans-unit id="c78555b4f9ed11e78c3f9a214cf093ae" resname="Content">
+        <source>Content</source>
+        <target xml:lang="ru" state="needs-translation">Content</target>
+      </trans-unit>
+      <trans-unit id="c7855852f9ed11e78c3f9a214cf093ae" resname="Obsolete browser">
+        <source>Obsolete browser</source>
+        <target xml:lang="ru" state="needs-translation">Obsolete browser</target>
+      </trans-unit>
+      <trans-unit id="c7855992f9ed11e78c3f9a214cf093ae" resname="Iframe">
+        <source>Iframe</source>
+        <target xml:lang="ru" state="needs-translation">Iframe</target>
+      </trans-unit>
+      <trans-unit id="c7855abef9ed11e78c3f9a214cf093ae" resname="Media Thumbnail">
+        <source>Media Thumbnail</source>
+        <target xml:lang="ru" state="needs-translation">Media Thumbnail</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

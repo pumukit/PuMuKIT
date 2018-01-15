@@ -220,10 +220,7 @@
       </trans-unit>
       <trans-unit id="3e000e0356839ea63a017d6fd3592c6b" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
-        <target xml:lang="eu" state="translated">5 minutu baino gutxiago</target>
-        <alt-trans>
-          <target xml:lang="eu">Hasta 5 minutos</target>
-        </alt-trans>
+        <target xml:lang="eu" state="needs-translation">Up to 5 minutes</target>
       </trans-unit>
       <trans-unit id="90838b30df0e321ec70b13542ab732c6" resname="Up to 10 minutes">
         <source>Up to 10 minutes</source>

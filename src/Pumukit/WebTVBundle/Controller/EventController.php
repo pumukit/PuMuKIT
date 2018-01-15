@@ -24,7 +24,6 @@ class EventController extends Controller implements WebTVController
         $translator = $this->get('translator');
         $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
 
         $eventsNow = $this->get('pumukitschema.eventsession')->findEventsNow();
