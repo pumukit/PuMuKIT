@@ -1582,6 +1582,22 @@ class MultimediaObject
     }
 
     /**
+     * Get real duration for cases with soft trimming edition.
+     *
+     * @return int
+     */
+    public function getRealDuration()
+    {
+        $master = $this->getMaster();
+
+        if ($this->getDuration() < $master->getDuration()) {
+            return $master->getDuration();
+        }
+
+        return $this->getDuration();
+    }
+
+    /**
      * Get master track.
      *
      * @param bool $any to get only tagged tracks

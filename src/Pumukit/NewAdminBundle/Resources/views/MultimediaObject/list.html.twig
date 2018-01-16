@@ -69,10 +69,10 @@
           {{ mm.getTitle() }}
         </td>
         <td class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-            {% if mm.duration == mmobj_duration(mm) %}
-              {{ mm.duration| duration_string }}
+            {% if mm.duration == mm.getRealDuration() %}
+              {{ mm.getRealDuration()| duration_string }}
             {% else %}
-              {{ mm.duration| duration_string }}
+              {{ mm.getRealDuration()| duration_string }}
               <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
             {% endif %}
         </td>
