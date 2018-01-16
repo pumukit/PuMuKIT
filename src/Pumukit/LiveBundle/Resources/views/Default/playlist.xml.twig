@@ -6,7 +6,7 @@
                 <item>
                     <title>{{ item.getTitle() }}</title>
                     <description>{{ item.getDescription() }}</description>
-                    <jwplayer:source file="{{ track.url|trim }}"/>
+                    <jwplayer:source file="{{ track_url(track) }}"/>
                 </item>
             {% endfor %}
         {% else %}
