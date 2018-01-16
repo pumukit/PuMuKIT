@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target>Neste intre non hai emisión en directo</target>
+        <target>Neste intre non hai emisións en directo</target>
       </trans-unit>
     </body>
   </file>
