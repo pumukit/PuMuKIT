@@ -242,21 +242,31 @@
 {# Pumukit2 Widgets #}
 
 {% block texti18n_widget -%}
-    {%- for locale in form.vars.locales %}
-        <div class="input-group">
-            <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            <span class="input-group-addon">{{ locale }}</span>
-        </div>
-    {%- endfor -%}
+    {%- if form.vars.locales|length == 1%}
+        {% set locale = form.vars.locales[0] %}
+        <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
+    {% else %}
+        {%- for locale in form.vars.locales %}
+            <div class="input-group">
+                <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
+                <span class="input-group-addon">{{ locale }}</span>
+            </div>
+        {% endfor -%}
+    {% endif -%}
 {%- endblock texti18n_widget %}
 
 {% block textareai18n_widget -%}
-    {%- for locale in form.vars.locales %}
-        <div class="input-group">
-            <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
-            <span class="input-group-addon">{{ locale }}</span>
-        </div>
-    {%- endfor -%}
+    {%- if form.vars.locales|length == 1 %}
+        {% set locale = form.vars.locales[0] %}
+        <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
+  {% else %}
+      {%- for locale in form.vars.locales %}
+          <div class="input-group">
+              <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
+              <span class="input-group-addon">{{ locale }}</span>
+          </div>
+      {%- endfor -%}
+    {% endif -%}
 {%- endblock textareai18n_widget %}
 
 {% block widgeti18n_attributes -%}
