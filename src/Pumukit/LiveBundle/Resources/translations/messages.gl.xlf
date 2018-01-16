@@ -58,6 +58,10 @@
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
         <target xml:lang="gl" state="translated">É necesario instalar o plugin Flash. JWPlayer require polo menos a versión 10.1.82.76 de Flash para reproducir.</target>
       </trans-unit>
+      <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
+        <source>There aren't events at this moment</source>
+        <target>Neste intre non hai emisións en directo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
