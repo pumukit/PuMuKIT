@@ -1590,6 +1590,10 @@ class MultimediaObject
     {
         $master = $this->getMaster();
 
+        if (!$master) {
+            return 0;
+        }
+
         if ($this->getDuration() < $master->getDuration()) {
             return $master->getDuration();
         }
