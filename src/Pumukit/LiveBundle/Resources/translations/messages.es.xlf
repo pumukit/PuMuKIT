@@ -125,6 +125,10 @@
         <source>Media Thumbnail</source>
         <target xml:lang="es-ES" state="needs-translation">Media Thumbnail</target>
       </trans-unit>
+      <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
+        <source>There aren't events at this moment</source>
+        <target>En este momento no hay emisiones en directo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

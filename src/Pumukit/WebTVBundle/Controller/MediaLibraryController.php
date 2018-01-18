@@ -45,7 +45,7 @@ class MediaLibraryController extends Controller implements WebTVController
                         continue;
                     }
 
-                    $key = substr($serie->getTitle(), 0, 1);
+                    $key = mb_substr(trim($serie->getTitle()), 0, 1);
                     if (!isset($result[ $key ])) {
                         $result[$key] = array();
                     }
