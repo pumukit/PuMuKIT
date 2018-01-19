@@ -27,7 +27,7 @@
     word-wrap: break-word;
     overflow: hidden;
     -webkit-line-clamp: 2;
-    display: -webkit-box;   
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
 }
@@ -132,7 +132,7 @@
     word-wrap: break-word;
     overflow: hidden;
     -webkit-line-clamp: 2;
-    display: -webkit-box;   
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
 }
@@ -162,4 +162,16 @@
     border: 1px solid #f5f5f5;
     color: #08c;
     cursor: default;
+}
+
+.alert-success {
+    background-color: #008846; /* Fix A11y */
+}
+
+.alert-warning {
+    background-color: #de3601; /* Fix A11y */
+}
+
+.btn-success:not(.btn-link):not(.btn-flat) {
+    background-color: #008846; /* Fix A11y */
 }
