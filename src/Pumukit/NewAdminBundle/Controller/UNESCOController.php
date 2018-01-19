@@ -367,6 +367,7 @@ class UNESCOController extends Controller implements NewAdminController
         $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $multimediaObject, $options);
 
+
         $session = $this->get('session');
         $session->set('admin/unesco/id', $multimediaObject->getId());
 
@@ -435,7 +436,10 @@ class UNESCOController extends Controller implements NewAdminController
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
                 array('_id' => new \MongoId($id))
             );
-            $this->get('session')->set('admin/unesco/id', $multimediaObject->getId());
+            if($multimediaObject) {
+                $this->get('session')->set('admin/unesco/id', $multimediaObject->getId());
+            }
+
         } else {
             $multimediaObject = null;
         }
