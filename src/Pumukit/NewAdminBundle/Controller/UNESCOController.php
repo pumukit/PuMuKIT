@@ -367,6 +367,9 @@ class UNESCOController extends Controller implements NewAdminController
         $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
         $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $multimediaObject, $options);
 
+        $session = $this->get('session');
+        $session->set('admin/unesco/id', $multimediaObject->getId());
+
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();

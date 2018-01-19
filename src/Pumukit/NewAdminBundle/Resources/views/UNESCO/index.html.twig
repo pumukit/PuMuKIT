@@ -109,9 +109,11 @@
                     },
                     success: function (response) {
                         $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
-                        $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
-                        $('#edit_mms').html('');
-                        $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+                        $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function(response) {
+                            console.log(response);
+                            $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                            $('#edit_mms').load("{{ path('pumukit_new_admin_unesco_edit', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                        });
                     }
                 });
                 return false;
