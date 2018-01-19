@@ -144,5 +144,11 @@
             window.init_mmobj_materialtags();
             $('#remember_save_mm').hide();
         });
+
+        window.update_list = function(seriesId)
+        {
+            $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+        }
+
     </script>
 {% endblock %}

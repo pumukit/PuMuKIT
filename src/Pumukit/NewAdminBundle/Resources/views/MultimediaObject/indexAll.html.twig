@@ -77,6 +77,11 @@
                 }
             });
             window.mmobjkeywords.initialize();
+
+            window.update_list = function(seriesId)
+            {
+                $('#list_mms').load("{{ path('pumukitnewadmin_mms_listall') }}");
+            }
         </script>
     {% endif %}
 {% endblock %}
