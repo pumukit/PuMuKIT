@@ -1930,8 +1930,9 @@ class MultimediaObject
      */
     private function updateDuration()
     {
-        if(count($this->tracks) == 0) {
+        if (count($this->tracks) == 0) {
             $this->setDuration(0);
+
             return;
         }
 
