@@ -29,7 +29,7 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 12662;102109;102;0;1;Culinary Arts;Artes culinarias;Artes culinarias;Kochkunst
 22662;102110;102;0;1;Visual Art;Arte Visual;Arte Visual;Bildende Kunst
 32662;102111;102;0;1;Fashion;Moda;Moda;Mode
-42662;102112;102;0;1;Media Arts;Artes audiovisuales;Artes audiovisuales;Medienkunst
+42662;102112;102;0;1;Media Arts;Artes audiovisuales;Artes audiovisuais;Medienkunst
 52662;102113;102;0;1;Photography;Fotografía;Fotografía;Fotografie
 2631;103;ITUNESU;0;1;Health & Medicine;Salud y Medicina;Saúde e Medicina;Gesundheit & Medizin
 2663;103100;103;0;1;Anatomy & Physiology;Anatomía y Fisiología;Anatomía e Fisioloxía;Anatomie & Physiologie
@@ -124,12 +124,12 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 2734;111104;111;0;1;Latin & Caribbean Studies;Estudios Latinos y Caribeños;Estudos Latinos e Caribeños;Lateinamerikanische & karibische Studien
 2735;111105;111;0;1;Middle Eastern Studies;Estudios de Oriente Medio;Estudos de Oriente Medio;Nahoststudien
 2736;111106;111;0;1;Women’s Studies;Estudios sobre mujeres;Estudos sobre mulleres;Frauenforschung
-12736;111107;111;0;1;African Studies;Estudios de África;Estudios de África;Afrikanistik
-22736;111108;111;0;1;American Studies;Estudios de América;Estudios de América;Amerikanistik
+12736;111107;111;0;1;African Studies;Estudios de África;Estudos de África;Afrikanistik
+22736;111108;111;0;1;American Studies;Estudios de América;Estudos de América;Amerikanistik
 32736;111109;111;0;1;Cross-cultural Studies;Estudios Transculturales;Estudos Transculturais;Interkulturelle Studien
 42736;111110;111;0;1;Immigration & Emigration;Inmigración y Emigración;Inmigración e Emigración;Ein- & Auswanderung
-52736;111111;111;0;1;Race & Ethnicity Studies;Estudios de raza y etnia;Estudios de raza e etnia.;Ethnizitätsforschung
-62736;111112;111;0;1;Sexuality Studies;Estudios de Sexsualidad;Estudios de Sexualidade;Sexualitätenforschung
+52736;111111;111;0;1;Race & Ethnicity Studies;Estudios de raza y etnia;Estudos de raza e etnia.;Ethnizitätsforschung
+62736;111112;111;0;1;Sexuality Studies;Estudios de Sexsualidad;Estudos de Sexualidade;Sexualitätenforschung
 2640;112;ITUNESU;0;1;Teaching & Learning;Enseñanza y Educación;Ensinanza e Educación;Lehren & Lernen
 2737;112100;112;0;1;Curriculum & Teaching;Curriculum y Enseñanza;Curriculum e Ensinanza;Curriculum & Lehre
 2738;112101;112;0;1;Educational Leadership;Liderazgo Educativo;Liderazgo Educativo;Führung im Bildungswesen
@@ -149,12 +149,12 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 2752;113107;113;0;1;Writing;Escritura;Escritura;Schreiben
 2753;114;ITUNESU;0;1;Philosophy;Filosofía;Filosofía;Philosophie
 2754;114100;114;0;1;Aesthetics;Estética;Estética;Ästhetik
-2755;114101;114;0;1;Epistemology;Epistemología;Epistemología;Epistemologie
+2755;114101;114;0;1;Epistemology;Epistemología;Epistemoloxía;Epistemologie
 2756;114102;114;0;1;Ethics;Ética;Ética;Ethik
 2757;114103;114;0;1;Metaphysics;Metafísica;Metafísica;Metaphysik
 2758;114104;114;0;1;Political Philosophy;Filosofía Política;Filosofía Política;Politische Philosophie
 2759;114105;114;0;1;Logic;Lógica;Lógica;Logik
-2760;114106;114;0;1;Philosophy of Language;Filosofía del Lenguaje;Filosofía do Linguaxe;Sprachphilosophie
+2760;114106;114;0;1;Philosophy of Language;Filosofía del Lenguaje;Filosofía da Linguaxe;Sprachphilosophie
 2761;114107;114;0;1;Philosophy of Religion;Filosofía de la Religión;Filosofía do Relixión;Religionsphilosophie
 2762;115;ITUNESU;0;1;Religion & Spirituality;Religión y Espiritualidad;Relixión e Espiritualidade;Religion & Spiritualität
 2763;115100;115;0;1;Buddhism;Budismo;Budismo;Buddhismus
@@ -162,9 +162,9 @@ id;cod;tree_parent_cod;metatag;display;name_en;name_es;name_gl;name_de
 2765;115102;115;0;1;Comparative Religion;Religión Comparativa;Relixión Comparativa;Vergleichende Religionswissenschaft
 2766;115103;115;0;1;Hinduism;Hinduismo;Hinduismo;Hinduismus
 2767;115104;115;0;1;Islam;Islam;Islam;Islam
-2768;115105;115;0;1;Judaism;Judaísmo;Judaísmo;Judaismus
-2769;115106;115;0;1;Other Religions;otras Religiones;Outras Relixiones;Andere Religionen
-2770;115107;115;0;1;Spirituality;Espiritualidad;Espiritualidad;Spiritualität
+2768;115105;115;0;1;Judaism;Judaísmo;Xudaísmo;Judaismus
+2769;115106;115;0;1;Other Religions;Otras Religiones;Outras Relixións;Andere Religionen
+2770;115107;115;0;1;Spirituality;Espiritualidad;Espiritualidade;Spiritualität
 2771;116;ITUNESU;0;1;Law & Politics;Ley y Política;Lei e Política;Recht & Politik
 2772;116100;116;0;1;Foreign Policy & International Relations;Política Exterior y Relaciones Internacionales;Política Exterior e Relacións Internacionais;"Außenpolitik & Internationale Beziehungen"
 2773;116101;116;0;1;Law;Ley;Lei;Recht
