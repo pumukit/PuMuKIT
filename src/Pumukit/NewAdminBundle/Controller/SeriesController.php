@@ -521,7 +521,7 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Returns true if the user has enough permissions to delete the $resource passed
      *
-     * This function will always return true if the user the MODIFY_ONWER permission. Otherwise,
+     * This function will always return true if the user has the MODIFY_ONWER permission. Otherwise,
      * it checks if it is the owner of the object (and there are no other owners) and returns false if not.
      * Since this is a series, that means it will check every object for ownerships.
      */
@@ -534,15 +534,18 @@ class SeriesController extends AdminController implements NewAdminController
             $role = $personService->getPersonalScopeRole();
             if(!$person)
                 return false;
-            $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $filter = $dm->getFilterCollection()->disable('backoffice');
+            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach($allMmobjs as $resource) {
                 if(!$resource->containsPersonWithRole($person, $role) ||
                    count($resource->getPeopleByRole($role, true)) > 1) {
+                    $filter = $dm->getFilterCollection()->enable('backoffice');
                     return false;
                 }
             }
+            $filter = $dm->getFilterCollection()->enable('backoffice');
         }
         return true;
     }
