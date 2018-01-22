@@ -662,6 +662,7 @@ class SeriesController extends AdminController implements NewAdminController
                 if (!$resource->containsPersonWithRole($person, $role) ||
                    count($resource->getPeopleByRole($role, true)) > 1) {
                     $filter = $dm->getFilterCollection()->enable('backoffice');
+
                     return false;
                 }
             }
