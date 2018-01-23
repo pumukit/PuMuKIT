@@ -1930,16 +1930,22 @@ class MultimediaObject
      */
     private function updateDuration()
     {
-        $maxDuration = 0;
+        if (count($this->tracks) == 0) {
+            $this->setDuration(0);
 
+            return;
+        }
+
+        $trackMinDuration = $this->tracks->first()->getDuration();
         foreach ($this->tracks as $mmTrack) {
-            if ($mmTrack->getDuration() > $this->getDuration()) {
-                $maxDuration = $mmTrack->getDuration();
+            if ($mmTrack->getDuration() < $trackMinDuration) {
+                $trackMinDuration = $mmTrack->getDuration();
             }
         }
 
-        if ($maxDuration !== $this->getDuration()) {
-            $this->setDuration($maxDuration);
+        $minDuration = $this->getDuration();
+        if ($minDuration > $trackMinDuration) {
+            $this->setDuration($trackMinDuration);
         }
     }
 

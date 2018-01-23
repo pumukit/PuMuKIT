@@ -109,9 +109,10 @@
                     },
                     success: function (response) {
                         $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
-                        $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
-                        $('#edit_mms').html('');
-                        $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+                        $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
+                            $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                            $('#edit_mms').load("{{ path('pumukit_new_admin_unesco_edit', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                        });
                     }
                 });
                 return false;
@@ -144,5 +145,10 @@
             window.init_mmobj_materialtags();
             $('#remember_save_mm').hide();
         });
+
+        window.update_list = function(seriesId) {
+            $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+        }
+
     </script>
 {% endblock %}
