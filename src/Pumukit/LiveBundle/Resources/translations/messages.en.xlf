@@ -129,6 +129,14 @@
         <source>There aren't events at this moment</source>
         <target>There aren't events at this moment</target>
       </trans-unit>
+      <trans-unit id="a1d7e26afd2f11e78be50ed5f89f718b" resname="email send">
+        <source>email send</source>
+        <target>email send</target>
+      </trans-unit>
+      <trans-unit id="d0568844fd2f11e78be50ed5f89f718b" resname="please verify form data">
+        <source>please verify form data</source>
+        <target>please verify form data</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
