@@ -133,7 +133,9 @@ class Builder extends ContainerAware
         }
 
         if ($authorizationChecker->isGranted('ROLE_ACCESS_SERIES_STYLE')) {
-            $tools = $menu->addChild('Tools');
+            if (!$tools) {
+                $tools = $menu->addChild('Tools');
+            }
             $tools->addChild('Series style', array('route' => 'pumukit_newadmin_series_styles'));
         }
 
