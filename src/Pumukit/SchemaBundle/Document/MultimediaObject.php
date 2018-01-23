@@ -52,7 +52,7 @@ class MultimediaObject
      * @MongoDB\Bool
      * @MongoDB\Index
      */
-    private $islive;
+    private $islive = false;
 
     /**
      * @var int
