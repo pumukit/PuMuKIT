@@ -120,7 +120,7 @@
                         onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
                         {{ mm.getRealDuration()| duration_string }}
-                        {% if mm.duration != mm.getRealDuration() %}
+                        {% if mm.getProperty('soft-editing-duration') %}
                             <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}
                     </td>
