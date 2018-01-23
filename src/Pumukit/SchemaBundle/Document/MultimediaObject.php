@@ -1936,18 +1936,17 @@ class MultimediaObject
             return;
         }
 
-        $maxDuration = $minDuration = $this->getDuration();
-
+        $minDuration = $this->getDuration();
+        $firstTrack = reset($this->tracks);
+        $trackMinDuration = $firstTrack[0]->getDuration();
         foreach ($this->tracks as $mmTrack) {
-            if ($mmTrack->getDuration() >= $minDuration) {
-                $maxDuration = $mmTrack->getDuration();
+            if ($mmTrack->getDuration() < $trackMinDuration) {
+                $trackMinDuration = $mmTrack->getDuration();
             }
         }
 
-        if ($minDuration < $maxDuration) {
-            $this->setDuration($minDuration);
-        } else {
-            $this->setDuration($maxDuration);
+        if ($minDuration > $trackMinDuration) {
+            $this->setDuration($trackMinDuration);
         }
     }
 
