@@ -113,7 +113,7 @@
                     <td headers="th-series"><a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.id }) }}">{{ mm.series }}</a></td>
 
                     <td headers="th-title" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
+                        ondblclick="dblclick_preview_mm('{{ mm.id }}')" style="word-break:break-all">
                         {{ mm.getTitle() }}
                     </td>
                     <td headers="th-duration" class="text-nowrap"
