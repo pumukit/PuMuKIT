@@ -30,14 +30,14 @@ class UpgradePumukitCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->initParameters($input, $output);
+        $this->initialize($input, $output);
         $this->output->writeln('************* Update model from 2.3.x to 2.4.x ***************');
         $this->initSeriesNewFields();
         $this->initMultimediaObjectNewFields();
         $this->output->writeln('End updating model.');
     }
 
-    protected function initParameters($input, $output)
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->input = $input;
