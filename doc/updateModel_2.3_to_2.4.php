@@ -61,6 +61,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         $all = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->update()
             ->multiple(true)
+            ->field('islive')->set(false)
             ->field('type')->set(MultimediaObject::TYPE_UNKNOWN)
             ->getQuery()
             ->execute();
