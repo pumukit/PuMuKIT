@@ -75,6 +75,15 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->execute();
         $this->output->writeln('MultimediaObject.type with master tracks without only audio initialized to TYPE_VIDEO (1): Modified '.$video['nModified'].' object(s)');
 
+        $external = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+            ->field('properties.opencast')->exists(true)
+            ->update()
+            ->multiple(true)
+            ->field('type')->set(MultimediaObject::TYPE_VIDEO)
+            ->getQuery()
+            ->execute();
+        $this->output->writeln('MultimediaObject.type with properties.opencast initialized to TYPE_VIDEO (3): Modified '.$external['nModified'].' object(s)');
+
         $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('master')->field('only_audio')->equals(true));
         $audio = $qb->update()
