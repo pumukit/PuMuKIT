@@ -26,10 +26,10 @@ class SchemaFilter extends BsonFilter
         }
         if ($this->hasParameter('display_track_tag')) {
             $criteria['$or'] = array(
-                                     array('tracks' => array('$elemMatch' => array('tags' => $this->getParameter('display_track_tag'), 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
-                                     array('properties.opencast' => array('$exists' => true)),
-                                     array('properties.externalplayer' => array('$exists' => true, '$ne' => '')),
-                                     );
+                array('tracks' => array('$elemMatch' => array('tags' => $this->getParameter('display_track_tag'), 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
+                array('properties.opencast' => array('$exists' => true)),
+                array('properties.externalplayer' => array('$exists' => true, '$ne' => '')),
+            );
         }
 
         return $criteria;
