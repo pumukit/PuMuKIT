@@ -123,7 +123,7 @@ class CASUserService
      */
     protected function getCASEmail($attributes)
     {
-        $mail = (isset($attributes[self::CAS_MAIL_KEY])) ?: null;
+        $mail = (isset($attributes[self::CAS_MAIL_KEY])) ? $attributes[self::CAS_MAIL_KEY] : null;
         if (!$mail) {
             throw new AuthenticationException("Mail can't be null");
         }
