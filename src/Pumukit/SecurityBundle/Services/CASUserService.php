@@ -141,7 +141,7 @@ class CASUserService
         $givenName = (isset($attributes[self::CAS_GIVENNAME_KEY])) ? $attributes[self::CAS_GIVENNAME_KEY] : '';
         $surName = (isset($attributes[self::CAS_SURNAME_KEY])) ? $attributes[self::CAS_SURNAME_KEY] : '';
 
-        return $givenName.$surName;
+        return $givenName.' '.$surName;
     }
 
     /**
