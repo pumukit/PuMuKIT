@@ -115,7 +115,7 @@ class Series
      * @var bool
      * @MongoDB\Boolean
      */
-    private $hide = true;
+    private $hide = false;
 
     /**
      * @var datetime

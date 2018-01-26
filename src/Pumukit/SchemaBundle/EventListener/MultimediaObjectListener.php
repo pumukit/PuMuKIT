@@ -21,9 +21,11 @@ class MultimediaObjectListener
     {
         $multimediaObject = $event->getMultimediaObject();
 
-        if ($multimediaObject->getProperty('externalplayer')) {
+        if ($multimediaObject->getProperty('opencast')) {
+            $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
+        } elseif ($multimediaObject->getProperty('externalplayer')) {
             $multimediaObject->setType(MultimediaObject::TYPE_EXTERNAL);
-        } elseif ($track = $multimediaObject->getMaster()) {
+        } elseif ($track = $multimediaObject->getMaster(false)) {
             if ($track->isOnlyAudio()) {
                 $multimediaObject->setType(MultimediaObject::TYPE_AUDIO);
             } else {

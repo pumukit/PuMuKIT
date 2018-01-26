@@ -9,6 +9,22 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 - Support for multimedia objects with an external player.
 - Fix WCAG2AA accessibility (a11y) errors.
 - HTML5 thumbnail generator
+- LiveBundle: Define live_type default value as WOWZA and not FMS.
+- EncoderBundle: Add 'downloadable' parameter to Profiles with default value as false.
+- NewAdminBundle: Add new paramaters advance_live_event, advance_live_event_create_serie_pic and advance_live_event_create_default_pic.
+- SchemaBundle: Add new Permission ROLE_ACCESS_SERIES_STYLE.
+- SchemaBundle: Add new Document and Repository for SeriesStyle.
+- SchemaBundle: SeriesDocument - Pic is defined as Traits.
+- SchemaBundle: SeriesDocument - Add new field 'sorting'. Default value as MANUAL.
+- SchemaBundle: SeriesDocument - Add new field 'hide'. Default value as true.
+- SchemaBundle: MultimediaObjectDocument - Add EmbeddedEvent.
+- SchemaBundle: MultimediaObjectDocument - Add EmbeddedSocial.
+- SchemaBundle: MultimediaObjectDocument - Pic, Link & Material are defined as Traits.
+- SchemaBundle: MultimediaObjectDocument - Add new field 'type'. Default value as UNKNOWN.
+- SchemaBundle: MultimediaObjectDocument - Add new field 'islive'. Default value as false.
+- SchemaBundle: MultimediaObjectDocument - Add new field 'comments'. No default value.
+- SchemaBundle: MultimediaObjectDocument - Use of new property 'externalplayer'.
+- SchemaBundle: TrackDocument - Add new field 'allowDownload'. Default value as false. Defined by the profile of the encoder bundle.
 
 ## [2.3.4] (YYYY-MM-DD) Unreleased
 - Bug fixes related to broadcastable_master ([BC note in encoder.yml](https://github.com/campusdomar/PuMuKIT2/commit/5ade04b001ae300646a8e9c810bc2e72e))
