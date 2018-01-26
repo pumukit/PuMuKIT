@@ -4,7 +4,7 @@
 
 set_time_limit(0);
 
-require __DIR__ . '/../app/autoload.php';
+require __DIR__.'/../app/autoload.php';
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -18,8 +18,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class UpgradePumukitCommand extends ContainerAwareCommand
 {
     private $dm;
-    private $input;
-    private $output;
 
     protected function configure()
     {
@@ -30,34 +28,37 @@ class UpgradePumukitCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->initialize($input, $output);
-        $this->output->writeln('************* Update model from 2.3.x to 2.4.x ***************');
-        $this->initSeriesNewFields();
-        $this->initMultimediaObjectNewFields();
-        $this->output->writeln('End updating model.');
+        $output->writeln('************* Update model from 2.3.x to 2.4.x ***************');
+        $seriesMessage = $this->initSeriesNewFields();
+        $output->writeln($seriesMessage);
+        $multimediaObjectMessages = $this->initMultimediaObjectNewFields();
+        foreach ($multimediaObjectMessages as $message) {
+            $output->writeln($message);
+        }
+        $output->writeln('End updating model.');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->input = $input;
-        $this->output = $output;
     }
 
     protected function initSeriesNewFields()
     {
-        $this->dm->createQueryBuilder('PumukitSchemaBundle:Series')
+        $all = $this->dm->createQueryBuilder('PumukitSchemaBundle:Series')
             ->update()
             ->multiple(true)
             ->field('hide')->set(false)
             ->field('sorting')->set(Series::SORT_MANUAL)
             ->getQuery()
             ->execute();
-        $this->output->writeln('Series.hide initialed to false and Series.sorting to SORT_MANUAL (ascendent rank)');
+        return 'Series.hide initialized to false and Series.sorting to SORT_MANUAL (ascendent rank): Modified '.$all['nModified'].' serie(s)';
     }
 
     protected function initMultimediaObjectNewFields()
     {
+        $messages = array();
+
         $all = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->update()
             ->multiple(true)
@@ -65,7 +66,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->field('type')->set(MultimediaObject::TYPE_UNKNOWN)
             ->getQuery()
             ->execute();
-        $this->output->writeln('MultimediaObject.type initialized to TYPE_UNKNOWN (0): Modified '.$all['nModified'].' object(s)');
+        $messages[] = 'MultimediaObject.type initialized to TYPE_UNKNOWN (0): Modified '.$all['nModified'].' object(s)';
 
         $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('master')->field('only_audio')->equals(false));
@@ -74,7 +75,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->field('type')->set(MultimediaObject::TYPE_VIDEO)
             ->getQuery()
             ->execute();
-        $this->output->writeln('MultimediaObject.type with master tracks without only audio initialized to TYPE_VIDEO (1): Modified '.$video['nModified'].' object(s)');
+        $messages[] = 'MultimediaObject.type with master tracks without only audio initialized to TYPE_VIDEO (1): Modified '.$video['nModified'].' object(s)';
 
         $external = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->field('properties.opencast')->exists(true)
@@ -83,7 +84,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->field('type')->set(MultimediaObject::TYPE_VIDEO)
             ->getQuery()
             ->execute();
-        $this->output->writeln('MultimediaObject.type with properties.opencast initialized to TYPE_VIDEO (1): Modified '.$external['nModified'].' object(s)');
+        $messages[] = 'MultimediaObject.type with properties.opencast initialized to TYPE_VIDEO (1): Modified '.$external['nModified'].' object(s)';
 
         $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
         $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('master')->field('only_audio')->equals(true));
@@ -92,7 +93,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->field('type')->set(MultimediaObject::TYPE_AUDIO)
             ->getQuery()
             ->execute();
-        $this->output->writeln('MultimediaObject.type with master tracks with only audio initialized to TYPE_AUDIO (2): Modified '.$audio['nModified'].' object(s)');
+        $messages[] = 'MultimediaObject.type with master tracks with only audio initialized to TYPE_AUDIO (2): Modified '.$audio['nModified'].' object(s)';
 
         $external = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->field('properties.externalplayer')->exists(true)
@@ -102,7 +103,9 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->field('type')->set(MultimediaObject::TYPE_EXTERNAL)
             ->getQuery()
             ->execute();
-        $this->output->writeln('MultimediaObject.type with properties.externalplayer not empty initialized to TYPE_EXTERNAL (3): Modified '.$external['nModified'].' object(s)');
+        $messages[] = 'MultimediaObject.type with properties.externalplayer not empty initialized to TYPE_EXTERNAL (3): Modified '.$external['nModified'].' object(s)';
+
+        return $messages;
     }
 }
 
