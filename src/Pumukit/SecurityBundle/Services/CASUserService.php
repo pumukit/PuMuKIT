@@ -82,15 +82,22 @@ class CASUserService
 
     /**
      * @param User $user
+     *
+     * @throws \Exception
      */
     public function updateUser(User $user)
     {
-        $attributes = $this->getCASAttributes();
+        if (self::ORIGIN === $user->getOrigin()) {
+            $attributes = $this->getCASAttributes();
 
-        if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
-            $user->setEmail($attributes[self::CAS_MAIL_KEY]);
-            $this->dm->persist($user);
-            $this->dm->flush();
+            $casFullName = $this->getCASFullName($attributes);
+            $user->setFullname($casFullName);
+
+            if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
+                $user->setEmail($attributes[self::CAS_MAIL_KEY]);
+                $this->dm->persist($user);
+                $this->dm->flush();
+            }
         }
     }
 
