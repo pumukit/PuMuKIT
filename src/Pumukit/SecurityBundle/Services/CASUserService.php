@@ -174,7 +174,7 @@ class CASUserService
      */
     protected function setCASGroup($attributes, $user)
     {
-        // TODO: Delete old cas groups and set new group. 
+        // TODO: Delete old cas groups and set new group.
         if (isset($attributes[self::CAS_GROUP_KEY])) {
             $group = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
             $this->userService->addGroup($group, $user, true, false);
