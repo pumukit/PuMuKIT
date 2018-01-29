@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class LogController extends Controller implements AdminController
 {
@@ -29,12 +31,18 @@ class LogController extends Controller implements AdminController
         }
 
         $pathFile = realpath($this->container->getParameter('kernel.root_dir').'/../app/logs/'.$sFile);
-        $pathFile = @file_get_contents($pathFile);
 
         if (false === $pathFile) {
             return new JsonResponse(array('error' => 'Error reading log file'.$pathFile), 500);
         }
 
-        return new Response($pathFile, 200, array('Content-Type' => 'application/json'));
+        $response = new BinaryFileResponse($pathFile);
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "log_$env.txt"
+        );
+
+        return $response;
     }
 }
