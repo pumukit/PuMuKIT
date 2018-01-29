@@ -356,4 +356,55 @@ class AdminController extends ResourceController implements NewAdminController
 
         return $allGroups;
     }
+
+    public function exportAction(Request $request)
+    {
+        $languages = $this->getParameter('pumukit2.locales');
+
+        $csv = array('id', 'cod', 'xml', 'display');
+        foreach ($languages as $language) {
+            $csv[] = 'name_'.$language;
+        }
+
+        foreach ($languages as $language) {
+            $csv[] = 'text_'.$language;
+        }
+
+        $csv = implode(';', $csv);
+        $csv = $csv.PHP_EOL;
+
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+        if (!$roles) {
+            throw new \Exception('Not roles found');
+        }
+
+        $i = 1;
+        foreach ($roles as $rol) {
+            $dataCSV = array();
+            $dataCSV[] = $i;
+            $dataCSV[] = $rol->getCod();
+            $dataCSV[] = $rol->getXML();
+            $dataCSV[] = $rol->getDisplay();
+            foreach ($languages as $language) {
+                $dataCSV[] = $rol->getName($language);
+            }
+
+            foreach ($languages as $language) {
+                $dataCSV[] = $rol->getText($language);
+            }
+
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+
+            ++$i;
+        }
+
+        $fp = fopen('roles_i18n.csv', 'w');
+        fputcsv($fp, $csv);
+        fclose($fp);
+
+        return array();
+    }
 }
