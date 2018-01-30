@@ -3,9 +3,11 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class AdminController extends ResourceController implements NewAdminController
 {
@@ -357,7 +359,10 @@ class AdminController extends ResourceController implements NewAdminController
         return $allGroups;
     }
 
-    public function exportAction(Request $request)
+    /**
+     * @throws \Exception
+     */
+    public function exportRolesAction()
     {
         $languages = $this->getParameter('pumukit2.locales');
 
@@ -386,7 +391,7 @@ class AdminController extends ResourceController implements NewAdminController
             $dataCSV[] = $i;
             $dataCSV[] = $rol->getCod();
             $dataCSV[] = $rol->getXML();
-            $dataCSV[] = $rol->getDisplay();
+            $dataCSV[] = (int) $rol->getDisplay();
             foreach ($languages as $language) {
                 $dataCSV[] = $rol->getName($language);
             }
@@ -401,10 +406,35 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        $fp = fopen('roles_i18n.csv', 'w');
-        fputcsv($fp, $csv);
-        fclose($fp);
+        $file = $this->getPathTmp() . '/roles_i18n.csv';
 
-        return array();
+        $this->writeFileToExport($file, $csv);
+
+        $this->downloadFileExported($file);
+
+    }
+    
+    private function getPathTmp()
+    {
+        return realpath($this->container->getParameter('kernel.root_dir').'/../web/storage/tmp');
+    }
+
+    private function writeFileToExport($file, $data)
+    {
+        $fp = fopen($file, 'w');
+        fputs($fp, $data);
+        fclose($fp);
+    }
+
+    private function downloadFileExported($file)
+    {
+        $response = new BinaryFileResponse($file);
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "roles_i18n.csv"
+        );
+
+        return $response;
     }
 }
