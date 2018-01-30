@@ -17,7 +17,7 @@
                 <span>{% trans %} IFRAME: {% endtrans %}</span>
                 {% set trackid = (track.id is defined)?track.id:null %}
                 {% set iframe_value %}{% spaceless %}
-                    <iframe src='{{ url('pumukit_live_event_id', {'id':multimediaObject.id, 'track_id': trackid}) }}'
+                    <iframe src='{{ url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackid}) }}'
                             {{- " id='pumukitiframe'" -}}
                             {{- " frameborder='0'" -}}
                             {{- " border='0'" -}}
