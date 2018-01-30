@@ -13,6 +13,7 @@
     <th colspan="2" width="5%" id="th-icons"></th>
     <th id="th-name">{% trans %}Name{% endtrans %}</th>
     <th id="th-url">{% trans %}URL{% endtrans %}</th>
+    <th id="th-url">{% trans %}Source Name{% endtrans %}</th>
     <th width="1%" id="th-resolution">{% trans %}Resolution{% endtrans %}</th>
     <th width="8%" id="th-type">{% trans %}Type{% endtrans %}</th>
       </tr>
@@ -20,7 +21,7 @@
     <tbody>
       {% if lives|length == 0 %}
       <tr>
-    <td colspan="9" headers="th-checkbox th-icons th-icons th-name th-resolution th-type th-url">
+    <td colspan="10" headers="th-checkbox th-icons th-icons th-name th-resolution th-type th-url">
       {% trans %}There are no live channels with those values.{% endtrans %}
     </td>
       </tr>
@@ -50,6 +51,9 @@
             <td headers="th-url" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.url }}
             </td>
+            <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+              {{ live.source_name }}
+            </td>
             <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getWidth }}x{{ live.getHeight }}
             </td>
@@ -62,7 +66,7 @@
     </tbody>
     <tfoot>
     <tr>
-      <td colspan="9" class="foot-td">
+      <td colspan="10" class="foot-td">
         {# TODO review column size to be responsive #}
         {% set column = ((lives.getNbPages/5)|round(0, 'floor')) %}
         <div class="col-md-8">
