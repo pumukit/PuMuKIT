@@ -406,11 +406,12 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        $file = $this->getPathTmp().'/roles_i18n.csv';
+        $filename = 'roles_i18n.csv';
+        $file = $this->getPathTmp().'/'.$filename;
 
         $this->writeFileToExport($file, $csv);
 
-        $this->downloadFileExported($file);
+        return $this->downloadFileExported($file, $filename);
     }
 
     /**
@@ -418,9 +419,9 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function exportPermissionProfilesAction()
     {
-        $languages = $this->getParameter('pumukit2.locales');
-
         $csv = array('id', 'name', 'system', 'default', 'scope', 'permissions');
+        $csv = implode(';', $csv);
+        $csv = $csv.PHP_EOL;
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
@@ -434,25 +435,30 @@ class AdminController extends ResourceController implements NewAdminController
             $dataCSV = array();
             $dataCSV[] = $i;
             $dataCSV[] = $pProfile->getName();
-            $dataCSV[] = (int) $pProfile->getSistem();
+            $dataCSV[] = (int) $pProfile->getSystem();
             $dataCSV[] = (int) $pProfile->getDefault();
-            $dataCSV[] = (int) $pProfile->getScope();
+            $dataCSV[] = $pProfile->getScope();
 
-            foreach ($pProfile->getPermissions() as $permision) {
-                $dataCSV[] = $rol->getName($language);
+            $permission = array();
+            foreach ($pProfile->getPermissions() as $permissionProfile) {
+                $permission[] = $permissionProfile;
             }
 
+            $dataPermission = implode(',', $permission);
+
+            $dataCSV[] = $dataPermission;
             $data = implode(';', $dataCSV);
             $csv .= $data.PHP_EOL;
 
             ++$i;
         }
 
-        $file = $this->getPathTmp().'/roles_i18n.csv';
+        $filename = 'permissionprofiles.csv';
+        $file = $this->getPathTmp().'/'.$filename;
 
         $this->writeFileToExport($file, $csv);
 
-        $this->downloadFileExported($file);
+        return $this->downloadFileExported($file, $filename);
     }
 
     private function getPathTmp()
@@ -467,13 +473,13 @@ class AdminController extends ResourceController implements NewAdminController
         fclose($fp);
     }
 
-    private function downloadFileExported($file)
+    private function downloadFileExported($file, $filename)
     {
         $response = new BinaryFileResponse($file);
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'roles_i18n.csv'
+            $filename
         );
 
         return $response;
