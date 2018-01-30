@@ -52,7 +52,7 @@
               {{ live.url }}
             </td>
             <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
-              {{ live.source_name }}
+              {{ live.getSourceName() }}
             </td>
             <td headers="th-resolution" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
               {{ live.getWidth }}x{{ live.getHeight }}
