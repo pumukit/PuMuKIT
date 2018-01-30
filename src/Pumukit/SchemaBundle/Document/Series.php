@@ -112,10 +112,14 @@ class Series
     private $announce = false;
 
     /**
+     * When series is hide and we access to the serie with the mmobj->getSeries(),
+     * it creates a pseudo serie with default values (the webtv filter dont permit to access hide series),
+     * and we want to force that the serie will be hide.
+     *
      * @var bool
      * @MongoDB\Boolean
      */
-    private $hide = false;
+    private $hide = true;
 
     /**
      * @var datetime
