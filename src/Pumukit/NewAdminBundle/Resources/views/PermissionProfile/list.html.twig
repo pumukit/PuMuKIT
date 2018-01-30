@@ -35,7 +35,7 @@
         <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
         <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
           {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary">{% trans %}Export{% endtrans %}</a>
+            <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
           {% endif %}
       </div>
     </div>

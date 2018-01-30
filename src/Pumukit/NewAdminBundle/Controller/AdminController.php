@@ -3,11 +3,9 @@
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class AdminController extends ResourceController implements NewAdminController
 {
@@ -406,12 +404,9 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        $filename = 'roles_i18n.csv';
-        $file = $this->getPathTmp().'/'.$filename;
+        header('Content-Disposition: attachment; filename="roles_i18n.csv"');
 
-        $this->writeFileToExport($file, $csv);
-
-        return $this->downloadFileExported($file, $filename);
+        return new Response($csv);
     }
 
     /**
@@ -453,35 +448,8 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        $filename = 'permissionprofiles.csv';
-        $file = $this->getPathTmp().'/'.$filename;
+        header('Content-Disposition: attachment; filename="permissionprofile.csv"');
 
-        $this->writeFileToExport($file, $csv);
-
-        return $this->downloadFileExported($file, $filename);
-    }
-
-    private function getPathTmp()
-    {
-        return realpath($this->container->getParameter('kernel.root_dir').'/../web/storage/tmp');
-    }
-
-    private function writeFileToExport($file, $data)
-    {
-        $fp = fopen($file, 'w');
-        fputs($fp, $data);
-        fclose($fp);
-    }
-
-    private function downloadFileExported($file, $filename)
-    {
-        $response = new BinaryFileResponse($file);
-        $response->headers->set('Content-Type', 'text/plain');
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $filename
-        );
-
-        return $response;
+        return new Response($csv);
     }
 }
