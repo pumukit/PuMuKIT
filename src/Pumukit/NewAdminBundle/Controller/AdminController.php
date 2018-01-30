@@ -406,14 +406,55 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        $file = $this->getPathTmp() . '/roles_i18n.csv';
+        $file = $this->getPathTmp().'/roles_i18n.csv';
 
         $this->writeFileToExport($file, $csv);
 
         $this->downloadFileExported($file);
-
     }
-    
+
+    /**
+     * @throws \Exception
+     */
+    public function exportPermissionProfilesAction()
+    {
+        $languages = $this->getParameter('pumukit2.locales');
+
+        $csv = array('id', 'name', 'system', 'default', 'scope', 'permissions');
+
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $permissionProfiles = $dm->getRepository('PumukitSchemaBundle:PermissionProfile')->findAll();
+        if (!$permissionProfiles) {
+            throw new \Exception('Not permission profiles found');
+        }
+
+        $i = 1;
+        foreach ($permissionProfiles as $pProfile) {
+            $dataCSV = array();
+            $dataCSV[] = $i;
+            $dataCSV[] = $pProfile->getName();
+            $dataCSV[] = (int) $pProfile->getSistem();
+            $dataCSV[] = (int) $pProfile->getDefault();
+            $dataCSV[] = (int) $pProfile->getScope();
+
+            foreach ($pProfile->getPermissions() as $permision) {
+                $dataCSV[] = $rol->getName($language);
+            }
+
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+
+            ++$i;
+        }
+
+        $file = $this->getPathTmp().'/roles_i18n.csv';
+
+        $this->writeFileToExport($file, $csv);
+
+        $this->downloadFileExported($file);
+    }
+
     private function getPathTmp()
     {
         return realpath($this->container->getParameter('kernel.root_dir').'/../web/storage/tmp');
@@ -432,7 +473,7 @@ class AdminController extends ResourceController implements NewAdminController
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "roles_i18n.csv"
+            'roles_i18n.csv'
         );
 
         return $response;
