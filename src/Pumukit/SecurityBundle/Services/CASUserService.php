@@ -96,8 +96,8 @@ class CASUserService
             if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
                 $user->setEmail($attributes[self::CAS_MAIL_KEY]);
             }
+
             $this->dm->persist($user);
-            $this->dm->flush();
 
             $this->userService->update($user, true, false);
         }
