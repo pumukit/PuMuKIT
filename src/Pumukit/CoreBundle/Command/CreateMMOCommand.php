@@ -74,7 +74,9 @@ EOT
             sleep(2);
         }
 
-        if (strpos($path, 'INBOX_MASTER_COPY') !== false) {
+        if (strpos($path, 'INBOX_MASTER_BROADCASTABLE') !== false) {
+            $profile = 'broadcastable_master';
+        } elseif (strpos($path, 'INBOX_MASTER_COPY') !== false) {
             $profile = 'master_copy';
         } elseif (strpos($path, 'INBOX_MASTER_H264') !== false) {
             $profile = 'master_video_h264';
