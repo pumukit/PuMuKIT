@@ -567,18 +567,27 @@ class SeriesController extends AdminController implements NewAdminController
                 return false;
             }
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $filter = $dm->getFilterCollection()->disable('backoffice');
+
+            $enableFilter = false;
+            if ($dm->getFilterCollection()->isEnabled('backoffice')) {
+                $enableFilter = true;
+                $filter = $dm->getFilterCollection()->disable('backoffice');
+            }
             $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role) ||
                    count($resource->getPeopleByRole($role, true)) > 1) {
-                    $filter = $dm->getFilterCollection()->enable('backoffice');
+                    if ($enableFilter) {
+                        $filter = $dm->getFilterCollection()->enable('backoffice');
+                    }
 
                     return false;
                 }
             }
-            $filter = $dm->getFilterCollection()->enable('backoffice');
+            if ($enableFilter) {
+                $filter = $dm->getFilterCollection()->enable('backoffice');
+            }
         }
 
         return true;
