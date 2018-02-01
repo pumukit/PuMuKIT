@@ -51,7 +51,14 @@
 
     } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
         var nextSessionStarts = "{% if nextSessions is not empty %}{{ firstNextSession }}{% endif %}";
-        date = new Date(parseInt(nextSessionStarts));
+        var date = new Date(parseInt(nextSessionStarts));
+        var secondsToEvent = {% if secondsToEvent is not null %}{{ secondsToEvent }}{% endif %};
+        if(secondsToEvent) {
+            var rand = 1000*Math.floor((Math.random()*60));
+            var date = new Date().getTime() + secondsToEvent + rand;
+            date = new Date(date);
+        }
+
         $("#directo-{{ id }}").html(background);
         $("#warning").countdown(date, function(event) {
             $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));

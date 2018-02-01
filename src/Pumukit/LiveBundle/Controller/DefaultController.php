@@ -170,9 +170,16 @@ class DefaultController extends Controller
             }
         }
 
+        $now = new \DateTime();
+        $secondsToEvent = null;
+        if (!empty($firstNextSession)) {
+            $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
+        }
+
         return array(
             'multimediaObject' => $multimediaObject,
             'firstNextSession' => $firstNextSession,
+            'secondsToEvent' => $secondsToEvent,
             'firstNowSessionEnds' => $firstNowSessionEnds,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
