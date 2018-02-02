@@ -62,7 +62,15 @@ class EventsType extends AbstractType
             ->add('duration', IntegerType::class,
                 array(
                     'required' => false,
-                    'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ));
+                    'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
+            ->add('i18n_already_held_message', TextI18nType::class,
+                array(
+                    'required' => false,
+                    'label' => $this->translator->trans('Already Held Message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+            ->add('i18n_not_yet_held_message', TextI18nType::class,
+                array(
+                    'required' => false,
+                    'label' => $this->translator->trans('Not Yet Held Message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

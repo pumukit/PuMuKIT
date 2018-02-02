@@ -95,6 +95,20 @@ class EmbeddedEvent
     private $url;
 
     /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $alreadyHeldMessage = array('en' => '');
+
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $notYetHeldMessage = array('en' => '');
+
+    /**
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
@@ -413,6 +427,106 @@ class EmbeddedEvent
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * Set already held message.
+     *
+     * @param string $message
+     */
+    public function setAlreadyHeldMessage($message, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->alreadyHeldMessage[$locale] = $message;
+    }
+
+    /**
+     * Get Already Held Message.
+     *
+     * @return string
+     */
+    public function getAlreadyHeldMessage($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->alreadyHeldMessage[$locale])) {
+            return '';
+        }
+
+        return $this->alreadyHeldMessage[$locale];
+    }
+
+    /**
+     * Set I18n Already Held Message.
+     *
+     * @param array $message
+     */
+    public function setI18nAlreadyHeldMessage(array $message)
+    {
+        $this->alreadyHeldMessage = $message;
+    }
+
+    /**
+     * Get I18n Already Held Message.
+     *
+     * @return array
+     */
+    public function getI18nAlreadyHeldMessage()
+    {
+        return $this->alreadyHeldMessage;
+    }
+
+    /**
+     * Set Not Yet held message.
+     *
+     * @param string $message
+     */
+    public function setNotYetHeldMessage($message, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->notYetHeldMessage[$locale] = $message;
+    }
+
+    /**
+     * Get Not Yet Held Message.
+     *
+     * @return string
+     */
+    public function getNotYetHeldMessage($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->notYetHeldMessage[$locale])) {
+            return '';
+        }
+
+        return $this->notYetHeldMessage[$locale];
+    }
+
+    /**
+     * Set I18n Not Yet Held Message.
+     *
+     * @param array $message
+     */
+    public function setI18nNotYetHeldMessage(array $message)
+    {
+        $this->notYetHeldMessage = $message;
+    }
+
+    /**
+     * Get I18n Not Yet Held Message.
+     *
+     * @return array
+     */
+    public function getI18nNotYetHeldMessage()
+    {
+        return $this->notYetHeldMessage;
     }
 
     /**
