@@ -28,7 +28,7 @@
         "friendsofsymfony/user-bundle": "~1.3",
         "sylius/resource-bundle": "0.12",
         "knplabs/knp-menu-bundle": "~2.0",
-        "gedmo/doctrine-extensions": "dev-master",
+        "teltek/doctrine-extensions": "dev-master",
         "jasig/phpcas": "1.3.*",
         "suncat/mobile-detect-bundle": "0.10.*",
         "vipx/bot-detect-bundle": "^2.0",
@@ -72,9 +72,5 @@
             }
         },
         "branch-alias": null
-    },
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/rubenrua/doctrineextensions"
-    }]
+    }
 }
