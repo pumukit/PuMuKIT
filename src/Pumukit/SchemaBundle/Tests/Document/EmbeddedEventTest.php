@@ -3,27 +3,25 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
-use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\LiveBundle\Document\Live;
 
 class EmbeddedEventTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetterAndGetter()
     {
-        $name = "Embedded Event 1";
-        $description = "Description of the event";
-        $author = "Author of the event";
-        $producer = "Producer of the event";
-        $place = "Place of the event";
-        $date = new \DateTime("2018-02-01 09:00:00");
+        $name = 'Embedded Event 1';
+        $description = 'Description of the event';
+        $author = 'Author of the event';
+        $producer = 'Producer of the event';
+        $place = 'Place of the event';
+        $date = new \DateTime('2018-02-01 09:00:00');
         $duration = 90;
         $display = true;
         $create_serial = false;
         $embeddedEventSession = new ArrayCollection();
         $live = new Live();
-        $url = "https://test.com";
+        $url = 'https://test.com';
         $alreadyHeldMessage = array('en' => 'The event has been already held.');
         $notYetHeldMessage = array('en' => 'The event has not yet been alread held.');
         $locale = 'en';
