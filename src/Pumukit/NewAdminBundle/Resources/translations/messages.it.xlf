@@ -3327,6 +3327,14 @@
         <source>Edit Templates</source>
         <target xml:lang="it" state="needs-translation">Edit Templates</target>
       </trans-unit>
+      <trans-unit id="4" resname="Already held event message">
+        <source>Already held event message</source>
+        <target xml:lang="it" state="needs-translation">>Already held event message</target>
+      </trans-unit>
+      <trans-unit id="5" resname="Not yet held event message">
+        <source>Not yet held event message</source>
+        <target xml:lang="it" state="needs-translation">>Not yet held event message</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

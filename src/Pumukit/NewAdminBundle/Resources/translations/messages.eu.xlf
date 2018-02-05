@@ -4850,6 +4850,13 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       <trans-unit id="b0415d954b4db90d746a00c0a3e4ff28" resname="Modify all multimedia objects status">
         <source>Modify all multimedia objects status</source>
         <target>Modificar estado de objectos multimedia</target>
+      <trans-unit id="4" resname="Already held event message">
+        <source>Already held event message</source>
+        <target xml:lang="eu" state="needs-translation">>Already held event message</target>
+      </trans-unit>
+      <trans-unit id="5" resname="Not yet held event message">
+        <source>Not yet held event message</source>
+        <target xml:lang="eu" state="needs-translation">>Not yet held event message</target>
       </trans-unit>
     </body>
   </file>

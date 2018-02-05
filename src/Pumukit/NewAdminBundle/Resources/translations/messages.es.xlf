@@ -3528,6 +3528,14 @@
                 <source>Show empty series</source>
                 <target>Ver series vacías</target>
             </trans-unit>
+            <trans-unit id="4" resname="Already held event message">
+              <source>Already held event message</source>
+              <target xml:lang="es-ES" state="translated">Mensaje de evento ya emitido</target>
+            </trans-unit>
+            <trans-unit id="5" resname="Not yet held event message">
+              <source>Not yet held event message</source>
+              <target xml:lang="es-ES" state="translated">Mensaje de evento todavía no emitido</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

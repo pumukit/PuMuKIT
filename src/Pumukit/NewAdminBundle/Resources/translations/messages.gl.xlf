@@ -3351,6 +3351,13 @@
       <trans-unit id="d75d4b5790fbb3fd7b0062324a547d96" resname="Allow download">
         <source>Allow download</source>
         <target xml:lang="es-ES" state="translated">Permitir descarga</target>
+      <trans-unit id="4" resname="Already held event message">
+        <source>Already held event message</source>
+        <target xml:lang="gl" state="needs-translation">>Already held event message</target>
+      </trans-unit>
+      <trans-unit id="5" resname="Not yet held event message">
+        <source>Not yet held event message</source>
+        <target xml:lang="gl" state="needs-translation">>Not yet held event message</target>
       </trans-unit>
       <trans-unit id="d05e95d00fe411e8b6420ed5f89f718b" resname="Today events list">
         <source>Today events list</source>

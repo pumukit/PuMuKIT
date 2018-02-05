@@ -3426,6 +3426,14 @@
                 <source>Show empty series</source>
                 <target>Show empty series</target>
             </trans-unit>
-        </body>
+            <trans-unit id="4" resname="Already held event message">
+              <source>Already held event message</source>
+              <target>Already held event message</target>
+            </trans-unit>
+            <trans-unit id="5" resname="Not yet held event message">
+              <source>Not yet held event message</source>
+              <target>Not yet held event message</target>
+            </trans-unit>
+          </body>
     </file>
 </xliff>
