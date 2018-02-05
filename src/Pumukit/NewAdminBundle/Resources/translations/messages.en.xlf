@@ -3326,6 +3326,10 @@
         <source>Edit Templates</source>
         <target>Edit Templates</target>
       </trans-unit>
+      <trans-unit id="d75d4b5790fbb3fd7b0062324a547d96" resname="Allow download">
+        <source>Allow download</source>
+        <target xml:lang="es-ES" state="translated">Allow download</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
