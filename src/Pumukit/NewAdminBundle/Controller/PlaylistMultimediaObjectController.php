@@ -252,10 +252,6 @@ class PlaylistMultimediaObjectController extends Controller
         if (!$mmobjIds) {
             throw $this->createNotFoundException();
         }
-        //Sanity check. (May be remove if we want to mix series and playlists in the future.)
-        if ($playlist->getType() != Series::TYPE_PLAYLIST) {
-            throw $this->createNotFoundException();
-        }
 
         if ('string' === gettype($mmobjIds)) {
             $mmobjIds = json_decode($mmobjIds, true);
@@ -280,10 +276,6 @@ class PlaylistMultimediaObjectController extends Controller
     {
         $mmobjIds = $request->query->get('ids', '');
         if (!$mmobjIds) {
-            throw $this->createNotFoundException();
-        }
-        //Sanity check. (May be remove if we want to mix series and playlists in the future.)
-        if ($playlist->getType() != Series::TYPE_PLAYLIST) {
             throw $this->createNotFoundException();
         }
 
@@ -314,6 +306,9 @@ class PlaylistMultimediaObjectController extends Controller
         if (!$request->query->has('mm_id')) {
             throw new \Exception('The request is missing the \'mm_id\' parameter');
         }
+
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $playlistEmbed = $series->getPlaylist();
         $mmobjId = $request->query->get('mm_id');

@@ -93,6 +93,27 @@ class Playlist
     }
 
     /**
+     * Get Published mmobjs
+     * try catch is used to avoid filter issues.
+     *
+     * @return array
+     */
+    public function getPublishedMultimediaObjects()
+    {
+        $mmobjs = array();
+        foreach ($this->multimedia_objects as $mmo) {
+            try {
+                if ($mmo->isPublished()) {
+                    $mmobjs[] = $mmo;
+                }
+            } catch (\Exception $exception) {
+            }
+        }
+
+        return $mmobjs;
+    }
+
+    /**
      * Get the mongo id list of multimedia objects.
      *
      * @return ArrayCollection
