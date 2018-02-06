@@ -1667,6 +1667,80 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * TODO review and move to EmbeddedEventSessionService.
+     *
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function findFutureEvents($multimediaObjectId = null, $limit = 0)
+    {
+        $dm = $this->getDocumentManager();
+        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+
+        if ($multimediaObjectId) {
+            $pipeline[] = array(
+                '$match' => array(
+                    '_id' => new \MongoId($multimediaObjectId),
+                    'islive' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        } else {
+            $pipeline[] = array(
+                '$match' => array(
+                    'islive' => true,
+                    'embeddedEvent.display' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        }
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$gt' => new \MongoDate()),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                    ),
+                ),
+            ),
+        );
+
+        if ($limit !== 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        return $collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * TODO review and move to EmbeddedEventSessionService.
      */
     public function findEventsMenu()
     {
