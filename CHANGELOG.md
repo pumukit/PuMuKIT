@@ -5,7 +5,7 @@ To get the diff for a specific change, go to https://github.com/campusdomar/PuMu
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
 
-## [2.4.0][Unreleased] (YYYY-MM-DD)
+## [2.4.0](https://github.com/campusdomar/PuMuKIT2/compare/2.3.3...2.4.0) (2018-02-06)
 - Support for multimedia objects with an external player.
 - Fix WCAG2AA accessibility (a11y) errors.
 - HTML5 thumbnail generator
