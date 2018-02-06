@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+//use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -27,6 +27,11 @@ class LocaleListener implements EventSubscriberInterface
         $this->pumukit2Locales = $pumukit2Locales;
     }
 
+    /**
+     * @param GetResponseEvent $event
+     *
+     * @throws \Exception
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         //if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
@@ -36,9 +41,19 @@ class LocaleListener implements EventSubscriberInterface
         $this->fixRequestLocale($event->getRequest());
     }
 
+    /**
+     * @param Request $request
+     *
+     * @throws \Exception
+     */
     public function fixRequestLocale(Request $request)
     {
         $requestLocale = $request->attributes->get('_locale');
+
+        if (null === $request->getSession()) {
+            return;
+        }
+
         $sessionLocale = $request->getSession()->get('_locale');
 
         // try to see if the locale has been set as a _locale routing parameter
@@ -70,6 +85,9 @@ class LocaleListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $document = $args->getDocument();
