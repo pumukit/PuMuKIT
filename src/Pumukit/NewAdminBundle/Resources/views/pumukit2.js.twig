@@ -2118,6 +2118,14 @@ $(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
     return false;
 });
 
+function checkRecordDateAndPublicDate(recordDate, publicDate) {
+    if (publicDate.getTime() < recordDate.getTime()){
+        var message = '{% trans %}Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.{% endtrans %}';
+        no_success(message);
+        return false;
+    }
+}
+
 $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event){
     $('#remember_save_mm').hide();
 
@@ -2127,11 +2135,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
     var publicDate = new Date(publicDateVal);
     var recordDate = new Date(recordDateVal);
 
-    if (publicDate.getTime() < recordDate.getTime()){
-        var message = '{% trans %}Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.{% endtrans %}';
-        no_success(message);
-        return false;
-    }
+    checkRecordDateAndPublicDate(recordDate, publicDate);
 
     var route = '{{ path('pumukitnewadmin_mms_update_meta', {'id': '__mmId__'}) }}';
     var mmId = $('#mm_id_meta').val();
