@@ -111,7 +111,12 @@
                         $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
                         $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
                             $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' : app.request.session.get('admin/unesco/id')}) }}");
-                            $('#edit_mms').load("{{ path('pumukit_new_admin_unesco_edit', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                            {% if app.request.session.get('admin/unesco/id') %}
+                                $('#edit_mms').load("{{ path('pumukit_new_admin_unesco_edit', {'id' : app.request.session.get('admin/unesco/id')}) }}");
+                            {% else %}
+                                $('#edit_mms').html('');
+                            {% endif %}
+
                         });
                     }
                 });
