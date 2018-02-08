@@ -1443,6 +1443,35 @@ $(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_sel
     return false;
 });
 
+$(document).on('click', '#pumukitnewadmin_person_post_sort_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var type = $('#pumukitnewadmin_person_sort_change_type').val();
+    var locale = "{{ app.request.getLocale() }}";
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'post.__lang__': '__type__'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'post.__lang__': '__type__'}})|raw }}";
+    }
+    route = route.replace('__lang__', locale);
+    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
+    return false;
+});
+
+$(document).on('click', '#pumukitnewadmin_person_post_sort_not_selected', function(){
+    var inputRawId = $('#inputRawId').val();
+    var locale = "{{ app.request.getLocale() }}";
+    if (inputRawId) {
+        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'post': 'asc'}})|raw }}";
+        route = route.replace('__inputRawId__', inputRawId);
+    } else {
+        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'post.__lang__': 'asc'}})|raw }}";
+    }
+    route = route.replace('__lang__', locale);
+    $('#list_people').load(route, {'_method':'POST'});
+    return false;
+});
+
 $(document).on('click', '#pumukitnewadmin_person_id_sort_selected', function(){
     var inputRawId = $('#inputRawId').val();
     var type = $('#pumukitnewadmin_person_sort_change_type').val();
