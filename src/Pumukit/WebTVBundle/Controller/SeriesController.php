@@ -36,7 +36,7 @@ class SeriesController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false, "track":false})
+     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide":true, "broadcast":false})
      * @Template("PumukitWebTVBundle:Series:index.html.twig")
      */
     public function magicIndexAction(Series $series, Request $request)
