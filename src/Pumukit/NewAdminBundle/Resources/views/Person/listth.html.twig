@@ -19,7 +19,15 @@
     </th>
 {% endif %}
 
-<th id="th-post">{% trans %}Post{% endtrans %}</th>
+{% if ('post.' ~ app.request.getLocale())  == app.session.get('admin/person/sort') %}
+    <th id="th-post">
+        <a href="#" id="pumukitnewadmin_person_post_sort_selected">{% trans %}Post{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+    </th>
+{% else %}
+    <th id="th-post">
+        <a href="#" id="pumukitnewadmin_person_post_sort_not_selected">{% trans %}Post{% endtrans %}</a>
+    </th>
+{% endif %}
 
 {% if 'email' == app.session.get('admin/person/sort') %}
     <th id="th-email">
