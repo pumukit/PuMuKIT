@@ -264,7 +264,6 @@ class SeriesController extends AdminController implements NewAdminController
             try {
                 $factoryService->deleteSeries($series);
                 ++$deleteSeriesCount;
-                $deleteSeriesCount += 2;
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
