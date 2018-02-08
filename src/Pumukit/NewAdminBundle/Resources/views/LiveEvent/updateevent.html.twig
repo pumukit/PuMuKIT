@@ -115,6 +115,13 @@
             </div>
 
             <div class="form-group">
+                <label>{% trans %}Event poster{% endtrans %}</label>
+                <div id="pic_events_{{ multimediaObject.getId() }}">
+                    {% include 'PumukitNewAdminBundle:Pic:list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms', 'is_event_poster': true} %}
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label>{% trans %}Broadcast profile{% endtrans %}</label>
                 <div class="row">
                     {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
