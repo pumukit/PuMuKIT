@@ -152,7 +152,7 @@ trait Keywords
             return false;
         }
 
-        $key = array_search($$keyword, $this->keywords[$lang], true);
+        $key = array_search($keyword, $this->keywords[$lang], true);
 
         if ($key !== false) {
             unset($this->keywords[$lang][$key]);
