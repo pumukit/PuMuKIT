@@ -93,24 +93,56 @@ class Playlist
     }
 
     /**
-     * Get Published mmobjs
-     * try catch is used to avoid filter issues.
+     * Get published multimediaObjects.
      *
      * @return array
      */
     public function getPublishedMultimediaObjects()
     {
-        $mmobjs = array();
-        foreach ($this->multimedia_objects as $mmo) {
+        return $this->getMultimediaObjectsByStatus(array(MultimediaObject::STATUS_PUBLISHED));
+    }
+
+    /**
+     * Get published and hiddden multimediaObjects.
+     *
+     * @return array
+     */
+    public function getPublishedAndHiddenMultimediaObjects()
+    {
+        return $this->getMultimediaObjectsByStatus(array(MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED));
+    }
+
+    /**
+     * Get Published mmobjs
+     * try catch is used to avoid filter issues.
+     * By default, returns all mmobjs (all status).
+     *
+     * @param array $status
+     *
+     * @return array
+     */
+    public function getMultimediaObjectsByStatus(array $status = array())
+    {
+        if (empty($status)) {
+            $status = array(MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED);
+        }
+
+        $multimediaObjects = array();
+        foreach ($this->multimedia_objects as $multimediaObject) {
             try {
-                if ($mmo->isPublished()) {
-                    $mmobjs[] = $mmo;
+                if (in_array(MultimediaObject::STATUS_PUBLISHED, $status) && $multimediaObject->isPublished()) {
+                    $multimediaObjects[] = $multimediaObject;
+                } elseif (in_array(MultimediaObject::STATUS_HIDDEN, $status) && $multimediaObject->isHidden()) {
+                    $multimediaObjects[] = $multimediaObject;
+                } elseif (in_array(MultimediaObject::STATUS_BLOCKED, $status) && $multimediaObject->isBlocked()) {
+                    $multimediaObjects[] = $multimediaObject;
                 }
             } catch (\Exception $exception) {
+                continue;
             }
         }
 
-        return $mmobjs;
+        return $multimediaObjects;
     }
 
     /**
