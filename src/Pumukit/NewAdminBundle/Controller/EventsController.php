@@ -28,6 +28,8 @@ use Pumukit\SchemaBundle\Document\Person;
  */
 class EventsController extends Controller
 {
+    private $regex = '/^[0-9a-z]{24}$/';
+
     /**
      * @param Request $request
      *
@@ -167,15 +169,32 @@ class EventsController extends Controller
         } elseif ($request->query->has('criteria')) {
             $data = $request->query->get('criteria');
             if (!empty($data['name'])) {
-                $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
+                if (preg_match($this->regex, $data['name'])) {
+                    $criteria['_id'] = new \MongoId($data['name']);
+                } else {
+                    $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
+                }
             }
-            if ($data['date']['from']) {
-                $date = strtotime($data['date']['from']);
-                $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gte' => new \MongoDate($date));
-            }
-            if ($data['date']['to']) {
-                $date = strtotime($data['date']['to']);
-                $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
+            if ($data['date']['from'] and $data['date']['to']) {
+                $start = strtotime($data['date']['from']);
+                $ends = strtotime($data['date']['to'].'23:59:59');
+
+                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
+                    'start' => array(
+                        '$gte' => new \MongoDate($start),
+                    ),
+                    'ends' => array(
+                        '$lte' => new \MongoDate($ends),
+                    ), ));
+            } else {
+                if ($data['date']['from']) {
+                    $date = strtotime($data['date']['from']);
+                    $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gte' => new \MongoDate($date));
+                }
+                if ($data['date']['to']) {
+                    $date = strtotime($data['date']['to']);
+                    $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
+                }
             }
         } elseif ($session->has('admin/live/event/criteria')) {
             $criteria = $session->get('admin/live/event/criteria');
@@ -502,7 +521,6 @@ class EventsController extends Controller
                 $dm->flush();
             } catch (\Exception $e) {
                 throw $e;
-
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
