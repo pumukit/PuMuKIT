@@ -3350,7 +3350,8 @@
       </trans-unit>
       <trans-unit id="d75d4b5790fbb3fd7b0062324a547d96" resname="Allow download">
         <source>Allow download</source>
-        <target xml:lang="es-ES" state="translated">Permitir descarga</target>
+        <target xml:lang="gl" state="translated">Permitir descarga</target>
+      </trans-unit>
       <trans-unit id="4" resname="Already held event message">
         <source>Already held event message</source>
         <target xml:lang="gl" state="needs-translation">>Already held event message</target>
