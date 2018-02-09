@@ -191,7 +191,9 @@ class SearchController extends Controller implements WebTVController
     protected function typeQueryBuilder($queryBuilder, $typeFound)
     {
         if ($typeFound != '') {
-            $queryBuilder->field('tracks.only_audio')->equals($typeFound == 'audio');
+            $queryBuilder->field('type')->equals(
+                ($typeFound == 'audio') ? Multimediaobject::TYPE_AUDIO : Multimediaobject::TYPE_VIDEO
+            );
         }
 
         return $queryBuilder;
