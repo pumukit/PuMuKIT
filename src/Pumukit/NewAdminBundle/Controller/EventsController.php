@@ -163,6 +163,15 @@ class EventsController extends Controller
                     'start' => array('$lte' => $date),
                     'ends' => array('$gte' => $date),
                     ));
+            } elseif ($type === 'today') {
+                $dateStart = new \DateTime(date('Y-m-d'));
+                $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
+                $dateStart = new \MongoDate($dateStart->getTimestamp());
+                $dateEnds = new \MongoDate($dateEnds->getTimestamp());
+                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
+                    'start' => array('$gte' => $dateStart),
+                    'ends' => array('$lte' => $dateEnds),
+                ));
             } else {
                 $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
             }
