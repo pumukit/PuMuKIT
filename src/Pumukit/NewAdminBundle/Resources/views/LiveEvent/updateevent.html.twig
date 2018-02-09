@@ -122,6 +122,14 @@
             </div>
 
             <div class="form-group">
+              <label for="poster_text_color">{% trans %}Poster text color{% endtrans %}</label>
+              <div class="form-control-wrapper">
+                <input id="poster_text_color" type="text" name="pumukitnewadmin_live_event[poster_text_color]" class="form-control" value="{{ poster_text_color(multimediaObject.getEmbeddedEvent()) }}">
+                <span class="material-input"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
                 <label>{% trans %}Broadcast profile{% endtrans %}</label>
                 <div class="row">
                     {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
@@ -159,7 +167,11 @@
                 success(message);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + textStatus);
+                if (textStatus != 'error') {
+                    no_success(errorThrown + ': ' + textStatus);
+                } else {
+                    no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
+                }
             }
         });
         return false;

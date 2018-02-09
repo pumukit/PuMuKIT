@@ -529,9 +529,12 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
+                $eventsService = $this->container->get('pumukitschema.eventsession');
+                $color = $eventsService->validateHtmlColor($data['poster_text_color']);
+                $multimediaObject->setProperty('postertextcolor', $color);
+
                 $dm->flush();
             } catch (\Exception $e) {
-                throw $e;
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
