@@ -74,6 +74,7 @@ class JobService
      * @param int              $flags
      *
      * @return MultimediaObject
+     *
      * @throws \Exception
      */
     public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
@@ -107,6 +108,7 @@ class JobService
      * @param int              $flags
      *
      * @return MultimediaObject
+     *
      * @throws \Exception
      */
     public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
@@ -153,6 +155,7 @@ class JobService
      * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
      * @return object|Job
+     *
      * @throws \Exception
      */
     public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
@@ -333,6 +336,8 @@ class JobService
     private function deleteTempFiles(Job $job)
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+            unlink($job->getPathIni());
+        } elseif (false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
         }
     }
@@ -555,6 +560,7 @@ class JobService
      * @param $duration_end
      *
      * @return bool
+     *
      * @throws \Exception
      */
     public function searchError($profile, $var, $duration_in, $duration_end)
@@ -581,6 +587,7 @@ class JobService
      * @param Job $job
      *
      * @return string commandLine
+     *
      * @throws \Exception
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
@@ -707,6 +714,7 @@ class JobService
      * @param $job
      *
      * @return Track
+     *
      * @throws \Exception
      */
     public function createTrackWithJob($job)
@@ -724,6 +732,7 @@ class JobService
      * @param array            $description
      *
      * @return Track
+     *
      * @throws \Exception
      */
     public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
@@ -800,7 +809,6 @@ class JobService
      * @param string $mmId
      *
      * @return ArrayCollection $jobs with mmId
-     *
      */
     public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {
@@ -912,8 +920,6 @@ class JobService
      * Gets the email of the user who executed the job, if no session get the user info from other jobs of the same mm.
      *
      * @param Job|null $job
-     *
-     * @return null
      */
     private function getUserEmail(Job $job = null)
     {
