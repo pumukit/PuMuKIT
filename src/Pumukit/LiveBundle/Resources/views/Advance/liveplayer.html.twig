@@ -25,9 +25,9 @@
 
 <script type="text/javascript">
 
-    var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\"";
+    var image = "<img src=\"{{ asset(poster(event)) }}\"";
     var width = 'width="100%">';
-    var style = '<p class="warning" style="position: absolute; top: 40%; color: white; font-weight: bold; font-size: 20px; width:100%; line-height: 34px; text-align: center;">';
+    var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_text_color(event) }}; font-weight: bold; font-size: 20px; width:100%; line-height: 34px; text-align: center;">';
 
     var image = image + width;
     var text = "{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans) }}";
