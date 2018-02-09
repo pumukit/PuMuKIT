@@ -25,7 +25,16 @@
             </th>
 
             <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
-            <th id="th-create-date" width="12%">{% trans %}Create date{% endtrans %}</th>
+            <th id="th-create-date" width="12%">
+                <a href="#" class="sort_field" data-type="_id">
+                {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
+                    {% if '_id' == app.session.get('admin/live/event/sort/field') %}
+                        {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
+                    {% endif %}
+                {% endif %}
+                {% trans %}Create date{% endtrans %}
+                </a>
+            </th>
             <th id="th-date" width="12%">
                 <a href="#" class="sort_field" data-type="embeddedEvent.embeddedEventSession.start">
                     {% trans %}Broadcasting date{% endtrans %}
@@ -74,7 +83,7 @@
                     {{ multimediaObject.getEmbeddedEvent().getEmbeddedEventSession() | length }} {% trans %} sessions{% endtrans %}
                 </td>
                 <td headers="th-create-date">
-                    {{ multimediaObject.getEmbeddedEvent().getDate() | localizeddate('medium', 'none') }}
+                    {{ date_from_mongo_id(multimediaObject) | localizeddate('medium', 'none') }}
                 </td>
                 <td headers="th-date" width="12%">
                     {% set session = multimediaObject|next_session_event %}
