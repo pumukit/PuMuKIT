@@ -11,12 +11,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
- */
 class PlaylistMultimediaObjectController extends Controller
 {
     /**
