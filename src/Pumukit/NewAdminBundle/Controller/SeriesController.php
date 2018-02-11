@@ -280,6 +280,7 @@ class SeriesController extends AdminController implements NewAdminController
             $ids = json_decode($ids, true);
         }
 
+        $deleteSeriesCount = 0;
         foreach ($ids as $id) {
             $series = $this->find($id);
             if (!$this->isUserAllowedToDelete($series)) {
@@ -302,9 +303,14 @@ class SeriesController extends AdminController implements NewAdminController
 
             try {
                 $factoryService->deleteSeries($series);
+                ++$deleteSeriesCount;
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
+        }
+
+        if ($deleteSeriesCount == 0) {
+            return new Response('0 series deleted', Response::HTTP_BAD_REQUEST);
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_series_list', array()));
