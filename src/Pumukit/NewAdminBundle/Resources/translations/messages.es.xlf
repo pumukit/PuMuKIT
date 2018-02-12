@@ -3554,7 +3554,7 @@
             </trans-unit>
             <trans-unit id="22eb0a3743f8d39c377b5ccde19fcc22" resname="Poster text color">
               <source>Poster text color</source>
-              <target xml:lang="es-ES" state="translated">Color del texto del póster</target>
+              <target xml:lang="es-ES" state="translated">Color de texto del póster</target>
             </trans-unit>
             <trans-unit id="9d58d5c328ecdb4215dfa935ff22fcea" resname="Source Name">
               <source>Source Name</source>
