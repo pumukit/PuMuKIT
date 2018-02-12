@@ -8,6 +8,10 @@
         <parameter key="pumukit.picextractor.command.ffmpeg">ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
         <parameter key="pumukit.picextractor.command.libav">avconv -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
         <parameter key="pumukit.picextractor.command">%pumukit.picextractor.command.libav%</parameter>
+        <parameter key="pumukitencoder.tmp" type="collection">
+            <parameter>%pumukit2.tmp%</parameter>
+            <parameter>%pumukit2.inbox%</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -34,7 +38,7 @@
             <argument type="service" id="pumukitencoder.mmpropertyjob"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
-            <argument>%pumukit2.inbox%</argument>
+            <argument>%pumukitencoder.tmp%</argument>
             <tag name="monolog.logger" channel="encoder"/>
         </service>
 
