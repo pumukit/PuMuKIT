@@ -10,7 +10,7 @@
                     - <a class="filterSearchEvents" data-type="future" href="#">{% trans %}Future events{% endtrans %}</a>
                 </li>
                 <li>
-                    - <a class="filterSearchEvents" data-type="today" href="#">{% trans %}Today events{% endtrans %}</a>
+                    - <a class="filterSearchEvents" data-type="today" href="#">{% trans %}Today events list{% endtrans %}</a>
                 </li>
             </ul>
         </div>
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
                         <div>
-                            {% set criteria = app.session.get('admin/live/event/criteria') %}
+                            {% set criteria = app.session.get('admin/live/event/dataForm')|default('') %}
                             <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
                         </div>
                     </div>
@@ -33,10 +33,16 @@
                         <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                         <div>
                             {% trans %}From{% endtrans %}:
-                            <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                            <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from"
+                            {% if criteria['date'] is defined and criteria['date']['from'] is not empty %}
+                                value="{{ criteria['date']['from'] }}"
+                            {% endif %}>
                             <br/>
                             {% trans %}To{% endtrans %}:
-                            <input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value="{{ criteria['date']['to']|default("") }}">
+                            <input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to"
+                            {% if criteria['date'] is defined and criteria['date']['to'] is not empty %}
+                                value="{{ criteria['date']['to'] }}"
+                            {% endif %}>
                         </div>
                     </div>
                 </div>
@@ -65,6 +71,7 @@
 
     $('.resetSession').on('click', function(event) {
         event.preventDefault();
+        $('#filter_events')[0].reset();
         $.ajax({
             url: "{{ path('pumukit_newadmin_live_events_reset_session') }}",
             method: 'GET',

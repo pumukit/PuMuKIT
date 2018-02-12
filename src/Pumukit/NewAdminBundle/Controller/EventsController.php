@@ -177,6 +177,7 @@ class EventsController extends Controller
             }
         } elseif ($request->query->has('criteria')) {
             $data = $request->query->get('criteria');
+            $session->set('admin/live/event/dataForm', $data);
             if (!empty($data['name'])) {
                 if (preg_match($this->regex, $data['name'])) {
                     $criteria['_id'] = new \MongoId($data['name']);
@@ -210,7 +211,7 @@ class EventsController extends Controller
         }
 
         $session->set('admin/live/event/criteria', $criteria);
-        $sortField = $session->get('admin/live/event/sort/field', 'embeddedEvent.date');
+        $sortField = $session->get('admin/live/event/sort/field', '_id');
         $sortType = $session->get('admin/live/event/sort/type', 'desc');
         $session->set('admin/live/event/sort/field', $sortField);
         $session->set('admin/live/event/sort/type', $sortType);
@@ -296,6 +297,7 @@ class EventsController extends Controller
         $session->remove('admin/live/event/sort/field');
         $session->remove('admin/live/event/sort/type');
         $session->remove('admin/live/event/criteria');
+        $session->remove('admin/live/event/dataForm');
         $session->remove('admin/live/event/id');
         $session->remove('admin/live/event/page');
 
@@ -530,7 +532,6 @@ class EventsController extends Controller
                 $dm->flush();
             } catch (\Exception $e) {
                 throw $e;
-
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 

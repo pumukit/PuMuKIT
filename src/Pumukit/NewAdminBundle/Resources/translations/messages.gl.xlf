@@ -3352,6 +3352,10 @@
         <source>Allow download</source>
         <target xml:lang="es-ES" state="translated">Permitir descarga</target>
       </trans-unit>
+      <trans-unit id="d05e95d00fe411e8b6420ed5f89f718b" resname="Today events list">
+        <source>Today events list</source>
+        <target>Directos hoxe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
