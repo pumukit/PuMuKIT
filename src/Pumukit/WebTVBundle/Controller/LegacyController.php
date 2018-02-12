@@ -51,7 +51,9 @@ class LegacyController extends Controller implements WebTVController
      *     "pumukit1id": "\d+"
      * }, defaults={"filter": false})
      * @Route("/mmobj/index/id/{pumukit1id}.html", defaults={"filter": false})
-     * @Route("/mmobj/index/id/{pumukit1id}", defaults={"filter": false})
+     * @Route("/mmobj/index/id/{pumukit1id}", requirements={
+     *     "pumukit1id": "\d+"
+     * }, defaults={"filter": false})
      * @Route("/index.php/{_locale}/video/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
      * @Route("/index.php/{_locale}/video/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
      * @Route("/index.php/video/{pumukit1id}", requirements={
