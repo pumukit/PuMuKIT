@@ -34,6 +34,7 @@
             <argument type="service" id="pumukitencoder.mmpropertyjob"/>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
+            <argument>%pumukit2.inbox%</argument>
             <tag name="monolog.logger" channel="encoder"/>
         </service>
 
