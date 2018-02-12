@@ -38,12 +38,12 @@ class JobService
     private $environment;
     private $tokenStorage;
     private $propService;
-    private $inboxPaths;
+    private $inboxPath;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
                                 TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService,
-                                $environment = 'dev', $tmpPath = null, array $inboxPaths = array())
+                                $environment = 'dev', $tmpPath = null, $inboxPath = null)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
@@ -51,7 +51,7 @@ class JobService
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
         $this->tmpPath = $tmpPath ? realpath($tmpPath) : sys_get_temp_dir();
-        $this->inboxPaths = $inboxPaths ? $inboxPaths : array(sys_get_tmp_dir());
+        $this->inboxPath = $inboxPath ? realpath($inboxPath) : sys_get_temp_dir();
         $this->logger = $logger;
         $this->trackService = $trackService;
         $this->tokenStorage = $tokenStorage;
@@ -335,10 +335,10 @@ class JobService
      */
     private function deleteTempFiles(Job $job)
     {
-        foreach ($this->inboxPaths as $inboxPath) {
-            if (false !== strpos($job->getPathIni(), $inboxPath) && file_exists($job->getPathIni())) {
-                unlink($job->getPathIni());
-            }
+        if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
+            unlink($job->getPathIni());
+        } elseif (false !== strpos($job->getPathIni(), $this->inboxPath)) {
+            unlink($job->getPathIni());
         }
     }
 
