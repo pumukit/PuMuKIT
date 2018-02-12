@@ -33,16 +33,16 @@
                         <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                         <div>
                             {% trans %}From{% endtrans %}:
-                            <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from" value={% if criteria['date'] is defined and criteria['date']['from'] is not empty %}
-                                "{{ criteria['date']['from'] }}"
+                            <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from"
+                            {% if criteria['date'] is defined and criteria['date']['from'] is not empty %}
+                                value="{{ criteria['date']['from'] }}"
                             {% endif %}>
                             <br/>
                             {% trans %}To{% endtrans %}:
-                            <input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to" value=
-                            {% if criteria['date'] is defined and criteria['date']['to'] %}
-                                "{{ criteria['date']['to'] }}"
-                            {% endif %}
-                            >
+                            <input type="date" class="form-control" name="criteria[date][to]" id="filters_date_to"
+                            {% if criteria['date'] is defined and criteria['date']['to'] is not empty %}
+                                value="{{ criteria['date']['to'] }}"
+                            {% endif %}>
                         </div>
                     </div>
                 </div>
