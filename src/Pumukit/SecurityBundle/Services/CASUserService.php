@@ -93,6 +93,8 @@ class CASUserService
             $casFullName = $this->getCASFullName($attributes);
             $user->setFullname($casFullName);
 
+            $this->setCASGroup($attributes, $user);
+
             if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
                 $user->setEmail($attributes[self::CAS_MAIL_KEY]);
             }
@@ -176,10 +178,14 @@ class CASUserService
      */
     protected function setCASGroup($attributes, $user)
     {
-        // TODO: Delete old cas groups and set new group.
         if (isset($attributes[self::CAS_GROUP_KEY])) {
-            $group = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
-            $this->userService->addGroup($group, $user, true, false);
+            $groupCAS = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
+            foreach ($user->getGroups as $group) {
+                if (self::ORIGIN === $group->getOrigin()) {
+                    $this->userService->deleteGroup($group, $user, true, false);
+                }
+            }
+            $this->userService->addGroup($groupCAS, $user, true, false);
         }
     }
 
