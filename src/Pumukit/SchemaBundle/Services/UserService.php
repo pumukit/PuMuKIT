@@ -548,7 +548,7 @@ class UserService
      */
     public function isAllowedToModifyUserGroup(User $user, Group $group)
     {
-        return $user->isLocal() && $group->isLocal();
+        return !(!$user->isLocal() && !$group->isLocal());
     }
 
     /**

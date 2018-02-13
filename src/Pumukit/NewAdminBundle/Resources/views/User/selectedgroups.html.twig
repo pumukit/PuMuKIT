@@ -1,26 +1,20 @@
 {% for user_group in user.getGroups() %}
-{% if user_group.isLocal() and user.isLocal() %}
-<a href="#" class="list-group-item pumukitnewadmin-trim-row"
-   id="add_group_{{ user_group.id }}"
-   onclick="javascript:return select_group(this);"
-   ondblclick="javascript:delete_group('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', 'user');">
-  <i class="mdi-social-group"></i>
-  {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
-</a>
-{% else %}
-{% if (not user_group.isLocal() and not user.isLocal()) %}
-{% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
-{% elseif (user_group.isLocal() and not user.isLocal()) %}
-{% set message = 'External defined group. Contact your directory service administrator to change membership.' %}
-{% else %}
-{% set message = 'External defined user. Contact your directory service administrator to change membership.' %}
-{% endif %}
-<a href="#" class="list-group-item disabled-group-item"
-   id="add_group_{{ user_group.id }}"
-   onclick="return false;"
-   ondblclick="javascript:window.alert('{{ message }}');">
-  <i class="mdi-social-group"></i>
-  {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
-</a>
-{% endif %}
+    {% if (user_group.isLocal() and user.isLocal()) or (user_group.isLocal() and not user.isLocal()) or (not user_group.isLocal() and user.isLocal()) %}
+        <a href="#" class="list-group-item pumukitnewadmin-trim-row"
+           id="add_group_{{ user_group.id }}"
+           onclick="return select_group(this);"
+           ondblclick="delete_group_user('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', '{{ user.getOrigin() }}');">
+            <i class="mdi-social-group"></i>
+            {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
+        </a>
+    {% else %}
+        {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
+        <a href="#" class="list-group-item disabled-group-item"
+           id="add_group_{{ user_group.id }}"
+           onclick="return false;"
+           ondblclick="window.alert('{{ message }}');">
+            <i class="mdi-social-group"></i>
+            {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin|upper }})
+        </a>
+    {% endif %}
 {% endfor %}
