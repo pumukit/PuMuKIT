@@ -281,6 +281,7 @@ class UserController extends AdminController implements NewAdminController
             array(
                 'add' => $addGroups,
                 'delete' => $deleteGroups,
+                'userOrigin' => $user->getOrigin(),
             )
         );
     }

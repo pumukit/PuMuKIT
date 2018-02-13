@@ -2513,6 +2513,7 @@ function select_group(element)
 }
 
 function add_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
+    console.log(user_origin);
     reset = typeof reset !== 'undefined' ? reset : false;
 
     create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin);
@@ -2535,11 +2536,13 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
     if ((group_origin == local_origin) || (((group_origin == 'cas') || (group_origin == 'ldap')) && !(group_origin == user_origin))){
         var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:delete_group(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+user_origin+'\');"';
+        var item_ondblclick = 'ondblclick="delete_group_user(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+user_origin+'\');"';
     } else {
         var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
+        var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
+    }
+    if(group_origin != local_origin) {
         group_origin = group_origin.toUpperCase();
     }
 
@@ -2568,17 +2571,18 @@ function create_element_group_in_delete_groups_user(group_id, group_key, group_n
 
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
     var item_id = 'id="delete_group_' + group_id;
+    var delete_groups_list = $('#delete_groups');
 
     if ((group_origin == local_origin) || (((group_origin == 'cas') || (group_origin == 'ldap')) && !(group_origin == user_origin))) {
-
         var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="javascript:add_group(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + user_origin + '\');"';
-        var delete_groups_list = $('#delete_groups');
+        var item_ondblclick = 'ondblclick="add_group_user(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + user_origin + '\');"';
     } else {
         var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
+        var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
+    }
+    if(group_origin != local_origin) {
         group_origin = group_origin.toUpperCase();
     }
 
@@ -2744,19 +2748,20 @@ $(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
         success: function(response){
             var addGroups = response.add;
             var deleteGroups = response.delete;
+            var userData = response.userOrigin;
             $('#add_groups').empty();
             $('#delete_groups').empty();
             for (var group_id in addGroups) {
                 var group_key = addGroups[group_id].key;
                 var group_name = addGroups[group_id].name;
                 var group_origin = addGroups[group_id].origin;
-                add_group(group_id, group_key, group_name, group_origin, 'user', true);
+                add_group_user(group_id, group_key, group_name, group_origin, userData, true);
             }
             for (var group_id in deleteGroups) {
                 var group_key = deleteGroups[group_id].key;
                 var group_name = deleteGroups[group_id].name;
                 var group_origin = deleteGroups[group_id].origin;
-                delete_group(group_id, group_key, group_name, group_origin, 'user', true);
+                delete_group_user(group_id, group_key, group_name, group_origin, userData, true);
             }
         }
     });
