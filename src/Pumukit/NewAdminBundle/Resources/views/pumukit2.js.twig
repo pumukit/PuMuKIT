@@ -2513,7 +2513,6 @@ function select_group(element)
 }
 
 function add_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
-    console.log(user_origin);
     reset = typeof reset !== 'undefined' ? reset : false;
 
     create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin);
@@ -2533,7 +2532,7 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
     var add_groups_list = $('#add_groups');
 
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
-    if ((group_origin == local_origin) || (((group_origin == 'cas') || (group_origin == 'ldap')) && !(group_origin == user_origin))){
+    if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
         var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="delete_group_user(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+user_origin+'\');"';
@@ -2573,7 +2572,7 @@ function create_element_group_in_delete_groups_user(group_id, group_key, group_n
     var item_id = 'id="delete_group_' + group_id;
     var delete_groups_list = $('#delete_groups');
 
-    if ((group_origin == local_origin) || (((group_origin == 'cas') || (group_origin == 'ldap')) && !(group_origin == user_origin))) {
+    if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
         var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="add_group_user(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + user_origin + '\');"';
