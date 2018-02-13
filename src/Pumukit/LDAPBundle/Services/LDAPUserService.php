@@ -16,6 +16,7 @@ class LDAPUserService
 {
     const EDU_PERSON_AFFILIATION = 'edupersonaffiliation';
     const IRISCLASSIFCODE = 'irisclassifcode';
+    const ORIGIN = 'ldap';
 
     protected $dm;
     protected $userService;
@@ -23,6 +24,17 @@ class LDAPUserService
     protected $permissionProfile;
     protected $logger;
 
+    /**
+     * LDAPUserService constructor.
+     *
+     * @param DocumentManager          $documentManager
+     * @param UserService              $userService
+     * @param PersonService            $personService
+     * @param LDAPService              $LDAPService
+     * @param PermissionProfileService $permissionProfile
+     * @param GroupService             $groupService
+     * @param LoggerInterface          $logger
+     */
     public function __construct(DocumentManager $documentManager, UserService $userService, PersonService $personService, LDAPService $LDAPService, PermissionProfileService $permissionProfile, GroupService $groupService, LoggerInterface $logger)
     {
         $this->dm = $documentManager;
@@ -34,6 +46,13 @@ class LDAPUserService
         $this->logger = $logger;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return mixed|object|User
+     * @throws \Exception
+     */
     public function createUser($info, $username)
     {
         if (!isset($username)) {
@@ -60,6 +79,12 @@ class LDAPUserService
         return $user;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return object|User
+     */
     protected function newUser($info, $username)
     {
         $email = $this->getEmail($info);
@@ -93,6 +118,13 @@ class LDAPUserService
         return $user;
     }
 
+    /**
+     * @param      $key
+     * @param null $type
+     *
+     * @return Group
+     * @throws \Exception
+     */
     protected function getGroup($key, $type = null)
     {
         $cleanKey = $this->getGroupKey($key, $type);
@@ -111,16 +143,34 @@ class LDAPUserService
         return $group;
     }
 
+    /**
+     * @param      $key
+     * @param null $type
+     *
+     * @return null|string|string[]
+     */
     protected function getGroupKey($key, $type = null)
     {
         return preg_replace('/\W/', '', $key);
     }
 
+    /**
+     * @param      $key
+     * @param null $type
+     *
+     * @return mixed
+     */
     protected function getGroupName($key, $type = null)
     {
         return $key;
     }
 
+    /**
+     * @param $info
+     * @param $user
+     *
+     * @throws \Exception
+     */
     protected function promoteUser($info, $user)
     {
         $permissionProfileAutoPub = $this->permissionProfileService->getByName('Auto Publisher');
@@ -155,6 +205,12 @@ class LDAPUserService
         }
     }
 
+    /**
+     * @param $info
+     * @param $user
+     *
+     * @return mixed
+     */
     protected function updateGroups($info, $user)
     {
         $aGroups = array();
@@ -215,6 +271,13 @@ class LDAPUserService
         return $user;
     }
 
+    /**
+     * @param $info
+     * @param $user
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     protected function updateUser($info, $user)
     {
         if (isset($info['mail'][0])) {
@@ -230,31 +293,66 @@ class LDAPUserService
         return $user;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return bool
+     */
     protected function isAutoPub($info, $username)
     {
         return false;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return bool
+     */
     protected function isAdmin($info, $username)
     {
         return false;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return bool
+     */
     protected function isIngestor($info, $username)
     {
         return false;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return bool
+     */
     protected function isPublisher($info, $username)
     {
         return false;
     }
 
+    /**
+     * @param $info
+     * @param $username
+     *
+     * @return bool
+     */
     protected function isViewer($info, $username)
     {
         return false;
     }
 
+    /**
+     * @param $info
+     *
+     * @return mixed
+     */
     public function getEmail($info)
     {
         if (isset($info['mail'][0])) {
