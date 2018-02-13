@@ -173,7 +173,7 @@ class UserController extends AdminController implements NewAdminController
     {
         $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
 
-        $ids = $request->request->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
