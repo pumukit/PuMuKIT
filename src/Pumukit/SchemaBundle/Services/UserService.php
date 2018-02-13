@@ -2,12 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Security\Permission;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 class UserService
@@ -24,12 +23,14 @@ class UserService
     private $genUserSalt;
 
     /**
-     * Constructor.
+     * UserService constructor.
      *
      * @param DocumentManager            $documentManager
      * @param UserEventDispatcherService $dispatcher
      * @param PermissionService          $permissionService
      * @param PermissionProfileService   $permissionProfileService
+     * @param bool                       $personalScopeDeleteOwners
+     * @param bool                       $genUserSalt
      */
     public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false, $genUserSalt = false)
     {
@@ -194,8 +195,11 @@ class UserService
      *
      * @param User $user
      * @param bool $executeFlush
+     * @param bool $checkOrigin
      *
      * @return User
+     *
+     * @throws \Exception
      */
     public function update(User $user, $executeFlush = true, $checkOrigin = true)
     {
@@ -249,10 +253,9 @@ class UserService
     /**
      * Add roles.
      *
-     * @param User $user
-     * @paran array $permissions
-     *
-     * @param bool $executeFlush
+     * @param User  $user
+     * @param array $permissions
+     * @param bool  $executeFlush
      *
      * @return User
      */
@@ -274,10 +277,9 @@ class UserService
     /**
      * Remove roles.
      *
-     * @param User $user
-     * @paran array $permissions
-     *
-     * @param bool $executeFlush
+     * @param User  $user
+     * @param array $permissions
+     * @param bool  $executeFlush
      *
      * @return User
      */
@@ -317,7 +319,9 @@ class UserService
      *
      * @param PermissionProfile $permissionProfile
      *
-     * @return Cursor
+     * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getUsersWithPermissionProfile(PermissionProfile $permissionProfile)
     {
@@ -386,7 +390,8 @@ class UserService
     /**
      * Add user scope.
      *
-     * @param User $user
+     * @param User   $user
+     * @param string $scope
      *
      * @return User
      */
@@ -410,6 +415,8 @@ class UserService
      * @param bool   $enabled
      *
      * @return User
+     *
+     * @throws \Exception
      */
     public function instantiate($userName = '', $email = '', $enabled = true)
     {
@@ -495,6 +502,8 @@ class UserService
      * @param User  $user
      * @param bool  $executeFlush
      * @param bool  $checkOrigin
+     *
+     * @throws \Exception
      */
     public function addGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
@@ -520,6 +529,8 @@ class UserService
      * @param User  $user
      * @param bool  $executeFlush
      * @param bool  $checkOrigin
+     *
+     * @throws \Exception
      */
     public function deleteGroup(Group $group, User $user, $executeFlush = true, $checkOrigin = true)
     {
@@ -554,9 +565,9 @@ class UserService
     /**
      * Find with group.
      *
-     * @param Group
+     * @param Group $group
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findWithGroup(Group $group)
     {
@@ -569,7 +580,9 @@ class UserService
     /**
      * Delete all users from group.
      *
-     * @param  Group
+     * @param Group $group
+     *
+     * @throws \Exception
      */
     public function deleteAllFromGroup(Group $group)
     {
@@ -583,13 +596,16 @@ class UserService
     /**
      * Is User last relation.
      *
-     * @param User   $user
-     * @param string $mmId
-     * @param string $personId
-     * @param array  $owners
-     * @param array  $addGroups
+     * @param User  $loggedInUser
+     * @param null  $mmId
+     * @param null  $personId
+     * @param array $owners
+     * @param array $addGroups
      *
      * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = array(), $addGroups = array())
     {
@@ -610,10 +626,13 @@ class UserService
     /**
      * Is logged in the person to be removed from owner of a multimedia object.
      *
-     * @param User   $loggedInUser
-     * @param string $personId
+     * @param User $loggedInUser
+     * @param      $personId
      *
      * @return bool TRUE if person to remove from owner is logged in, FALSE otherwise
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, $personId)
     {
@@ -637,10 +656,13 @@ class UserService
     /**
      * Is user in owners array.
      *
-     * @param User  $user
+     * @param User  $loggedInUser
      * @param array $owners
      *
      * @return bool TRUE if user is in owners array, FALSE otherwise
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function isUserInOwners(User $loggedInUser, $owners = array())
     {
@@ -663,13 +685,15 @@ class UserService
     /**
      * User has group in common with given groups array.
      *
-     * @param User $loggedInUser
-     * @para   string  $mmId
-     * @para   string  $personId
-     *
+     * @param User  $loggedInUser
+     * @param null  $mmId
+     * @param null  $personId
      * @param array $groups
      *
      * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = array())
     {
