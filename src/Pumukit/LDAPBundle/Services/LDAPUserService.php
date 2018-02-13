@@ -51,6 +51,7 @@ class LDAPUserService
      * @param $username
      *
      * @return mixed|object|User
+     *
      * @throws \Exception
      */
     public function createUser($info, $username)
@@ -123,6 +124,7 @@ class LDAPUserService
      * @param null $type
      *
      * @return Group
+     *
      * @throws \Exception
      */
     protected function getGroup($key, $type = null)
@@ -276,6 +278,7 @@ class LDAPUserService
      * @param $user
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function updateUser($info, $user)
