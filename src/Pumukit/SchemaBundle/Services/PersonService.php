@@ -228,11 +228,19 @@ class PersonService
      *
      * @param string $name
      * @param array  $exclude
+     * @param bool   $checkAccents
      *
      * @return ArrayCollection
      */
-    public function autoCompletePeopleByName($name, array $exclude = array())
+    public function autoCompletePeopleByName($name, array $exclude = array(), $checkAccents = false)
     {
+        if ($checkAccents) {
+            //Wating for Mongo 3.4 and https://docs.mongodb.com/manual/reference/collation/
+            $from = array('a', 'e', 'i', 'o', 'u');
+            $to = array('[aá]', '[eé]', '[ií]', '[oó]', '[uú]');
+            $name = str_replace($from, $to, $name);
+        }
+
         $qb = $this->repoPerson->createQueryBuilder()
             ->field('name')->equals(new \MongoRegex('/'.$name.'/i'));
 

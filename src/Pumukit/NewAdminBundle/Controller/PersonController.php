@@ -412,7 +412,7 @@ class PersonController extends AdminController implements NewAdminController
         foreach ($excludedPeople as $person) {
             $excludedPeopleIds[] = new \MongoId($person->getId());
         }
-        $people = $personService->autoCompletePeopleByName($name, $excludedPeopleIds);
+        $people = $personService->autoCompletePeopleByName($name, $excludedPeopleIds, true);
 
         $out = [];
         foreach ($people as $p) {
