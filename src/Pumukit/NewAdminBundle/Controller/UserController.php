@@ -173,7 +173,7 @@ class UserController extends AdminController implements NewAdminController
     {
         $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
 
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -310,6 +310,7 @@ class UserController extends AdminController implements NewAdminController
                 $userService->addGroup($group, $user, false);
             }
         }
+
         foreach ($deleteGroups as $deleteGroup) {
             $groupsIds = explode('_', $deleteGroup);
             $groupId = $groupsIds[2];
