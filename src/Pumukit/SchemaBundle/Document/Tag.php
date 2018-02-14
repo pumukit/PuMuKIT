@@ -105,6 +105,7 @@ class Tag
     /**
      * @Gedmo\TreeParent
      * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
+     * @MongoDB\Index
      */
     private $parent;
 
