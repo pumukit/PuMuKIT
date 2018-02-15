@@ -185,6 +185,7 @@ class SearchController extends Controller implements WebTVController
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
+            $searchFound = str_replace('*', '.*', $searchFound);
             $mRegex = new \MongoRegex("/$searchFound/i");
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));

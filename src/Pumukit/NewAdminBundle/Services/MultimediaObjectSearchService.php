@@ -59,6 +59,7 @@ class MultimediaObjectSearchService
                     $bAnnounce = true;
                 } elseif ('false' === $value) {
                     $bAnnounce = false;
+                    $bAnnounce = false;
                 }
             } elseif (('date' === $property) && ('' !== $value)) {
                 $new_criteria += $this->processDates($value);
@@ -152,6 +153,7 @@ class MultimediaObjectSearchService
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $text = str_replace('*', '.*', $text);
             $mRegex = new \MongoRegex("/$text/i");
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);

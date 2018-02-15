@@ -347,6 +347,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $text = str_replace('*', '.*', $text);
             $mRegex = new \MongoRegex("/$text/i");
             $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
             $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
