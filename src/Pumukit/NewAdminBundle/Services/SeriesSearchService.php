@@ -3,18 +3,29 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesSearchService
 {
     private $dm;
 
+    /**
+     * SeriesSearchService constructor.
+     *
+     * @param DocumentManager $documentManager
+     */
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
     }
 
-    public function processCriteria($reqCriteria, $searchInObjects = false)
+    /**
+     * @param        $reqCriteria
+     * @param bool   $searchInObjects
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function processCriteria($reqCriteria, $searchInObjects = false, $locale = 'en')
     {
         $new_criteria = array();
 
@@ -22,12 +33,13 @@ class SeriesSearchService
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
                     $mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-                    $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100)->toArray();
+                    $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale)->toArray();
                     $ids[] = $value;
 
                     $new_criteria['$or'] = $this->getSearchCriteria(
                         $value,
-                        array(array('_id' => array('$in' => $ids)))
+                        array(array('_id' => array('$in' => $ids))),
+                        $locale
                     );
                 } else {
                     $new_criteria['$or'] = $this->getSearchCriteria(
@@ -51,6 +63,11 @@ class SeriesSearchService
         return $new_criteria;
     }
 
+    /**
+     * @param $value
+     *
+     * @return array
+     */
     private function processDates($value)
     {
         $criteria = array();
@@ -73,12 +90,19 @@ class SeriesSearchService
         return $criteria;
     }
 
-    private function getSearchCriteria($text, array $base = array())
+    /**
+     * @param       $text
+     * @param array $base
+     * @param       $locale
+     *
+     * @return array
+     */
+    private function getSearchCriteria($text, array $base = array(), $locale)
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $mRegex = new \MongoRegex("/$text/i");
-            $base[] = array('title.es' => $mRegex);
+            $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);
         } else {
             $base[] = array('$text' => array('$search' => $text));

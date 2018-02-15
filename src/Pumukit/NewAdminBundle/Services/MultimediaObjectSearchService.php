@@ -9,12 +9,23 @@ class MultimediaObjectSearchService
 {
     private $dm;
 
+    /**
+     * MultimediaObjectSearchService constructor.
+     *
+     * @param DocumentManager $documentManager
+     */
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
     }
 
-    public function processMMOCriteria($reqCriteria)
+    /**
+     * @param $reqCriteria
+     * @param $locale
+     *
+     * @return array
+     */
+    public function processMMOCriteria($reqCriteria, $locale = 'en')
     {
         $new_criteria = array('status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE));
         $bAnnounce = '';
@@ -29,7 +40,8 @@ class MultimediaObjectSearchService
             if (('search' === $property) && ('' !== $value)) {
                 $new_criteria['$or'] = $this->getSearchCriteria(
                     $value,
-                    array(array('_id' => array('$in' => array($value))))
+                    array(array('_id' => array('$in' => array($value)))),
+                    $locale
                 );
             } elseif (('person_name' === $property) && ('' !== $value)) {
                 $personName = $value;
@@ -102,6 +114,11 @@ class MultimediaObjectSearchService
         return $new_criteria;
     }
 
+    /**
+     * @param $value
+     *
+     * @return array
+     */
     private function processDates($value)
     {
         $criteria = array();
@@ -124,12 +141,19 @@ class MultimediaObjectSearchService
         return $criteria;
     }
 
-    private function getSearchCriteria($text, array $base = array())
+    /**
+     * @param       $text
+     * @param array $base
+     * @param       $locale
+     *
+     * @return array
+     */
+    private function getSearchCriteria($text, array $base = array(), $locale)
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $mRegex = new \MongoRegex("/$text/i");
-            $base[] = array('title.es' => $mRegex);
+            $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);
         } else {
             $base[] = array('$text' => array('$search' => $text));
