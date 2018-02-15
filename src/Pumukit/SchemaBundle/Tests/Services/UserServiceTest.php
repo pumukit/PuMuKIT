@@ -29,12 +29,9 @@ class UserServiceTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
 
-        $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:User');
-        $this->permissionProfileRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->permissionProfileRepo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
 
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
@@ -386,7 +383,7 @@ class UserServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Unable to assign a Permission Profile to the new User. There is no default Permission Profile
      */
     public function testInstantiateException()
@@ -601,12 +598,12 @@ class UserServiceTest extends WebTestCase
 
         $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $localGroup));
         $this->assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $casGroup));
-        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($localUser, $casGroup));
-        $this->assertFalse($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
+        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($localUser, $casGroup));
+        $this->assertTrue($this->userService->isAllowedToModifyUserGroup($casUser, $localGroup));
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  is not local and can not be modified
      */
     public function testUpdateException()
@@ -632,11 +629,7 @@ class UserServiceTest extends WebTestCase
         $user = $this->userService->update($user);
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add group
-     */
-    public function testExceptionAddGroupLocalCas()
+    public function testAddGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -653,13 +646,11 @@ class UserServiceTest extends WebTestCase
         $this->dm->flush();
 
         $this->userService->addGroup($localGroup, $casUser);
+
+        $this->assertTrue($casUser->containsGroup($localGroup));
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to add group
-     */
-    public function testExceptionAddGroupCasLocal()
+    public function testAddGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -676,10 +667,12 @@ class UserServiceTest extends WebTestCase
         $this->dm->flush();
 
         $this->userService->addGroup($casGroup, $localUser);
+
+        $this->assertTrue($localUser->containsGroup($casGroup));
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  Not allowed to add group
      */
     public function testExceptionAddGroupCasCas()
@@ -701,11 +694,7 @@ class UserServiceTest extends WebTestCase
         $this->userService->addGroup($casGroup, $casUser);
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete group
-     */
-    public function testExceptionDeleteGroupLocalCas()
+    public function testDeleteGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -725,14 +714,14 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($casUser);
         $this->dm->flush();
 
+        $this->assertTrue($casUser->containsGroup($localGroup));
+
         $this->userService->deleteGroup($localGroup, $casUser);
+
+        $this->assertFalse($casUser->containsGroup($localGroup));
     }
 
-    /**
-     * @expectedException         Exception
-     * @expectedExceptionMessage  Not allowed to delete group
-     */
-    public function testExceptionDeleteGroupCasLocal()
+    public function testDeleteGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -752,11 +741,15 @@ class UserServiceTest extends WebTestCase
         $this->dm->persist($localUser);
         $this->dm->flush();
 
+        $this->assertTrue($localUser->containsGroup($casGroup));
+
         $this->userService->deleteGroup($casGroup, $localUser);
+
+        $this->assertFalse($localUser->containsGroup($casGroup));
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  Not allowed to delete group
      */
     public function testExceptionDeleteGroupCasCas()
@@ -1067,7 +1060,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
     }
 
-    public function testNotExceptionAddGroupCasCas()
+    public function testAddGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -1088,7 +1081,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($casUser->containsGroup($casGroup));
     }
 
-    public function testNotExceptionDeleteGroupCasCas()
+    public function testDeleteGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
