@@ -59,7 +59,6 @@ class MultimediaObjectSearchService
                     $bAnnounce = true;
                 } elseif ('false' === $value) {
                     $bAnnounce = false;
-                    $bAnnounce = false;
                 }
             } elseif (('date' === $property) && ('' !== $value)) {
                 $new_criteria += $this->processDates($value);
