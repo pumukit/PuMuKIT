@@ -2536,8 +2536,6 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
 
-    group_origin = group_origin.toUpperCase();
-
     var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
         item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
@@ -2568,8 +2566,6 @@ function create_element_group_in_delete_groups_user(group_id, group_key, group_n
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
-
-    group_origin = group_origin.toUpperCase();
 
     var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
