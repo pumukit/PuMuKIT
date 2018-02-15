@@ -446,8 +446,6 @@ class AdminController extends ResourceController implements NewAdminController
             ++$i;
         }
 
-        header('Content-Disposition: attachment; filename="permissionprofiles.csv"');
-
-        return new Response($csv);
+        return new Response($csv, Response::HTTP_OK, array('Content-Disposition' => 'attachment; filename="permissionprofiles.csv"'));
     }
 }
