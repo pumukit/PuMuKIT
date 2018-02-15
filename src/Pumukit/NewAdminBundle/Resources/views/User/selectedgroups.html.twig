@@ -5,7 +5,7 @@
            onclick="return select_group(this);"
            ondblclick="delete_group_user('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', '{{ user.getOrigin() }}');">
             <i class="mdi-social-group"></i>
-            {{ user_group.key }} - {{ user_group.name }} - ({{ (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) ? user_group.origin : user_group.origin|upper }})
+            {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>
     {% else %}
         {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
