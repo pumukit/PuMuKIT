@@ -3572,6 +3572,14 @@
               <source>Publish to Moodle</source>
               <target xml:lang="es-ES" state="translated">Publicar en Moodle</target>
             </trans-unit>
+            <trans-unit id="9aa5a39bd64b18c79c21bbf97dbb0557" resname="Show configuration for messages, poster image and color text.">
+              <source>Show configuration for messages, poster image and color text.</source>
+              <target xml:lang="es-ES" state="translated">Mostrar la configuración de mensajes, imagen de póster y color de texto.</target>
+            </trans-unit>
+            <trans-unit id="8e55bbde437f7d9ba1d6cbd9b1b274dc" resname="Click to edit messages, poster image and color text">
+              <source>Click to edit messages, poster image and color text</source>
+              <target xml:lang="es-ES" state="translated">Hacer click para editar mensajes, imagen de póster y color de texto</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

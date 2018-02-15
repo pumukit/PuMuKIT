@@ -3339,6 +3339,10 @@
         <source>Not yet held event message</source>
         <target xml:lang="ru" state="needs-translation">Not yet held event message</target>
       </trans-unit>
+      <trans-unit id="d7c00ac27e345f7048f6181b182bdbf9" resname="Today events list">
+        <source>Today events list</source>
+        <target xml:lang="ru" state="needs-translation">Today events list</target>
+      </trans-unit>
       <trans-unit id="bd2135d039aaa998629afbc13c2fdc27" resname="Default live screen image">
         <source>Default live screen image</source>
         <target xml:lang="ru" state="needs-translation">Default live screen image</target>
@@ -3374,6 +3378,14 @@
       <trans-unit id="d821d7a73f18b0a432c59dec9eb4821a" resname="Publish to Moodle">
         <source>Publish to Moodle</source>
         <target xml:lang="ru" state="needs-translation">Publish to Moodle</target>
+      </trans-unit>
+      <trans-unit id="9aa5a39bd64b18c79c21bbf97dbb0557" resname="Show configuration for messages, poster image and color text.">
+        <source>Show configuration for messages, poster image and color text.</source>
+        <target xml:lang="ru" state="needs-translation">Show configuration for messages, poster image and color text.</target>
+      </trans-unit>
+      <trans-unit id="8e55bbde437f7d9ba1d6cbd9b1b274dc" resname="Click to edit messages, poster image and color text">
+        <source>Click to edit messages, poster image and color text</source>
+        <target xml:lang="ru" state="needs-translation">Click to edit messages, poster image and color text</target>
       </trans-unit>
     </body>
   </file>

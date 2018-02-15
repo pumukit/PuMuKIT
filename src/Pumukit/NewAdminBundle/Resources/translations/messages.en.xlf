@@ -3470,6 +3470,14 @@
               <source>Publish to Moodle</source>
               <target>Publish to Moodle</target>
             </trans-unit>
+            <trans-unit id="9aa5a39bd64b18c79c21bbf97dbb0557" resname="Show configuration for messages, poster image and color text.">
+              <source>Show configuration for messages, poster image and color text.</source>
+              <target>Show configuration for messages, poster image and color text.</target>
+            </trans-unit>
+            <trans-unit id="8e55bbde437f7d9ba1d6cbd9b1b274dc" resname="Click to edit messages, poster image and color text">
+              <source>Click to edit messages, poster image and color text</source>
+              <target>Click to edit messages, poster image and color text</target>
+            </trans-unit>
           </body>
     </file>
 </xliff>
