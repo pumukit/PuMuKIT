@@ -224,10 +224,6 @@ class UserController extends AdminController implements NewAdminController
     {
         $user = $this->findOr404($request);
 
-        /*if (!$user->isLocal()) {
-            return new Response("Not allowed to update this not local user '".$user->getUsername()."'", Response::HTTP_BAD_REQUEST);
-        }*/
-
         if ('POST' === $request->getMethod()) {
             $addGroups = $request->get('addGroups', array());
             if ('string' === gettype($addGroups)) {

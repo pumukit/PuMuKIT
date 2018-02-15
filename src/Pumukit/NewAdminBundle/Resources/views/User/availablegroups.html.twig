@@ -7,7 +7,7 @@
                ondblclick="add_group_user('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ user.getOrigin() }}');"
                class="list-group-item notload pumukitnewadmin-trim-row">
                 <i class="mdi-social-group"></i>
-                {{ group.key }} - {{ group.name }} - ({{ (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) ? group.origin : group.origin|upper }})
+                {{ group.key }} - {{ group.name }} - ({{ group.origin }})
             </a>
         {% else %}
             <a href="#"
@@ -16,7 +16,7 @@
                ondblclick="window.alert('External defined groups. Contact your directory service administrator to change membership.');"
                class="list-group-item notload pumukitnewadmin-trim-row disabled-group-item">
                 <i class="mdi-social-group"></i>
-                {{ group.key }} - {{ group.name }} - ({{ (group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) ? group.origin : group.origin|upper }})
+                {{ group.key }} - {{ group.name }} - ({{ group.origin }})
             </a>
         {% endif %}
     {% endfor %}

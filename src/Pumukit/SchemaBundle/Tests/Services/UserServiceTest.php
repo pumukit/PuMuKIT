@@ -629,7 +629,7 @@ class UserServiceTest extends WebTestCase
         $user = $this->userService->update($user);
     }
 
-    public function testExceptionAddGroupLocalCas()
+    public function testAddGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -650,7 +650,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($casUser->containsGroup($localGroup));
     }
 
-    public function testExceptionAddGroupCasLocal()
+    public function testAddGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -694,7 +694,7 @@ class UserServiceTest extends WebTestCase
         $this->userService->addGroup($casGroup, $casUser);
     }
 
-    public function testExceptionDeleteGroupLocalCas()
+    public function testDeleteGroupLocalCas()
     {
         $localGroup = new Group();
         $localGroup->setKey('local_key');
@@ -721,7 +721,7 @@ class UserServiceTest extends WebTestCase
         $this->assertFalse($casUser->containsGroup($localGroup));
     }
 
-    public function testExceptionDeleteGroupCasLocal()
+    public function testDeleteGroupCasLocal()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -1060,7 +1060,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($this->userService->isUserInGroups($user, $mm->getId(), $person->getId(), $groups));
     }
 
-    public function testNotExceptionAddGroupCasCas()
+    public function testAddGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');
@@ -1081,7 +1081,7 @@ class UserServiceTest extends WebTestCase
         $this->assertTrue($casUser->containsGroup($casGroup));
     }
 
-    public function testNotExceptionDeleteGroupCasCas()
+    public function testDeleteGroupCasCas()
     {
         $casGroup = new Group();
         $casGroup->setKey('cas_key');

@@ -2513,17 +2513,11 @@ function select_group(element)
 }
 
 function add_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
-    reset = typeof reset !== 'undefined' ? reset : false;
 
     create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin);
     var element_to_delete = "#delete_group_" + group_id;
 
     delete_element_group_from_select(element_to_delete);
-    can_enable_broadcast_groups_save_button();
-
-    if (!reset) {
-        is_last_user_relation_to_admin_mm('user', null);
-    }
 }
 
 function create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin) {
@@ -2541,9 +2535,8 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
-    if(group_origin != local_origin) {
-        group_origin = group_origin.toUpperCase();
-    }
+
+    group_origin = group_origin.toUpperCase();
 
     var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
@@ -2553,17 +2546,11 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
 }
 
 function delete_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
-    reset = typeof reset !== 'undefined' ? reset : false;
 
     create_element_group_in_delete_groups_user(group_id, group_key, group_name, group_origin, user_origin);
 
     var element_to_delete = "#add_group_" + group_id;
     delete_element_group_from_select(element_to_delete);
-    can_enable_broadcast_groups_save_button();
-
-    if ((!reset)) {
-        is_last_user_relation_to_admin_mm('user', null);
-    }
 }
 
 function create_element_group_in_delete_groups_user(group_id, group_key, group_name, group_origin, user_origin) {
@@ -2581,9 +2568,8 @@ function create_element_group_in_delete_groups_user(group_id, group_key, group_n
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
-    if(group_origin != local_origin) {
-        group_origin = group_origin.toUpperCase();
-    }
+
+    group_origin = group_origin.toUpperCase();
 
     var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}

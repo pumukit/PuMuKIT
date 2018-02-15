@@ -14,7 +14,7 @@
            onclick="return false;"
            ondblclick="window.alert('{{ message }}');">
             <i class="mdi-social-group"></i>
-            {{ user_group.key }} - {{ user_group.name }} - ({{ (user_group.origin == constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')) ? user_group.origin : user_group.origin|upper }})
+            {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>
     {% endif %}
 {% endfor %}

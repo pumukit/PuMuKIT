@@ -110,7 +110,7 @@ class LDAPUserService
 
         $permissionProfile = $this->permissionProfileService->getByName('Viewer');
         $user->setPermissionProfile($permissionProfile);
-        $user->setOrigin('ldap');
+        $user->setOrigin(self::ORIGIN);
         $user->setEnabled(true);
 
         $this->userService->create($user);
@@ -139,7 +139,7 @@ class LDAPUserService
         $group = new Group();
         $group->setKey($cleanKey);
         $group->setName($cleanName);
-        $group->setOrigin('ldap');
+        $group->setOrigin(self::ORIGIN);
         $this->groupService->create($group);
 
         return $group;
@@ -259,7 +259,7 @@ class LDAPUserService
         }
 
         foreach ($user->getGroups() as $group) {
-            if ('ldap' === $group->getOrigin()) {
+            if (self::ORIGIN === $group->getOrigin()) {
                 if (!in_array($group->getKey(), $aGroups)) {
                     try {
                         $this->userService->deleteGroup($group, $user, true, false);
