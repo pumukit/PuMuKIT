@@ -36,11 +36,12 @@ class LogController extends Controller implements AdminController
             return new JsonResponse(array('error' => 'Error reading log file'.$pathFile), 500);
         }
 
+        $downloadFileName = str_replace('.log', '.txt', $sFile);
         $response = new BinaryFileResponse($pathFile);
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "log_$env.txt"
+            $downloadFileName
         );
 
         return $response;
