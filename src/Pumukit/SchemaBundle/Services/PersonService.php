@@ -185,8 +185,8 @@ class PersonService
             $oneseries = $mmobj->getSeries();
             if (!$seriesCollection->contains($oneseries)) {
                 $seriesCollection->add($oneseries);
+                ++$count;
             }
-            ++$count;
         }
 
         return $seriesCollection;
