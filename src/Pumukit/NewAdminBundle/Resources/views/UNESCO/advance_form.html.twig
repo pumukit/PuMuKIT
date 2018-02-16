@@ -93,6 +93,7 @@
             </div>
 
             <div class="clearfix"></div>
+            {% if not disable_pudenew %}
             <div class="form-group" style="display:inline-block; margin-top:15px;">
                 <strong style="margin-left:15px;"> {% trans %}Announce{% endtrans %}</strong>
                 <div class="checkbox" style="display:inline;margin-left:50px;">
@@ -105,6 +106,7 @@
                     </label>
                 </div>
             </div>
+            {% endif %}
 
             {% if puderadio %}
                 <div class="clearfix"></div>
