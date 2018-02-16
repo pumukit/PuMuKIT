@@ -578,12 +578,15 @@ class ClientService
     public function getSpatialField($url)
     {
         if (0 === strpos($url, $this->url)) {
-            $response = $this->request($url);
+            $path = parse_url($url, PHP_URL_PATH);
+            if (!$path) {
+                return null;
+            }
+            $response = $this->request($path);
         } else {
             $response = array('var' => file_get_contents($url));
         }
 
-        $response = $this->request($url);
         $start = strrpos($response['var'], '<dcterms:spatial>');
         $end = strrpos($response['var'], '</dcterms:spatial>');
 
