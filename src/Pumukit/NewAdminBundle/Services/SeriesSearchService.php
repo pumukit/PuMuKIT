@@ -97,7 +97,7 @@ class SeriesSearchService
      *
      * @return array
      */
-    private function getSearchCriteria($text, array $base = array(), $locale)
+    private function getSearchCriteria($text, array $base = array(), $locale = 'en')
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
