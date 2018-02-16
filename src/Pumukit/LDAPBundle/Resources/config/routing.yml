@@ -9,4 +9,6 @@ pumukit_ldap_js:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitLDAPBundle::ldap.js.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: js

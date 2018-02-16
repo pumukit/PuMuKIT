@@ -4,6 +4,8 @@ pumukitwizard_js:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'PumukitWizardBundle::pumukit2_wizard.js.twig'
+        maxAge:       86400
+        sharedAge:    86400
         _format: js
 
 pumukitwizard_default:
