@@ -21,7 +21,6 @@ class PermissionService
     {
         $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Tag');
         $this->externalPermissions = $externalPermissions;
-        $this->allPermissions = $this->buildAllDependencies();
     }
 
     /**
@@ -73,13 +72,32 @@ class PermissionService
     }
 
     /**
-     * Get all permissions.
+     * Get all permission.
+     * Return an array with code as key and description and dependencies as value.
+     * See Pumukit\SchemaBundle\Security\Permission.
+     *
+     * @return array
+     */
+    public function getAllPermissionValues()
+    {
+        if (!$this->allPermissions) {
+            $this->allPermissions = $this->buildAllDependencies();
+        }
+
+        return $this->allPermissions;
+    }
+
+    /**
+     * Get all permission descriptions.
+     * Return an array with code as key and description as value.
+     *
+     * @return array
      */
     public function getAllPermissions()
     {
         return array_map(function ($a) {
             return $a['description'];
-        }, $this->allPermissions);
+        }, $this->getAllPermissionValues());
     }
 
     /**
@@ -106,7 +124,7 @@ class PermissionService
     {
         return array_map(function ($a) {
             return $a['dependencies'];
-        }, $this->allPermissions);
+        }, $this->getAllPermissionValues());
     }
 
     /**
@@ -114,7 +132,7 @@ class PermissionService
      */
     public function exists($permission)
     {
-        return array_key_exists($permission, $this->allPermissions);
+        return array_key_exists($permission, $this->getAllPermissionValues());
     }
 
     /**
@@ -210,14 +228,16 @@ class PermissionService
      */
     public function getDependablesByScope($permission, $scope)
     {
-        if (!array_key_exists($permission, $this->allPermissions)) {
+        $allPermissions = $this->getAllPermissionValues();
+
+        if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
         if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
         }
         $dependables = array_filter(
-            $this->allPermissions,
+            $allPermissions,
             function ($a) use ($permission, $scope) {
                 return in_array($permission, $a['dependencies'][$scope]);
             }
@@ -238,13 +258,15 @@ class PermissionService
      */
     public function getDependenciesByScope($permission, $scope)
     {
-        if (!array_key_exists($permission, $this->allPermissions)) {
+        $allPermissions = $this->getAllPermissionValues();
+
+        if (!array_key_exists($permission, $allPermissionValues)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
         if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
         }
 
-        return $this->allPermissions[$permission]['dependencies'][$scope];
+        return $allPermissions[$permission]['dependencies'][$scope];
     }
 }
