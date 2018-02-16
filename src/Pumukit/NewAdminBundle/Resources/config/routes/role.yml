@@ -85,3 +85,9 @@ pumukitnewadmin_role_list:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.role:listAction
+
+pumukitnewadmin_role_export:
+    pattern: /export
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.role:exportRolesAction

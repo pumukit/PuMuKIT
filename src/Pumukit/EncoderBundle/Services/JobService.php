@@ -489,11 +489,11 @@ class JobService
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         $commandLine = $this->renderBat($job);
 
-        $this->mkdir(dirname($job->getPathEnd()));
-
         $executor = $this->getExecutor($profile['app'], $cpu);
 
         try {
+            $this->mkdir(dirname($job->getPathEnd()));
+
             //Throws exception when the multimedia object is not found.
             $multimediaObject = $this->getMultimediaObject($job);
             //This does not 'executes' the job. This adds the 'executing job' property to the mmobj.

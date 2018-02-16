@@ -1,50 +1,47 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}edit groups for user{% endtrans %}:</h4>
-  <h2 class="modal-title">&laquo;{{ user.getUsername() }}&raquo;</h2>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}edit groups for user{% endtrans %}:</h4>
+    <h2 class="modal-title">&laquo;{{ user.getUsername() }}&raquo;</h2>
 </div>
 
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
-  <input type="hidden" id="user_id" value="{{ user.id }}"/>
-  <div class="panel panel-default">
-    <div class="panel-heading" style="text-align:center;">{% trans %}GROUPS{% endtrans %}</div>
-    <div class="panel-body" id="group_mode">
-      <div class="row pumukitnewadmin-groups-list-title-row">
-        <div class="pumukitnewadmin-groups-list-title list-title-1">
-          {% trans %}Available Groups{% endtrans %}:
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADMIN_USERS')) %}
+        <input type="hidden" id="user_id" value="{{ user.id }}"/>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align:center;">{% trans %}GROUPS{% endtrans %}</div>
+            <div class="panel-body" id="group_mode">
+                <div class="row pumukitnewadmin-groups-list-title-row">
+                    <div class="pumukitnewadmin-groups-list-title list-title-1">
+                        {% trans %}Available Groups{% endtrans %}:
+                    </div>
+                    <div class="pumukitnewadmin-groups-list-title list-title-2">
+                        {% trans %}User current Groups{% endtrans %}:
+                    </div>
+                </div>
+                <div class="pumukitnewadmin-groups-boxes">
+                    <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_groups">
+                        {% include 'PumukitNewAdminBundle:User:availablegroups.html.twig' with {'user': user, 'groups': groups} %}
+                    </div>
+                    <div class="pumukitnewadmin-groups-arrows">
+                        <a href="#" onclick="$('#add_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
+                        <a href="#" onclick="$('#delete_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+                    </div>
+                    {# Groups added to the user #}
+                    <div class="tag pumukitnewadmin-groups-list-box" id="select_tag">
+                        <div class="tag_tree list-group" id="add_groups">
+                            {% include 'PumukitNewAdminBundle:User:selectedgroups.html.twig' with {'user': user, 'groups': groups} %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="pumukitnewadmin-groups-list-title list-title-2">
-          {% trans %}User current Groups{% endtrans %}:
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+            <button type="button" class="btn btn-primary btn-raised" id="pumukitnewadmin_user_groups_reset">{% trans %}Reset{% endtrans %}</button>
+            <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_user_groups_submit">{% trans %}Save changes{% endtrans %}</button>
         </div>
-      </div>
-      <div class="pumukitnewadmin-groups-boxes">
-	    <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_groups">
-          {% include 'PumukitNewAdminBundle:User:availablegroups.html.twig' with {'user': user, 'groups': groups} %}
-	    </div>
-	    <div class="pumukitnewadmin-groups-arrows">
-	      <a href="#" onclick="$('#add_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
-	      <a href="#" onclick="$('#delete_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
-	    </div>
-        {# Groups added to the user #}
-	    <div class="tag pumukitnewadmin-groups-list-box" id="select_tag">
-	      <div class="tag_tree list-group" id="add_groups" >
-            {% include 'PumukitNewAdminBundle:User:selectedgroups.html.twig' with {'user': user, 'groups': groups} %}
-	      </div>
-        </div>
-	  </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    {% if user.isLocal() %}
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-    <button type="button" class="btn btn-primary btn-raised" id="pumukitnewadmin_user_groups_reset">{% trans %}Reset{% endtrans %}</button>
-    <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_user_groups_submit">{% trans %}Save changes{% endtrans %}</button>
     {% else %}
-    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}
-  </div>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
 </div>
