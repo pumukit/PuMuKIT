@@ -356,4 +356,96 @@ class AdminController extends ResourceController implements NewAdminController
 
         return $allGroups;
     }
+
+    /**
+     * @throws \Exception
+     */
+    public function exportRolesAction()
+    {
+        $languages = $this->getParameter('pumukit2.locales');
+
+        $csv = array('id', 'cod', 'xml', 'display');
+        foreach ($languages as $language) {
+            $csv[] = 'name_'.$language;
+        }
+
+        foreach ($languages as $language) {
+            $csv[] = 'text_'.$language;
+        }
+
+        $csv = implode(';', $csv);
+        $csv = $csv.PHP_EOL;
+
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+        if (!$roles) {
+            throw new \Exception('Not roles found');
+        }
+
+        $i = 1;
+        foreach ($roles as $rol) {
+            $dataCSV = array();
+            $dataCSV[] = $i;
+            $dataCSV[] = $rol->getCod();
+            $dataCSV[] = $rol->getXML();
+            $dataCSV[] = (int) $rol->getDisplay();
+            foreach ($languages as $language) {
+                $dataCSV[] = $rol->getName($language);
+            }
+
+            foreach ($languages as $language) {
+                $dataCSV[] = $rol->getText($language);
+            }
+
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+
+            ++$i;
+        }
+
+        return new Response($csv, Response::HTTP_OK, array('Content-Disposition' => 'attachment; filename="roles_i18n.csv"'));
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function exportPermissionProfilesAction()
+    {
+        $csv = array('id', 'name', 'system', 'default', 'scope', 'permissions');
+        $csv = implode(';', $csv);
+        $csv = $csv.PHP_EOL;
+
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+
+        $permissionProfiles = $dm->getRepository('PumukitSchemaBundle:PermissionProfile')->findAll();
+        if (!$permissionProfiles) {
+            throw new \Exception('Not permission profiles found');
+        }
+
+        $i = 1;
+        foreach ($permissionProfiles as $pProfile) {
+            $dataCSV = array();
+            $dataCSV[] = $i;
+            $dataCSV[] = $pProfile->getName();
+            $dataCSV[] = (int) $pProfile->getSystem();
+            $dataCSV[] = (int) $pProfile->getDefault();
+            $dataCSV[] = $pProfile->getScope();
+
+            $permission = array();
+            foreach ($pProfile->getPermissions() as $permissionProfile) {
+                $permission[] = $permissionProfile;
+            }
+
+            $dataPermission = implode(',', $permission);
+
+            $dataCSV[] = $dataPermission;
+            $data = implode(';', $dataCSV);
+            $csv .= $data.PHP_EOL;
+
+            ++$i;
+        }
+
+        return new Response($csv, Response::HTTP_OK, array('Content-Disposition' => 'attachment; filename="permissionprofiles.csv"'));
+    }
 }

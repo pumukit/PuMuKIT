@@ -51,3 +51,9 @@ pumukitnewadmin_permissionprofile_batch_update:
         _controller: pumukitnewadmin.controller.permissionprofile:batchUpdateAction
         _sylius:
             redirect: pumukitnewadmin_permissionprofile_index
+
+pumukitnewadmin_permissionprofile_export:
+    pattern: /export
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.role:exportPermissionProfilesAction
