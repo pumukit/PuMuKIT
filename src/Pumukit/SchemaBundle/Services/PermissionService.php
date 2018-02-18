@@ -260,7 +260,7 @@ class PermissionService
     {
         $allPermissions = $this->getAllPermissionValues();
 
-        if (!array_key_exists($permission, $allPermissionValues)) {
+        if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
         if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
