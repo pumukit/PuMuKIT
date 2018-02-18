@@ -49,6 +49,7 @@ class PermissionServiceTest extends WebTestCase
             'description' => 'Access Four',
         );
         $permissionService = new PermissionService($this->dm, $externalPermissions);
+        $permissionService->getAllPermissionValues();
     }
 
     /**
@@ -63,6 +64,7 @@ class PermissionServiceTest extends WebTestCase
             'description' => 'Invalid Name',
         );
         $permissionService = new PermissionService($this->dm, $externalPermissions);
+        $permissionService->getAllPermissionValues();
     }
 
     public function testGetLocalPermissions()
@@ -171,6 +173,7 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = $erroringPermission;
         $permissionService = new PermissionService($this->dm, $externalPermissions);
+        $permissionService->getAllPermissionValues();
     }
 
     /**
@@ -180,12 +183,13 @@ class PermissionServiceTest extends WebTestCase
     public function testExceptionRole()
     {
         $externalPermissions = array(
-                                     array(
-                                           'role' => 'NOT_VALID',
-                                           'description' => 'Not valid',
-                                           ),
-                                     );
+            array(
+                'role' => 'NOT_VALID',
+                'description' => 'Not valid',
+            ),
+        );
         $permissionService = new PermissionService($this->dm, $externalPermissions);
+        $permissionService->getAllPermissionValues();
     }
 
     private function getExternalPermissions()
