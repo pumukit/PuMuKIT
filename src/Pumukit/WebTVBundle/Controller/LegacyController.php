@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -36,7 +37,7 @@ class LegacyController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl('pumukit_webtv_series_index', array('id' => $series->getId())));
+        return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()), Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -82,9 +83,9 @@ class LegacyController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
         if ($multimediaObject->getStatus() == MultimediaObject::STATUS_HIDE) {
-            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_magicindex', array('secret' => $multimediaObject->getSecret())));
+            return $this->redirectToRoute('pumukit_webtv_multimediaobject_magicindex', array('secret' => $multimediaObject->getSecret()), Response::HTTP_MOVED_PERMANENTLY);
         } else {
-            return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
+            return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), Response::HTTP_MOVED_PERMANENTLY);
         }
     }
 
@@ -110,7 +111,7 @@ class LegacyController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $multimediaObject->getId())));
+        return $this->redirectToRoute('pumukit_webtv_multimediaobject_iframe', array('id' => $multimediaObject->getId()), Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -135,7 +136,7 @@ class LegacyController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
+        return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -157,7 +158,7 @@ class LegacyController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
 
-        return $this->redirect($this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret())));
+        return $this->redirectToRoute('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret()), Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -165,6 +166,6 @@ class LegacyController extends Controller implements WebTVController
      */
     public function directoAction()
     {
-        return $this->redirect($this->generateUrl('pumukit_live', array()));
+        return $this->redirectToRoute('pumukit_live', array(), Response::HTTP_MOVED_PERMANENTLY);
     }
 }
