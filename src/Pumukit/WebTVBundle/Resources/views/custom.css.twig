@@ -3,18 +3,25 @@
 {# 2. Inside the body block, set variables as documented on Resources/doc/override.md #}
 {% extends 'PumukitWebTVBundle::default.css.twig' %}
 {% block body %}
-{% set breadcrumbs_font_color = '#fff' %}
-{{ parent() }}
-.breadcrumbs_color {
-    border-bottom: 10px solid #D66400;
-}
-.breadcrumb > li:last-of-type {
-    margin-top: 5px;
-}
-@media (max-width: 767px) {
-    .main-content {
-        max-width: 500px;
-        margin: 0 auto;
+    {% set breadcrumbs_font_color = '#fff' %}
+
+    {{ parent() }}
+    .breadcrumbs_color {
+        border-bottom: 10px solid #D66400;
     }
-}
+    .breadcrumb > li:last-of-type {
+        margin-top: 5px;
+    }
+    @media (max-width: 767px) {
+        .main-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    }
+
+    .row.subseries_title_wrapper.place_subserial {
+        margin-top:30px;
+        margin-bottom:30px;
+    }
+
 {% endblock %}
