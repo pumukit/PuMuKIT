@@ -81,9 +81,14 @@ class SeriesType extends AbstractType
                         'label' => $this->translator->trans('Headline', array(), null, $this->locale), ))
            ->add('template', 'choice',
                   array(
-                        'choices' => array('date' => 'date', 'date_all' => 'date_all',
-                                           'date_subserial' => 'date_subserial', 'subserial' => 'subserial',
-                                           'multisubserial' => 'multisubserial', ),
+                        'choices' => array(
+                            'date' => $this->translator->trans('date'),
+                            'date_all' => $this->translator->trans('date_all'),
+                            'date_subserial' => $this->translator->trans('date_subserial'),
+                            'place_subserial' => $this->translator->trans('place_subserial'),
+                            'subserial' => $this->translator->trans('subserial'),
+                            'multisubserial' => $this->translator->trans('multisubserial'),
+                        ),
                         'empty_data' => null,
                         'mapped' => false,
                         'attr' => array('groupclass' => 'hidden-naked'),
