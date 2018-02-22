@@ -45,14 +45,14 @@ script:
     - php app/console pumukit:init:repo all --force
 #    - php app/console pumukit:init:example  --force
     - php app/console server:start --env=prod
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/series/channel/1.html
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/latestuploads
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/searchmultimediaobjects
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/searchseries
-#    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/live/595b77640fd60c42008b4567
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/mediateca
-    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/categories
-#    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/video/59269ab79833a041008b4576
-#    - pa11y -l error -s WCAG2AA -r cli http://localhost:8000/series/5925a5519833a043008b456c
+    - pa11y -c .pa11y.json http://localhost:8000/
+    - pa11y -c .pa11y.json http://localhost:8000/series/channel/1.html
+    - pa11y -c .pa11y.json http://localhost:8000/latestuploads
+    - pa11y -c .pa11y.json http://localhost:8000/searchmultimediaobjects
+    - pa11y -c .pa11y.json http://localhost:8000/searchseries
+#    - pa11y -c .pa11y.json http://localhost:8000/live/595b77640fd60c42008b4567
+    - pa11y -c .pa11y.json http://localhost:8000/mediateca
+    - pa11y -c .pa11y.json http://localhost:8000/categories
+#    - pa11y -c .pa11y.json http://localhost:8000/video/59269ab79833a041008b4576
+#    - pa11y -c .pa11y.json http://localhost:8000/series/5925a5519833a043008b456c
     - php app/console server:stop
