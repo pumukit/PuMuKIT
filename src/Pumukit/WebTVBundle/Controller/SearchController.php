@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 
 class SearchController extends Controller implements WebTVController
 {
@@ -47,6 +47,7 @@ class SearchController extends Controller implements WebTVController
 
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        $pagerfanta->getCurrentPageResults(); // TTK-17149 force the complete search query to avoid a new query to count
         $totalObjects = $pagerfanta->getNbResults();
 
         // -- Get years array --
@@ -105,6 +106,7 @@ class SearchController extends Controller implements WebTVController
 
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        $pagerfanta->getCurrentPageResults(); // TTK-17149 force the complete search query to avoid a new query to count
         $totalObjects = $pagerfanta->getNbResults();
 
         // --- Query to get existing languages ---
