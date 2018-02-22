@@ -181,7 +181,15 @@ class SearchController extends Controller implements WebTVController
 
     protected function searchQueryBuilder($queryBuilder, $searchFound)
     {
-        if ($searchFound != '') {
+        $searchFound = trim($searchFound);
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+
+        if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
+            $searchFound = str_replace('*', '.*', $searchFound);
+            $mRegex = new \MongoRegex("/$searchFound/i");
+            $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
+            $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
+        } elseif ($searchFound != '') {
             $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
         }
 
@@ -270,6 +278,7 @@ class SearchController extends Controller implements WebTVController
 
         return $queryBuilder;
     }
+
     // ========== END queryBuilder functions =========
 
     protected function getMmobjsYears()

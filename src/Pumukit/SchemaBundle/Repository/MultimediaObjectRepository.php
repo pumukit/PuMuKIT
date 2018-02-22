@@ -334,15 +334,28 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Search series using text index or the _id.
      *
-     * @param string $text or _id
+     * @param        $text
+     * @param int    $limit
+     * @param int    $page
+     * @param string $locale
      *
      * @return ArrayCollection
      */
-    public function getIdsWithSeriesTextOrId($text, $limit = 0, $page = 0)
+    public function getIdsWithSeriesTextOrId($text, $limit = 0, $page = 0, $locale = 'en')
     {
         $qb = $this->createStandardQueryBuilder();
-        $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
-        $qb->addOr($qb->expr()->field('_id')->equals($text));
+
+        $text = trim($text);
+        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $text = str_replace('*', '.*', $text);
+            $mRegex = new \MongoRegex("/$text/i");
+            $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
+            $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
+        } else {
+            $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
+            $qb->addOr($qb->expr()->field('_id')->equals($text));
+        }
+
         $qb->distinct('series');
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
@@ -449,6 +462,7 @@ class MultimediaObjectRepository extends DocumentRepository
           ->getQuery()
           ->execute();
     }
+
     // Find Multimedia Objects with Tags
 
     /**
@@ -543,6 +557,7 @@ class MultimediaObjectRepository extends DocumentRepository
 
         return $qb;
     }
+
     /**
      * Create QueryBuilder to find multimedia objects with Tag and without any Tag children.
      *
