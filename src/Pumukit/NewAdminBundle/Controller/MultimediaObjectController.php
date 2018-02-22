@@ -1488,15 +1488,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function getCriteria($config)
     {
-        $criteria = $this->getRequest()->get('criteria', array());
-        if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$this->getResourceName($this->getRequest()).'/criteria');
-        } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$this->getResourceName($this->getRequest()).'/criteria', $criteria);
-        }
-        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($this->getRequest()).'/criteria', array());
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $criteria = $request->get('criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, true);
+        if (array_key_exists('reset', $criteria)) {
+            $this->get('session')->remove('admin/'.$this->getResourceName($request).'/criteria');
+        } elseif ($criteria) {
+            $this->get('session')->set('admin/'.$this->getResourceName($request).'/criteria', $criteria);
+        }
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($request).'/criteria', array());
+
+        $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
 
         return $new_criteria;
     }

@@ -4,48 +4,68 @@
 {% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
 
 {% block body %}
-  {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
-  {% set series_precinct = precinct_of_series(multimediaObjects) %}
-  <div class="row">
-    <div class="col-xs-12">
-      {% include 'PumukitWebTVBundle:Series:header.html.twig' with {'series_precinct': series_precinct} %}
+    {% set last_date = '' %}
+    {% set last_subseriestitle = '' %}
+    {% set template = series.getProperty('template')|default('date') %}
+
+    {% include 'PumukitWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
+    {% set precinct = precinct_of_series(multimediaObjects) %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% include 'PumukitWebTVBundle:Series:header.html.twig' with { 'series_precinct' : precinct} %}
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div id="serial_header">
-        {{ series.header|raw }}
-      </div>
+    {% if template != 'place_subserial' %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="serial_header">
+                    {{ series.header|raw }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% if template == 'place_subserial' %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="serial_header">
+                            {{ series.header|raw }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% for mm in multimediaObjects %}
+                {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" ) %}
+                {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
+                <div class="col-xs-12">
+                    <a name="{{ mm.id }}"></a>
+                    {% include 'PumukitWebTVBundle:Series:group_by.html.twig' with {
+                        'current_date': current_date,
+                        'last_date' : last_date,
+                        'subserie_title': subserie_title,
+                        'last_subseriestitle' : last_subseriestitle,
+                        'template': template ,
+                        'subseries': false,
+                        'series_precinct': precinct,
+                        'mm' : mm
+                    } %}
+                    {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm } %}
+                    {% set last_date = current_date %}
+                    {% set last_subseriestitle =  subserie_title %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      {% set last_date = '' %}
-      {% set last_subseriestitle = '' %}
-      {% set template = series.getProperty('template')|default('date') %}
-      {% for mm in multimediaObjects %}
-        {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" )%}
-        {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
-          <div class="col-xs-12">
-            <a name="{{ mm.id }}" ></a>
-            {% include 'PumukitWebTVBundle:Series:group_by.html.twig' with {'current_date': current_date,
-                'last_date' : last_date, 'subserie_title': subserie_title, 'last_subseriestitle' : last_subseriestitle, 'template': template , 'subseries': false } %}
-            {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm } %}
-            {% set last_date = current_date %}
-            {% set last_subseriestitle =  subserie_title %}
-          </div>
-      {% endfor %}
+    {% if multimediaObjects.getMaxPerPage()|default(0) %}
+        <div class="row">
+            {% set objects = multimediaObjects %}
+            {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-12">
+            {{ series.footer|raw }}
+        </div>
     </div>
-  </div>
-  {% if multimediaObjects.getMaxPerPage()|default(0) %}
-  <div class="row">
-      {% set objects = multimediaObjects %}
-    {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
-  </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-xs-12">
-      {{ series.footer|raw }}
-    </div>
-  </div>
 {% endblock %}

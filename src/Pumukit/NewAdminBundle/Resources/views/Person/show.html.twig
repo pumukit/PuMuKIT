@@ -12,12 +12,14 @@
       {{ person.getOther() }}
       <br />
     {% trans %}SERIES{% endtrans %}:
+      <ul class="list-unstyled">
       {% for oneseries in series %}
-        {{ oneseries.id }} ({{ oneseries.getTitle() }})
+        <li><a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}" title="{{ oneseries.getTitle() }}">{{ oneseries.id }}</a> ({{ oneseries.getTitle() }})</li>
       {% endfor %}
       {% if series|length > 4 %}
-        <strong>...</strong>
+        <li><strong>...</strong></li>
       {% endif %}
+      </ul>
   </p>
 </div>
 {% else %}

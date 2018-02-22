@@ -410,7 +410,8 @@ class SeriesController extends AdminController implements NewAdminController
      */
     public function getCriteria($config)
     {
-        $criteria = $this->getRequest()->get('criteria', array());
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $criteria = $request->get('criteria', array());
 
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/series/criteria');
@@ -419,7 +420,7 @@ class SeriesController extends AdminController implements NewAdminController
         }
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true);
+        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
 
         return $new_criteria;
     }
