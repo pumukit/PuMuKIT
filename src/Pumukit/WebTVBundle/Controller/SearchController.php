@@ -45,11 +45,9 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
         // --- END Create QueryBuilder ---
 
-        // --- Execute QueryBuilder count --
-        $countQuery = clone $queryBuilder;
-        $totalObjects = $countQuery->count()->getQuery()->execute();
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        $totalObjects = $pagerfanta->getNbResults();
 
         // -- Get years array --
         $searchYears = $this->getSeriesYears();
@@ -105,11 +103,10 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         // --- END Create QueryBuilder ---
 
-        // --- Execute QueryBuilder count --
-        $countQuery = clone $queryBuilder;
-        $totalObjects = $countQuery->count()->getQuery()->execute();
         // --- Execute QueryBuilder and get paged results ---
         $pagerfanta = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        $totalObjects = $pagerfanta->getNbResults();
+
         // --- Query to get existing languages ---
         $searchLanguages = $this->get('doctrine_mongodb')
         ->getRepository('PumukitSchemaBundle:MultimediaObject')
