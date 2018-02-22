@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 /**
  * MultimediaObjectRepository.
@@ -294,12 +295,20 @@ class MultimediaObjectRepository extends DocumentRepository
      * Search series using text index.
      *
      * @param string $text
+     * @param int    $limit
+     * @param int    $page
+     * @param string $locale
      *
      * @return ArrayCollection
      */
-    public function searchSeriesField($text, $limit = 0, $page = 0)
+    public function searchSeriesField($text, $limit = 0, $page = 0, $locale = 'en')
     {
-        $qb = $this->createQueryBuilder()->field('$text')->equals(array('$search' => $text))->distinct('series');
+        $qb = $this->createQueryBuilder()
+            ->field('$text')->equals(array(
+                '$search' => $text,
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+            ))
+            ->distinct('series');
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
@@ -327,7 +336,11 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
             $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
         } else {
-            $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
+            $qb->addOr($qb->expr()->field('$text')->equals(array(
+                '$search' => $text,
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+
+            )));
             $qb->addOr($qb->expr()->field('_id')->equals($text));
         }
 

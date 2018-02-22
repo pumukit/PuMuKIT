@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="english"})
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage"})
  * })
  */
 class Series
@@ -175,6 +175,16 @@ class Series
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
+
+    /**
+     * https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/.
+     *
+     * Used to specify the MongoDB Index Language within the Document.
+     *
+     * @var string
+     * @MongoDB\String
+     */
+    private $indexlanguage = 'en';
 
     /**
      * Used locale to override Translation listener`s locale
@@ -848,6 +858,25 @@ class Series
     public function getLocale()
     {
         return $this->locale;
+    }
+    /**
+     * Set indexlanguage.
+     *
+     * @param string $indexlanguage
+     */
+    public function setIndexlanguage($indexlanguage)
+    {
+        $this->indexlanguage = $indexlanguage;
+    }
+
+    /**
+     * Get indexlanguage.
+     *
+     * @return string
+     */
+    public function getIndexlanguage()
+    {
+        return $this->indexlanguage;
     }
 
     /**

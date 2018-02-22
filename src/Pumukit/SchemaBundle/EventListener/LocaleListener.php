@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 /**
  * Init the locale of the i18n Documents when loaded.
@@ -93,6 +94,18 @@ class LocaleListener implements EventSubscriberInterface
             } else {
                 $document->setLocale($this->defaultLocale);
             }
+        }
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $document = $args->getDocument();
+
+        if (method_exists($document, 'setIndexlanguage')) {
+            $document->setIndexlanguage(TextIndexUtils::getCloseLanguage($this->defaultLocale));
         }
     }
 }
