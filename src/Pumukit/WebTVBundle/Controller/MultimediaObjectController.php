@@ -123,7 +123,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     /**
      * @Template()
      */
-    public function seriesAction(MultimediaObject $multimediaObject)
+    public function seriesAction(MultimediaObject $multimediaObject, Request $request)
     {
         $series = $multimediaObject->getSeries();
 
@@ -133,7 +133,15 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $limit = $this->container->getParameter('limit_objs_player_series');
 
-        $multimediaObjects = $mmobjRepo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED), $limit);
+        $referer = $request->headers->get('Referer');
+        $secretSeriesUrl = $this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret()), true);
+        $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
+
+        $status = $fromSecret ?
+                array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN) :
+                array(MultimediaObject::STATUS_PUBLISHED);
+
+        $multimediaObjects = $mmobjRepo->findWithStatus($series, $status, $limit);
 
         return array(
             'series' => $series,
