@@ -41,6 +41,7 @@ class Role
 
     /**
      * See European Broadcasting Union Role Codes.
+     * https://www.ebu.ch/metadata/cs/web/ebu_RoleCodeCS_p.xml.htm.
      *
      * @var string
      *
