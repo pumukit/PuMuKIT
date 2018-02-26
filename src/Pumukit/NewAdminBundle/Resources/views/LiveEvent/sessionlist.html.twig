@@ -5,6 +5,7 @@
                 <th id="th-edit"></th>
                 <th id="th-id" >ID</th>
                 <th id="th-start">{% trans %}Start{% endtrans %}</th>
+                <th id="th-ends">{% trans %}End{% endtrans %}</th>
                 <th id="th-duration">{% trans %}Duration{% endtrans %}</th>
                 <th id="th-notes">{% trans %}Notes{% endtrans %}</th>
             </thead>
@@ -24,6 +25,7 @@
                         </td>
                         <td header="th-id">{{ session.id  }}</td>
                         <td header="th-start"> {{ session.start | localizeddate('medium', 'medium') }}</td>
+                        <td header="th-ends"> {{ session.ends | localizeddate('medium', 'medium') }}</td>
                         <td header="th-duration"> {{ (session.duration/60)|number_format(0) }} {% trans %}min.{% endtrans %}</td>
                         <td header="th-notes"> {{ session.notes|raw }}</td>
                     </tr>
