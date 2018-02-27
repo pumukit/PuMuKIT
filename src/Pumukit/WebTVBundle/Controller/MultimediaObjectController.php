@@ -133,7 +133,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $limit = $this->container->getParameter('limit_objs_player_series');
 
-        $referer = $request->headers->get('Referer');
+        $referer = $request->headers->get('referer');
         $secretSeriesUrl = $this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret()), true);
         $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
 
