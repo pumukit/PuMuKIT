@@ -8,6 +8,11 @@
     </li>
     {% if not is_naked() %}
     <li>
+      <a  title="{% trans %}Modify all multimedia objects status{% endtrans %}" href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+        <i class="mdi-action-visibility"></i> {% trans %}Modify all multimedia objects status{% endtrans %}
+      </a>
+    </li>
+    <li>
       <a  title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
         <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
       </a>

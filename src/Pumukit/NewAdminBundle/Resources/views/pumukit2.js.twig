@@ -2977,10 +2977,19 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
     $('a.delete-broadcast-group-item').each(function(){
         deleteGroups.push($(this).attr("id"));
     });
+
+    var values = [];
+    $('.checkbox_change_pub_mms:checked').each(function(){
+        var $this = $(this);
+        var mmId = $this.attr("id");
+        values.push(mmId);
+    });
+    if (values.size == 0) return false;
+
     $.ajax({
         url: route.replace('__seriesId__', seriesId),
         type: 'POST',
-        data: {'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
+        data: {'ids': values, 'type': broadcast_type, 'password': password, 'addGroups': addGroups, 'deleteGroups': deleteGroups},
         error: function (jqXHR, textStatus, errorThrown) {
             no_success(errorThrown + ': ' + jqXHR.responseText);
         },

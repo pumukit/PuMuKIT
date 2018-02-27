@@ -4843,6 +4843,14 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Edit Templates</source>
         <target xml:lang="eu" state="translated">Txantiloiak editatu</target>
       </trans-unit>
+      <trans-unit id="4fa154c6f5a3cc42591e049ef35c65cc" resname="Select objects">
+        <source>Select objects</source>
+        <target>Seleccionar objetos</target>
+      </trans-unit>
+      <trans-unit id="b0415d954b4db90d746a00c0a3e4ff28" resname="Modify all multimedia objects status">
+        <source>Modify all multimedia objects status</source>
+        <target>Modificar estado de objectos multimedia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

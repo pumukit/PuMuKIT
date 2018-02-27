@@ -124,8 +124,8 @@
           </div>
         </div>
         <div style="text-align: right">{% trans %}Select{% endtrans %}:
-          <a href="#" onclick="window.click_changepub_selection($(this), false)">{% trans %}nothing{% endtrans %}</a>
-          <a href="#" onclick="window.click_changepub_selection($(this), true)">{% trans %}all{% endtrans %}</a>
+          <a href="#" onclick="window.click_changepub_selection($(this), false); return false;">{% trans %}nothing{% endtrans %}</a>
+          <a href="#" onclick="window.click_changepub_selection($(this), true); return false;">{% trans %}all{% endtrans %}</a>
         </div>
       </div>
     </fieldset>

@@ -709,10 +709,21 @@ class SeriesController extends AdminController implements NewAdminController
         $embeddedBroadcast = false;
         $sameBroadcast = $seriesService->sameEmbeddedBroadcast($series);
         $firstFound = $this->getFirstMultimediaObject($series);
+
+        $multimediaObjects = $mmRepo->findBySeries($series);
+
         if ($sameBroadcast && $firstFound) {
             $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
         }
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
+            if ($request->request->has('ids')) {
+                $ids = $request->get('ids');
+                $multimediaObjects = $mmRepo
+                     ->createStandardQueryBuilder()
+                     ->field('_id')->in($ids)
+                     ->getQuery()->execute();
+            }
+
             try {
                 $type = $request->get('type', null);
                 $password = $request->get('password', null);
@@ -724,7 +735,7 @@ class SeriesController extends AdminController implements NewAdminController
                 if ('string' === gettype($deleteGroups)) {
                     $deleteGroups = json_decode($deleteGroups, true);
                 }
-                $multimediaObjects = $mmRepo->findBySeries($series);
+
                 foreach ($multimediaObjects as $multimediaObject) {
                     if (!$multimediaObject->islive()) {
                         $this->modifyBroadcastGroups(
@@ -750,12 +761,13 @@ class SeriesController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'series' => $series,
-                     'broadcasts' => $broadcasts,
-                     'groups' => $allGroups,
-                     'sameBroadcast' => $sameBroadcast,
-                     'embeddedBroadcast' => $embeddedBroadcast,
-                     );
+                'series' => $series,
+                'broadcasts' => $broadcasts,
+                'groups' => $allGroups,
+                'sameBroadcast' => $sameBroadcast,
+                'embeddedBroadcast' => $embeddedBroadcast,
+                'multimediaObjects' => $mmRepo->findBySeries($series),
+        );
     }
 
     /**
