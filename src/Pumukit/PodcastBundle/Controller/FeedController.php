@@ -227,7 +227,7 @@ class FeedController extends Controller
 
         $channel->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
 
-        $channel = $this->completeTracksInfo($channel, $multimediaObjects, $values, $trackType);
+        $this->completeTracksInfo($channel, $multimediaObjects, $values, $trackType);
 
         return $xml;
     }
@@ -242,7 +242,7 @@ class FeedController extends Controller
             if ($track) {
                 $item = $channel->addChild('item');
 
-                $title = (strlen($multimediaObject->getTitle()) === 0) ?
+                $title = (0 === strlen($multimediaObject->getTitle())) ?
                   $multimediaObject->getSeries()->getTitle() :
                   $multimediaObject->getTitle();
                 $item->addChild('title', htmlspecialchars($title));
@@ -250,7 +250,7 @@ class FeedController extends Controller
                 $item->addChild('itunes:summary', htmlspecialchars($multimediaObject->getDescription()), self::ITUNES_DTD_URL);
                 $item->addChild('description', htmlspecialchars($multimediaObject->getDescription()));
 
-                if ($itunesUTag !== null) {
+                if (null !== $itunesUTag) {
                     foreach ($multimediaObject->getTags() as $tag) {
                         if ($tag->isDescendantOf($itunesUTag)) {
                             $itunesUCategory = $item->addChild('itunesu:category', null, self::ITUNESU_FEED_URL);
@@ -270,7 +270,7 @@ class FeedController extends Controller
                 $item->addChild('itunes:duration', $this->getDurationString($multimediaObject), self::ITUNES_DTD_URL);
                 $item->addChild('author', $values['email'].' ('.$values['channel_title'].')');
                 $item->addChild('itunes:author', $multimediaObject->getCopyright(), self::ITUNES_DTD_URL);
-                $item->addChild('itunes:keywords', $multimediaObject->getKeyword(), self::ITUNES_DTD_URL);
+                $item->addChild('itunes:keywords', htmlspecialchars($multimediaObject->getKeyword()), self::ITUNES_DTD_URL);
                 $item->addChild('itunes:explicit', $values['itunes_explicit'], self::ITUNES_DTD_URL);
                 $item->addChild('itunes:image', $this->getAbsoluteUrl($multimediaObject->getFirstUrlPic()), self::ITUNES_DTD_URL);
                 $item->addChild('pubDate', $multimediaObject->getRecordDate()->format('r'));
