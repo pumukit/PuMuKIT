@@ -10,7 +10,7 @@
             </label>
           </div>
         </th>
-        {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) + (is_naked() ? 1 : 0) %}
+        {% set colspan = 5 - (series.sorting == constant('SORT_MANUAL', series) ? 0 : 2) - (is_naked() ? 1 : 0) %}
         <th id="th-icons" colspan="{{ colspan }}" width="5%"></th>
         <th id="th-video" width="1%">{% trans %}Audio/Video{% endtrans %}</th>
         <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
