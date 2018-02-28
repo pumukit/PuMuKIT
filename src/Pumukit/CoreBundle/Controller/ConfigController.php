@@ -26,7 +26,7 @@ class ConfigController extends Controller implements AdminController
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'parameters_deploy.txt'
+            'parameters_deploy.yml'
         );
 
         return $response;
