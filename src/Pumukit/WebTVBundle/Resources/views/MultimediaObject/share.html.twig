@@ -1,5 +1,11 @@
+{% set trackid = (track.id is defined)?track.id:null %}
 {% if multimediaObject.isPublished %}
-
+  {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) %}
+  {% set urlIframe = url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid}) %}
+{% else %}
+  {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret }) %}
+  {% set urlIframe = url('pumukit_webtv_multimediaobject_magiciframe', {'secret': multimediaObject.secret }) %}
+{% endif %}
 <!--Share multimedia object in facebook, google+ and twitter-->
 <div class="panel panel-default share_mmobj">
   <div class="panel-heading" data-toggle="collapse" data-target="#shareBars" aria-expanded="false" aria-controls="shareBars" role="button">
@@ -24,20 +30,20 @@
         <div class="silly-buttons">
           <div style="width: 22px; height: 19px; float: left;">
             <!--Añadir url del objeto multimedia a compartir-->
-            <a href="http://www.facebook.com/sharer.php?u={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id})}}" title="{% trans %}Share on Facebook{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/compartir_facebook.jpg')}}" alt="{% trans %}Share on Facebook{% endtrans %}"></a>
+            <a href="http://www.facebook.com/sharer.php?u={{ url }}" title="{% trans %}Share on Facebook{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/compartir_facebook.jpg')}}" alt="{% trans %}Share on Facebook{% endtrans %}"></a>
           </div>
           <div style="width: 38px; height: 19px; float: left;">
-            <a href="https://plus.google.com/share?url={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id})}}" title="{% trans %}Share on Google +{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/gplus_button.png')}}" alt="{% trans %}Share on Google +{% endtrans %}"></a>
+            <a href="https://plus.google.com/share?url={{ url }}" title="{% trans %}Share on Google +{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/gplus_button.png')}}" alt="{% trans %}Share on Google +{% endtrans %}"></a>
           </div>
           <div style="width: 58px; height: 19px; float: left;">
-            <a href="https://twitter.com/intent/tweet?text={{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" title="{% trans %}Share on Twitter{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/twit_button.png')}}" alt="{% trans %}Share on Twitter{% endtrans %}"></a>
+            <a href="https://twitter.com/intent/tweet?text={{ url }}" title="{% trans %}Share on Twitter{% endtrans %}" class="facebook"><img src="{{ asset('bundles/pumukitwebtv/images/twit_button.png')}}" alt="{% trans %}Share on Twitter{% endtrans %}"></a>
           </div><br/>
         </div>
       </li>
       <li class="list-group-item">
         <div class="share_url">
           <span>{% trans %} URL: {% endtrans %}</span>
-          <input type="text" value="{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) }}" aria-label="share-url"
+          <input type="text" value="{{ url }}" aria-label="share-url"
                  onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly"/>
         </div>
       </li>
@@ -46,7 +52,7 @@
           <span>{% trans %} IFRAME: {% endtrans %}</span>
           {% set trackid = (track.id is defined)?track.id:null %}
           {% set iframe_value %}{% spaceless %}
-          <iframe src='{{url('pumukit_webtv_multimediaobject_iframe', {'id':multimediaObject.id, 'track_id': trackid})}}'
+          <iframe src='{{urlIframe}}'
             {{- " id='pumukitiframe'" -}}
             {{- " frameborder='0'" -}}
             {{- " border='0'" -}}
@@ -62,5 +68,3 @@
       </li>
     </ul>
 </div>
-
-{% endif %}
