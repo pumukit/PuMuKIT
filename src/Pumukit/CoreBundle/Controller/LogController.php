@@ -40,7 +40,7 @@ class LogController extends Controller implements AdminController
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "log_$env.txt"
+            $sFile
         );
 
         return $response;

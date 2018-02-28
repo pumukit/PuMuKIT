@@ -154,7 +154,7 @@ class JobService
      * @param int              $duration         Only necesary in JobService::ADD_JOB_NOT_CHECKS
      * @param int              $flags            A bit field of constants to customize the job creation: JobService::ADD_JOB_UNIQUE, JobService::ADD_JOB_NOT_CHECKS
      *
-     * @return object|Job
+     * @return Job
      *
      * @throws \Exception
      */
@@ -242,8 +242,6 @@ class JobService
      *
      * @param $id
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
     public function pauseJob($id)
@@ -264,8 +262,6 @@ class JobService
      *
      * @param $id
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
     public function resumeJob($id)
@@ -286,8 +282,6 @@ class JobService
      *
      * @param $id
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
     public function cancelJob($id)
@@ -309,8 +303,6 @@ class JobService
     /**
      * @param $id
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
     public function deleteJob($id)
@@ -346,8 +338,6 @@ class JobService
      * @param $id
      * @param $priority
      *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
     public function updateJobPriority($id, $priority)
@@ -385,7 +375,7 @@ class JobService
      *
      * Returns the job in waiting status with higher priority (tie: timeini older)
      *
-     * @return array|null|object
+     * @return mixed
      */
     public function getNextJob()
     {
@@ -395,7 +385,7 @@ class JobService
     /**
      * Exec next job.
      *
-     * @return array|null|object
+     * @return mixed|null
      */
     public function executeNextJob()
     {
@@ -589,9 +579,6 @@ class JobService
      * @return string commandLine
      *
      * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function renderBat(Job $job)
     {
@@ -793,7 +780,7 @@ class JobService
 
         $this->inspectionService->autocompleteTrack($track);
 
-        $track->setOnlyAudio($track->getWidth() == 0);
+        $track->setOnlyAudio(0 == $track->getWidth());
         $track->setHide(!$profile['display']);
 
         $multimediaObject->setDuration($track->getDuration());
@@ -827,6 +814,12 @@ class JobService
 
     /**
      * Retry job.
+     *
+     * @param $job
+     *
+     * @return bool
+     *
+     * @throws \Exception
      */
     public function retryJob($job)
     {
@@ -854,6 +847,12 @@ class JobService
         return true;
     }
 
+    /**
+     * @param $app
+     * @param $cpu
+     *
+     * @return LocalExecutor|RemoteHTTPExecutor
+     */
     private function getExecutor($app, $cpu)
     {
         $localhost = array('localhost', '127.0.0.1');
@@ -862,6 +861,13 @@ class JobService
         return $executor;
     }
 
+    /**
+     * @param $job
+     *
+     * @return mixed|null
+     *
+     * @throws \Exception
+     */
     private function getProfile($job)
     {
         $profile = $this->profileService->getProfile($job->getProfile());
@@ -875,6 +881,13 @@ class JobService
         return $profile;
     }
 
+    /**
+     * @param $job
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
     private function getMultimediaObject($job)
     {
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
@@ -889,7 +902,13 @@ class JobService
     }
 
     /**
-     * Emit an event to notifiy finised job.
+     * Emit an event to notify finished job.
+     *
+     * @param            $success
+     * @param Job        $job
+     * @param Track|null $track
+     *
+     * @throws \Exception
      */
     private function dispatch($success, Job $job, Track $track = null)
     {
@@ -909,7 +928,13 @@ class JobService
 
         foreach ($jobs as $job) {
             if ($job->getTimestart() < $yesterday) {
-                $this->logger->error(sprintf('[checkService] Job executing for a long time %s', $job->getId()));
+                $job->setStatus(Job::STATUS_ERROR);
+                $message = '[checkService] Job executing for a long time, set status to ERROR ';
+                $job->appendOutput($message);
+                $this->logger->error(
+                    $message.$job->getId()
+                );
+                $this->dm->flush();
             }
         }
     }
