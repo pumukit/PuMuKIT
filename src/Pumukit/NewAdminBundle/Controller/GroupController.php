@@ -289,7 +289,8 @@ class GroupController extends AdminController implements NewAdminController
         $locale = $request->getLocale();
         $action = $request->get('action', false);
         $usersSort = array('username' => 1);
-        $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort);
+        $limit = 101;
+        $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort, $limit);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         if ($locale) {
@@ -297,8 +298,8 @@ class GroupController extends AdminController implements NewAdminController
         } else {
             $sort = array('title' => 1);
         }
-        $adminMultimediaObjects = $mmobjRepo->findWithGroup($group, $sort);
-        $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group, $sort);
+        $adminMultimediaObjects = $mmobjRepo->findWithGroup($group, $sort, $limit);
+        $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group, $sort, $limit);
         $groupService = $this->get('pumukitschema.group');
         $countResources = $groupService->countResourcesInGroup($group);
         $canBeDeleted = $groupService->canBeDeleted($group);
