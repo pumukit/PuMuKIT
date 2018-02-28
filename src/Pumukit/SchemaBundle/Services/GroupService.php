@@ -293,12 +293,15 @@ class GroupService
      *
      * @return Cursor
      */
-    public function findUsersInGroup(Group $group, $sort = array())
+    public function findUsersInGroup(Group $group, $sort = array(), $limit = 0)
     {
         $qb = $this->userRepo->createQueryBuilder()
             ->field('groups')->equals($group->getId());
         if (0 !== count($sort)) {
             $qb->sort($sort);
+        }
+        if ($limit > 0) {
+            $qb->limit($limit);
         }
 
         return $qb->getQuery()

@@ -1,4 +1,7 @@
 {% for resource in resources %}
+{% if loop.index == resources.count(true) and resources.count(true) > 100 %}
+<p>&#8226;&nbsp;...</p>
+{% else %}
 {% if 'user' == resource_name and not group.isLocal() %}
 <p>
   <a href="#">
@@ -21,5 +24,7 @@
   {% else %}
   {{ resource.getTitle() }}
   {% endif %}
+</p>
+{% endif %}
 {% endif %}
 {% endfor %}
