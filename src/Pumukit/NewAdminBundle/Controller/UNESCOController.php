@@ -257,7 +257,7 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria['year'] = $value;
                     $formBasic = true;
                 } elseif ('text' === $key and !empty($value)) {
-                    $newCriteria['$text'] = new \MongoRegex('/.*'.$value.'.*/i');
+                    $newCriteria['$text'] = $value;
                     $formBasic = true;
                 } elseif ('broadcast' === $key and !empty($value)) {
                     if ('all' !== $value) {
@@ -732,7 +732,8 @@ class UNESCOController extends Controller implements NewAdminController
             } elseif ('record_date_finish' === $key and !empty($field)) {
                 $record_date_finish = $field;
             } elseif ('$text' === $key and !empty($field)) {
-                $query->text($field);
+                $this->get('pumukitnewadmin.multimedia_object_search')
+                    ->completeSearchQueryBuilder($field, $query, $request->getLocale());
             } elseif ('type' === $key and !empty($field)) {
                 if ('all' !== $field) {
                     $query->field('type')->equals($field);
