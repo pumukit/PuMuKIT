@@ -1252,7 +1252,18 @@ $(function() {
   $.material.init();
 
   $('body').on('hidden.bs.modal', '.modal', function () {
-    $(this).removeData('bs.modal');
+    $(this).removeData('bs.modal').find('.modal-content').html('');
+  });
+
+  $('body').on('loaded.bs.modal', '.modal', function () {
+    var $this = $(this);
+    var autofocus = $this.find('[autofocus]');
+    if (autofocus.length != 0) {
+      autofocus.focus();
+    } else {
+      $this.find('input:text').first().focus();
+    }
+
   });
 
   init_tabs();
