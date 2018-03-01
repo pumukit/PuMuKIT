@@ -118,6 +118,7 @@ class Series
      *
      * @var bool
      * @MongoDB\Boolean
+     * @MongoDB\Index
      */
     private $hide = true;
 

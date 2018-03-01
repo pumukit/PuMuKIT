@@ -27,6 +27,7 @@ class Role
      * @var int
      *
      * @MongoDB\Int
+     * @MongoDB\Index
      * @Gedmo\SortablePosition
      */
     private $rank;

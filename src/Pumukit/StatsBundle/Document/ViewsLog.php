@@ -22,6 +22,7 @@ class ViewsLog
      * @var \Date
      *
      * @MongoDB\Date
+     * @MongoDB\Index
      */
     private $date;
 
@@ -57,6 +58,7 @@ class ViewsLog
      * @var string
      *
      * @MongoDB\ObjectId
+     * @MongoDB\Index
      */
     private $multimediaObject;
 
@@ -64,6 +66,7 @@ class ViewsLog
      * @var string
      *
      * @MongoDB\ObjectId
+     * @MongoDB\Index
      */
     private $series;
 

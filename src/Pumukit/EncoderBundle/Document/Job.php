@@ -45,6 +45,7 @@ class Job
      * @var string
      *
      * @MongoDB\String
+     * @MongoDB\Index
      */
     private $mm_id;
 
@@ -88,6 +89,7 @@ class Job
      * @var int
      *
      * @MongoDB\Int
+     * @MongoDB\Index
      */
     private $status = self::STATUS_WAITING;
 
