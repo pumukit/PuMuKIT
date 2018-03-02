@@ -1255,18 +1255,10 @@ $(function() {
     $(this).removeData('bs.modal').find('.modal-content').html('');
   });
 
-  $('body').on('loaded.bs.modal', '.modal', function () {
-    var $this = $(this);
-    var autofocus = $this.find('[autofocus]');
-    if (autofocus.length != 0) {
-      autofocus.focus();
-      autofocus.select();
-    } else {
-      var first = $this.find('input:text').first();
-      first.focus();
-      first.select();
+  $('body').on('shown.bs.modal loaded.bs.modal', '.modal', function () {
+    if ($('.modal.fade.in:focus').length != 0) {
+      $(this).find('input:text').first().focus();
     }
-
   });
 
   init_tabs();
