@@ -3356,6 +3356,14 @@
         <source>Today events list</source>
         <target>Directos hoxe</target>
       </trans-unit>
+      <trans-unit id="4fa154c6f5a3cc42591e049ef35c65cc" resname="Select objects">
+        <source>Select objects</source>
+        <target>Seleccionar obxetos</target>
+      </trans-unit>
+      <trans-unit id="b0415d954b4db90d746a00c0a3e4ff28" resname="Modify all multimedia objects status">
+        <source>Modify all multimedia objects status</source>
+        <target>Modificar estado de obxectos multimedia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

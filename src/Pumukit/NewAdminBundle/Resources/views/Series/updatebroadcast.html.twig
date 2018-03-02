@@ -1,46 +1,86 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</h3>
-  <span id="warning_modify_series" class="alert alert-dismissable alert-danger" style="vertical-align:middle;">{% trans %}WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.{% endtrans %}</span>
-</div>
-<div class="modal-body">
-  <form autocomplete="off" id="pumukitnewadmin_series_updatebroadcast_submit"
-     action="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}" method="POST">
-    <fieldset>
-      <legend hidden>{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</legend>
-      <input type="hidden" id="pumukitnewadmin_series_broadcast_series_id" name="" value="{{ series.id }}"/>
-      <div class="form-group">
-        <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
-        <div id="pumukitnewadmin_series_broadcast_broadcast">
-          {% for broadcast_type, broadcast_name in broadcasts %}
-          <div class="radio">
-            <label class="required">
-              <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
-              {{ broadcast_name|trans }}
-            </label>
-            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object{% endtrans %}"></i>
-            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users with the defined password can play this multimedia object{% endtrans %}"></i>
-            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_LOGIN') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only logged in users in the system can play this multimedia object{% endtrans %}"></i>
-            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
-            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users in the selected Groups can play this multimedia object{% endtrans %}"></i>
-            {% endif %}
-          </div>
-            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
-            {% include 'PumukitNewAdminBundle:Series:broadcastpassword.html.twig' %}
-            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
-            {% include 'PumukitNewAdminBundle:Series:broadcastgroups.html.twig' with {'groups': groups} %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised"{{ embeddedBroadcast ? '':' disabled' }}>{% trans %}Save changes{% endtrans %}</button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</h3>
+
+    <div class="modal-body">
+        <span id="warning_modify_series" class="alert alert-dismissable alert-danger" style="vertical-align:middle;">
+            {% trans %}WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.{% endtrans %}
+        </span>
+
+        <form autocomplete="off" id="pumukitnewadmin_series_updatebroadcast_submit"
+              action="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}" method="POST">
+
+            <details style="margin: 25px 0px 15px">
+                <summary style="cursor:pointer">{% trans %}Select objects{% endtrans %}</summary>
+
+                <div class="table-responsive">
+                    <table id="table_mms_change_pub" class="table table-striped table-hover" style="overflow:visible;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{% trans %}Title{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mm in series.getMultimediaObjects() if mm.islive == false %}
+                            <tr {{ (mm.ispublished) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+                                <td>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" 
+                                                   onclick="if ($('input.checkbox_change_pub_mms:checked').length == $('input.checkbox_change_pub_mms').length ) {$('#warning_modify_series').show();} else {$('#warning_modify_series').hide();}">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{ mm.getTitle() }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: right">{% trans %}Select{% endtrans %}:
+                    <a href="#" onclick="window.click_changepub_selection($(this), false); $('#warning_modify_series').hide(); return false;">{% trans %}nothing{% endtrans %}</a>
+                    <a href="#" onclick="window.click_changepub_selection($(this), true); $('#warning_modify_series').show(); return false;">{% trans %}all{% endtrans %}</a>
+                </div>
+            </details>
+
+            
+            <fieldset>
+                <legend hidden>{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</legend>
+                <input type="hidden" id="pumukitnewadmin_series_broadcast_series_id" name="" value="{{ series.id }}"/>
+                <div class="form-group">
+                    <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
+                    <div id="pumukitnewadmin_series_broadcast_broadcast">
+                        {% for broadcast_type, broadcast_name in broadcasts %}
+                            <div class="radio">
+                                <label class="required">
+                                    <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+                                    {{ broadcast_name|trans }}
+                                </label>
+                                {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
+                                <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Any Internet user can play this multimedia object{% endtrans %}"></i>
+                                {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
+                                <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users with the defined password can play this multimedia object{% endtrans %}"></i>
+                                {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_LOGIN') %}
+                                <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only logged in users in the system can play this multimedia object{% endtrans %}"></i>
+                                {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
+                                <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Only users in the selected Groups can play this multimedia object{% endtrans %}"></i>
+                                {% endif %}
+                            </div>
+                            {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
+                              {% include 'PumukitNewAdminBundle:Series:broadcastpassword.html.twig' %}
+                            {% elseif broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') %}
+                              {% include 'PumukitNewAdminBundle:Series:broadcastgroups.html.twig' with {'groups': groups} %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+                <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised"{{ embeddedBroadcast ? '':' disabled' }}>{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
     </div>
-  </form>
 </div>
 {% include 'PumukitNewAdminBundle:MultimediaObject:updatebroadcast.js.twig' %}
