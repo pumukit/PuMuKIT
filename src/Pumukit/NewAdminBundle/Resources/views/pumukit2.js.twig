@@ -1260,8 +1260,11 @@ $(function() {
     var autofocus = $this.find('[autofocus]');
     if (autofocus.length != 0) {
       autofocus.focus();
+      autofocus.select();
     } else {
-      $this.find('input:text').first().focus();
+      var first = $this.find('input:text').first();
+      first.focus();
+      first.select();
     }
 
   });
