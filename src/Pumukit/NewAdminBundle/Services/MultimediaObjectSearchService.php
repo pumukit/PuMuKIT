@@ -187,10 +187,8 @@ class MultimediaObjectSearchService
      * @param $text
      * @param $queryBuilder
      * @param $locale
-     *
-     * @return array
      */
-    private function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
+    public function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
@@ -201,7 +199,7 @@ class MultimediaObjectSearchService
         } else {
             $queryBuilder->field('$text')->equals(array(
                 '$search' => $text,
-                '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
             ));
         }
     }

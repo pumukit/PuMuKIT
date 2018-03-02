@@ -311,7 +311,7 @@ class UNESCOController extends Controller implements NewAdminController
 
         if ($request->request->has('sort_type')) {
             $sort_type = $request->request->get('sort_type');
-            if ($request->request->get('sort_type') === 'title') {
+            if ('title' === $request->request->get('sort_type')) {
                 $sort_type = 'title.'.$request->getLocale();
             }
 
@@ -718,6 +718,8 @@ class UNESCOController extends Controller implements NewAdminController
      */
     private function addCriteria($query, $criteria)
     {
+        $request = $this->get('request_stack')->getMasterRequest();
+
         foreach ($criteria as $key => $field) {
             if ('roles' === $key and count($field) >= 1) {
                 foreach ($field as $key2 => $value) {
@@ -820,19 +822,19 @@ class UNESCOController extends Controller implements NewAdminController
     private function findDuration($query, $key, $field)
     {
         if ('tracks.duration' === $key) {
-            if ($field == '-5') {
+            if ('-5' == $field) {
                 $query->field($key)->lte(300);
             }
-            if ($field == '-10') {
+            if ('-10' == $field) {
                 $query->field($key)->lte(600);
             }
-            if ($field == '-30') {
+            if ('-30' == $field) {
                 $query->field($key)->lte(1800);
             }
-            if ($field == '-60') {
+            if ('-60' == $field) {
                 $query->field($key)->lte(3600);
             }
-            if ($field == '+60') {
+            if ('+60' == $field) {
                 $query->field($key)->gt(3600);
             }
         } elseif ('year' === $key) {
