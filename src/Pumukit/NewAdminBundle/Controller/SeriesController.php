@@ -368,7 +368,7 @@ class SeriesController extends AdminController implements NewAdminController
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannels as $key => $pubTag) {
-            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+            if ($pubTag->getProperty('hide_in_tag_group')) {
                 unset($pubChannels[$key]);
             }
         }

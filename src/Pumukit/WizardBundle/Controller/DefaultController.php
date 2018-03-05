@@ -283,7 +283,7 @@ class DefaultController extends Controller
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannelsTags as $key => $pubTag) {
-            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+            if ($pubTag->getProperty('hide_in_tag_group')) {
                 unset($pubChannelsTags[$key]);
             }
         }
