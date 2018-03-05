@@ -70,6 +70,7 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
             new \Twig_SimpleFunction('next_event_session', array($this, 'getNextEventSession')),
             new \Twig_SimpleFunction('live_event_session', array($this, 'getLiveEventSession')),
+            new \Twig_SimpleFunction('precinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
         );
     }
 
@@ -150,6 +151,20 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
+     * Get precinct of Series.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return EmbbededTag|null
+     */
+    public function getPrecinctOfMultimediaObject($multimediaObject)
+    {
+        $precinctTag = $this->getPrecinct($multimediaObject->getTags());
+
+        return $precinctTag;
+    }
+
+    /**
      * Get precinct fulltitle.
      *
      * @param EmbbededTag $precinctEmbeddedTag
@@ -222,7 +237,7 @@ class PumukitExtension extends \Twig_Extension
                 $seg = '0'.$seg;
             }
 
-            if ($min == 0) {
+            if (0 == $min) {
                 $aux = $seg."''";
             } else {
                 $aux = $min."' ".$seg."''";
