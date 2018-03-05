@@ -26,22 +26,22 @@
         {% endif %}
     {% endfor %}
 {% elseif template == "place_subserial" %}
-    {% if precinct.getTitle() != last_precinct|default('') and series_precinct.getCod() != "PLACE0001PRECINCT001"  and subserie_title != last_subseriestitle|default('') %}
+    {% if series_precinct and series_precinct.getTitle() != last_precinct|default('') and series_precinct.getCod() != "PLACE0001PRECINCT001"  and subserie_title != last_subseriestitle|default('') %}
 
         {% if current_date != last_date %}
             <div class="row subseries_title_wrapper place_subserial">
-                <h4 class="text-center subseries_title"> {{ precinct.getTitle() }} </h4>
+                <h4 class="text-center subseries_title"> {{ series_precinct.getTitle() }} </h4>
             </div>
         {% endif %}
-        {% if subserie_title is not empty or current_date != last_date %}
+        {% if subserie_title is not empty and current_date != last_date %}
             <div class="row subseries_title_wrapper">
                 <h4 class="text-center subseries_title"> {{ subserie_title }} </h4>
             </div>
         {% endif %}
-        {% set last_precinct = precinct.getTitle() %}
-    {% elseif current_date != last_date and subserie_title is empty %}
+        {% set last_precinct = series_precinct.getTitle() %}
+    {% elseif series_precinct and current_date != last_date and subserie_title is empty %}
         <div class="row subseries_title_wrapper place_subserial">
-            <h4 class="text-center subseries_title"> {{ precinct.getTitle() }} </h4>
+            <h4 class="text-center subseries_title"> {{ series_precinct.getTitle() }} </h4>
         </div>
     {% endif %}
 {% endif %}

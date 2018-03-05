@@ -38,6 +38,9 @@
             {% for mm in multimediaObjects %}
                 {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" ) %}
                 {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
+                {% if template == "place_subserial" %}
+                    {% set precinct = precinct_of_mmo(mm) %}
+                {% endif %}
                 <div class="col-xs-12">
                     <a name="{{ mm.id }}"></a>
                     {% include 'PumukitWebTVBundle:Series:group_by.html.twig' with {
