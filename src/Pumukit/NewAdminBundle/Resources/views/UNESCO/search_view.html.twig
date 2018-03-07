@@ -1,4 +1,3 @@
-
 {% set criteria = false %}
 {% if app.request.session.has('UNESCO/form') %}
     {% set criteria = app.request.session.get('UNESCO/form') %}
@@ -20,6 +19,11 @@
             </div>
 
             <div class="col-xs-12">
+                <img id="unesco_form_loader"
+                     alt="{% trans %}Spinner{% endtrans %}"
+                     src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
+                     style="width:36px; opacity:0; float:right; margin-right: 62px; margin-top: -10px;"/>
+
                 <a class="unescoResetForm" href="#">{% trans %}Reset{% endtrans %}</a>
             </div>
         </form>
@@ -39,12 +43,14 @@
 
     $('.unesco_form').on('submit',function(event) {
         event.preventDefault();
+        $('#unesco_form_loader').css('opacity', 1);
         $.ajax({
             url: '{{ path('pumukitnewadmin_unesco_addcriteria') }}',
             method: 'POST',
             data: $(this).serialize(),
             success: function (response) {
                 $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
+                $('#unesco_form_loader').css('opacity', 0);
                 if($('tr.success input.mm_checkbox').length > 0) {
                     var id = $('tr.success input.mm_checkbox').data('id');
                     var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
