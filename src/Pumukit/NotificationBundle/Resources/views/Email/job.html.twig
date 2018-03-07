@@ -5,6 +5,27 @@
 {% trans %}Multimedia Object Admin Link{% endtrans %}: <a href="{{ multimedia_object_admin_link }}" target="_blank">{{ multimedia_object_admin_link }}</a>
 </p>
 
+
+<details>
+<summary>{% trans %}Metadata{% endtrans %}</summary>
+
+<ul>
+<li>
+<strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ multimedia_object.getId() }}
+</li>
+<li>
+<strong>{% trans %}Multimedia Object Title{% endtrans %}:</strong> {{ multimedia_object.getTitle() }}
+</li>
+<li>
+<strong>{% trans %}Series Id{% endtrans %}:</strong> {{ multimedia_object.getSeries().getId() }}
+</li>
+<li>
+<strong>{% trans %}Series Title{% endtrans %}:</strong> {{ multimedia_object.getSeries().getTitle() }}
+</li>
+</ul>
+</details>
+
+
 <details>
 <summary>{% trans %}Technical info{% endtrans %}</summary>
 
@@ -14,9 +35,6 @@
 </li>
 <li>
 <strong>{% trans %}Job Id{% endtrans %}:</strong> {{ job.getId() }}
-</li>
-<li>
-<strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ job.getMmId() }}
 </li>
 <li>
 <strong>{% trans %}Profile{% endtrans %}:</strong> {{ job.getProfile() }}
