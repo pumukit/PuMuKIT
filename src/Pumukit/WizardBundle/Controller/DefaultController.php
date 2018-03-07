@@ -283,7 +283,7 @@ class DefaultController extends Controller
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannelsTags as $key => $pubTag) {
-            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+            if ($pubTag->getProperty('hide_in_tag_group')) {
                 unset($pubChannelsTags[$key]);
             }
         }
@@ -417,13 +417,31 @@ class DefaultController extends Controller
 
                     if ('file' === $filetype) {
                         $selectedPath = $request->get('resource');
-                        $multimediaObject = $jobService->createTrackFromLocalHardDrive($multimediaObject, $request->files->get('resource'), $profile, $priority, $language, $description,
-                                                                                       array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
+                        $multimediaObject = $jobService->createTrackFromLocalHardDrive(
+                            $multimediaObject,
+                            $request->files->get('resource'),
+                            $profile,
+                            $priority,
+                            $language,
+                            $description,
+                            array(),
+                            $duration,
+                            JobService::ADD_JOB_NOT_CHECKS
+                        );
                     } elseif ('inbox' === $filetype) {
                         $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
                         $selectedPath = $request->get('file');
-                        $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description,
-                                                                                      array(), $duration, JobService::ADD_JOB_NOT_CHECKS);
+                        $multimediaObject = $jobService->createTrackFromInboxOnServer(
+                            $multimediaObject,
+                            $request->get('file'),
+                            $profile,
+                            $priority,
+                            $language,
+                            $description,
+                            array(),
+                            $duration,
+                            JobService::ADD_JOB_NOT_CHECKS
+                        );
                     }
 
                     if ($multimediaObject && $pubchannel) {

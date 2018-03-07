@@ -137,7 +137,8 @@ class SeriesController extends AdminController implements NewAdminController
             $criteria = $this->getCriteria($config);
             $resources = $this->getResources($request, $config, $criteria, $resource->getId());
 
-            return $this->render('PumukitNewAdminBundle:Series:list.html.twig',
+            return $this->render(
+                'PumukitNewAdminBundle:Series:list.html.twig',
                                  array('series' => $resources)
                                  );
         }
@@ -184,7 +185,8 @@ class SeriesController extends AdminController implements NewAdminController
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
 
-        return $this->render('PumukitNewAdminBundle:Series:update.html.twig',
+        return $this->render(
+            'PumukitNewAdminBundle:Series:update.html.twig',
                              array(
                                    'series' => $resource,
                                    'form' => $form->createView(),
@@ -368,7 +370,7 @@ class SeriesController extends AdminController implements NewAdminController
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannels as $key => $pubTag) {
-            if ('PUCHYOUTUBE' == $pubTag->getCod()) {
+            if ($pubTag->getProperty('hide_in_tag_group')) {
                 unset($pubChannels[$key]);
             }
         }
