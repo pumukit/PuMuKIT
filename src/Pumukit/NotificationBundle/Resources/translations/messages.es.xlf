@@ -79,10 +79,6 @@
         <source>Metadata</source>
         <target>Metadatos</target>
       </trans-unit>
-      <trans-unit id="66a0a78cd1e3aaed9aa1073b49b48270" resname="Multimedia Object Id">
-        <source>Multimedia Object Id</source>
-        <target>Identificador del objeto multimedia</target>
-      </trans-unit>
       <trans-unit id="6544bf0080fae39fefe95d729bf175f4" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
         <target>Título del objeto multimedia</target>
