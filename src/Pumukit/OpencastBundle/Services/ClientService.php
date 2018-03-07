@@ -35,9 +35,7 @@ class ClientService
      * @param bool            $manageOpencastUsers
      * @param LoggerInterface $logger
      */
-    public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html',
-                                $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null,
-                                LoggerInterface $logger = null, RoleHierarchy $roleHierarchy = null)
+    public function __construct($url = '', $user = '', $passwd = '', $player = '/engage/ui/watch.html', $scheduler = '/admin/index.html#/recordings', $dashboard = '/dashboard/index.html', $deleteArchiveMediaPackage = false, $deletionWorkflowName = 'delete-archive', $manageOpencastUsers = false, $insecure = false, $adminUrl = null, LoggerInterface $logger = null, RoleHierarchy $roleHierarchy = null)
     {
         $this->logger = $logger;
 
@@ -590,7 +588,7 @@ class ClientService
         $start = strrpos($response['var'], '<dcterms:spatial>');
         $end = strrpos($response['var'], '</dcterms:spatial>');
 
-        if (isset($start) && isset($end)) {
+        if ((false !== $start) && (false !== $end)) {
             $start += strlen('<dcterms:spatial>');
 
             return substr($response['var'], $start, $end - $start);
