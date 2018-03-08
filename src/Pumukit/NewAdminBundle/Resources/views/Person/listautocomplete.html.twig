@@ -62,7 +62,7 @@ $("#name").autocomplete({
     }
     }).autocomplete("instance")._renderItem = function( ul, item ) {
         return $("<li>")
-        .append("<a>"+item.id+" - "+item.label+"<br><span class='form-control'>"+item.desc+"</span></a>")
+        .append("<a title=\""+item.id+"\">"+item.label+"<br><span class='form-control'>"+item.desc+"</span></a>")
         .appendTo(ul);
 };
 
