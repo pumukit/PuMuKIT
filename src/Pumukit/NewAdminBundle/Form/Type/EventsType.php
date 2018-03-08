@@ -46,11 +46,11 @@ class EventsType extends AbstractType
             ->add('live', null,
                 array(
                     'choice_label' => 'info',
-                    'query_builder' => function($repo) {
+                    'query_builder' => function ($repo) {
                         return $repo->createAbcSortQueryBuilder($this->locale);
                     },
                     'label' => $this->translator->trans('Channels', array(), null, $this->locale),
-                    'attr' => array('class' => 'form-control')))
+                    'attr' => array('class' => 'form-control'), ))
             ->add('display', CheckboxType::class,
                 array(
                     'required' => false,
