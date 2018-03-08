@@ -12,4 +12,16 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class LiveRepository extends DocumentRepository
 {
+    /**
+     * Create a query builder sorted by name.
+     *
+     * @param string $locale
+     *
+     * @return QueryBuilder
+     */
+    public function createAbcSortQueryBuilder($locale = 'en')
+    {
+        return $this->createQueryBuilder()
+            ->sort('name.'.$locale, 1);
+    }
 }

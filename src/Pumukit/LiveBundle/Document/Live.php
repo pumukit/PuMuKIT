@@ -527,4 +527,14 @@ class Live
             $this->height = $resolution['height'];
         }
     }
+
+    /**
+     * Return short info about the live channel to use as choice label.
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());
+    }
 }
