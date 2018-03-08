@@ -6,7 +6,7 @@
       {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret }) %}
     {% endif %}
     <div class="row">
-      <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.getId()}) }}'">
+      <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url }}'">
         <div class="minithumbnail">
           <a href="{{ url }}">
             <div class="media-object play_icon small" alt=""></div>
