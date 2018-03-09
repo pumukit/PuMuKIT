@@ -1244,8 +1244,12 @@ procesaReset = function(){
 }
 
 /**
- * Global Ajax Event Handlers
+ * Global Ajax Event Handlers and Config
  */
+$.ajaxSetup({
+  cache: true
+});
+
 $(document).ajaxSuccess(function() {
   $.material.init();
   $("body").tooltip({
