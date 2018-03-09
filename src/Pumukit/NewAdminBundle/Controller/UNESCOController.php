@@ -429,8 +429,6 @@ class UNESCOController extends Controller implements NewAdminController
         $roles = $this->get('pumukitschema.person')->getRoles();
         $activeEditor = $this->checkHasEditor();
 
-        $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('UNESCO');
-
         if (isset($id)) {
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
                 array('_id' => new \MongoId($id))
@@ -443,7 +441,6 @@ class UNESCOController extends Controller implements NewAdminController
         }
 
         return array(
-            'unescoTag' => $unescoTag,
             'mm' => $multimediaObject,
             'roles' => $roles,
             'active_editor' => $activeEditor,
