@@ -140,15 +140,12 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $this->get('session')->set('admin/mms/id', $data->getId());
 
-        $roles = $this->get('pumukitschema.person')->getRoles();
-
         $activeEditor = $this->checkHasEditor();
 
         return array(
-                   'mm' => $data,
-                   'roles' => $roles,
-                   'active_editor' => $activeEditor,
-                   );
+            'mm' => $data,
+            'active_editor' => $activeEditor,
+        );
     }
 
     /**

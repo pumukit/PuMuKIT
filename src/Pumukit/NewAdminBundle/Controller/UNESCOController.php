@@ -426,7 +426,6 @@ class UNESCOController extends Controller implements NewAdminController
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $roles = $this->get('pumukitschema.person')->getRoles();
         $activeEditor = $this->checkHasEditor();
 
         if (isset($id)) {
@@ -442,7 +441,6 @@ class UNESCOController extends Controller implements NewAdminController
 
         return array(
             'mm' => $multimediaObject,
-            'roles' => $roles,
             'active_editor' => $activeEditor,
         );
     }

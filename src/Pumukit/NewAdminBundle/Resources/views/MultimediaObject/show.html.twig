@@ -33,7 +33,7 @@
 
         <div>
             <ul>
-                {% for role in roles if role.getDisplay() %}
+                {% for role in mm.getRoles() if role.getDisplay() %}
                     {% set actors = mm.getPeopleByRole(role, true) %}
                     {% if actors|length != 0 %}
                         <li>{{ role.name }}</li>
