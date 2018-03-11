@@ -160,6 +160,58 @@ class TagService
     }
 
     /**
+     * Remove one Tag from Multimedia Object.
+     *
+     * @param MultimediaObject $mmobj
+     * @param string           $tagId
+     * @param bool             $executeFlush
+     *
+     * @return array[Tag] removed tags
+     *
+     * @throws \Exception
+     */
+    public function removeOneTagFromMultimediaObject(MultimediaObject $mmobj, $tagId, $executeFlush = true)
+    {
+        $tag = $this->repository->find($tagId);
+        if (!$tag) {
+            throw new \Exception('Tag with id '.$tagId.' not found.');
+        }
+
+        return $this->removeOneTag($mmobj, $tag, $executeFlush);
+    }
+
+    /**
+     * Remove one Tag from Multimedia Object.
+     *
+     * @param MultimediaObject $mmobj
+     * @param Tag              $tag
+     * @param bool             $executeFlush
+     *
+     * @return array[Tag] removed tags
+     */
+    public function removeOneTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
+    {
+        $removed = $mmobj->removeTag($tag);
+        if ($removed && !$mmobj->isPrototype()) {
+            $tag->decreaseNumberMultimediaObjects();
+        }
+
+        if (!$removed) {
+            return array();
+        }
+
+        $this->dm->persist($tag);
+        $this->dm->persist($mmobj);
+
+        if ($executeFlush) {
+            $this->dm->flush();
+            $this->dispatcher->dispatchUpdate($mmobj);
+        }
+
+        return array($tag);
+    }
+
+    /**
      * Update Tag.
      *
      * @param Tag $tag
