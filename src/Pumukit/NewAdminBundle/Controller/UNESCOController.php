@@ -432,9 +432,6 @@ class UNESCOController extends Controller implements NewAdminController
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
                 array('_id' => new \MongoId($id))
             );
-            if ($multimediaObject) {
-                $this->get('session')->set('admin/unesco/id', $multimediaObject->getId());
-            }
         } else {
             $multimediaObject = null;
         }

@@ -153,8 +153,6 @@ class AdminController extends ResourceController implements NewAdminController
         $config = $this->getConfiguration();
         $data = $this->findOr404($request);
 
-        $this->get('session')->set('admin/'.$config->getResourceName().'/id', $data->getId());
-
         $view = $this
             ->view()
             ->setTemplate($config->getTemplate('show.html'))

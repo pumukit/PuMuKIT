@@ -8,7 +8,9 @@
     <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
       <tag name="twig.extension" />
     </service>
-
+    <service id="pumukitcore.ajax_session_close_listener" class="Pumukit\CoreBundle\EventListener\AjaxSessionCloseListener">
+      <tag name="kernel.event_listener" event="kernel.request" priority="-255" />
+    </service>
     <service id="pumukitcore.filter" class="Pumukit\CoreBundle\EventListener\FilterListener">
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="pumukitschema.person"/>
