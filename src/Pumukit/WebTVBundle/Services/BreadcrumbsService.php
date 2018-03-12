@@ -87,7 +87,17 @@ class BreadcrumbsService
     public function addMultimediaObject(MultimediaObject $multimediaObject)
     {
         $this->addSeries($multimediaObject->getSeries());
-        $this->add($multimediaObject->getTitle(), 'pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
+
+        $title = $multimediaObject->getTitle();
+        if ($multimediaObject->isPublished()) {
+            $routeName = 'pumukit_webtv_multimediaobject_index';
+            $routeParameters = array('id' => $multimediaObject->getId());
+        } else {
+            $routeName = 'pumukit_webtv_multimediaobject_magicindex';
+            $routeParameters = array('secret' => $multimediaObject->getSecret());
+        }
+
+        $this->add($title, $routeName, $routeParameters);
     }
 
     public function add($title, $routeName, array $routeParameters = array())
