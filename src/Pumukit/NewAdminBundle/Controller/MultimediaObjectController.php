@@ -138,8 +138,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $config = $this->getConfiguration();
         $data = $this->findOr404($request);
 
-        $this->get('session')->set('admin/mms/id', $data->getId());
-
         $activeEditor = $this->checkHasEditor();
 
         return array(
