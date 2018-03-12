@@ -125,9 +125,9 @@
                 <input title="{% trans %}Go to page{% endtrans %}" type="number"
                        style="width: 25px;text-align:center;cursor:pointer;"
                        value="{{ mms.getCurrentPage() }}"
-                       onchange="window.location.search = '?page=' + this.value; return false;" />
+                       onchange="window.location.search = '?id={{ series.id }}&page=' + this.value; return false;" />
 
-                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
+                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?id={{ series.id }}&page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
                   <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                   <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                   <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
