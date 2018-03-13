@@ -528,7 +528,8 @@ class UNESCOController extends Controller implements NewAdminController
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($tagCod);
         $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('UNESCO');
         $removedTags = array();
-        if ($tag->isChildOf($unescoTag)) {
+
+        if ($tag->isDescendantOf($unescoTag)) {
             $removedTags = $tagService->removeTagFromMultimediaObject($multimediaObject, $tag->getId());
         }
 
