@@ -117,7 +117,7 @@ class DefaultController extends Controller
      *
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
-     * @Template("PumukitLiveBundle:Default:iframe.html.twig")
+     * @Template("PumukitLiveBundle:Advance:iframe.html.twig")
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
