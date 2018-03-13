@@ -9,6 +9,10 @@
           <div class="col-xs-10 input-group">
             <input type="text" class="form-control" id="inputROId" readonly onclick="select()" value="{{ series.id }}">
           </div>
+          <label for="inputROTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
+          <div class="col-xs-10 input-group">
+            <input type="text" class="form-control" id="inputROTitle" readonly onclick="select()" value="{{ series.title }}">
+          </div>
           <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
           <div class="col-xs-10 input-group hidden-naked">
             <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
