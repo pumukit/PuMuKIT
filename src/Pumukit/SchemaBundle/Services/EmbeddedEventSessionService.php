@@ -350,9 +350,11 @@ class EmbeddedEventSessionService
     {
         foreach ($event->getEmbeddedEventSession() as $session) {
             if ($start && $session->getStart()) {
+
                 return $session->getStart();
             }
             if (!$start && $session->getEnds()) {
+
                 return $session->getEnds();
             }
         }
