@@ -302,6 +302,46 @@ class EmbeddedEventSessionService
         throw new \Exception('Invalid text color: must be a hexadecimal number or a color name.');
     }
 
+    /**
+     * Get event starts date
+     *
+     * @param EmbeddedEvent
+     *
+     * @returns Date
+     */
+    public function getEventStartsDate($event)
+    {
+        $date = $event->getDate();
+        $sessions = $event->getEmbeddedEventSession();
+        foreach ($sessions as $session) {
+            if ($session->getStart() < $date) {
+                $date = $session->getStart();
+            }
+        }
+
+        return $date;
+    }
+
+    /**
+     * Get event ends date
+     *
+     * @param EmbeddedEvent
+     *
+     * @returns Date
+     */
+    public function getEventEndsDate($event)
+    {
+        $date = $event->getDate();
+        $sessions = $event->getEmbeddedEventSession();
+        foreach ($sessions as $session) {
+            if ($session->getEnds() > $date) {
+                $date = $session->getEnds();
+            }
+        }
+
+        return $date;
+    }
+
     private function initPipeline()
     {
         $pipeline = array();
