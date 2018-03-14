@@ -15,7 +15,7 @@
     {% endif %}
 </div>
 <div class="modal-body">
-    <form autocomplete="off" id="pumukitnewadmin_mms_updatebroadcast_submit" action="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" method="POST">
+    <form id="pumukitnewadmin_mms_updatebroadcast_submit" action="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" method="POST">
         <fieldset>
             <legend hidden>{% trans %}Modify broadcast profile{% endtrans %}</legend>
             <input type="hidden" id="pumukitnewadmin_mms_broadcast_mm_id" name="" value="{{ mm.id }}"/>

@@ -1,6 +1,6 @@
 <!-- Filter -->
 <div class="well">
-  <form autocomplete="off" class="form-horizontal" id="filter_people" onsubmit="$('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
+  <form class="form-horizontal" id="filter_people" onsubmit="$('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
   <fieldset>
     <legend hidden>{% trans %}Filter People{% endtrans %}</legend>
     <h2>{% trans %}Search{% endtrans %}</h2>

@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
+  <form onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukit_opencast_mm_update', {'id': multimediaObject.id}) }}',
                           type: 'POST',

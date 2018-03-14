@@ -2,7 +2,7 @@
 
 <div class="well">
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <form autocomplete="off" id="pumukitnewadmin_mmtemplate_updatemeta_form"
+  <form id="pumukitnewadmin_mmtemplate_updatemeta_form"
         onsubmit="$.ajax({
                           url: '{{ path('pumukitnewadmin_mmtemplate_update_meta', {'id': mm.id, 'seriesId': mm.getSeries().getId()}) }}',
                           type: 'POST',

@@ -2,7 +2,7 @@
 {% block wizard_body %}
 {% render(controller('PumukitWizardBundle:Default:steps', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) %}
 <div class="well">
-  <form id="pumukitwizard_track_form" autocomplete="off"
+  <form id="pumukitwizard_track_form"
         enctype="multipart/form-data" target="iframeUpload"
         action="{{ path('pumukitwizard_default_upload') }}" method="POST">
     <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>

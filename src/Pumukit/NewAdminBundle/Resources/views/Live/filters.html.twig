@@ -1,5 +1,5 @@
 <div class="well">
-  <form autocomplete="off" id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
+  <form id="filter_lives" class="form" onsubmit="$('#list_lives').load('{{ path('pumukitnewadmin_live_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
     <fieldset>
       <legend hidden>{% trans %}Filter Live Channels{% endtrans %}</legend>
       <div class="panel panel-default">
@@ -11,15 +11,15 @@
             <label for="name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
             <div>
               {% set criteria = app.session.get('admin/live/criteria') %}
-	          <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}" aria-label="Name">
+              <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}" aria-label="Name">
             </div>
           </div>
         </div>
       </div>
     </fieldset>
     <div class="text-right">
-	  <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
-	  <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+      <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
+      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
     </div>
   </form>
 </div>

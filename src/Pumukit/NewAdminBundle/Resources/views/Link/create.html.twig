@@ -5,7 +5,7 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
+  <form onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_link_create', {'id': mm.id}) }}',
                           type: 'POST',
@@ -19,10 +19,10 @@
       {{ form_row(child) }}
       {% endfor %}
     </fieldset>
-	<div class="modal-footer">
-	  <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-	  <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
-	</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+    </div>
   </form>
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}

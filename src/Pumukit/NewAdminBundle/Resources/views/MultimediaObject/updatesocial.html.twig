@@ -1,5 +1,5 @@
 <div id="tv_admin_container" class="well">
-    <form autocomplete="off" id="pumukitnewadmin_mms_updatesocial_form" action="{{ path('pumukitnewadmin_mms_update_social', {'id': mm.id}) }}" method="POST">
+    <form id="pumukitnewadmin_mms_updatesocial_form" action="{{ path('pumukitnewadmin_mms_update_social', {'id': mm.id}) }}" method="POST">
 
         <input type="hidden" name="id" id="id" value="{{ mm.id }}">
         <input type="hidden" name="series_id" id="series_id" value="{{ mm.series.id }}">

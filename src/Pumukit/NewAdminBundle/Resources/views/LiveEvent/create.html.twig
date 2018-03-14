@@ -6,7 +6,7 @@
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
         {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-        <form autocomplete="off" id="pumukitnewadmin_event_create_form"
+        <form id="pumukitnewadmin_event_create_form"
               action="{{ path('pumukitnewadmin_live_event_create') }}" method="POST">
             <fieldset>
                 {% for child in form %}

@@ -7,7 +7,7 @@
             {% trans %}WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.{% endtrans %}
         </span>
 
-        <form autocomplete="off" id="pumukitnewadmin_series_updatebroadcast_submit"
+        <form id="pumukitnewadmin_series_updatebroadcast_submit"
               action="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}" method="POST">
 
             <details style="margin: 25px 0px 15px">
@@ -27,7 +27,7 @@
                                 <td>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" 
+                                            <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked"
                                                    onclick="window.click_checkbox_change_pub_mms()">
                                         </label>
                                     </div>
@@ -44,7 +44,7 @@
                 </div>
             </details>
 
-            
+
             <fieldset>
                 <legend hidden>{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</legend>
                 <input type="hidden" id="pumukitnewadmin_series_broadcast_series_id" name="" value="{{ series.id }}"/>

@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/playlist/criteria') %}
 <div class="well">
-  <form autocomplete="off" id="filter_playlist" class="form"
+  <form id="filter_playlist" class="form"
         onsubmit="return filter_playlist(this);">
     <fieldset>
       <legend hidden>{% trans %}Filter playlist{% endtrans %}</legend>

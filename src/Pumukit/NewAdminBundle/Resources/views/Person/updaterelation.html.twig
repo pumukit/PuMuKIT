@@ -4,8 +4,7 @@
 </div>
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-  <form autocomplete="off"
-        onsubmit="$('#myAuxModal{{ template }}').modal('hide');
+  <form onsubmit="$('#myAuxModal{{ template }}').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}',
                           type: 'POST',

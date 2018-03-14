@@ -5,7 +5,7 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form autocomplete="off" method="post" target="iframeUpload"
+  <form method="post" target="iframeUpload"
         action="{{ path('pumukitnewadmin_track_upload', {'id': mm.id}) }}"
         enctype="multipart/form-data" name="formulario">
     <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>

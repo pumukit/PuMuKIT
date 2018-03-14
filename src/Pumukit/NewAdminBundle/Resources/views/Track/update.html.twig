@@ -5,7 +5,7 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form autocomplete="off" onsubmit="$('#myModal').modal('hide');
+  <form onsubmit="$('#myModal').modal('hide');
                   $.ajax({
                           url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mmId}) }}',
                           type: 'POST',
@@ -31,7 +31,7 @@
       {{ form_row(form['i18n_description']) }}
 
       <div class="form-group" id="pumukitnewadmin_track_update_profile">
-        <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>        
+        <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
         <select name="profile" id="profile" class="form-control" disabled>
           {% for key in profiles|keys %}
               <option value="{{ key }}" {{ track.getTags()|profile == key ?'selected="selected"' :'' }}>{{ key }}</option>
@@ -41,7 +41,7 @@
       {% for child in form if child.vars.id not in ['pumukitnewadmin_track_update_i18n_description'] %}
         {{ form_row(child) }}
       {% endfor %}
-      {{ form_rest(form) }}      
+      {{ form_rest(form) }}
     </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>

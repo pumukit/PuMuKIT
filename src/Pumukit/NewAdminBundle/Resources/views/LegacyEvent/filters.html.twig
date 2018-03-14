@@ -1,5 +1,5 @@
 <div class="well">
-  <form autocomplete="off" id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_event_index') }}" method="GET">
+  <form id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_event_index') }}" method="GET">
     <fieldset>
       <legend hidden>{% trans %}Filter Live Events{% endtrans %}</legend>
       <div class="panel panel-default">

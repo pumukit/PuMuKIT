@@ -6,7 +6,7 @@
 
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <form autocomplete="off" onsubmit="window.submit_series_change_pub(); return false;"
+  <form onsubmit="window.submit_series_change_pub(); return false;"
         action="{{ path('pumukitnewadmin_series_updatepub') }}" method="POST">
     <fieldset>
       <legend hidden>{% trans %}change status of multimedia objects inside the series{% endtrans %}</legend>

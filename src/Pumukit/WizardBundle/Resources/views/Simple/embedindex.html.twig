@@ -13,7 +13,6 @@
     <div class="col-md-12">
       <div class="well" >
           <form id="pumukitwizard_simple_embed_track_form"
-                autocomplete="off"
                 enctype="multipart/form-data"
                 {% if series.id is defined %}
                 action="{{ path('pumukitwizard_simple_embedupload', {'id': series.id, 'externalData': externalData}) }}" method="POST">
