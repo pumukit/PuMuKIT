@@ -215,6 +215,11 @@ class PersonServiceTest extends WebTestCase
         $roleActor->setCod($newActorCode);
 
         $roleActor = $this->personService->updateRole($roleActor);
+
+        $this->dm->refresh($mm1);
+        $this->dm->refresh($mm2);
+        $this->dm->refresh($mm3);
+
         $this->assertEquals($newActorCode, $this->roleRepo->find($roleActor->getId())->getCod());
         $this->assertEquals($newActorCode, $mm1->getEmbeddedRole($roleActor)->getCod());
         $this->assertEquals($newActorCode, $mm2->getEmbeddedRole($roleActor)->getCod());
@@ -224,6 +229,11 @@ class PersonServiceTest extends WebTestCase
         $rolePresenter->setCod($newPresenterCode);
 
         $rolePresenter = $this->personService->updateRole($rolePresenter);
+
+        $this->dm->refresh($mm1);
+        $this->dm->refresh($mm2);
+        $this->dm->refresh($mm3);
+
         $this->assertEquals($newPresenterCode, $this->roleRepo->find($rolePresenter->getId())->getCod());
         $this->assertEquals($newPresenterCode, $mm1->getEmbeddedRole($rolePresenter)->getCod());
         $this->assertEquals($newPresenterCode, $mm2->getEmbeddedRole($rolePresenter)->getCod());
