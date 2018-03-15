@@ -2207,6 +2207,7 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
             success: function(response){
                                         $('#list_mms').html(response);
                                         $('#preview_mm').load(showRoute);
+                                        $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
                                         var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
                                         success(message);
                                         }

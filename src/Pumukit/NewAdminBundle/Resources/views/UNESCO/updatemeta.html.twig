@@ -67,6 +67,7 @@
             success: function(response){
                 $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
                 $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' :mm.id }) }}");
+                $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
                 var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
                 success(message);
             }

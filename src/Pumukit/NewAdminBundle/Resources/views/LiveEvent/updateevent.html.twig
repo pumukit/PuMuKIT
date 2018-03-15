@@ -137,6 +137,9 @@
 
                 var editmm = "{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}";
                 $('#event').load(editmm);
+
+                $('#inputMMTitle').val($('#pumukitnewadmin_live_event_i18n_name_{{ app.request.getLocale() }}').val());
+
                 var message = '{% trans %}Event successfully updated.{% endtrans %}';
                 success(message);
             },
