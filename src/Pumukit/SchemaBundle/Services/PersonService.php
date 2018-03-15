@@ -146,17 +146,20 @@ class PersonService
     {
         $role = $this->saveRole($role);
 
-        foreach ($this->repoMmobj->findByRoleId($role->getId()) as $mmobj) {
-            foreach ($mmobj->getRoles() as $embeddedRole) {
-                if ($role->getId() === $embeddedRole->getId()) {
-                    $embeddedRole = $this->updateEmbeddedRole($role, $embeddedRole);
-                    $this->dm->persist($mmobj);
-                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                        $this->dispatcher->dispatchUpdate($mmobj, $embeddedPerson, $embeddedRole);
-                    }
-                }
-            }
-        }
+        $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+
+        $query = $qb
+            ->update()
+            ->multiple(true)
+            ->field('people._id')->equals(new \MongoId($role->getId()))
+            ->field('people.$.cod')->set($role->getCod())
+            ->field('people.$.xml')->set($role->getXml())
+            ->field('people.$.display')->set($role->getDisplay())
+            ->field('people.$.name')->set($role->getI18nName())
+            ->field('people.$.text')->set($role->getI18nText())
+            ->getQuery();
+        $query->execute();
+
         $this->dm->flush();
 
         return $role;
@@ -177,7 +180,7 @@ class PersonService
         $seriesCollection = new ArrayCollection();
         $count = 0;
         foreach ($mmobjs as $mmobj) {
-            if ($limit !== 0) {
+            if (0 !== $limit) {
                 if ($count === $limit) {
                     break;
                 }
