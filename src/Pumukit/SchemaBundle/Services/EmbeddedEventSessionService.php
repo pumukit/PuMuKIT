@@ -303,19 +303,21 @@ class EmbeddedEventSessionService
     }
 
     /**
-     * Get event starts date
+     * Get current session date
      *
      * @param EmbeddedEvent
+     * @param bool
      *
      * @returns Date
      */
-    public function getEventStartsDate($event)
+    public function getCurrentSessionDate(EmbeddedEvent $event, $start = true)
     {
-        $date = $event->getDate();
+        $now = new \DateTime('now');
+        $date = new \DateTime('now');
         $sessions = $event->getEmbeddedEventSession();
         foreach ($sessions as $session) {
-            if ($session->getStart() < $date) {
-                $date = $session->getStart();
+            if ($session->getStart() < $now && $session->getEnds() > $now) {
+                $date = $start ? $session->getStart() : $session->getEnds();
             }
         }
 
@@ -323,23 +325,30 @@ class EmbeddedEventSessionService
     }
 
     /**
-     * Get event ends date
+     * Get future session date
      *
      * @param EmbeddedEvent
+     * @param bool
      *
      * @returns Date
      */
-    public function getEventEndsDate($event)
+    public function getFutureSessionDate($event, $start = true)
     {
-        $date = $event->getDate();
-        $sessions = $event->getEmbeddedEventSession();
-        foreach ($sessions as $session) {
-            if ($session->getEnds() > $date) {
-                $date = $session->getEnds();
+        if (isset($event['embeddedEventSession'])) {
+            $date = $event['date'];
+            foreach ($event['embeddedEventSession'] as $session) {
+                if ($start && isset($session['start'])) {
+                    $date = $session['start'];
+                    return $date->toDateTime();
+                }
+                if (!$start && isset($session['ends'])) {
+                    $date = $session['ends'];
+                    return $date->toDateTime();
+                }
             }
         }
 
-        return $date;
+        return '';
     }
 
     private function initPipeline()

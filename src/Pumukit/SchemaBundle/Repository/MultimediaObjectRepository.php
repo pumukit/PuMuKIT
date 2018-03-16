@@ -1736,7 +1736,23 @@ class MultimediaObjectRepository extends DocumentRepository
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $collection->aggregate($pipeline)->toArray();
+        $result = $collection->aggregate($pipeline)->toArray();
+
+        $orderSession = array();
+        foreach ($result as $key => $element) {
+            foreach ($element['data'] as $eventData) {
+                foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
+                    $orderSession[$embeddedSession['start']->sec] = $element;
+                    break;
+                }
+            }
+        }
+        ksort($orderSession);
+        foreach (array_values($orderSession) as $key => $session) {
+            $result[$key] = $session;
+        }
+
+        return $result;
     }
 
     /**
