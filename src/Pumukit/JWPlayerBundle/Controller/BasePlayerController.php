@@ -46,6 +46,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
+                     'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
                      'track' => $track, );
     }
 
@@ -89,6 +90,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
                      'intro' => $this->getIntro($request->query->get('intro')),
                      'multimediaObject' => $multimediaObject,
                      'object' => $multimediaObject,
+                     'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
                      'track' => $track,
                      'magic_url' => true, );
     }

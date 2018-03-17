@@ -46,6 +46,15 @@
          aspectratio: '16:9',
          logo: { hide: true }
      });
+     {% if 'on_play' == when_dispatch_view_event %}
+     jwplayer("player1").onPlay(function(e){
+       if (!window.notifyVideoPlayedReq) {
+         window.notifyVideoPlayedReq = new XMLHttpRequest();
+         window.notifyVideoPlayedReq.open('POST', '{{ path('pumukit_trackplayed_index', {id: track.id}) }}', true);
+         window.notifyVideoPlayedReq.send();
+       }
+     });
+     {% endif %}
     </script>
   {% else %}
     <div style="color: white;
