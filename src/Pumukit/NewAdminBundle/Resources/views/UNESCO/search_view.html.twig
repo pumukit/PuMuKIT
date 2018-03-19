@@ -32,15 +32,6 @@
 
 
 <script type="text/javascript">
-
-    $('#collapseAdvanceForm').on('show.bs.collapse', function () {
-        $('#submitBasicForm').attr('disabled',true);
-    });
-
-    $('#collapseAdvanceForm').on('hide.bs.collapse', function () {
-        $('#submitBasicForm').attr('disabled', false);
-    });
-
     $('.unesco_form').on('submit',function(event) {
         event.preventDefault();
         $('#unesco_form_loader').css('opacity', 1);
