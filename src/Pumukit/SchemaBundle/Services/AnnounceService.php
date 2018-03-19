@@ -39,6 +39,15 @@ class AnnounceService
         $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array('public_date' => -1), $limit, 0);
         $lastSeries = $this->seriesRepo->findBy($seriesCriteria, array('public_date' => -1), $limit, 0);
 
+        $z = 0;
+        foreach ($lastSeries as $series) {
+            $isValidSeries = $this->mmobjRepo->findStandardBy(array('series' => $series->getId()));
+            if (count($isValidSeries) <= 0) {
+                unset($lastSeries[$z]);
+            }
+            ++$z;
+        }
+
         $return = array();
         $i = 0;
         $iMms = 0;
