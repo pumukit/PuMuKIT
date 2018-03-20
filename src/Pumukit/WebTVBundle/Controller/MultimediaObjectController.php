@@ -185,9 +185,11 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         if ($response instanceof Response) {
             return $this->render('PumukitWebTVBundle:MultimediaObject:emptyinfo.html.twig');
         }
+        $editorChapters = $this->getChapterMarks($multimediaObject);
 
         return array(
             'multimediaObject' => $multimediaObject,
+            'editor_chapters' => $editorChapters,
         );
     }
 }
