@@ -264,6 +264,20 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Get event poster by event id.
+     *
+     * @param string $id
+     *
+     * @return string
+     */
+    public function getEventPosterByEventId($eventId)
+    {
+        $pics = $this->getMultimediaObjectPics($eventId);
+
+        return $this->getPoster($pics);
+    }
+
+    /**
      * Get poster text color.
      *
      * @param EmbeddedEvent $event
