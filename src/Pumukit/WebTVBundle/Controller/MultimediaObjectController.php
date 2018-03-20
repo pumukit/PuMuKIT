@@ -70,7 +70,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
+        } elseif ((
+            $multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
                  && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
