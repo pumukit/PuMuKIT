@@ -12,7 +12,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchController extends Controller implements WebTVController
 {
@@ -190,10 +189,7 @@ class SearchController extends Controller implements WebTVController
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ($searchFound != '') {
-            $queryBuilder->field('$text')->equals(array(
-                '$search' => $searchFound,
-                '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
-            ));
+            $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
         }
 
         return $queryBuilder;

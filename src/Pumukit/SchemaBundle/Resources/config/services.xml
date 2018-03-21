@@ -18,7 +18,6 @@
             <argument>%kernel.default_locale%</argument>
             <argument>%pumukit2.locales%</argument>
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
-            <tag name="doctrine_mongodb.odm.event_listener" event="prePersist" />
             <tag name="kernel.event_subscriber" />
         </service>
 

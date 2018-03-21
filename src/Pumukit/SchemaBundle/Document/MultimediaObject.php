@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage"})
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
  * })
  */
 class MultimediaObject
@@ -218,16 +218,6 @@ class MultimediaObject
     private $people;
 
     /**
-     * https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/.
-     *
-     * Used to specify the MongoDB Index Language within the Document.
-     *
-     * @var string
-     * @MongoDB\String
-     */
-    private $indexlanguage = 'en';
-
-    /**
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
@@ -318,26 +308,6 @@ class MultimediaObject
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * Set indexlanguage.
-     *
-     * @param string $indexlanguage
-     */
-    public function setIndexlanguage($indexlanguage)
-    {
-        $this->indexlanguage = $indexlanguage;
-    }
-
-    /**
-     * Get indexlanguage.
-     *
-     * @return string
-     */
-    public function getIndexlanguage()
-    {
-        return $this->indexlanguage;
     }
 
     /**
