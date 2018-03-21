@@ -20,5 +20,9 @@
           <argument type="service" id="router.request_context" on-invalid="ignore" />
           <argument type="service" id="pumukit_baseplayer.trackurl" />
         </service>
+
+        <service id="pumukit_baseplayer.intro" class="Pumukit\BasePlayerBundle\Services\IntroService">
+          <argument>%pumukit2.intro%</argument>
+        </service>
     </services>
 </container>

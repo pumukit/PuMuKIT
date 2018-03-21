@@ -43,7 +43,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         return array(
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
@@ -103,7 +103,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         return array(
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'magic_url' => true,
