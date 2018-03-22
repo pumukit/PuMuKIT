@@ -389,6 +389,147 @@ class EmbeddedEventSessionService
         return '';
     }
 
+    /**
+     * Find future events.
+     *
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function findFutureEvents($multimediaObjectId = null, $limit = 0)
+    {
+        if ($multimediaObjectId) {
+            $pipeline[] = array(
+                '$match' => array(
+                    '_id' => new \MongoId($multimediaObjectId),
+                    'islive' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        } else {
+            $pipeline[] = array(
+                '$match' => array(
+                    'islive' => true,
+                    'embeddedEvent.display' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        }
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$gt' => new \MongoDate()),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                    ),
+                ),
+            ),
+        );
+
+        if ($limit !== 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        $result = $this->collection->aggregate($pipeline)->toArray();
+
+        $orderSession = array();
+        foreach ($result as $key => $element) {
+            foreach ($element['data'] as $eventData) {
+                foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
+                    $orderSession[$embeddedSession['start']->sec] = $element;
+                    break;
+                }
+            }
+        }
+        ksort($orderSession);
+        foreach (array_values($orderSession) as $key => $session) {
+            $result[$key] = $session;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Find all events.
+     *
+     * @return array
+     */
+    public function findAllEvents()
+    {
+        $pipeline[] = array(
+            '$match' => array(
+                'islive' => true,
+                'embeddedEvent.display' => true,
+                'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                    ),
+                ),
+            ),
+        );
+
+        return $this->collection->aggregate($pipeline)->toArray();
+    }
+
     private function initPipeline()
     {
         $pipeline = array();
