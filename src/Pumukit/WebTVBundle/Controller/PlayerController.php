@@ -14,17 +14,6 @@ class PlayerController extends Controller implements WebTVController
         $breadcrumbs->addMultimediaObject($multimediaObject);
     }
 
-    protected function getIntro($queryIntro = false)
-    {
-        $intro = $this->container->getParameter('pumukit2.intro');
-
-        if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
-            $intro = $queryIntro;
-        }
-
-        return $intro;
-    }
-
     protected function getChapterMarks(MultimediaObject $multimediaObject)
     {
         //Get editor chapters for the editor template.

@@ -43,7 +43,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         return array(
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'editor_chapters' => $editorChapters,
@@ -70,8 +70,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
-                 && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
+        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
+                 && MultimediaObject::STATUS_HIDE != $multimediaObject->getStatus()
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
@@ -103,7 +103,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         return array(
             'autostart' => $request->query->get('autostart', 'true'),
-            'intro' => $this->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
             'multimediaObject' => $multimediaObject,
             'track' => $track,
             'magic_url' => true,

@@ -38,11 +38,13 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        return array('autostart' => $request->query->get('autostart', 'false'),
-                     'intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject,
-                     'object' => $multimediaObject,
-                     'track' => $track, );
+        return array(
+            'autostart' => $request->query->get('autostart', 'false'),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'object' => $multimediaObject,
+            'track' => $track,
+        );
     }
 
     /**
@@ -56,8 +58,8 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_videoplayer_index', array('id' => $multimediaObject->getId())));
             }
-        } elseif (($multimediaObject->getStatus() != MultimediaObject::STATUS_PUBLISHED
-                 && $multimediaObject->getStatus() != MultimediaObject::STATUS_HIDE
+        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
+                 && MultimediaObject::STATUS_HIDE != $multimediaObject->getStatus()
                  ) || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
         }
@@ -77,12 +79,14 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             return $this->redirect($track->getUrl());
         }
 
-        return array('autostart' => $request->query->get('autostart', 'false'),
-                     'intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject,
-                     'object' => $multimediaObject,
-                     'track' => $track,
-                     'magic_url' => true, );
+        return array(
+            'autostart' => $request->query->get('autostart', 'false'),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'object' => $multimediaObject,
+            'track' => $track,
+            'magic_url' => true,
+        );
     }
 
     /**
@@ -100,10 +104,12 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         $this->dispatchViewEvent($multimediaObject);
 
-        return array('intro' => $this->getIntro($request->query->get('intro')),
-                     'multimediaObject' => $multimediaObject,
-                     'object' => $multimediaObject,
-                     'is_mobile_device' => $isMobileDevice,
-                     'is_old_browser' => $isOldBrowser, );
+        return array(
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'multimediaObject' => $multimediaObject,
+            'object' => $multimediaObject,
+            'is_mobile_device' => $isMobileDevice,
+            'is_old_browser' => $isOldBrowser,
+        );
     }
 }
