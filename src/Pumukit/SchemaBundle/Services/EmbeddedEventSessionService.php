@@ -339,6 +339,28 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Get first session date.
+     *
+     * @param EmbeddedEvent
+     * @param bool
+     *
+     * @returns Date
+     */
+    public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
+    {
+        foreach ($event->getEmbeddedEventSession() as $session) {
+            if ($start && $session->getStart()) {
+                return $session->getStart();
+            }
+            if (!$start && $session->getEnds()) {
+                return $session->getEnds();
+            }
+        }
+
+        return $event->getDate();
+    }
+
+    /**
      * Get future session date
      *
      * @param EmbeddedEvent
@@ -360,6 +382,8 @@ class EmbeddedEventSessionService
                     return $date->toDateTime();
                 }
             }
+
+            return $date->toDateTime();
         }
 
         return '';
