@@ -38,8 +38,11 @@
             {% for mm in multimediaObjects %}
                 {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" ) %}
                 {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
-                {% if template == "place_subserial" %}
+                {% if template == "place_subserial" and not precinct %}
                     {% set precinct = precinct_of_mmo(mm) %}
+                    {% set typeofprecinct = 'mm' %}
+                {% else %}
+                    {% set typeofprecinct = 'series' %}
                 {% endif %}
                 <div class="col-xs-12">
                     <a name="{{ mm.id }}"></a>
@@ -51,7 +54,8 @@
                         'template': template ,
                         'subseries': false,
                         'series_precinct': precinct,
-                        'mm' : mm
+                        'mm' : mm,
+                        'type_precinct' : typeofprecinct
                     } %}
                     {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm } %}
                     {% set last_date = current_date %}
