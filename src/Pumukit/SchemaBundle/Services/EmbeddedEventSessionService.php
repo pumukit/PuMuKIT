@@ -398,64 +398,7 @@ class EmbeddedEventSessionService
      */
     public function findFutureEvents($multimediaObjectId = null, $limit = 0)
     {
-        if ($multimediaObjectId) {
-            $pipeline[] = array(
-                '$match' => array(
-                    '_id' => new \MongoId($multimediaObjectId),
-                    'islive' => true,
-                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-                ),
-            );
-        } else {
-            $pipeline[] = array(
-                '$match' => array(
-                    'islive' => true,
-                    'embeddedEvent.display' => true,
-                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-                ),
-            );
-        }
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$_id',
-                'event' => '$embeddedEvent',
-                'sessions' => '$embeddedEvent.embeddedEventSession',
-            ),
-        );
-
-        $pipeline[] = array('$unwind' => '$sessions');
-
-        $pipeline[] = array(
-            '$match' => array(
-                'sessions.start' => array('$exists' => true),
-                'sessions.start' => array('$gt' => new \MongoDate()),
-            ),
-        );
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$multimediaObjectId',
-                'event' => '$event',
-                'sessions' => '$sessions',
-                'session' => '$sessions',
-            ),
-        );
-
-        $pipeline[] = array(
-            '$group' => array(
-                '_id' => '$multimediaObjectId',
-                'data' => array(
-                    '$addToSet' => array(
-                        'event' => '$event',
-                    ),
-                ),
-            ),
-        );
-
-        if ($limit !== 0) {
-            $pipeline[] = array('$limit' => $limit);
-        }
+        $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
 
         $result = $this->collection->aggregate($pipeline)->toArray();
 
@@ -469,11 +412,30 @@ class EmbeddedEventSessionService
             }
         }
         ksort($orderSession);
+        $output = array();
         foreach (array_values($orderSession) as $key => $session) {
-            $result[$key] = $session;
+            if ($limit !== 0 && $key >= $limit) {
+                break;
+            }
+            $output[$key] = $session;
         }
 
-        return $result;
+        return $output;
+    }
+
+    /**
+     * Count future events.
+     *
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function countFutureEvents($multimediaObjectId = null)
+    {
+        $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
+        $result = $this->collection->aggregate($pipeline)->toArray();
+
+        return count($result);
     }
 
     /**
@@ -597,6 +559,66 @@ class EmbeddedEventSessionService
                 'data.session.start' => 1,
             ),
         );
+    }
+
+    private function getFutureEventsPipeline($multimediaObjectId)
+    {
+        if ($multimediaObjectId) {
+            $pipeline[] = array(
+                '$match' => array(
+                    '_id' => new \MongoId($multimediaObjectId),
+                    'islive' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        } else {
+            $pipeline[] = array(
+                '$match' => array(
+                    'islive' => true,
+                    'embeddedEvent.display' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        }
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$gt' => new \MongoDate()),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                    ),
+                ),
+            ),
+        );
+
+        return $pipeline;
     }
 
     private function getMultimediaObjectPics($eventId)
