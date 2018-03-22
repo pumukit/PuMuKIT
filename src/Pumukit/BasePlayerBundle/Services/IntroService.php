@@ -26,7 +26,7 @@ class IntroService
         $hasIntro = (bool) $this->intro;
 
         $showIntro = true;
-        if ($introParameter !== null && filter_var($introParameter, FILTER_VALIDATE_BOOLEAN) === false) {
+        if (null !== $introParameter && false === filter_var($introParameter, FILTER_VALIDATE_BOOLEAN)) {
             $showIntro = false;
         }
 
