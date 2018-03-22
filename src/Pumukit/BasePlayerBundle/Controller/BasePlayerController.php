@@ -32,7 +32,7 @@ abstract class BasePlayerController extends Controller
     }
 
     /**
-     * @deprecated Will be removed in version 2.4.x
+     * @deprecated Will be removed in version 2.5.x
      *             Use lines in this function instead
      */
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
@@ -41,5 +41,14 @@ abstract class BasePlayerController extends Controller
         $password = $request->get('broadcast_password');
 
         return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
+    }
+
+    /**
+     * @deprecated Will be removed in version 2.5.x
+     *             Use lines in this function instead
+     */
+    protected function getIntro($queryIntro = false)
+    {
+        return $this->get('pumukit_baseplayer.intro')->getIntro($queryIntro);
     }
 }
