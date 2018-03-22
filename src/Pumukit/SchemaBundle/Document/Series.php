@@ -481,7 +481,7 @@ class Series
      */
     public function setTitle($title, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->title[$locale] = $title;
@@ -496,7 +496,7 @@ class Series
      */
     public function getTitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->title[$locale])) {
@@ -534,7 +534,7 @@ class Series
      */
     public function setSubtitle($subtitle, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->subtitle[$locale] = $subtitle;
@@ -549,7 +549,7 @@ class Series
      */
     public function getSubtitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->subtitle[$locale])) {
@@ -587,7 +587,7 @@ class Series
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -602,7 +602,7 @@ class Series
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -640,7 +640,7 @@ class Series
      */
     public function setHeader($header, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->header[$locale] = $header;
@@ -655,7 +655,7 @@ class Series
      */
     public function getHeader($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->header[$locale])) {
@@ -693,7 +693,7 @@ class Series
      */
     public function setFooter($footer, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->footer[$locale] = $footer;
@@ -708,7 +708,7 @@ class Series
      */
     public function getFooter($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->footer[$locale])) {
@@ -786,7 +786,7 @@ class Series
      */
     public function setLine2($line2, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->line2[$locale] = $line2;
@@ -801,7 +801,7 @@ class Series
      */
     public function getLine2($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->line2[$locale])) {

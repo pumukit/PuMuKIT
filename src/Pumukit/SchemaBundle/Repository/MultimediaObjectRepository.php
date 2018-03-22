@@ -1462,14 +1462,14 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         // TODO #10479: Find better way to get array with only IDs of groups
         if ($groups) {
-            if (gettype($groups) !== 'array') {
+            if ('array' !== gettype($groups)) {
                 $groups = $groups->toArray();
                 $groupsIds = $this->getMongoIds($groups);
             } else {
                 $mockString = false;
                 $mockGroup = false;
                 foreach ($groups as $group) {
-                    if (gettype($group) === 'string') {
+                    if ('string' === gettype($group)) {
                         $mockString = true;
                         break;
                     } elseif ($group instanceof Group) {

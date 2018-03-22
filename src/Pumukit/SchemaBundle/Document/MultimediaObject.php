@@ -478,7 +478,7 @@ class MultimediaObject
      */
     public function setTitle($title, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->title[$locale] = $title;
@@ -493,7 +493,7 @@ class MultimediaObject
      */
     public function getTitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->title[$locale])) {
@@ -531,7 +531,7 @@ class MultimediaObject
      */
     public function setSubtitle($subtitle, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->subtitle[$locale] = $subtitle;
@@ -546,7 +546,7 @@ class MultimediaObject
      */
     public function getSubtitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->subtitle[$locale])) {
@@ -584,7 +584,7 @@ class MultimediaObject
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -599,7 +599,7 @@ class MultimediaObject
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -657,7 +657,7 @@ class MultimediaObject
      */
     public function setLine2($line2, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->line2[$locale] = $line2;
@@ -672,7 +672,7 @@ class MultimediaObject
      */
     public function getLine2($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->line2[$locale])) {
@@ -777,7 +777,7 @@ class MultimediaObject
                 $seg = '0'.$seg;
             }
 
-            if ($min == 0) {
+            if (0 == $min) {
                 $aux = $seg."''";
             } else {
                 $aux = $min."' ".$seg."''";
@@ -857,11 +857,11 @@ class MultimediaObject
      */
     public function setBroadcast(Broadcast $broadcast)
     {
-        if (($this->broadcast instanceof Broadcast) && ($this->status != self::STATUS_PROTOTYPE)) {
+        if (($this->broadcast instanceof Broadcast) && (self::STATUS_PROTOTYPE != $this->status)) {
             $this->broadcast->decreaseNumberMultimediaObjects();
         }
         $this->broadcast = $broadcast;
-        if ($this->status != self::STATUS_PROTOTYPE) {
+        if (self::STATUS_PROTOTYPE != $this->status) {
             $broadcast->increaseNumberMultimediaObjects();
         }
     }
@@ -1930,7 +1930,7 @@ class MultimediaObject
      */
     private function updateDuration()
     {
-        if (count($this->tracks) == 0) {
+        if (0 == count($this->tracks)) {
             $this->setDuration(0);
 
             return;
