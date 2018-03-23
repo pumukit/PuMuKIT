@@ -11,7 +11,7 @@ class EmbeddedEventSessionService
     private $dm;
     private $repo;
     private $collection;
-    const DEFAULT_POSTER = '/bundles/pumukitwebtv/images/live_screen.jpg';
+    private $defaultPoster;
     const DEFAULT_COLOR = 'white';
     private $validColors = array(
         'aliceblue',
@@ -159,11 +159,22 @@ class EmbeddedEventSessionService
     /**
      * Constructor.
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, $defaultPoster)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $this->defaultPoster = $defaultPoster;
+    }
+
+    /**
+     * Get default poster.
+     *
+     * @return string
+     */
+    public function getDefaultPoster()
+    {
+        return $this->defaultPoster;
     }
 
     /**
@@ -664,7 +675,7 @@ class EmbeddedEventSessionService
             }
         }
 
-        return self::DEFAULT_POSTER;
+        return $this->defaultPoster;
     }
 
     /**
