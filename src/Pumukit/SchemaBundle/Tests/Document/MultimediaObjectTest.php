@@ -491,7 +491,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
 
         $mm->addTag($tag);
 
-    // TEST GETTERS
+        // TEST GETTERS
 
         $this->assertEquals($locale, $mm->getTags()[0]->getLocale());
         $this->assertEquals($title, $mm->getTags()[0]->getTitle());

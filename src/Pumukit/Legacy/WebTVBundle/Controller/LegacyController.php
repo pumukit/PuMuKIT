@@ -63,7 +63,7 @@ class LegacyController extends Controller
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
-        if ($multimediaObject->getStatus() == MultimediaObject::STATUS_HIDE) {
+        if (MultimediaObject::STATUS_HIDE == $multimediaObject->getStatus()) {
             return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_magicindex', array('secret' => $multimediaObject->getSecret())));
         } else {
             return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId())));

@@ -487,7 +487,7 @@ class Track extends Element
     public function getProfileName()
     {
         foreach ($this->getTags() as $tag) {
-            if (strpos($tag, 'profile:') === 0) {
+            if (0 === strpos($tag, 'profile:')) {
                 return substr($tag, 8);
             }
         }

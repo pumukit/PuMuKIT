@@ -18,11 +18,11 @@ class Annotation
      */
     private $id;
 
-/**
- * @var object_id
- *
- * @MongoDB\ObjectId
- */
+    /**
+     * @var object_id
+     *
+     * @MongoDB\ObjectId
+     */
     //This field would be the equivalent to 'mediapackage_id' on opencast.
     private $multimediaObject;
 

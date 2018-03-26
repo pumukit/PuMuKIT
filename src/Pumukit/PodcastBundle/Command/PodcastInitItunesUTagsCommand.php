@@ -91,12 +91,12 @@ EOT
         $idCodMapping = array();
 
         $row = 1;
-        if (($file = fopen($file, 'r')) !== false) {
-            while (($currentRow = fgetcsv($file, 0, ';')) !== false) {
+        if (false !== ($file = fopen($file, 'r'))) {
+            while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
                 $number = count($currentRow);
-                if (('tag' === $repoName) && ($number == 6 || $number == 9)) {
+                if (('tag' === $repoName) && (6 == $number || 9 == $number)) {
                     //Check header rows
-                    if (trim($currentRow[0]) == 'id') {
+                    if ('id' == trim($currentRow[0])) {
                         continue;
                     }
                     $parent = isset($idCodMapping[$currentRow[2]])
@@ -114,7 +114,7 @@ EOT
                     $output->writeln("Error: line $row has $number elements");
                 }
 
-                if ($row % 100 == 0) {
+                if (0 == $row % 100) {
                     echo 'Row '.$row."\n";
                 }
                 $previous_content = $currentRow;

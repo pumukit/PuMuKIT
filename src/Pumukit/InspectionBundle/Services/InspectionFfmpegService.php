@@ -18,6 +18,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
     }
 
     // TO DO check if the duration is rounded up
+
     /**
      * Gets file duration in s.
      *
@@ -86,7 +87,7 @@ class InspectionFfmpegService implements InspectionServiceInterface
     private function fileHasMediaContent($finfo, $file)
     {
         $mime = substr($finfo->file($file, FILEINFO_MIME_TYPE), 0, 5);
-        if ($mime == 'audio' || $mime == 'video') {
+        if ('audio' == $mime || 'video' == $mime) {
             return true;
         }
 

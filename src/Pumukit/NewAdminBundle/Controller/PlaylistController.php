@@ -236,7 +236,7 @@ class PlaylistController extends CollectionController
         $value = $session->get('admin/playlist/type', 'desc');
         $key = $session->get('admin/playlist/sort', 'public_date');
 
-        if ($key == 'title') {
+        if ('title' == $key) {
             $key .= '.'.$request->getLocale();
         }
 

@@ -204,7 +204,7 @@ class PermissionService
         $dependencies = array_diff($dependencies, array($permission));
 
         reset($dependencies);
-        while (($elem = each($dependencies)) !== false) {
+        while (false !== ($elem = each($dependencies))) {
             if (!array_key_exists($elem['value'], $allPermissions)) {
                 throw new \InvalidArgumentException(sprintf('The permission with role \'%s\' does not exist in the configuration', $elem['value']));
             }

@@ -63,7 +63,7 @@ class JobGeneratorListener
 
         foreach ($tag->getChildren() as $pubchannel) {
             if ($multimediaObject->containsTag($pubchannel)) {
-                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && strpos($profile['target'], $pubchannel->getCod()) === false) {
+                if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], $pubchannel->getCod())) {
                     $master->addTag('ENCODED_'.$pubchannel->getCod());
                     $this->generateJobs($multimediaObject, $pubchannel->getCod());
                 }
@@ -90,14 +90,14 @@ class JobGeneratorListener
                 continue;
             }
 
-            if (count($default_profiles) !== 0) {
+            if (0 !== count($default_profiles)) {
                 if (!isset($default_profiles[$pubChannelCod])) {
                     continue;
                 }
-                if (!$multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]['video'], $targetProfile) === false) {
+                if (!$multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['video'], $targetProfile)) {
                     continue;
                 }
-                if ($multimediaObject->isOnlyAudio() && strpos($default_profiles[$pubChannelCod]['audio'], $targetProfile) === false) {
+                if ($multimediaObject->isOnlyAudio() && false === strpos($default_profiles[$pubChannelCod]['audio'], $targetProfile)) {
                     continue;
                 }
             }
@@ -148,7 +148,7 @@ class JobGeneratorListener
         $return = array('standard' => array(), 'force' => array());
 
         foreach (array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
-            if (substr($target, -1) == '*') {
+            if ('*' == substr($target, -1)) {
                 $return['force'][] = substr($target, 0, -1);
             } else {
                 $return['standard'][] = $target;

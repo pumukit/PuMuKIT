@@ -123,7 +123,7 @@ class TrackController extends Controller implements NewAdminController
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
-        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && $multimediaObject->getStatus() == MultimediaObject::STATUS_PUBLISHED;
+        $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
         return array(
             'track' => $track,

@@ -252,7 +252,7 @@ class PersonController extends AdminController implements NewAdminController
 
                 return new Response($textStatus, 409);
             }
-            if ($owner === 'owner') {
+            if ('owner' === $owner) {
                 $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
             } else {
                 $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
@@ -313,7 +313,7 @@ class PersonController extends AdminController implements NewAdminController
 
                 $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-                if ($owner === 'owner') {
+                if ('owner' === $owner) {
                     $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
                 } else {
                     $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
@@ -380,7 +380,7 @@ class PersonController extends AdminController implements NewAdminController
             $template = '_template';
         }
         $owner = $request->get('owner', false);
-        if ($owner === 'owner') {
+        if ('owner' === $owner) {
             $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
         } else {
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
@@ -449,7 +449,7 @@ class PersonController extends AdminController implements NewAdminController
             $template = '_template';
         }
         $owner = $request->get('owner', false);
-        if ($owner === 'owner') {
+        if ('owner' === $owner) {
             $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
         } else {
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
@@ -487,7 +487,7 @@ class PersonController extends AdminController implements NewAdminController
             $template = '_template';
         }
         $owner = $request->get('owner', false);
-        if ($owner === 'owner') {
+        if ('owner' === $owner) {
             $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
         } else {
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';
@@ -532,7 +532,7 @@ class PersonController extends AdminController implements NewAdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
-        if ($owner === 'owner') {
+        if ('owner' === $owner) {
             $twigTemplate = 'PumukitNewAdminBundle:MultimediaObject:listownerrelation.html.twig';
         } else {
             $twigTemplate = 'PumukitNewAdminBundle:Person:listrelation.html.twig';

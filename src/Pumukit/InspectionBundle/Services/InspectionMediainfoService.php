@@ -42,6 +42,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
     // Check the desired codec names (MPEG Audio/MPEG-1 Audio layer 3; AAC / Advanced Audio Codec / ...)
     // Now we choose FORMAT.
+
     /**
      * Completes track information from a given path using mediainfo.
      *
@@ -89,9 +90,9 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
     private function xmlHasMediaContent($xml)
     {
-        if ($xml->File->track != null) {
+        if (null != $xml->File->track) {
             foreach ($xml->File->track as $track) {
-                if ($track['type'] == 'Audio' || $track['type'] == 'Video') {
+                if ('Audio' == $track['type'] || 'Video' == $track['type']) {
                     return true;
                 }
             }

@@ -124,7 +124,7 @@ class DefaultController extends Controller
             $id = $formData['series']['reuse']['id'];
             $formData['series']['id'] = $id;
         } elseif ($newSeries && isset($formData['series']['id'])) {
-            if (!$id || ($id === 'null')) {
+            if (!$id || ('null' === $id)) {
                 $id = null;
                 $formData['series']['id'] = null;
                 $formData['series']['reuse']['id'] = null;
@@ -408,7 +408,7 @@ class DefaultController extends Controller
 
                     if ($showObjectLicense) {
                         $license = $this->getKeyData('license', $formData['multimediaobject']);
-                        if ($license && ($license !== '0')) {
+                        if ($license && ('0' !== $license)) {
                             $multimediaObject = $this->setData($multimediaObject, $formData['multimediaobject'], array('license'));
                         }
                     }
@@ -452,7 +452,7 @@ class DefaultController extends Controller
 
                     if ($showTags) {
                         $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
-                        if ($tagCode != '0') {
+                        if ('0' != $tagCode) {
                             $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                         }
                     }

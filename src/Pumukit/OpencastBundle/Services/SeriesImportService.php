@@ -32,7 +32,7 @@ class SeriesImportService
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesTitle, $seriesOpencastId, $loggedInUser);
             }
-        } elseif (($seriesOpencastSpatial = $this->getSpatialField($mediaPackage)) != null) {
+        } elseif (null != ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
             $series = $seriesRepo->findOneBy(array('properties.opencastspatial' => $seriesOpencastSpatial));
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
@@ -88,7 +88,7 @@ class SeriesImportService
             return $this->opencastClient->getSpatialField($metadata['catalog']['url']);
         }
         foreach ($metadata['catalog'] as $catalog) {
-            if (isset($catalog['type']) && $catalog['type'] === 'dublincore/episode') {
+            if (isset($catalog['type']) && 'dublincore/episode' === $catalog['type']) {
                 return $this->opencastClient->getSpatialField($catalog['url']);
             }
         }

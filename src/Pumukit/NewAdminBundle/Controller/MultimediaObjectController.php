@@ -412,7 +412,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
 
             $mms = $this->getListMultimediaObjects($series);
-            if (strpos($request->server->get('HTTP_REFERER'), 'mmslist') === false) {
+            if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
                 return $this->render(
                     'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
                     array(
@@ -623,7 +623,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     private function getAllParents($element, $tags, $top_parent)
     {
-        if ($element->getParent() != null) {
+        if (null != $element->getParent()) {
             $parentMissing = true;
             foreach ($tags as $tag) {
                 if ($element->getParent() == $tag) {
@@ -1299,9 +1299,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
-        if ($type === EmbeddedBroadcast::TYPE_PASSWORD) {
+        if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
             $embeddedBroadcastService->updatePassword($password, $multimediaObject, false);
-        } elseif ($type === EmbeddedBroadcast::TYPE_GROUPS) {
+        } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
             foreach ($addGroups as $addGroup) {
                 $groupIdArray = explode('_', $addGroup);
                 $groupId = end($groupIdArray);
@@ -1463,7 +1463,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     private function renderList(MultimediaObject $resource, $referer)
     {
-        if (strpos($referer, 'mmslist') === false) {
+        if (false === strpos($referer, 'mmslist')) {
             $mms = $this->getListMultimediaObjects($resource->getSeries());
 
             return $this->render(
@@ -1551,7 +1551,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $value = $session->get('admin/'.$session_namespace.'/type', 'desc');
         $key = $session->get('admin/'.$session_namespace.'/sort', 'public_date');
 
-        if ($key == 'title') {
+        if ('title' == $key) {
             $key .= '.'.$request->getLocale();
         }
 
@@ -1562,7 +1562,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $sRoute = $request->get('_route');
 
-        return (strpos($sRoute, 'all') === false) ? 'mms' : 'mmslist';
+        return (false === strpos($sRoute, 'all')) ? 'mms' : 'mmslist';
     }
 
     private function updateSession(MultimediaObject $mm)

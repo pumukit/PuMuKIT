@@ -82,7 +82,7 @@ class LegacyController extends Controller implements WebTVController
         if (!$multimediaObject) {
             throw $this->createNotFoundException();
         }
-        if ($multimediaObject->getStatus() == MultimediaObject::STATUS_HIDE) {
+        if (MultimediaObject::STATUS_HIDE == $multimediaObject->getStatus()) {
             return $this->redirectToRoute('pumukit_webtv_multimediaobject_magicindex', array('secret' => $multimediaObject->getSecret()), Response::HTTP_MOVED_PERMANENTLY);
         } else {
             return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), Response::HTTP_MOVED_PERMANENTLY);

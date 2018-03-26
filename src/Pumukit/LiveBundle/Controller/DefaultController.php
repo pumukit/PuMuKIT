@@ -91,7 +91,7 @@ class DefaultController extends Controller
                 ->field('tags.cod')->equals('PUCHWEBTV')
                 ->field('series')->equals(new \MongoId($series->getId()))
                 ->getQuery()->execute();
-            if (count($multimediaObjects) == 1) {
+            if (1 == count($multimediaObjects)) {
                 $multimediaObjects->next();
                 $multimediaObject = $multimediaObjects->current();
 
@@ -121,7 +121,7 @@ class DefaultController extends Controller
      */
     public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, $iframe = true)
     {
-        if ($multimediaObject->getEmbeddedBroadcast()->getType() === embeddedBroadcast::TYPE_PASSWORD && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
+        if (embeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array(
                 'live' => $multimediaObject->getEmbeddedEvent(),
                 'invalid_password' => boolval($request->get('broadcast_password')),
@@ -270,7 +270,7 @@ class DefaultController extends Controller
             $message->setSubject($subject)->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
             $sent = $this->get('mailer')->send($message);
 
-            if ($sent == 0) {
+            if (0 == $sent) {
                 $this->get('logger')->error('Event contact: Error sending message from - '.$request->request->get('email'));
             }
 
@@ -296,7 +296,7 @@ class DefaultController extends Controller
     {
         $privatekey = $this->container->getParameter('captcha_private_key');
 
-        if ($response == null || strlen($response) == 0) {
+        if (null == $response || 0 == strlen($response)) {
             return false;
         }
 

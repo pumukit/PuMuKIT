@@ -207,7 +207,6 @@ class User extends BaseUser
      */
     public function getGroupsIds()
     {
-
         // Performance boost (Don't repeat it, only if it's exceptionally necesary)
         if ($this->groups instanceof \Doctrine\ODM\MongoDB\PersistentCollection && !$this->groups->isDirty()) {
             //See PersistentCollection class (coll + mongoData)

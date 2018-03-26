@@ -172,7 +172,7 @@ class Playlist
         if ($maxPos < 1) {
             return false;
         }
-        if ($posStart - $posEnd == 0
+        if (0 == $posStart - $posEnd
            || $posStart < 0 || $posStart > $maxPos) {
             return false; //If start is out of range or start/end is the same, do nothing.
         }

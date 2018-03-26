@@ -28,7 +28,7 @@ class FilterListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         $req = $event->getRequest();
-        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST &&
+        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType() &&
             "Pumukit\OaiBundle" === substr($req->attributes->get('_controller'), 0, 17)) {
             $filter = $this->dm->getFilterCollection()->enable('frontend');
             $filter->setParameter('pub_channel_tag', $this->pubChannelTag);

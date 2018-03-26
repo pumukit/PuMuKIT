@@ -158,12 +158,12 @@ class EventsController extends Controller
         $criteria['islive'] = true;
         if ($type) {
             $date = new \MongoDate();
-            if ($type === 'now') {
+            if ('now' === $type) {
                 $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
                     'start' => array('$lte' => $date),
                     'ends' => array('$gte' => $date),
                     ));
-            } elseif ($type === 'today') {
+            } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
                 $dateStart = new \MongoDate($dateStart->getTimestamp());
@@ -273,7 +273,7 @@ class EventsController extends Controller
                 $field = 'embeddedEvent.name.'.$request->getLocale();
             }
             if ($session->has('admin/live/event/sort/field') and $session->get('admin/live/event/sort/field') === $field) {
-                $session->set('admin/live/event/sort/type', (($session->get('admin/live/event/sort/type') == 'desc') ? 'asc' : 'desc'));
+                $session->set('admin/live/event/sort/type', (('desc' == $session->get('admin/live/event/sort/type')) ? 'asc' : 'desc'));
             } else {
                 $session->set('admin/live/event/sort/type', 'desc');
             }
@@ -479,7 +479,7 @@ class EventsController extends Controller
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
         $form->handleRequest($request);
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             try {
                 $data = $request->request->get('pumukitnewadmin_live_event');
 
@@ -532,7 +532,6 @@ class EventsController extends Controller
                 $dm->flush();
             } catch (\Exception $e) {
                 throw $e;
-
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
@@ -640,7 +639,7 @@ class EventsController extends Controller
         $form = $this->createForm(new EmbeddedEventSessionType($translator, $locale));
 
         $form->handleRequest($request);
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             try {
                 $data = $form->getData();
                 $start = new \DateTime($data->getStart());
@@ -945,7 +944,7 @@ class EventsController extends Controller
             }
 
             if ($validSessionA && $validSessionB) {
-                if ($sortType == 'desc') {
+                if ('desc' == $sortType) {
                     return ($validSessionA < $validSessionB) ? 1 : -1;
                 } else {
                     return ($validSessionA < $validSessionB) ? -1 : 1;
