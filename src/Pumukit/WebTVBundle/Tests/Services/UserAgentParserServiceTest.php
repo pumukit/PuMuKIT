@@ -15,8 +15,8 @@ class UserAgentParserServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->agentService = static::$kernel->getContainer()->get('pumukit_web_tv.useragent_parser');
-    //Setting up user agent strings taken from random browsers:
-    $this->agentStrings = array(array('string' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0', 'old' => true),
+        //Setting up user agent strings taken from random browsers:
+        $this->agentStrings = array(array('string' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0', 'old' => true),
                                 array('string' => 'Mozilla/5.0 (X11; U; Linux i686; ru-RU; rv:1.9.2a1pre) Gecko/20090405 Ubuntu/9.04 (jaunty) Firefox/3.6a1pre', 'old' => true),
                                 array('string' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10', 'old' => false),
                                 array('string' => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_7; de-de) AppleWebKit/525.28.3 (KHTML, like Gecko) Version/3.2.3 Safari/525.28.3', 'old' => true),

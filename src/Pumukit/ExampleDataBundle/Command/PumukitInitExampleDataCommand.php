@@ -81,7 +81,7 @@ EOT
             }
 
             $zip = new ZipArchive();
-            if ($zip->open($newFile, ZIPARCHIVE::CREATE) == true) {
+            if (true == $zip->open($newFile, ZIPARCHIVE::CREATE)) {
                 $zip->extractTo(realpath(dirname(__FILE__).'/../Resources/public/'));
                 $zip->close();
             }
@@ -404,7 +404,7 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
         $language = 'es';
         $description = array();
-        if ($audio == true) {
+        if (true == $audio) {
             $path = realpath(dirname(__FILE__).'/../Resources/public/videos/'.$folder.'/'.$track.'.m4a');
             $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
             $jobService->createTrackWithFile($path, 'audio_aac', $multimediaObject, $language, $description);

@@ -59,13 +59,16 @@ class StatsService
                 $mongoProjectDate[] = 'H';
                 $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
                 $mongoProjectDate[] = 'T';
+                // no break
             case 'day':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
                 $mongoProjectDate[] = '-';
+                // no break
             default: //If it doesn't exists, it's 'month'
             case 'month':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
                 $mongoProjectDate[] = '-';
+                // no break
             case 'year':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
                 break;

@@ -97,9 +97,9 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     private function jsonHasMediaContent($json)
     {
-        if ($json->streams != null) {
+        if (null != $json->streams) {
             foreach ($json->streams as $stream) {
-                if ((isset($stream->codec_type)) && ($stream->codec_type == 'audio' || $stream->codec_type == 'video')) {
+                if ((isset($stream->codec_type)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type)) {
                     return true;
                 }
             }

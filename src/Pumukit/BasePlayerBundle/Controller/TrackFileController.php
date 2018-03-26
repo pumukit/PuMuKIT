@@ -93,10 +93,10 @@ class TrackFileController extends Controller
         if (!$range && !$start) {
             return true;
         }
-        if ($range && substr($range, 0, 8) == 'bytes=0-') {
+        if ($range && 'bytes=0-' == substr($range, 0, 8)) {
             return true;
         }
-        if ($start !== null && $start == 0) {
+        if (null !== $start && 0 == $start) {
             return true;
         }
 

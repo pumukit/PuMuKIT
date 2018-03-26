@@ -161,15 +161,15 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $m = $this->get('session')->get('admin/event/month');
         $y = $this->get('session')->get('admin/event/year');
 
-        if ($request->query->get('month') == 'next') {
+        if ('next' == $request->query->get('month')) {
             $changed_date = mktime(0, 0, 0, $m + 1, 1, $y);
             $this->get('session')->set('admin/event/year', date('Y', $changed_date));
             $this->get('session')->set('admin/event/month', date('m', $changed_date));
-        } elseif ($request->query->get('month') == 'previous') {
+        } elseif ('previous' == $request->query->get('month')) {
             $changed_date = mktime(0, 0, 0, $m - 1, 1, $y);
             $this->get('session')->set('admin/event/year', date('Y', $changed_date));
             $this->get('session')->set('admin/event/month', date('m', $changed_date));
-        } elseif ($request->query->get('month') == 'today') {
+        } elseif ('today' == $request->query->get('month')) {
             $this->get('session')->set('admin/event/year', date('Y'));
             $this->get('session')->set('admin/event/month', date('m'));
         }
@@ -193,10 +193,10 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $d = self::$daysInMonth[$month - 1];
 
-        if ($month == 2) {
-            if ($year % 4 == 0) {
-                if ($year % 100 == 0) {
-                    if ($year % 400 == 0) {
+        if (2 == $month) {
+            if (0 == $year % 4) {
+                if (0 == $year % 100) {
+                    if (0 == $year % 400) {
                         $d = 29;
                     }
                 } else {

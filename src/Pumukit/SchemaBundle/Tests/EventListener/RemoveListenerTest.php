@@ -85,7 +85,7 @@ class RemoveListenerTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Can not delete Multimedia Object with id
      */
     public function testPreRemoveWithException()

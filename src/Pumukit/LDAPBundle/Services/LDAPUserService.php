@@ -67,7 +67,7 @@ class LDAPUserService
             } catch (\Exception $e) {
                 throw new AuthenticationException($e->getMessage());
             }
-        } elseif ($user->getEmail() !== $info['mail'][0] || $user->getFullname() !== $info['cn'][0]) {
+        } elseif ($info['mail'][0] !== $user->getEmail() || $info['cn'][0] !== $user->getFullname()) {
             try {
                 $user = $this->updateUser($info, $user);
             } catch (\Exception $e) {

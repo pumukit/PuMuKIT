@@ -47,7 +47,7 @@ class OaiController extends Controller
      */
     public function getRecord($request)
     {
-        if ($request->query->get('metadataPrefix') !== 'oai_dc') {
+        if ('oai_dc' !== $request->query->get('metadataPrefix')) {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
         }
 
@@ -56,7 +56,7 @@ class OaiController extends Controller
         $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $object = $mmObjColl->find(array('id' => $identifier));
 
-        if ($object === null) {
+        if (null === $object) {
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
@@ -106,13 +106,13 @@ class OaiController extends Controller
             return $this->error('badArgument', 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax');
         }
 
-        if ($token->getMetadataPrefix() !== 'oai_dc') {
+        if ('oai_dc' !== $token->getMetadataPrefix()) {
             return $this->error('cannotDisseminateFormat', 'cannotDisseminateFormat');
         }
 
         $mmObjColl = $this->filter($limit, $token->getOffset(), $token->getFrom(), $token->getUntil(), $token->getSet());
 
-        if (count($mmObjColl) === 0) {
+        if (0 === count($mmObjColl)) {
             return $this->error('noRecordsMatch', 'The combination of the values of the from, until, and set arguments results in an empty list');
         }
 
@@ -130,7 +130,7 @@ class OaiController extends Controller
         }
 
         $XMLrequest->addAttribute('verb', $verb);
-        if ($verb === 'ListIdentifiers') {
+        if ('ListIdentifiers' === $verb) {
             $XMLlist = new SimpleXMLExtended('<ListIdentifiers></ListIdentifiers>');
             foreach ($mmObjColl as $object) {
                 $this->genObjectHeader($XMLlist, $object);
@@ -165,7 +165,7 @@ class OaiController extends Controller
         $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mmObj = $mmObjColl->find(array('id' => $identifier));
 
-        if ($request->query->has('identifier') && $mmObj === null) {
+        if ($request->query->has('identifier') && null === $mmObj) {
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
@@ -389,7 +389,7 @@ class OaiController extends Controller
     //TODO Delete using ResumptionToken
     private function validateToken($resumptionToken)
     {
-        if ($resumptionToken !== null) {
+        if (null !== $resumptionToken) {
             $error = false;
 
             return array('pag' => (((int) $resumptionToken) + 1), 'error' => $error);

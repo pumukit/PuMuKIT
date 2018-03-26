@@ -86,7 +86,7 @@ class PicService
     public function getDefaultUrlPicForObject($object, $absolute = false, $hd = true)
     {
         if ($object instanceof Series) {
-            if ($object->getType() == Series::TYPE_PLAYLIST) {
+            if (Series::TYPE_PLAYLIST == $object->getType()) {
                 return $this->getDefaultPlaylistUrlPic($absolute);
             }
 

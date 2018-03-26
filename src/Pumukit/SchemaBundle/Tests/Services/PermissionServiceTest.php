@@ -38,7 +38,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage The permission with role 'ROLE_FOUR' is duplicated. Please check the configuration.
      */
     public function testConstructorDuplicatedRoleException()
@@ -53,7 +53,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException UnexpectedValueException
+     * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage Invalid permission: "INVALID_NAME". Permission must start with "ROLE_".
      */
     public function testConstructorRoleNameException()
@@ -135,7 +135,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The permission with role 'ROLE_DOESNTEXIST' does not exist in the configuration
      */
     public function testGetDependenciesByScopeInvalidPermission()
@@ -146,7 +146,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The scope 'NO_SCOPE' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)
      */
     public function testGetDependenciesByScopeInvalidScope()
@@ -157,7 +157,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The permission with role 'ROLE_DEPENDENCY' does not exist in the configuration
      */
     public function testGetDependenciesByScopeInvalidDependency()
@@ -177,7 +177,7 @@ class PermissionServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Permission must start with "ROLE_"
      */
     public function testExceptionRole()

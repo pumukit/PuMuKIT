@@ -51,7 +51,7 @@ EOT
         foreach ($jobsByStatus as $jg) {
             if (in_array($jg['_id'], array(Job::STATUS_PAUSED, Job::STATUS_WAITING))) {
                 $jobsPending += $jg['count'];
-            } elseif ($jg['_id'] == Job::STATUS_EXECUTING) {
+            } elseif (Job::STATUS_EXECUTING == $jg['_id']) {
                 $jobsPending = $jg['count'];
             }
         }

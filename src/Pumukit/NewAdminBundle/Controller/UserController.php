@@ -349,7 +349,7 @@ class UserController extends AdminController implements NewAdminController
             }
         }
 
-        if ($userToDelete->getOrigin() !== User::ORIGIN_LOCAL) {
+        if (User::ORIGIN_LOCAL !== $userToDelete->getOrigin()) {
             if ($loggedInUser->isSuperAdmin()) {
                 return true;
             }

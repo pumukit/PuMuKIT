@@ -140,7 +140,7 @@ class ClientService
     {
         $output = $this->request('/search/episode.json?'.($query ? 'q='.urlencode($query).'&' : '').'limit='.$limit.'&offset='.$offset);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             return false;
         }
         $decode = $this->decodeJson($output['var']);
@@ -175,7 +175,7 @@ class ClientService
     {
         $output = $this->request('/search/episode.json?id='.$id);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             return false;
         }
         $decode = $this->decodeJson($output['var']);
@@ -202,7 +202,7 @@ class ClientService
     {
         $output = $this->request('/search/episode.json?id='.$id);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             return false;
         }
         $decode = $this->decodeJson($output['var']);
@@ -229,10 +229,10 @@ class ClientService
     {
         $output = $this->request('/episode/episode.json?id='.$id, array(), 'GET', true);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             $output = $this->request('/archive/episode.json?id='.$id, array(), 'GET', true);
 
-            if ($output['status'] !== 200) {
+            if (200 !== $output['status']) {
                 return false;
             }
         }
@@ -283,7 +283,7 @@ class ClientService
 
         $output = $this->request($request, $parameters, 'POST', true);
 
-        if ($output['status'] !== 204) {
+        if (204 !== $output['status']) {
             return false;
         }
 
@@ -301,7 +301,7 @@ class ClientService
 
         $output = $this->request($request, array(), 'GET', true);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             return false;
         }
 
@@ -324,7 +324,7 @@ class ClientService
 
         $output = $this->request($request, array(), 'GET', true);
 
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             return false;
         }
 
@@ -347,7 +347,7 @@ class ClientService
                 $request = '/workflow/stop';
                 $params = array('id' => $workflow['id']);
                 $output = $this->request($request, $params, 'POST', true);
-                if ($output['status'] !== 200) {
+                if (200 !== $output['status']) {
                     return false;
                 }
 
@@ -515,7 +515,7 @@ class ClientService
             curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
         }
 
-        if ($this->user != '') {
+        if ('' != $this->user) {
             curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
             curl_setopt($request, CURLOPT_USERPWD, $this->user.':'.$this->passwd);
             curl_setopt($request, CURLOPT_HTTPHEADER, $header);
@@ -528,7 +528,7 @@ class ClientService
 
         curl_close($request);
 
-        if ($method == 'GET') {
+        if ('GET' == $method) {
             if (200 != $output['status']) {
                 $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                       .') Error ('.$output['status'].') Processing Request : '.$requestUrl.'.');

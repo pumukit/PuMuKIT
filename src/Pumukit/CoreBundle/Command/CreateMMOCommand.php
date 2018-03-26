@@ -69,16 +69,16 @@ EOT
         */
 
         // hotfix to work with FTP
-        if ((($pos = strpos($path, '.filepart')) !== false) || (($pos = strpos($path, '.part')) !== false)) {
+        if ((false !== ($pos = strpos($path, '.filepart'))) || (false !== ($pos = strpos($path, '.part')))) {
             $path = substr($path, 0, $pos);
             sleep(2);
         }
 
-        if (strpos($path, 'INBOX_MASTER_BROADCASTABLE') !== false) {
+        if (false !== strpos($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
-        } elseif (strpos($path, 'INBOX_MASTER_COPY') !== false) {
+        } elseif (false !== strpos($path, 'INBOX_MASTER_COPY')) {
             $profile = 'master_copy';
-        } elseif (strpos($path, 'INBOX_MASTER_H264') !== false) {
+        } elseif (false !== strpos($path, 'INBOX_MASTER_H264')) {
             $profile = 'master_video_h264';
         } else {
             $profile = $this->getDefaultMasterProfile();

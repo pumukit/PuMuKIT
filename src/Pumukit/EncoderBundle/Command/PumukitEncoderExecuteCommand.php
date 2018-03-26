@@ -32,11 +32,11 @@ EOT
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
-        if (($id = $input->getArgument('id')) === null) {
+        if (null === ($id = $input->getArgument('id'))) {
             throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");
         }
 
-        if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
+        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 

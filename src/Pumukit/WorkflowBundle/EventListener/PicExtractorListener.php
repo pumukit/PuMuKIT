@@ -72,7 +72,7 @@ class PicExtractorListener
             return false;
         }
         $multimediaObject = $this->mmsPicService->addPicFile($multimediaObject, $picFile);
-        if ($multimediaObject !== null) {
+        if (null !== $multimediaObject) {
             if ($multimediaObject instanceof MultimediaObject) {
                 $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
                                     .'Extracted pic from track '.

@@ -161,7 +161,7 @@ class Element
     {
         $tag = array_search($tag, $this->tags, true);
 
-        if ($tag !== false) {
+        if (false !== $tag) {
             unset($this->tags[$tag]);
 
             return true;
@@ -203,7 +203,7 @@ class Element
      */
     public function containsAnyTag(array $tags)
     {
-        return count(array_intersect($tags, $this->tags)) != 0;
+        return 0 != count(array_intersect($tags, $this->tags));
     }
 
     /**
@@ -324,7 +324,7 @@ class Element
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -339,7 +339,7 @@ class Element
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {

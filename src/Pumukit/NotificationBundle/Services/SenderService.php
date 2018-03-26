@@ -226,7 +226,7 @@ class SenderService
         $errorEmails = array();
         if (is_array($emailTo)) {
             foreach ($emailTo as $email) {
-                if (filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
+                if (false != filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $verifiedEmails[] = $email;
                 } else {
                     $errorEmails[] = $email;

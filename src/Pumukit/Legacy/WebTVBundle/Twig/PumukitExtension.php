@@ -220,7 +220,7 @@ class PumukitExtension extends \Twig_Extension
                 $seg = '0'.$seg;
             }
 
-            if ($min == 0) {
+            if (0 == $min) {
                 $aux = $seg."''";
             } else {
                 $aux = $min."' ".$seg."''";
@@ -294,6 +294,7 @@ class PumukitExtension extends \Twig_Extension
 
         return $url;
     }
+
     public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null, $parameters = array(), $relative = false)
     {
         return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);

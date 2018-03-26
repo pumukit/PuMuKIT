@@ -190,7 +190,7 @@ class EmbeddedBroadcast
     {
         $groups = $this->getGroups();
         $groupsDescription = '';
-        if (($this->getType() === self::TYPE_GROUPS) && ($groups)) {
+        if ((self::TYPE_GROUPS === $this->getType()) && ($groups)) {
             $groupsDescription = ': ';
             foreach ($groups as $group) {
                 $groupsDescription .= $group->getName();

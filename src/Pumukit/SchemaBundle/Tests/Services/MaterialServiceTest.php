@@ -231,7 +231,7 @@ class MaterialServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage for storing Materials does not exist
      */
     public function testInvalidTargetPath()
