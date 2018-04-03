@@ -387,6 +387,31 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Get current session date.
+     *
+     * @param EmbeddedEvent
+     * @param bool
+     *
+     * @returns Date
+     */
+    public function getShowEventSessionDate(EmbeddedEvent $event, $start = true)
+    {
+        $now = new \DateTime('now');
+        $sessions = $event->getEmbeddedEventSession();
+        foreach ($sessions as $session) {
+            if ($session->getStart() < $now && $session->getEnds() > $now) {
+                return $start ? $session->getStart() : $session->getEnds();
+            } elseif ($session->getStart() > $now) {
+                return $start ? $session->getStart() : $session->getEnds();
+            } elseif ($session->getStart() < $now) {
+                return $start ? $session->getStart() : $session->getEnds();
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Find future events.
      *
      * @param $multimediaObjectId
