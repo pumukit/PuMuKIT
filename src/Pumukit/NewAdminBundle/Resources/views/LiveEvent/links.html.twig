@@ -12,7 +12,7 @@
                         </div>
                         <label for="inputMMTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
                         <div class="col-xs-10 input-group">
-                            <input type="text" class="form-control" id="inputMMTitle" readonly onclick="select()" value="{{ multimediaObject.title }}">
+                            <input type="text" class="form-control" id="inputMMTitle" readonly onclick="select()" value="{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}">
                         </div>
                         <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
                         <div class="col-xs-10 input-group hidden-naked">
