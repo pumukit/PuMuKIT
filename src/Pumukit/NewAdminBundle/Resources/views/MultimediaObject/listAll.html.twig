@@ -111,7 +111,6 @@
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
                         {{ mm.getRealDuration()| duration_string }}
                         {% if mm.getProperty('soft-editing-duration') %}
-                            {{ mm.getRealDuration()| duration_string }}
                             <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}
                     </td>
