@@ -529,6 +529,13 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
+                if (isset($data['twitter_hashtag']) && $multimediaObject->getEmbeddedSocial()) {
+                    $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
+                }
+                if (isset($data['twitter_widget_id']) && $multimediaObject->getEmbeddedSocial()) {
+                    $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
+                }
+
                 $eventsService = $this->container->get('pumukitschema.eventsession');
                 $color = $eventsService->validateHtmlColor($data['poster_text_color']);
                 $multimediaObject->setProperty('postertextcolor', $color);

@@ -156,6 +156,25 @@
                     {% include 'PumukitNewAdminBundle:MultimediaObject:listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
                 </div>
             </div>
+
+            <div class="form-group">
+              <a style="color:#666; text-decoration:underline" href="#"
+                 onclick="$('#pumukitnewadmin_live_event_twitter_hashtag').toggle();
+                          $('#pumukitnewadmin_live_event_twitter_widget_id').toggle();
+                          return false;">
+                <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
+                {% trans %}Show configuration for Twitter.{% endtrans %}
+                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to edit Twitter configuration{% endtrans %}"></i>
+              </a>
+            </div>
+            <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_hashtag">
+                <label for="twitter_hashtag">{% trans %}Twitter hashtag{% endtrans %}</label>
+                <input id="twitter_hashtag" type="text" name="pumukitnewadmin_live_event[twitter_hashtag]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitterHashtag() : '' }}" />
+            </div>
+            <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_widget_id">
+                <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
+                <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
+            </div>
         </fieldset>
     </div>
     {{ form_end(form) }}
