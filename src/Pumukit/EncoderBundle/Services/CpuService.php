@@ -30,7 +30,7 @@ class CpuService
     /**
      * Get available free cpus.
      */
-    public function getFreeCpu($type = null)
+    public function getFreeCpu($profile = null)
     {
         $executingJobs = $this->jobRepo->findWithStatus(array(Job::STATUS_EXECUTING));
 
@@ -45,7 +45,11 @@ class CpuService
                     ++$busy;
                 }
             }
-            if (($busy < $cpu['max']) && (($cpu['type'] == $type) || (null == $type))) {
+
+            if (
+                $busy < $cpu['max'] &&
+                ($profile === null || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']))
+            ) {
                 $freeCpus[] = array(
                                     'name' => $name,
                                     'busy' => $busy,
