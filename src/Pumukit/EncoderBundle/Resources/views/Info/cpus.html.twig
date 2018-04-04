@@ -15,20 +15,17 @@
         {% endif %}
       </div>
       <div class="row-content">
+        {% if cpu.profiles is not empty %}
+          <i
+            title="{% trans %}This cpu only executes jobs from the following profiles:{% endtrans %} {{ cpu.profiles | join(', ')}}"
+            class="mdi-action-info"
+            aria-hidden="true"
+            style="cursor:pointer;border-radius:0;float:right;"
+          >
+          </i>
+        {% endif %}
         <h4 class="list-group-item-heading">{{ name }} ({{ cpu.max }})</h4>
         <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
-        {% if cpu.profiles is not empty %}
-          <p class="list-group-item-text">
-            <i
-              title="{% trans %}This cpu only executes jobs from the following profiles:{% endtrans %} [{% for profile in cpu.profiles %}{{ profile }}; {% endfor %}]"
-              class="mdi-action-info"
-              aria-hidden="true"
-              style="cursor:pointer;border-radius:0;"
-            >
-            profiles
-            </i>
-          </p>
-        {% endif %}
         <small>{{ cpu.host }}</small>
         <div>
           <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
