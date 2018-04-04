@@ -426,7 +426,7 @@ class EmbeddedEventSessionService
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
-                    $orderSession[$embeddedSession['start']->sec] = $element;
+                    $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
                     break;
                 }
             }
@@ -741,5 +741,123 @@ class EmbeddedEventSessionService
         }
 
         return array();
+    }
+
+    /**
+     * Find next live events.
+     *
+     * @param $multimediaObjectId
+     *
+     * @return array
+     */
+    public function findNextLiveEvents($multimediaObjectId = null, $limit = 0)
+    {
+        $pipeline = $this->getNextLiveEventsPipeline($multimediaObjectId);
+        $result = $this->collection->aggregate($pipeline)->toArray();
+        $orderSession = array();
+        foreach ($result as $key => $element) {
+            foreach ($element['data'] as $eventData) {
+                foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
+                    $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                    break;
+                }
+            }
+        }
+        ksort($orderSession);
+        $output = array();
+        foreach (array_values($orderSession) as $key => $session) {
+            if ($limit !== 0 && $key >= $limit) {
+                break;
+            }
+            $output[$key] = $session;
+        }
+
+        return $output;
+    }
+
+    /**
+     * Get next live events pipeline.
+     *
+     * @param string multimediaObjectId
+     *
+     * @return array
+     */
+    private function getNextLiveEventsPipeline($multimediaObjectId)
+    {
+        if ($multimediaObjectId) {
+            $pipeline[] = array(
+                '$match' => array(
+                    '_id' => array('$nin' => array(new \MongoId($multimediaObjectId))),
+                    'islive' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        } else {
+            $pipeline[] = array(
+                '$match' => array(
+                    'islive' => true,
+                    'embeddedEvent.display' => true,
+                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+                ),
+            );
+        }
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+        $pipeline[] = array('$unwind' => '$sessions');
+        $now = new \MongoDate();
+        $today = new \MongoDate((new \DateTime('now'))->setTime(0, 0)->format('U'));
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$gte' => $today),
+                'sessions.ends' => array('$exists' => true),
+                'sessions.ends' => array('$gte' => $now),
+            ),
+        );
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+            ),
+        );
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                    ),
+                ),
+            ),
+        );
+
+        return $pipeline;
+    }
+
+    /**
+     * Add element with session sec.
+     *
+     * @param array $orderSession
+     * @param array $element
+     * @param int   $indexSec
+     *
+     * @return array
+     */
+    protected function addElementWithSessionSec($orderSession, $element, $indexSec)
+    {
+        $index = 0;
+        while (isset($orderSession[$indexSec + $index])) {
+            ++$index;
+        }
+        $orderSession[$indexSec + $index] = $element;
+
+        return $orderSession;
     }
 }
