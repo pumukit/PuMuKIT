@@ -36,13 +36,15 @@ class CpuService
 
         $freeCpus = array();
         foreach ($this->cpus as $name => $cpu) {
-            if ($this->isInMaintenance($name) || $this->isBusy($cpu, $executingJobs) || !$this->isCompatible($cpu, $profile)) {
+            $jobs = $this->getRunningJobs($name, $executingJobs);
+
+            if ($this->isInMaintenance($name) || $jobs >= $cpu['max'] || !$this->isCompatible($cpu, $profile)) {
                 continue;
             }
 
             $freeCpus[] = array(
                 'name' => $name,
-                'busy' => $busy,
+                'jobs' => $jobs,
                 'max' => $cpu['max'],
             );
         }
@@ -91,9 +93,9 @@ class CpuService
                 $optimalCpu = $cpu;
                 continue;
             }
-            if (($cpu['busy'] / $cpu['max']) < ($optimalCpu['busy'] / $optimalCpu['max'])) {
+            if (($cpu['jobs'] / $cpu['max']) < ($optimalCpu['jobs'] / $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
-            } elseif (($cpu['busy'] === 0) && ($optimalCpu['busy'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
+            } elseif (($cpu['jobs'] === 0) && ($optimalCpu['jobs'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
             }
         }
@@ -142,23 +144,22 @@ class CpuService
         }
     }
 
-
-    private function isBusy($cpu, $executingJobs) {
+    private function getRunningJobs($cpuName, $allRunningJobs)
+    {
         $jobs = 0;
-        foreach ($executingJobs as $job) {
-            if ($name === $job->getCpu()) {
+        foreach ($allRunningJobs as $job) {
+            if ($cpuName === $job->getCpu()) {
                 ++$jobs;
             }
         }
 
-        return $jobs < $cpu['max'];
+        return $jobs;
     }
 
-    public function isCompatible($cpu, $profile) {
+    public function isCompatible($cpu, $profile)
+    {
         return $profile === null || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']);
     }
-
-
 
     public function getCpuNamesInMaintenanceMode()
     {
