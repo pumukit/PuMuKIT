@@ -40,7 +40,7 @@ class CpuServiceTest extends WebTestCase
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
 
         $job = new Job();
         $job->setCpu('CPU_REMOTE');
@@ -48,7 +48,7 @@ class CpuServiceTest extends WebTestCase
         $this->dm->persist($job);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_LOCAL', $this->cpuService->getFreeCpu('video_h264'));
 
         $job2 = new Job();
         $job2->setCpu('CPU_LOCAL');
@@ -56,7 +56,7 @@ class CpuServiceTest extends WebTestCase
         $this->dm->persist($job2);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_CLOUD', $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_CLOUD', $this->cpuService->getFreeCpu('video_h264'));
 
         $job3 = new Job();
         $job3->setCpu('CPU_CLOUD');
@@ -64,7 +64,7 @@ class CpuServiceTest extends WebTestCase
         $this->dm->persist($job3);
         $this->dm->flush();
 
-        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu());
+        $this->assertEquals('CPU_REMOTE', $this->cpuService->getFreeCpu('video_h264'));
 
         $job4 = new Job();
         $job4->setCpu('CPU_REMOTE');
@@ -72,14 +72,17 @@ class CpuServiceTest extends WebTestCase
         $this->dm->persist($job4);
         $this->dm->flush();
 
-        $this->assertNull($this->cpuService->getFreeCpu());
+        $this->assertNull($this->cpuService->getFreeCpu('video_h264'));
+        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('master_webm'));
+        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu('video_webm'));
+        $this->assertEquals('CPU_WEBM', $this->cpuService->getFreeCpu());
     }
 
     public function testGetCpus()
     {
         $cpus = $this->getDemoCpus();
 
-        $this->assertEquals(3, count($this->cpuService->getCpus()));
+        $this->assertEquals(4, count($this->cpuService->getCpus()));
         $this->assertEquals(count($cpus), count($this->cpuService->getCpus()));
     }
 
@@ -97,6 +100,16 @@ class CpuServiceTest extends WebTestCase
     private function getDemoCpus()
     {
         $cpus = array(
+            'CPU_WEBM' => array(
+                'host' => '127.0.0.1',
+                'max' => 1,
+                'number' => 1,
+                'type' => CpuService::TYPE_LINUX,
+                'user' => 'transco4',
+                'password' => 'PUMUKIT',
+                'description' => 'Pumukit transcoder',
+                'profiles' => ['master_webm', 'video_webm'],
+            ),
                       'CPU_LOCAL' => array(
                                            'host' => '127.0.0.1',
                                            'max' => 1,
@@ -124,7 +137,7 @@ class CpuServiceTest extends WebTestCase
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder',
                                             ),
-                      );
+        );
 
         return $cpus;
     }
