@@ -36,26 +36,15 @@ class CpuService
 
         $freeCpus = array();
         foreach ($this->cpus as $name => $cpu) {
-            if ($this->isInMaintenance($name)) {
+            if ($this->isInMaintenance($name) || $this->isBusy($cpu, $executingJobs) || !$this->isCompatible($cpu, $profile)) {
                 continue;
             }
-            $busy = 0;
-            foreach ($executingJobs as $job) {
-                if ($name === $job->getCpu()) {
-                    ++$busy;
-                }
-            }
 
-            if (
-                $busy < $cpu['max'] &&
-                ($profile === null || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']))
-            ) {
-                $freeCpus[] = array(
-                                    'name' => $name,
-                                    'busy' => $busy,
-                                    'max' => $cpu['max'],
-                                    );
-            }
+            $freeCpus[] = array(
+                'name' => $name,
+                'busy' => $busy,
+                'max' => $cpu['max'],
+            );
         }
 
         return $this->getOptimalCpuName($freeCpus);
@@ -152,6 +141,24 @@ class CpuService
             return false;
         }
     }
+
+
+    private function isBusy($cpu, $executingJobs) {
+        $jobs = 0;
+        foreach ($executingJobs as $job) {
+            if ($name === $job->getCpu()) {
+                ++$jobs;
+            }
+        }
+
+        return $jobs < $cpu['max'];
+    }
+
+    public function isCompatible($cpu, $profile) {
+        return $profile === null || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']);
+    }
+
+
 
     public function getCpuNamesInMaintenanceMode()
     {
