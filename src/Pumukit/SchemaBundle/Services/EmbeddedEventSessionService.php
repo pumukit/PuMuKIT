@@ -860,4 +860,16 @@ class EmbeddedEventSessionService
 
         return $orderSession;
     }
+
+    /**
+     * Is live broadcasting.
+     *
+     * @return bool
+     */
+    public function isLiveBroadcasting()
+    {
+        $events = $this->repo->findNowEventSessions();
+
+        return (count($events) > 0);
+    }
 }
