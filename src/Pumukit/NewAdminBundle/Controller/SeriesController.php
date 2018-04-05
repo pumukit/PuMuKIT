@@ -39,13 +39,12 @@ class SeriesController extends AdminController implements NewAdminController
             $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
             $pipeline = array(
                 array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
+                array('$match' => array('count' => 1)),
             );
             $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
             $emptySeries = array();
             foreach ($allSeries as $series) {
-                if (1 == $series['count']) {
-                    $emptySeries[] = $series['_id'];
-                }
+                $emptySeries[] = $series['_id'];
             }
         }
         $config = $this->getConfiguration();
