@@ -1,109 +1,114 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
 <div class="well">
-  <form id="filter_series" class="form">
-    <fieldset>
-      <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
-      <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
+    <form id="filter_series" class="form">
+        <fieldset>
+            <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
+            <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
 
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingSearch">
-            <h2 class="panel-title">
-              <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
-                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
-              </a>
-            </h2>
-          </div>
-          <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
-            <div class="panel-body">
-              {# <div class="form-group">
-                <label for="filters_id" class="control-label">{% trans %}Id{% endtrans %}:</label>
-                <div>
-                  <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
-                </div>
-              </div> #}
-              <div class="form-group">
-                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %}:</label>
-                <div>
-                  <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
-                </div>
-              </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
+                            {# <div class="form-group">
+                              <label for="filters_id" class="control-label">{% trans %}Id{% endtrans %}:</label>
+                              <div>
+                                <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
+                              </div>
+                            </div> #}
+                            <div class="form-group">
+                                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %}
+                                    :</label>
+                                <div>
+                                    <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
+                                </div>
+                            </div>
 
-              {# <div class="form-group">
-                <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
-                <div>
-                  <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
+                            {# <div class="form-group">
+                              <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
+                              <div>
+                                <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
+                              </div>
+                            </div> #}
+                            <div class="form-group">
+                                <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+                                <div class="row">
+                                    <div class="col-md-11 col-md-offset-1">
+                                        {% trans %}From{% endtrans %}
+                                        :&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
+                                                      name="criteria[date][from]" onChange="on_filter_series_list()" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                                        <br/>
+                                        {% trans %}To{% endtrans %}
+                                        :&nbsp;&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
+                                                            name="criteria[date][to]" id="filters_date_to" onChange="on_filter_series_list()" value="{{ criteria['date']['to']|default("") }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div> #}
-              <div class="form-group">
-                <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
-                <div class="row">
-                  <div class="col-md-11 col-md-offset-1">
-                    {% trans %}From{% endtrans %}:&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
-                                                             name="criteria[date][from]" onChange="on_filter_series_list()" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
-                    <br/>
-                      {% trans %}To{% endtrans %}:&nbsp;&nbsp;<input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD"
-                                                                   name="criteria[date][to]" id="filters_date_to" onChange="on_filter_series_list()" value="{{ criteria['date']['to']|default("") }}">
-                  </div>
-                </div>
-              </div>
+
+                {% if disable_pudenew != true %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOthers">
+                            <h2 class="panel-title">
+                                <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
+                                    <i class="mdi-navigation-menu pull-right show"></i> {% trans %}Others{% endtrans %}
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
+                            <div class="panel-body container-fluid">
+                                <div class="form-group">
+                                    <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %}
+                                        :</label>
+                                    <div>
+                                        <select class="form-control" name="criteria[announce]" id="filters_announce">
+                                            <option value="diff">{% trans %}Indifferent{% endtrans %}</option>
+                                            <option value="true" {% if criteria is not null and criteria['announce'] == "true" %}selected{% endif %}>{% trans %}Yes{% endtrans %}</option>
+                                            <option value="false" {% if criteria is not null and criteria['announce'] == "false" %}selected{% endif %}>{% trans %}No{% endtrans %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
-          </div>
-        </div>
+        </fieldset>
 
-        {% if disable_pudenew != true %}
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingOthers">
-            <h2 class="panel-title">
-              <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
-                <i class="mdi-navigation-menu pull-right show"></i> {% trans %}Others{% endtrans %}
-              </a>
-            </h2>
-          </div>
-          <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
-            <div class="panel-body container-fluid">
-              <div class="form-group">
-                <label for="filters_announce" class="control-label">{% trans %}Announced{% endtrans %}:</label>
-                <div>
-                  <select class="form-control" name="criteria[announce]" id="filters_announce"><option value="diff">{% trans %}Indifferent{% endtrans %}</option>
-                    <option value="true" {% if criteria is not null and criteria['announce'] == "true" %}selected{% endif %}>{% trans %}Yes{% endtrans %}</option>
-                    <option value="false" {% if criteria is not null and criteria['announce'] == "false" %}selected{% endif %}>{% trans %}No{% endtrans %}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="text-right">
+            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
-        {% endif %}
-      </div>
-    </fieldset>
-
-    <div class="text-right">
-      <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
-    </div>
-  </form>
+    </form>
 </div>
 
 <script type="text/javascript">
-  function resetSearchForm() {
-    $('filters_title').value = '';
-    $('filters_person').value = '';
-    $('filters_date_from').value = '';
-    $('filters_date_to').value = '';
-    $('filters_announce').value = 'diff';
-    $('filters_status').value = 'all';
-  }
+    function resetSearchForm() {
+        $('filters_title').value = '';
+        $('filters_person').value = '';
+        $('filters_date_from').value = '';
+        $('filters_date_to').value = '';
+        $('filters_announce').value = 'diff';
+        $('filters_status').value = 'all';
+    }
 
-  function on_filter_series_list(event) {
-      var from_date = $('#filters_date_from');
-      var to_date = $('#filters_date_to');
-      if (to_date.val() != "" && from_date.val() >= to_date.val()) {
-          to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
-      } else {
-          to_date[0].setCustomValidity("");
-      }
-      return false;
-  }
+    function on_filter_series_list(event) {
+        var from_date = $('#filters_date_from');
+        var to_date = $('#filters_date_to');
+        if (to_date.val() != "" && from_date.val() >= to_date.val()) {
+            to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
+        } else {
+            to_date[0].setCustomValidity("");
+        }
+        return false;
+    }
 </script>
 
 {# TODO FALTA VER OCULTOS Y ANUNCIADOS #}
