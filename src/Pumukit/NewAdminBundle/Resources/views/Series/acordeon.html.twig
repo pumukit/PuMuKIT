@@ -3,8 +3,9 @@
     <form id="filter_series" class="form">
         <fieldset>
             <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
+            <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
             <ul class="list-unstyled">
-                <li>
+                <li> -
                     <a href="{{ path('pumukitnewadmin_series_index', {'empty_series': true}) }}" title="{% trans %}Show empty series{% endtrans %}">{% trans %}Show empty series{% endtrans %}</a>
                 </li>
             </ul>
