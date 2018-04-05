@@ -84,7 +84,6 @@ class ChatController extends Controller
      */
     public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $messages = array();
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitLiveBundle:Message');
         $messages = $repo->findBy(

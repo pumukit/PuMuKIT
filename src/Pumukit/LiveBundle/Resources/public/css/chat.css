@@ -6,23 +6,17 @@
   color: #FF0000;
   text-decoration: underline;
 }
-.chatForm {
-  font-family: Arial, Helvetica;
-  font-size: 13px;
-}
 .chatText {
   font-family: Arial, Helvetica;
   font-size: 13px;
   color: #000000;
 }
 .chatTime {
-  font-family: Arial, Helvetica;
   font-size: 9px;
   color: #A0A0A0;
   text-align: right;
 }
 .chatError {
-  font-family: Arial, Helvetica;
   font-size: 11px;
   padding: 4px;
   text-align: center;
@@ -30,7 +24,11 @@
   background-color: #FFF0E0;
   border: 1px solid #C0B0A0;
 }
-
 .chatForm.chatInputMessage {
   overflow-y: auto;
+}
+.chat-list-error,
+.chat-name-error {
+    display: none;
+    color: red;
 }
