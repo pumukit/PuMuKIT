@@ -1,7 +1,6 @@
 {% set criteria = app.session.get('admin/playlist/criteria') %}
 <div class="well">
-    <form id="filter_playlist" class="form"
-          onsubmit="return filter_playlist(this);">
+    <form id="filter_playlist" class="form" onsubmit="return filter_playlist(this);">
         <fieldset>
             <legend hidden>{% trans %}Filter playlist{% endtrans %}</legend>
             <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
@@ -9,15 +8,17 @@
                     <div class="panel-heading" role="tab" id="headingSearch">
                         <h2 class="panel-title">
                             <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
-                                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
+                                <i class="mdi-navigation-menu pull-right"></i>
+                                {% trans %}Search{% endtrans %}
                             </a>
                         </h2>
                     </div>
                     <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %}
-                                    :</label>
+                                <label for="filters_search" class="control-label">
+                                    {% trans %}Search{% endtrans %}:
+                                </label>
                                 <div>
                                     <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
                                 </div>
