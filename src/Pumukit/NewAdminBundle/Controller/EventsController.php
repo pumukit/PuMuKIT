@@ -529,11 +529,25 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
-                if (isset($data['twitter_hashtag']) && $multimediaObject->getEmbeddedSocial()) {
-                    $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
+                if (isset($data['twitter_hashtag'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitterHashtag($data['twitter_hashtag']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
                 }
-                if (isset($data['twitter_widget_id']) && $multimediaObject->getEmbeddedSocial()) {
-                    $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
+                if (isset($data['twitter_widget_id'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitter($data['twitter_widget_id']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
                 }
 
                 $eventsService = $this->container->get('pumukitschema.eventsession');

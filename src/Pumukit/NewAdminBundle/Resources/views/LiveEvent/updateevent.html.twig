@@ -168,12 +168,14 @@
               </a>
             </div>
             <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_hashtag">
-                <label for="twitter_hashtag">{% trans %}Twitter hashtag{% endtrans %}</label>
-                <input id="twitter_hashtag" type="text" name="pumukitnewadmin_live_event[twitter_hashtag]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitterHashtag() : '' }}" />
+              <label for="twitter_hashtag">{% trans %}Twitter hashtag{% endtrans %}</label>
+              <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Twitter hashtag without #{% endtrans %}"></i>
+              <input id="twitter_hashtag" type="text" name="pumukitnewadmin_live_event[twitter_hashtag]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitterHashtag() : '' }}" />
             </div>
             <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_widget_id">
-                <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
-                <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
+              <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
+              <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code{% endtrans %}"></i>
+              <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
             </div>
         </fieldset>
     </div>
