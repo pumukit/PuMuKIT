@@ -109,6 +109,12 @@ class EmbeddedEvent
     private $notYetHeldMessage = array('en' => '');
 
     /**
+     * @var bool
+     * @MongoDB\Boolean
+     */
+    private $enableChat = false;
+
+    /**
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
@@ -527,6 +533,36 @@ class EmbeddedEvent
     public function getI18nNotYetHeldMessage()
     {
         return $this->notYetHeldMessage;
+    }
+
+    /**
+     * Set enableChat.
+     *
+     * @param bool $enableChat
+     */
+    public function setEnableChat($enableChat)
+    {
+        $this->enableChat = $enableChat;
+    }
+
+    /**
+     * Get enableChat.
+     *
+     * @return bool
+     */
+    public function getEnableChat()
+    {
+        return $this->enableChat;
+    }
+
+    /**
+     * Is chat enabled.
+     *
+     * @return bool
+     */
+    public function isChatEnabled()
+    {
+        return $this->enableChat;
     }
 
     /**
