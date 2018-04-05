@@ -24,11 +24,11 @@ class PumukitLiveExtension extends Extension
             'handlers' => array(
                 'privatelive' => array(
                     'type' => 'stream',
-                    'path' => "%kernel.logs_dir%/live_%kernel.environment%.log",
+                    'path' => '%kernel.logs_dir%/live_%kernel.environment%.log',
                     'level' => 'info',
-                    'channels' => array('live')
-                )
-            )
+                    'channels' => array('live'),
+                ),
+            ),
         ));
     }
 

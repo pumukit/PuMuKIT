@@ -4,7 +4,6 @@ namespace Pumukit\LiveBundle\Controller;
 
 use Pumukit\LiveBundle\Document\Message;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,7 +26,7 @@ class ChatController extends Controller
      * @Template
      *
      * @param MultimediaObject $multimediaObject
-     * @param Request $request
+     * @param Request          $request
      *
      * @return Response
      */
@@ -47,7 +46,7 @@ class ChatController extends Controller
      * @Route("/post/{id}", name="pumukit_live_chat_post")
      *
      * @param MultimediaObject $multimediaObject
-     * @param Request $request
+     * @param Request          $request
      *
      * @return RedirectResponse
      */
@@ -78,7 +77,7 @@ class ChatController extends Controller
      * @Template
      *
      * @param MultimediaObject $multimediaObject
-     * @param Request $request
+     * @param Request          $request
      *
      * @return Response
      */
