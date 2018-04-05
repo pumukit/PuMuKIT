@@ -33,8 +33,26 @@ class SeriesController extends AdminController implements NewAdminController
      */
     public function indexAction(Request $request)
     {
+        $session = $this->get('session');
+        if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
+            $session->set('admin/series/empty_series', true);
+            $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+            $pipeline = array(
+                array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
+            );
+            $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
+            $emptySeries = array();
+            foreach ($allSeries as $series) {
+                if (1 == $series['count']) {
+                    $emptySeries[] = $series['_id'];
+                }
+            }
+        }
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
+        if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
+            $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
+        }
         $resources = $this->getResources($request, $config, $criteria);
 
         $update_session = true;
@@ -417,6 +435,7 @@ class SeriesController extends AdminController implements NewAdminController
 
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/series/criteria');
+            $this->get('session')->remove('admin/series/empty_series');
         } elseif ($criteria) {
             $this->get('session')->set('admin/series/criteria', $criteria);
         }
