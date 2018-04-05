@@ -1,34 +1,36 @@
 {% set criteria = app.session.get('admin/playlist/criteria') %}
 <div class="well">
-  <form id="filter_playlist" class="form"
-        onsubmit="return filter_playlist(this);">
-    <fieldset>
-      <legend hidden>{% trans %}Filter playlist{% endtrans %}</legend>
-      <div id="accordion" class="panel-group" role="tablist" arirole="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingSearch">
-            <h2 class="panel-title">
-              <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
-                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
-              </a>
-            </h2>
-          </div>
-          <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
-            <div class="panel-body">
-              <div class="form-group">
-                <label for="filters_search" class="control-label">{% trans %}Search{% endtrans %}:</label>
-                <div>
-                  <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
+    <form id="filter_playlist" class="form" onsubmit="return filter_playlist(this);">
+        <fieldset>
+            <legend hidden>{% trans %}Filter playlist{% endtrans %}</legend>
+            <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i>
+                                {% trans %}Search{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="filters_search" class="control-label">
+                                    {% trans %}Search{% endtrans %}:
+                                </label>
+                                <div>
+                                    <input type="text" class="form-control" name="criteria[search]" id="filters_search" value="{{ criteria['search']|default("") }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </fieldset>
+        <div class="text-right">
+            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
-      </div>
-    </fieldset>
-    <div class="text-right">
-      <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-      <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
-    </div>
-  </form>
+    </form>
 </div>
