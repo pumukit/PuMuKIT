@@ -30,7 +30,7 @@
 </div>
 
 <br/>
-{% include 'PumukitWebTVBundle:Event:chat.html.twig' %}
+{{ render(controller('PumukitLiveBundle:Chat:show', {'id': multimediaObject.getId() })) }}
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-default">
