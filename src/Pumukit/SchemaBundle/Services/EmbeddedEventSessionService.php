@@ -870,6 +870,6 @@ class EmbeddedEventSessionService
     {
         $events = $this->repo->findNowEventSessions();
 
-        return (count($events) > 0);
+        return count($events) > 0;
     }
 }
