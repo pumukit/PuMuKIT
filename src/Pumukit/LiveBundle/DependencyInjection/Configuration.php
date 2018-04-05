@@ -20,9 +20,20 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_live');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+          ->children()
+            ->integerNode('chat_update_interval')
+              ->defaultValue(5000)
+              ->min(5000)
+              ->info('The interval in milliseconds to update chat')
+            ->end()
+            ->integerNode('log_update_interval')
+              ->defaultValue(300000)
+              ->min(300000)
+              ->info('The interval in milliseconds to update log file')
+            ->end()
+          ->end()
+          ;
 
         return $treeBuilder;
     }
