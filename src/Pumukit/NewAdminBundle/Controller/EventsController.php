@@ -529,9 +529,33 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
+                if (isset($data['twitter_hashtag'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitterHashtag($data['twitter_hashtag']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
+                }
+                if (isset($data['twitter_widget_id'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitter($data['twitter_widget_id']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
+                }
+
+                $eventsService = $this->container->get('pumukitschema.eventsession');
+                $color = $eventsService->validateHtmlColor($data['poster_text_color']);
+                $multimediaObject->setProperty('postertextcolor', $color);
+
                 $dm->flush();
             } catch (\Exception $e) {
-                throw $e;
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 

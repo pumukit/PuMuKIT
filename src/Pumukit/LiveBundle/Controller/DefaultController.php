@@ -216,7 +216,7 @@ class DefaultController extends Controller
         return $this->iframeAction($live, $request, false);
     }
 
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+    protected function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);

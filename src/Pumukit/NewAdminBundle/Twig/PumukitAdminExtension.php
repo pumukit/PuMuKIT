@@ -12,6 +12,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -24,11 +25,12 @@ class PumukitAdminExtension extends \Twig_Extension
     private $countMmobjsWithTag;
     private $mmobjService;
     private $specialTranslationService;
+    private $eventService;
 
     /**
      * Constructor.
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
@@ -37,6 +39,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $this->router = $router;
         $this->mmobjService = $mmobjService;
         $this->specialTranslationService = $specialTranslationService;
+        $this->eventService = $eventService;
     }
 
     /**
@@ -88,6 +91,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFunction('is_naked', array($this, 'isNaked'), array('needs_environment' => true)),
             new \Twig_SimpleFunction('trans_i18n_broadcast', array($this, 'getI18nEmbeddedBroadcast')),
             new \Twig_SimpleFunction('date_from_mongo_id', array($this, 'getDateFromMongoId')),
+            new \Twig_SimpleFunction('default_poster', array($this, 'getDefaultPoster')),
         );
     }
 
@@ -696,5 +700,15 @@ class PumukitAdminExtension extends \Twig_Extension
                 return false;
             }
         }
+    }
+
+    /**
+     * Get Default Poster.
+     *
+     * @returns string
+     */
+    public function getDefaultPoster()
+    {
+        return $this->eventService->getDefaultPoster();
     }
 }

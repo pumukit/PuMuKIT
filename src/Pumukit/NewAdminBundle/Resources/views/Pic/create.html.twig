@@ -1,3 +1,4 @@
+{% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title" id="myModalLabel">{% trans %}add new thumbnail{% endtrans %}</h4>
@@ -8,14 +9,17 @@
   <div id="tv_admin_container_url">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     <form onsubmit="$.ajax({
-                            url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}',
+                            url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'is_event_poster': event_poster}) }}',
                             type: 'POST',
                             data: $(this).serialize(),
                             success: function(response){
                                                         var resource_name = '{{ resource_name }}';
+                                                        var event_poster = {{ event_poster }};
                                                         if ('event' == resource_name) {
                                                           $('#list_events').html(response);
                                                           $('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': resource.id})|raw }}');
+                                                        } else if (event_poster) {
+                                                          $('#pic_events_{{ resource.id }}').html(response);
                                                         } else {
                                                           $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
                                                         }
@@ -23,7 +27,7 @@
                                                         }
                           });
                     return false;"
-          action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id}) }}" method="post">
+          action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'is_event_poster': event_poster}) }}" method="post">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
@@ -46,7 +50,7 @@
   <div style="clear:both"></div>
 
   <div id="tv_admin_container_file">
-    <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id}) }}">
+    <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'is_event_poster': event_poster}) }}">
       <input type="hidden" name="type" id="type" value="url">
       <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
       <fieldset>
@@ -74,7 +78,7 @@
   {% if resource_name != 'event' %}
   <div id="pics_to_add_list">
     {% set picstoaddlistaction = "PumukitNewAdminBundle:"~(resource_name == 'mms' ? 'MultimediaObject':(resource_name|capitalize))~"Pic:picstoaddlist" %}
-    {{ render(controller(picstoaddlistaction, {'id': resource.id, 'page':1})) }}
+    {{ render(controller(picstoaddlistaction, {'id': resource.id, 'page':1, 'is_event_poster': event_poster})) }}
   </div>
   {% endif %}
   {% endif %}

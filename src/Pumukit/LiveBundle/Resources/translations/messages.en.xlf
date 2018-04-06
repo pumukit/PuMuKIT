@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="eu" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -136,6 +136,26 @@
       <trans-unit id="d0568844fd2f11e78be50ed5f89f718b" resname="please verify form data">
         <source>please verify form data</source>
         <target>please verify form data</target>
+      </trans-unit>
+      <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
+        <source>Event chat</source>
+        <target>Event chat</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target>Name cannot be empty</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+        <source>Message</source>
+        <target>Message</target>
+      </trans-unit>
+      <trans-unit id="9b6449cd47c236450bbc9ccf0a358a56" resname="Sorry but there was an error">
+        <source>Sorry but there was an error</source>
+        <target>Sorry but there was an error</target>
       </trans-unit>
     </body>
   </file>

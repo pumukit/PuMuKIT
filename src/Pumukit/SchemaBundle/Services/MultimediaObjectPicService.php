@@ -58,10 +58,13 @@ class MultimediaObjectPicService
     /**
      * Set a pic from an url into the multimediaObject.
      */
-    public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true)
+    public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true, $isEventPoster = false)
     {
         $pic = new Pic();
         $pic->setUrl($picUrl);
+        if ($isEventPoster) {
+            $pic = $this->updatePosterTag($multimediaObject, $pic);
+        }
 
         $multimediaObject->addPic($pic);
         $this->dm->persist($multimediaObject);
@@ -77,7 +80,7 @@ class MultimediaObjectPicService
     /**
      * Set a pic from an url into the multimediaObject.
      */
-    public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile)
+    public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile, $isEventPoster = false)
     {
         if (UPLOAD_ERR_OK != $picFile->getError()) {
             throw new \Exception($picFile->getErrorMessage());
@@ -92,6 +95,10 @@ class MultimediaObjectPicService
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path));
         $pic->setPath($path);
+
+        if ($isEventPoster) {
+            $pic = $this->updatePosterTag($multimediaObject, $pic);
+        }
 
         $multimediaObject->addPic($pic);
         $this->dm->persist($multimediaObject);
@@ -178,5 +185,15 @@ class MultimediaObjectPicService
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    private function updatePosterTag(MultimediaObject $multimediaObject, Pic $pic)
+    {
+        foreach ($multimediaObject->getPicsWithTag('poster') as $posterPic) {
+            $multimediaObject->removePic($posterPic);
+        }
+        $pic->addTag('poster');
+
+        return $pic;
     }
 }

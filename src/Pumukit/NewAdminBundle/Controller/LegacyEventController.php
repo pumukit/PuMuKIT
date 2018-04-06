@@ -144,6 +144,51 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     }
 
     /**
+     * Update Action
+     * Overwrite to return list and not index
+     * and show toast message.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function updateAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $resource = $this->findOr404($request);
+        $form = $this->getForm($resource);
+
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            try {
+                $dm->persist($resource);
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
+            }
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($resource, 204));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render('PumukitNewAdminBundle:LegacyEvent:update.html.twig',
+                             array(
+                                   $resourceName => $resource,
+                                   'form' => $form->createView(),
+                                   ));
+    }
+
+    /**
      * Get calendar.
      */
     private function getCalendar($config, $request)

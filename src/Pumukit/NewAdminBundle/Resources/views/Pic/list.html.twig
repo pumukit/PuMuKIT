@@ -1,6 +1,7 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <div>
-  {% for index,pic in resource.getPics() %}
+  {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
+  {% for index,pic in resource.getPics() if (event_poster and pic.containsTag('poster') or (not event_poster and not pic.containsTag('poster'))) %}
   <div style="float: left; padding : 10px; ">
     <div style="padding: 10px; float:left; text-align : center">
       <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">
@@ -8,18 +9,38 @@
       </div></div></div></div>
     </div>
     <div style="text-align : center">
-      {% if (0 != index) %}
+      {% if (0 != index) and not event_poster %}
       <a href="#" onclick="window.up_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move up thumbnail{% endtrans %}">&#8592;</a>
       {% endif %}
+      {% if event_poster %}
+      <a href="#" onclick="window.delete_eventspic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Delete thumbnail{% endtrans %}">
+        <i class="mdi-content-clear"></i>
+      </a>
+      {% else %}
       <a href="#" onclick="window.delete_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Delete thumbnail{% endtrans %}">
         <i class="mdi-content-clear"></i>
       </a>
-      {% if ((resource.getPics()|length - 1) != index) %}
+      {% endif %}
+      {% if ((resource.getPics()|length - 1) != index) and not event_poster %}
       <a href="#" onclick="window.down_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move down thumbnail{% endtrans %}">&#8594;</a>
       {% endif %}
     </div>
   </div>
   {% endfor %}
+  {% if event_poster and not resource.getPicWithTag('poster') %}
+  <div style="float: left; padding : 10px; ">
+    <div style="padding: 10px; float:left; text-align : center">
+      <div class="wrap0"><div class="wrap1"><div class="wrap2"><div class="wrap3">
+              <img class="image-responsive pic-{{ resource.id }} admin-pic-{{ resource.id }} pic-0 first"  src="{{ default_poster() }}"  style="max-width:146px;height:82px" border="1" alt="{% trans %}Default live screen image{% endtrans %}">
+      </div></div></div></div>
+    </div>
+    <div style="text-align : center">
+      <a href="#" onclick="return false;" title="{% trans %}Default live screen image{% endtrans %}">
+        {% trans %}Default live screen image{% endtrans %}
+      </a>
+    </div>
+  </div>
+  {% endif %}
   {# TODO image with glyphicon #}
   <img id="pic_mms_{{ resource.id }}_load" src="{{ asset('/bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" alt="{% trans %}loading{% endtrans %}" style="position: relative; top: 50px; float:left; display: none"/>
 </div>
@@ -34,8 +55,10 @@
   <div style="text-align : center">
     {% if resource_name == 'mms' and resource.getDisplayTrack() and not resource.getDisplayTrack().isOnlyAudio() %}
       <a href="{{ path('pumukitnewadmin_mmspic_generate', {'id': resource.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}Generate thumbnail{% endtrans %}...</a>
+    {% elseif event_poster %}
+      <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'is_event_poster': event_poster}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New poster{% endtrans %}...</a>
     {% else %}
-      <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New thumbnail{% endtrans %}...</a>
+      <a href="{{ path('pumukitnewadmin_'~resource_name~'pic_create', {'id': resource.id, 'is_event_poster': event_poster}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New thumbnail{% endtrans %}...</a>
     {% endif %}
   </div>
 </div>

@@ -1,4 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+  {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
   <fieldset>
     <legend hidden>{% trans %}Use Thumbnail{% endtrans %}</legend>
     <div class="form-group">
@@ -13,7 +14,7 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-                    <a href="#" data-dismiss="modal" onclick="$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
+                    <a href="#" data-dismiss="modal" onclick="$('#pic_{{ event_poster ? 'events' : resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url, 'is_event_poster': event_poster}) }}', function(){success('{% trans %}New Thumbnail added.{% endtrans %}');}); return false;">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                     </a>
                   </div>
@@ -32,7 +33,7 @@
         <ul class="pagination pagination-sm">
           {% if (1 < page) %}
             <li class="prev">
-              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1)}) }}'); return false;">&laquo;</a>
+              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1), 'is_event_poster': event_poster}) }}'); return false;">&laquo;</a>
             </li>
           {% else %}
             <li class="prev disabled">
@@ -49,13 +50,13 @@
               </li>
             {% else %}
               <li>
-                <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i}) }}'); return false;">{{ i }}</a>
+                <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i, 'is_event_poster': event_poster}) }}'); return false;">{{ i }}</a>
               </li>
             {% endif %}
           {% endfor %}
           {% if (total > page) %}
             <li class="next">
-              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1)}) }}'); return false;">&raquo;</a>
+              <a href="#" onclick="window.change_pics_page('{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1), 'is_event_poster': event_poster}) }}'); return false;">&raquo;</a>
             </li>
           {% else %}
             <li class="next disabled">

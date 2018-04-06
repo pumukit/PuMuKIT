@@ -388,6 +388,15 @@ window.delete_mmspic = function(id, resourceId) {
     }
 }
 
+window.delete_eventspic = function(id, resourceId) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this event poster?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___', 'is_event_poster': true})|raw }}';
+        var div_id = '#pic_events___resourceId__';
+        div_id = div_id.replace('__resourceId__', resourceId);
+        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Event poster removed.{% endtrans %}');});
+    }
+}
+
 window.up_mmspic = function(id, resourceId) {
     var url = '{{ path('pumukitnewadmin_mmspic_up', {'id': '___id___'})|raw }}';
     var div_id = '#pic_mms___resourceId__';
