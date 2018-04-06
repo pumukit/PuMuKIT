@@ -6,6 +6,8 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
@@ -23,6 +25,19 @@ class TrackFileController extends Controller
 
         if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
+        }
+
+        // Master without url
+        if (!$track->getUrl()) {
+            if ($request->query->getBoolean('forcedl')) {
+                $response = new BinaryFileResponse($track->getPath());
+                $response->trustXSendfileTypeHeader();
+                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
+
+                return $response;
+            } else {
+                throw $this->createNotFoundException("Not mmobj found with the track id: $id");
+            }
         }
 
         if ($secret = $this->container->getParameter('pumukitplayer.secure_secret')) {
