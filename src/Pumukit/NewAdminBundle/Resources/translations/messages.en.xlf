@@ -291,12 +291,8 @@
             </trans-unit>
             <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94"
                         resname="External defined users and groups can not be edited here, contact your directory service administrator.">
-                <source>External defined users and groups can not be edited here, contact your directory service
-                    administrator.
-                </source>
-                <target>External defined users and groups can not be edited here, contact your directory service
-                    administrator.
-                </target>
+                <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
+                <target>External defined users and groups can not be edited here, contact your directory service administrator.</target>
             </trans-unit>
             <trans-unit id="e8bbbedf873013a5db75bb45b25b30d8" resname="Video Template of Series">
                 <source>Video Template of Series</source>
@@ -340,10 +336,8 @@
             </trans-unit>
             <trans-unit id="d1c4c128e19012693c2dbc1b62b812e1"
                         resname="External defined groups can not be edited here, contact your directory service administrator.">
-                <source>External defined groups can not be edited here, contact your directory service administrator.
-                </source>
-                <target>External defined groups can not be edited here, contact your directory service administrator.
-                </target>
+                <source>External defined groups can not be edited here, contact your directory service administrator.</source>
+                <target>External defined groups can not be edited here, contact your directory service administrator.</target>
             </trans-unit>
             <trans-unit id="ded7ed1b967339b875bd23238807d82c" resname="Delete Group or Group relations">
                 <source>Delete Group or Group relations</source>
@@ -379,11 +373,8 @@
             </trans-unit>
             <trans-unit id="affa928796995b6d2f52cedcfe3538cb"
                         resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.">
-                <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter
-                    in your config file.
-                </source>
-                <target>
-                    <![CDATA[To use the inbox mode define the inbox path as <code>pumukit2.inbox</code> parameter in your config file.]]></target>
+                <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</source>
+                <target><![CDATA[To use the inbox mode define the inbox path as <code>pumukit2.inbox</code> parameter in your config file.]]></target>
             </trans-unit>
             <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
                 <source>not exists</source>
@@ -690,10 +681,8 @@
             </trans-unit>
             <trans-unit id="5c990ac3eb2b70ab75ad57e69a6b632b"
                         resname="Warning: This link will give a 404 error until this multimedia object is correctly published.">
-                <source>Warning: This link will give a 404 error until this multimedia object is correctly published.
-                </source>
-                <target>Warning: This link will give a 404 error until this multimedia object is correctly published.
-                </target>
+                <source>Warning: This link will give a 404 error until this multimedia object is correctly published.</source>
+                <target>Warning: This link will give a 404 error until this multimedia object is correctly published.</target>
             </trans-unit>
             <trans-unit id="feec6ee6a4a144e5e182a90c7690ab82"
                         resname="This URL will give you access to the series without login.">
@@ -707,12 +696,8 @@
             </trans-unit>
             <trans-unit id="4df01400d5b64853ff3b37f4f0f44a1a"
                         resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
-                <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable
-                    resource.
-                </source>
-                <target>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable
-                    resource.
-                </target>
+                <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
+                <target>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</target>
             </trans-unit>
             <trans-unit id="e0c2297cd0586edafa230edc0585c1af" resname="Audio/Video">
                 <source>Audio/Video</source>
@@ -1038,12 +1023,8 @@
             </trans-unit>
             <trans-unit id="f4d46eec2d41c4ab86e8a4a2a3ccb987"
                         resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and">
-                <source>Add the name of the person you want to add. In case this person already exists in the database,
-                    a pull-down list will be shown, where you can select him/her and
-                </source>
-                <target>Add the name of the person you want to add. In case this person already exists in the database,
-                    a pull-down list will be shown, where you can select him/her and
-                </target>
+                <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</source>
+                <target>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</target>
             </trans-unit>
             <trans-unit id="98d6ceb3a5d782932eae0aa8bad56de5" resname="use him/her">
                 <source>use him/her</source>
@@ -1499,10 +1480,8 @@
             </trans-unit>
             <trans-unit id="99454057ff61f40ed0b061d607bc7476"
                         resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
-                <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.
-                </source>
-                <target>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.
-                </target>
+                <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
+                <target>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</target>
             </trans-unit>
             <trans-unit id="f0a27743b1b9a570d8e8d76c9e5bf5ab"
                         resname="Any Internet user can play this multimedia object in the video portal">
@@ -1511,10 +1490,8 @@
             </trans-unit>
             <trans-unit id="9483b18e753a9653f53760bb887a9b99"
                         resname="Only users with the defined password can play this multimedia object in the video portal">
-                <source>Only users with the defined password can play this multimedia object in the video portal
-                </source>
-                <target>Only users with the defined password can play this multimedia object in the video portal
-                </target>
+                <source>Only users with the defined password can play this multimedia object in the video portal</source>
+                <target>Only users with the defined password can play this multimedia object in the video portal</target>
             </trans-unit>
             <trans-unit id="1d8a8e416151ea937a88421fd75deddd"
                         resname="Only logged in users in the system can play this multimedia object in the video portal">
@@ -1689,11 +1666,8 @@
             </trans-unit>
             <trans-unit id="992432c48d89f6369b4290bb9f7381d7"
                         resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
-                <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia
-                    object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;
-                </source>
-                <target>
-                    <![CDATA[<span class="alert alert-dismissable alert-warning"><i>Warning: This multimedia object is not correctly published on WebTV</i></span>]]></target>
+                <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
+                <target><![CDATA[<span class="alert alert-dismissable alert-warning"><i>Warning: This multimedia object is not correctly published on WebTV</i></span>]]></target>
             </trans-unit>
             <trans-unit id="0923805acd5ce3e792e3b633596178e9" resname="Embedded Iframe">
                 <source>Embedded Iframe</source>
@@ -1821,12 +1795,8 @@
             </trans-unit>
             <trans-unit id="b9ea06dd3a644effbbbc995238bfa38b"
                         resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
-                <source>External defined user. User Groups cannot be edited. Contact your directory service
-                    administrator to change membership.
-                </source>
-                <target>External defined user. User Groups cannot be edited. Contact your directory service
-                    administrator to change membership.
-                </target>
+                <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
+                <target>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</target>
             </trans-unit>
             <trans-unit id="40c6907f3e993a48f7eb56b81b5c2b02" resname="create new user">
                 <source>create new user</source>
@@ -1878,17 +1848,13 @@
             </trans-unit>
             <trans-unit id="95112c45826edfd595dae2617befa51b"
                         resname="External defined users can not be edited here, contact your directory service administrator.">
-                <source>External defined users can not be edited here, contact your directory service administrator.
-                </source>
-                <target>External defined users can not be edited here, contact your directory service administrator.
-                </target>
+                <source>External defined users can not be edited here, contact your directory service administrator.</source>
+                <target>External defined users can not be edited here, contact your directory service administrator.</target>
             </trans-unit>
             <trans-unit id="4abc357019e1f3bdbd2f10555c7a0f87"
                         resname="External defined users can not be deleted here, contact your directory service administrator.">
-                <source>External defined users can not be deleted here, contact your directory service administrator.
-                </source>
-                <target>External defined users can not be deleted here, contact your directory service administrator.
-                </target>
+                <source>External defined users can not be deleted here, contact your directory service administrator.</source>
+                <target>External defined users can not be deleted here, contact your directory service administrator.</target>
             </trans-unit>
             <trans-unit id="fb51b403bdd54cec0f0fe19b9ab4c5fc" resname="User Groups">
                 <source>User Groups</source>
@@ -1979,12 +1945,8 @@
             </trans-unit>
             <trans-unit id="76999272eb740b7956a06487d1ee26f0"
                         resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
-                <source>Are you sure you want to sync this tags? The tags in other objects from this series will be
-                    lost.
-                </source>
-                <target>Are you sure you want to sync this tags? The tags in other objects from this series will be
-                    lost.
-                </target>
+                <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
+                <target>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</target>
             </trans-unit>
             <trans-unit id="470608c99219ae88ec43c2b74d929fd8"
                         resname="Are you sure you want to delete this multimedia object?">
@@ -2203,10 +2165,8 @@
             </trans-unit>
             <trans-unit id="dc22dbfd44366a6bfe6556dd6a767dcb"
                         resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
-                <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?
-                </source>
-                <target>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?
-                </target>
+                <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
+                <target>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</target>
             </trans-unit>
             <trans-unit id="9b438c64b513e51ba0d094e2b1b82bb6"
                         resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
@@ -2297,10 +2257,8 @@
             </trans-unit>
             <trans-unit id="59c2d94d5c2d43c387e4021074e079ac"
                         resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
-                <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?
-                </source>
-                <target>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?
-                </target>
+                <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
+                <target>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</target>
             </trans-unit>
             <trans-unit id="6d407c8ae795ae481d0bd26d9fc63b92"
                         resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
@@ -2449,13 +2407,8 @@
             </trans-unit>
             <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a"
                         resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
-                <source>Add the name of the person you want to add. In case this person already exists in the database,
-                    a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;.
-                    If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the
-                    written name
-                </source>
-                <target>
-                    <![CDATA[Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and <strong>use him/her</strong>. If he/she doesn't exist in the database, <strong>create</strong> a new entrance with the written name]]></target>
+                <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+                <target><![CDATA[Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and <strong>use him/her</strong>. If he/she doesn't exist in the database, <strong>create</strong> a new entrance with the written name]]></target>
             </trans-unit>
             <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
                 <source>My Playlists</source>
@@ -2701,30 +2654,18 @@
             </trans-unit>
             <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe"
                         resname="Only users with the defined password can play the new multimedia objects created from this video template">
-                <source>Only users with the defined password can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target>Only users with the defined password can play the new multimedia objects created from this video
-                    template
-                </target>
+                <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
+                <target>Only users with the defined password can play the new multimedia objects created from this video template</target>
             </trans-unit>
             <trans-unit id="46860ca8477cd97a78801725a8fbf69c"
                         resname="Only logged in users in the system can play the new multimedia objects created from this video template">
-                <source>Only logged in users in the system can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target>Only logged in users in the system can play the new multimedia objects created from this video
-                    template
-                </target>
+                <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
+                <target>Only logged in users in the system can play the new multimedia objects created from this video template</target>
             </trans-unit>
             <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6"
                         resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
-                <source>Only users in the selected Groups can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target>Only users in the selected Groups can play the new multimedia objects created from this video
-                    template
-                </target>
+                <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
+                <target>Only users in the selected Groups can play the new multimedia objects created from this video template</target>
             </trans-unit>
             <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
                 <source>Upload new videos</source>
@@ -2943,13 +2884,9 @@
                 <target>Event successfully updated.</target>
             </trans-unit>
             <trans-unit id="360c27f740233cbea8da5fda1b050aaf"
-                        resname="Select an&#10;                                action...">
-                <source>Select an
-                    action...
-                </source>
-                <target>Select an
-                    action...
-                </target>
+                        resname="Select an&#10; action...">
+                <source>Select an action...</source>
+                <target>Select an action...</target>
             </trans-unit>
             <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
                 <source>Create new series of live events</source>
@@ -3026,16 +2963,8 @@
             </trans-unit>
             <trans-unit id="f0192d5298c63afd585b2f29d1170f77"
                         resname="Add the name of the series you want to use.&#10;                            In case this series already exists in the database, a pull-down list will be shown,&#10;                            where you can select it and use it. If it doesn't exist in the database,&#10;                            create a new entrance with the written name.">
-                <source>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </source>
-                <target>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </target>
+                <source>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</source>
+                <target>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</target>
             </trans-unit>
             <trans-unit id="cf26c0d5b71f36207ad9b694d77ab7c5" resname="Video URL">
                 <source>Video URL</source>
@@ -3169,9 +3098,7 @@
             </trans-unit>
             <trans-unit id="408c624b14b33497a9595c77338e22d9"
                         resname="Publishing&#10;                        Decisions">
-                <source>Publishing
-                    Decisions
-                </source>
+                <source>Publishing Decisions</source>
                 <target>Publishing Decisions</target>
             </trans-unit>
             <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
@@ -3408,30 +3335,18 @@
             </trans-unit>
             <trans-unit id="a33e4cfc99ad017b0c06278054108189"
                         resname="Modify broadcast profile of videos&#10;            template">
-                <source>Modify broadcast profile of videos
-                    template
-                </source>
-                <target>Modify broadcast profile of videos
-                    template
-                </target>
+                <source>Modify broadcast profile of videos template</source>
+                <target>Modify broadcast profile of videos template</target>
             </trans-unit>
             <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717"
                         resname="Modify broadcast profile of live&#10;                event">
-                <source>Modify broadcast profile of live
-                    event
-                </source>
-                <target>Modify broadcast profile of live
-                    event
-                </target>
+                <source>Modify broadcast profile of live event</source>
+                <target>Modify broadcast profile of live event</target>
             </trans-unit>
             <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031"
                         resname="Modify broadcast profile of multimedia&#10;                object">
-                <source>Modify broadcast profile of multimedia
-                    object
-                </source>
-                <target>Modify broadcast profile of multimedia
-                    object
-                </target>
+                <source>Modify broadcast profile of multimedia object</source>
+                <target>Modify broadcast profile of multimedia object</target>
             </trans-unit>
             <trans-unit id="f4295a80d088167a35cd118ceb2d311e"
                         resname="Delete error. Live channel channel is associated to live event.">
@@ -3468,16 +3383,8 @@
             </trans-unit>
             <trans-unit id="d378c2c63c90e4a8f19c034551167d10"
                         resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
-                <source>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </source>
-                <target>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </target>
+                <source>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</source>
+                <target>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</target>
             </trans-unit>
             <trans-unit id="e7439b5ca1f88bed2622be1ba9e317d5" resname="Create date">
                 <source>Create date</source>
