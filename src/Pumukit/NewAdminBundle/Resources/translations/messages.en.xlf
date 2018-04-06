@@ -3514,6 +3514,10 @@
         <source>Publish to LMS</source>
         <target>Publish to LMS</target>
       </trans-unit>
+      <trans-unit id="1chat" resname="Enable Chat">
+        <source>Enable Chat</source>
+        <target>Enable Chat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
