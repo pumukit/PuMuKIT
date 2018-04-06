@@ -29,9 +29,7 @@
             <trans-unit id="1e90923b480ee935dee9edc36669318b"
                         resname="You don't have enough permissions to access this content.">
                 <source>You don't have enough permissions to access this content.</source>
-                <target xml:lang="es-ES" state="translated">No tiene permisos suficientes para acceder a este
-                    contenido.
-                </target>
+                <target xml:lang="es-ES" state="translated">No tiene permisos suficientes para acceder a este contenido.</target>
             </trans-unit>
             <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
                 <source>Search</source>
@@ -107,9 +105,7 @@
             </trans-unit>
             <trans-unit id="ed3ad9a67a38f55342b301a058878f48" resname="{0} broadcasts|{1} broadcast|]1,Inf] broadcasts">
                 <source>{0} broadcasts|{1} broadcast|]1,Inf] broadcasts</source>
-                <target xml:lang="es-ES" state="translated">{0} perfiles de difusión|{1} perfil de difusión|]1,Inf]
-                    perfiles de difusión
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} perfiles de difusión|{1} perfil de difusión|]1,Inf] perfiles de difusión</target>
             </trans-unit>
             <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
                 <source>Cancel current search</source>
@@ -125,8 +121,7 @@
             </trans-unit>
             <trans-unit id="bd06a46fabd1233bcf85ea3940fb3386" resname="There was an error in updating the Broadcast.">
                 <source>There was an error in updating the Broadcast.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error actualizando el perfil de difusión.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error actualizando el perfil de difusión.</target>
             </trans-unit>
             <trans-unit id="e8569cbaa4a6baf00bffe76953f192c9" resname="Broadcast successfully updated.">
                 <source>Broadcast successfully updated.</source>
@@ -139,16 +134,12 @@
             <trans-unit id="d63a360b4f267dea1f99e94122b29c11"
                         resname="This page uses Javascript to show you a Timeline.">
                 <source>This page uses Javascript to show you a Timeline.</source>
-                <target xml:lang="es-ES" state="translated">Esta página emplea Javascript para mostrar su línea
-                    temporal.
-                </target>
+                <target xml:lang="es-ES" state="translated">Esta página emplea Javascript para mostrar su línea temporal.</target>
             </trans-unit>
             <trans-unit id="c5a0f2d6c4f156aeff88cfb6c7a161c8"
                         resname="Please enable Javascript in your browser to see the full page.">
                 <source>Please enable Javascript in your browser to see the full page.</source>
-                <target xml:lang="es-ES" state="translated">Por favor, habilite Javascript en su navegador para ver la
-                    página completa.
-                </target>
+                <target xml:lang="es-ES" state="translated">Por favor, habilite Javascript en su navegador para ver la página completa.</target>
             </trans-unit>
             <trans-unit id="2d439011ecebc222e1feb2e3e005c0ac" resname="Thank you.">
                 <source>Thank you.</source>
@@ -185,9 +176,7 @@
             <trans-unit id="4ffedae7e1c0e453877d5eb7e9344c96"
                         resname="{0} live events|{1} live event|]1,Inf] live events">
                 <source>{0} live events|{1} live event|]1,Inf] live events</source>
-                <target xml:lang="es-ES" state="translated">{0} eventos en vivo|{1} evento en vivo|]1,Inf] eventos en
-                    vivo
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} eventos en vivo|{1} evento en vivo|]1,Inf] eventos en vivo</target>
             </trans-unit>
             <trans-unit id="98617021b249af0ace0f84ee92ccc7cd" resname="MONDAY">
                 <source>MONDAY</source>
@@ -278,13 +267,11 @@
             </trans-unit>
             <trans-unit id="00f8f838ec40e3aa2030e1a74694ac0f" resname="There was an error in updating the Live event.">
                 <source>There was an error in updating the Live event.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error actualizando el evento en vivo.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error actualizando el evento en vivo.</target>
             </trans-unit>
             <trans-unit id="c4b9a7e958b0b92f52ac06c5d1729747" resname="Live event successfully updated.">
                 <source>Live event successfully updated.</source>
-                <target xml:lang="es-ES" state="translated">El evento en vivo ha sido actualizado correctamente.
-                </target>
+                <target xml:lang="es-ES" state="translated">El evento en vivo ha sido actualizado correctamente.</target>
             </trans-unit>
             <trans-unit id="5fbb1856f60cde9ee70de2fb5196fec6" resname="Add thumbnail">
                 <source>Add thumbnail</source>
@@ -308,12 +295,8 @@
             </trans-unit>
             <trans-unit id="bdc610e01894c9e3c14bf48ef01a8f94"
                         resname="External defined users and groups can not be edited here, contact your directory service administrator.">
-                <source>External defined users and groups can not be edited here, contact your directory service
-                    administrator.
-                </source>
-                <target xml:lang="es-ES" state="translated">Los usuarios y grupos definidos externamente no pueden ser
-                    editados aquí, contacte con el administrador de su servicio.
-                </target>
+                <source>External defined users and groups can not be edited here, contact your directory service administrator.</source>
+                <target xml:lang="es-ES" state="translated">Los usuarios y grupos definidos externamente no pueden ser editados aquí, contacte con el administrador de su servicio.</target>
             </trans-unit>
             <trans-unit id="e8bbbedf873013a5db75bb45b25b30d8" resname="Video Template of Series">
                 <source>Video Template of Series</source>
@@ -357,11 +340,8 @@
             </trans-unit>
             <trans-unit id="d1c4c128e19012693c2dbc1b62b812e1"
                         resname="External defined groups can not be edited here, contact your directory service administrator.">
-                <source>External defined groups can not be edited here, contact your directory service administrator.
-                </source>
-                <target xml:lang="es-ES" state="translated">Los usuarios y grupos definidos externamente no pueden ser
-                    editados aquí, contacte con el administrador de su servicio.
-                </target>
+                <source>External defined groups can not be edited here, contact your directory service administrator.</source>
+                <target xml:lang="es-ES" state="translated">Los usuarios y grupos definidos externamente no pueden ser editados aquí, contacte con el administrador de su servicio.</target>
             </trans-unit>
             <trans-unit id="ded7ed1b967339b875bd23238807d82c" resname="Delete Group or Group relations">
                 <source>Delete Group or Group relations</source>
@@ -397,13 +377,8 @@
             </trans-unit>
             <trans-unit id="affa928796995b6d2f52cedcfe3538cb"
                         resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.">
-                <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter
-                    in your config file.
-                </source>
-                <target xml:lang="es-ES" state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta
-                    de la bandeja de entrada como parámetro &lt;code&gt;pumukit2.inbox&lt;/code&gt; en su archivo de
-                    configuración.
-                </target>
+                <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</source>
+                <target xml:lang="es-ES" state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit2.inbox&lt;/code&gt; en su archivo de configuración.</target>
             </trans-unit>
             <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
                 <source>not exists</source>
@@ -468,9 +443,7 @@
             <trans-unit id="02b7b3f2e7279c0a8fafdecfb61293dc"
                         resname="{0} live channels|{1} live channel|]1,Inf] live channels">
                 <source>{0} live channels|{1} live channel|]1,Inf] live channels</source>
-                <target xml:lang="es-ES" state="translated">{0} canales en vivo|{1} canal en vivo|]1,Inf] canales en
-                    vivo
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} canales en vivo|{1} canal en vivo|]1,Inf] canales en vivo</target>
             </trans-unit>
             <trans-unit id="7d367dab8b471ac44dddc3ab3aa2c1bf" resname="Source IP">
                 <source>Source IP</source>
@@ -507,8 +480,7 @@
             <trans-unit id="f18a9fa39e74d5489f1e50027ee12352"
                         resname="There was an error in updating the Live channel.">
                 <source>There was an error in updating the Live channel.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el canal en vivo.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el canal en vivo.</target>
             </trans-unit>
             <trans-unit id="f114f4467c71d4e59ec9bebe7e9fd17a" resname="Live channel successfully updated.">
                 <source>Live channel successfully updated.</source>
@@ -564,9 +536,7 @@
             <trans-unit id="5f7afa50da145d660626f3b4d233cdbe"
                         resname="WARNING: You do not have enough permissions to modify admin groups.">
                 <source>WARNING: You do not have enough permissions to modify admin groups.</source>
-                <target xml:lang="es-ES" state="translated">Advertencia: No tiene permisos suficientes para modificar
-                    los grupos administradores.
-                </target>
+                <target xml:lang="es-ES" state="translated">Advertencia: No tiene permisos suficientes para modificar los grupos administradores.</target>
             </trans-unit>
             <trans-unit id="dffecb5c02ee376eac36ab3228433c91" resname="BROADCAST GROUPS">
                 <source>BROADCAST GROUPS</source>
@@ -667,30 +637,22 @@
             <trans-unit id="62c5afd627dcf34a49c1a06cb94bd503"
                         resname="List multimedia objects in descending order of publication date">
                 <source>List multimedia objects in descending order of publication date</source>
-                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de publicación en
-                    orden descendente
-                </target>
+                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de publicación en orden descendente</target>
             </trans-unit>
             <trans-unit id="abe024c4d4a6ddd25313bc1267420e45"
                         resname="List multimedia objects in ascending order of publication date">
                 <source>List multimedia objects in ascending order of publication date</source>
-                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de publicación en
-                    orden ascendente
-                </target>
+                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de publicación en orden ascendente</target>
             </trans-unit>
             <trans-unit id="1ee1a8f62c601f99eb08919cb1b78788"
                         resname="List multimedia objects in descending order of recording date">
                 <source>List multimedia objects in descending order of recording date</source>
-                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de grabación en
-                    orden descendente
-                </target>
+                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de grabación en orden descendente</target>
             </trans-unit>
             <trans-unit id="869c932002d911b88a5561bc35bc9709"
                         resname="List multimedia objects in ascending order of recording date">
                 <source>List multimedia objects in ascending order of recording date</source>
-                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de grabación en
-                    orden ascendente
-                </target>
+                <target xml:lang="es-ES" state="translated">Listar los objetos multimedia por fecha de grabación en orden ascendente</target>
             </trans-unit>
             <trans-unit id="a3b2babf515370667710ada3dbd898e5" resname="Cut multimedia objects">
                 <source>Cut multimedia objects</source>
@@ -729,33 +691,23 @@
             </trans-unit>
             <trans-unit id="5c990ac3eb2b70ab75ad57e69a6b632b"
                         resname="Warning: This link will give a 404 error until this multimedia object is correctly published.">
-                <source>Warning: This link will give a 404 error until this multimedia object is correctly published.
-                </source>
-                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace dará un error 404 hasta que el
-                    objeto multimedia sea correctamente publicado.
-                </target>
+                <source>Warning: This link will give a 404 error until this multimedia object is correctly published.</source>
+                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace dará un error 404 hasta que el objeto multimedia sea correctamente publicado.</target>
             </trans-unit>
             <trans-unit id="feec6ee6a4a144e5e182a90c7690ab82"
                         resname="This URL will give you access to the series without login.">
                 <source>This URL will give you access to the series without login.</source>
-                <target xml:lang="es-ES" state="translated">Esta URL le dará acceso a la serie sin iniciar sesión.
-                </target>
+                <target xml:lang="es-ES" state="translated">Esta URL le dará acceso a la serie sin iniciar sesión.</target>
             </trans-unit>
             <trans-unit id="746885175979f3a91579ce8e8934d9a3"
                         resname="Warning: This link will show a player with no video until a display track is added.">
                 <source>Warning: This link will show a player with no video until a display track is added.</source>
-                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace mostrará un reproductor sin vídeo
-                    hasta que se añada una pista que se pueda mostrar.
-                </target>
+                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace mostrará un reproductor sin vídeo hasta que se añada una pista que se pueda mostrar.</target>
             </trans-unit>
             <trans-unit id="4df01400d5b64853ff3b37f4f0f44a1a"
                         resname="WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.">
-                <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable
-                    resource.
-                </source>
-                <target xml:lang="es-ES" state="translated">ADVERTENCIA, este objeto multimedia aún no ha sido publicado
-                    en WebTV, o no tiene un recurso reproducible.
-                </target>
+                <source>WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.</source>
+                <target xml:lang="es-ES" state="translated">ADVERTENCIA, este objeto multimedia aún no ha sido publicado en WebTV, o no tiene un recurso reproducible.</target>
             </trans-unit>
             <trans-unit id="e0c2297cd0586edafa230edc0585c1af" resname="Audio/Video">
                 <source>Audio/Video</source>
@@ -835,8 +787,7 @@
             </trans-unit>
             <trans-unit id="62a56ee07100224049d920cd53485de8" resname="Groups that can admin this multimedia object">
                 <source>Groups that can admin this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Grupos que pueden administrar este objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Grupos que pueden administrar este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="a5bb7630479a4aeebc5522fabd149389" resname="Selected Admin Groups">
                 <source>Selected Admin Groups</source>
@@ -852,8 +803,7 @@
             </trans-unit>
             <trans-unit id="8f033758508a57e9a909095bde188401" resname="Users that can admin this multimedia object">
                 <source>Users that can admin this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Usuarios que pueden administrar este objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Usuarios que pueden administrar este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="8f2c7bfcbcfd016460fac8f4cb50d7f5" resname="Person Fullname">
                 <source>Person Fullname</source>
@@ -881,8 +831,7 @@
             </trans-unit>
             <trans-unit id="c05969aadc543591c235d8b67b586878" resname="Modify broadcast profile of videos template">
                 <source>Modify broadcast profile of videos template</source>
-                <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de las plantillas de vídeo
-                </target>
+                <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de las plantillas de vídeo</target>
             </trans-unit>
             <trans-unit id="b64fc3b2b8500852e8c631abc4a3e1c5" resname="Modify broadcast profile of multimedia object">
                 <source>Modify broadcast profile of multimedia object</source>
@@ -903,9 +852,7 @@
             <trans-unit id="5a4b5aea4eafcf338bfcd70b61359e9a"
                         resname="WARNING: If you press OK, you will no longer have access to this Multimedia Object">
                 <source>WARNING: If you press OK, you will no longer have access to this Multimedia Object</source>
-                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Si pulsa OK, dejará de tener acceso a este
-                    objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Si pulsa OK, dejará de tener acceso a este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="acc66e14d297c1bfc20986bf593cb054" resname="Thumbnails">
                 <source>Thumbnails</source>
@@ -958,9 +905,7 @@
             <trans-unit id="e9db93e67639a40b42e45e12f5cbf3be"
                         resname="Apply these tags to all multimedia objects of this series.">
                 <source>Apply these tags to all multimedia objects of this series.</source>
-                <target xml:lang="es-ES" state="translated">Emplear estas categorías en todos los objetos multimedia de
-                    esta serie.
-                </target>
+                <target xml:lang="es-ES" state="translated">Emplear estas categorías en todos los objetos multimedia de esta serie.</target>
             </trans-unit>
             <trans-unit id="41a95201a6491434c5a0f1db23806427" resname="Sync in this series">
                 <source>Sync in this series</source>
@@ -972,8 +917,7 @@
             </trans-unit>
             <trans-unit id="66c1faead4cb99af8725104143a7cabf" resname="Mutlimedia Object Template saved OK">
                 <source>Mutlimedia Object Template saved OK</source>
-                <target xml:lang="es-ES" state="translated">Plantilla del Objeto Multimedia guardada correctamente
-                </target>
+                <target xml:lang="es-ES" state="translated">Plantilla del Objeto Multimedia guardada correctamente</target>
             </trans-unit>
             <trans-unit id="888ee58ccfa82ba8a0685c58bb43fd7d" resname="Press OK for the change to take effect">
                 <source>Press OK for the change to take effect</source>
@@ -990,9 +934,7 @@
             <trans-unit id="0bde587f09316fdaa8b2638470365e0f"
                         resname="{0} permission profiles|{1} permission profile|]1,Inf] permission profiles">
                 <source>{0} permission profiles|{1} permission profile|]1,Inf] permission profiles</source>
-                <target xml:lang="es-ES" state="translated">{0} perfiles de permisos|{1} perfil de permisos|]1,Inf]
-                    perfiles de permisos
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} perfiles de permisos|{1} perfil de permisos|]1,Inf] perfiles de permisos</target>
             </trans-unit>
             <trans-unit id="3523bed7d1014a7b8cdd5afd1e3ee8da" resname="Press SAVE for changes to take effect">
                 <source>Press SAVE for changes to take effect</source>
@@ -1050,9 +992,7 @@
             <trans-unit id="714494e16649c3c5dd3d797a39f6a2f5"
                         resname="Person successfully associated to Multimedia Object">
                 <source>Person successfully associated to Multimedia Object</source>
-                <target xml:lang="es-ES" state="translated">La persona ha sido asociada al Objeto Multimedia
-                    correctamente
-                </target>
+                <target xml:lang="es-ES" state="translated">La persona ha sido asociada al Objeto Multimedia correctamente</target>
             </trans-unit>
             <trans-unit id="b878aa8bbb132d9c66de1424698c44d2" resname="with role">
                 <source>with role</source>
@@ -1099,13 +1039,8 @@
             </trans-unit>
             <trans-unit id="f4d46eec2d41c4ab86e8a4a2a3ccb987"
                         resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and">
-                <source>Add the name of the person you want to add. In case this person already exists in the database,
-                    a pull-down list will be shown, where you can select him/her and
-                </source>
-                <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el
-                    caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde
-                    podrá seleccionarla y
-                </target>
+                <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and</source>
+                <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y</target>
             </trans-unit>
             <trans-unit id="98d6ceb3a5d782932eae0aa8bad56de5" resname="use him/her">
                 <source>use him/her</source>
@@ -1250,9 +1185,7 @@
             <trans-unit id="0bb9885b2f22eb2c9f84085fe3ac2255"
                         resname="change broadcast status of multimedia objects inside the series">
                 <source>change broadcast status of multimedia objects inside the series</source>
-                <target xml:lang="es-ES" state="translated">cambie el estado de emisión de los objetos multimedia dentro
-                    de la serie
-                </target>
+                <target xml:lang="es-ES" state="translated">cambie el estado de emisión de los objetos multimedia dentro de la serie</target>
             </trans-unit>
             <trans-unit id="51f950aa3065224126ed97477757007c" resname="Multimedia Objects">
                 <source>Multimedia Objects</source>
@@ -1277,20 +1210,14 @@
             <trans-unit id="98d3e521741790e0895166ca674c9ad8"
                         resname="Published: is listed in the Series and can be played with published URL">
                 <source>Published: is listed in the Series and can be played with published URL</source>
-                <target xml:lang="es-ES" state="translated">Publicado: se lista en el catálogo de Series y puede ser
-                    reproducido con la URL de publicación
-                </target>
+                <target xml:lang="es-ES" state="translated">Publicado: se lista en el catálogo de Series y puede ser reproducido con la URL de publicación</target>
             </trans-unit>
             <trans-unit id="c6b7e9af7d5f66f937d19b1583827225"
                         resname="Hidden: is not listed in the Series but can be played with magic URL">
                 <source>Hidden: is not listed in the Series but can be played with magic URL</source>
-                <target xml:lang="es-ES" state="translated">Oculto: no se lista en el catálogo de Series pero puede ser
-                    reproducido con la URL mágica
-                </target>
+                <target xml:lang="es-ES" state="translated">Oculto: no se lista en el catálogo de Series pero puede ser reproducido con la URL mágica</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Oculta: no se lista en el catálogo de Series pero puede ser reproducida con
-                        la URL mágica
-                    </target>
+                    <target xml:lang="es-ES">Oculta: no se lista en el catálogo de Series pero puede ser reproducida con la URL mágica</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="7338c1d663923b728431d5b0ce1caf33"
@@ -1335,9 +1262,7 @@
             </trans-unit>
             <trans-unit id="124ba72c1d58716323d53543a8c33d96" resname="{0} playlist|{1} playlist|]1,Inf] playlists">
                 <source>{0} playlist|{1} playlist|]1,Inf] playlists</source>
-                <target xml:lang="es-ES" state="translated">{0} listas de reproducción|{1} lista de reproducción|]1,Inf]
-                    listas de reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} listas de reproducción|{1} lista de reproducción|]1,Inf] listas de reproducción</target>
             </trans-unit>
             <trans-unit id="d896b781caf98a9784c2b5f7ea1e0a5d" resname="Num. Mm.Obj.">
                 <source>Num. Mm.Obj.</source>
@@ -1377,13 +1302,11 @@
             <trans-unit id="10c31d548ba2ee7e3941cbcf69378cdc"
                         resname="Add the object &quot;%title%&quot; to the playlist">
                 <source>Add the object "%title%" to the playlist</source>
-                <target xml:lang="es-ES" state="translated">Añadir el objeto "%title%" a la lista de reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">Añadir el objeto "%title%" a la lista de reproducción</target>
             </trans-unit>
             <trans-unit id="6a2fb61d3618029c43320aad0a4bcf78" resname="Add %num% multimedia objects to the playlist">
                 <source>Add %num% multimedia objects to the playlist</source>
-                <target xml:lang="es-ES" state="translated">Añadir %num% objetos multimedia a la lista de reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">Añadir %num% objetos multimedia a la lista de reproducción</target>
             </trans-unit>
             <trans-unit id="aa79aaf7fc30827bb332e7c796c7f8cb" resname="There are no playlist, please create one.">
                 <source>There are no playlist, please create one.</source>
@@ -1444,8 +1367,7 @@
             <trans-unit id="62e8e63afec79691417f07d4bae26e35"
                         resname="There is no published Multimedia Object with the following id:">
                 <source>There is no published Multimedia Object with the following id:</source>
-                <target xml:lang="es-ES" state="translated">No hay Objetos Multimedia publicados con el siguiente id:
-                </target>
+                <target xml:lang="es-ES" state="translated">No hay Objetos Multimedia publicados con el siguiente id:</target>
             </trans-unit>
             <trans-unit id="d4aa1184a32d2db1fbe02b31c347c771" resname="create new role">
                 <source>create new role</source>
@@ -1525,9 +1447,7 @@
             <trans-unit id="db05535e84f43715a5315c58a3c56807"
                         resname="change status of multimedia objects inside the series">
                 <source>change status of multimedia objects inside the series</source>
-                <target xml:lang="es-ES" state="translated">cambie el estado de los objetos multimedia dentro de la
-                    serie
-                </target>
+                <target xml:lang="es-ES" state="translated">cambie el estado de los objetos multimedia dentro de la serie</target>
             </trans-unit>
             <trans-unit id="17cd4945a039ee7e45d22752d265efdc" resname="Multimedia Series">
                 <source>Multimedia Series</source>
@@ -1544,16 +1464,12 @@
             <trans-unit id="212044fb8af62aa57aae184ca36a2be7"
                         resname="Click to modify status of all Multimedia Objects">
                 <source>Click to modify status of all Multimedia Objects</source>
-                <target xml:lang="es-ES" state="translated">Haga clic para modificar el estado de todos los Objetos
-                    Multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Haga clic para modificar el estado de todos los Objetos Multimedia</target>
             </trans-unit>
             <trans-unit id="c72112d0922fd42fa94bfd7aae5647a9"
                         resname="Not enough privileges to modify status of all Multimedia Objects">
                 <source>Not enough privileges to modify status of all Multimedia Objects</source>
-                <target xml:lang="es-ES" state="translated">No tiene privilegios suficientes para modificar el estado de
-                    todos los Objetos Multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">No tiene privilegios suficientes para modificar el estado de todos los Objetos Multimedia</target>
             </trans-unit>
             <trans-unit id="193a985036f40e2437f9a86479f617f2" resname="There are no series with those values.">
                 <source>There are no series with those values.</source>
@@ -1596,51 +1512,35 @@
             <trans-unit id="287acf341ae9b6ec834a7880b6208a16"
                         resname="Modify broadcast profile of all multimedia objects in this Series">
                 <source>Modify broadcast profile of all multimedia objects in this Series</source>
-                <target xml:lang="es-ES" state="translated">Modificar el perfil de difusión de todos los objetos
-                    multimedia en esta Serie
-                </target>
+                <target xml:lang="es-ES" state="translated">Modificar el perfil de difusión de todos los objetos multimedia en esta Serie</target>
             </trans-unit>
             <trans-unit id="99454057ff61f40ed0b061d607bc7476"
                         resname="WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.">
-                <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.
-                </source>
-                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Todos los Objetos Multimedia en esta Serie
-                    serán modificados con el perfil de difusión seleccionado.
-                </target>
+                <source>WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.</source>
+                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Todos los Objetos Multimedia en esta Serie serán modificados con el perfil de difusión seleccionado.</target>
             </trans-unit>
             <trans-unit id="f0a27743b1b9a570d8e8d76c9e5bf5ab"
                         resname="Any Internet user can play this multimedia object in the video portal">
                 <source>Any Internet user can play this multimedia object in the video portal</source>
-                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir este objeto
-                    multimedia en el portal de vídeo
-                </target>
+                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir este objeto multimedia en el portal de vídeo</target>
             </trans-unit>
             <trans-unit id="9483b18e753a9653f53760bb887a9b99"
                         resname="Only users with the defined password can play this multimedia object in the video portal">
-                <source>Only users with the defined password can play this multimedia object in the video portal
-                </source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán
-                    reproducir este objeto multimedia en el portal de vídeo
-                </target>
+                <source>Only users with the defined password can play this multimedia object in the video portal</source>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán reproducir este objeto multimedia en el portal de vídeo</target>
             </trans-unit>
             <trans-unit id="1d8a8e416151ea937a88421fd75deddd"
                         resname="Only logged in users in the system can play this multimedia object in the video portal">
                 <source>Only logged in users in the system can play this multimedia object in the video portal</source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán
-                    reproducir este objeto multimedia en el portal de vídeo
-                </target>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir este objeto multimedia en el portal de vídeo</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto
-                        multimedia en el portal de vídeo
-                    </target>
+                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia en el portal de vídeo</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="72e6f8ab577d9cabcf31ee3039a3cd87"
                         resname="Only users in the selected Groups can play this multimedia object in the video portal">
                 <source>Only users in the selected Groups can play this multimedia object in the video portal</source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán
-                    reproducir este objeto multimedia en el portal de vídeo
-                </target>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán reproducir este objeto multimedia en el portal de vídeo</target>
             </trans-unit>
             <trans-unit id="a799d4290aa13652f187f118f605a700" resname="Modify all broadcasts">
                 <source>Modify all broadcasts</source>
@@ -1660,9 +1560,7 @@
             </trans-unit>
             <trans-unit id="be202fe9414be76f5c729710893b753a" resname="Click to show or add header/banner and footer">
                 <source>Click to show or add header/banner and footer</source>
-                <target xml:lang="es-ES" state="translated">Haga clic para mostrar o añadir cabecera/banner y pie de
-                    página
-                </target>
+                <target xml:lang="es-ES" state="translated">Haga clic para mostrar o añadir cabecera/banner y pie de página</target>
             </trans-unit>
             <trans-unit id="bff13b03e3e759a6dffcbfbf9abefb47" resname="Add banner">
                 <source>Add banner</source>
@@ -1702,9 +1600,7 @@
             <trans-unit id="cee525b9e2d94e7c51c05d7d37dc8a83"
                         resname="{0} series types|{1} series type |]1,Inf] series types">
                 <source>{0} series types|{1} series type |]1,Inf] series types</source>
-                <target xml:lang="es-ES" state="translated">{0} tipos de series|{1} tipo de serie |]1,Inf] tipos de
-                    series
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} tipos de series|{1} tipo de serie |]1,Inf] tipos de series</target>
             </trans-unit>
             <trans-unit id="e7ef1f171b86c156054a23ba566a6728" resname="modify series type">
                 <source>modify series type</source>
@@ -1712,8 +1608,7 @@
             </trans-unit>
             <trans-unit id="f48ad79328ffcfdb95218d530002562a" resname="There was an error in updating the series type.">
                 <source>There was an error in updating the series type.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el tipo de serie.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el tipo de serie.</target>
             </trans-unit>
             <trans-unit id="2a46c982ffe210d08adb21dbf7703c27" resname="Series type successfully updated.">
                 <source>Series type successfully updated.</source>
@@ -1813,12 +1708,8 @@
             </trans-unit>
             <trans-unit id="992432c48d89f6369b4290bb9f7381d7"
                         resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
-                <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia
-                    object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;
-                </source>
-                <target xml:lang="es-ES" state="translated">&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertencia:
-                    Este objeto multimedia no está publicado correctamente en WebTV&lt;/i&gt;&lt;/span&gt;
-                </target>
+                <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
+                <target xml:lang="es-ES" state="translated">&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Advertencia: Este objeto multimedia no está publicado correctamente en WebTV&lt;/i&gt;&lt;/span&gt;</target>
             </trans-unit>
             <trans-unit id="0923805acd5ce3e792e3b633596178e9" resname="Embedded Iframe">
                 <source>Embedded Iframe</source>
@@ -1830,8 +1721,7 @@
             </trans-unit>
             <trans-unit id="edb87f3d802207abd0dc194447dd5569" resname="Warning: This Track is not a playable resource.">
                 <source>Warning: This Track is not a playable resource.</source>
-                <target xml:lang="es-ES" state="translated">Advertencia: Esta pista no tiene un recurso reproducible.
-                </target>
+                <target xml:lang="es-ES" state="translated">Advertencia: Esta pista no tiene un recurso reproducible.</target>
             </trans-unit>
             <trans-unit id="5801dc37dcb8115a1e1020f404e84a43" resname="Job info">
                 <source>Job info</source>
@@ -1939,8 +1829,7 @@
             </trans-unit>
             <trans-unit id="630fd5c224192c780dcc650d1bd94bac" resname="Update the web page to show master videos">
                 <source>Update the web page to show master videos</source>
-                <target xml:lang="es-ES" state="translated">Actualizar la página para mostrar los vídeos maestros
-                </target>
+                <target xml:lang="es-ES" state="translated">Actualizar la página para mostrar los vídeos maestros</target>
             </trans-unit>
             <trans-unit id="dfaf09345e35103c855afaffa460c33d" resname="New Track added.">
                 <source>New Track added.</source>
@@ -1948,12 +1837,8 @@
             </trans-unit>
             <trans-unit id="b9ea06dd3a644effbbbc995238bfa38b"
                         resname="External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.">
-                <source>External defined user. User Groups cannot be edited. Contact your directory service
-                    administrator to change membership.
-                </source>
-                <target xml:lang="es-ES" state="translated">Usuario definido externamente. Los grupos del usuario no
-                    pueden ser editados. Contacte con el administrador de su servicio.
-                </target>
+                <source>External defined user. User Groups cannot be edited. Contact your directory service administrator to change membership.</source>
+                <target xml:lang="es-ES" state="translated">Usuario definido externamente. Los grupos del usuario no pueden ser editados. Contacte con el administrador de su servicio.</target>
             </trans-unit>
             <trans-unit id="40c6907f3e993a48f7eb56b81b5c2b02" resname="create new user">
                 <source>create new user</source>
@@ -2005,19 +1890,13 @@
             </trans-unit>
             <trans-unit id="95112c45826edfd595dae2617befa51b"
                         resname="External defined users can not be edited here, contact your directory service administrator.">
-                <source>External defined users can not be edited here, contact your directory service administrator.
-                </source>
-                <target xml:lang="es-ES" state="translated">Usuarios definidos externamente no pueden ser editados aquí,
-                    contacte con el administrador de su servicio.
-                </target>
+                <source>External defined users can not be edited here, contact your directory service administrator.</source>
+                <target xml:lang="es-ES" state="translated">Usuarios definidos externamente no pueden ser editados aquí, contacte con el administrador de su servicio.</target>
             </trans-unit>
             <trans-unit id="4abc357019e1f3bdbd2f10555c7a0f87"
                         resname="External defined users can not be deleted here, contact your directory service administrator.">
-                <source>External defined users can not be deleted here, contact your directory service administrator.
-                </source>
-                <target xml:lang="es-ES" state="translated">Usuarios definidos externamente no pueden ser eliminados
-                    aquí, contacte con el administrador de su servicio.
-                </target>
+                <source>External defined users can not be deleted here, contact your directory service administrator.</source>
+                <target xml:lang="es-ES" state="translated">Usuarios definidos externamente no pueden ser eliminados aquí, contacte con el administrador de su servicio.</target>
             </trans-unit>
             <trans-unit id="fb51b403bdd54cec0f0fe19b9ab4c5fc" resname="User Groups">
                 <source>User Groups</source>
@@ -2065,8 +1944,7 @@
             </trans-unit>
             <trans-unit id="d4a7f68aa54a8fa8eef60fc258123da3" resname="Are you sure you want to delete this broadcast?">
                 <source>Are you sure you want to delete this broadcast?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este perfíl de difusión?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este perfíl de difusión?</target>
             </trans-unit>
             <trans-unit id="edc1cf6a82f8ca14569cb7709991bbe9" resname="Broadcast successfully deleted.">
                 <source>Broadcast successfully deleted.</source>
@@ -2101,8 +1979,7 @@
             <trans-unit id="c3f0668a5a038545688bdc7c6df69379"
                         resname="Are you sure you want to delete this live event?">
                 <source>Are you sure you want to delete this live event?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este evento en vivo?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este evento en vivo?</target>
             </trans-unit>
             <trans-unit id="9ddd64a5b8afc0c4aa82957c0238c469" resname="Live event successfully deleted.">
                 <source>Live event successfully deleted.</source>
@@ -2110,18 +1987,13 @@
             </trans-unit>
             <trans-unit id="76999272eb740b7956a06487d1ee26f0"
                         resname="Are you sure you want to sync this tags? The tags in other objects from this series will be lost.">
-                <source>Are you sure you want to sync this tags? The tags in other objects from this series will be
-                    lost.
-                </source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer sincronizar estas categorías? Se
-                    perderán las categorías en otros objetos de esta serie.
-                </target>
+                <source>Are you sure you want to sync this tags? The tags in other objects from this series will be lost.</source>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer sincronizar estas categorías? Se perderán las categorías en otros objetos de esta serie.</target>
             </trans-unit>
             <trans-unit id="470608c99219ae88ec43c2b74d929fd8"
                         resname="Are you sure you want to delete this multimedia object?">
                 <source>Are you sure you want to delete this multimedia object?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este objeto multimedia?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar este objeto multimedia?</target>
             </trans-unit>
             <trans-unit id="8a150f35bc4d7476c6b39749ce51646c" resname="Multimedia Object successfully deleted.">
                 <source>Multimedia Object successfully deleted.</source>
@@ -2130,9 +2002,7 @@
             <trans-unit id="71b035c5f2bbe3c69279256790bacef1"
                         resname="Are you sure you want to regenerate the magic url for this multimedia object?">
                 <source>Are you sure you want to regenerate the magic url for this multimedia object?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer generar una nueva url mágica para
-                    este objeto multimedia?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer generar una nueva url mágica para este objeto multimedia?</target>
             </trans-unit>
             <trans-unit id="df7c42c2c5036006370658b566d3ba79" resname="Magic Url successfully generated.">
                 <source>Magic Url successfully generated.</source>
@@ -2141,15 +2011,12 @@
             <trans-unit id="d6efb57f0ca1c818fef20f8cac069bd1"
                         resname="Are you sure you want to regenerate the magic url for the Series: &quot;+seriesTitle+&quot;?">
                 <source>Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer generar una nueva url mágica para la
-                    Serie: "+seriesTitle+"?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer generar una nueva url mágica para la Serie: "+seriesTitle+"?</target>
             </trans-unit>
             <trans-unit id="5b596e0eca7ef3c519dcb017eda806f1"
                         resname="Are you sure you want to clone this multimedia object?">
                 <source>Are you sure you want to clone this multimedia object?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer clonar este objeto multimedia?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer clonar este objeto multimedia?</target>
             </trans-unit>
             <trans-unit id="e6131184d559cb3ecf67dbf94b291747" resname="Multimedia Object successfully cloned.">
                 <source>Multimedia Object successfully cloned.</source>
@@ -2173,8 +2040,7 @@
             </trans-unit>
             <trans-unit id="e4f43ec84514c27900e6395df72eb6d2" resname="Are you sure you want to delete the playlist">
                 <source>Are you sure you want to delete the playlist</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar la lista de reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar la lista de reproducción</target>
             </trans-unit>
             <trans-unit id="f6b4a5e2a897467a97a2e124f518a548" resname="This playlist has">
                 <source>This playlist has</source>
@@ -2187,8 +2053,7 @@
             <trans-unit id="563eb67796a6982d00a8ec3c376e611c"
                         resname="Are you sure you want to delete the Permission Profile">
                 <source>Are you sure you want to delete the Permission Profile</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el perfil de permisos
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar el perfil de permisos</target>
             </trans-unit>
             <trans-unit id="a313f0437660f477274a9c86d2bd7b69" resname="Are you sure you want to delete this thumbnail?">
                 <source>Are you sure you want to delete this thumbnail?</source>
@@ -2269,21 +2134,17 @@
             <trans-unit id="b11b5551b4e0c4fbdc4c40c5ff13cda5"
                         resname="Are you sure you want to delete selected groups?">
                 <source>Are you sure you want to delete selected groups?</source>
-                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar los grupos seleccionados?
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Está seguro de querer eliminar los grupos seleccionados?</target>
             </trans-unit>
             <trans-unit id="bf197646d2caa8ad8bed05aca91bbe47"
                         resname="Multimedia Object cut. Paste it in the desire Series.">
                 <source>Multimedia Object cut. Paste it in the desire Series.</source>
-                <target xml:lang="es-ES" state="translated">Corte el Objeto Multimedia. Péguelo en la Serie deseada.
-                </target>
+                <target xml:lang="es-ES" state="translated">Corte el Objeto Multimedia. Péguelo en la Serie deseada.</target>
             </trans-unit>
             <trans-unit id="6a139f9d8492bd8b42f3bd0cbc259de2"
                         resname="Multimedia Objects cut. Paste them in the desire Series.">
                 <source>Multimedia Objects cut. Paste them in the desire Series.</source>
-                <target xml:lang="es-ES" state="translated">Corte los Objetos Multimedia. Péguelos en la Serie
-                    deseada.
-                </target>
+                <target xml:lang="es-ES" state="translated">Corte los Objetos Multimedia. Péguelos en la Serie deseada.</target>
             </trans-unit>
             <trans-unit id="ee2e8056ac92ae0d6d20ccd30aef61e1" resname="Paste multimedia object(s) in this series?">
                 <source>Paste multimedia object(s) in this series?</source>
@@ -2303,9 +2164,7 @@
             </trans-unit>
             <trans-unit id="a737de563c3997a6084957bafa51b606" resname="From date must be less than to date">
                 <source>From date must be less than to date</source>
-                <target xml:lang="es-ES" state="translated">La fecha en 'Desde' debe ser anterior a la fecha en
-                    'Hasta'
-                </target>
+                <target xml:lang="es-ES" state="translated">La fecha en 'Desde' debe ser anterior a la fecha en 'Hasta'</target>
             </trans-unit>
             <trans-unit id="9ff0baa6607db7919e5c36f0c416c66c" resname="Multimedia Object successfully created.">
                 <source>Multimedia Object successfully created.</source>
@@ -2333,15 +2192,12 @@
             </trans-unit>
             <trans-unit id="958bb6db0834f2884df5ee7d8d3afca2" resname="Multimedia Object(s) has/have this tag">
                 <source>Multimedia Object(s) has/have this tag</source>
-                <target xml:lang="es-ES" state="translated">El/Los Objeto(s) Multimedia tiene/tienen esta categoría
-                </target>
+                <target xml:lang="es-ES" state="translated">El/Los Objeto(s) Multimedia tiene/tienen esta categoría</target>
             </trans-unit>
             <trans-unit id="cb2438bb89acec64f1b97f4027a0f119"
                         resname="Are you sure you want to delete the tag with code">
                 <source>Are you sure you want to delete the tag with code</source>
-                <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el
-                    código
-                </target>
+                <target xml:lang="es-ES" state="translated">¿Estás seguro de querer eliminar la categoría con el código</target>
             </trans-unit>
             <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
                 <source>Tag</source>
@@ -2350,24 +2206,17 @@
             <trans-unit id="2608be85187f57ccbfc0c4358357d5ea"
                         resname="ATTENTION: Are you sure you want to delete all User from this Group?">
                 <source>ATTENTION: Are you sure you want to delete all User from this Group?</source>
-                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Usuarios
-                    de este Grupo?
-                </target>
+                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Usuarios de este Grupo?</target>
             </trans-unit>
             <trans-unit id="dc22dbfd44366a6bfe6556dd6a767dcb"
                         resname="ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?">
-                <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?
-                </source>
-                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Objetos
-                    Multimedia Administrados de este Grupo?
-                </target>
+                <source>ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?</source>
+                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Objetos Multimedia Administrados de este Grupo?</target>
             </trans-unit>
             <trans-unit id="9b438c64b513e51ba0d094e2b1b82bb6"
                         resname="ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?">
                 <source>ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?</source>
-                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Objetos
-                    Multimedia Reproducibles de este Grupo?
-                </target>
+                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar todos los Objetos Multimedia Reproducibles de este Grupo?</target>
             </trans-unit>
             <trans-unit id="82b19eaea40d5e84d03c532e5fcb0551" resname="There was an error in creating the Live event.">
                 <source>There was an error in creating the Live event.</source>
@@ -2393,9 +2242,7 @@
             <trans-unit id="3c7955415edc493ea8db119150385ef0"
                         resname="Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.">
                 <source>Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.</source>
-                <target xml:lang="es-ES" state="translated">ERROR al guardar el Objeto Multimedia: La fecha de
-                    publicación no puede ser menor que la de grabación.
-                </target>
+                <target xml:lang="es-ES" state="translated">ERROR al guardar el Objeto Multimedia: La fecha de publicación no puede ser menor que la de grabación.</target>
             </trans-unit>
             <trans-unit id="253453ff16857dbcc5b50daecb61415a" resname="There was an error in updating the User.">
                 <source>There was an error in updating the User.</source>
@@ -2419,8 +2266,7 @@
             <trans-unit id="79e512ea54e5f43db17fb7c10050322f"
                         resname="There was an error in creating the Permission Profile.">
                 <source>There was an error in creating the Permission Profile.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al crear el perfil de permisos.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al crear el perfil de permisos.</target>
             </trans-unit>
             <trans-unit id="187de3933caf7d0f824cf6f9c5b6c337" resname="Permission Profile successfully created.">
                 <source>Permission Profile successfully created.</source>
@@ -2429,8 +2275,7 @@
             <trans-unit id="a9b570077359602dde382b40e5173ec8"
                         resname="There was an error in updating the Permission Profile.">
                 <source>There was an error in updating the Permission Profile.</source>
-                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el Perfil de Permisos.
-                </target>
+                <target xml:lang="es-ES" state="translated">Ha ocurrido un error al actualizar el Perfil de Permisos.</target>
             </trans-unit>
             <trans-unit id="c30206a1ee7a2cdf98cb84b6841b48b0" resname="Permission Profile successfully updated.">
                 <source>Permission Profile successfully updated.</source>
@@ -2451,71 +2296,50 @@
             <trans-unit id="a9f964b6bb8a5a322515b7d99969314f"
                         resname="If you click OK you will uncheck all these permissions. Are you sure?">
                 <source>If you click OK you will uncheck all these permissions. Are you sure?</source>
-                <target xml:lang="es-ES" state="translated">Si hace clic en OK desmarcará todos estos permisos. ¿Está
-                    seguro?
-                </target>
+                <target xml:lang="es-ES" state="translated">Si hace clic en OK desmarcará todos estos permisos. ¿Está seguro?</target>
             </trans-unit>
             <trans-unit id="7e05819f596fc786d34b03ea3a3c1c42"
                         resname="ATTENTION: Are you sure you want to delete this User from this Group?">
                 <source>ATTENTION: Are you sure you want to delete this User from this Group?</source>
-                <target xml:lang="es-ES" state="translated">ATENCIÓN: ¿Está seguro de querer eliminar este Usuario de
-                    este Grupo?
-                </target>
+                <target xml:lang="es-ES" state="translated">ATENCIÓN: ¿Está seguro de querer eliminar este Usuario de este Grupo?</target>
             </trans-unit>
             <trans-unit id="59c2d94d5c2d43c387e4021074e079ac"
                         resname="ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?">
-                <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?
-                </source>
-                <target xml:lang="es-ES" state="translated">ATENCIÓN: ¿Está seguro de querer eliminar este Objeto
-                    Multimedia Administrado de este Grupo?
-                </target>
+                <source>ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?</source>
+                <target xml:lang="es-ES" state="translated">ATENCIÓN: ¿Está seguro de querer eliminar este Objeto Multimedia Administrado de este Grupo?</target>
             </trans-unit>
             <trans-unit id="6d407c8ae795ae481d0bd26d9fc63b92"
                         resname="ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?">
                 <source>ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?</source>
-                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar este Objeto
-                    Multimedia Reproducible de este Grupo?
-                </target>
+                <target xml:lang="es-ES" state="translated">ATENCiÓN: ¿Está seguro de querer eliminar este Objeto Multimedia Reproducible de este Grupo?</target>
             </trans-unit>
             <trans-unit id="d7d950ec91d4c06845156811a0084853"
                         resname="WARNING: You will no longer have access to this Multimedia Object.">
                 <source>WARNING: You will no longer have access to this Multimedia Object.</source>
-                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Dejará de tener acceso a este Objeto
-                    Multimedia.
-                </target>
+                <target xml:lang="es-ES" state="translated">ADVERTENCIA: Dejará de tener acceso a este Objeto Multimedia.</target>
             </trans-unit>
             <trans-unit id="90e394e53e9896a196e22f4b7d2fa1aa"
                         resname="Any Internet user can play this multimedia object">
                 <source>Any Internet user can play this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir este objeto
-                    multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="d62721a20e444a58b4753aa63a995265"
                         resname="Only users with the defined password can play this multimedia object">
                 <source>Only users with the defined password can play this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán
-                    reproducir este objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán reproducir este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="61ee265a4986d33b3abbc8bfa87e82e0"
                         resname="Only logged in users in the system can play this multimedia object">
                 <source>Only logged in users in the system can play this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán
-                    reproducir este objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir este objeto multimedia</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto
-                        multimedia
-                    </target>
+                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir este objeto multimedia</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="6ee1d7777bee7c24bc7764aa031ef762"
                         resname="Only users in the selected Groups can play this multimedia object">
                 <source>Only users in the selected Groups can play this multimedia object</source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán
-                    reproducir este objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán reproducir este objeto multimedia</target>
             </trans-unit>
             <trans-unit id="d5ddfae94fbec629e0f0535615b05fdd" resname="Media Manager">
                 <source>Media Manager</source>
@@ -2572,16 +2396,12 @@
             <trans-unit id="e622429156edfbdf560c765a86d633ce"
                         resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
                 <source>{0} |{1} 1 pending job. |]1,Inf[ %count% pending jobs.</source>
-                <target xml:lang="es-ES" state="translated">{0} |{1} 1 tarea pendiente. |]1,Inf[ %count% tareas
-                    pendientes.
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} |{1} 1 tarea pendiente. |]1,Inf[ %count% tareas pendientes.</target>
             </trans-unit>
             <trans-unit id="215f26215b6734e1db7b1473532c0530"
                         resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
                 <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
-                <target xml:lang="es-ES" state="translated">{0} |{1} 1 tarea en ejecución. |]1,Inf[ %count% tareas en
-                    ejecución.
-                </target>
+                <target xml:lang="es-ES" state="translated">{0} |{1} 1 tarea en ejecución. |]1,Inf[ %count% tareas en ejecución.</target>
             </trans-unit>
             <trans-unit id="b12959058e1e722f9e557ffccfbbf96e" resname="Multimedia object preview">
                 <source>Multimedia object preview</source>
@@ -2589,8 +2409,7 @@
             </trans-unit>
             <trans-unit id="a179bfbcfd79b846e9321376e49f1397" resname="The multimedia object '%title%' is not playable">
                 <source>The multimedia object '%title%' is not playable</source>
-                <target xml:lang="es-ES" state="translated">No se puede reproducir el objeto multimedia '%title%'
-                </target>
+                <target xml:lang="es-ES" state="translated">No se puede reproducir el objeto multimedia '%title%'</target>
             </trans-unit>
             <trans-unit id="096783234f0908eb8e8cdda7c3e12e75"
                         resname="The multimedia object '%title%' is not published">
@@ -2610,14 +2429,11 @@
             </trans-unit>
             <trans-unit id="55483e9fdd78d5ecc8e884deee206c03" resname="This object cannot be played on the playlist">
                 <source>This object cannot be played on the playlist</source>
-                <target xml:lang="es-ES" state="translated">Este objeto no se puede reproducir en la lista de
-                    reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">Este objeto no se puede reproducir en la lista de reproducción</target>
             </trans-unit>
             <trans-unit id="e499d880b861f4238bf7305842298db6" resname="This user does not own any multimedia objects">
                 <source>This user does not own any multimedia objects</source>
-                <target xml:lang="es-ES" state="translated">Este usuario no es propietario de ningún objeto multimedia
-                </target>
+                <target xml:lang="es-ES" state="translated">Este usuario no es propietario de ningún objeto multimedia</target>
             </trans-unit>
             <trans-unit id="0448191f48f4a6fcec112c635d80b132" resname="Edit multimedia object">
                 <source>Edit multimedia object</source>
@@ -2625,8 +2441,7 @@
             </trans-unit>
             <trans-unit id="56014549547131f0a7aada0a6e2755f3" resname="Delete multimedia object from de playlist">
                 <source>Delete multimedia object from de playlist</source>
-                <target xml:lang="es-ES" state="translated">Eliminar objeto multimedia de la lista de reproducción
-                </target>
+                <target xml:lang="es-ES" state="translated">Eliminar objeto multimedia de la lista de reproducción</target>
             </trans-unit>
             <trans-unit id="6aa2a91ae07341251a38ce9baba096c2" resname="My Multimedia Series">
                 <source>My Multimedia Series</source>
@@ -2646,29 +2461,13 @@
             </trans-unit>
             <trans-unit id="e234635b56ec116c2ebde7e5ac0b3c7a"
                         resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
-                <source>Add the name of the person you want to add. In case this person already exists in the database,
-                    a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;.
-                    If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the
-                    written name
-                </source>
-                <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el
-                    caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde
-                    podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt;
-                    una nueva entrada con el nombre
-                </target>
+                <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+                <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa
-                        persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá
-                        seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt;
-                        &gt;una nueva entrada con el nombre
-                    </target>
+                    <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
                 </alt-trans>
                 <alt-trans>
-                    <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa
-                        persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá
-                        seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt;
-                        &gt;una nueva entrada con el nombre
-                    </target>
+                    <target xml:lang="es-ES">Introduzca el nombre de la persona que quiere añadir. En el caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; &gt;una nueva entrada con el nombre</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="805d0e84ccf3732268f61ea1e8f3a9b0" resname="My Playlists">
@@ -2914,17 +2713,14 @@
             </trans-unit>
             <trans-unit id="4ce2178d00438cb85909748f42e6b6c3" resname="Successfully updated groups in User.">
                 <source>Successfully updated groups in User.</source>
-                <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el usuario.
-                </target>
+                <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el usuario.</target>
                 <alt-trans>
                     <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el usuario.</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="0698e8331c54ff033308542896e38de5" resname="Successfully updated groups in Mm.">
                 <source>Successfully updated groups in Mm.</source>
-                <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el objeto
-                    multimedia.
-                </target>
+                <target xml:lang="es-ES" state="translated">Actualizados satisfactoriamente los grupos en el objeto multimedia.</target>
                 <alt-trans>
                     <target xml:lang="es-ES">Actualizado satisfactoriamente los grupos en el objeto multimedia.</target>
                 </alt-trans>
@@ -2939,53 +2735,33 @@
             <trans-unit id="851864904ebf878a7cdc69903621cace"
                         resname="Successfully updated Broadcast in all Multimedia Objects.">
                 <source>Successfully updated Broadcast in all Multimedia Objects.</source>
-                <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión en todos los
-                    objetos multimedia.
-                </target>
+                <target xml:lang="es-ES" state="translated">Actualizada satisfactoriamente la difusión en todos los objetos multimedia.</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión en todos los objetos
-                        multimedia.
-                    </target>
+                    <target xml:lang="es-ES">Actualizado satisfactoriamente la difusión en todos los objetos multimedia.</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="4fcd7e6e9143ff68521e8d7c17fe2947"
                         resname="Any Internet user can play the new multimedia objects created from this video template">
                 <source>Any Internet user can play the new multimedia objects created from this video template</source>
-                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir los nuevos
-                    objetos multimedia creados a partir de esta plantilla de video
-                </target>
+                <target xml:lang="es-ES" state="translated">Cualquier usuario de Internet puede reproducir los nuevos objetos multimedia creados a partir de esta plantilla de video</target>
             </trans-unit>
             <trans-unit id="f8359269ed8bb0171fec71a44cc12cfe"
                         resname="Only users with the defined password can play the new multimedia objects created from this video template">
-                <source>Only users with the defined password can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán
-                    reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo
-                </target>
+                <source>Only users with the defined password can play the new multimedia objects created from this video template</source>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios con la contraseña definida podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
             </trans-unit>
             <trans-unit id="46860ca8477cd97a78801725a8fbf69c"
                         resname="Only logged in users in the system can play the new multimedia objects created from this video template">
-                <source>Only logged in users in the system can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán
-                    reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo
-                </target>
+                <source>Only logged in users in the system can play the new multimedia objects created from this video template</source>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios registrados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
                 <alt-trans>
-                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir los nuevos
-                        objetos multimedia creados a partir de esta plantilla de vídeo
-                    </target>
+                    <target xml:lang="es-ES">Sólo los usuarios logueados en el sistema podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
                 </alt-trans>
             </trans-unit>
             <trans-unit id="dbbcde2b3cfdef9792b3d8a8e77ea5b6"
                         resname="Only users in the selected Groups can play the new multimedia objects created from this video template">
-                <source>Only users in the selected Groups can play the new multimedia objects created from this video
-                    template
-                </source>
-                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán
-                    reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo
-                </target>
+                <source>Only users in the selected Groups can play the new multimedia objects created from this video template</source>
+                <target xml:lang="es-ES" state="translated">Sólo los usuarios en los Grupos seleccionados podrán reproducir los nuevos objetos multimedia creados a partir de esta plantilla de vídeo</target>
             </trans-unit>
             <trans-unit id="4aa82f2fd75c14f8893440790ec807c7" resname="Upload new videos">
                 <source>Upload new videos</source>
@@ -3042,22 +2818,17 @@
             <trans-unit id="d196df35ab21fefc9490c8f22c4239c6"
                         resname="Select the number of series to display per page.">
                 <source>Select the number of series to display per page.</source>
-                <target xml:lang="es-ES" state="translated">Seleccione el número de series a mostrar por página.
-                </target>
+                <target xml:lang="es-ES" state="translated">Seleccione el número de series a mostrar por página.</target>
             </trans-unit>
             <trans-unit id="a52f85515fc1c0fdc14f42c0479347c9"
                         resname="Select the number of playlists to display per page.">
                 <source>Select the number of playlists to display per page.</source>
-                <target xml:lang="es-ES" state="translated">Seleccione el número de listas de reproducción a mostrar por
-                    página.
-                </target>
+                <target xml:lang="es-ES" state="translated">Seleccione el número de listas de reproducción a mostrar por página.</target>
             </trans-unit>
             <trans-unit id="39af30d7680c5a7fcd31a5d3a4f10303"
                         resname="Select the number of multimedia objects to display per page.">
                 <source>Select the number of multimedia objects to display per page.</source>
-                <target xml:lang="es-ES" state="translated">Seleccione el número de objetos multimedia a mostrar por
-                    página.
-                </target>
+                <target xml:lang="es-ES" state="translated">Seleccione el número de objetos multimedia a mostrar por página.</target>
             </trans-unit>
             <trans-unit id="629a1fb15dc990e60e6f54e6f1bc456f" resname="External player">
                 <source>External player</source>
@@ -3210,9 +2981,7 @@
             </trans-unit>
             <trans-unit id="360c27f740233cbea8da5fda1b050aaf"
                         resname="Select an&#10;                                action...">
-                <source>Select an
-                    action...
-                </source>
+                <source>Select an action...</source>
                 <target xml:lang="es-ES" state="translated">Seleccione una acción...</target>
             </trans-unit>
             <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
@@ -3246,8 +3015,7 @@
             <trans-unit id="4c6daee4c977416c848e86cbc6c6eb66"
                         resname="There was an error in updating the event session.">
                 <source>There was an error in updating the event session.</source>
-                <target xml:lang="es-ES" state="translated">Se produjo un error al actualizar la sesión del evento.
-                </target>
+                <target xml:lang="es-ES" state="translated">Se produjo un error al actualizar la sesión del evento.</target>
             </trans-unit>
             <trans-unit id="f6bcfdbb84d891968be16598655c04fe" resname="Live session successfully updated.">
                 <source>Live session successfully updated.</source>
@@ -3291,15 +3059,8 @@
             </trans-unit>
             <trans-unit id="f0192d5298c63afd585b2f29d1170f77"
                         resname="Add the name of the series you want to use.&#10;                            In case this series already exists in the database, a pull-down list will be shown,&#10;                            where you can select it and use it. If it doesn't exist in the database,&#10;                            create a new entrance with the written name.">
-                <source>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </source>
-                <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de
-                    que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla
-                    y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.
-                </target>
+                <source>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</source>
+                <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.</target>
             </trans-unit>
             <trans-unit id="cf26c0d5b71f36207ad9b694d77ab7c5" resname="Video URL">
                 <source>Video URL</source>
@@ -3332,9 +3093,7 @@
             <trans-unit id="db0f481303d58eca53dbb87e35452a30"
                         resname="Warning: This link will give a 404 error while this series is hidden.">
                 <source>Warning: This link will give a 404 error while this series is hidden.</source>
-                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace dará un error 404 mientras que esta
-                    serie esté oculta.
-                </target>
+                <target xml:lang="es-ES" state="translated">Advertencia: Este enlace dará un error 404 mientras que esta serie esté oculta.</target>
             </trans-unit>
             <trans-unit id="e5a005c3d96b863b567a679c7b85cb70" resname="Magic URL">
                 <source>Magic URL</source>
@@ -3438,9 +3197,7 @@
             </trans-unit>
             <trans-unit id="408c624b14b33497a9595c77338e22d9"
                         resname="Publishing&#10;                        Decisions">
-                <source>Publishing
-                    Decisions
-                </source>
+                <source>Publishing Decisions</source>
                 <target xml:lang="es-ES" state="translated">Decisiones de publicación</target>
             </trans-unit>
             <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
@@ -3680,31 +3437,23 @@
             </trans-unit>
             <trans-unit id="a33e4cfc99ad017b0c06278054108189"
                         resname="Modify broadcast profile of videos&#10;            template">
-                <source>Modify broadcast profile of videos
-                    template
-                </source>
-                <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de las plantillas de vídeo
-                </target>
+                <source>Modify broadcast profile of videos template</source>
+                <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de las plantillas de vídeo</target>
             </trans-unit>
             <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717"
                         resname="Modify broadcast profile of live&#10;                event">
-                <source>Modify broadcast profile of live
-                    event
-                </source>
+                <source>Modify broadcast profile of live event</source>
                 <target xml:lang="es-ES" state="translated">Modificar Perfil de difusión del directo</target>
             </trans-unit>
             <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031"
                         resname="Modify broadcast profile of multimedia&#10;                object">
-                <source>Modify broadcast profile of multimedia
-                    object
-                </source>
+                <source>Modify broadcast profile of multimedia object</source>
                 <target xml:lang="es-ES" state="translated">Modificar perfil de difusión del objeto multimedia</target>
             </trans-unit>
             <trans-unit id="f4295a80d088167a35cd118ceb2d311e"
                         resname="Delete error. Live channel channel is associated to live event.">
                 <source>Delete error. Live channel channel is associated to live event.</source>
-                <target xml:lang="es-ES" state="translated">Error al borrar. Existen eventos asociados al canal.
-                </target>
+                <target xml:lang="es-ES" state="translated">Error al borrar. Existen eventos asociados al canal.</target>
             </trans-unit>
             <trans-unit id="09e9ac9c330b57bd31a058d19dcccc50" resname="No downloadable">
                 <source>No downloadable</source>
@@ -3736,15 +3485,8 @@
             </trans-unit>
             <trans-unit id="d378c2c63c90e4a8f19c034551167d10"
                         resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
-                <source>Add the name of the series you want to use.
-                    In case this series already exists in the database, a pull-down list will be shown,
-                    where you can select it and use it. If it doesn't exist in the database,
-                    create a new entrance with the written name.
-                </source>
-                <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de
-                    que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla
-                    y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.
-                </target>
+                <source>Add the name of the series you want to use. In case this series already exists in the database, a pull-down list will be shown, where you can select it and use it. If it doesn't exist in the database, create a new entrance with the written name.</source>
+                <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.</target>
             </trans-unit>
             <trans-unit id="e7439b5ca1f88bed2622be1ba9e317d5" resname="Create date">
                 <source>Create date</source>
