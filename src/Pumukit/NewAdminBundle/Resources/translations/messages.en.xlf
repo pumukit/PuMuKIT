@@ -3478,6 +3478,42 @@
         <source>Click to edit messages, poster image and color text</source>
         <target>Click to edit messages, poster image and color text</target>
       </trans-unit>
+      <trans-unit id="0095a9fa74d1713e43e370a7d7846224" resname="Export">
+        <source>Export</source>
+        <target>Export</target>
+      </trans-unit>
+      <trans-unit id="87557f11575c0ad78e4e28abedc13b6e" resname="End">
+        <source>End</source>
+        <target>End</target>
+      </trans-unit>
+      <trans-unit id="9a1ca27234c1c7454ab1ded1a3479b8e" resname="Show configuration for Twitter.">
+        <source>Show configuration for Twitter.</source>
+        <target>Show configuration for Twitter.</target>
+      </trans-unit>
+      <trans-unit id="d9e30479d3de74181f0a80e9a28513ce" resname="Click to edit Twitter configuration">
+        <source>Click to edit Twitter configuration</source>
+        <target>Click to edit Twitter configuration</target>
+      </trans-unit>
+      <trans-unit id="e0dad2922e09dcf2045cc4419436ab13" resname="Twitter hashtag">
+        <source>Twitter hashtag</source>
+        <target>Twitter hashtag</target>
+      </trans-unit>
+      <trans-unit id="29b5a22bb5b315cb68b2f4f95bb3df53" resname="Twitter hashtag without #">
+        <source>Twitter hashtag without #</source>
+        <target>Twitter hashtag without #</target>
+      </trans-unit>
+      <trans-unit id="4d2900f87d53445bad2db338bf31a6da" resname="Twitter widget id">
+        <source>Twitter widget id</source>
+        <target>Twitter widget id</target>
+      </trans-unit>
+      <trans-unit id="a1e326dd777395e6cebda584bfc7e50a" resname="Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code">
+        <source>Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code</source>
+        <target>Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code</target>
+      </trans-unit>
+      <trans-unit id="f1f61c18f955147adbf8cf46785b65de" resname="Publish to LMS">
+        <source>Publish to LMS</source>
+        <target>Publish to LMS</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
