@@ -3620,6 +3620,10 @@
         <source>Enable Chat</source>
         <target>Habilitar Chat</target>
       </trans-unit>
+      <trans-unit id="5aba75edc1588135361d21efeb337b40" resname="Click on the color bar to change color. A pop-up window will be shown.">
+        <source>Click on the color bar to change color. A pop-up window will be shown.</source>
+        <target>Haz click en la barra de color para cambiar el color. Una ventana emergente se mostrará.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
