@@ -51,8 +51,8 @@ class SeriesController extends AdminController implements NewAdminController
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
+            $criteria['playlist.multimedia_objects'] = array('$size' => 0);
             $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
-            $criteria['playlist.multimedia_objects'] = array('$gt' => 1);
         }
         $resources = $this->getResources($request, $config, $criteria);
 
