@@ -36,7 +36,8 @@ class SeriesController extends AdminController implements NewAdminController
         $session = $this->get('session');
         if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
             $session->set('admin/series/empty_series', true);
-            $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $mmObjColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
             $pipeline = array(
                 array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
                 array('$match' => array('count' => 1)),
@@ -44,7 +45,10 @@ class SeriesController extends AdminController implements NewAdminController
             $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
             $emptySeries = array();
             foreach ($allSeries as $series) {
-                $emptySeries[] = $series['_id'];
+                $oSeries = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($series['_id'])));
+                if (0 == count($oSeries->getPlaylist()->getMultimediaObjects())) {
+                    $emptySeries[] = $series['_id'];
+                }
             }
         }
         $config = $this->getConfiguration();
