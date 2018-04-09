@@ -3,13 +3,6 @@
     <form id="filter_series" class="form">
         <fieldset>
             <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
-            <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
-            <ul class="list-unstyled">
-                <li> -
-                    <a href="{{ path('pumukitnewadmin_series_index', {'empty_series': true}) }}" title="{% trans %}Show empty series{% endtrans %}">{% trans %}Show empty series{% endtrans %}</a>
-                </li>
-            </ul>
-
             <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingSearch">
@@ -92,6 +85,12 @@
                     </div>
                 {% endif %}
             </div>
+            <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
+            <ul class="list-unstyled">
+                <li> -
+                    <a href="{{ path('pumukitnewadmin_series_index', {'empty_series': true}) }}" title="{% trans %}Show empty series{% endtrans %}">{% trans %}Show empty series{% endtrans %}</a>
+                </li>
+            </ul>
         </fieldset>
 
         <div class="text-right">
