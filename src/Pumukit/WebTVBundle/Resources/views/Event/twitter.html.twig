@@ -2,6 +2,7 @@
 <div class="panel panel-default nomargin panel-related">
   <div class="panel-heading">
     #{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }}
+    <img src="{{ asset('bundles/pumukitwebtv/images/twitter.svg') }}" alt="{% trans %}Twitter icon{% endtrans %}" title="{% trans %}Twitter icon{% endtrans %}" class="twitter-icon-heading"/>
   </div>
   <div class="panel-body" style="height:400px;">
     <a class="twitter-timeline"  href="https://twitter.com/hashtag/{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }}" data-border-color="#337ab7" data-chrome="nofooter noscrollbar noborders noheader" data-width="100%" data-height="440" data-widget-id="{{ multimediaObject.getEmbeddedSocial().getTwitter() }}" >#{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }} Tweets</a>
