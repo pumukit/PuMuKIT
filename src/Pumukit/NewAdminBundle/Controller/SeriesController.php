@@ -33,27 +33,8 @@ class SeriesController extends AdminController implements NewAdminController
      */
     public function indexAction(Request $request)
     {
-        $session = $this->get('session');
-        if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
-            $session->set('admin/series/empty_series', true);
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $mmObjColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-            $pipeline = array(
-                array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
-                array('$match' => array('count' => 1)),
-            );
-            $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
-            $emptySeries = array();
-            foreach ($allSeries as $series) {
-                $emptySeries[] = $series['_id'];
-            }
-        }
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
-        if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
-            $criteria['playlist.multimedia_objects'] = array('$size' => 0);
-            $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
-        }
         $resources = $this->getResources($request, $config, $criteria);
 
         $update_session = true;
@@ -434,12 +415,34 @@ class SeriesController extends AdminController implements NewAdminController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $criteria = $request->get('criteria', array());
 
+        if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
+            $this->get('session')->set('admin/series/empty_series', true);
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $mmObjColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+            $pipeline = array(
+                array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
+                array('$match' => array('count' => 1)),
+            );
+            $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
+            $emptySeries = array();
+            foreach ($allSeries as $series) {
+                $emptySeries[] = $series['_id'];
+            }
+        }
+
+        if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
+            $criteria['playlist.multimedia_objects'] = array('$size' => 0);
+            $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
+            $this->get('session')->set('admin/series/criteria', $criteria);
+        }
+
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/series/criteria');
             $this->get('session')->remove('admin/series/empty_series');
         } elseif ($criteria) {
             $this->get('session')->set('admin/series/criteria', $criteria);
         }
+
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
@@ -509,7 +512,6 @@ class SeriesController extends AdminController implements NewAdminController
                 if ($page < 1) {
                     $page = 1;
                 }
-
                 $session->set($session_namespace.'/page', $page);
             }
 
@@ -518,21 +520,28 @@ class SeriesController extends AdminController implements NewAdminController
             }
 
             if ($selectedSeriesId) {
-                $newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($selectedSeriesId);
+                //$newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($selectedSeriesId);
                 $adapter = $resources->getAdapter();
                 $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
                 $position = 1;
+                $findSerie = false;
                 foreach ($returnedSeries as $series) {
                     if ($selectedSeriesId == $series->getId()) {
+                        $findSerie = true;
                         break;
                     }
                     ++$position;
                 }
+
                 $maxPerPage = $session->get($session_namespace.'/paginate', 10);
                 $page = intval(ceil($position / $maxPerPage));
+                if (!$findSerie) {
+                    $page = 1;
+                }
             } else {
                 $page = $session->get($session_namespace.'/page', 1);
             }
+
             $resources
                 ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
                 ->setNormalizeOutOfRangePages(true)

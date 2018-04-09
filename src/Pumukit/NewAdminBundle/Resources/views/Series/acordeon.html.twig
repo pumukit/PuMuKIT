@@ -71,10 +71,10 @@
                                     <div>
                                         <select class="form-control" name="criteria[announce]" id="filters_announce">
                                             <option value="diff">{% trans %}Indifferent{% endtrans %}</option>
-                                            <option value="true" {% if criteria is not null and criteria['announce'] == "true" %}selected{% endif %}>
+                                            <option value="true" {% if criteria is not null and criteria['announce'] is defined and criteria['announce'] == "true" %}selected{% endif %}>
                                                 {% trans %}Yes{% endtrans %}
                                             </option>
-                                            <option value="false" {% if criteria is not null and criteria['announce'] == "false" %}selected{% endif %}>
+                                            <option value="false" {% if criteria is not null and criteria['announce'] is defined and criteria['announce'] == "false" %}selected{% endif %}>
                                                 {% trans %}No{% endtrans %}
                                             </option>
                                         </select>

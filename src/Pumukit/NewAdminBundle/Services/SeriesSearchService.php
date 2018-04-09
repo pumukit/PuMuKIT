@@ -57,6 +57,8 @@ class SeriesSearchService
                 }
             } elseif (('_id' === $property) && ('' !== $value)) {
                 $new_criteria['_id'] = $value;
+            } elseif("playlist.multimedia_objects" === $property && ('' !== $value)) {
+                $new_criteria['playlist.multimedia_objects'] = array('$size' => 0);
             }
         }
 
