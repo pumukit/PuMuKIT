@@ -45,16 +45,14 @@ class SeriesController extends AdminController implements NewAdminController
             $allSeries = $mmObjColl->aggregate($pipeline)->toArray();
             $emptySeries = array();
             foreach ($allSeries as $series) {
-                $oSeries = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($series['_id'])));
-                if (0 == count($oSeries->getPlaylist()->getMultimediaObjects())) {
-                    $emptySeries[] = $series['_id'];
-                }
+                $emptySeries[] = $series['_id'];
             }
         }
         $config = $this->getConfiguration();
         $criteria = $this->getCriteria($config);
         if ($request->query->has('empty_series') || $session->has('admin/series/empty_series')) {
             $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
+            $criteria['playlist.multimedia_objects'] = array('$gt' => 1);
         }
         $resources = $this->getResources($request, $config, $criteria);
 
