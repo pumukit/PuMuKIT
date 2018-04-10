@@ -31,7 +31,7 @@
 
     <div class="col-xs-12 col-sm-4 col-md-4">
         <br />
-        {% include('PumukitWebTVBundle:Event:twitter.html.twig') %}
+        {% render(controller('PumukitWebTVBundle:Event:twitter', {'id': multimediaObject.id})) %}
         <br />
         {% render(controller('PumukitWebTVBundle:Event:liveList')) %}
         <br />

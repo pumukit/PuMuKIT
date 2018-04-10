@@ -1,6 +1,6 @@
-{% if multimediaObject.getEmbeddedSocial() and multimediaObject.getEmbeddedSocial().getTwitter() and multimediaObject.getEmbeddedSocial().getTwitterHashtag() %}
+{% if enable_twitter and multimediaObject.getEmbeddedSocial() and multimediaObject.getEmbeddedSocial().getTwitter() and multimediaObject.getEmbeddedSocial().getTwitterHashtag() %}
 <div class="panel panel-default nomargin panel-related">
-  <div class="panel-heading">
+  <div class="panel-heading twitter-panel-heading">
     #{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }}
     <img src="{{ asset('bundles/pumukitwebtv/images/twitter.svg') }}" alt="{% trans %}Twitter icon{% endtrans %}" title="{% trans %}Twitter icon{% endtrans %}" class="twitter-icon-heading"/>
   </div>
