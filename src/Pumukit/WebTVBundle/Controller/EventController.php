@@ -80,6 +80,23 @@ class EventController extends Controller implements WebTVController
     }
 
     /**
+     * @param string $id
+     *
+     * @return array
+     * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
+     * @Template("PumukitWebTVBundle:Event:twitter.html.twig")
+     */
+    public function twitterAction($id)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObject = $repo->find($id);
+        $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
+
+        return array('multimediaObject' => $multimediaObject, 'enable_twitter' => $enableTwitter);
+    }
+
+    /**
      * @param       $title
      * @param       $routeName
      * @param array $routeParameters

@@ -33,7 +33,8 @@ class ChatController extends Controller
     public function showAction(MultimediaObject $multimediaObject, Request $request)
     {
         return array(
-            'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat_update_interval'),
+            'enable_chat' => $this->container->getParameter('pumukit_live.chat.enable'),
+            'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat.update_interval'),
             'multimediaObject' => $multimediaObject,
             'username' => $this->getUser(),
         );

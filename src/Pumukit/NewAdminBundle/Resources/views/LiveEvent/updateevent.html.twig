@@ -150,10 +150,13 @@
                 </div>
             </div>
 
+            {% if enableChat %}
             <div class="form-group">
                 {{ form_row(form.enable_chat) }}
             </div>
+            {% endif %}
 
+            {% if enableTwitter %}
             <div class="form-group">
               <a style="color:#666; text-decoration:underline" href="#"
                  onclick="$('#pumukitnewadmin_live_event_twitter_hashtag').toggle();
@@ -174,6 +177,7 @@
               <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code{% endtrans %}"></i>
               <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
             </div>
+            {% endif %}
         </fieldset>
     </div>
     {{ form_end(form) }}
