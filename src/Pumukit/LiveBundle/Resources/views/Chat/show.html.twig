@@ -1,4 +1,4 @@
-{% if multimediaObject.getEmbeddedEvent() and multimediaObject.getEmbeddedEvent().isChatEnabled() %}
+{% if enable_chat and multimediaObject.getEmbeddedEvent() and multimediaObject.getEmbeddedEvent().isChatEnabled() %}
 {% set event = multimediaObject.getEmbeddedEvent() %}
 <link href="{{ asset('bundles/pumukitlive/css/chat.css') }}" type="text/css" rel="stylesheet" media="screen"/>
 <div class="panel panel-default panel-related event-chat-panel">
