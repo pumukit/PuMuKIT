@@ -17,30 +17,17 @@ class PumukitLiveExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container)
-    {
-        $container->prependExtensionConfig('monolog', array(
-            'channels' => array('live'),
-            'handlers' => array(
-                'privatelive' => array(
-                    'type' => 'stream',
-                    'path' => '%kernel.logs_dir%/live_%kernel.environment%.log',
-                    'level' => 'info',
-                    'channels' => array('live'),
-                ),
-            ),
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('pumukit_live.chat_update_interval', $config['chat_update_interval']);
-        $container->setParameter('pumukit_live.log_update_interval', $config['log_update_interval']);
+
+        $container->setParameter('pumukit_live.chat', $config['chat']);
+        $container->setParameter('pumukit_live.chat.enable', $config['chat']['enable']);
+        $container->setParameter('pumukit_live.chat.update_interval', $config['chat']['update_interval']);
+        $container->setParameter('pumukit_live.twitter', $config['twitter']);
+        $container->setParameter('pumukit_live.twitter.enable', $config['twitter']['enable']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
