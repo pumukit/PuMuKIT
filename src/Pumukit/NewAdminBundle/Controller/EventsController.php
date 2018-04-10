@@ -478,6 +478,9 @@ class EventsController extends Controller
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
+        $enableChat = $this->container->getParameter('pumukit_live.chat.enable');
+        $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
+
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
             try {
@@ -529,7 +532,7 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
-                if (isset($data['twitter_hashtag'])) {
+                if ($enableTwitter && isset($data['twitter_hashtag'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
                     } else {
@@ -539,7 +542,7 @@ class EventsController extends Controller
                         $multimediaObject->setEmbeddedSocial($embeddedSocial);
                     }
                 }
-                if (isset($data['twitter_widget_id'])) {
+                if ($enableTwitter && isset($data['twitter_widget_id'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
                     } else {
@@ -562,7 +565,7 @@ class EventsController extends Controller
             return new JsonResponse(array('event' => $multimediaObject->getEmbeddedEvent()));
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people);
+        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter);
     }
 
     /**
