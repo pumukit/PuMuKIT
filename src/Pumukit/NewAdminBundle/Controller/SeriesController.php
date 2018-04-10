@@ -520,7 +520,6 @@ class SeriesController extends AdminController implements NewAdminController
             }
 
             if ($selectedSeriesId) {
-                //$newSeries = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->find($selectedSeriesId);
                 $adapter = $resources->getAdapter();
                 $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
                 $position = 1;
