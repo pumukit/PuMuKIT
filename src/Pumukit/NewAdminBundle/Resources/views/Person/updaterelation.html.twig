@@ -1,42 +1,43 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myAuxModal{{ template }}Label">{% trans %}edit person{% endtrans %}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myAuxModal{{ template }}Label">{% trans %}edit person{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-  <form onsubmit="$('#myAuxModal{{ template }}').modal('hide');
-                  $.ajax({
-                          url: '{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}',
-                          type: 'POST',
-                          data: $(this).serialize(),
-                          success: function(response){
-                                    $('#{{ role.id }}_person_mms{{ template }}').html(response);
-                                    {% if template != '_template' %}
-                                    $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                                    {% endif %}
-                                    success('{% trans %}Person associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\' {% trans %}successfully updated{% endtrans %}.');
-                          },
-                          error: function(jqXHR, textStatus, errorThrown){
-                                    var textError = jqXHR.responseText;
-                                    var message = errorThrown+': '+textError;
-                                    no_success(message);
-                          }
-                  });
-                  return false;"
-        action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
-    {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-    <input type="hidden" name="id" id="person_id_update" value="{{ person.id }}">
-    <fieldset>
-      {% for child in form %}
-        {{ form_row(child) }}
-      {% endfor %}
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
-    </div>
-  </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+        <form onsubmit="$('#myAuxModal{{ template }}').modal('hide');
+                $.ajax({
+                    url: '{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        $('#{{ role.id }}_person_mms{{ template }}').html(response);
+                        {% if template != '_template' %}
+                            $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
+                        {% endif %}
+                        success('{% trans %}Person associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\' {% trans %}successfully updated{% endtrans %}.');
+                },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        var textError = jqXHR.responseText;
+                        var message = errorThrown+': '+textError;
+                        no_success(message);
+                    }
+                });
+                return false;"
+              action="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+            {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+            <input type="hidden" name="id" id="person_id_update" value="{{ person.id }}">
+            <fieldset>
+                {% for child in form %}
+                    {{ form_row(child) }}
+                {% endfor %}
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

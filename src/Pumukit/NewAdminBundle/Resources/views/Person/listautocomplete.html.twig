@@ -1,73 +1,75 @@
 <div class="modal-header">
-<p>
-{% trans %}Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and <strong>use him/her</strong>. If he/she doesn't exist in the database, <strong>create</strong> a new entrance with the written name{% endtrans %}.
-</p>
+    <p>
+        {% trans %}Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
+        <strong>use him/her</strong>. If he/she doesn't exist in the database,
+        <strong>create</strong> a new entrance with the written name{% endtrans %}.
+    </p>
 </div>
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <fieldset>
-    <legend hidden>{% trans %}Search person{% endtrans %}</legend>
-    <div class="form-group">
-      <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
-      <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control" />
-      <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('/bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
-      <input type="hidden" name="person_id" value="" id="person_id"/>
-    </div>
-  </fieldset>
-  <div class="modal-footer">
-    {% if ldap_enabled  and role.cod != personal_scope_role_code %}
-      {% render(controller('PumukitLDAPBundle:Person:button', {'mmId': mm.id, 'roleId': role.id})) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        <fieldset>
+            <legend hidden>{% trans %}Search person{% endtrans %}</legend>
+            <div class="form-group">
+                <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+                <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control"/>
+                <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('/bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
+                <input type="hidden" name="person_id" value="" id="person_id"/>
+            </div>
+        </fieldset>
+        <div class="modal-footer">
+            {% if ldap_enabled  and role.cod != personal_scope_role_code %}
+                {% render(controller('PumukitLDAPBundle:Person:button', {'mmId': mm.id, 'roleId': role.id})) %}
+            {% endif %}
+            <button type="button" class="btn btn-primary btn-raised"
+                    onclick="if('' != $('#person_id').val()){
+                            var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner} ) }}';
+                            var personId = $('#person_id').val();
+                            $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
+                            success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
+                    {% if template != '_template' %} $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'}); {% endif %}
+                            });
+                            $('#myAuxModal{{ template }}').modal('hide');
+                            }else{
+                            alert('{% trans %}Select before a person{% endtrans %}');
+                            }
+                            return false;">
+                {% trans %}Use{% endtrans %}
+            </button>
+            {% if app.user and ((role.cod != personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE'))) or ((role.cod == personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
+                <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+                        id="create_relation" href="#"
+                        onclick="var aux = $('#name').val();
+                                var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__', 'owner': owner}) }}';
+                                $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
+                    {% trans %}New{% endtrans %}
+                </button>
+            {% endif %}
+            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        </div>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}
-    <button type="button" class="btn btn-primary btn-raised"
-            onclick="if('' != $('#person_id').val()){
-                                                     var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner} ) }}';
-                                                     var personId = $('#person_id').val();
-                                                     $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
-                                                         success('{% trans %}Person successfully associated to Multimedia Object{% endtrans %} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
-                                                         {% if template != '_template' %} $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'}); {%endif%}
-                                                     });
-                                                     $('#myAuxModal{{ template }}').modal('hide');
-                     }else{
-                           alert('{% trans %}Select before a person{% endtrans %}');
-                     }
-                     return false;">
-      {% trans %}Use{% endtrans %}
-    </button>
-    {% if app.user and ((role.cod != personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE'))) or ((role.cod == personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
-    <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
-            id="create_relation" href="#"
-            onclick="var aux = $('#name').val();
-                     var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__', 'owner': owner}) }}';
-                     $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
-      {% trans %}New{% endtrans %}
-    </button>
-    {% endif %}
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-  </div>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
 </div>
 
 <div style="clear:right"></div>
 
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-<script type="text/javascript">
-$("#name").autocomplete({
-    source: "{{ path('pumukitnewadmin_person_auto_complete', {'mmId': mm.id, 'roleId': role.id})|raw }}",
-    delay: 250,
-    minLength: 2,
-    select: function(event, ui) {
-        $("#person_id").val(ui.item.id)
-    }
-    }).autocomplete("instance")._renderItem = function( ul, item ) {
-        return $("<li>")
-        .append("<a title=\""+item.id+"\">"+item.label+"<br><span class='form-control'>"+item.desc+"</span></a>")
-        .appendTo(ul);
-};
+    <script type="text/javascript">
+        $("#name").autocomplete({
+            source: "{{ path('pumukitnewadmin_person_auto_complete', {'mmId': mm.id, 'roleId': role.id})|raw }}",
+            delay: 250,
+            minLength: 2,
+            select: function (event, ui) {
+                $("#person_id").val(ui.item.id)
+            }
+        }).autocomplete("instance")._renderItem = function (ul, item) {
+            return $("<li>")
+                .append("<a title=\"" + item.id + "\">" + item.label + "<br><span class='form-control'>" + item.desc + "</span></a>")
+                .appendTo(ul);
+        };
 
-$("#name").on("input", function(){
-    $("#person_id").val("");
-});
-</script>
+        $("#name").on("input", function () {
+            $("#person_id").val("");
+        });
+    </script>
 {% endif %}
