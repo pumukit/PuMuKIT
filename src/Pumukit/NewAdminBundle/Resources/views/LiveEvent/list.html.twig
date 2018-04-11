@@ -71,7 +71,7 @@
                 </td>
                 <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
                     {% if multimediaObject.getPics()|length > 0 %}
-                        <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive" />
+                        <img src="{{ event_first_thumbnail(multimediaObject.embeddedEvent) }}" class="img-responsive" />
                     {% else %}
                         <img src="{{ default_event_pic }}" class="img-responsive" />
                     {% endif %}
