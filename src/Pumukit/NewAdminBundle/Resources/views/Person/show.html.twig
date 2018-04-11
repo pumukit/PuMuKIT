@@ -1,32 +1,40 @@
-<!-- Vista previa -->
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-{% if person is not null %}
-<div>
-   <input type="hidden" id="inputRawId" value="{{ person.id }}"/>
-   <p style="text-align:center; font-size: large;">
-    {{ person.getHName() }}
-  </p>
+<div class="row">
+    <div class="col-md-12">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+            {% if person is not null %}
 
-  <p>
-    {% trans %}INFO{% endtrans %}:
-      {{ person.getOther() }}
-      <br />
-    {% trans %}SERIES{% endtrans %}:
-      <ul class="list-unstyled">
-      {% for oneseries in series %}
-        <li><a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}" title="{{ oneseries.getTitle() }}">{{ oneseries.id }}</a> ({{ oneseries.getTitle() }})</li>
-      {% endfor %}
-      {% if series|length > 4 %}
-        <li><strong>...</strong></li>
-      {% endif %}
-      </ul>
-  </p>
+                <input type="hidden" id="inputRawId" value="{{ person.id }}"/>
+                <h4 class="text-center">
+                    <strong>{{ person.getHName() }}</strong>
+                </h4>
+
+                <p>
+                    <u>{% trans %}INFO{% endtrans %}:</u>
+                </p>
+                <p>{{ person.getOther() }}</p>
+
+                <p>
+                    <u>{% trans %}SERIES{% endtrans %}:</u>
+                </p>
+                <ul class="list-unstyled">
+                    {% for oneseries in series %}
+                        <li>
+                            <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}" title="{{ oneseries.getTitle() }}">
+                                ({{ oneseries.getTitle() }})
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    {% if series|length > 4 %}
+                        <li><strong>...</strong></li>
+                    {% endif %}
+                </ul>
+
+            {% else %}
+                <p>{% trans %}Select any person{% endtrans %}.</p>
+            {% endif %}
+        {% else %}
+            {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+        {% endif %}
+    </div>
 </div>
-{% else %}
-<p>
-  {% trans %}Select any person{% endtrans %}.
-</p>
-{% endif %}
-{% else %}
-  {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-{% endif %}
