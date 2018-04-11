@@ -1,49 +1,64 @@
 <!-- Filter -->
 <div class="well">
-  <form id="filter_users"  action="{{ path('pumukitnewadmin_user_index') }}" method="get">
-  <fieldset>
-    <legend hidden>{% trans %}Filter Users{% endtrans %}</legend>
-    <h2>{% trans %}Search{% endtrans %}</h2>
+    <form id="filter_users" action="{{ path('pumukitnewadmin_user_index') }}" method="get">
+        <fieldset>
+            <legend hidden>{% trans %}Filter Users{% endtrans %}</legend>
+            <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i>
+                                {% trans %}Search{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
 
-    <div class="form-group">
-      <label for="filters_username" class="control-label">{% trans %}Username{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/user/criteria') %}
-      <div>
-        <input type="text" class="reset form-control" name="criteria[username]" id="filters_username" value="{{ criteria['username']|default("") }}">
-      </div>
-    </div>
+                            <div class="form-group">
+                                <label for="filters_username" class="control-label">{% trans %}Username{% endtrans %}:</label>
+                                {% set criteria = app.session.get('admin/user/criteria') %}
+                                <div>
+                                    <input type="text" class="reset form-control" name="criteria[username]" id="filters_username" value="{{ criteria['username']|default("") }}">
+                                </div>
+                            </div>
 
-    <div class="form-group">
-      <label for="filters_profile" class="control-label">{% trans %}Permission Profile{% endtrans %}:</label>
-      <div>
-        <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">
-          <option value="all" {% if criteria is null or criteria['permissionProfile'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
-          {% for profile in profiles %}
-          <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile'] == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
+                            <div class="form-group">
+                                <label for="filters_profile" class="control-label">{% trans %}Permission Profile{% endtrans %}:</label>
+                                <div>
+                                    <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">
+                                        <option value="all" {% if criteria is null or criteria['permissionProfile'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+                                        {% for profile in profiles %}
+                                            <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile'] == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
 
-    {% if origins|length > 1 %}
-    <div class="form-group">
-      <label for="filters_origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
-      <div>
-        <select class="form-control" name="criteria[origin]" id="filters_origin">
-          <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
-          {% for origin in origins %}
-          <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-    {% endif %}
+                            {% if origins|length > 1 %}
+                                <div class="form-group">
+                                    <label for="filters_origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
+                                    <div>
+                                        <select class="form-control" name="criteria[origin]" id="filters_origin">
+                                            <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+                                            {% for origin in origins %}
+                                                <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  </fieldset>
+        </fieldset>
 
-  <div class="text-right">
-    <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-    <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
-  </div>
-</form>
+        <div class="text-right">
+            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
+        </div>
+    </form>
 </div>
