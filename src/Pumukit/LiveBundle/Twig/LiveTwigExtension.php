@@ -33,6 +33,7 @@ class LiveTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
             new \Twig_SimpleFunction('poster', array($this, 'getEventPoster')),
             new \Twig_SimpleFunction('poster_text_color', array($this, 'getPosterTextColor')),
+            new \Twig_SimpleFunction('event_first_thumbnail', array($this, 'getEventThumbnail')),
         );
     }
 
@@ -85,5 +86,21 @@ class LiveTwigExtension extends \Twig_Extension
     public function getPosterTextColor(EmbeddedEvent $event)
     {
         return $this->eventsService->getPosterTextColor($event);
+    }
+
+    /**
+     * Get event thumbnail.
+     *
+     * @param EmbeddedEvent|array $event
+     *
+     * @return string
+     */
+    public function getEventThumbnail($event)
+    {
+        if (!is_array($event)) {
+            return $this->eventsService->getEventThumbnail($event);
+        } else {
+            return $this->eventsService->getEventThumbnailByEventId($event['event']['_id']);
+        }
     }
 }
