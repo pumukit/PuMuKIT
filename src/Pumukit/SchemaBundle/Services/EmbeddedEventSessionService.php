@@ -13,7 +13,7 @@ class EmbeddedEventSessionService
     private $collection;
     private $defaultPoster;
     private $defaultThumbnail;
-    const DEFAULT_COLOR = 'white';
+    const DEFAULT_COLOR = '#ffffff';
     private $validColors = array(
         'aliceblue',
         'antiquewhite',
