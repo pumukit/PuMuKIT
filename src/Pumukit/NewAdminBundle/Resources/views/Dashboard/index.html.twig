@@ -1,85 +1,91 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-  {{ parent() }}
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}" />
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}"/>
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/js/timeline_2.3.1/timeline_js/timeline-api.js') }}"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/js/timeline_2.3.1/timeline_js/timeline-api.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-<h1>{% trans %}Dashboard{% endtrans %}</h1>
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Dashboard{% endtrans %}</li>
+        </ul>
+    </h3>
 
-<div class="text-center well"> 
-  <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
-  <br />
-  <br />
-  <noscript>
-     {% trans %}This page uses Javascript to show you a Timeline.{% endtrans %}
-     {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
-     {% trans %}Thank you.{% endtrans %}
-  </noscript>
-</div>
+    <div class="text-center well">
+        <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
+        <br/>
+        <br/>
+        <noscript>
+            {% trans %}This page uses Javascript to show you a Timeline.{% endtrans %}
+            {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
+            {% trans %}Thank you.{% endtrans %}
+        </noscript>
+    </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-$(function(){
-  var eventSource = new Timeline.DefaultEventSource();
-  var bandInfos = [
-    Timeline.createBandInfo({
-      eventSource:    eventSource,
-      width: '70%',
-      intervalUnit:   Timeline.DateTime.DAY, 
-      intervalPixels: 100
-    }),
-    Timeline.createBandInfo({
-      eventSource:    eventSource,
-      overview: true,
-      width: '30%',
-      intervalUnit:   Timeline.DateTime.MONTH, 
-      intervalPixels: 200
-    })
-  ];  
+        $(function () {
+            var eventSource = new Timeline.DefaultEventSource();
+            var bandInfos = [
+                Timeline.createBandInfo({
+                    eventSource: eventSource,
+                    width: '70%',
+                    intervalUnit: Timeline.DateTime.DAY,
+                    intervalPixels: 100
+                }),
+                Timeline.createBandInfo({
+                    eventSource: eventSource,
+                    overview: true,
+                    width: '30%',
+                    intervalUnit: Timeline.DateTime.MONTH,
+                    intervalPixels: 200
+                })
+            ];
 
-  bandInfos[1].syncWith = 0;
-  bandInfos[1].highlight = true;
- 
-  tl = Timeline.create(document.getElementById('my-timeline'), bandInfos);
-  Timeline.loadXML('{{ url('pumukit_newadmin_dashboard_seriestimeline' ) }}', function(xml, url) { eventSource.loadXML(xml, url); });
+            bandInfos[1].syncWith = 0;
+            bandInfos[1].highlight = true;
 
-});
+            tl = Timeline.create(document.getElementById('my-timeline'), bandInfos);
+            Timeline.loadXML('{{ url('pumukit_newadmin_dashboard_seriestimeline' ) }}', function (xml, url) {
+                eventSource.loadXML(xml, url);
+            });
 
-{# Sobrecargo la función que pinta la burbuja y sólo pinto el título y la fecha traducida al español #}
-var oldFillInfoBubble = Timeline.DefaultEventSource.Event.prototype.fillInfoBubble;
-Timeline.DefaultEventSource.Event.prototype.fillInfoBubble = function(elmt, theme, labeller) {
-    var eventObject = this;
-    
-    // oldFillInfoBubble.call(this, elmt, theme, labeller); {# antigua función para crear el html de la burbuja #}
+        });
 
-    var start = new Date(eventObject._start);
-    var div_title = document.createElement("div");
-    div_title.className = "timeline-event-bubble-title";
-    var a_title = document.createElement("a");
-    a_title.setAttribute('href', eventObject._link);
-    a_title.innerHTML = eventObject._text;
-    div_title.appendChild(a_title);
-    var div_time = document.createElement("div");
-    div_time.className = "timeline-event-bubble-time";
-    div_time.innerText = start;
-    elmt.appendChild(div_title);
-    elmt.appendChild(div_time);
-    var link_frontend = eventObject._link;
-    var a_frontend = document.createElement("a");
-    a_frontend.setAttribute('href', link_frontend);
-    a_frontend.innerHTML = "{% trans %}Go to series WebTV page{% endtrans %}";
-    elmt.appendChild(a_frontend);
-}
-</script>
-<br />
-<br />
+        {# Sobrecargo la función que pinta la burbuja y sólo pinto el título y la fecha traducida al español #}
+        var oldFillInfoBubble = Timeline.DefaultEventSource.Event.prototype.fillInfoBubble;
+        Timeline.DefaultEventSource.Event.prototype.fillInfoBubble = function (elmt, theme, labeller) {
+            var eventObject = this;
+
+            // oldFillInfoBubble.call(this, elmt, theme, labeller); {# antigua función para crear el html de la burbuja #}
+
+            var start = new Date(eventObject._start);
+            var div_title = document.createElement("div");
+            div_title.className = "timeline-event-bubble-title";
+            var a_title = document.createElement("a");
+            a_title.setAttribute('href', eventObject._link);
+            a_title.innerHTML = eventObject._text;
+            div_title.appendChild(a_title);
+            var div_time = document.createElement("div");
+            div_time.className = "timeline-event-bubble-time";
+            div_time.innerText = start;
+            elmt.appendChild(div_title);
+            elmt.appendChild(div_time);
+            var link_frontend = eventObject._link;
+            var a_frontend = document.createElement("a");
+            a_frontend.setAttribute('href', link_frontend);
+            a_frontend.innerHTML = "{% trans %}Go to series WebTV page{% endtrans %}";
+            elmt.appendChild(a_frontend);
+        }
+    </script>
+    <br/>
+    <br/>
 
 
 {% endblock %}
