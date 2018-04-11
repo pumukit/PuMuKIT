@@ -2,38 +2,42 @@
 
 {% block body %}
 
-<h1>{% trans %}Groups{% endtrans %}</h1>
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Groups{% endtrans %}</li>
+        </ul>
+    </h3>
 
-<div class="row">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
-  <div class="col-md-10">
-    <div class="well">
-      <div id="list_groups">
-        {% include 'PumukitNewAdminBundle:Group:list.html.twig' %}
-      </div>
-      <div class="row">
-        <div class="col-xs-4">
-          <select id="options_groups" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('group', $(this), 'groups');">
-            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option>
-            <option value="delete_selected_groups">{% trans %}Delete selected{% endtrans %}</option>
-          </select>
-        </div>
-        <div class="col-xs-8 text-right">
-          <a href="{{ path('pumukitnewadmin_group_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-        </div>
-      </div>
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
+            <div class="col-md-10">
+                <div class="well">
+                    <div id="list_groups">
+                        {% include 'PumukitNewAdminBundle:Group:list.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <select id="options_groups" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('group', $(this), 'groups');">
+                                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                                <option disabled="">---</option>
+                                <option value="delete_selected_groups">{% trans %}Delete selected{% endtrans %}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <a href="{{ path('pumukitnewadmin_group_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 hidden-xs hidden-sm">
+                {% include 'PumukitNewAdminBundle:Group:filters.html.twig' %}
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
-  <div class="col-md-2 hidden-xs hidden-sm">
-    {% include 'PumukitNewAdminBundle:Group:filters.html.twig' %}
-  </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
-</div>
 {% endblock %}
