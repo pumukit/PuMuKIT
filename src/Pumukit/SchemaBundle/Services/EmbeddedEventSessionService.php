@@ -12,6 +12,7 @@ class EmbeddedEventSessionService
     private $repo;
     private $collection;
     private $defaultPoster;
+    private $defaultThumbnail;
     const DEFAULT_COLOR = 'white';
     private $validColors = array(
         'aliceblue',
@@ -159,12 +160,13 @@ class EmbeddedEventSessionService
     /**
      * Constructor.
      */
-    public function __construct(DocumentManager $documentManager, $defaultPoster)
+    public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $this->defaultPoster = $defaultPoster;
+        $this->defaultThumbnail = $defaultThumbnail;
     }
 
     /**
@@ -271,6 +273,58 @@ class EmbeddedEventSessionService
         $pics = $this->getMultimediaObjectPics($eventId);
 
         return $this->getPoster($pics);
+    }
+
+    /**
+     * Get event thumbnail.
+     *
+     * @param EmbeddedEvent $event
+     *
+     * @return string
+     */
+    public function getEventThumbnail(EmbeddedEvent $event)
+    {
+        $pics = $this->getMultimediaObjectPics($event->getId());
+
+        return $this->getFirstThumbnail($pics);
+    }
+
+    /**
+     * Get event thumbnail by event id.
+     *
+     * @param string $id
+     *
+     * @return string
+     */
+    public function getEventThumbnailByEventId($eventId)
+    {
+        $pics = $this->getMultimediaObjectPics($eventId);
+
+        return $this->getFirstThumbnail($pics);
+    }
+
+    /**
+     * Get first thumbnail.
+     *
+     * @param array pics
+     *
+     * @return string
+     */
+    public function getFirstThumbnail($pics)
+    {
+        foreach ($pics as $pic) {
+            if ($pic['hide']) {
+                continue;
+            }
+            if (isset($pic['tags']) && in_array('poster', $pic['tags'])) {
+                continue;
+            }
+            if (isset($pic['url'])) {
+                return $pic['url'];
+            }
+        }
+
+        return $this->defaultThumbnail;
     }
 
     /**

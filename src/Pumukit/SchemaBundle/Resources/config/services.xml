@@ -245,6 +245,7 @@
         <service id="pumukitschema.eventsession" class="Pumukit\SchemaBundle\Services\EmbeddedEventSessionService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
           <argument>%pumukitschema.event_default_poster%</argument>
+          <argument>%pumukit_new_admin.advance_live_event_create_default_pic%</argument>
         </service>
 
     </services>
