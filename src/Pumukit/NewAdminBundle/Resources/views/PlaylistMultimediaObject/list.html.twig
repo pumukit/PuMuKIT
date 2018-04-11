@@ -1,171 +1,176 @@
 <div class="table-responsive well" style="overflow:visible;">
     <table class="table table-striped table-hover">
-      <thead>
+        <thead>
         <tr>
-          <th width="1%">
-            <div class="checkbox pumukit-mms-checkbox">
-              <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('playlistmm', this.checked)">
-              </label>
-            </div>
-          </th>
-          <th colspan="{{ is_naked() ? 4 : 6}}" width="5%"></th>
-          <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
-          <th width="1%">{% trans %}Img{% endtrans %}</th>
-          <th>{% trans %}Title{% endtrans %}</th>
-          <th width="1%">{% trans %}Duration{% endtrans %}</th>
-          <th width="1%">{% trans %}RecDate{% endtrans %}</th>
-          <th width="1%">{% trans %}PubDate{% endtrans %}</th>
+            <th width="1%">
+                <div class="checkbox pumukit-mms-checkbox">
+                    <label>
+                        <input type="checkbox" onclick="window.click_checkbox_all('playlistmm', this.checked)">
+                    </label>
+                </div>
+            </th>
+            <th colspan="{{ is_naked() ? 4 : 6 }}" width="5%"></th>
+            <th width="1%">{% trans %}Audio/Video{% endtrans %}</th>
+            <th width="1%">{% trans %}Img{% endtrans %}</th>
+            <th>{% trans %}Title{% endtrans %}</th>
+            <th width="1%">{% trans %}Duration{% endtrans %}</th>
+            <th width="1%">{% trans %}RecDate{% endtrans %}</th>
+            <th width="1%">{% trans %}PubDate{% endtrans %}</th>
         </tr>
-      </thead>
+        </thead>
 
-      <tbody>
+        <tbody>
         {% set mms_offset = (mms.getCurrentPage()-1)*mms.getMaxPerPage() %}{# Init this in controller instead? #}
         {% for mm in mms %}
-          {% set mm_pos = loop.index0 + mms_offset %}
-          {% set is_selected = (app.session.get('admin/playlistmms/id') == mm.id)  and (app.session.get('admin/playlistmms/pos', -1) == mm_pos) %}
-          <tr style="cursor: pointer" class="mm_listed {{is_selected?'success':''}}" data-id="{{mm.id}}" data-pos="{{mm_pos}}">
-            <td>
-              <div class="checkbox pumukit-mms-checkbox">
-                <label>
-                  <input id="{{ mm.id }}" data-pos="{{ mm_pos }}" class="playlistmm_checkbox" type="checkbox">
-                </label>
-              </div>
-            </td>
-            <td>
-              {% if not is_playable_on_playlist(mm) %}
-                <i id="table_playable_mm_{{ mm.id }}" style="color:orange;font-size:16px" class="non-playable-warning mdi-action-report-problem" data-toggle="tooltip" data-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
-              {% endif %}
-            </td>
-            {% if not is_naked() %}
-            <td>
-              <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
-            </td>
-            <td>
-              {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
-            </td>
-            {% endif %}
-            <td>
-              {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
-            </td>
-            <td>
-              {% if mms.getCurrentPage() != 1 or not loop.first %}
-                {% spaceless %}
-                  <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-                  <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
-                {% endspaceless %}
-              {% endif %}
-            </td>
-            <td>
-              {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults())  %}
-                {% spaceless %}
-                  <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-                  <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
-                {% endspaceless %}
-              {% endif %}
-            </td>
-            <td>
-              <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
-            </td>
-            <td>
-              <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
-            </td>
-            <td>
-              {{ mm.getTitle() }}
-            </td>
-            <td>
-              {{ mmobj_duration(mm) | duration_string  }}
-            </td>
-            <td class="text-nowrap">
-              {{ mm.getRecordDate()|date('d-m-Y') }}
-            </td>
-            <td class="text-nowrap">
-              {{ mm.getPublicDate()|date('d-m-Y') }}
-            </td>
-          </tr>
-  {% else %}
-          <tr>
-            <td colspan="13">
-              {% trans %}There are no multimedia objects with those values.{% endtrans %}
-            </td>
-          </tr>
+            {% set mm_pos = loop.index0 + mms_offset %}
+            {% set is_selected = (app.session.get('admin/playlistmms/id') == mm.id)  and (app.session.get('admin/playlistmms/pos', -1) == mm_pos) %}
+            <tr style="cursor: pointer" class="mm_listed {{ is_selected?'success':'' }}" data-id="{{ mm.id }}" data-pos="{{ mm_pos }}">
+                <td>
+                    <div class="checkbox pumukit-mms-checkbox">
+                        <label>
+                            <input id="{{ mm.id }}" data-pos="{{ mm_pos }}" class="playlistmm_checkbox" type="checkbox">
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    {% if not is_playable_on_playlist(mm) %}
+                        <i id="table_playable_mm_{{ mm.id }}" style="color:orange;font-size:16px" class="non-playable-warning mdi-action-report-problem" data-toggle="tooltip" data-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
+                    {% endif %}
+                </td>
+                {% if not is_naked() %}
+                    <td>
+                        <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm.status|status_text }}"></i>
+                    </td>
+                    <td>
+                        {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+                    </td>
+                {% endif %}
+                <td>
+                    {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:updatemenu.html.twig' with {'mm': mm, 'mm_pos':mm_pos} %}
+                </td>
+                <td>
+                    {% if mms.getCurrentPage() != 1 or not loop.first %}
+                        {% spaceless %}
+                            <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+                            <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+                        {% endspaceless %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
+                        {% spaceless %}
+                            <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+                            <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+                        {% endspaceless %}
+                    {% endif %}
+                </td>
+                <td>
+                    <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
+                </td>
+                <td>
+                    <img class="mini" src="{{ mm|first_url_pic(false, false) }}" alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+                </td>
+                <td>
+                    {{ mm.getTitle() }}
+                </td>
+                <td>
+                    {{ mm.getRealDuration()| duration_string }}
+                    {% if mm.getProperty('soft-editing-duration') %}
+                        <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                    {% endif %}
+                </td>
+                <td class="text-nowrap">
+                    {{ mm.getRecordDate()|date('d-m-Y') }}
+                </td>
+                <td class="text-nowrap">
+                    {{ mm.getPublicDate()|date('d-m-Y') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">
+                    {% trans %}There are no multimedia objects with those values.{% endtrans %}
+                </td>
+            </tr>
         {% endfor %}
 
-        {% if 0 == mms|length%}
-          {% set range = 1..9 %}
+        {% if 0 == mms|length %}
+            {% set range = 1..9 %}
         {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage) %}
-          {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
+            {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
         {% else %}
-          {% set range = [] %}
+            {% set range = [] %}
         {% endif %}
 
         {% for i in range %}
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            {% if not is_naked() %}
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            {% endif %}
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                {% if not is_naked() %}
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                {% endif %}
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
         {% endfor %}
-      </tbody>
-      <tfoot>
+        </tbody>
+        <tfoot>
         <tr>
-          <th colspan="13" class="foot-td">
-            <div class="row">
-              <div class="col-md-6">
-                {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
-                {% if app.session.get('admin/playlistmms/criteria')|length != 0%}
-                  <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-                {% endif %}
-              </div>
-              <div class="col-md-6 text-right">
-                <div class="pagerfanta">
-                  {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
-                      "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"}) }}
+            <th colspan="13" class="foot-td">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
+                        {% if app.session.get('admin/playlistmms/criteria')|length != 0 %}
+                            <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="pagerfanta">
+                            {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
+                                "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"}) }}
 
-                  {% if not is_naked() %}
-                  <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
-                    <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
-                    <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
-                    <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
-                  </select>
-                {% endif %}
+                            {% if not is_naked() %}
+                                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
+                                    <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
+                                    <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
+                                    <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
+                                </select>
+                            {% endif %}
 
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </th>
+            </th>
         </tr>
-      </tfoot>
+        </tfoot>
     </table>
 </div>
 <script type="text/javascript">
- $('.mm_listed').click(function(){
-     var show_url = "{{ path('pumukitnewadmin_playlistmms_show', {'id': '__mmid__', 'pos':'__pos__'}) }}";
-     var edit_url = "{{ path('pumukitnewadmin_playlistmms_info', {'id': '__mmid__'}) }}";
-     var id = $(this).data('id');
-     var pos = $(this).data('pos');
-     $('.success').removeClass('success');
-     $(this).addClass('success');
-     show_url = show_url.replace('__mmid__', id);
-     show_url = show_url.replace('__pos__', pos);
-     edit_url = edit_url.replace('__mmid__', id);
-     $('#preview_playlistmm').load(show_url);
-     $('#edit_playlistmm').load(edit_url, function(){init_tabs();});
- }).dblclick(function(){
-     var id = $(this).data('id');
-     dblclick_preview_mm(id);
- });
+    $('.mm_listed').click(function () {
+        var show_url = "{{ path('pumukitnewadmin_playlistmms_show', {'id': '__mmid__', 'pos':'__pos__'}) }}";
+        var edit_url = "{{ path('pumukitnewadmin_playlistmms_info', {'id': '__mmid__'}) }}";
+        var id = $(this).data('id');
+        var pos = $(this).data('pos');
+        $('.success').removeClass('success');
+        $(this).addClass('success');
+        show_url = show_url.replace('__mmid__', id);
+        show_url = show_url.replace('__pos__', pos);
+        edit_url = edit_url.replace('__mmid__', id);
+        $('#preview_playlistmm').load(show_url);
+        $('#edit_playlistmm').load(edit_url, function () {
+            init_tabs();
+        });
+    }).dblclick(function () {
+        var id = $(this).data('id');
+        dblclick_preview_mm(id);
+    });
 
 </script>
