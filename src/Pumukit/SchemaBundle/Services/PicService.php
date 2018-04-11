@@ -48,11 +48,13 @@ class PicService
     public function getFirstUrlPic($object, $absolute = false, $hd = true)
     {
         $pics = $object->getPics();
+        $picUrl = null;
         if (0 === count($pics)) {
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         } else {
             foreach ($pics as $pic) {
-                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) {
+                if (($pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster')) {
+                    $picUrl = $pic->getUrl();
                     break;
                 }
             }
