@@ -1,0 +1,23 @@
+{% if type == 'series' %}
+    {% set text = "Series picture"|trans %}
+    {% set src = object|first_url_pic %}
+{% elseif type == 'mm' %}
+    {% set text = "Multimedia object picture"|trans %}
+    {% set src = object|first_url_pic(false, false) %}
+{% elseif type == 'playlist' %}
+    {% set text = "Playlist picture"|trans %}
+    {% set src = object|first_url_pic(false, false) %}
+{% elseif type == 'event' %}
+    {% set text = "Event picture"|trans %}
+    {% if object.getPics()|length > 0 %}
+        {% set src = object|first_url_pic(true, false) %}
+    {% else %}
+        {% set src = default_event_pic %}
+    {% endif %}
+{% endif %}
+
+<div class="embed-responsive embed-responsive-16by9">
+    <div class="embed-responsive-item text-center">
+        <img class="img-responsive pic-{{ object.id }} preview" src="{{ src }}" style="max-height:100%" alt="{{ text }}"/>
+    </div>
+</div>
