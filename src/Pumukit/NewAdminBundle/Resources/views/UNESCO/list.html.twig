@@ -2,76 +2,7 @@
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <table class="table table-striped table-hover">
             <thead>
-            <tr>
-                <th width="1%" id="th-checkbox">
-                    <div class="checkbox pumukit-mms-checkbox">
-                        <label>
-                            <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
-                        </label>
-                    </div>
-                </th>
-                <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
-                <th id="th-video" width="1%">{% trans %}Audio/Video{% endtrans %}</th>
-                <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
-
-                <th id="th-series" width="15%">
-                    <a href="#" class="sort_unesco" data-id="seriesTitle">
-                        {% trans %}Series{% endtrans %}&nbsp;
-                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                            {% if 'seriesTitle' == app.session.get('admin/unesco/element_sort') %}
-                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </th>
-
-                <th id="th-title">
-                    <a href="#" class="sort_unesco" data-id="title">
-                        {% trans %}Title{% endtrans %}&nbsp;
-                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                            {% set type = app.session.get('admin/unesco/element_sort')|split('.') %}
-                            {% if 'title' == type[0] %}
-                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </th>
-                <th id="th-duration" width="10%">
-                    <a href="#" class="sort_unesco" data-id="tracks.duration">
-                        {% trans %}Duration{% endtrans %}
-                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                            {% if 'tracks.duration' ==  app.session.get('admin/unesco/element_sort') %}
-                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </th>
-
-                <th id="th-rec-date" width="10%">
-                    <a href="#" class="sort_unesco" data-id="record_date">
-                        {% trans %}RecDate{% endtrans %}&nbsp;
-                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                            {% if 'record_date' == app.session.get('admin/unesco/element_sort') %}
-                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </th>
-
-                <th id="th-pub-date" width="10%">
-                    <a href="#" class="sort_unesco" data-id="public_date">
-                        {% trans %}PubDate{% endtrans %}&nbsp;
-                        {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                            {% if 'public_date' == app.session.get('admin/unesco/element_sort') %}
-                                {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </th>
-
-                <input type="hidden" name="unesco_short_type" id="pumukitnewadmin_unesco_sort_change_type" value="{{ app.session.get('admin/unesco/type')=='asc'?'desc':'asc' }}"/>
-
-            </tr>
+                {% include "PumukitNewAdminBundle:UNESCO:listth.html.twig" %}
             </thead>
 
             <tbody>
@@ -106,8 +37,7 @@
 
                     <td headers="th-img" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        <img class="mini pic-{{ mm.id }} preview" src="{{ mm|first_url_pic(false, false) }}"
-                             alt="{% trans %}No_pic{% endtrans %}" height="23" width="30">
+                        {% include "PumukitNewAdminBundle:Collection:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
                     </td>
 
                     <td headers="th-series"><a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.id }) }}">{{ mm.series }}</a></td>

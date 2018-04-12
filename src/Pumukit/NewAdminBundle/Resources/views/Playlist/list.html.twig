@@ -1,101 +1,104 @@
 <div class="table-responsive well" style="overflow:visible;">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-  <input type="hidden" name="pumukitnewadmin_playlist_sort_change_type" id="pumukitnewadmin_playlist_sort_change_type" value="{{ app.session.get('admin/playlist/type')=='asc'?'desc':'asc' }}"/>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th width="1%" id="th-checkbox">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('playlist', this.checked)">
-              </label>
-            </div>
-          </th>
-          <th width="1%" id="th-icons"></th>
-          <th width="1%" id="th-img">{% trans %}Img{% endtrans %}</th>
-          {% include 'PumukitNewAdminBundle:Playlist:listth.html.twig' %}
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for oneseries in series %}
-          <tr style="cursor: pointer" {% if(app.session.get('admin/playlist/id') == oneseries.id ) %} class="success" {% endif %}>
-            <td headers="th-checkbox">
-              <div class="checkbox">
-                <label>
-                  <input id="{{ oneseries.id }}" class="playlist_checkbox" type="checkbox">
-                </label>
-              </div>
-            </td>
-            <td headers="th-icons">
-              {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
-            </td>
-            <td headers="th-img" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-              <img class="pic-{{oneseries.id}} preview" src="{{ oneseries|first_url_pic }}" height="23" width="23" alt="playlist image" />
-            </td>
-            <td headers="th-title" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-              <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
-                {{ oneseries.getTitle() }}
-              </a>
-
-            </td>
-            <td headers="th-mm" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-              {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
-            </td>
-          </tr>
-  {% else %}
-          <tr>
-            <td colspan="5" headers="th-checkbox th-icons th-img th-title th-mm">
-              {% trans %}There are no playlist with those values.{% endtrans %}
-            </td>
-          </tr>
-        {% endfor %}
-        {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
-          {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+        <input type="hidden" name="pumukitnewadmin_playlist_sort_change_type" id="pumukitnewadmin_playlist_sort_change_type" value="{{ app.session.get('admin/playlist/type')=='asc'?'desc':'asc' }}"/>
+        <table class="table table-striped table-hover">
+            <thead>
             <tr>
-              <td headers="th-checkbox">&nbsp;</td>
-              <td headers="th-icons">&nbsp;</td>
-              <td headers="th-img">&nbsp;</td>
-              <td headers="th-title">&nbsp;</td>
-              <td headers="th-mm">&nbsp;</td>
+                <th width="1%" id="th-checkbox">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" onclick="window.click_checkbox_all('playlist', this.checked)">
+                        </label>
+                    </div>
+                </th>
+                <th width="1%" id="th-icons"></th>
+                <th width="1%" id="th-img">{% trans %}Img{% endtrans %}</th>
+                {% include 'PumukitNewAdminBundle:Playlist:listth.html.twig' %}
             </tr>
-          {% endfor %}
-        {% endif %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="6" class="foot-td">
-            <div class="row">
-              <div class="col-md-6">
-                {{ series.getNbResults }}
-                {% transchoice series.getNbResults %}
-                {0} playlist|{1} playlist|]1,Inf] playlists
-            {% endtranschoice %}
-            {% if app.session.get('admin/playlist/criteria')|length != 0%}
-              <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
-            {% endif %}
-              </div>
-              <div class="col-md-6 text-right">
-                <div class="pagerfanta">
-                  {% set sorting = {('sorting[' ~ (app.session.get('admin/playlist/sort')) ~ ']') : (app.session.get('admin/playlist/type')) } %}
-                  {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting}) }}
+            </thead>
 
-                {% if not is_naked() %}
-                  <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
-                    <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
-                    <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
-                    <option {% if series.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
-                  </select>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-    {% include 'PumukitNewAdminBundle:Playlist:listthjs.html.twig' %}
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+            <tbody>
+            {% for oneseries in series %}
+                <tr style="cursor: pointer" {% if(app.session.get('admin/playlist/id') == oneseries.id ) %} class="success" {% endif %}>
+                    <td headers="th-checkbox">
+                        <div class="checkbox">
+                            <label>
+                                <input id="{{ oneseries.id }}" class="playlist_checkbox" type="checkbox">
+                            </label>
+                        </div>
+                    </td>
+                    <td headers="th-icons">
+                        {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
+                    </td>
+                    <td headers="th-img" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                        {% include "PumukitNewAdminBundle:Collection:img_list.html.twig"  with {'object' : oneseries, 'type': 'playlist' } %}
+                    </td>
+                    <td headers="th-title" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                        <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
+                            {{ oneseries.getTitle() }}
+                        </a>
+
+                    </td>
+                    <td headers="th-mm" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                        {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" headers="th-checkbox th-icons th-img th-title th-mm">
+                        {% trans %}There are no playlist with those values.{% endtrans %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% if (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1))) < (series.maxPerPage) %}
+                {% for i in (series|length - (series.getMaxPerPage() * (series.getCurrentPage() - 1)))..(series.maxPerPage-1) %}
+                    <tr>
+                        <td headers="th-checkbox">&nbsp;</td>
+                        <td headers="th-icons">&nbsp;</td>
+                        <td headers="th-img">&nbsp;</td>
+                        <td headers="th-title">&nbsp;</td>
+                        <td headers="th-mm">&nbsp;</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="foot-td">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ series.getNbResults }}
+                            {% transchoice series.getNbResults %}
+                                {0} playlist|{1} playlist|]1,Inf] playlists
+                            {% endtranschoice %}
+                            {% if app.session.get('admin/playlist/criteria')|length != 0 %}
+                                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="pagerfanta">
+                                {% set sorting = {('sorting[' ~ (app.session.get('admin/playlist/sort')) ~ ']') : (app.session.get('admin/playlist/type')) } %}
+                                {{ pagerfanta(series, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting}) }}
+
+                                {% if not is_naked() %}
+                                    <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
+                                        <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">10
+                                        </option>
+                                        <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">20
+                                        </option>
+                                        <option {% if series.maxPerPage == 50 %}selected{% endif %} value="50">50
+                                        </option>
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        {% include 'PumukitNewAdminBundle:Playlist:listthjs.html.twig' %}
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>
