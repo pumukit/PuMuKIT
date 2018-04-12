@@ -65,17 +65,7 @@
                 success: function () {
                     $('#myModal').modal('hide');
                     var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                    $('#list_events').load(mm, function(){
-                        var mmo = $('table tr.success .events_checkbox').val();
-                        var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__id__'}) }}";
-                        var showUrl = "{{ path('pumukit_new_admin_live_event_show', {'id': '__id__'}) }}";
-                        if(mmo) {
-                            url = url.replace('__id__', mmo);
-                            showUrl = showUrl.replace('__id__', mmo);
-                            $('#edit_events').load(url);
-                            $('#preview_events').load(showUrl);
-                        }
-                    });
+                    $('#list_events').load(mm);
 
                     $('#seriesSuggestValidate').val("");
                     var message = '{% trans %}Event successfully updated.{% endtrans %}';

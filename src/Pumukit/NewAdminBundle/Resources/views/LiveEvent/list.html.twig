@@ -132,6 +132,20 @@
 </div>
 
 <script type="text/javascript">
+    $(function(){
+        var mmo = "{{ app.session.get('admin/live/event/id') }}";
+        var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__id__'}) }}";
+        var showUrl = "{{ path('pumukit_new_admin_live_event_show', {'id': '__id__'}) }}";
+        if(mmo) {
+            url = url.replace('__id__', mmo);
+            showUrl = showUrl.replace('__id__', mmo);
+            if (mmo != $('#inputMMId').val()) {
+                $('#edit_events').load(url);
+            }
+            $('#preview_events').load(showUrl);
+        }
+    });
+
     $('.event_option').on('click', function (event) {
         event.preventDefault();
         $.ajax({
