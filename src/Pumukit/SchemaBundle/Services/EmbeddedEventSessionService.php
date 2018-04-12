@@ -843,6 +843,7 @@ class EmbeddedEventSessionService
                 '$match' => array(
                     '_id' => array('$nin' => array(new \MongoId($multimediaObjectId))),
                     'islive' => true,
+                    'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
             );
