@@ -397,11 +397,12 @@ class EmbeddedEventSessionService
      */
     public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
     {
+        $now = new \DateTime('now');
         foreach ($event->getEmbeddedEventSession() as $session) {
-            if ($start && $session->getStart()) {
+            if ($start && $session->getStart() && ($session->getStart() > $now)) {
                 return $session->getStart();
             }
-            if (!$start && $session->getEnds()) {
+            if (!$start && $session->getEnds() && ($session->getEnds() > $now)) {
                 return $session->getEnds();
             }
         }
@@ -419,16 +420,25 @@ class EmbeddedEventSessionService
      */
     public function getFutureSessionDate($event, $start = true)
     {
+        $now = new \DateTime('now');
         if (isset($event['embeddedEventSession'])) {
             $date = $event['date'];
             foreach ($event['embeddedEventSession'] as $session) {
                 if ($start && isset($session['start'])) {
                     $date = $session['start'];
+                    $dateSession = $date->toDateTime();
+                    if ($dateSession < $now) {
+                        continue;
+                    }
 
                     return $date->toDateTime();
                 }
                 if (!$start && isset($session['ends'])) {
                     $date = $session['ends'];
+                    $dateSession = $date->toDateTime();
+                    if ($dateSession < $now) {
+                        continue;
+                    }
 
                     return $date->toDateTime();
                 }
@@ -477,11 +487,15 @@ class EmbeddedEventSessionService
         $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
         $result = $this->collection->aggregate($pipeline)->toArray();
         $orderSession = array();
+        $now = new \DateTime('now');
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
-                    $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
-                    break;
+                    $startDate = $embeddedSession['start']->toDateTime();
+                    if ($startDate > $now) {
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        break;
+                    }
                 }
             }
         }
@@ -809,11 +823,15 @@ class EmbeddedEventSessionService
         $pipeline = $this->getNextLiveEventsPipeline($multimediaObjectId);
         $result = $this->collection->aggregate($pipeline)->toArray();
         $orderSession = array();
+        $now = new \DateTime('now');
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
-                    $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
-                    break;
+                    $startDate = $embeddedSession['start']->toDateTime();
+                    if ($startDate > $now) {
+                        $orderSession = $this->addElementWithSessionSec($orderSession, $element, $embeddedSession['start']->sec);
+                        break;
+                    }
                 }
             }
         }
