@@ -1578,7 +1578,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      */
-    public function findNowEventSessions($multimediaObjectId = null)
+    public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -1661,6 +1661,10 @@ class MultimediaObjectRepository extends DocumentRepository
                 ),
             ),
         );
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
 
         return $collection->aggregate($pipeline)->toArray();
     }
