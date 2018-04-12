@@ -1,16 +1,22 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 {% block stylesheets %}
-{{ parent() }}
-<link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
+    {{ parent() }}
+    <link href="{{ asset('/bundles/pumukitwizard/css/nav-wizard.bootstrap.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript" src="{{ path('pumukitwizard_js') }}"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ path('pumukitwizard_js') }}"></script>
 {% endblock %}
 {% block body %}
-<div id="pumukitwizard_body">
-{% block wizard_body %}
-wizard index
-{% endblock %}
-</div>
+
+    <div id="pumukitwizard_body">
+        <h3 class="cab_body_div">
+            <ul class="breadcrumb" style="margin-bottom: 5px;">
+                <li class="active">{% trans %}Upload local file{% endtrans %}</li>
+            </ul>
+        </h3>
+        {% block wizard_body %}
+            wizard index
+        {% endblock %}
+    </div>
 {% endblock body %}
