@@ -2,13 +2,15 @@
 
 {% block body %}
 
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Series style{% endtrans %}</li>
+        </ul>
+    </h3>
+
     <div class="well">
         <div class="well">
             <div class="row">
-                <div class="col-md-12">
-                    <h3>Estilos para series</h3>
-                    <hr />
-                </div>
                 <div id="style_list" class="col-md-3">
                     {% render(controller('PumukitNewAdminBundle:SeriesStyles:list')) %}
                 </div>

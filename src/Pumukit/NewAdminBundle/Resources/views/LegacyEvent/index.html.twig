@@ -2,47 +2,51 @@
 
 {% block body %}
 
-<h1>{% trans %}Live broadcastings{% endtrans %}</h3>
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Live broadcastings{% endtrans %}</li>
+        </ul>
+    </h3>
 
-<div class="row">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
-  <div class="col-md-10">
-    <div class="well">
-      <div id="list_events">
-        {% include 'PumukitNewAdminBundle:LegacyEvent:list.html.twig' %}
-      </div>
-      <div class="row">
-        <div class="col-xs-4">
-          <select id="options_events" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('event', $(this), 'events')">
-            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option>
-            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-          </select>
-        </div>
-        <div class="col-xs-8 text-right">
-          {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
-          <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-        </div>
-      </div>
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
+            <div class="col-md-10">
+                <div class="well">
+                    <div id="list_events">
+                        {% include 'PumukitNewAdminBundle:LegacyEvent:list.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <select id="options_events" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('event', $(this), 'events')">
+                                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                                <option disabled="">---</option>
+                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            {# TODO event series <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create_several') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New Series{% endtrans %}</a> #}
+                            <a title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_event_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 hidden-xs hidden-sm">
+                <div id="preview_event" class="well">
+                    {% if(app.session.has('admin/event/id')) %}
+                        {{ render_hinclude(url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
+                    {% else %}
+                        {% trans %}Select any live event.{% endtrans %}
+                    {% endif %}
+                </div>
+                {% include 'PumukitNewAdminBundle:LegacyEvent:filters.html.twig' %}
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
-  <div class="col-md-2 hidden-xs hidden-sm">
-    <div id="preview_event" class="well">
-      {% if(app.session.has('admin/event/id')) %}
-        {{ render_hinclude(url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
-      {% else %}
-        {% trans %}Select any live event.{% endtrans %}
-      {% endif %}
-    </div>
-    {% include 'PumukitNewAdminBundle:LegacyEvent:filters.html.twig' %}
-  </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
-</div>
 
 {% endblock %}

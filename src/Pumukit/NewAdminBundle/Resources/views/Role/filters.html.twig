@@ -1,23 +1,36 @@
-<!-- Filter -->
+{% set criteria = app.session.get('admin/role/criteria') %}
+
 <div class="well">
-  <form id="filter_roles"  action="{{ path('pumukitnewadmin_role_index') }}" method="get">
-  <fieldset>
-    <legend hidden>{% trans %}Filter Roles{% endtrans %}</legend>
-    <h2>{% trans %}Search{% endtrans %}</h2>
+    <form id="filter_roles" action="{{ path('pumukitnewadmin_role_index') }}" method="get">
+        <fieldset>
+            <legend hidden>{% trans %}Filter Roles{% endtrans %}</legend>
+            <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSearch">
+                        <h2 class="panel-title">
+                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu pull-right"></i>
+                                {% trans %}Search{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="filters_cod" class="control-label">{% trans %}Code{% endtrans %}:</label>
+                                <div>
+                                    <input type="text" class="reset form-control" name="criteria[cod]" id="filters_cod" value="{{ criteria['cod']|default("") }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
 
-    <div class="form-group">
-      <label for="filters_cod" class="control-label">{% trans %}Cod{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/role/criteria') %}
-      <div>
-        <input type="text" class="reset form-control" name="criteria[cod]" id="filters_cod" value="{{ criteria['cod']|default("") }}">
-      </div>
-    </div>
-
-  </fieldset>
-
-  <div class="text-right">
-    <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-    <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
-  </div>
-</form>
+        <div class="text-right">
+            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
+        </div>
+    </form>
 </div>

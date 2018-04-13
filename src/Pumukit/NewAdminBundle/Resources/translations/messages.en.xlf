@@ -3522,6 +3522,14 @@
         <source>Click on the color bar to change color. A pop-up window will be shown.</source>
         <target>Click on the color bar to change color. A pop-up window will be shown.</target>
       </trans-unit>
+      <trans-unit id="0e5f7f4a3d6511e8b4670ed5f89f718b" resname="Show tag on WebTV portal and edit categories on multimedia objects">
+        <source>Show tag on WebTV portal and edit categories on multimedia objects</source>
+        <target>Show tag on WebTV portal and edit categories on multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="0e5f865c3d6511e8b4670ed5f89f718b" resname="Not valid to tagged objets">
+        <source>Not valid to tagged objets</source>
+        <target>Not valid to tagged objets</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

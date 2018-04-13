@@ -1,68 +1,75 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 
 {% block body %}
-  {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-    {% if is_naked() %}
-      <h3> {% trans %}My Playlists{% endtrans %}</h3>
-    {% else %}
-      <h3> {% trans %}My Moodle Playlists{% endtrans %}</h3>
-    {% endif %}
-  {% else %}
-    <h3> {% trans %}Moodle Playlists{% endtrans %}</h3>
-  {% endif %}
 
-  <div class="row">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-      <div class="col-md-10">
-        <div class="well" >
-          <div id="list_playlists">
-            {% include 'PumukitNewAdminBundle:Playlist:list.html.twig' %}
-          </div>
-          <div class="row">
-            <div class="col-xs-4">
-              <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('playlist', $(this), 'playlists');">
-                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-                <option disabled="">---</option>
-                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-              </select>
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">
+                {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+                    {% if is_naked() %}
+                        {% trans %}My Playlists{% endtrans %}
+                    {% else %}
+                        {% trans %}My Moodle Playlists{% endtrans %}
+                    {% endif %}
+                {% else %}
+                    {% trans %}Moodle Playlists{% endtrans %}
+                {% endif %}
+            </li>
+        </ul>
+    </h3>
+
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+            <div class="col-md-10">
+                <div class="well">
+                    <div id="list_playlists">
+                        {% include 'PumukitNewAdminBundle:Playlist:list.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('playlist', $(this), 'playlists');">
+                                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                                <option disabled="">---</option>
+                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+                                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="edit_playlist">
+                    {% if(app.session.has('admin/playlist/id')) %}
+                        {{ render(url('pumukitnewadmin_playlist_update', {'id': app.session.get('admin/playlist/id')})) }}
+                    {% endif %}
+                </div>
             </div>
-            <div class="col-xs-8 text-right">
-              {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
-              {% endif %}
+            <div class="col-md-2 hidden-xs hidden-sm">
+                <div id="preview_playlist" class="well">
+                    {% if(app.session.has('admin/playlist/id')) %}
+                        {{ render_hinclude(url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/playlist/id')})) }}
+                    {% else %}
+                        {% trans %}Select any playlist.{% endtrans %}
+                    {% endif %}
+                </div>
+                {% include 'PumukitNewAdminBundle:Playlist:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
             </div>
-          </div>
-        </div>
-
-        <div id="edit_playlist">
-          {% if(app.session.has('admin/playlist/id')) %}
-            {{ render(url('pumukitnewadmin_playlist_update', {'id': app.session.get('admin/playlist/id')})) }}
-          {% endif %}
-        </div>
-      </div>
-      <div class="col-md-2 hidden-xs hidden-sm">
-        <div id="preview_playlist" class="well">
-          {% if(app.session.has('admin/playlist/id')) %}
-            {{ render_hinclude(url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/playlist/id')})) }}
-          {% else %}
-            {% trans %}Select any playlist.{% endtrans %}
-          {% endif %}
-        </div>
-        {% include 'PumukitNewAdminBundle:Playlist:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
-      </div>
-    {% else %}
-      <div class="col-md-12">
-        <div class="well">
-          {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-        </div>
-      </div>
-    {% endif %}
-  </div>
-
-  <div class="modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
+
+    <div class="modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 {% endblock %}

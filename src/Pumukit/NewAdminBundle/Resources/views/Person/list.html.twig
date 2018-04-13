@@ -1,20 +1,13 @@
+{% set sorting = {('sorting[' ~ (app.session.get('admin/person/sort')) ~ ']') : (app.session.get('admin/person/type')) } %}
+
 <div class="table-responsive well">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
         <input type="hidden" name="pumukitnewadmin_person_sort_change_type" id="pumukitnewadmin_person_sort_change_type" value="{{ app.session.get('admin/person/type')=='asc'?'desc':'asc' }}"/>
         <table class="table table-striped table-hover">
             <thead>
-            <tr>
-                <th width="1%" id="th-checkbox">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" onclick="window.click_checkbox_all('person', this.checked)">
-                        </label>
-                    </div>
-                </th>
-                <th colspan="2" width="5%" id="th-icons"></th>
-                {% include 'PumukitNewAdminBundle:Person:listth.html.twig' %}
-                <th width="1%" id="th-mm">{% trans %}Mm.Obj.{% endtrans %}</th>
-            </tr>
+                <tr>
+                    {% include 'PumukitNewAdminBundle:Person:listth.html.twig' %}
+                </tr>
             </thead>
 
             <tbody>
@@ -27,6 +20,7 @@
             {% endif %}
 
             {% for person in people %}
+                {% set urlShowPerson = path('pumukitnewadmin_person_show', {'id': person.id}) %}
                 <tr>
                     <td headers="th-checkbox">
                         <div class="checkbox">
@@ -53,49 +47,45 @@
                             </a>
                         {% endif %}
                     </td>
-                    <td headers="th-id" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
-                        {{ person.id }}
-                    </td>
-                    <td headers="th-name" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
+                    <td headers="th-name" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
                         <span style="color:gray">{{ person.getHonorific() }}</span> {{ person.getName() }}
                     </td>
-                    <td headers="th-post" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
+                    <td headers="th-post" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
                         {{ person.getPost() }}
                     </td>
-                    <td headers="th-email" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
+                    <td headers="th-email" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
                         {{ person.getEmail() }}
                     </td>
-                    <td headers="th-phone" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
+                    <td headers="th-phone" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
                         {{ person.getPhone() }}
                     </td>
-                    <td headers="th-mm" onclick="click_fila_url('person', this, '{{ path('pumukitnewadmin_person_show', {'id': person.id}) }}');">
+                    <td headers="th-mm" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
                         {{ countMmPeople[person.id] }}
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
             <tfoot>
-            <tr>
-                <td colspan="9" class="foot-td">
-                    {# TODO review column size to be responsive #}
-                    {% set column = ((people.getNbPages/5)|round(0, 'floor')) %}
-                    <div class="col-md-8">
-                        {{ people.getNbResults }}
-                        {% transchoice people.getNbResults %}
-                            {0} people|{1} person|]1,Inf] people
-                        {% endtranschoice %}
-                        {% if app.session.get('admin/person/criteria')|length != 0 %}
-                            <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <div class="pagerfanta">
-                            {% set sorting = {('sorting[' ~ (app.session.get('admin/person/sort')) ~ ']') : (app.session.get('admin/person/type')) } %}
-                            {{ pagerfanta(people, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_person_index", "routeParams": sorting}) }}
+                <tr>
+                    <td colspan="9" class="foot-td">
+                        {# TODO review column size to be responsive #}
+                        {% set column = ((people.getNbPages/5)|round(0, 'floor')) %}
+                        <div class="col-md-8">
+                            {{ people.getNbResults }}
+                            {% transchoice people.getNbResults %}
+                                {0} people|{1} person|]1,Inf] people
+                            {% endtranschoice %}
+                            {% if app.session.get('admin/person/criteria')|length != 0 %}
+                                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                            {% endif %}
                         </div>
-                    </div>
-                </td>
-            </tr>
+                        <div class="col-md-4 text-right">
+                            <div class="pagerfanta">
+                                {{ pagerfanta(people, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_person_index", "routeParams": sorting}) }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </tfoot>
         </table>
     {% else %}
