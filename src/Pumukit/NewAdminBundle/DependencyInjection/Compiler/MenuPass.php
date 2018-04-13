@@ -16,6 +16,8 @@ class MenuPass implements CompilerPassInterface
         $this->addItems($container, 'pumukitnewadmin.mmobjlistbuttons');
         // The services tagged as pumukitnewadmin.mmobjmenuitem will be added here
         $this->addItems($container, 'pumukitnewadmin.mmobjmenu');
+        // The services tagged as pumukitnewadmin.seriesmenu will be added here
+        $this->addItems($container, 'pumukitnewadmin.seriesmenu');
     }
 
     public function addItems($container, $serviceName)
