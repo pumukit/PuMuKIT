@@ -191,6 +191,7 @@
 
     $('#form_event').on('submit', function (event) {
         event.preventDefault();
+        $('#remember_save_event').hide();
         $.ajax({
             url: '{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}',
             method: 'POST',
