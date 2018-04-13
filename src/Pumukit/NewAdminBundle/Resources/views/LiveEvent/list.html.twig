@@ -70,7 +70,7 @@
                     </a>
                 </td>
                 <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
-                    {% include "PumukitNewAdminBundle:Collection:img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
+                    {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
                 </td>
                 <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}

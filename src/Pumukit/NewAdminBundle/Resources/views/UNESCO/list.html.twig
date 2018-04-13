@@ -37,7 +37,7 @@
 
                     <td headers="th-img" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
                         ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {% include "PumukitNewAdminBundle:Collection:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
+                        {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
                     </td>
 
                     <td headers="th-series"><a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.id }) }}">{{ mm.series }}</a></td>

@@ -31,7 +31,7 @@
                         {% include 'PumukitNewAdminBundle:Playlist:updatemenu.html.twig' with {'oneseries': oneseries, 'numV': (oneseries|count_multimedia_objects)} %}
                     </td>
                     <td headers="th-img" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
-                        {% include "PumukitNewAdminBundle:Collection:img_list.html.twig"  with {'object' : oneseries, 'type': 'playlist' } %}
+                        {% include "PumukitNewAdminBundle:Misc:img_list.html.twig"  with {'object' : oneseries, 'type': 'playlist' } %}
                     </td>
                     <td headers="th-title" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
                         <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
@@ -82,11 +82,14 @@
 
                                 {% if not is_naked() %}
                                     <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
-                                        <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">10
+                                        <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">
+                                            10
                                         </option>
-                                        <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">20
+                                        <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">
+                                            20
                                         </option>
-                                        <option {% if series.maxPerPage == 50 %}selected{% endif %} value="50">50
+                                        <option {% if series.maxPerPage == 50 %}selected{% endif %} value="50">
+                                            50
                                         </option>
                                     </select>
                                 {% endif %}
