@@ -73,6 +73,7 @@
                 </div>
             </div>
 
+            {% if enableContactForm %}
             <div class="form-group">
                 {% set contact = '' %}
                 {% if multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not empty %}
@@ -86,6 +87,7 @@
                 </div>
                 <input id="contact" type="email" name="pumukitnewadmin_live_event[contact]" class="form-control" {% if contact != '' %}value="{{ multimediaObject.getEmbeddedSocial().getEmail() }}" {% else %}disabled{% endif %}/>
             </div>
+            {% endif %}
 
             <div class="form-group">
                 <label>{% trans %}Attachments{% endtrans %}</label>
@@ -216,6 +218,7 @@
         return false;
     });
 
+    {% if enableContactForm %}
     $('#allowContact').on('click', function () {
         var contact = $('#contact');
         var isDisabled = contact.prop('disabled');
@@ -225,6 +228,7 @@
             contact.prop('disabled', true);
         }
     });
+    {% endif %}
 
     $('#allowExternalURL').on('click', function () {
         var externalURL = $('#externalURL');
