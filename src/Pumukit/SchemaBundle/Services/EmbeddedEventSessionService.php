@@ -468,8 +468,11 @@ class EmbeddedEventSessionService
             } elseif ($session->getStart() > $now) {
                 return $start ? $session->getStart() : $session->getEnds();
             } elseif ($session->getStart() < $now) {
-                return $start ? $session->getStart() : $session->getEnds();
+                $date = $start ? $session->getStart() : $session->getEnds();
             }
+        }
+        if (isset($date)) {
+            return $date;
         }
 
         return false;
