@@ -156,6 +156,12 @@ class DefaultController extends Controller
             break;
         }
 
+        $firstNowSessionDuration = 0;
+        foreach ($nowSessions as $session) {
+            $firstNowSessionDuration = $session['data'][0]['session']['duration'] * 1000;
+            break;
+        }
+
         $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
 
         $date = new \DateTime();
@@ -181,6 +187,7 @@ class DefaultController extends Controller
             'firstNextSession' => $firstNextSession,
             'secondsToEvent' => $secondsToEvent,
             'firstNowSessionEnds' => $firstNowSessionEnds,
+            'firstNowSessionDuration' => $firstNowSessionDuration,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
             'captcha_public_key' => $captchaPublicKey,
