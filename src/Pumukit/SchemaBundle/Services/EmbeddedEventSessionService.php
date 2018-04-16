@@ -180,6 +180,16 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * Get default thumbnail.
+     *
+     * @return string
+     */
+    public function getDefaultThumbnail()
+    {
+        return $this->defaultThumbnail;
+    }
+
+    /**
      * Find current events.
      */
     public function findEventsNow()
