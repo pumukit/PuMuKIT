@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
@@ -61,6 +62,8 @@ class FactoryService
      * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createSeries(User $loggedInUser = null, array $title = null)
     {
@@ -74,6 +77,8 @@ class FactoryService
      * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createPlaylist(User $loggedInUser = null, array $title = null)
     {
@@ -88,6 +93,8 @@ class FactoryService
      * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function doCreateCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -124,6 +131,8 @@ class FactoryService
      * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -141,6 +150,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
     {
@@ -450,19 +461,77 @@ class FactoryService
     }
 
     /**
+     * @param Series $series
+     *
+     * @throws \Exception
+     */
+    public function cloneSeries(Series $series)
+    {
+        $newSeries = new Series();
+        $i18nTitles = array();
+        foreach ($series->getI18nTitle() as $key => $val) {
+            $string = $this->translator->trans('cloned', array(), null, $key);
+            $i18nTitles[$key] = $val.' ('.$string.')';
+        }
+
+        $newSeries->setI18nTitle($i18nTitles);
+
+        $this->dm->persist($newSeries);
+        $this->dm->flush();
+
+        $multimediaObjectPrototype = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
+        $newMultimediaObject = $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
+        $newSeries->addMultimediaObject($newMultimediaObject);
+
+        foreach ($series->getMultimediaObjects() as $multimediaObject) {
+            if (!$multimediaObject->isLive()) {
+                $newMultimediaObject = $this->cloneMultimediaObject($multimediaObject, $newSeries);
+                $newSeries->addMultimediaObject($newMultimediaObject);
+            }
+        }
+
+        $newSeries->setAnnounce($series->getAnnounce());
+        $newSeries->setProperties($series->getProperties());
+        $newSeries->setI18nDescription($series->getI18nDescription());
+        $newSeries->setI18nFooter($series->getI18nFooter());
+        $newSeries->setI18nHeader($series->getI18nHeader());
+        $newSeries->setI18nLine2($series->getI18nLine2());
+        $newSeries->setI18nSubtitle($series->getI18nSubtitle());
+        $newSeries->setI18nKeywords($series->getI18nKeywords());
+        $newSeries->setHide($series->getHide());
+        $newSeries->setCopyright($series->getCopyright());
+        $newSeries->setLicense($series->getLicense());
+        $newSeries->setPlaylist($series->getPlaylist());
+        if ($series->getSeriesType() instanceof SeriesType) {
+            $newSeries->setSeriesType($series->getSeriesType());
+        }
+        $newSeries->setSeriesStyle($series->getSeriesStyle());
+        $newSeries->setPublicDate($series->getPublicDate());
+
+        $this->dm->flush();
+
+        $this->seriesDispatcher->dispatchCreate($series);
+    }
+
+    /**
      * Clone a multimedia object.
      *
      * @param MultimediaObject $src
+     * @param null             $series
      *
      * @return MultimediaObject
      *
      * @throws \Exception
      */
-    public function cloneMultimediaObject(MultimediaObject $src)
+    public function cloneMultimediaObject(MultimediaObject $src, $series = null)
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
-        $new->setSeries($src->getSeries());
+        if ($series) {
+            $new->setSeries($series);
+        } else {
+            $new->setSeries($src->getSeries());
+        }
         $new->setType($src->getType());
 
         $i18nTitles = array();
@@ -537,7 +606,11 @@ class FactoryService
 
         $new->setPublicDate($src->getPublicDate());
         $new->setRecordDate($src->getRecordDate());
-        $new->setStatus(MultimediaObject::STATUS_BLOQ);
+        if ($series && MultimediaObject::STATUS_PROTOTYPE == $src->getStatus()) {
+            $new->setStatus($src->getStatus());
+        } else {
+            $new->setStatus(MultimediaObject::STATUS_BLOQ);
+        }
 
         $this->dm->persist($new);
         $this->dm->flush();

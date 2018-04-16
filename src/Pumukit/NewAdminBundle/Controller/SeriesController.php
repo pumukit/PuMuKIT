@@ -90,6 +90,34 @@ class SeriesController extends AdminController implements NewAdminController
     }
 
     /**
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Exception
+     */
+    public function cloneAction($id)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+
+        $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($id)));
+        if (!$series) {
+            throw new \Exception($translator->trans('No series found with ID').' '.$id);
+        }
+
+        $factoryService = $this->get('pumukitschema.factory');
+
+        try {
+            $factoryService->cloneSeries($series);
+
+            return $this->redirectToRoute('pumukitnewadmin_series_list');
+        } catch (\Exception $exception) {
+            throw new \Exception($translator->trans('Error while cloning series ').$exception->getMessage());
+        }
+    }
+
+    /**
      * @param Series $resource
      *
      * @return array

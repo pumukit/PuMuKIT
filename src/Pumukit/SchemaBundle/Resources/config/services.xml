@@ -52,6 +52,7 @@
             <argument type="service" id="pumukitschema.person" />
             <argument type="service" id="pumukitschema.user" />
             <argument type="service" id="pumukitschema.embeddedbroadcast" />
+            <argument type="service" id="pumukitschema.series" />
             <argument type="service" id="pumukitschema.multimediaobject_dispatcher" />
             <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument type="service" id="translator" />

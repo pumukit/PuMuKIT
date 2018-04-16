@@ -168,6 +168,17 @@ window.submit_clone_mms = function(id)
     }
 }
 
+window.submit_clone_series = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to clone this series?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_series_clone', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Series successfully cloned.{% endtrans %}';
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
+            success(message);
+        });
+    }
+}
+
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
