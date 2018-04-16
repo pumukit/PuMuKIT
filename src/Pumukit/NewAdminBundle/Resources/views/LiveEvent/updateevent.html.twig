@@ -186,7 +186,7 @@
 <script type="text/javascript">
 
     $('#form_event').on('change', function(e){
-        if (e.target.value != e.target.defaultValue){
+        if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
             $('#remember_save_event').css('display', 'inline-block');
         }
     });

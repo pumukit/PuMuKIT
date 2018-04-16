@@ -2226,13 +2226,13 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
 });
 
 $(document).on('change', "*[id^='pumukitnewadmin_series_']", function(e){
-    if (e.target.value != e.target.defaultValue){
+    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_series').css('display', 'inline-block');
     }
 });
 
 $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
-    if (e.target.value != e.target.defaultValue){
+    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_mm').css('display', 'inline-block');
     }
 });
