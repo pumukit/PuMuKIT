@@ -3632,6 +3632,18 @@
         <source>Not valid to tagged objets</source>
         <target>Tag no disponible para asignar a objetos multimedia</target>
       </trans-unit>
+      <trans-unit id="70846b50417911e8842f0ed5f89f718b" resname="Clone series">
+        <source>Clone series</source>
+        <target>Clonar serie</target>
+      </trans-unit>
+      <trans-unit id="70846fec417911e8842f0ed5f89f718b" resname="Are you sure you want to clone this series?">
+        <source>Are you sure you want to clone this series?</source>
+        <target>¿ Estás seguro de clonar esta serie ?</target>
+      </trans-unit>
+      <trans-unit id="70847302417911e8842f0ed5f89f718b" resname="Series successfully cloned.">
+        <source>Series successfully cloned.</source>
+        <target>Serie clonada correctamente.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

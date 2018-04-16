@@ -3530,6 +3530,18 @@
         <source>Not valid to tagged objets</source>
         <target>Not valid to tagged objets</target>
       </trans-unit>
+      <trans-unit id="70846b50417911e8842f0ed5f89f718b" resname="Clone series">
+        <source>Clone series</source>
+        <target>Clone series</target>
+      </trans-unit>
+      <trans-unit id="70846fec417911e8842f0ed5f89f718b" resname="Are you sure you want to clone this series?">
+        <source>Are you sure you want to clone this series?</source>
+        <target>Are you sure you want to clone this series?</target>
+      </trans-unit>
+      <trans-unit id="70847302417911e8842f0ed5f89f718b" resname="Series successfully cloned.">
+        <source>Series successfully cloned.</source>
+        <target>Series successfully cloned.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
