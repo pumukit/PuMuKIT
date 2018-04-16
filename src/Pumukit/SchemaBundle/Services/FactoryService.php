@@ -20,6 +20,7 @@ class FactoryService
     private $personService;
     private $userService;
     private $embeddedBroadcastService;
+    private $seriesService;
     private $mmsDispatcher;
     private $seriesDispatcher;
     private $translator;
@@ -28,13 +29,14 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->seriesService = $seriesService;
         $this->mmsDispatcher = $mmsDispatcher;
         $this->seriesDispatcher = $seriesDispatcher;
         $this->translator = $translator;
@@ -55,7 +57,8 @@ class FactoryService
     /**
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
-     * @param User $loggedInUser
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
      */
@@ -67,7 +70,8 @@ class FactoryService
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
      *
-     * @param User $loggedInUser
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
      */
@@ -79,8 +83,9 @@ class FactoryService
     /**
      * Internal method to create a new collection (series or playlist) with default values. Not emit events.
      *
-     * @param int  $collectionType
-     * @param User $loggedInUser
+     * @param int        $collectionType
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
      */
@@ -114,8 +119,9 @@ class FactoryService
     /**
      * Create a new collection (series or playlist) with default values.
      *
-     * @param int  $collectionType
-     * @param User $loggedInUser
+     * @param int        $collectionType
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
      */
@@ -167,6 +173,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
@@ -221,6 +229,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
@@ -238,7 +248,10 @@ class FactoryService
      * @param string $id
      * @param string $sessionId
      *
-     * @return Series
+     * @return null|object Series
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function findSeriesById($id, $sessionId = null)
     {
@@ -260,7 +273,10 @@ class FactoryService
      *
      * @param string $id
      *
-     * @return Multimedia Object
+     * @return object
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function findMultimediaObjectById($id)
     {
@@ -271,6 +287,10 @@ class FactoryService
 
     /**
      * Get parent tags.
+     *
+     * @return object
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getParentTags()
     {
@@ -284,7 +304,9 @@ class FactoryService
      *
      * @param Series $series
      *
-     * @return MultimediaObject
+     * @return object MultimediaObject
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -299,7 +321,9 @@ class FactoryService
      * @param string $cod
      * @param bool   $getChildren
      *
-     * @return ArrayCollection $tags
+     * @return mixed $tags
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getTagsByCod($cod, $getChildren)
     {
@@ -318,6 +342,8 @@ class FactoryService
      * Delete Series.
      *
      * @param Series $series
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function deleteSeries(Series $series)
     {
@@ -344,8 +370,6 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
-        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-
         if (null != $series = $multimediaObject->getSeries()) {
             $series->removeMultimediaObject($multimediaObject);
             $this->dm->persist($series);
@@ -383,6 +407,8 @@ class FactoryService
      * @param MultimediaObject $prototype
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
     {
@@ -429,6 +455,8 @@ class FactoryService
      * @param MultimediaObject $src
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function cloneMultimediaObject(MultimediaObject $src)
     {
@@ -457,7 +485,7 @@ class FactoryService
         $new->setProperty('clonedfrom', $src->getId());
 
         foreach ($src->getTags() as $tag) {
-            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+            $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
         foreach ($src->getRoles() as $embeddedRole) {
@@ -549,6 +577,14 @@ class FactoryService
         return $i18nTitle;
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     * @param User|null        $loggedInUser
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
+     */
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
