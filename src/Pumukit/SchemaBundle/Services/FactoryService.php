@@ -609,7 +609,7 @@ class FactoryService
         if ($series && MultimediaObject::STATUS_PROTOTYPE == $src->getStatus()) {
             $new->setStatus($src->getStatus());
         } else {
-            $new->setStatus(MultimediaObject::STATUS_BLOQ);
+            $new->setStatus(MultimediaObject::STATUS_BLOCKED);
         }
 
         $this->dm->persist($new);
