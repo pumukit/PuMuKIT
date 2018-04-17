@@ -17,6 +17,11 @@
                     <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
                 </a>
             </li>
+            <li>
+                <a href="#" onclick="window.submit_clone_series('{{ oneseries.id }}'); return false;">
+                    <i class="mdi-content-content-copy"></i> {% trans %}Clone series{% endtrans %}
+                </a>
+            </li>
         {% endif %}
         <li>
             <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ numV }}'); return false;">
@@ -28,6 +33,8 @@
                 <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
             </a>
         </li>
+
+
 
         {% for item in get_extra_series_menu_items() %}
             {% if app.user and is_granted(item.accessRole) %}

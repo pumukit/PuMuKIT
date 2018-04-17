@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Document\SeriesType;
 use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Series;
@@ -20,6 +21,7 @@ class FactoryService
     private $personService;
     private $userService;
     private $embeddedBroadcastService;
+    private $seriesService;
     private $mmsDispatcher;
     private $seriesDispatcher;
     private $translator;
@@ -28,13 +30,14 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->seriesService = $seriesService;
         $this->mmsDispatcher = $mmsDispatcher;
         $this->seriesDispatcher = $seriesDispatcher;
         $this->translator = $translator;
@@ -55,9 +58,12 @@ class FactoryService
     /**
      * Wrapper for createCollection. Creates a TYPE_SERIES collection.
      *
-     * @param User $loggedInUser
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createSeries(User $loggedInUser = null, array $title = null)
     {
@@ -67,9 +73,12 @@ class FactoryService
     /**
      * Wrapper for createColletion. Creates a TYPE_PLAYLIST collection.
      *
-     * @param User $loggedInUser
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createPlaylist(User $loggedInUser = null, array $title = null)
     {
@@ -79,10 +88,13 @@ class FactoryService
     /**
      * Internal method to create a new collection (series or playlist) with default values. Not emit events.
      *
-     * @param int  $collectionType
-     * @param User $loggedInUser
+     * @param int        $collectionType
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function doCreateCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -114,10 +126,13 @@ class FactoryService
     /**
      * Create a new collection (series or playlist) with default values.
      *
-     * @param int  $collectionType
-     * @param User $loggedInUser
+     * @param int        $collectionType
+     * @param User|null  $loggedInUser
+     * @param array|null $title
      *
      * @return Series
+     *
+     * @throws \Exception
      */
     public function createCollection($collectionType, User $loggedInUser = null, array $title = null)
     {
@@ -135,6 +150,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectPrototype(Series $series, User $loggedInUser = null)
     {
@@ -167,6 +184,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function doCreateMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
@@ -221,6 +240,8 @@ class FactoryService
      * @param User   $loggedInUser
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function createMultimediaObject(Series $series, $flush = true, User $loggedInUser = null)
     {
@@ -238,7 +259,10 @@ class FactoryService
      * @param string $id
      * @param string $sessionId
      *
-     * @return Series
+     * @return null|object Series
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function findSeriesById($id, $sessionId = null)
     {
@@ -260,7 +284,10 @@ class FactoryService
      *
      * @param string $id
      *
-     * @return Multimedia Object
+     * @return object
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function findMultimediaObjectById($id)
     {
@@ -271,6 +298,10 @@ class FactoryService
 
     /**
      * Get parent tags.
+     *
+     * @return object
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getParentTags()
     {
@@ -284,7 +315,9 @@ class FactoryService
      *
      * @param Series $series
      *
-     * @return MultimediaObject
+     * @return object MultimediaObject
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getMultimediaObjectPrototype(Series $series = null)
     {
@@ -299,7 +332,9 @@ class FactoryService
      * @param string $cod
      * @param bool   $getChildren
      *
-     * @return ArrayCollection $tags
+     * @return mixed $tags
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getTagsByCod($cod, $getChildren)
     {
@@ -318,6 +353,8 @@ class FactoryService
      * Delete Series.
      *
      * @param Series $series
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function deleteSeries(Series $series)
     {
@@ -344,8 +381,6 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
-        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-
         if (null != $series = $multimediaObject->getSeries()) {
             $series->removeMultimediaObject($multimediaObject);
             $this->dm->persist($series);
@@ -383,6 +418,8 @@ class FactoryService
      * @param MultimediaObject $prototype
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     private function createMultimediaObjectFromPrototype(MultimediaObject $prototype)
     {
@@ -424,17 +461,77 @@ class FactoryService
     }
 
     /**
+     * @param Series $series
+     *
+     * @throws \Exception
+     */
+    public function cloneSeries(Series $series)
+    {
+        $newSeries = new Series();
+        $i18nTitles = array();
+        foreach ($series->getI18nTitle() as $key => $val) {
+            $string = $this->translator->trans('cloned', array(), null, $key);
+            $i18nTitles[$key] = $val.' ('.$string.')';
+        }
+
+        $newSeries->setI18nTitle($i18nTitles);
+
+        $this->dm->persist($newSeries);
+        $this->dm->flush();
+
+        $multimediaObjectPrototype = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
+        $newMultimediaObject = $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
+        $newSeries->addMultimediaObject($newMultimediaObject);
+
+        foreach ($series->getMultimediaObjects() as $multimediaObject) {
+            if (!$multimediaObject->isLive()) {
+                $newMultimediaObject = $this->cloneMultimediaObject($multimediaObject, $newSeries);
+                $newSeries->addMultimediaObject($newMultimediaObject);
+            }
+        }
+
+        $newSeries->setAnnounce($series->getAnnounce());
+        $newSeries->setProperties($series->getProperties());
+        $newSeries->setI18nDescription($series->getI18nDescription());
+        $newSeries->setI18nFooter($series->getI18nFooter());
+        $newSeries->setI18nHeader($series->getI18nHeader());
+        $newSeries->setI18nLine2($series->getI18nLine2());
+        $newSeries->setI18nSubtitle($series->getI18nSubtitle());
+        $newSeries->setI18nKeywords($series->getI18nKeywords());
+        $newSeries->setHide($series->getHide());
+        $newSeries->setCopyright($series->getCopyright());
+        $newSeries->setLicense($series->getLicense());
+        $newSeries->setPlaylist($series->getPlaylist());
+        if ($series->getSeriesType() instanceof SeriesType) {
+            $newSeries->setSeriesType($series->getSeriesType());
+        }
+        $newSeries->setSeriesStyle($series->getSeriesStyle());
+        $newSeries->setPublicDate($series->getPublicDate());
+
+        $this->dm->flush();
+
+        $this->seriesDispatcher->dispatchCreate($series);
+    }
+
+    /**
      * Clone a multimedia object.
      *
      * @param MultimediaObject $src
+     * @param null             $series
      *
      * @return MultimediaObject
+     *
+     * @throws \Exception
      */
-    public function cloneMultimediaObject(MultimediaObject $src)
+    public function cloneMultimediaObject(MultimediaObject $src, $series = null)
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
-        $new->setSeries($src->getSeries());
+        if ($series) {
+            $new->setSeries($series);
+        } else {
+            $new->setSeries($src->getSeries());
+        }
         $new->setType($src->getType());
 
         $i18nTitles = array();
@@ -457,7 +554,7 @@ class FactoryService
         $new->setProperty('clonedfrom', $src->getId());
 
         foreach ($src->getTags() as $tag) {
-            $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
+            $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
         foreach ($src->getRoles() as $embeddedRole) {
@@ -509,7 +606,11 @@ class FactoryService
 
         $new->setPublicDate($src->getPublicDate());
         $new->setRecordDate($src->getRecordDate());
-        $new->setStatus(MultimediaObject::STATUS_BLOQ);
+        if ($series && MultimediaObject::STATUS_PROTOTYPE == $src->getStatus()) {
+            $new->setStatus($src->getStatus());
+        } else {
+            $new->setStatus(MultimediaObject::STATUS_BLOCKED);
+        }
 
         $this->dm->persist($new);
         $this->dm->flush();
@@ -549,6 +650,14 @@ class FactoryService
         return $i18nTitle;
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     * @param User|null        $loggedInUser
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
+     */
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
     {
         if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {

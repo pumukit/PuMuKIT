@@ -751,7 +751,7 @@ class Series
     /**
      * Get copyright.
      *
-     * @return array
+     * @return string
      */
     public function getCopyright()
     {
@@ -771,7 +771,7 @@ class Series
     /**
      * Get license.
      *
-     * @return array
+     * @return string $license
      */
     public function getLicense()
     {
