@@ -434,23 +434,20 @@ class EmbeddedEventSessionService
         if (isset($event['embeddedEventSession'])) {
             $date = $event['date'];
             foreach ($event['embeddedEventSession'] as $session) {
-                if ($start && isset($session['start'])) {
-                    $date = $session['start'];
-                    $dateSession = $date->toDateTime();
-                    if ($dateSession < $now) {
-                        continue;
-                    }
-
-                    return $date->toDateTime();
+                if (!isset($session['start']) && !isset($session['ends'])) {
+                    continue;
                 }
-                if (!$start && isset($session['ends'])) {
-                    $date = $session['ends'];
-                    $dateSession = $date->toDateTime();
-                    if ($dateSession < $now) {
-                        continue;
-                    }
-
-                    return $date->toDateTime();
+                $dateStart = $session['start'];
+                $dateEnds = $session['ends'];
+                $dateStartSession = $dateStart->toDateTime();
+                $dateEndsSession = $dateEnds->toDateTime();
+                if (($dateStartSession < $now) || ($dateEndsSession < $now)) {
+                    continue;
+                }
+                if ($start) {
+                    return $dateStartSession;
+                } else {
+                    return $dateEndsSession;
                 }
             }
 
