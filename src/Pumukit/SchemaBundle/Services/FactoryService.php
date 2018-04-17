@@ -523,7 +523,7 @@ class FactoryService
      *
      * @throws \Exception
      */
-    public function cloneMultimediaObject(MultimediaObject $src, $series = null)
+    public function cloneMultimediaObject(MultimediaObject $src, Series $series = null)
     {
         $new = new MultimediaObject();
         $new->setLocale($this->locales[0]);
