@@ -148,17 +148,14 @@ class DefaultController extends Controller
             $activeContact = true;
         }
 
+        $now = new \DateTime();
         $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
         $firstNowSessionEnds = new \DateTime();
         $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
+        $firstNowSessionRemainingDuration = 0;
         foreach ($nowSessions as $session) {
             $firstNowSessionEnds = ($session['data'][0]['session']['start']->sec + $session['data'][0]['session']['duration']) * 1000;
-            break;
-        }
-
-        $firstNowSessionDuration = 0;
-        foreach ($nowSessions as $session) {
-            $firstNowSessionDuration = $session['data'][0]['session']['duration'] * 1000;
+            $firstNowSessionRemainingDuration = $firstNowSessionEnds - ($now->getTimeStamp() * 1000);
             break;
         }
 
@@ -176,7 +173,6 @@ class DefaultController extends Controller
             }
         }
 
-        $now = new \DateTime();
         $secondsToEvent = null;
         if (!empty($firstNextSession)) {
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
@@ -187,7 +183,7 @@ class DefaultController extends Controller
             'firstNextSession' => $firstNextSession,
             'secondsToEvent' => $secondsToEvent,
             'firstNowSessionEnds' => $firstNowSessionEnds,
-            'firstNowSessionDuration' => $firstNowSessionDuration,
+            'firstNowSessionDuration' => $firstNowSessionRemainingDuration,
             'nowSessions' => $nowSessions,
             'nextSessions' => $nextSessions,
             'captcha_public_key' => $captchaPublicKey,
