@@ -142,6 +142,13 @@ class Builder extends ContainerAware
             $tools->addChild('Series style', array('route' => 'pumukit_newadmin_series_styles'));
         }
 
+        if ($authorizationChecker->isGranted('ROLE_ACCESS_TAGS')) {
+            if (!$tools) {
+                $tools = $menu->addChild('Tools');
+            }
+            $tools->addChild('Places and recinct', array('route' => 'pumukitnewadmin_places_index'));
+        }
+
         foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
             if ($authorizationChecker->isGranted($item->getAccessRole())) {
                 if (!$tools) {

@@ -1,0 +1,76 @@
+{% if children is defined %}
+
+    {% for tag in children %}
+        <tr style="font-size:12px">
+            <td headers="th-checkbox">
+                <div class="checkbox">
+                    <label>
+                        <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+                    </label>
+                </div>
+            </td>
+
+            <td headers="th-icons">
+                <a href="#" title="{% trans %}delete{% endtrans %}">
+                    <i class="mdi-content-clear"></i>
+                </a>
+            </td>
+
+            <td headers="th-icons">
+                <a title="{% trans %}Edit tag {% endtrans %}">
+                    <i class="mdi-editor-mode-edit"></i>
+                </a>
+            </td>
+
+            <td headers="th-icons">
+                <a title="{% trans %}Create child tag for{% endtrans %}">
+                    <i class="mdi-image-add-to-photos"></i>
+                </a>
+            </td>
+
+            <td class="data_children" data-id="{{ tag.getId() }}" headers="th-name">
+                {{ tag.getTitle() }}
+            </td>
+
+            <td class="data_children text-center" data-id="{{ tag.getId() }}" headers="th-num-video">
+                {{ tag.getNumberMultimediaObjects() }}
+            </td>
+        </tr>
+    {% else %}
+        <tr class="text-center" style="font-size:12px">
+            <td colspan="8">{% trans %}No data{% endtrans %}</td>
+        </tr>
+    {% endfor %}
+
+{% else %}
+    <tr class="text-center" style="font-size:12px">
+        <td colspan="8">{% trans %}Select one place to load data{% endtrans %}</td>
+    </tr>
+{% endif %}
+
+<script type="text/javascript">
+    $('.data_children').on('click', function(event){
+        'use strict';
+        event.preventDefault();
+
+        var id = $(this).data('id');
+        var route = '{{ path('pumukitnewadmin_places_children_preview', {'id': '__id__'}) }}';
+        route = route.replace('__id__', id);
+
+        $('.preview-precinct').html("<tr class=\"text-center\" style=\"font-size:12px\"><td colspan=\"8\"><img class=\"center\" src=\"{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}\"/></td></tr>");
+        $('html,body').scrollTop(0);
+
+        $.ajax({
+            url: route,
+            type: 'GET',
+            error: function() {
+                var message = "{% trans %}Error loading tag{% endtrans %}";
+                no_success(message);
+            },
+            success: function(response) {
+                $('.preview-precinct').html(response);
+            }
+        });
+        return false;
+    });
+</script>

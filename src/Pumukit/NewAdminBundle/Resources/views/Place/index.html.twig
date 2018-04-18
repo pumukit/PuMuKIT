@@ -1,0 +1,15 @@
+{% extends 'PumukitNewAdminBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Place and precinct{% endtrans %}</li>
+        </ul>
+    </h3>
+
+    {% include "PumukitNewAdminBundle:Place:parent.html.twig" %}
+    {% include "PumukitNewAdminBundle:Place:children.html.twig" %}
+    {% include "PumukitNewAdminBundle:Place:preview.html.twig" %}
+
+{% endblock %}

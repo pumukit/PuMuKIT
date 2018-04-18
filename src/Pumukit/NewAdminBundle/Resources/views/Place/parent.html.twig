@@ -1,0 +1,53 @@
+<div class="col-md-6">
+    <div class="well">
+        <table class="table table-striped table-hover pmk-tag-tree">
+            <thead>
+                {% include 'PumukitNewAdminBundle:Place:parent_listth.html.twig' %}
+            </thead>
+            <tbody>
+                {% if places|length is empty %}
+                    <tr>
+                        <td headers="th-checkbox th-icons th-icons th-code th-name th-num" colspan="8">
+                            {% trans %}There are no tags with those values.{% endtrans %}
+                        </td>
+                    </tr>
+                {% else %}
+                    {% include 'PumukitNewAdminBundle:Place:parent_list.html.twig' %}
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" class="foot-td">&nbsp;</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.load_children').on('click', function(event){
+        'use strict';
+        event.preventDefault();
+
+        var id = $(this).data('id');
+        var route = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
+        route = route.replace('__id__', id);
+
+        $('.children-list').html("<tr class=\"text-center\" style=\"font-size:12px\"><td colspan=\"8\"><img class=\"center\" src=\"{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}\"/></td></tr>");
+        $('html,body').scrollTop(0);
+
+        $.ajax({
+            url: route,
+            type: 'GET',
+            error: function() {
+                var message = "{% trans %}Error loading tag{% endtrans %}";
+                no_success(message);
+            },
+            success: function(response) {
+                console.log(response);
+                $('.children-list').html(response);
+            }
+        });
+        return false;
+    });
+</script>

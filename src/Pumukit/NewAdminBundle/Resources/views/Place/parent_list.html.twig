@@ -1,0 +1,40 @@
+{% for tag in places %}
+    <tr style="font-size:12px">
+        <td headers="th-checkbox">
+            <div class="checkbox">
+                <label>
+                    <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+                </label>
+            </div>
+        </td>
+
+        <td headers="th-icons">
+            <a href="#" title="{% trans %}delete{% endtrans %}">
+                <i class="mdi-content-clear"></i>
+            </a>
+        </td>
+
+        <td headers="th-icons">
+            <a title="{% trans %}Edit tag {% endtrans %}">
+                <i class="mdi-editor-mode-edit"></i>
+            </a>
+        </td>
+
+        <td headers="th-icons">
+            <a title="{% trans %}Create child tag for{% endtrans %}">
+                <i class="mdi-image-add-to-photos"></i>
+            </a>
+        </td>
+        <td class="load_children" data-id="{{ tag.getId() }}" headers="th-name">
+            {{ tag.getTitle() }}
+        </td>
+        <td class="load_children" data-id="{{ tag.getId() }}" headers="th-dir">
+            {% if tag.getProperty('address') is not empty %}
+                {{ tag.getProperty('address')[app.request.getLocale()] }}
+            {% endif %}
+        </td>
+        <td class="load_children text-center" data-id="{{ tag.getId() }}" headers="th-num-precinct">
+            {{ tag.getChildren()|length }}
+        </td>
+    </tr>
+{% endfor %}

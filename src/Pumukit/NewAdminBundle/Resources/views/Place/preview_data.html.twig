@@ -1,0 +1,32 @@
+{% if tag is defined %}
+    <div class="panel panel-default" style="font-size:12px">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                {{ tag.getTitle()|default('No title'|trans) }}
+                {% if tag.parent.getProperty('address') is not empty %}
+                    - {{ tag.parent.getProperty('address')[app.request.getLocale()] }}
+                {% endif %}
+            </h4>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for key, title in series %}
+                    <li>&nbsp;</li>
+                    <li>
+                        <a href="{{ path('pumukitnewadmin_series_index', {'id': key}) }}">{{ title }}</a>
+                    </li>
+                {% else %}
+                    <li>{% trans %}Precinct without series{% endtrans %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% else %}
+    <div class="panel panel-default" style="font-size:12px">
+        <div class="panel-heading">
+            <div class="panel-body">
+                {% trans %}Select one precinct to load data{% endtrans %}
+            </div>
+        </div>
+    </div>
+{% endif %}
