@@ -38,3 +38,31 @@
         </td>
     </tr>
 {% endfor %}
+
+<script type="text/javascript">
+    $('.load_children').on('click', function(event){
+        'use strict';
+        event.preventDefault();
+
+        var id = $(this).data('id');
+        var route = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
+        route = route.replace('__id__', id);
+
+        $('.children-list').html("<tr class=\"text-center\" style=\"font-size:12px\"><td colspan=\"8\"><img class=\"center\" src=\"{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}\"/></td></tr>");
+        $('html,body').scrollTop(0);
+
+        $.ajax({
+            url: route,
+            type: 'GET',
+            error: function() {
+                var message = "{% trans %}Error loading tag{% endtrans %}";
+                no_success(message);
+            },
+            success: function(response) {
+                console.log(response);
+                $('.children-list').html(response);
+            }
+        });
+        return false;
+    });
+</script>
