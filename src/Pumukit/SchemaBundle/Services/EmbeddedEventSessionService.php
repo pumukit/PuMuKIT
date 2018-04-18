@@ -433,6 +433,9 @@ class EmbeddedEventSessionService
         $now = new \DateTime('now');
         if (isset($event['embeddedEventSession'])) {
             $date = $event['date'];
+            usort($event['embeddedEventSession'], function ($a, $b) {
+                return $a['start'] >= $b['start'];
+            });
             foreach ($event['embeddedEventSession'] as $session) {
                 if (!isset($session['start']) && !isset($session['ends'])) {
                     continue;
@@ -500,6 +503,9 @@ class EmbeddedEventSessionService
         $now = new \DateTime('now');
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
+                usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
+                    return $a['start'] >= $b['start'];
+                });
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
@@ -836,6 +842,9 @@ class EmbeddedEventSessionService
         $now = new \DateTime('now');
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
+                usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
+                    return $a['start'] >= $b['start'];
+                });
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
                     if ($startDate > $now) {
