@@ -10,14 +10,16 @@
         </div>
         <div class="panel-body">
             <ul class="list-unstyled">
-                {% for key, title in series %}
-                    <li>&nbsp;</li>
-                    <li>
-                        <a href="{{ path('pumukitnewadmin_series_index', {'id': key}) }}">{{ title }}</a>
-                    </li>
+                {% if series is defined %}
+                    {% for key, title in series %}
+                        <li>&nbsp;</li>
+                        <li>
+                            <a href="{{ path('pumukitnewadmin_series_index', {'id': key}) }}">{{ title }}</a>
+                        </li>
+                    {% endfor %}
                 {% else %}
                     <li>{% trans %}Precinct without series{% endtrans %}</li>
-                {% endfor %}
+                {% endif %}
             </ul>
         </div>
     </div>
