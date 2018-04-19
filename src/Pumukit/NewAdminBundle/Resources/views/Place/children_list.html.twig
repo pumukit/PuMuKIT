@@ -44,7 +44,7 @@
     <tr>
         <td colspan="6">
             <div class="col-md-8">
-            <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+            <select id="options_precinct" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                 <option disabled="">---</option>
                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -63,6 +63,7 @@
         <td colspan="8">{% trans %}Select one place to load data{% endtrans %}</td>
     </tr>
 {% endif %}
+
 
 <script type="text/javascript">
     $('.data_children').on('click', function(event){
@@ -102,20 +103,60 @@
         var route2 = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
         route2 = route2.replace('__id__', parent);
 
-        $.ajax({
-            url: route,
-            type: 'GET',
-            error: function() {
-                var message = "{% trans %}Error deleting tag{% endtrans %}";
-                no_success(message);
-            },
-            success: function(response) {
-                $('.children-list').load(route2);
-                $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
-                success(message);
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            $.ajax({
+                url: route,
+                type: 'GET',
+                error: function () {
+                    var message = "{% trans %}Error deleting tag{% endtrans %}";
+                    no_success(message);
+                },
+                success: function (response) {
+                    $('.children-list').load(route2);
+                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                    var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
+                    success(message);
+                }
+            });
+            return false;
+        }
+    });
+
+    {% if parent is defined %}
+        $('#options_precinct').on('change', function(event) {
+            'use strict';
+            event.preventDefault();
+            var ids = [];
+            $('.tag_children_checkbox:checked').each(function(){
+                ids.push($(this).attr("id"));
+            });
+            if (ids.length == 0) return true;
+            var option = $("#options_precinct").val();
+
+            if(option != 'delete_selected') return true;
+
+            var route = "{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}";
+            route = route.replace('__ids__', JSON.stringify(ids));
+
+            if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+                $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {'_method': 'DELETE'},
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        var textError = eval('(' + jqXHR.responseText + ')');
+                        var statusError = textError.status;
+                        var message = errorThrown + ': {% trans %}Tags with children can not be deleted.{% endtrans %} ' + statusError;
+                        no_success(message);
+                    },
+                    success: function (response) {
+                        $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
+                        var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
+                        success(message);
+                    }
+                });
             }
         });
-        return false;
-    });
+    {% endif %}
 </script>

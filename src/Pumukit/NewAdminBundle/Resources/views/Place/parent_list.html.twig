@@ -76,20 +76,22 @@
         var route = '{{ path('pumukitnewadmin_places_delete', {'id': '__id__'}) }}';
         route = route.replace('__id__', id);
 
-        $.ajax({
-            url: route,
-            type: 'GET',
-            error: function() {
-                var message = "{% trans %}Error deleting tag{% endtrans %}";
-                no_success(message);
-            },
-            success: function(response) {
-                $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                var message = '{% trans %}Place successfully deleted.{% endtrans %}';
-                success(message);
-            }
-        });
-        return false;
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            $.ajax({
+                url: route,
+                type: 'GET',
+                error: function () {
+                    var message = "{% trans %}Error deleting tag{% endtrans %}";
+                    no_success(message);
+                },
+                success: function (response) {
+                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                    var message = '{% trans %}Place successfully deleted.{% endtrans %}';
+                    success(message);
+                }
+            });
+            return false;
+        }
     });
 </script>
 

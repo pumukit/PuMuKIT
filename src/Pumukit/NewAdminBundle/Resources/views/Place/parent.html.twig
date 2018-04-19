@@ -52,21 +52,23 @@
         var route = "{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}";
         route = route.replace('__ids__', JSON.stringify(ids));
 
-        $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'_method': 'DELETE'},
-            error: function(jqXHR, textStatus, errorThrown){
-                var textError = eval('('+jqXHR.responseText+')');
-                var statusError = textError.status;
-                var message = errorThrown+': {% trans %}Tags with children can not be deleted.{% endtrans %} '+statusError;
-                no_success(message);
-            },
-            success: function(response){
-                $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                var message = '{% trans %}Places successfully deleted.{% endtrans %}';
-                success(message);
-            }
-        });
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {'_method': 'DELETE'},
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var textError = eval('(' + jqXHR.responseText + ')');
+                    var statusError = textError.status;
+                    var message = errorThrown + ': {% trans %}Tags with children can not be deleted.{% endtrans %} ' + statusError;
+                    no_success(message);
+                },
+                success: function (response) {
+                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                    var message = '{% trans %}Places successfully deleted.{% endtrans %}';
+                    success(message);
+                }
+            });
+        }
     })
 </script>
