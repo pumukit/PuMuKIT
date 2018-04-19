@@ -24,8 +24,16 @@
         'use strict';
         event.preventDefault();
         $('#myModal').modal('hide');
+
+        var parent_cod = "{{ parent.cod }}";
+
+        if(parent_cod != 'PLACES') {
+            var route = '{{ path('pumukitnewadmin_places_create', {'id': parent.id }) }}';
+        } else {
+            var route = '{{ path('pumukitnewadmin_places_create') }}';
+        }
         $.ajax({
-            url: '{{ path('pumukitnewadmin_places_create') }}',
+            url: route,
             method: 'POST',
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
@@ -36,6 +44,9 @@
                     $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}", function() {
                         $('html,body').scrollTop(0);
                     });
+                    if(parent_cod != 'PLACES') {
+                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
+                    }
                     var message = '{% trans %}Place successfully created.{% endtrans %}';
                     success(message);
                 }

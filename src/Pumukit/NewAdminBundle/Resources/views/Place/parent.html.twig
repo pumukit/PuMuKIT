@@ -23,7 +23,7 @@
         </table>
         <div class="row">
             <div class="col-md-4">
-                <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                <select id="options_place" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
                     <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                     <option disabled="">---</option>
                     <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -35,3 +35,38 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#options_place').on('change', function(event) {
+        'use strict';
+        event.preventDefault();
+        var ids = [];
+        $('.tag_parent_checkbox:checked').each(function(){
+            ids.push($(this).attr("id"));
+        });
+        if (ids.length == 0) return true;
+        var option = $("#options_place").val();
+
+        if(option != 'delete_selected') return true;
+
+        var route = "{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}";
+        route = route.replace('__ids__', JSON.stringify(ids));
+
+        $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method': 'DELETE'},
+            error: function(jqXHR, textStatus, errorThrown){
+                var textError = eval('('+jqXHR.responseText+')');
+                var statusError = textError.status;
+                var message = errorThrown+': {% trans %}Tags with children can not be deleted.{% endtrans %} '+statusError;
+                no_success(message);
+            },
+            success: function(response){
+                $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                var message = '{% trans %}Places successfully deleted.{% endtrans %}';
+                success(message);
+            }
+        });
+    })
+</script>

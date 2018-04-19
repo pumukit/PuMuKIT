@@ -5,13 +5,13 @@
             <td headers="th-checkbox">
                 <div class="checkbox">
                     <label>
-                        <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+                        <input id="{{ tag.id }}" class="tag_children_checkbox" type="checkbox">
                     </label>
                 </div>
             </td>
 
             <td headers="th-icons">
-                <a class="delete_tag" data-id="{{ tag.id }}" data-parent="{{ tag.parent.id }}" href="#" title="{% trans %}delete{% endtrans %}">
+                <a class="delete_children_tag" data-id="{{ tag.id }}" data-parent="{{ tag.parent.id }}" href="#" title="{% trans %}delete{% endtrans %}">
                     <i class="mdi-content-clear"></i>
                 </a>
             </td>
@@ -22,11 +22,11 @@
                 </a>
             </td>
 
-            <td headers="th-icons">
+            {#<td headers="th-icons">
                 <a title="{% trans %}Clone precinct{% endtrans %}">
                     <i class="mdi-content-content-copy"></i>
                 </a>
-            </td>
+            </td>#}
 
             <td class="data_children" data-id="{{ tag.getId() }}" headers="th-name">
                 {{ tag.getTitle() }}
@@ -41,6 +41,22 @@
             <td colspan="8">{% trans %}No data{% endtrans %}</td>
         </tr>
     {% endfor %}
+    <tr>
+        <td colspan="6">
+            <div class="col-md-8">
+            <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                <option disabled="">---</option>
+                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+            </select>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('pumukitnewadmin_places_create', {'id': parent.id }) }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    {% trans %}New{% endtrans %}
+                </a>
+            </div>
+        </td>
+    </tr>
 
 {% else %}
     <tr class="text-center" style="font-size:12px">

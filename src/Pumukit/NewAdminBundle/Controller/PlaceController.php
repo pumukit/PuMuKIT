@@ -70,7 +70,7 @@ class PlaceController extends Controller implements NewAdminController
         $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('_id' => $tag->getId()));
         $children = $tag->getChildren();
 
-        return array('children' => $children);
+        return array('children' => $children, 'parent' => $tag);
     }
 
     /**
@@ -112,11 +112,13 @@ class PlaceController extends Controller implements NewAdminController
 
         if ($id) {
             $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('_id' => new \MongoId($id)));
+            $isPrecinct = true;
         } else {
             $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
+            $isPrecinct = false;
         }
 
-        $suggested_code = $this->autogenerateCode($parent, $id);
+        $suggested_code = $this->autogenerateCode($parent, $isPrecinct);
 
         $tag = new Tag();
         $tag->setCod($suggested_code);
@@ -136,7 +138,7 @@ class PlaceController extends Controller implements NewAdminController
             return new JsonResponse(array('success'));
         }
 
-        return array('tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code);
+        return array('tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code, 'parent' => $parent);
     }
 
     /**
@@ -196,32 +198,31 @@ class PlaceController extends Controller implements NewAdminController
     }
 
     /**
-     * @param $parent
-     * @param $id
+     * @param Tag  $parent
+     * @param bool $isPrecinct
      *
-     * @return int
+     * @return int|string
      */
-    private function autogenerateCode($parent, $id)
+    private function autogenerateCode(Tag $parent, $isPrecinct)
     {
         $code = array();
-        $delimiter = 'PLACE';
-        if ($id) {
-            $delimiter = 'PRECINCT';
-        }
+        $delimiter = ($isPrecinct) ? 'PRECINCT' : 'PLACE';
 
         foreach ($parent->getChildren() as $child) {
             $tagCode = explode($delimiter, $child->getCod());
+            dump($delimiter);
+            dump($tagCode);
             $code[] = $tagCode[1];
         }
 
-        $value = (int) array_pop($code);
-        $suggested_code = $value + 1;
-
-        if ($id) {
-            $rootCode = $parent->getCod();
-            $suggested_code = $rootCode.$delimiter.$suggested_code;
+        if (empty($code)) {
+            $suggested_code = $delimiter.'1';
         } else {
-            $suggested_code = $delimiter.$suggested_code;
+            $suggested_code = $delimiter.((int) max($code) + 1);
+        }
+
+        if ($isPrecinct) {
+            $suggested_code = $parent->getCod().$suggested_code;
         }
 
         return $suggested_code;

@@ -1,29 +1,12 @@
 <div class="col-md-3">
     <div class="well">
-        <table class="table table-striped table-hover pmk-tag-tree">
+        <table class="table table-striped">
             <thead>
             {% include 'PumukitNewAdminBundle:Place:children_listth.html.twig' %}
             </thead>
             <tbody class="children-list">
                 {% include 'PumukitNewAdminBundle:Place:children_list.html.twig' %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8" class="foot-td"></td>
-                </tr>
-            </tfoot>
         </table>
-        <div class="row">
-            <div class="col-md-8">
-                <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
-                    <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-                    <option disabled="">---</option>
-                    <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-                </select>
-            </div>
-            <div class="col-md-4 text-right">
-                <a href="{{ path('pumukitnewadmin_places_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
-            </div>
-        </div>
     </div>
 </div>

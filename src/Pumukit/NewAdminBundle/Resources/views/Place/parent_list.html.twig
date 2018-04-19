@@ -3,7 +3,7 @@
         <td headers="th-checkbox">
             <div class="checkbox">
                 <label>
-                    <input id="{{ tag.id }}" class="tag_checkbox" type="checkbox">
+                    <input id="{{ tag.id }}" class="tag_parent_checkbox" type="checkbox">
                 </label>
             </div>
         </td>
@@ -20,11 +20,12 @@
             </a>
         </td>
 
-        <td headers="th-icons">
+        {#<td headers="th-icons">
             <a title="{% trans %}Clone place{% endtrans %}">
                 <i class="mdi-content-content-copy"></i>
             </a>
-        </td>
+        </td>#}
+
         <td class="load_children" data-id="{{ tag.getId() }}" headers="th-name">
             {{ tag.getTitle() }}
         </td>
