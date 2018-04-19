@@ -210,8 +210,6 @@ class PlaceController extends Controller implements NewAdminController
 
         foreach ($parent->getChildren() as $child) {
             $tagCode = explode($delimiter, $child->getCod());
-            dump($delimiter);
-            dump($tagCode);
             $code[] = $tagCode[1];
         }
 
