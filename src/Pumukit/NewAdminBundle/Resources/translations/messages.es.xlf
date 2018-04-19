@@ -3644,6 +3644,22 @@
         <source>Series successfully cloned.</source>
         <target>Serie clonada correctamente.</target>
       </trans-unit>
+      <trans-unit id="631d2cc3c9fd429fe8726f2ce195a8a5" resname="No people.">
+        <source>No people.</source>
+        <target>Sin personas.</target>
+      </trans-unit>
+      <trans-unit id="9ff3ad923f11da2cee0db1b8cdf0c700" resname="Multimedia object picture">
+        <source>Multimedia object picture</source>
+        <target>Miniatura de objeto multimedia</target>
+      </trans-unit>
+      <trans-unit id="e39612beb08e93c9dcc1be56135467d6" resname="Playlist picture">
+        <source>Playlist picture</source>
+        <target>Miniatura de lista de reproducción</target>
+      </trans-unit>
+      <trans-unit id="4e303b45dd07d09adcf18d5cdb77ba1d" resname="Event picture">
+        <source>Event picture</source>
+        <target>Miniatura de evento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
