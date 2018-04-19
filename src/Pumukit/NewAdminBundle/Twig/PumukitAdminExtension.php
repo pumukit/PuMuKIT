@@ -303,13 +303,14 @@ class PumukitAdminExtension extends \Twig_Extension
         list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
 
         $iconText = sprintf(
-            "%d %s,\n%d %s,\n%d %s,\n",
+            "%s: \n %d %s,\n%d %s,\n%d %s\n",
+            $this->translator->trans('Multimedia Objects'),
             $mmobjsPublished,
-            $this->translator->trans('Published Multimedia Object(s)'),
+            $this->translator->trans('Published'),
             $mmobjsHidden,
-            $this->translator->trans('Hidden Multimedia Object(s)'),
+            $this->translator->trans('Hidden'),
             $mmobjsBlocked,
-            $this->translator->trans('Blocked Multimedia Object(s)')
+            $this->translator->trans('Blocked')
         );
 
         return $iconText;
