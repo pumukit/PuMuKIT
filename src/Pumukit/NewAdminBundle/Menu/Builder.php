@@ -146,7 +146,7 @@ class Builder extends ContainerAware
             if (!$tools) {
                 $tools = $menu->addChild('Tools');
             }
-            $tools->addChild('Places and recinct', array('route' => 'pumukitnewadmin_places_index'));
+            $tools->addChild('Places and precinct', array('route' => 'pumukitnewadmin_places_index'));
         }
 
         foreach ($this->container->get('pumukitnewadmin.menu')->items() as $item) {
