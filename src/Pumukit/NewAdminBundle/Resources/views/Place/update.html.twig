@@ -1,12 +1,11 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title" id="myModalLabel">{% trans %}Create new place{% endtrans %}</h4>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}modify tag{% endtrans %}</h4>
 </div>
 <div class="modal-body">
     {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-    <form id="create_place" action="{{ path('pumukitnewadmin_places_create') }}" method="POST">
+    <form id="update_tag" action="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" method="POST">
         <fieldset>
             {% for child in form %}
                 {{ form_row(child) }}
@@ -20,23 +19,27 @@
 </div>
 
 <script type="text/javascript">
-    $('#create_place').on('submit', function(event) {
+    $('#update_tag').on('submit', function(event) {
         'use strict';
         event.preventDefault();
+
+        var isPlace = "{% if tag.parent.cod != 'PLACES' %}false{% else %}true{% endif %}";
+
         $('#myModal').modal('hide');
         $.ajax({
-            url: '{{ path('pumukitnewadmin_places_create') }}',
+            url: '{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}',
             method: 'POST',
             data: $(this).serialize(),
             success: function(response, textStatus, jqXHR){
                 if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{% trans %}There was an error in creating the Tag.{% endtrans %}';
+                    var message = '{% trans %}There was an error in updating the Tag.{% endtrans %}';
                     no_success(message);
-                } else {
-                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}", function() {
-                        $('html,body').scrollTop(0);
-                    });
-                    var message = '{% trans %}Place successfully created.{% endtrans %}';
+                } else{
+                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                    if(isPlace == "false") {
+                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': tag.parent.id}) }}");
+                    }
+                    var message = '{% trans %}Tag successfully updated.{% endtrans %}';
                     success(message);
                 }
             },

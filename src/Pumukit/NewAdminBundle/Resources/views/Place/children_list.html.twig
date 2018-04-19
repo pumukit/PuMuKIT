@@ -11,20 +11,20 @@
             </td>
 
             <td headers="th-icons">
-                <a href="#" title="{% trans %}delete{% endtrans %}">
+                <a class="delete_tag" data-id="{{ tag.id }}" data-parent="{{ tag.parent.id }}" href="#" title="{% trans %}delete{% endtrans %}">
                     <i class="mdi-content-clear"></i>
                 </a>
             </td>
 
             <td headers="th-icons">
-                <a title="{% trans %}Edit tag {% endtrans %}">
+                <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
                     <i class="mdi-editor-mode-edit"></i>
                 </a>
             </td>
 
             <td headers="th-icons">
-                <a title="{% trans %}Create child tag for{% endtrans %}">
-                    <i class="mdi-image-add-to-photos"></i>
+                <a title="{% trans %}Clone precinct{% endtrans %}">
+                    <i class="mdi-content-content-copy"></i>
                 </a>
             </td>
 
@@ -69,6 +69,35 @@
             },
             success: function(response) {
                 $('.preview-precinct').html(response);
+            }
+        });
+        return false;
+    });
+
+    $('.delete_children_tag').on('click', function(event) {
+        'use strict';
+        event.preventDefault();
+
+        var id = $(this).data('id');
+        var route = '{{ path('pumukitnewadmin_places_delete', {'id': '__id__'}) }}';
+        route = route.replace('__id__', id);
+
+        var parent = $(this).data('parent');
+        var route2 = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
+        route2 = route2.replace('__id__', parent);
+
+        $.ajax({
+            url: route,
+            type: 'GET',
+            error: function() {
+                var message = "{% trans %}Error deleting tag{% endtrans %}";
+                no_success(message);
+            },
+            success: function(response) {
+                $('.children-list').load(route2);
+                $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                var message = '{% trans %}Precinct successfully deleted.{% endtrans %}';
+                success(message);
             }
         });
         return false;

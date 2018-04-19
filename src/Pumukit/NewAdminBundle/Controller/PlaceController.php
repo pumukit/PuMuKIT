@@ -31,7 +31,25 @@ class PlaceController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $placeTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
-        $places = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array("title.".$request->getLocale() => 1));
+        $places = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
+
+        return array('places' => $places);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     *
+     * @Route("/parent/", name="pumukitnewadmin_places_parent")
+     * @Template("PumukitNewAdminBundle:Place:parent_list.html.twig")
+     */
+    public function parentAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $placeTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
+        $places = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
 
         return array('places' => $places);
     }
@@ -68,7 +86,7 @@ class PlaceController extends Controller implements NewAdminController
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('tags._id' =>  new \MongoId($tag->getId())));
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('tags._id' => new \MongoId($tag->getId())));
 
         $series = array();
         foreach ($multimediaObjects as $multimediaObject) {
@@ -92,7 +110,7 @@ class PlaceController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
 
-        if($id) {
+        if ($id) {
             $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('_id' => new \MongoId($id)));
         } else {
             $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
@@ -106,7 +124,8 @@ class PlaceController extends Controller implements NewAdminController
 
         $form = $this->createForm(new TagType($translator, $request->getLocale()), $tag);
 
-        if ($form->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $dm->persist($tag);
                 $dm->flush();
@@ -114,10 +133,66 @@ class PlaceController extends Controller implements NewAdminController
                 return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
             }
 
-            return $this->redirectToRoute('pumukitnewadmin_places_index');
+            return new JsonResponse(array('success'));
         }
 
         return array('tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code);
+    }
+
+    /**
+     * @param Request $request
+     * @param Tag     $tag
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Exception
+     *
+     * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
+     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     */
+    public function deletePlaceAction(Request $request, Tag $tag)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $tagService = $this->get('pumukitschema.tag');
+
+        try {
+            $tagService->deleteTag($tag);
+            $dm->flush();
+
+            return $this->redirectToRoute('pumukitnewadmin_places_index');
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Tag     $tag
+     *
+     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Route("/update/{id}", name="pumukitnewadmin_places_update")
+     * @ParamConverter("tag", class="PumukitSchemaBundle:Tag", options={"mapping": {"id": "id"}})
+     * @Template("PumukitNewAdminBundle:Place:update.html.twig")
+     */
+    public function updateAction(Request $request, Tag $tag)
+    {
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $form = $this->createForm(new TagType($translator, $locale), $tag);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->get('pumukitschema.tag')->updateTag($tag);
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
+            }
+
+            return new JsonResponse(array('success'));
+        }
+
+        return array('tag' => $tag, 'form' => $form->createView());
     }
 
     /**
@@ -130,11 +205,11 @@ class PlaceController extends Controller implements NewAdminController
     {
         $code = array();
         $delimiter = 'PLACE';
-        if($id) {
+        if ($id) {
             $delimiter = 'PRECINCT';
         }
 
-        foreach($parent->getChildren() as $child) {
+        foreach ($parent->getChildren() as $child) {
             $tagCode = explode($delimiter, $child->getCod());
             $code[] = $tagCode[1];
         }
@@ -142,14 +217,13 @@ class PlaceController extends Controller implements NewAdminController
         $value = (int) array_pop($code);
         $suggested_code = $value + 1;
 
-        if($id) {
+        if ($id) {
             $rootCode = $parent->getCod();
-            $suggested_code = $rootCode . $delimiter . $suggested_code;
+            $suggested_code = $rootCode.$delimiter.$suggested_code;
         } else {
-            $suggested_code = $delimiter . $suggested_code;
+            $suggested_code = $delimiter.$suggested_code;
         }
 
         return $suggested_code;
     }
-
 }

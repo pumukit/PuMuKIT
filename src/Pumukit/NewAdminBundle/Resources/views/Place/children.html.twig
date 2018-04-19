@@ -13,5 +13,17 @@
                 </tr>
             </tfoot>
         </table>
+        <div class="row">
+            <div class="col-md-8">
+                <select id="options_people" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                    <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                    <option disabled="">---</option>
+                    <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                </select>
+            </div>
+            <div class="col-md-4 text-right">
+                <a href="{{ path('pumukitnewadmin_places_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+            </div>
+        </div>
     </div>
 </div>
