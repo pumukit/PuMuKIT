@@ -1578,4 +1578,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $session->set('admin/mms/page', $page);
         $session->set('admin/mms/id', $mm->getId());
     }
+
+    public function updatePropertyAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($request->get('id')));
+        $method = $request->getMethod();
+        if (in_array($method, array('POST'))) {
+            $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));
+            $dm->flush();
+        }
+
+        return new JsonResponse(array('paellalayout' => $multimediaObject->getProperty('paellalayout')));
+    }
 }
