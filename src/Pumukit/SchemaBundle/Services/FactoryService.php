@@ -508,6 +508,12 @@ class FactoryService
         $newSeries->setSeriesStyle($series->getSeriesStyle());
         $newSeries->setPublicDate($series->getPublicDate());
 
+        foreach ($series->getPics() as $thumb) {
+            $clonedThumb = clone $thumb;
+            $this->dm->persist($clonedThumb);
+            $newSeries->addPic($clonedThumb);
+        }
+
         $this->dm->flush();
 
         $this->seriesDispatcher->dispatchCreate($series);
