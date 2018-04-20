@@ -1,7 +1,38 @@
 <div class="well">
   <fieldset>
     <dl>
-      <div class="form-row text-right">
+      <div class="form-row">
+        {% if mm.isMultistream() %}
+        <form class="form-horizontal">
+        <div class="col-lg-8 text-right">
+          <div class="col-xs-5" style="padding-top: 11px; padding-left: 0px;">
+            <label class="col-xs-4 control-label" style="padding-left: 0px;">Layout:</label>
+            <div class="col-xs-7 input-group">
+              <input id="paella-layout" list="layouts" value="{{ mm.getProperty("paellalayout") }}" type="text" class="form-control" placeholder="Layout">
+            </div>
+            <datalist id="layouts">
+              <option value="s_p_blackboard2">
+                <option value="slide_professor">
+                <option value="professor_slide">
+                <option value="professor">
+                <option value="slide">
+                <option value="slide_over_professor">
+                <option value="slide_over_professor_right">
+                <option value="professor_over_slide">
+                <option value="professor_over_slide_right">
+                <option value="blank_professor">
+                <option value="chroma">
+            </datalist>
+          </div>
+          <div class="col-lg-2" style="padding-right: 0px;">
+            <a class="btn btn-primary btn-raised" onclick="switchMode('save-layout')"> {%trans%} SAVE {%endtrans%} </a>
+          </div>
+        </div>
+        </form>
+        <div class="col-lg-4 text-right">
+        {% else %}
+        <div class="text-right">
+        {% endif %}
         <span id="edit-btn-group" style="display: none">
           <a class="btn btn-default btn-raised" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
           <a class="btn btn-pumukit btn-raised" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
@@ -10,10 +41,13 @@
         <span id="play-btn-group">
           <a class="btn btn-primary btn-raised" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
         </span>
-        <iframe id="paellaiframe"
-                src="{{url('pumukit_videoeditor_index', {'id': mm.id})}}?id={{mm.id}}"
-                style="background:black;width:100%;height:715px;">
-        </iframe>
+        </div>
+        <div>
+          <iframe id="paellaiframe"
+                  src="{{url('pumukit_videoeditor_index', {'id': mm.id})}}?id={{mm.id}}"
+                  style="background:black;width:100%;height:715px;">
+          </iframe>
+        </div>
       </div>
     </dl>
   </fieldset>
@@ -47,6 +81,20 @@
              break;
          case 'save':
              paella.editor.instance.bottomBar.toolbar.save();
+             break;
+         case 'save-layout':
+             $.post('/admin/mms/{{ mm.id }}/updateProperty',
+             {paellalayout : $("#paella-layout").val()})
+             .done(function() {
+               var message = '{% trans %}Multimedia Object saved OK{% endtrans %}';
+               $("#div_messages_span_info").attr("data-content", message);
+               $("#div_messages_span_info").snackbar("show");
+             })
+             .fail(function() {
+               var message = '{% trans %}Multimedia Object saved ERROR{% endtrans %}'
+               $("#div_messages_span_error").attr("data-content", message);
+               $("#div_messages_span_error").snackbar("show");
+             })
              break;
      }
  }

@@ -246,3 +246,9 @@ pumukitnewadmin_mms_listall:
     methods: [GET, POST]
     defaults:
         _controller: pumukitnewadmin.controller.mms:listAllAction
+
+pumukitnewadmin_mms_updateProperty:
+    pattern: /{id}/updateProperty
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updatePropertyAction
