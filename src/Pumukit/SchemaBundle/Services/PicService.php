@@ -107,7 +107,8 @@ class PicService
      * according to absolute url parameter
      *
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultSeriesUrlPic($absolute = false)
     {
@@ -125,7 +126,8 @@ class PicService
      * according to absolute url parameter
      *
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultPlaylistUrlPic($absolute = false)
     {
@@ -146,7 +148,8 @@ class PicService
      * @param bool $audio    Video is only audio
      * @param bool $hd       Returns pic in HD
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultMultimediaObjectUrlPic($absolute = false, $audio = false, $hd = true)
     {
@@ -270,7 +273,8 @@ class PicService
      *
      * @param bool $audio Video is only audio
      * @param bool $hd    Returns pic in HD
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultMultimediaObjectPathPic($audio = false, $hd = true)
     {
@@ -285,6 +289,35 @@ class PicService
         }
 
         return $this->getAbsolutePathPic($defaultPic);
+    }
+
+    /**
+     * @param      $object
+     * @param bool $absolute
+     * @param bool $hd
+     *
+     * @return null|string
+     */
+    public function getPosterUrl($object, $absolute = false, $hd = true)
+    {
+        $pics = $object->getPics();
+        $picUrl = null;
+        if (0 === count($pics)) {
+            return $picUrl;
+        }
+
+        foreach ($pics as $pic) {
+            if ($pic->getUrl() && $pic->containsTag('poster')) {
+                $picUrl = $pic->getUrl();
+                break;
+            }
+        }
+
+        if ($absolute) {
+            return $this->getAbsoluteUrlPic($picUrl);
+        }
+
+        return $picUrl;
     }
 
     /**
