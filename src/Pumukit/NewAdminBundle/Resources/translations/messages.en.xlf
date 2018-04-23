@@ -3601,6 +3601,18 @@
       <trans-unit id="e2f09bf843c911e8842f0ed5f89f718b" resname="Select one precinct to load data">
         <source>Select one precinct to load data</source>
         <target>Select one precinct to load data</target>
+      </trans-unit>        
+      <trans-unit id="c18fc162448411e8842f0ed5f89f718b" resname="i18n.multiple.Published">
+        <source>i18n.multiple.Published</source>
+        <target>Published</target>
+      </trans-unit>
+      <trans-unit id="c18fc4b4448411e8842f0ed5f89f718b" resname="i18n.multiple.Hidden">
+        <source>i18n.multiple.Hidden</source>
+        <target>Hidden</target>
+      </trans-unit>
+      <trans-unit id="c18fc61c448411e8842f0ed5f89f718b" resname="i18n.multiple.Blocked">
+        <source>i18n.multiple.Blocked</source>
+        <target>Blocked</target>
       </trans-unit>
     </body>
   </file>

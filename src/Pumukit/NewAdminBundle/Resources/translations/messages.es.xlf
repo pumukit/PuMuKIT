@@ -3704,6 +3704,18 @@
         <source>Select one precinct to load data</source>
         <target>Selecciona un recinto para cargar los datos</target>
       </trans-unit>
+      <trans-unit id="c18fc162448411e8842f0ed5f89f718b" resname="i18n.multiple.Published">
+        <source>i18n.multiple.Published</source>
+        <target>Publicados</target>
+      </trans-unit>
+      <trans-unit id="c18fc4b4448411e8842f0ed5f89f718b" resname="i18n.multiple.Hidden">
+        <source>i18n.multiple.Hidden</source>
+        <target>Ocultos</target>
+      </trans-unit>
+      <trans-unit id="c18fc61c448411e8842f0ed5f89f718b" resname="i18n.multiple.Blocked">
+        <source>i18n.multiple.Blocked</source>
+        <target>Bloqueados</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

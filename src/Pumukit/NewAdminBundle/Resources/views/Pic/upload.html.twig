@@ -4,7 +4,7 @@
 
   parent.$('#myModal').modal('hide');
   var isBanner = "{{ isBanner ? 'yes':'no' }}";
-  var event_poster = {{ event_poster }};
+  var event_poster = {{ event_poster ? event_poster : 0 }};
   if ('yes' == isBanner) {
     parent.$('#edit_series').load('{{ path('pumukitnewadmin_series_update', {'id': resource.id}) }}');
   } else if (event_poster) {
