@@ -3558,6 +3558,50 @@
         <source>Event picture</source>
         <target>Event picture</target>
       </trans-unit>
+      <trans-unit id="e2f088ca43c911e8842f0ed5f89f718b" resname="Places and precinct">
+        <source>Places and precinct</source>
+        <target>Places and precinct</target>
+      </trans-unit>
+      <trans-unit id="e2f08b7243c911e8842f0ed5f89f718b" resname="Place and precinct">
+        <source>Place and precinct</source>
+        <target>Place and precinct</target>
+      </trans-unit>
+      <trans-unit id="e2f08cbc43c911e8842f0ed5f89f718b" resname="Address">
+        <source>Address</source>
+        <target>Address</target>
+      </trans-unit>
+      <trans-unit id="e2f090f443c911e8842f0ed5f89f718b" resname="Precinct">
+        <source>Precinct</source>
+        <target>Precinct</target>
+      </trans-unit>
+      <trans-unit id="e2f0925243c911e8842f0ed5f89f718b" resname="Error loading tag">
+        <source>Error loading tag</source>
+        <target>Error loading tag.</target>
+      </trans-unit>
+      <trans-unit id="e2f0937e43c911e8842f0ed5f89f718b" resname="Error deleting tag">
+        <source>Error deleting tag</source>
+        <target>Error deleting tag</target>
+      </trans-unit>
+      <trans-unit id="e2f094a043c911e8842f0ed5f89f718b" resname="Place successfully deleted.">
+        <source>Place successfully deleted.</source>
+        <target>Place successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="e2f095c243c911e8842f0ed5f89f718b" resname="Places successfully deleted.">
+        <source>Places successfully deleted.</source>
+        <target>Places successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="e2f096da43c911e8842f0ed5f89f718b" resname="Select one place to load data">
+        <source>Select one place to load data</source>
+        <target>Select one place to load data</target>
+      </trans-unit>
+      <trans-unit id="e2f0980643c911e8842f0ed5f89f718b" resname="Precinct successfully deleted.">
+        <source>Precinct successfully deleted.</source>
+        <target>Precinct successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="e2f09bf843c911e8842f0ed5f89f718b" resname="Select one precinct to load data">
+        <source>Select one precinct to load data</source>
+        <target>Select one precinct to load data</target>
+      </trans-unit>        
       <trans-unit id="c18fc162448411e8842f0ed5f89f718b" resname="i18n.multiple.Published">
         <source>i18n.multiple.Published</source>
         <target>Published</target>

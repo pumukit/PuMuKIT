@@ -1,0 +1,74 @@
+<div class="col-md-6">
+    <div class="well">
+        <table class="table table-striped table-hover pmk-tag-tree">
+            <thead>
+                {% include 'PumukitNewAdminBundle:Place:parent_listth.html.twig' %}
+            </thead>
+            <tbody class="parent-list">
+                {% if places|length is empty %}
+                    <tr>
+                        <td headers="th-checkbox th-icons th-icons th-code th-name th-num" colspan="8">
+                            {% trans %}There are no tags with those values.{% endtrans %}
+                        </td>
+                    </tr>
+                {% else %}
+                    {% include 'PumukitNewAdminBundle:Place:parent_list.html.twig' %}
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" class="foot-td"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="row">
+            <div class="col-md-4">
+                <select id="options_place" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                    <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                    <option disabled="">---</option>
+                    <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                </select>
+            </div>
+            <div class="col-md-8 text-right">
+                <a href="{{ path('pumukitnewadmin_places_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#options_place').on('change', function(event) {
+        'use strict';
+        event.preventDefault();
+        var ids = [];
+        $('.tag_parent_checkbox:checked').each(function(){
+            ids.push($(this).attr("id"));
+        });
+        if (ids.length == 0) return true;
+        var option = $("#options_place").val();
+
+        if(option != 'delete_selected') return true;
+
+        var route = "{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}";
+        route = route.replace('__ids__', JSON.stringify(ids));
+
+        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {'_method': 'DELETE'},
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var textError = eval('(' + jqXHR.responseText + ')');
+                    var statusError = textError.status;
+                    var message = errorThrown + ': {% trans %}Tags with children can not be deleted.{% endtrans %} ' + statusError;
+                    no_success(message);
+                },
+                success: function (response) {
+                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
+                    var message = '{% trans %}Places successfully deleted.{% endtrans %}';
+                    success(message);
+                }
+            });
+        }
+    })
+</script>
