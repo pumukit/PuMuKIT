@@ -1993,4 +1993,20 @@ class MultimediaObject
             $this->duration = ($durationInMinutesAndSeconds['minutes'] * 60) + $durationInMinutesAndSeconds['seconds'];
         }
     }
+
+    /**
+     * Is multistream.
+     *
+     * @return bool TRUE if multimediaObject has tracks with tags presenter/delivery and presentation/delivery, FALSE otherwise
+     */
+    public function isMultistream()
+    {
+        $presenterTracks = $this->getFilteredTracksWithTags(array('presenter/delivery'));
+        $presentationTracks = $this->getFilteredTracksWithTags(array('presentation/delivery'));
+        if ($presenterTracks && $presentationTracks) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
