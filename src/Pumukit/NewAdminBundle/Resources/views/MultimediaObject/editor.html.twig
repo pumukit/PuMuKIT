@@ -5,9 +5,9 @@
         {% if mm.isMultistream() %}
         <form class="form-horizontal">
         <div class="col-lg-8 text-right">
-          <div class="col-xs-5" style="padding-top: 11px; padding-left: 0px;">
-            <label class="col-xs-4 control-label" style="padding-left: 0px;">Layout:</label>
-            <div class="col-xs-7 input-group">
+          <div class="col-xs-6" style="padding-top: 11px; padding-left: 0px;">
+            <label class="col-xs-4 control-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
+            <div class="col-xs-8 input-group">
               <input id="paella-layout" list="layouts" value="{{ mm.getProperty("paellalayout") }}" type="text" class="form-control" placeholder="Layout">
             </div>
             <datalist id="layouts">
