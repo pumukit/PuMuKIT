@@ -26,15 +26,15 @@
             </a>
         </td>#}
 
-        <td class="load_children" data-id="{{ tag.getId() }}" headers="th-name">
+        <td class="load_children" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-name">
             {{ tag.getTitle() }}
         </td>
-        <td class="load_children" data-id="{{ tag.getId() }}" headers="th-dir">
+        <td class="load_children" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-dir">
             {% if tag.getProperty('address') is not empty %}
                 {{ tag.getProperty('address')[app.request.getLocale()] }}
             {% endif %}
         </td>
-        <td class="load_children text-center" data-id="{{ tag.getId() }}" headers="th-num-precinct">
+        <td class="load_children text-center" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-num-precinct">
             {{ tag.getChildren()|length }}
         </td>
     </tr>
@@ -44,6 +44,8 @@
     $('.load_children').on('click', function(event){
         'use strict';
         event.preventDefault();
+
+        $('.name_of_children').html($(this).data('title'));
 
         var id = $(this).data('id');
         var route = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
