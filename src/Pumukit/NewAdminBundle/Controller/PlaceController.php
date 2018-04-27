@@ -65,9 +65,6 @@ class PlaceController extends Controller implements NewAdminController
      */
     public function childrenAction(Tag $tag)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('_id' => $tag->getId()));
         $children = $tag->getChildren();
 
         return array('children' => $children, 'parent' => $tag);
