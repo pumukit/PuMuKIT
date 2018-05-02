@@ -16,7 +16,7 @@
                     </div>
                     <div class="miniinfo-wrapper">
                         <div class="miniinfo">
-                            <div class="title" >
+                            <div class="title" data-toggle="tooltip" data-placement="right" title="{{ event['event']['name'][app.request.getLocale()] | default('No title' | trans )}}">
                                 {{ event['event']['name'][app.request.getLocale()] | default('No title' | trans )}}
                             </div>
                             <br />
