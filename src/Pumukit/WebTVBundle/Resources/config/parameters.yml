@@ -26,6 +26,7 @@ parameters:
   menu.search_title:         'Multimedia objects search'  # 'Search' option title for the menu widget.
   show_mostviewed_lastmonth: false                        # If true it shows only the most viewed during last month.
   show_latest_with_pudenew:  false                        # Set whether to use the PUDENEW tag for 'Recently Added' and 'Latest Uploads'
+  use_record_date_announces: false                        # Use record_date instead of public_data in announce list
 
   pumukit_web_tv.cinema_mode: false
   pumukit_web_tv.breadcrumbs_all_title: 'All'

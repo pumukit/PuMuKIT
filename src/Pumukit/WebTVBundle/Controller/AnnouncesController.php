@@ -61,7 +61,7 @@ class AnnouncesController extends Controller implements WebTVController
         return array(
             $this->container->getParameter('columns_objs_announces'),
             $this->container->getParameter('show_latest_with_pudenew'),
-            false, // 'use_record_date'
+            $this->container->getParameter('use_record_date_announces'),
         );
     }
 }
