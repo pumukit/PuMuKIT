@@ -105,7 +105,7 @@ class UserController extends AdminController implements NewAdminController
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {
-                if ($this->isGranted('ROLE_ADMIN')) {
+                if (!$user->isLocal()) {
                     $user = $this->get('pumukitschema.user')->update($user, true, false);
                 } else {
                     $response = $this->isAllowedToBeUpdated($user);
@@ -455,13 +455,11 @@ class UserController extends AdminController implements NewAdminController
 
         $users = $usersRepo->findBy(array('_id' => array('$in' => $ids)));
 
-        $checkOrigin = !$this->isGranted('ROLE_ADMIN');
-
         try {
             foreach ($users as $user) {
                 if (!$user->hasRole('ROLE_SUPER_ADMIN')) {
                     $user->setPermissionProfile($profile);
-                    $this->get('pumukitschema.user')->update($user, true, $checkOrigin);
+                    $this->get('pumukitschema.user')->update($user, true, false);
                 }
             }
         } catch (\Exception $e) {
