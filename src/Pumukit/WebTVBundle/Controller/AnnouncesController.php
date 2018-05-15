@@ -29,7 +29,7 @@ class AnnouncesController extends Controller implements WebTVController
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        list($numberCols, $showPudenew) = $this->getParameters();
+        list($numberCols, $showPudenew, $useRecordDate) = $this->getParameters();
 
         $announcesService = $this->get('pumukitschema.announce');
 
@@ -38,7 +38,7 @@ class AnnouncesController extends Controller implements WebTVController
         if (!$date) {
             throw $this->createNotFoundException();
         }
-        list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew);
+        list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew, $useRecordDate);
         if (empty($last)) {
             $dateHeader = '---';
         } else {
@@ -61,6 +61,7 @@ class AnnouncesController extends Controller implements WebTVController
         return array(
             $this->container->getParameter('columns_objs_announces'),
             $this->container->getParameter('show_latest_with_pudenew'),
+            $this->container->getParameter('use_record_date_announces'),
         );
     }
 }
