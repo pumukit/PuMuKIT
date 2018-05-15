@@ -35,10 +35,6 @@ class EventsType extends AbstractType
                 array(
                     'required' => false,
                     'label' => $this->translator->trans('Description', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
-            ->add('date', Html5dateType::class,
-                array(
-                    'required' => true,
-                    'label' => $this->translator->trans('Start date', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
             ->add('place', TextType::class,
                 array(
                     'required' => false,
