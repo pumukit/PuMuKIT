@@ -106,6 +106,7 @@ class MaterialService
      * @param                  $formData
      *
      * @return MultimediaObject
+     *
      * @throws \Exception
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
@@ -144,6 +145,7 @@ class MaterialService
      * @param                  $materialId
      *
      * @return MultimediaObject
+     *
      * @throws \Exception
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
