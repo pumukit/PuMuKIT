@@ -22,7 +22,7 @@
           </div>
 
           {# TODO Add Glyphicons #}
-          <button id="take-img-button" title="Take image." style="margin-top: 35px; padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
+          <button id="take-img-button" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
 
 
           <div class="btn-group">
@@ -37,17 +37,23 @@
             </ul>
           </div>
 
+          <button id="advanced-button" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-raised btn-xs">{% trans %}Show advanced{% endtrans %}</button>
+
         </div>
 
       </div>
       <div class="col-md-5 text-center">
+        <span id="pic-size" class="label label-default" style="position: absolute;"></span>
         <!-- PREVIEW -->
         <img class="image" style="max-width: 100%; max-height:100%" id="gen_pic_img" src="{{ asset('/bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
       </div>
 
     </div>
 
-
+    <div class="row" id="advanced" style="display: none;">
+        {% trans %}Format{% endtrans %}: <select id="pic-format"><option>jpeg</option><option>png</option>{#<option value="webp">webp (experimental)</option>#}</select>
+        {% trans %}Quality{% endtrans %}: <select id="pic-quality"><option>1.0</option><option selected="selected">0.92</option><option>0.85</option><option>0.75</option><option>0.6</option></select>
+    </div>
 
     <div class="row">
       <div id="frames" style="overflow-y: scroll; height: 210px; margin-top: 15px;"></div>
@@ -82,13 +88,17 @@ var prev_frame = document.querySelector("#prev-frame-button");
 var next_frame = document.querySelector("#next-frame-button");
 var take_img = document.querySelector("#take-img-button");
 var take_burst = $(".take-burst-button");
+var advanced = document.querySelector("#advanced-button");
 var canvas_draw = document.querySelector("#canvas-draw-frames");
 var frames = document.querySelector("#frames");
 var sumbit = document.querySelector("#gen_pic_submit");
 var init_img = img.src;
 var upload_img = document.querySelector("#file-upload-button");
-
+var pic_size = document.querySelector("#pic-size");
+var pic_format = document.querySelector("#pic-format");
+var pic_quality = document.querySelector("#pic-quality");
 var ctx_draw = canvas_draw.getContext("2d");
+
 
 
 if(video.readyState == 4){
@@ -118,8 +128,24 @@ next_frame.addEventListener("click", function(){
 take_img.addEventListener("click", function(){
   var new_img = take_pic();
   img.src = new_img.src;
+  update_pic_size();
 }, false);
 
+
+advanced.addEventListener("click", function(){
+  $('#advanced').toggle();
+}, false);
+
+function update_pic_size() {
+  var subindex = img.src.substr(11, 3) == "png" ? 22 : 23;
+  var size = atob(img.src.substr(subindex)).length;
+  if (size < 3000 ) {
+    var size_text = size + " B";
+  } else {
+    var size_text = Math.ceil(size/1024) + " KB";  
+  }
+  pic_size.innerHTML = size_text;
+}
 
 function take_pic() {
   ctx_draw.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
@@ -127,11 +153,14 @@ function take_pic() {
   new_img.classList.add("new_img");
   new_img.classList.add("btn");
   new_img.style.padding = "0px"
-  new_img.src = canvas_draw.toDataURL("image/png");
+  var format = "image/" + pic_format.value;
+  var quality = parseFloat(pic_quality.value);
+  new_img.src = canvas_draw.toDataURL(format, quality);
   new_img.width = 120;
 
   new_img.addEventListener("click", function(){
     img.src = this.src;
+    update_pic_size();
   })
 
   frames.appendChild(new_img);
