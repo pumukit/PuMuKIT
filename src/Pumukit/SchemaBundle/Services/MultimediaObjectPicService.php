@@ -32,7 +32,11 @@ class MultimediaObjectPicService
     }
 
     /**
-     * Returns the target path for a series.
+     * Returns the target path for an object.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
     {
@@ -40,7 +44,11 @@ class MultimediaObjectPicService
     }
 
     /**
-     * Returns the target url for a series.
+     * Returns the target url for an object.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
     {
@@ -49,6 +57,12 @@ class MultimediaObjectPicService
 
     /**
      * Get pics from series or multimedia object.
+     *
+     * @param $series
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getRecommendedPics($series)
     {
@@ -57,6 +71,13 @@ class MultimediaObjectPicService
 
     /**
      * Set a pic from an url into the multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $picUrl
+     * @param bool             $flush
+     * @param bool             $isEventPoster
+     *
+     * @return MultimediaObject
      */
     public function addPicUrl(MultimediaObject $multimediaObject, $picUrl, $flush = true, $isEventPoster = false)
     {
@@ -79,6 +100,14 @@ class MultimediaObjectPicService
 
     /**
      * Set a pic from an url into the multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param UploadedFile     $picFile
+     * @param bool             $isEventPoster
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile, $isEventPoster = false)
     {
@@ -111,6 +140,12 @@ class MultimediaObjectPicService
 
     /**
      * Set a pic from a memory string.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $pic
+     * @param string           $format
+     *
+     * @return MultimediaObject
      */
     public function addPicMem(MultimediaObject $multimediaObject, $pic, $format = 'png')
     {
@@ -142,6 +177,13 @@ class MultimediaObjectPicService
 
     /**
      * Remove Pic from Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $picId
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)
     {
@@ -164,6 +206,12 @@ class MultimediaObjectPicService
         return $multimediaObject;
     }
 
+    /**
+     * @param $path
+     * @param $multimediaObject
+     *
+     * @throws \Exception
+     */
     private function deleteFileOnDisk($path, $multimediaObject)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
@@ -187,6 +235,12 @@ class MultimediaObjectPicService
         }
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     * @param Pic              $pic
+     *
+     * @return Pic
+     */
     private function updatePosterTag(MultimediaObject $multimediaObject, Pic $pic)
     {
         foreach ($multimediaObject->getPicsWithTag('poster') as $posterPic) {
