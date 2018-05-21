@@ -20,9 +20,55 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_core');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('info')
+                    ->info('Info of PuMuKIT')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('title')
+                                ->defaultValue('Title')
+                            ->end()
+                            ->scalarNode('description')
+                                ->defaultValue('Description')
+                            ->end()
+                            ->scalarNode('keywords')
+                                ->defaultValue('Keywords')
+                            ->end()
+                            ->scalarNode('email')
+                                ->defaultValue('Email')
+                            ->end()
+                            ->scalarNode('logo')
+                                ->defaultValue('Logo')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('locales')
+                    ->info('Languages of WebTV')
+                    ->prototype('scalar')
+                    ->defaultValue('en')
+                    ->end()
+                ->end()
+                ->scalarNode('uploads_dir')
+                    ->defaultValue('%kernel.root_dir%/../web/uploads')
+                ->end()
+                ->scalarNode('uploads_url')
+                    ->defaultValue('/uploads')
+                ->end()
+                ->scalarNode('inbox')
+                    ->defaultValue('/mnt/inbox')
+                ->end()
+                ->scalarNode('tmp')
+                    ->defaultValue('/mnt/tmp')
+                ->end()
+                ->booleanNode('delete_on_disk')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('use_series_channels')
+                    ->defaultFalse()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
