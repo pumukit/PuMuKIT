@@ -3,7 +3,6 @@
 namespace Pumukit\OpencastBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\SchemaBundle\Document\User;
 
 class ClientServiceTest extends WebTestCase

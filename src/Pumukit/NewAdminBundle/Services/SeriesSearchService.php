@@ -3,7 +3,6 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SeriesSearchService
 {
@@ -58,6 +57,8 @@ class SeriesSearchService
                 }
             } elseif (('_id' === $property) && ('' !== $value)) {
                 $new_criteria['_id'] = $value;
+            } elseif ('playlist.multimedia_objects' === $property && ('' !== $value)) {
+                $new_criteria['playlist.multimedia_objects'] = array('$size' => 0);
             }
         }
 
@@ -107,10 +108,7 @@ class SeriesSearchService
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);
         } else {
-            $base[] = array('$text' => array(
-                '$search' => $text,
-                '$language' => TextIndexUtils::getCloseLanguage($locale),
-            ));
+            $base[] = array('$text' => array('$search' => $text));
         }
 
         return $base;

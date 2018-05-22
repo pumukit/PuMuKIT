@@ -33,7 +33,7 @@ class PumukitNotificationExtension extends Extension
         $container->setParameter('pumukit_notification.notificate_errors_to_admin', $config['notificate_errors_to_admin']);
 
         $env = $container->getParameter('kernel.environment');
-        if ($env === 'test') {
+        if ('test' === $env) {
             $container->setParameter('pumukit_notification.template', Configuration::TEMPLATE);
             $container->setParameter('pumukit_notification.sender_email', Configuration::SENDER_EMAIL);
             $container->setParameter('pumukit_notification.admin_email', Configuration::ADMIN_EMAIL);

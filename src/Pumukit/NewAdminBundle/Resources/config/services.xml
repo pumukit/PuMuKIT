@@ -8,6 +8,7 @@
     <parameter key="pumukit2.customlanguages" type="collection"></parameter>
     <parameter key="pumukit2.warning_on_unpublished">false</parameter>
     <parameter key="pumukit2.show_dashboard_tab">true</parameter>
+    <parameter key="pumukit2.show_mms_list_all_menu">false</parameter>
   </parameters>
 
   <services>
@@ -44,6 +45,7 @@
       <argument type="service" id="router" />
       <argument type="service" id="pumukitschema.multimedia_object" />
       <argument type="service" id="pumukitschema.special_translation" />
+      <argument type="service" id="pumukitschema.eventsession" />
     </service>
 
     <service id="pumukitnewadmin.series_search" class="Pumukit\NewAdminBundle\Services\SeriesSearchService">
@@ -65,11 +67,13 @@
     <service id="pumukitnewadmin.menu" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
     <service id="pumukitnewadmin.mmobjlistbuttons" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
     <service id="pumukitnewadmin.mmobjmenu" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
+    <service id="pumukitnewadmin.seriesmenu" class="Pumukit\NewAdminBundle\Menu\ItemsList" />
 
     <!-- This extension is used to get the list of buttons(items) added through the pumukitnewadmin.mmobjlistbuttonsitem tag -->
     <service id="pumukitnewadmin.twig_mmobjbuttons_extension" class="Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension">
       <argument type="service" id="pumukitnewadmin.mmobjlistbuttons"/>
       <argument type="service" id="pumukitnewadmin.mmobjmenu"/>
+      <argument type="service" id="pumukitnewadmin.seriesmenu"/>
       <tag name="twig.extension"/>
     </service>
 

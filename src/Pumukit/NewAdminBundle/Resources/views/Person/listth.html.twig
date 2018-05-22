@@ -1,49 +1,49 @@
-{% if 'id' == app.session.get('admin/person/sort') %}
-    <th width="1%" id="th-id">
-        <a href="#" id="pumukitnewadmin_person_id_sort_selected">{% trans %}Id{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
-    </th>
-{% else %}
-    <th width="1%" id="th-id">
-        <a href="#" id="pumukitnewadmin_person_id_sort_not_selected">{% trans %}Id{% endtrans %}</a>
-    </th>
-{% endif %}
+{% set sort = app.session.get('admin/person/sort') %}
+{% set type = app.session.get('admin/person/type') %}
+{% set typeIcon = type=='asc'?' &#x25B4;':' &#x25BE;' %}
 
-{% if 'name' == app.session.get('admin/person/sort') %}
-    <th id="th-name">
-        <a href="#" id="pumukitnewadmin_person_name_sort_selected">{% trans %}Name{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
-    </th>
-{% else %}
-    <th id="th-name">
+<th width="1%" id="th-checkbox">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" onclick="window.click_checkbox_all('person', this.checked)">
+        </label>
+    </div>
+</th>
+
+<th colspan="2" width="5%" id="th-icons"></th>
+
+<th id="th-name">
+    {% if 'name' == sort %}
+        <a href="#" id="pumukitnewadmin_person_name_sort_selected">{% trans %}Name{% endtrans %}{{ typeIcon|raw }}</a>
+    {% else %}
         <a href="#" id="pumukitnewadmin_person_name_sort_not_selected">{% trans %}Name{% endtrans %}</a>
-    </th>
-{% endif %}
+    {% endif %}
+</th>
 
-{% if ('post.' ~ app.request.getLocale())  == app.session.get('admin/person/sort') %}
-    <th id="th-post">
-        <a href="#" id="pumukitnewadmin_person_post_sort_selected">{% trans %}Post{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
-    </th>
-{% else %}
-    <th id="th-post">
+<th id="th-post">
+    {% if ('post.' ~ app.request.getLocale())  == sort %}
+        <a href="#" id="pumukitnewadmin_person_post_sort_selected">{% trans %}Post{% endtrans %}{{ typeIcon|raw  }}</a>
+    {% else %}
         <a href="#" id="pumukitnewadmin_person_post_sort_not_selected">{% trans %}Post{% endtrans %}</a>
-    </th>
-{% endif %}
+    {% endif %}
+</th>
 
-{% if 'email' == app.session.get('admin/person/sort') %}
-    <th id="th-email">
-        <a href="#" id="pumukitnewadmin_person_email_sort_selected">{% trans %}Email{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
-    </th>
-{% else %}
-    <th id="th-email">
+<th id="th-email">
+    {% if 'email' == sort %}
+        <a href="#" id="pumukitnewadmin_person_email_sort_selected">{% trans %}Email{% endtrans %}{{ typeIcon|raw  }}</a>
+    {% else %}
         <a href="#" id="pumukitnewadmin_person_email_sort_not_selected">{% trans %}Email{% endtrans %}</a>
-    </th>
-{% endif %}
+    {% endif %}
+</th>
 
-{% if 'phone' == app.session.get('admin/person/sort') %}
-    <th id="th-phone">
-        <a href="#" id="pumukitnewadmin_person_phone_sort_selected">{% trans %}Phone{% endtrans %}{{ app.session.get('admin/person/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
-    </th>
-{% else %}
-    <th id="th-phone">
+<th id="th-phone">
+    {% if 'phone' == sort %}
+        <a href="#" id="pumukitnewadmin_person_phone_sort_selected">{% trans %}Phone{% endtrans %}{{ typeIcon|raw  }}</a>
+    {% else %}
         <a href="#" id="pumukitnewadmin_person_phone_sort_not_selected">{% trans %}Phone{% endtrans %}</a>
-    </th>
-{% endif %}
+    {% endif %}
+</th>
+
+<th id="th-mm">
+    {% trans %}Mm.Obj.{% endtrans %}
+</th>

@@ -46,7 +46,7 @@ class MediaLibraryController extends Controller implements WebTVController
                     }
 
                     $key = mb_substr(trim($serie->getTitle()), 0, 1, 'UTF-8');
-                    if (!isset($result[ $key ])) {
+                    if (!isset($result[$key])) {
                         $result[$key] = array();
                     }
                     $result[$key][] = $serie;
@@ -62,15 +62,15 @@ class MediaLibraryController extends Controller implements WebTVController
                     }
 
                     $key = $serie->getPublicDate()->format('m/Y');
-                    if (!isset($result[ $key ])) {
-                        $result[ $key ] = array();
+                    if (!isset($result[$key])) {
+                        $result[$key] = array();
                     }
 
                     $title = $serie->getTitle();
-                    if (!isset($result[ $key ][ $title ])) {
-                        $result[ $key ][ $title ] = $serie;
+                    if (!isset($result[$key][$title])) {
+                        $result[$key][$title] = $serie;
                     } else {
-                        $result[ $key ][ $title.rand() ] = $serie;
+                        $result[$key][$title.rand()] = $serie;
                     }
                 }
 
@@ -111,10 +111,10 @@ class MediaLibraryController extends Controller implements WebTVController
                             continue;
                         }
 
-                        if (!isset($result[ $key ])) {
-                            $result[ $key ] = array();
+                        if (!isset($result[$key])) {
+                            $result[$key] = array();
                         }
-                        $result[ $key ][] = $serie;
+                        $result[$key][] = $serie;
                     }
                 }
                 break;

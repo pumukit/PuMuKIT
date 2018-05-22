@@ -32,7 +32,36 @@ class MaterialService
     }
 
     /**
+     * Returns the target path for an object.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
+     */
+    public function getTargetPath(MultimediaObject $multimediaObject)
+    {
+        return $this->targetPath.'/'.$multimediaObject->getId();
+    }
+
+    /**
+     * Returns the target url for an object.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
+     */
+    public function getTargetUrl(MultimediaObject $multimediaObject)
+    {
+        return $this->targetUrl.'/'.$multimediaObject->getId();
+    }
+
+    /**
      * Update Material in Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param Material         $material
+     *
+     * @return MultimediaObject
      */
     public function updateMaterialInMultimediaObject(MultimediaObject $multimediaObject, Material $material)
     {
@@ -46,6 +75,12 @@ class MaterialService
 
     /**
      * Set a material from an url into the multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $url
+     * @param                  $formData
+     *
+     * @return MultimediaObject
      */
     public function addMaterialUrl(MultimediaObject $multimediaObject, $url, $formData)
     {
@@ -65,6 +100,14 @@ class MaterialService
 
     /**
      * Add a material from a file into the multimediaObject.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param UploadedFile     $materialFile
+     * @param                  $formData
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function addMaterialFile(MultimediaObject $multimediaObject, UploadedFile $materialFile, $formData)
     {
@@ -97,6 +140,13 @@ class MaterialService
 
     /**
      * Remove Material from Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $materialId
+     *
+     * @return MultimediaObject
+     *
+     * @throws \Exception
      */
     public function removeMaterialFromMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -110,7 +160,7 @@ class MaterialService
         if ($this->forceDeleteOnDisk && $materialPath) {
             $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $otherMaterials = $mmobjRepo->findBy(array('materials.path' => $materialPath));
-            if (count($otherMaterials) == 0) {
+            if (0 == count($otherMaterials)) {
                 $this->deleteFileOnDisk($materialPath);
             }
         }
@@ -122,6 +172,11 @@ class MaterialService
 
     /**
      * Up Material in Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $materialId
+     *
+     * @return MultimediaObject
      */
     public function upMaterialInMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -134,6 +189,11 @@ class MaterialService
 
     /**
      * Down Material in Multimedia Object.
+     *
+     * @param MultimediaObject $multimediaObject
+     * @param                  $materialId
+     *
+     * @return MultimediaObject
      */
     public function downMaterialInMultimediaObject(MultimediaObject $multimediaObject, $materialId)
     {
@@ -147,7 +207,7 @@ class MaterialService
     /**
      * Get VTT captions.
      *
-     * @param MultimediaObject $multimediaObjet
+     * @param MultimediaObject $multimediaObject
      *
      * @return array
      */
@@ -163,7 +223,10 @@ class MaterialService
     /**
      * Save form data of Material.
      *
-     * @return Material $material
+     * @param Material $material
+     * @param          $formData
+     *
+     * @return Material
      */
     private function saveFormData(Material $material, $formData)
     {
@@ -183,6 +246,11 @@ class MaterialService
         return $material;
     }
 
+    /**
+     * @param $path
+     *
+     * @throws \Exception
+     */
     private function deleteFileOnDisk($path)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);

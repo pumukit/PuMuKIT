@@ -6,7 +6,7 @@
         <div class="pumukit_mmobj">
             <div class="thumbnail {{ active|default(false) ? 'active'}}">
                 {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ event['pics'][0]['url'] }}" style="height:100%"/>
+                    <img alt="serial_pic" class="serial thumbnailimg" src="{{ event_first_thumbnail(event) }}" style="height:100%"/>
                 {% else %}
                     <img alt="serial_pic" class="serial thumbnailimg" src="{{ defaultPic }}" style="height:100%"/>
                 {% endif %}

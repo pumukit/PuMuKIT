@@ -190,7 +190,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  There is already a group created with key key and a group created with name name
      */
     public function testCreateExceptionKeyAndName()
@@ -212,7 +212,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  There is already a group created with key
      */
     public function testCreateExceptionKey()
@@ -236,7 +236,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  There is already a group created with name
      */
     public function testCreateExceptionName()
@@ -305,7 +305,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  There is already a group created with key
      */
     public function testUpdateExceptionKey()
@@ -333,7 +333,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException         Exception
+     * @expectedException         \Exception
      * @expectedExceptionMessage  There is already a group created with name
      */
     public function testUpdateExceptionName()
@@ -386,7 +386,7 @@ class GroupServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Not allowed to delete Group "key": is external Group and/or has existent relations with users and multimedia objects.
      */
     public function testDeleteException()

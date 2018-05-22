@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 //Used on countMmobjsInTags TODO Move to service
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -69,7 +68,7 @@ class CategoriesController extends Controller implements WebTVController
         $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');
         foreach ($tagsArray as $id => $parent) {
-            if ($id == '__object') {
+            if ('__object' == $id) {
                 continue;
             }
             $allGrounds[$id] = array();
@@ -96,7 +95,7 @@ class CategoriesController extends Controller implements WebTVController
                 $allGrounds[$id]['children']['general']['children'] = array();
             }
             foreach ($parent as $id2 => $child) {
-                if ($id2 == '__object') {
+                if ('__object' == $id2) {
                     continue;
                 }
                 $allGrounds[$id]['children'][$id2] = array();
@@ -112,7 +111,7 @@ class CategoriesController extends Controller implements WebTVController
                 $allGrounds[$id]['children'][$id2]['children'] = array();
 
                 foreach ($child as $id3 => $grandchild) {
-                    if ($id3 == '__object') {
+                    if ('__object' == $id3) {
                         continue;
                     }
                     $allGrounds[$id]['children'][$id2]['children'][$id3] = array();
@@ -142,7 +141,7 @@ class CategoriesController extends Controller implements WebTVController
              array('properties.opencast' => array('$exists' => true)),
              array('properties.externalplayer' => array('$exists' => true, '$ne' => '')),
         );
-        if ($provider !== null) {
+        if (null !== $provider) {
             $criteria['$and'] = array(
                 array('tags.cod' => array('$eq' => $provider)), );
         }
@@ -167,7 +166,7 @@ class CategoriesController extends Controller implements WebTVController
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $repo->createBuilderWithGeneralTag($tag);
-        if ($provider !== null) {
+        if (null !== $provider) {
             $qb = $qb->field('tags.cod')->equals($provider);
         }
         $qb = $qb->count()

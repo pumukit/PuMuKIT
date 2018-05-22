@@ -119,11 +119,11 @@ EOT
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
-        if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
+        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 
-        if (($job = $dm->find('PumukitEncoderBundle:Job', $id)) === null) {
+        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 

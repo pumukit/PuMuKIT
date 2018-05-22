@@ -27,6 +27,12 @@ class EmbeddedSocial
      * @var string
      * @MongoDB\String
      */
+    private $twitterHashtag;
+
+    /**
+     * @var string
+     * @MongoDB\String
+     */
     private $email;
 
     /**
@@ -40,7 +46,7 @@ class EmbeddedSocial
     }
 
     /**
-     * Set twitter.
+     * Set twitter widget id.
      *
      * @param string $twitter
      */
@@ -50,13 +56,33 @@ class EmbeddedSocial
     }
 
     /**
-     * Get twitter.
+     * Get twitter widget id.
      *
      * @return string
      */
     public function getTwitter()
     {
         return $this->twitter;
+    }
+
+    /**
+     * Set twitter hashtag.
+     *
+     * @param string $twitter
+     */
+    public function setTwitterHashtag($twitterHashtag)
+    {
+        $this->twitterHashtag = $twitterHashtag;
+    }
+
+    /**
+     * Get twitterHashtag.
+     *
+     * @return string
+     */
+    public function getTwitterHashtag()
+    {
+        return $this->twitterHashtag;
     }
 
     /**

@@ -23,21 +23,27 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
+
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+            'is_event_poster' => $isEventPoster,
+        );
     }
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
      */
-    public function listAction(MultimediaObject $multimediaObject)
+    public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
+
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+            'is_event_poster' => $isEventPoster,
+        );
     }
 
     /**
@@ -48,15 +54,17 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
         if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
             $picService = $this->get('pumukitschema.mmspic');
-            $multimediaObject = $picService->addPicUrl($multimediaObject, $url);
+            $multimediaObject = $picService->addPicUrl($multimediaObject, $url, true, $isEventPoster);
         }
 
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+            'is_event_poster' => $isEventPoster,
+        );
     }
 
     /**
@@ -65,31 +73,34 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
         try {
             if (empty($_FILES) && empty($_POST)) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if ($request->files->has('file')) {
                 $picService = $this->get('pumukitschema.mmspic');
-                $media = $picService->addPicFile($multimediaObject, $request->files->get('file'));
+                $media = $picService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
             }
         } catch (\Exception $e) {
             return array(
-                         'resource' => $multimediaObject,
-                         'resource_name' => 'mms',
-                         'uploaded' => 'failed',
-                         'message' => $e->getMessage(),
-                         'isBanner' => false,
-                         );
+                'resource' => $multimediaObject,
+                'resource_name' => 'mms',
+                'uploaded' => 'failed',
+                'message' => $e->getMessage(),
+                'isBanner' => false,
+                'is_event_poster' => $isEventPoster,
+            );
         }
 
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     'uploaded' => 'success',
-                     'message' => 'New Pic added.',
-                     'isBanner' => false,
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+            'uploaded' => 'success',
+            'message' => 'New Pic added.',
+            'isBanner' => false,
+            'is_event_poster' => $isEventPoster,
+        );
     }
 
     /**
@@ -97,6 +108,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function deleteAction(Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
@@ -108,7 +120,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
 
         $multimediaObject = $this->get('pumukitschema.mmspic')->removePicFromMultimediaObject($multimediaObject, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', array('id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_mmspic_list', array('id' => $multimediaObject->getId(), 'is_event_poster' => $isEventPoster)));
     }
 
     /**
@@ -162,6 +174,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $isEventPoster = $request->get('is_event_poster', false);
         $picService = $this->get('pumukitschema.mmspic');
 
         // TODO search in picservice according to page (in criteria)
@@ -180,12 +193,13 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
         return array(
-                     'resource' => $multimediaObject,
-                     'resource_name' => 'mms',
-                     'pics' => $pics,
-                     'page' => $page,
-                     'total' => $total,
-                     );
+            'resource' => $multimediaObject,
+            'resource_name' => 'mms',
+            'pics' => $pics,
+            'page' => $page,
+            'total' => $total,
+            'is_event_poster' => $isEventPoster,
+        );
     }
 
     /**

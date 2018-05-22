@@ -375,7 +375,7 @@ class Job
      */
     public function setName($name, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->name[$locale] = $name;
@@ -388,7 +388,7 @@ class Job
      */
     public function getName($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
@@ -425,7 +425,7 @@ class Job
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -438,7 +438,7 @@ class Job
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -805,7 +805,7 @@ class Job
      */
     public function isPending()
     {
-        return $this->status == self::STATUS_WAITING || $this->status == self::STATUS_PAUSED;
+        return self::STATUS_WAITING == $this->status || self::STATUS_PAUSED == $this->status;
     }
 
     /**
@@ -813,7 +813,7 @@ class Job
      */
     public function isWaiting()
     {
-        return $this->status == self::STATUS_WAITING;
+        return self::STATUS_WAITING == $this->status;
     }
 
     /**
@@ -821,7 +821,7 @@ class Job
      */
     public function isPaused()
     {
-        return $this->status == self::STATUS_PAUSED;
+        return self::STATUS_PAUSED == $this->status;
     }
 
     /**
@@ -829,7 +829,7 @@ class Job
      */
     public function isExecuting()
     {
-        return $this->status == self::STATUS_EXECUTING;
+        return self::STATUS_EXECUTING == $this->status;
     }
 
     /**
@@ -837,7 +837,7 @@ class Job
      */
     public function isFailed()
     {
-        return $this->status == self::STATUS_ERROR;
+        return self::STATUS_ERROR == $this->status;
     }
 
     /**
@@ -845,7 +845,7 @@ class Job
      */
     public function isFinished()
     {
-        return $this->status == self::STATUS_FINISHED;
+        return self::STATUS_FINISHED == $this->status;
     }
 
     /**
@@ -853,6 +853,6 @@ class Job
      */
     public function isExecuted()
     {
-        return $this->status == self::STATUS_ERROR || $this->status == self::STATUS_FINISHED;
+        return self::STATUS_ERROR == $this->status || self::STATUS_FINISHED == $this->status;
     }
 }

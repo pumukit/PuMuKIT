@@ -41,7 +41,7 @@ class BreadcrumbsService
             $this->session->set('breadcrumbs/routeParameters', array());
         }
         $this->breadcrumbs = array();
-        if ($this->parentWeb !== null) {
+        if (null !== $this->parentWeb) {
             $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
         }
         $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
@@ -53,7 +53,7 @@ class BreadcrumbsService
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
         $this->session->set('breadcrumbs/routeParameters', array());
         $this->breadcrumbs = array();
-        if ($this->parentWeb !== null) {
+        if (null !== $this->parentWeb) {
             $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
         }
         $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
@@ -115,7 +115,7 @@ class BreadcrumbsService
 
     public function setTitle($title)
     {
-        if (($this->parentWeb !== null) && (isset($this->breadcrumbs[1]['title']))) {
+        if ((null !== $this->parentWeb) && (isset($this->breadcrumbs[1]['title']))) {
             $this->breadcrumbs[1]['title'] = $title;
         } else {
             $this->breadcrumbs[0]['title'] = $title;

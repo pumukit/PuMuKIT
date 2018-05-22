@@ -57,7 +57,7 @@ class SeriesService
             $firstFound = $multimediaObject;
             break;
         }
-        if ($firstFound == null) {
+        if (null == $firstFound) {
             return false;
         }
         $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();

@@ -1,13 +1,16 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+{% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
 <script type="text/javascript">
 
   parent.$('#myModal').modal('hide');
-
   var isBanner = "{{ isBanner ? 'yes':'no' }}";
+  var event_poster = {{ event_poster ? event_poster : 0 }};
   if ('yes' == isBanner) {
     parent.$('#edit_series').load('{{ path('pumukitnewadmin_series_update', {'id': resource.id}) }}');
+  } else if (event_poster) {
+    parent.$('#pic_events_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id, 'is_event_poster': event_poster}) }}');
   } else {
-    parent.$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id}) }}');
+    parent.$('#pic_{{ resource_name }}_{{ resource.id }}').load('{{ path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id, 'is_event_poster': event_poster}) }}');
     parent.$('#pic_{{ resource_name }}_{{ resource.id }}').html('{% trans %}Update the video to show the thumbnails{% endtrans %}.');
   }
 

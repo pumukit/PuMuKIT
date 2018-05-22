@@ -5,86 +5,90 @@
 </style>
 
 <div class="well">
-    <div class="well">
+    {% if mm is defined and mm is not null %}
+        <p>
+            {% trans %}Is part of {% endtrans %}:
+            <a target="_blank" href="{{ url('pumukitnewadmin_mms_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
+        </p>
+        <p>
+            {% if mm.getStatus() == 0 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
+                <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}">
+                    {% trans %}Show video on WebTV{% endtrans %}.
+                </a>.
+            {% elseif mm.getStatus == 2 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
+                <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.getSecret() }) }}">
+                    {% trans %}Show video on WebTV{% endtrans %}.
+                </a>.
+            {% endif %}
+        </p>
 
-        {% if mm is defined and mm is not null %}
+        <div>
+            {% include 'PumukitNewAdminBundle:MultimediaObject:showplayer.html.twig' %}
+        </div>
 
-            <p>
-                {% trans %}Is part of {% endtrans %}:
-                <a target="_blank" href="{{ url('pumukitnewadmin_mms_index', {id: mm.series.id}) }}"> {{ mm.series.title }} </a>.
-            </p>
-            <p>
-                {% if mm.getStatus() == 0 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
-                    <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_index', {id: mm.id}) }}">
-                        {% trans %}Show video on WebTV{% endtrans %}.
-                    </a>.
-                {% elseif mm.getStatus == 2 and mm.containsTagWithCod('PUCHWEBTV') and mm.getDisplayTrack() %}
-                    <a target="_blank" href="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.getSecret() }) }}">
-                        {% trans %}Show video on WebTV{% endtrans %}.
-                    </a>.
-                {% endif %}
-            </p>
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title-preview panel-title">Tags UNESCO</h3>
+                </div>
+                <div class="panel-body-preview panel-body">
+                    <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
+                        {% for mtag in mm.tags if mtag.isDescendantOfByCod('UNESCO') %}
+                            <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
+                                <span class="label label-default">{{ mtag.title }} |
+                                    <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
+                                        <i class="mdi-content-clear"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        {% else %}
+                            <div class="unesco_tags" draggable="true">
+                                {% trans %}No tags{% endtrans %}.
+                            </div>
+                        {% endfor %}
 
-            <div>
-                {% include 'PumukitNewAdminBundle:MultimediaObject:showplayer.html.twig' %}
-            </div>
-
-            <div>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title-preview panel-title">Tags UNESCO</h3>
-                    </div>
-                    <div class="panel-body-preview panel-body">
-                        <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
-                            {% for mtag in mm.tags if mtag.isDescendantOfByCod('UNESCO') %}
-                                <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
-                                    <span class="label label-default">{{ mtag.title }} |
-                                        <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
-                                            <i class="mdi-content-clear"></i>
-                                        </a>
-                                    </span>
-                                </div>
-                            {% else %}
-                                <div class="unesco_tags" draggable="true">
-                                    {% trans %}No tags{% endtrans %}.
-                                </div>
-                            {% endfor %}
-
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div>
-                <ul>
-                    {% for role in mm.getRoles() if role.getDisplay() %}
-                        {% set actors = mm.getPeopleByRole(role, true) %}
-                        {% if actors|length != 0 %}
-                            <li>{{ role.name }}</li>
-                            <ul>
-                                {% for act in actors %}
-                                    <li>
-                                        {{ role.getText() }}
-                                        {% if act.getWeb() is not empty %}
-                                            <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
-                                        {% else %}
-                                            {{ act.getHName() }}
-                                        {% endif %}
-                                        <small>{{ act.getInfo() }}</small>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title-preview panel-title">{% trans %}People{% endtrans %}</h3>
+                </div>
+                <div class="panel-body-preview panel-body">
+                    <ul class="list-unstyled">
+                        {% for role in mm.getRoles() if role.getDisplay() %}
+                            {% set actors = mm.getPeopleByRole(role, true) %}
+                            {% if actors|length != 0 %}
+                                <li><u>{{ role.name }}</u></li>
+                                <ul>
+                                    {% for act in actors %}
+                                        <li>
+                                            {{ role.getText() }}
+                                            {% if act.getWeb() is not empty %}
+                                                <a target="_black" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+                                            {% else %}
+                                                {{ act.getHName() }}
+                                            {% endif %}
+                                            <small>{{ act.getInfo() }}</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% else %}
+                            <span>{% trans %}No people.{% endtrans %}</span>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
 
-        {% else %}
-            <p>
-                {% trans %}Select any multimedia object.{% endtrans %}
-            </p>
-        {% endif %}
-    </div>
+        </div>
+
+    {% else %}
+        <p>{% trans %}Select any multimedia object.{% endtrans %}</p>
+    {% endif %}
 </div>
 
 <script type="text/javascript">

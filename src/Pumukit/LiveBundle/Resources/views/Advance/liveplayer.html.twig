@@ -25,12 +25,12 @@
 
 <script type="text/javascript">
 
-    var image = "<img src=\"{{ asset('/bundles/pumukitwebtv/images/live_screen.jpg') }}\"";
+    var image = "<img src=\"{{ asset(poster(event)) }}\"";
     var width = 'width="100%">';
-    var style = '<p class="warning" style="position: absolute; top: 40%; color: white; font-weight: bold; font-size: 20px; width:100%; line-height: 34px; text-align: center;">';
+    var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_text_color(event) }}; font-weight: bold; font-size: 20px; width:100%; line-height: 34px; text-align: center;">';
 
     var image = image + width;
-    var text = "{% trans %}The event has not been held yet{% endtrans %}";
+    var text = "{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans) }}";
     var finalText = '<br/><span id=\"warning\"></span></p>';
 
     var background = image + style + text + finalText;
@@ -40,7 +40,7 @@
 
     if(nextSessionsCount == 0 && nowSessionsCount == 0) {
 
-        var text = "{% trans %}The event has already been held{% endtrans %}";
+        var text = "{{ event.getAlreadyHeldMessage()|default('The event has already been held'|trans) }}";
         background = image + style + text + finalText;
         $("#directo-{{ id }}").html(background);
 
@@ -72,6 +72,13 @@
     } else if (nowSessionsCount > 0) {
         var nowSessionsEnds = "{% if nowSessions is not empty %}{{ firstNowSessionEnds }}{% endif %}";
         date = new Date(parseInt(nowSessionsEnds));
+
+        var secondsToEventEnds = {% if firstNowSessionDuration is defined %}{{ firstNowSessionDuration }}{% else %}0{% endif %};
+        if(secondsToEventEnds) {
+            var date = new Date().getTime() + secondsToEventEnds;
+            date = new Date(date);
+        }
+
         $("#countdownClock").countdown(date , function(event) {
             $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
         }).on('finish.countdown', function(event) {

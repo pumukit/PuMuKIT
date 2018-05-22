@@ -168,6 +168,17 @@ window.submit_clone_mms = function(id)
     }
 }
 
+window.submit_clone_series = function(id)
+{
+    if (window.confirm("{% trans %}Are you sure you want to clone this series?{% endtrans %}")){
+        var url = "{{ path('pumukitnewadmin_series_clone', {'id': '__id__'})|raw }}";
+        var message = '{% trans %}Series successfully cloned.{% endtrans %}';
+        $('#list_series').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
+            success(message);
+        });
+    }
+}
+
 window.submit_delete_series = function(id, seriesTitle, countMm)
 {
     var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
@@ -385,6 +396,15 @@ window.delete_mmspic = function(id, resourceId) {
         var div_id = '#pic_mms___resourceId__';
         div_id = div_id.replace('__resourceId__', resourceId);
         $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Thumbnail removed.{% endtrans %}');});
+    }
+}
+
+window.delete_eventspic = function(id, resourceId) {
+    if (window.confirm('{% trans %}Are you sure you want to delete this event poster?{% endtrans %}')) {
+        var url = '{{ path('pumukitnewadmin_mmspic_delete', {'id': '___id___', 'is_event_poster': true})|raw }}';
+        var div_id = '#pic_events___resourceId__';
+        div_id = div_id.replace('__resourceId__', resourceId);
+        $(div_id).load(url.replace('___id___', id), {'_method': 'DELETE'}, function(){success('{% trans %}Event poster removed.{% endtrans %}');});
     }
 }
 
@@ -2217,13 +2237,13 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
 });
 
 $(document).on('change', "*[id^='pumukitnewadmin_series_']", function(e){
-    if (e.target.value != e.target.defaultValue){
+    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_series').css('display', 'inline-block');
     }
 });
 
 $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
-    if (e.target.value != e.target.defaultValue){
+    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_mm').css('display', 'inline-block');
     }
 });

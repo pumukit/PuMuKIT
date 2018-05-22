@@ -69,14 +69,10 @@
                         {{ series|count_multimedia_objects }} {% trans %} videos{% endtrans %}
                     </a>
                 </td>
-                <td headers="th-image" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
-                    {% if multimediaObject.getPics()|length > 0 %}
-                        <img src="{{ multimediaObject | first_url_pic(true, false) }}" class="img-responsive" />
-                    {% else %}
-                        <img src="{{ default_event_pic }}" class="img-responsive" />
-                    {% endif %}
+                <td headers="th-image" style="cursor: pointer" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
+                    {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
                 </td>
-                <td headers="th-title" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
+                <td headers="th-title" style="cursor: pointer" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
                 <td headers="th-number-sessions" width="8%">
@@ -110,8 +106,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             {{ multimediaObjects|length }} {% trans %}Live events{% endtrans %}
-                            {% if app.session.get('admin/live/criteria')|length != 0%}
-                                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+                            {% if app.session.get('admin/live/event/criteria')|length > 1%}
+                                <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="#" onclick="$('.resetSession').click(); return false;">{% trans %}Cancel search{% endtrans %}</a>
                            {% endif %}
                        </div>
                        <div class="col-md-4 text-right">
@@ -139,7 +135,9 @@
         if(mmo) {
             url = url.replace('__id__', mmo);
             showUrl = showUrl.replace('__id__', mmo);
-            $('#edit_events').load(url);
+            if (mmo != $('#inputMMId').val()) {
+                $('#edit_events').load(url);
+            }
             $('#preview_events').load(showUrl);
         }
     });

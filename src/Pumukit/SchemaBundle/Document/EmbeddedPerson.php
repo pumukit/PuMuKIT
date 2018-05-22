@@ -203,7 +203,7 @@ class EmbeddedPerson
      */
     public function setHonorific($honorific, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->honorific[$locale] = $honorific;
@@ -218,7 +218,7 @@ class EmbeddedPerson
      */
     public function getHonorific($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->honorific[$locale])) {
@@ -252,7 +252,7 @@ class EmbeddedPerson
      */
     public function setFirm($firm, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->firm[$locale] = $firm;
@@ -267,7 +267,7 @@ class EmbeddedPerson
      */
     public function getFirm($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->firm[$locale])) {
@@ -301,7 +301,7 @@ class EmbeddedPerson
      */
     public function setPost($post, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->post[$locale] = $post;
@@ -316,7 +316,7 @@ class EmbeddedPerson
      */
     public function getPost($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->post[$locale])) {
@@ -350,7 +350,7 @@ class EmbeddedPerson
      */
     public function setBio($bio, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->bio[$locale] = $bio;
@@ -365,7 +365,7 @@ class EmbeddedPerson
      */
     public function getBio($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->bio[$locale])) {

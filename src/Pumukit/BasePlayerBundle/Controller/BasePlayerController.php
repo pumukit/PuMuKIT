@@ -31,23 +31,8 @@ abstract class BasePlayerController extends Controller
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
     }
 
-    protected function getIntro($queryIntro = false)
-    {
-        $hasIntro = $this->container->hasParameter('pumukit2.intro');
-
-        if ($queryIntro && filter_var($queryIntro, FILTER_VALIDATE_URL)) {
-            $intro = $queryIntro;
-        } elseif ($hasIntro) {
-            $intro = $this->container->getParameter('pumukit2.intro');
-        } else {
-            $intro = false;
-        }
-
-        return $intro;
-    }
-
     /**
-     * @deprecated Will be removed in version 2.4.x
+     * @deprecated Will be removed in version 2.5.x
      *             Use lines in this function instead
      */
     protected function testBroadcast(MultimediaObject $multimediaObject, Request $request)
@@ -56,5 +41,14 @@ abstract class BasePlayerController extends Controller
         $password = $request->get('broadcast_password');
 
         return $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
+    }
+
+    /**
+     * @deprecated Will be removed in version 2.5.x
+     *             Use lines in this function instead
+     */
+    protected function getIntro($queryIntro = false)
+    {
+        return $this->get('pumukit_baseplayer.intro')->getIntro($queryIntro);
     }
 }

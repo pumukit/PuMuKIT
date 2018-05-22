@@ -15,7 +15,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (TestCommand::commandExists('mediainfo') == false) {
+        if (false == TestCommand::commandExists('mediainfo')) {
             $this->markTestSkipped('Mediainfo test marks skipped (No mediainfo command).');
         }
 
@@ -36,7 +36,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testGetDurationFileNotExists()
     {
@@ -45,7 +45,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetDurationFileWithoutMultimediaContent()
     {
@@ -58,12 +58,12 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
         $file1 = $this->resources_dir.'AUDIO.mp3';
         $file2 = $this->resources_dir.'CAMERA.mp4';
         $is = new InspectionMediainfoService(); //logger missing, it is not initialized here.
-      $this->assertEquals(2, $is->getDuration($file1));
+        $this->assertEquals(2, $is->getDuration($file1));
         $this->assertEquals(2, $is->getDuration($file2));
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testAutocompleteTrackWithoutPath()
     {
@@ -73,7 +73,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testAutocompleteTrackFileWithoutMultimediaContent()
     {

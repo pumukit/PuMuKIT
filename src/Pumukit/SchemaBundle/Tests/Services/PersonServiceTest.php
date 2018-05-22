@@ -649,7 +649,7 @@ class PersonServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage remove Person with id
      */
     public function testDeletePerson()

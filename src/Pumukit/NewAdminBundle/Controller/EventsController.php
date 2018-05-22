@@ -158,12 +158,12 @@ class EventsController extends Controller
         $criteria['islive'] = true;
         if ($type) {
             $date = new \MongoDate();
-            if ($type === 'now') {
+            if ('now' === $type) {
                 $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
                     'start' => array('$lte' => $date),
                     'ends' => array('$gte' => $date),
                     ));
-            } elseif ($type === 'today') {
+            } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
                 $dateStart = new \MongoDate($dateStart->getTimestamp());
@@ -273,7 +273,7 @@ class EventsController extends Controller
                 $field = 'embeddedEvent.name.'.$request->getLocale();
             }
             if ($session->has('admin/live/event/sort/field') and $session->get('admin/live/event/sort/field') === $field) {
-                $session->set('admin/live/event/sort/type', (($session->get('admin/live/event/sort/type') == 'desc') ? 'asc' : 'desc'));
+                $session->set('admin/live/event/sort/type', (('desc' == $session->get('admin/live/event/sort/type')) ? 'asc' : 'desc'));
             } else {
                 $session->set('admin/live/event/sort/type', 'desc');
             }
@@ -478,8 +478,12 @@ class EventsController extends Controller
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
+        $enableChat = $this->container->getParameter('pumukit_live.chat.enable');
+        $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
+        $enableContactForm = $this->container->getParameter('liveevent_contact_and_share');
+
         $form->handleRequest($request);
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             try {
                 $data = $request->request->get('pumukitnewadmin_live_event');
 
@@ -506,7 +510,7 @@ class EventsController extends Controller
                     );
                     $event->setLive($live);
                 }
-                if (isset($data['contact'])) {
+                if ($enableContactForm && isset($data['contact'])) {
                     if ($multimediaObject->getEmbeddedSocial()) {
                         $multimediaObject->getEmbeddedSocial()->setEmail($data['contact']);
                     } else {
@@ -529,17 +533,40 @@ class EventsController extends Controller
                     $multimediaObject->getEmbeddedEvent()->setProducer($data['producer']);
                 }
 
+                if ($enableTwitter && isset($data['twitter_hashtag'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitterHashtag($data['twitter_hashtag']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitterHashtag($data['twitter_hashtag']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
+                }
+                if ($enableTwitter && isset($data['twitter_widget_id'])) {
+                    if ($multimediaObject->getEmbeddedSocial()) {
+                        $multimediaObject->getEmbeddedSocial()->setTwitter($data['twitter_widget_id']);
+                    } else {
+                        $embeddedSocial = new EmbeddedSocial();
+                        $embeddedSocial->setTwitter($data['twitter_widget_id']);
+                        $dm->persist($embeddedSocial);
+                        $multimediaObject->setEmbeddedSocial($embeddedSocial);
+                    }
+                }
+
+                $eventsService = $this->container->get('pumukitschema.eventsession');
+                $color = $eventsService->validateHtmlColor($data['poster_text_color']);
+                $multimediaObject->setProperty('postertextcolor', $color);
+
                 $dm->flush();
             } catch (\Exception $e) {
-                throw $e;
-
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
             return new JsonResponse(array('event' => $multimediaObject->getEmbeddedEvent()));
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people);
+        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'enableContactForm' => $enableContactForm);
     }
 
     /**
@@ -640,7 +667,7 @@ class EventsController extends Controller
         $form = $this->createForm(new EmbeddedEventSessionType($translator, $locale));
 
         $form->handleRequest($request);
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             try {
                 $data = $form->getData();
                 $start = new \DateTime($data->getStart());
@@ -945,7 +972,7 @@ class EventsController extends Controller
             }
 
             if ($validSessionA && $validSessionB) {
-                if ($sortType == 'desc') {
+                if ('desc' == $sortType) {
                     return ($validSessionA < $validSessionB) ? 1 : -1;
                 } else {
                     return ($validSessionA < $validSessionB) ? -1 : 1;

@@ -211,7 +211,7 @@ class SeriesPicServiceTest extends WebTestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage for storing Pics does not exist
      */
     public function testInvalidTargetPath()

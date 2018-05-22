@@ -12,7 +12,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
-use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchController extends Controller implements WebTVController
 {
@@ -189,11 +188,8 @@ class SearchController extends Controller implements WebTVController
             $mRegex = new \MongoRegex("/$searchFound/i");
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
-        } elseif ($searchFound != '') {
-            $queryBuilder->field('$text')->equals(array(
-                '$search' => $searchFound,
-                '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
-            ));
+        } elseif ('' != $searchFound) {
+            $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
         }
 
         return $queryBuilder;
@@ -201,9 +197,9 @@ class SearchController extends Controller implements WebTVController
 
     protected function typeQueryBuilder($queryBuilder, $typeFound)
     {
-        if ($typeFound != '') {
+        if ('' != $typeFound) {
             $queryBuilder->field('type')->equals(
-                ($typeFound == 'audio') ? Multimediaobject::TYPE_AUDIO : Multimediaobject::TYPE_VIDEO
+                ('audio' == $typeFound) ? Multimediaobject::TYPE_AUDIO : Multimediaobject::TYPE_VIDEO
             );
         }
 
@@ -212,20 +208,20 @@ class SearchController extends Controller implements WebTVController
 
     protected function durationQueryBuilder($queryBuilder, $durationFound)
     {
-        if ($durationFound != '') {
-            if ($durationFound == '-5') {
+        if ('' != $durationFound) {
+            if ('-5' == $durationFound) {
                 $queryBuilder->field('tracks.duration')->lte(300);
             }
-            if ($durationFound == '-10') {
+            if ('-10' == $durationFound) {
                 $queryBuilder->field('tracks.duration')->lte(600);
             }
-            if ($durationFound == '-30') {
+            if ('-30' == $durationFound) {
                 $queryBuilder->field('tracks.duration')->lte(1800);
             }
-            if ($durationFound == '-60') {
+            if ('-60' == $durationFound) {
                 $queryBuilder->field('tracks.duration')->lte(3600);
             }
-            if ($durationFound == '+60') {
+            if ('+60' == $durationFound) {
                 $queryBuilder->field('tracks.duration')->gt(3600);
             }
         }
@@ -241,11 +237,11 @@ class SearchController extends Controller implements WebTVController
             $queryBuilder->field($dateField)->gte($start);
             $queryBuilder->field($dateField)->lt($end);
         } else {
-            if ($startFound != '') {
+            if ('' != $startFound) {
                 $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
                 $queryBuilder->field($dateField)->gt($start);
             }
-            if ($endFound != '') {
+            if ('' != $endFound) {
                 $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
                 $end->modify('+1 day');
                 $queryBuilder->field($dateField)->lt($end);
@@ -257,7 +253,7 @@ class SearchController extends Controller implements WebTVController
 
     protected function languageQueryBuilder($queryBuilder, $languageFound)
     {
-        if ($languageFound != '') {
+        if ('' != $languageFound) {
             $queryBuilder->field('tracks.language')->equals($languageFound);
         }
 
@@ -267,17 +263,17 @@ class SearchController extends Controller implements WebTVController
     protected function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral = false)
     {
         $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        if ($blockedTag !== null) {
+        if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();
         }
-        if ($tagsFound !== null) {
+        if (null !== $tagsFound) {
             $tagsFound = array_values(array_diff($tagsFound, array('All', '')));
         }
         if (count($tagsFound) > 0) {
             $queryBuilder->field('tags.cod')->all($tagsFound);
         }
 
-        if ($useTagAsGeneral && $blockedTag !== null) {
+        if ($useTagAsGeneral && null !== $blockedTag) {
             $queryBuilder->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($blockedTag->getPath()).'.*\|/')));
         }
 

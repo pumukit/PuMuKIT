@@ -36,9 +36,12 @@ class Builder extends ContainerAware
             $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index'));
             $series->setDisplayChildren(false);
 
-            $mmslist = $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), array('route' => 'pumukitnewadmin_mms_indexall'));
-            $mmslist->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_indexall'));
-            $mmslist->setDisplayChildren(false);
+            $activeMmsListAll = $this->container->getParameter('pumukit2.show_mms_list_all_menu');
+            if ($activeMmsListAll) {
+                $mmslist = $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), array('route' => 'pumukitnewadmin_mms_indexall'));
+                $mmslist->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_indexall'));
+                $mmslist->setDisplayChildren(false);
+            }
 
             $unesco = $mediaManager->addChild('UNESCO catalogue', array('route' => 'pumukitnewadmin_unesco_index'));
             $unesco->setDisplayChildren(false);
@@ -102,6 +105,12 @@ class Builder extends ContainerAware
             if ($authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
                 $tables->addChild('Tags', array('route' => 'pumukitnewadmin_tag_index'));
             }
+
+            $menuPlaceAndPrecinct = $this->container->hasParameter('pumukit_new_admin.show_menu_place_and_precinct') ? $this->container->getParameter('pumukit_new_admin.show_menu_place_and_precinct') : false;
+            if ($authorizationChecker->isGranted(Permission::ACCESS_TAGS) && $menuPlaceAndPrecinct) {
+                $tables->addChild('Places and precinct', array('route' => 'pumukitnewadmin_places_index'));
+            }
+
             if ($showSeriesTypeTab && $authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
                 $tables->addChild('Series types', array('route' => 'pumukitnewadmin_seriestype_index'));
             }

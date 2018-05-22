@@ -35,7 +35,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testGetDurationFileNotExists()
     {
@@ -44,7 +44,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetDurationFileWithoutMultimediaContent()
     {
@@ -57,12 +57,12 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
         $file1 = $this->resources_dir.'AUDIO.mp3';
         $file2 = $this->resources_dir.'CAMERA.mp4';
         $is = new InspectionFfmpegService(); //logger missing, it is not initialized here.
-      $this->assertEquals(2, $is->getDuration($file1));
+        $this->assertEquals(2, $is->getDuration($file1));
         $this->assertEquals(2, $is->getDuration($file2));
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testAutocompleteTrackWithoutPath()
     {
@@ -72,7 +72,7 @@ class InspectionFfmpegServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testAutocompleteTrackFileWithoutMultimediaContent()
     {

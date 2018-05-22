@@ -12,6 +12,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -24,11 +25,12 @@ class PumukitAdminExtension extends \Twig_Extension
     private $countMmobjsWithTag;
     private $mmobjService;
     private $specialTranslationService;
+    private $eventService;
 
     /**
      * Constructor.
      */
-    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService)
+    public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService)
     {
         $this->dm = $documentManager;
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
@@ -37,6 +39,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $this->router = $router;
         $this->mmobjService = $mmobjService;
         $this->specialTranslationService = $specialTranslationService;
+        $this->eventService = $eventService;
     }
 
     /**
@@ -88,6 +91,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFunction('is_naked', array($this, 'isNaked'), array('needs_environment' => true)),
             new \Twig_SimpleFunction('trans_i18n_broadcast', array($this, 'getI18nEmbeddedBroadcast')),
             new \Twig_SimpleFunction('date_from_mongo_id', array($this, 'getDateFromMongoId')),
+            new \Twig_SimpleFunction('default_poster', array($this, 'getDefaultPoster')),
         );
     }
 
@@ -299,13 +303,14 @@ class PumukitAdminExtension extends \Twig_Extension
         list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
 
         $iconText = sprintf(
-            "%d %s,\n%d %s,\n%d %s,\n",
+            "%s: \n %s: %d,\n%s: %d,\n%s: %d\n",
+            $this->translator->trans('Multimedia Objects'),
+            $this->translator->trans('i18n.multiple.Published'),
             $mmobjsPublished,
-            $this->translator->trans('Published Multimedia Object(s)'),
+            $this->translator->trans('i18n.multiple.Hidden'),
             $mmobjsHidden,
-            $this->translator->trans('Hidden Multimedia Object(s)'),
-            $mmobjsBlocked,
-            $this->translator->trans('Blocked Multimedia Object(s)')
+            $this->translator->trans('i18n.multiple.Blocked'),
+            $mmobjsBlocked
         );
 
         return $iconText;
@@ -525,21 +530,21 @@ class PumukitAdminExtension extends \Twig_Extension
         if ($islive) {
             $changeWord = 'live event';
         }
-        if (($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) && $template) {
+        if ((EmbeddedBroadcast::TYPE_PUBLIC === $broadcastType) && $template) {
             $description = $this->translator->trans('Any Internet user can play the new multimedia objects created from this video template');
-        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PUBLIC) {
+        } elseif (EmbeddedBroadcast::TYPE_PUBLIC === $broadcastType) {
             $description = $this->translator->trans("Any Internet user can play this $changeWord");
-        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) && $template) {
+        } elseif ((EmbeddedBroadcast::TYPE_PASSWORD === $broadcastType) && $template) {
             $description = $this->translator->trans('Only users with the defined password can play the new multimedia objects created from this video template');
-        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_PASSWORD) {
+        } elseif (EmbeddedBroadcast::TYPE_PASSWORD === $broadcastType) {
             $description = $this->translator->trans("Only users with the defined password can play this $changeWord");
-        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) && $template) {
+        } elseif ((EmbeddedBroadcast::TYPE_LOGIN === $broadcastType) && $template) {
             $description = $this->translator->trans('Only logged in users in the system can play the new multimedia objects created from this video template');
-        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_LOGIN) {
+        } elseif (EmbeddedBroadcast::TYPE_LOGIN === $broadcastType) {
             $description = $this->translator->trans("Only logged in users in the system can play this $changeWord");
-        } elseif (($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) && $template) {
+        } elseif ((EmbeddedBroadcast::TYPE_GROUPS === $broadcastType) && $template) {
             $description = $this->translator->trans('Only users in the selected Groups can play the new multimedia objects created from this video template');
-        } elseif ($broadcastType === EmbeddedBroadcast::TYPE_GROUPS) {
+        } elseif (EmbeddedBroadcast::TYPE_GROUPS === $broadcastType) {
             $description = $this->translator->trans("Only users in the selected Groups can play this $changeWord");
         }
 
@@ -696,5 +701,15 @@ class PumukitAdminExtension extends \Twig_Extension
                 return false;
             }
         }
+    }
+
+    /**
+     * Get Default Poster.
+     *
+     * @returns string
+     */
+    public function getDefaultPoster()
+    {
+        return $this->eventService->getDefaultPoster();
     }
 }

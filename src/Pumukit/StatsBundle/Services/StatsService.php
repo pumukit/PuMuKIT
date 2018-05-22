@@ -114,7 +114,7 @@ class StatsService
 
         //Add mmobj with zero views
         if (count($aggregation) < $options['limit']) {
-            if (count($aggregation) == 0) {
+            if (0 == count($aggregation)) {
                 $max = min((1 + $options['page']) * $options['limit'], $total);
                 for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
                     $multimediaObject = $this->repo->find($mmobjIds[$i - $totalInAggegation]);
@@ -183,7 +183,7 @@ class StatsService
 
         //Add series with zero views
         if (count($aggregation) < $options['limit']) {
-            if (count($aggregation) == 0) {
+            if (0 == count($aggregation)) {
                 $max = min((1 + $options['page']) * $options['limit'], $total);
                 for ($i = ($options['page'] * $options['limit']); $i < $max; ++$i) {
                     $series = $this->repoSeries->find($seriesIds[$i - $totalInAggegation]);
@@ -276,8 +276,7 @@ class StatsService
      */
     private function aggrPipeAddMatch(\DateTime $fromDate = null, \DateTime $toDate = null, $matchExtra = array(), $pipeline = array())
     {
-
-      //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
+        //$filterMath = $this->dm->getFilterCollection()->getFilterCriteria($this->repo->getClassMetadata());
 
         $date = array();
         if ($fromDate) {
@@ -294,7 +293,7 @@ class StatsService
 
         if (count($matchExtra) > 0 || count($date) > 0) {
             //$pipeline[] = array('$match' => array_merge($filterMath, $matchExtra, $date));
-          $pipeline[] = array('$match' => array_merge($matchExtra, $date));
+            $pipeline[] = array('$match' => array_merge($matchExtra, $date));
         }
 
         return $pipeline;
@@ -327,13 +326,16 @@ class StatsService
                 $mongoProjectDate[] = 'H';
                 $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
                 $mongoProjectDate[] = 'T';
+                // no break
             case 'day':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
                 $mongoProjectDate[] = '-';
+                // no break
             default: //If it doesn't exists, it's 'month'
             case 'month':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
                 $mongoProjectDate[] = '-';
+                // no break
             case 'year':
                 $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
                 break;

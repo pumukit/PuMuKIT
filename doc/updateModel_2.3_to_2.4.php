@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Debug;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class UpgradePumukitCommand extends ContainerAwareCommand
 {
@@ -46,14 +45,11 @@ class UpgradePumukitCommand extends ContainerAwareCommand
 
     protected function initSeriesNewFields()
     {
-        $indexlanguage = $this->getIndexLanguage();
-
         $all = $this->dm->createQueryBuilder('PumukitSchemaBundle:Series')
             ->update()
             ->multiple(true)
             ->field('hide')->set(false)
             ->field('sorting')->set(Series::SORT_MANUAL)
-            ->field('indexlanguage')->set($indexlanguage)
             ->getQuery()
             ->execute();
         return 'Series.hide initialized to false and Series.sorting to SORT_MANUAL (ascendent rank): Modified '.$all['nModified'].' serie(s)';
@@ -63,14 +59,11 @@ class UpgradePumukitCommand extends ContainerAwareCommand
     {
         $messages = array();
 
-        $indexlanguage = $this->getIndexLanguage();
-
         $all = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
             ->update()
             ->multiple(true)
             ->field('islive')->set(false)
             ->field('type')->set(MultimediaObject::TYPE_UNKNOWN)
-            ->field('indexlanguage')->set($indexlanguage)
             ->getQuery()
             ->execute();
         $messages[] = 'MultimediaObject.type initialized to TYPE_UNKNOWN (0): Modified '.$all['nModified'].' object(s)';
@@ -113,15 +106,6 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         $messages[] = 'MultimediaObject.type with properties.externalplayer not empty initialized to TYPE_EXTERNAL (3): Modified '.$external['nModified'].' object(s)';
 
         return $messages;
-    }
-
-
-    protected function getIndexLanguage()
-    {
-        $defaultLocale = $this->getContainer()->getParameter('kernel.default_locale');
-        $indexlanguage = TextIndexUtils::getCloseLanguage($defaultLocale);
-
-        return $indexlanguage;
     }
 }
 

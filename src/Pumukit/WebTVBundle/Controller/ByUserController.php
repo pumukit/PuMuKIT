@@ -89,7 +89,7 @@ class ByUserController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
 
-        if ($type === 'multimediaobject') {
+        if ('multimediaobject' === $type) {
             $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
             $qb = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, array('public_date' => -1));
         } else {

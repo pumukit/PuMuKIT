@@ -7,7 +7,7 @@
                         <a href="{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}">
                             <div class="media-object play_icon small" alt=""></div>
                             {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                                <img class="media-object thumbnailimg" src="{{ event['pics'][0]['url'] }}" style="height:100%" alt="{% trans %}Media Thumbnail{% endtrans %}">
+                                <img class="media-object thumbnailimg" src="{{ event_first_thumbnail(event) }}" style="height:100%" alt="{% trans %}Media Thumbnail{% endtrans %}">
                             {% else %}
                                 <img class="media-object thumbnailimg" src="{{ defaultPic }}" style="height:100%" alt="{% trans %}Media Thumbnail{% endtrans %}">
                             {% endif %}
@@ -16,7 +16,7 @@
                     </div>
                     <div class="miniinfo-wrapper">
                         <div class="miniinfo">
-                            <div class="title" >
+                            <div class="title" data-toggle="tooltip" data-placement="right" title="{{ event['event']['name'][app.request.getLocale()] | default('No title' | trans )}}">
                                 {{ event['event']['name'][app.request.getLocale()] | default('No title' | trans )}}
                             </div>
                             <br />

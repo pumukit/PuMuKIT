@@ -25,7 +25,7 @@ class Link extends Element
      */
     public function setName($name, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->getLocale();
         }
         $this->name[$locale] = $name;
@@ -40,7 +40,7 @@ class Link extends Element
      */
     public function getName($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->getLocale();
         }
         if (!isset($this->name[$locale])) {

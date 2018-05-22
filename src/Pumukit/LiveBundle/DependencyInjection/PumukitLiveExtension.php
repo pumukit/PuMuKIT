@@ -22,6 +22,12 @@ class PumukitLiveExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukit_live.chat', $config['chat']);
+        $container->setParameter('pumukit_live.chat.enable', $config['chat']['enable']);
+        $container->setParameter('pumukit_live.chat.update_interval', $config['chat']['update_interval']);
+        $container->setParameter('pumukit_live.twitter', $config['twitter']);
+        $container->setParameter('pumukit_live.twitter.enable', $config['twitter']['enable']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }

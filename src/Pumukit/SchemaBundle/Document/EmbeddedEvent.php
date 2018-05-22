@@ -95,6 +95,26 @@ class EmbeddedEvent
     private $url;
 
     /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $alreadyHeldMessage = array('en' => '');
+
+    /**
+     * @var string
+     *
+     * @MongoDB\Raw
+     */
+    private $notYetHeldMessage = array('en' => '');
+
+    /**
+     * @var bool
+     * @MongoDB\Boolean
+     */
+    private $enableChat = false;
+
+    /**
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
@@ -126,7 +146,7 @@ class EmbeddedEvent
      */
     public function setName($name, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->name[$locale] = $name;
@@ -141,7 +161,7 @@ class EmbeddedEvent
      */
     public function getName($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
@@ -178,7 +198,7 @@ class EmbeddedEvent
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -194,7 +214,7 @@ class EmbeddedEvent
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
 
@@ -413,6 +433,136 @@ class EmbeddedEvent
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * Set already held message.
+     *
+     * @param string $message
+     */
+    public function setAlreadyHeldMessage($message, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->alreadyHeldMessage[$locale] = $message;
+    }
+
+    /**
+     * Get Already Held Message.
+     *
+     * @return string
+     */
+    public function getAlreadyHeldMessage($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->alreadyHeldMessage[$locale])) {
+            return '';
+        }
+
+        return $this->alreadyHeldMessage[$locale];
+    }
+
+    /**
+     * Set I18n Already Held Message.
+     *
+     * @param array $message
+     */
+    public function setI18nAlreadyHeldMessage(array $message)
+    {
+        $this->alreadyHeldMessage = $message;
+    }
+
+    /**
+     * Get I18n Already Held Message.
+     *
+     * @return array
+     */
+    public function getI18nAlreadyHeldMessage()
+    {
+        return $this->alreadyHeldMessage;
+    }
+
+    /**
+     * Set Not Yet held message.
+     *
+     * @param string $message
+     */
+    public function setNotYetHeldMessage($message, $locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        $this->notYetHeldMessage[$locale] = $message;
+    }
+
+    /**
+     * Get Not Yet Held Message.
+     *
+     * @return string
+     */
+    public function getNotYetHeldMessage($locale = null)
+    {
+        if ($locale == null) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->notYetHeldMessage[$locale])) {
+            return '';
+        }
+
+        return $this->notYetHeldMessage[$locale];
+    }
+
+    /**
+     * Set I18n Not Yet Held Message.
+     *
+     * @param array $message
+     */
+    public function setI18nNotYetHeldMessage(array $message)
+    {
+        $this->notYetHeldMessage = $message;
+    }
+
+    /**
+     * Get I18n Not Yet Held Message.
+     *
+     * @return array
+     */
+    public function getI18nNotYetHeldMessage()
+    {
+        return $this->notYetHeldMessage;
+    }
+
+    /**
+     * Set enableChat.
+     *
+     * @param bool $enableChat
+     */
+    public function setEnableChat($enableChat)
+    {
+        $this->enableChat = $enableChat;
+    }
+
+    /**
+     * Get enableChat.
+     *
+     * @return bool
+     */
+    public function getEnableChat()
+    {
+        return $this->enableChat;
+    }
+
+    /**
+     * Is chat enabled.
+     *
+     * @return bool
+     */
+    public function isChatEnabled()
+    {
+        return $this->enableChat;
     }
 
     /**

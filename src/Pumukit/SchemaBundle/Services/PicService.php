@@ -48,11 +48,13 @@ class PicService
     public function getFirstUrlPic($object, $absolute = false, $hd = true)
     {
         $pics = $object->getPics();
+        $picUrl = null;
         if (0 === count($pics)) {
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
         } else {
             foreach ($pics as $pic) {
-                if (($picUrl = $pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner')) {
+                if (($pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster')) {
+                    $picUrl = $pic->getUrl();
                     break;
                 }
             }
@@ -86,7 +88,7 @@ class PicService
     public function getDefaultUrlPicForObject($object, $absolute = false, $hd = true)
     {
         if ($object instanceof Series) {
-            if ($object->getType() == Series::TYPE_PLAYLIST) {
+            if (Series::TYPE_PLAYLIST == $object->getType()) {
                 return $this->getDefaultPlaylistUrlPic($absolute);
             }
 
@@ -105,7 +107,8 @@ class PicService
      * according to absolute url parameter
      *
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultSeriesUrlPic($absolute = false)
     {
@@ -123,7 +126,8 @@ class PicService
      * according to absolute url parameter
      *
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultPlaylistUrlPic($absolute = false)
     {
@@ -144,7 +148,8 @@ class PicService
      * @param bool $audio    Video is only audio
      * @param bool $hd       Returns pic in HD
      * @param bool $absolute Returns absolute path
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultMultimediaObjectUrlPic($absolute = false, $audio = false, $hd = true)
     {
@@ -268,7 +273,8 @@ class PicService
      *
      * @param bool $audio Video is only audio
      * @param bool $hd    Returns pic in HD
-     * @returns string
+     *
+     * @return string
      */
     public function getDefaultMultimediaObjectPathPic($audio = false, $hd = true)
     {
@@ -283,6 +289,35 @@ class PicService
         }
 
         return $this->getAbsolutePathPic($defaultPic);
+    }
+
+    /**
+     * @param      $object
+     * @param bool $absolute
+     * @param bool $hd
+     *
+     * @return null|string
+     */
+    public function getPosterUrl($object, $absolute = false, $hd = true)
+    {
+        $pics = $object->getPics();
+        $picUrl = null;
+        if (0 === count($pics)) {
+            return $picUrl;
+        }
+
+        foreach ($pics as $pic) {
+            if ($pic->getUrl() && $pic->containsTag('poster')) {
+                $picUrl = $pic->getUrl();
+                break;
+            }
+        }
+
+        if ($absolute) {
+            return $this->getAbsoluteUrlPic($picUrl);
+        }
+
+        return $picUrl;
     }
 
     /**

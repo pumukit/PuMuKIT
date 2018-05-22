@@ -93,6 +93,7 @@ class AnnounceServiceTest extends WebTestCase
 
         $this->assertEquals(array(), $this->announceService->getLast());
     }
+
     public function testNextLatestUploads()
     {
         $tagPudenew = new Tag();

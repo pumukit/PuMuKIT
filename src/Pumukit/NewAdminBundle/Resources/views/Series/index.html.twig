@@ -2,112 +2,118 @@
 
 {% block body %}
 
-{% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-  {% if is_naked() %}
-    <h3> {% trans %}My Series{% endtrans %}</h3>
-  {% else %}
-    <h3> {% trans %}My Multimedia Series{% endtrans %}</h3>
-  {% endif %}
-{% else %}
-  <h3> {% trans %}Multimedia Series{% endtrans %}</h3>
-{% endif %}
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">
+                {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
+                    {% if is_naked() %}
+                        {% trans %}My Series{% endtrans %}
+                    {% else %}
+                        {% trans %}My Multimedia Series{% endtrans %}
+                    {% endif %}
+                {% else %}
+                    {% trans %}Series{% endtrans %}
+                {% endif %}
+            </li>
+        </ul>
+    </h3>
 
-<div class="row">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <div class="col-md-10">
-    <div class="well" >
-      <div id="list_series">
-        {% include 'PumukitNewAdminBundle:Series:list.html.twig' %}
-      </div>
-      <div class="row">
-        <div class="col-xs-4">
-          <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
-            <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
-            <option disabled="">---</option>
-            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+            <div class="col-md-10">
+                <div class="well">
+                    <div id="list_series">
+                        {% include 'PumukitNewAdminBundle:Series:list.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
+                                <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
+                                <option disabled="">---</option>
+                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
 
-            {% if not is_naked() %}
-            <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
-            {% endif %}
+                                {% if not is_naked() %}
+                                    <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
+                                {% endif %}
 
-          </select>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            {#
+                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
+                            <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
+                            {% endif %}
+                            {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
+                            <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+                            {% endif %}
+                            #}
+                            {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
+                                <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">
+                                    <i class="mdi-content-add"></i>
+                                    {% trans %}New{% endtrans %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="edit_series">
+                    {% if(app.session.has('admin/series/id')) %}
+                        {{ render(url('pumukitnewadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-2 hidden-xs hidden-sm">
+                <div id="preview_series" class="well">
+                    {% if(app.session.has('admin/series/id')) %}
+                        {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+                    {% else %}
+                        {% trans %}Select any series.{% endtrans %}
+                    {% endif %}
+                </div>
+                {# TODO define $broadcasts and $seriestypes #}
+                {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="pmk-modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            </div>
         </div>
-        <div class="col-xs-8 text-right">
-          {#
-          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_WIZARD_UPLOAD')) %}
-          <a class="btn btn-primary btn-raised" href="{{ url('pumukitwizard_default_series') }}">{% trans %}Wizard{% endtrans %}</a>
-          {% endif %}
-          {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD')) %}
-          <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
-          {% endif %}
-          #}
-          {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
-          <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">
-            <i class="mdi-content-add"></i>
-            {% trans %}New{% endtrans %}
-          </a>
-          {% endif %}
-        </div>
-      </div>
     </div>
 
-    <div id="edit_series">
-      {% if(app.session.has('admin/series/id')) %}
-        {{ render(url('pumukitnewadmin_series_update', {'id': app.session.get('admin/series/id')})) }}
-      {% endif %}
-    </div>
-  </div>
-  <div class="col-md-2 hidden-xs hidden-sm">
-    <div id="preview_series" class="well">
-      {% if(app.session.has('admin/series/id')) %}
-        {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
-      {% else %}
-        {% trans %}Select any series.{% endtrans %}
-      {% endif %}
-    </div>
-    {# TODO define $broadcasts and $seriestypes #}
-    {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
-  </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
-</div>
+    <script>
+        var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
+        window.mmobjkeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
 
-<div class="pmk-modal modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+        window.mmobjkeywords.initialize();
 
-<script>
-var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
-window.mmobjkeywords = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-        url: url,
-        ttl: 1800000
-    }
-});
+        var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'})|raw }}";
+        window.serieskeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                ttl: 1800000
+            }
+        });
 
-window.mmobjkeywords.initialize();
+        window.serieskeywords.initialize();
 
-var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'})|raw }}";
-window.serieskeywords = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-        url: url,
-        ttl: 1800000
-    }
-});
-
-window.serieskeywords.initialize();
-
-</script>
+    </script>
 {% endblock %}

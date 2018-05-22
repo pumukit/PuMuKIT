@@ -78,7 +78,7 @@ class WorkflowService
             $total = $statistics['statistics']['total'];
         }
 
-        if ($total == 0) {
+        if (0 == $total) {
             return null;
         }
 
@@ -188,7 +188,7 @@ class WorkflowService
         $mediaPackageIdWorkflows = array();
         foreach ($workflows as $workflow) {
             if (isset($workflow['mediapackage']['id'])) {
-                if ($mediaPackageId == $workflow['mediapackage']['id']) {
+                if ($workflow['mediapackage']['id'] == $mediaPackageId) {
                     $mediaPackageIdWorkflows[] = $workflow;
                 }
             }

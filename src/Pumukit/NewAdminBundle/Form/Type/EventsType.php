@@ -4,7 +4,6 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -35,10 +34,6 @@ class EventsType extends AbstractType
                 array(
                     'required' => false,
                     'label' => $this->translator->trans('Description', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
-            ->add('date', Html5dateType::class,
-                array(
-                    'required' => true,
-                    'label' => $this->translator->trans('Start date', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
             ->add('place', TextType::class,
                 array(
                     'required' => false,
@@ -62,7 +57,20 @@ class EventsType extends AbstractType
             ->add('duration', IntegerType::class,
                 array(
                     'required' => false,
-                    'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ));
+                    'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
+            ->add('i18n_already_held_message', TextI18nType::class,
+                array(
+                    'required' => false,
+                    'label' => $this->translator->trans('Already held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+            ->add('i18n_not_yet_held_message', TextI18nType::class,
+                array(
+                    'required' => false,
+                    'label' => $this->translator->trans('Not yet held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+            ->add('enable_chat', 'checkbox',
+                array(
+                    'required' => false,
+                    'attr' => array('aria-label' => $this->translator->trans('Enable Chat', array(), null, $this->locale)),
+                    'label' => $this->translator->trans('Enable Chat', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

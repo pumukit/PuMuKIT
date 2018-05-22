@@ -60,7 +60,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $i = 0;
         foreach ($coll_mms as $mm) {
             ++$i;
-          //echo "\t - ", $mm->getId(), "\n";
+            //echo "\t - ", $mm->getId(), "\n";
         }
         $this->assertEquals(1, $i);
     }

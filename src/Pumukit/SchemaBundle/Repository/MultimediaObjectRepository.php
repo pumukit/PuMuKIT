@@ -9,7 +9,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 /**
  * MultimediaObjectRepository.
@@ -295,20 +294,12 @@ class MultimediaObjectRepository extends DocumentRepository
      * Search series using text index.
      *
      * @param string $text
-     * @param int    $limit
-     * @param int    $page
-     * @param string $locale
      *
      * @return ArrayCollection
      */
-    public function searchSeriesField($text, $limit = 0, $page = 0, $locale = 'en')
+    public function searchSeriesField($text, $limit = 0, $page = 0)
     {
-        $qb = $this->createQueryBuilder()
-            ->field('$text')->equals(array(
-                '$search' => $text,
-                '$language' => TextIndexUtils::getCloseLanguage($locale),
-            ))
-            ->distinct('series');
+        $qb = $this->createQueryBuilder()->field('$text')->equals(array('$search' => $text))->distinct('series');
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
@@ -336,11 +327,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
             $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
         } else {
-            $qb->addOr($qb->expr()->field('$text')->equals(array(
-                '$search' => $text,
-                '$language' => TextIndexUtils::getCloseLanguage($locale),
-
-            )));
+            $qb->addOr($qb->expr()->field('$text')->equals(array('$search' => $text)));
             $qb->addOr($qb->expr()->field('_id')->equals($text));
         }
 
@@ -1475,14 +1462,14 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         // TODO #10479: Find better way to get array with only IDs of groups
         if ($groups) {
-            if (gettype($groups) !== 'array') {
+            if ('array' !== gettype($groups)) {
                 $groups = $groups->toArray();
                 $groupsIds = $this->getMongoIds($groups);
             } else {
                 $mockString = false;
                 $mockGroup = false;
                 foreach ($groups as $group) {
-                    if (gettype($group) === 'string') {
+                    if ('string' === gettype($group)) {
                         $mockString = true;
                         break;
                     } elseif ($group instanceof Group) {
@@ -1591,7 +1578,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return array
      */
-    public function findNowEventSessions($multimediaObjectId = null)
+    public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -1674,6 +1661,10 @@ class MultimediaObjectRepository extends DocumentRepository
                 ),
             ),
         );
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
 
         return $collection->aggregate($pipeline)->toArray();
     }

@@ -100,7 +100,7 @@ class CpuService
             }
             if (($cpu['busy'] / $cpu['max']) < ($optimalCpu['busy'] / $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
-            } elseif (($cpu['busy'] === 0) && ($optimalCpu['busy'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
+            } elseif ((0 === $cpu['busy']) && (0 === $optimalCpu['busy']) && ($cpu['max'] > $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
             }
         }
@@ -118,7 +118,7 @@ class CpuService
             $cpuStatus = new CpuStatus();
             $cpuStatus->setName($cpuName);
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
-        } elseif ($cpuStatus->getStatus() != CpuStatus::STATUS_MAINTENANCE) {
+        } elseif (CpuStatus::STATUS_MAINTENANCE != $cpuStatus->getStatus()) {
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
         }
         $this->dm->persist($cpuStatus);
@@ -142,7 +142,7 @@ class CpuService
     public function isInMaintenance($cpuName)
     {
         $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
-        if ($cpuStatus && $cpuStatus->getStatus() == CpuStatus::STATUS_MAINTENANCE) {
+        if ($cpuStatus && CpuStatus::STATUS_MAINTENANCE == $cpuStatus->getStatus()) {
             return true;
         } else {
             return false;

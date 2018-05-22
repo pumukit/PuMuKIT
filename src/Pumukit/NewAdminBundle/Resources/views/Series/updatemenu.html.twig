@@ -1,37 +1,54 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
-    <li>
-      <a  title="{% trans %}List multimedia objects of the series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}">
-        <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the series{% endtrans %}
-      </a>
-    </li>
-    {% if not is_naked() %}
-    <li>
-      <a  title="{% trans %}Modify all multimedia objects status{% endtrans %}" href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-        <i class="mdi-action-visibility"></i> {% trans %}Modify all multimedia objects status{% endtrans %}
-      </a>
-    </li>
-    <li>
-      <a  title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-        <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
-      </a>
-    </li>
-    {% endif %}
-    <li>
-      <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries|count_multimedia_objects }}'); return false;">
-        <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
-      </a>
-    </li>
-    <li>
-      <a href="{{ path('pumukitnewadmin_series_listproperties', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-        <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
-      </a>
-    </li>
-    <li>
-      <a href="#" onclick="return false;">
-        <strong>{% trans %}Cancel{% endtrans %}...</strong>
-      </a>
-    </li>
-  </ul>
+    <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
+        <li>
+            <a title="{% trans %}List multimedia objects of the series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}">
+                <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the series{% endtrans %}
+            </a>
+        </li>
+        {% if not is_naked() %}
+            <li>
+                <a title="{% trans %}Modify all multimedia objects status{% endtrans %}" href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <i class="mdi-action-visibility"></i> {% trans %}Modify all multimedia objects status{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="window.submit_clone_series('{{ oneseries.id }}'); return false;">
+                    <i class="mdi-content-content-copy"></i> {% trans %}Clone series{% endtrans %}
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="#" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ numV }}'); return false;">
+                <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pumukitnewadmin_series_listproperties', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
+            </a>
+        </li>
+
+
+
+        {% for item in get_extra_series_menu_items() %}
+            {% if app.user and is_granted(item.accessRole) %}
+                <li>
+                    <a href="{{ path(item.uri, {'id': oneseries.id}) }}" {% if not item.fullscreen|default(false) %} data-toggle="modal" data-backdrop="static" data-target="#myModal" {% endif %}>
+                        <i class="{{ item.icon|default('mdi-action-list')}}"></i> {{ item.name | trans }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <li>
+            <a href="#" onclick="return false;">
+                <strong>{% trans %}Cancel{% endtrans %}...</strong>
+            </a>
+        </li>
+    </ul>
 </div>

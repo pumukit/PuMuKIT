@@ -219,8 +219,8 @@ EOT
                 unset($src[$key]);
                 continue;
             }
-            if ($numSpaces != 0 &&
-                (strlen(trim($line)) == 0 ||
+            if (0 != $numSpaces &&
+                (0 == strlen(trim($line)) ||
                 1 === preg_match('/^( ){'.$numSpaces.'}.*/', $line))) {
                 unset($src[$key]);
             } else {

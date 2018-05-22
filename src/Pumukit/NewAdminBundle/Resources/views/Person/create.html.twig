@@ -1,42 +1,44 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}create new person{% endtrans %}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}create new person{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form onsubmit="
-                  $(this).find(':submit').prop('disabled', true);
-                  $('#myModal').modal('hide');
-                  $.ajax({
-                          url: '{{ path('pumukitnewadmin_person_create') }}',
-                          method: 'POST',
-                          data: $(this).serialize(),
-                          success: function(response, textStatus, jqXHR){
-                                    $('#list_people').html(response);
-                                    var message = '{% trans %}Person successfully created.{% endtrans %}';
-                                    success(message);
-                          },
-                          error: function(jqXHR, textStatus, errorThrown){
-                                    var textError = jqXHR.responseText;
-                                    var message = errorThrown+': '+textError;
-                                    no_success(message);
-                          }
-                  });
-                  return false;
-                  "
-        action="{{ path('pumukitnewadmin_person_create') }}" method="POST">
-    <fieldset>
-      {% for child in form %}
-        {{ form_row(child) }}
-      {% endfor %}
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
-    </div>
-  </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
+        {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+        <form onsubmit="
+                $(this).find(':submit').prop('disabled', true);
+                $('#myModal').modal('hide');
+                $.ajax({
+                    url: '{{ path('pumukitnewadmin_person_create') }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response, textStatus, jqXHR){
+                        $('#list_people').html(response);
+                        var message = '{% trans %}Person successfully created.{% endtrans %}';
+                        success(message);
+                },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        var textError = jqXHR.responseText;
+                        var message = errorThrown+': '+textError;
+                        no_success(message);
+                    }
+                });
+                return false;
+                "
+              action="{{ path('pumukitnewadmin_person_create') }}" method="POST">
+            <fieldset>
+                {% for child in form %}
+                    {{ form_row(child) }}
+                {% endfor %}
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

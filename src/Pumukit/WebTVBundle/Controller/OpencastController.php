@@ -75,7 +75,7 @@ class OpencastController extends PlayerController implements WebTVController
         $editorChapters = $this->getChapterMarks($multimediaObject);
 
         return array(
-            'intro' => $this->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
             'multimediaObject' => $multimediaObject,
             'is_old_browser' => $isOldBrowser,
             'is_mobile_device' => $isMobileDevice,

@@ -287,7 +287,7 @@ class OpencastImportService
                 $itemAttachment = $attachment[$index];
             }
             $type = $this->getMediaPackageField($itemAttachment, 'type');
-            if ($type == 'presenter/search+preview') {
+            if ('presenter/search+preview' == $type) {
                 $tags = $this->getMediaPackageField($itemAttachment, 'tags');
                 $url = $this->getMediaPackageField($itemAttachment, 'url');
                 if ($tags || $url) {

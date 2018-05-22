@@ -10,4 +10,3 @@ id;cod;xml;display;name_es;name_gl;name_en;text_es;text_gl;text_en
 9;"lecturer";"lecturer";1;"Conferenciante";"Conferenciante";"Lecturer"
 10;"writer";"writer";1;"Guión";"Guión";"Writer"
 11;"owner";"owner";0;"Propietario";"Propietario";"Owner"
-12;"expired_owner";"expired_owner";1;"Antiguo propietario";"Antiguo propietario";"Old owner"

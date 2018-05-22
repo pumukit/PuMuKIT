@@ -20,9 +20,32 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_live');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+          ->children()
+            ->arrayNode('chat')
+              ->addDefaultsIfNotSet()
+              ->children()
+                ->booleanNode('enable')->isRequired()
+                  ->defaultFalse()
+                  ->info('Enable chat in live channel')
+                ->end()
+                ->integerNode('update_interval')
+                  ->defaultValue(5000)
+                  ->info('Interval in milliseconds to refresh the content of the chat.')
+                ->end()
+              ->end()
+            ->end()
+            ->arrayNode('twitter')
+              ->addDefaultsIfNotSet()
+              ->children()
+                ->booleanNode('enable')->isRequired()
+                  ->defaultFalse()
+                  ->info('Enable Twitter in live channel')
+                ->end()
+              ->end()
+            ->end()
+          ->end()
+          ;
 
         return $treeBuilder;
     }

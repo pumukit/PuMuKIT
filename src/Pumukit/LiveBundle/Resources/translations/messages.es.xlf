@@ -137,6 +137,26 @@
         <source>please verify form data</source>
         <target>Por favor, revisa los datos del formulario</target>
       </trans-unit>
+      <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
+        <source>Event chat</source>
+        <target>Chat del evento</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target>El nombre no puede estar vacío</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+        <source>Message</source>
+        <target>Mensaje</target>
+      </trans-unit>
+      <trans-unit id="9b6449cd47c236450bbc9ccf0a358a56" resname="Sorry but there was an error">
+        <source>Sorry but there was an error</source>
+        <target>Disculpa, ha ocurrido un error</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -16,13 +16,14 @@ class AnnounceService
         $this->mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
-    public function getLast($limit = 3, $withPudenewTag = true)
+    public function getLast($limit = 3, $withPudenewTag = true, $useRecordDate = false)
     {
         if ($withPudenewTag) {
-            $return = $this->getLastMmobjsWithSeries($limit);
+            $return = $this->getLastMmobjsWithSeries($limit, $useRecordDate);
         } else {
             //Get recently added mmobjs
-            $return = $this->mmobjRepo->findStandardBy(array(), array('public_date' => -1), $limit, 0);
+            $sortKey = $useRecordDate ? 'record_date' : 'public_date';
+            $return = $this->mmobjRepo->findStandardBy(array(), array($sortKey => -1), $limit, 0);
         }
 
         return $return;
@@ -31,13 +32,23 @@ class AnnounceService
     /**
      * Returns the last series/mmobjs with the pudenew tag.
      */
-    protected function getLastMmobjsWithSeries($limit = 3)
+    protected function getLastMmobjsWithSeries($limit = 3, $useRecordDate = false)
     {
         $mmobjCriteria = array('tags.cod' => 'PUDENEW');
         $seriesCriteria = array('announce' => true);
 
-        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array('public_date' => -1), $limit, 0);
+        $sortKey = $useRecordDate ? 'record_date' : 'public_date';
+        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array($sortKey => -1), $limit, 0);
         $lastSeries = $this->seriesRepo->findBy($seriesCriteria, array('public_date' => -1), $limit, 0);
+
+        $z = 0;
+        foreach ($lastSeries as $series) {
+            $isValidSeries = $this->mmobjRepo->findStandardBy(array('series' => $series->getId()));
+            if (count($isValidSeries) <= 0) {
+                unset($lastSeries[$z]);
+            }
+            ++$z;
+        }
 
         $return = array();
         $i = 0;
@@ -68,13 +79,15 @@ class AnnounceService
         return $return;
     }
 
-    public function getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag = true)
+    public function getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag = true, $useRecordDate = false)
     {
+        $sortKey = $useRecordDate ? 'record_date' : 'public_date';
+
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
-        $queryBuilderMms->field('public_date')->range($dateStart, $dateEnd);
+        $queryBuilderMms->field($sortKey)->range($dateStart, $dateEnd);
 
         if (!$withPudenewTag) {
-            return $queryBuilderMms->sort(array('public_date' => -1))->getQuery()->execute()->toArray();
+            return $queryBuilderMms->sort(array($sortKey => -1))->getQuery()->execute()->toArray();
         }
 
         $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
@@ -116,7 +129,7 @@ class AnnounceService
      *
      * @return array
      */
-    public function getNextLatestUploads($date, $withPudenewTag = true)
+    public function getNextLatestUploads($date, $withPudenewTag = true, $useRecordDate = false)
     {
         $counter = 0;
         $dateStart = clone $date;
@@ -128,7 +141,7 @@ class AnnounceService
             ++$counter;
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
-            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag);
+            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag, $useRecordDate);
         } while (empty($last) && $counter < 24);
 
         return array($dateEnd, $last);

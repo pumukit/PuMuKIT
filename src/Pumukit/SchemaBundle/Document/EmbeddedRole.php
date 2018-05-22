@@ -146,7 +146,7 @@ class EmbeddedRole
      */
     public function setName($name, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->name[$locale] = $name;
@@ -161,7 +161,7 @@ class EmbeddedRole
      */
     public function getName($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
@@ -199,7 +199,7 @@ class EmbeddedRole
      */
     public function setText($text, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->text[$locale] = $text;
@@ -214,7 +214,7 @@ class EmbeddedRole
      */
     public function getText($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->text[$locale])) {

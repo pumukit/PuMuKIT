@@ -2,36 +2,40 @@
 
 {% block body %}
 
-<h1>Encoder</h1>
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Encoder{% endtrans %}</li>
+        </ul>
+    </h3>
 
-<div class="row stats_jobs">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
-  {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
-  {% endif %}
-</div>
+    <div class="row stats_jobs">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+            {% include 'PumukitEncoderBundle:Info:stats.html.twig' %}
+        {% endif %}
+    </div>
 
-<div class="row">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
-  <div class="col-md-9">
-    <div class="well" id="list_jobs">
-      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending }%}
-      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing }%}
-      {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed }%}
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+            <div class="col-md-9">
+                <div class="well" id="list_jobs">
+                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending } %}
+                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing } %}
+                    {% include 'PumukitEncoderBundle:Info:jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed } %}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="well" id="list_cpus">
+                    {% include 'PumukitEncoderBundle:Info:cpus.html.twig' %}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="well" id="list_cpus">
-      {% include 'PumukitEncoderBundle:Info:cpus.html.twig' %}
-    </div>
-  </div>
-  {% else %}
-  <div class="col-md-12">
-    <div class="well">
-      {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-    </div>
-  </div>
-  {% endif %}
-</div>
 
 
 {% endblock %}

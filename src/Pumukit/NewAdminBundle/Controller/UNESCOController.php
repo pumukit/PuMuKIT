@@ -278,7 +278,7 @@ class UNESCOController extends Controller implements NewAdminController
                 } elseif ('roles' === $key) {
                     foreach ($value as $key2 => $field) {
                         if (!empty($field)) {
-                            $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.$field.'.*/i');
+                            $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.preg_quote($field).'.*/i');
                         }
                     }
                 } elseif (in_array(
@@ -295,7 +295,7 @@ class UNESCOController extends Controller implements NewAdminController
                         $newCriteria['record_date_finish'] = $value;
                     }
                 } elseif (!empty($value)) {
-                    $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.$value.'.*/i');
+                    $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 }
             }
         }

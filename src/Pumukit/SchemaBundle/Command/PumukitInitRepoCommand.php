@@ -86,7 +86,7 @@ EOT
                 }
                 break;
             }
-        } elseif ($repoName == 'tag') {
+        } elseif ('tag' == $repoName) {
             $errorExecuting = $this->executeTags($input, $output, false);
             if (-1 === $errorExecuting) {
                 return -1;
@@ -212,15 +212,15 @@ EOT
             return -1;
         }
 
-        if (($file = fopen($file_route, 'r')) === false) {
+        if (false === ($file = fopen($file_route, 'r'))) {
             $output->writeln('<error>Error opening '.$file_route.": fopen() returned 'false' </error>");
 
             return -1;
         }
 
-        if ($repoName == 'tag') {
+        if ('tag' == $repoName) {
             //Creates the csvTagHeaders (to be used later)
-            if (($csvTagHeaders = fgetcsv($file, 0, ';', '"')) === false) {
+            if (false === ($csvTagHeaders = fgetcsv($file, 0, ';', '"'))) {
                 $output->writeln('<error>Error reading first row (csv header) of '.$file_route.": fgetcsv returned 'false' </error>");
 
                 return -1;
@@ -251,13 +251,13 @@ EOT
 
         $row = 1;
         $importedTags = array();
-        while (($currentRow = fgetcsv($file, 0, ';')) !== false) {
+        while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
             $number = count($currentRow);
             if (('tag' === $repoName) ||
-                (('role' === $repoName) && ($number == 7 || $number == 10)) ||
-                (('permissionprofile' === $repoName) && ($number == 6))) {
+                (('role' === $repoName) && (7 == $number || 10 == $number)) ||
+                (('permissionprofile' === $repoName) && (6 == $number))) {
                 //Check header rows
-                if (trim($currentRow[0]) == 'id') {
+                if ('id' == trim($currentRow[0])) {
                     continue;
                 }
 
@@ -266,14 +266,14 @@ EOT
                     case 'tag':
                         $csvTagsArray = array();
                         for ($i = 0; $i < count($currentRow); ++$i) {
-                            $key = $csvTagHeaders[ $i ]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
-                            $csvTagsArray[ $key ] = $currentRow[ $i ];
+                            $key = $csvTagHeaders[$i]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
+                            $csvTagsArray[$key] = $currentRow[$i];
                         }
 
-                        if (isset($importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ])) {
-                            $parent = $importedTags[ $csvTagsArray[ 'tree_parent_cod' ] ];
+                        if (isset($importedTags[$csvTagsArray['tree_parent_cod']])) {
+                            $parent = $importedTags[$csvTagsArray['tree_parent_cod']];
                         } else {
-                            $parent = $this->tagsRepo->findOneByCod($csvTagsArray[ 'tree_parent_cod' ]);
+                            $parent = $this->tagsRepo->findOneByCod($csvTagsArray['tree_parent_cod']);
                         }
 
                         if (!isset($parent)) {
@@ -281,7 +281,7 @@ EOT
                         }
                         try {
                             $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
-                            $importedTags[ $tag->getCod() ] = $tag;
+                            $importedTags[$tag->getCod()] = $tag;
                         } catch (\LengthException $e) {
                             if ($verbose) {
                                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
@@ -309,7 +309,7 @@ EOT
                 $output->writeln("Error: line $row has $number elements");
             }
 
-            if ($verbose && $row % 100 == 0) {
+            if ($verbose && 0 == $row % 100) {
                 echo 'Row '.$row."\n";
             }
 
@@ -322,7 +322,7 @@ EOT
 
     private function createTagFromCsvArray($csvTagsArray, $tag_parent = null)
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray[ 'cod' ])) {
+        if ($tag = $this->tagsRepo->findOneByCod($csvTagsArray['cod'])) {
             throw new \LengthException('Nothing done - Tag already on DB - id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 
@@ -336,17 +336,17 @@ EOT
         //Get all titles neccessary on PMK.
         foreach ($this->pmk2_allLocales as $locale) {
             $key_name = 'name_'.$locale;
-            if (isset($csvTagsArray[ $key_name ])) {
-                $tag->setTitle($csvTagsArray[ $key_name ], $locale);
+            if (isset($csvTagsArray[$key_name])) {
+                $tag->setTitle($csvTagsArray[$key_name], $locale);
             } else {
                 //Default name will be in english
-                $tag->setTitle($csvTagsArray[ 'name_en' ], $locale);
+                $tag->setTitle($csvTagsArray['name_en'], $locale);
             }
         }
         foreach (array_keys($csvTagsArray) as $key) {
             if (preg_match('/property_*/', $key, $matches)) {
                 $property_name = str_replace($matches[0], '', $key);
-                $tag->setProperty($property_name, $csvTagsArray[ $key ]);
+                $tag->setProperty($property_name, $csvTagsArray[$key]);
             }
         }
 
@@ -399,15 +399,15 @@ EOT
         $permissionProfile->setName($csv_array[1]);
         $permissionProfile->setSystem($csv_array[2]);
         $permissionProfile->setDefault($csv_array[3]);
-        if (($csv_array[4] === PermissionProfile::SCOPE_GLOBAL) ||
-            ($csv_array[4] === PermissionProfile::SCOPE_PERSONAL) ||
-            ($csv_array[4] === PermissionProfile::SCOPE_NONE)) {
+        if ((PermissionProfile::SCOPE_GLOBAL === $csv_array[4]) ||
+            (PermissionProfile::SCOPE_PERSONAL === $csv_array[4]) ||
+            (PermissionProfile::SCOPE_NONE === $csv_array[4])) {
             $permissionProfile->setScope($csv_array[4]);
         }
         foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {
-            if ($permission === 'none') {
+            if ('none' === $permission) {
                 break;
-            } elseif ($permission === 'all') {
+            } elseif ('all' === $permission) {
                 $permissionProfile = $this->addAllPermissions($permissionProfile);
                 break;
             } elseif (array_key_exists($permission, $this->allPermissions)) {

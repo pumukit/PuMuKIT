@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage"})
+ *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
  * })
  */
 class Series
@@ -176,16 +176,6 @@ class Series
      * @MongoDB\Raw
      */
     private $line2 = array('en' => '');
-
-    /**
-     * https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/.
-     *
-     * Used to specify the MongoDB Index Language within the Document.
-     *
-     * @var string
-     * @MongoDB\String
-     */
-    private $indexlanguage = 'en';
 
     /**
      * Used locale to override Translation listener`s locale
@@ -491,7 +481,7 @@ class Series
      */
     public function setTitle($title, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->title[$locale] = $title;
@@ -506,7 +496,7 @@ class Series
      */
     public function getTitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->title[$locale])) {
@@ -544,7 +534,7 @@ class Series
      */
     public function setSubtitle($subtitle, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->subtitle[$locale] = $subtitle;
@@ -559,7 +549,7 @@ class Series
      */
     public function getSubtitle($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->subtitle[$locale])) {
@@ -597,7 +587,7 @@ class Series
      */
     public function setDescription($description, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -612,7 +602,7 @@ class Series
      */
     public function getDescription($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -650,7 +640,7 @@ class Series
      */
     public function setHeader($header, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->header[$locale] = $header;
@@ -665,7 +655,7 @@ class Series
      */
     public function getHeader($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->header[$locale])) {
@@ -703,7 +693,7 @@ class Series
      */
     public function setFooter($footer, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->footer[$locale] = $footer;
@@ -718,7 +708,7 @@ class Series
      */
     public function getFooter($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->footer[$locale])) {
@@ -761,7 +751,7 @@ class Series
     /**
      * Get copyright.
      *
-     * @return array
+     * @return string
      */
     public function getCopyright()
     {
@@ -781,7 +771,7 @@ class Series
     /**
      * Get license.
      *
-     * @return array
+     * @return string $license
      */
     public function getLicense()
     {
@@ -796,7 +786,7 @@ class Series
      */
     public function setLine2($line2, $locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         $this->line2[$locale] = $line2;
@@ -811,7 +801,7 @@ class Series
      */
     public function getLine2($locale = null)
     {
-        if ($locale == null) {
+        if (null == $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->line2[$locale])) {
@@ -859,25 +849,6 @@ class Series
     public function getLocale()
     {
         return $this->locale;
-    }
-    /**
-     * Set indexlanguage.
-     *
-     * @param string $indexlanguage
-     */
-    public function setIndexlanguage($indexlanguage)
-    {
-        $this->indexlanguage = $indexlanguage;
-    }
-
-    /**
-     * Get indexlanguage.
-     *
-     * @return string
-     */
-    public function getIndexlanguage()
-    {
-        return $this->indexlanguage;
     }
 
     /**
