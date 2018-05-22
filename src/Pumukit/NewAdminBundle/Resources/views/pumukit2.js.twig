@@ -1290,11 +1290,11 @@ $(document).ajaxError(function(event, xhr, settings) {
 $(function() {
   $.material.init();
 
-  $('body').on('hidden.bs.modal', '.modal', function () {
+  $('body').on('hidden.bs.modal', '.pmk-modal', function () {
     $(this).removeData('bs.modal').find('.modal-content').html('');
   });
 
-  $('body').on('shown.bs.modal loaded.bs.modal', '.modal', function () {
+  $('body').on('shown.bs.modal loaded.bs.modal', '.pmk-modal', function () {
     if ($('.modal.fade.in:focus').length != 0) {
       $(this).find('input:text').first().focus();
     }
