@@ -497,7 +497,9 @@ class EventsController extends Controller
                 }
 
                 $event->setPlace($data['place']);
-                $event->setDate(new \DateTime($data['date']));
+                if (isset($data['date'])) {
+                    $event->setDate(new \DateTime($data['date']));
+                }
                 $event->setDuration($data['duration']);
                 $display = isset($data['display']) ? true : false;
                 $event->setDisplay($display);
