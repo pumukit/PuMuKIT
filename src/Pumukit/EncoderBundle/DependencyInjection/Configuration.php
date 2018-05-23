@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param ArrayNodeDefinition $node
      */
-    public function addProfilesSection(ArrayNodeDefinition $node)
+    public static function addProfilesSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -142,6 +142,17 @@ class Configuration implements ConfigurationInterface
                             ->info('Specifies the user to log in as on the remote encoder host')->end()
                             ->scalarNode('description')->defaultValue('')
                             ->info('Encoder host description')->end()
+                            ->arrayNode('profiles')
+                                ->info('Array of profiles. If set, only the profiles listed will be transcoded here')
+                                //TODO: Use this from Symfony 3.3 onwards ->beforeNormalization()->castToArray()
+                                ->beforeNormalization()
+                                    ->ifString()
+                                    ->then(function ($v) {
+                                        return array($v);
+                                    })
+                                ->end()
+                                ->prototype('scalar')
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

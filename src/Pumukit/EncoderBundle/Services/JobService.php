@@ -399,8 +399,9 @@ class JobService
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
 
-        $freeCpu = $this->cpuService->getFreeCpu();
         $nextJob = $this->getNextJob();
+        $profile = $nextJob->getProfile();
+        $freeCpu = $this->cpuService->getFreeCpu($profile);
         if (($freeCpu) && ($nextJob) && ($this->cpuService->isActive($freeCpu))) {
             $nextJob->setCpu($freeCpu);
             $nextJob->setTimestart(new \DateTime('now'));
