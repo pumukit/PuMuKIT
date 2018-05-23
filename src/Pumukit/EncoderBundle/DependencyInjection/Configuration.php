@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param ArrayNodeDefinition $node
      */
-    public function addProfilesSection(ArrayNodeDefinition $node)
+    public static function addProfilesSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
