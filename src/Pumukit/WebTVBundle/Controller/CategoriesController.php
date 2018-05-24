@@ -133,9 +133,11 @@ class CategoriesController extends Controller implements WebTVController
     //TODO Move this function into a service.
     private function countMmobjInTags($provider = null)
     {
+        $parentCod = $this->container->getParameter('categories_tag_cod');
+
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' => 'ITUNESU');
+        $criteria = array('status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' => $parentCod);
         $criteria['$or'] = array(
              array('tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)), 'properties.opencast' => array('$exists' => false)),
              array('properties.opencast' => array('$exists' => true)),
