@@ -481,6 +481,7 @@ class EventsController extends Controller
         $enableChat = $this->container->getParameter('pumukit_live.chat.enable');
         $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
         $enableContactForm = $this->container->getParameter('liveevent_contact_and_share');
+        $twitterAccountsLinkColor = $this->container->getParameter('pumukit_live.twitter.accounts_link_color');
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -568,7 +569,7 @@ class EventsController extends Controller
             return new JsonResponse(array('event' => $multimediaObject->getEmbeddedEvent()));
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'enableContactForm' => $enableContactForm);
+        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm);
     }
 
     /**

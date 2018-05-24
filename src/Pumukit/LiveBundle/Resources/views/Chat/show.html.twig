@@ -3,8 +3,14 @@
 <link href="{{ asset('bundles/pumukitlive/css/chat.css') }}" type="text/css" rel="stylesheet" media="screen"/>
 <div class="panel panel-default panel-related event-chat-panel">
   <div class="panel-heading chat-panel-heading">
-    {% trans %}Event chat{% endtrans %}
-    <img src="{{ asset('bundles/pumukitwebtv/images/chat.svg') }}" alt="{% trans %}Chat icon{% endtrans %}" title="{% trans %}Chat icon{% endtrans %}" class="chat-icon-heading"/>
+    <div class="panel-heading-table">
+      <div class="panel-heading-table-row">
+        <div class="panel-heading-table-cell">{% trans %}Event chat{% endtrans %}</div>
+        <div class="panel-heading-table-cell panel-heading-image">
+          <img src="{{ asset('bundles/pumukitwebtv/images/chat.svg') }}" alt="{% trans %}Chat icon{% endtrans %}" title="{% trans %}Chat icon{% endtrans %}" class="chat-icon-heading"/>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="chat-panel-body" class="panel-body" style="height:200px;">
     <div id="chatList" style="overflow: hidden;">
@@ -14,7 +20,7 @@
   <div class="panel-footer">
     <form id="chatForm" onsubmit="postChatMessage(); return false;" action="{{ path('pumukit_live_chat_post', {'id': multimediaObject.id}) }}" method="post">
       <fieldset>
-        <div class="form-group">
+        <div id="event-chat-form-name" class="form-group">
           <label for="name">{% trans %}Name{% endtrans %}:</label>
           <input type="text" name="name" id="chatName" maxlength="30" class="form-control" value="{{ username }}" {{ username ? 'disabled':'' }}/>
           <div id="chat-name-error" class="chat-name-error">{% trans %}Name cannot be empty{% endtrans %}</div>
@@ -44,6 +50,7 @@ postChatMessage = function()
 {
     if ($("#chatName").val() != '') {
         $('#chat-name-error').hide();
+        $('#event-chat-form-name').hide();
         var route = "{{ path('pumukit_live_chat_post', {'id': multimediaObject.id})|raw }}";
         var name = $("#chatName").val();
         var message = $("#chatMessage").val();
