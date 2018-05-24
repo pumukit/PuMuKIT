@@ -3608,9 +3608,9 @@
         <source>Twitter widget id</source>
         <target>Identificador del widget de Twitter</target>
       </trans-unit>
-      <trans-unit id="a1e326dd777395e6cebda584bfc7e50a" resname="Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code">
-        <source>Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code</source>
-        <target>Crea un Widget de búsqueda en tu cuenta de Twitter con el hashtag definido e introduce en este campo el valor del elemento 'data-widget-id' del código HTML generado</target>
+      <trans-unit id="a1e326dd777395e6cebda584bfc7e50a" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.">
+        <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
+        <target>Crea un Widget de búsqueda en tu cuenta de Twitter. Configúralo con el hashtag definido y el color recomendado %twitterAccountsLinkColor% para el color del enlace. Introduce en este campo el valor del elemento 'data-widget-id' del código HTML generado.</target>
       </trans-unit>
       <trans-unit id="f1f61c18f955147adbf8cf46785b65de" resname="Publish to LMS">
         <source>Publish to LMS</source>
