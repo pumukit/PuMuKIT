@@ -170,7 +170,7 @@
             </div>
             <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_widget_id">
               <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
-              <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code{% endtrans %}"></i>
+              <i id="twitter-widget-id-tooltip" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Create a search Widget in your Twitter account with the defined hashtag and place here the 'data-widget-id' of the HTML generated code{% endtrans %}"></i>
               <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
             </div>
             {% endif %}
@@ -236,4 +236,7 @@
         }
     });
 
+    {% if enableTwitter %}
+    $("#twitter-widget-id-tooltip").tooltip({container: 'body'});
+    {% endif %}
 </script>
