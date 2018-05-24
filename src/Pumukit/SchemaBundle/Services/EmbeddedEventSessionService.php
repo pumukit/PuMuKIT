@@ -158,7 +158,13 @@ class EmbeddedEventSessionService
     );
 
     /**
-     * Constructor.
+     * EmbeddedEventSessionService constructor.
+     *
+     * @param DocumentManager $documentManager
+     * @param                 $defaultPoster
+     * @param                 $defaultThumbnail
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
     {
@@ -258,6 +264,36 @@ class EmbeddedEventSessionService
     }
 
     /**
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findWidgetEvents($limit = 0)
+    {
+        $pipeline = $this->initPipeline();
+        $now = new \MongoDate((new \DateTime('now'))->format('U'));
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.ends' => array('$gte' => $now),
+            ),
+        );
+        $pipeline[] = array(
+            '$sort' => array(
+                'sessions.start' => 1,
+            ),
+        );
+        $this->endPipeline($pipeline);
+
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        return $this->collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
      * Get event poster.
      *
      * @param EmbeddedEvent $event
@@ -274,7 +310,7 @@ class EmbeddedEventSessionService
     /**
      * Get event poster by event id.
      *
-     * @param string $id
+     * @param string $eventId
      *
      * @return string
      */
@@ -302,7 +338,7 @@ class EmbeddedEventSessionService
     /**
      * Get event thumbnail by event id.
      *
-     * @param string $id
+     * @param string $eventId
      *
      * @return string
      */
@@ -357,9 +393,11 @@ class EmbeddedEventSessionService
     /**
      * Validate HTML Color.
      *
-     * @param string $color
+     * @param $color
      *
      * @return string
+     *
+     * @throws \Exception
      */
     public function validateHtmlColor($color)
     {
@@ -378,10 +416,10 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent
-     * @param bool
+     * @param EmbeddedEvent $event
+     * @param bool          $start
      *
-     * @returns Date
+     * @return \DateTime
      */
     public function getCurrentSessionDate(EmbeddedEvent $event, $start = true)
     {
@@ -400,10 +438,10 @@ class EmbeddedEventSessionService
     /**
      * Get first session date.
      *
-     * @param EmbeddedEvent
-     * @param bool
+     * @param EmbeddedEvent $event
+     * @param bool          $start
      *
-     * @returns Date
+     * @return \Datetime
      */
     public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
     {
@@ -423,10 +461,10 @@ class EmbeddedEventSessionService
     /**
      * Get future session date.
      *
-     * @param EmbeddedEvent
-     * @param bool
+     * @param      $event
+     * @param bool $start
      *
-     * @returns Date
+     * @return string
      */
     public function getFutureSessionDate($event, $start = true)
     {
@@ -463,10 +501,10 @@ class EmbeddedEventSessionService
     /**
      * Get current session date.
      *
-     * @param EmbeddedEvent
-     * @param bool
+     * @param EmbeddedEvent $event
+     * @param bool          $start
      *
-     * @returns Date
+     * @return bool
      */
     public function getShowEventSessionDate(EmbeddedEvent $event, $start = true)
     {
@@ -491,7 +529,8 @@ class EmbeddedEventSessionService
     /**
      * Find future events.
      *
-     * @param $multimediaObjectId
+     * @param null $multimediaObjectId
+     * @param int  $limit
      *
      * @return array
      */
@@ -518,7 +557,7 @@ class EmbeddedEventSessionService
         ksort($orderSession);
         $output = array();
         foreach (array_values($orderSession) as $key => $session) {
-            if ($limit !== 0 && $key >= $limit) {
+            if (0 !== $limit && $key >= $limit) {
                 break;
             }
             $output[$key] = $session;
@@ -830,7 +869,8 @@ class EmbeddedEventSessionService
     /**
      * Find next live events.
      *
-     * @param $multimediaObjectId
+     * @param null $multimediaObjectId
+     * @param int  $limit
      *
      * @return array
      */
@@ -857,7 +897,7 @@ class EmbeddedEventSessionService
         ksort($orderSession);
         $output = array();
         foreach (array_values($orderSession) as $key => $session) {
-            if ($limit !== 0 && $key >= $limit) {
+            if (0 !== $limit && $key >= $limit) {
                 break;
             }
             $output[$key] = $session;
@@ -957,6 +997,8 @@ class EmbeddedEventSessionService
      * Is live broadcasting.
      *
      * @return bool
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function isLiveBroadcasting()
     {
