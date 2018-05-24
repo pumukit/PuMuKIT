@@ -14,7 +14,7 @@
   <div class="panel-footer">
     <form id="chatForm" onsubmit="postChatMessage(); return false;" action="{{ path('pumukit_live_chat_post', {'id': multimediaObject.id}) }}" method="post">
       <fieldset>
-        <div class="form-group">
+        <div id="event-chat-form-name" class="form-group">
           <label for="name">{% trans %}Name{% endtrans %}:</label>
           <input type="text" name="name" id="chatName" maxlength="30" class="form-control" value="{{ username }}" {{ username ? 'disabled':'' }}/>
           <div id="chat-name-error" class="chat-name-error">{% trans %}Name cannot be empty{% endtrans %}</div>
@@ -44,6 +44,7 @@ postChatMessage = function()
 {
     if ($("#chatName").val() != '') {
         $('#chat-name-error').hide();
+        $('#event-chat-form-name').hide();
         var route = "{{ path('pumukit_live_chat_post', {'id': multimediaObject.id})|raw }}";
         var name = $("#chatName").val();
         var message = $("#chatMessage").val();
