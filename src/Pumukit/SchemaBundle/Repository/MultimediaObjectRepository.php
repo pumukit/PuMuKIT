@@ -1672,7 +1672,7 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * TODO review and move to EmbeddedEventSessionService.
      */
-    public function findEventsMenu()
+    public function findEventsMenu($limit = 0)
     {
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -1734,6 +1734,10 @@ class MultimediaObjectRepository extends DocumentRepository
                 ),
             ),
         );
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
 
         return $collection->aggregate($pipeline)->toArray();
     }
