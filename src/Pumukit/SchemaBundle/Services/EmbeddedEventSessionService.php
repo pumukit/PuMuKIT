@@ -285,7 +285,6 @@ class EmbeddedEventSessionService
         );
         $this->endPipeline($pipeline);
 
-
         if ($limit > 0) {
             $pipeline[] = array('$limit' => $limit);
         }
