@@ -57,7 +57,7 @@ class TagService
     {
         $tag = $this->repository->findOneByCod($tagCod);
         if (!$tag) {
-            throw new \Exception('Tag with id '.$tag->getId().' not found.');
+            throw new \Exception('Tag'.$tagCod.' not found.');
         }
 
         return $this->addTag($mmobj, $tag, $executeFlush);
