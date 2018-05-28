@@ -171,19 +171,25 @@ function take_pic() {
 take_burst.on("click", function(event){
   event.preventDefault();
 
+  var numThumbnails = parseInt(event.target.dataset.num);
   var TotalTime = Math.ceil(parseInt(video.duration));
-  var interval = TotalTime/parseInt(event.target.dataset.num);
+  var interval = TotalTime/numThumbnails;
 
   if ($('.new_img')){
       $('.new_img').remove();
       ctx_draw.clearRect(0, 0, canvas_draw.width, canvas_draw.height);
   }
 
+  var thumbnailsTaken = 0;
   video.addEventListener("seeked", burst = function(e){
     if (!video.seeking) {
       take_pic();
       video.currentTime = (video.currentTime + interval);
-      if (video.currentTime >= video.duration - interval) video.removeEventListener("seeked", burst);
+      thumbnailsTaken += 1;
+      if ((video.currentTime >= video.duration - interval) || (thumbnailsTaken >= numThumbnails)) {
+          video.removeEventListener("seeked", burst);
+          thumbnailsTaken = 0;
+      }
     }
   });
 
