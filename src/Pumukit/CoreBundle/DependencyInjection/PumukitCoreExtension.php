@@ -22,6 +22,15 @@ class PumukitCoreExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('pumukit2.info', $config['info']);
+        $container->setParameter('pumukit2.locales', $config['locales']);
+        $container->setParameter('pumukit2.uploads_dir', $config['uploads_dir']);
+        $container->setParameter('pumukit2.uploads_url', $config['uploads_url']);
+        $container->setParameter('pumukit2.inbox', $config['inbox']);
+        $container->setParameter('pumukit2.tmp', $config['tmp']);
+        $container->setParameter('pumukit2.delete_on_disk', $config['delete_on_disk']);
+        $container->setParameter('pumukit2.use_series_channels', $config['use_series_channels']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
