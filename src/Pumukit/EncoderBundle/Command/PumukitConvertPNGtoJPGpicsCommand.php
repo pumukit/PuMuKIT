@@ -58,6 +58,7 @@ EOT
      * @param OutputInterface $output
      *
      * @return bool|int|null
+     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -72,6 +73,7 @@ EOT
 
         if (!$multimediaObjects) {
             $output->writeln('No multimedia objects found to regenerate pics');
+
             return true;
         }
 
