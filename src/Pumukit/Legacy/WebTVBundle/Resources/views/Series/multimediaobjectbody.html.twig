@@ -64,7 +64,7 @@
          {% endif %}
          <div class="objects">
            <!-- MATTERHORN -->
-           {% if mm.getProperty('opencast') is not empty %}
+           {% if mm.getProperty('opencast') is not empty or mm.isMultistream() %}
            <div id="material" class="file matterhorn">
              <a href="{{ url_mmobj }}">{% spaceless %}
                {% trans %}Video{% endtrans %}
@@ -72,7 +72,7 @@
                {% trans %}private{% endtrans %}
                {% endif %}
              {% endspaceless %}</a>
-             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):'en')|language_name }}</span>
+             &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):(mm.isMultistream()?mm.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name }}</span>
              &nbsp;|&nbsp; {{ mm.getDuration()|duration_minutes_seconds }}
 	         &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
              {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
