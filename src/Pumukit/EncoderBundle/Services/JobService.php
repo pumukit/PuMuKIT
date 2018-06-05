@@ -400,6 +400,9 @@ class JobService
         sem_acquire($seg);
 
         $nextJob = $this->getNextJob();
+        if (!isset($nextJob)) {
+            return null;
+        }
         $profile = $nextJob->getProfile();
         $freeCpu = $this->cpuService->getFreeCpu($profile);
         if (($freeCpu) && ($nextJob) && ($this->cpuService->isActive($freeCpu))) {
