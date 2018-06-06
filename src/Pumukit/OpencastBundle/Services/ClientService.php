@@ -509,7 +509,7 @@ class ClientService
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($request, CURLOPT_CONNECTTIMEOUT, 1);
-        curl_setopt($request, CURLOPT_TIMEOUT, 1);
+        curl_setopt($request, CURLOPT_TIMEOUT, 10);
 
         if ($this->insecure) {
             curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
