@@ -32,11 +32,21 @@ class ChatController extends Controller
      */
     public function showAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $username = $this->getUser();
+        if (!$username) {
+            $sessionCookie = $request->cookies->get('PHPSESSID');
+            $dm = $this->get('doctrine_mongodb.odm.document_manager');
+            $messageRepo = $dm->getRepository('PumukitLiveBundle:Message');
+            $message = $messageRepo->findOneBy(array('cookie' => $sessionCookie));
+            if ($message && ($author = $message->getAuthor())) {
+                $username = $author;
+            }
+        }
         return array(
             'enable_chat' => $this->container->getParameter('pumukit_live.chat.enable'),
             'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat.update_interval'),
             'multimediaObject' => $multimediaObject,
-            'username' => $this->getUser(),
+            'username' => $username,
         );
     }
 
@@ -58,6 +68,8 @@ class ChatController extends Controller
         $message->setMultimediaObject($multimediaObject);
         $message->setMessage($request->get('message'));
         $message->setInsertDate(new \DateTime());
+        $sessionCookie = $request->cookies->get('PHPSESSID');
+        $message->setCookie($sessionCookie);
 
         try {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');

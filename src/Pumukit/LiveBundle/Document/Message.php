@@ -46,6 +46,13 @@ class Message
     private $insertDate;
 
     /**
+     * @var string cookie
+     *
+     * @MongoDB\String
+     */
+    private $cookie;
+
+    /**
      * Get id.
      *
      * @return id
@@ -109,5 +116,21 @@ class Message
     public function setMultimediaObject($multimediaObject)
     {
         $this->multimediaObject = $multimediaObject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCookie()
+    {
+        return $this->cookie;
+    }
+
+    /**
+     * @param string $cookie
+     */
+    public function setCookie($cookie)
+    {
+        $this->cookie = $cookie;
     }
 }
