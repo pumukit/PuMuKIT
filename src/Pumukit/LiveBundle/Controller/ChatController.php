@@ -42,6 +42,7 @@ class ChatController extends Controller
                 $username = $author;
             }
         }
+
         return array(
             'enable_chat' => $this->container->getParameter('pumukit_live.chat.enable'),
             'chatUpdateInterval' => $this->container->getParameter('pumukit_live.chat.update_interval'),
