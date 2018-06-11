@@ -45,7 +45,7 @@ class JobGeneratorListener
         }
 
         // Only for non multi-stream objects
-        if (null != $multimediaObject->getProperty('opencast')) {
+        if ($multimediaObject->isMultistream()) {
             return;
         }
 
