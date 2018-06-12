@@ -50,7 +50,7 @@ EOT
         $this->output = $output;
         $this->input = $input;
 
-        $this->deletePngFiles = (bool) $this->input->getArgument('delete');
+        $this->deletePngFiles = $this->input->getArgument('delete');
     }
 
     /**
@@ -112,7 +112,7 @@ EOT
                         }
                     }
 
-                    if ($this->deletePngFiles) {
+                    if ('true' == $this->deletePngFiles) {
                         $this->multimediaObjectPicService->removePicFromMultimediaObject($multimediaObject, $pic->getId());
                         $this->output->writeln('Deleted pic for the mmobj - '.$multimediaObject->getId().' with path '.$pic->getPath());
                     }
