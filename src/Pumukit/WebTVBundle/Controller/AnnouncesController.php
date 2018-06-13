@@ -40,16 +40,18 @@ class AnnouncesController extends Controller implements WebTVController
             throw $this->createNotFoundException();
         }
         list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew);
-        if (empty($last)) {
-            $dateHeader = '---';
-        } else {
+
+        $response = new Response();
+        $dateHeader = '---';
+
+        if (!empty($last)) {
+            $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $date, 'number_cols' => $numberCols)), 200);
             $dateHeader = $date->format('m/Y');
+            $response->headers->set('X-Date-Month', $date->format('m'));
+            $response->headers->set('X-Date-Year', $date->format('Y'));
         }
 
-        $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $date, 'number_cols' => $numberCols)), 200);
         $response->headers->set('X-Date', $dateHeader);
-        $response->headers->set('X-Date-Month', $date->format('m'));
-        $response->headers->set('X-Date-Year', $date->format('Y'));
 
         return $response;
     }

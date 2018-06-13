@@ -137,6 +137,10 @@ class AnnounceService
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag);
         } while (empty($last) && $lastMm->getPublicDate() <= $dateEnd);
 
+        if (empty($last)) {
+            $dateEnd = null;
+        }
+
         return array($dateEnd, $last);
     }
 }

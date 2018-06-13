@@ -4,9 +4,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 
 class AnnounceServiceTest extends WebTestCase
@@ -93,6 +90,7 @@ class AnnounceServiceTest extends WebTestCase
 
         $this->assertEquals(array(), $this->announceService->getLast());
     }
+
     public function testNextLatestUploads()
     {
         $tagPudenew = new Tag();
@@ -147,14 +145,6 @@ class AnnounceServiceTest extends WebTestCase
         $dateEnd->modify('first day of last month');
         list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals(array(), $last);
-        $this->assertEquals('04/1997', $dateEnd->format('m/Y'));
-        $dateEnd->modify('first day of last month');
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
-        $this->assertEquals(array(), $last);
-        $this->assertEquals('04/1995', $dateEnd->format('m/Y'));
-        $dateEnd->modify('first day of last month');
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd, false);
-        $this->assertEquals(array(), $last);
-        $this->assertEquals('04/1993', $dateEnd->format('m/Y'));
+        $this->assertEquals(null, $dateEnd);
     }
 }
