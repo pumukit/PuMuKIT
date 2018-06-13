@@ -1,10 +1,9 @@
 <div>
-  {% for object in objects %}
-    {% if object.isCollection() %}
-      {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
-    {% else %}
-      {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
-    {% endif %}
-
-  {% endfor %}
+    {% for object in objects %}
+        {% if object.isCollection() %}
+            {% include 'PumukitWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+        {% else %}
+            {% include 'PumukitWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+        {% endif %}
+    {% endfor %}
 </div>

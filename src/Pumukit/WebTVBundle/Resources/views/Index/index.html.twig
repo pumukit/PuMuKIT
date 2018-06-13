@@ -6,8 +6,8 @@
     {% else %}
         {% render(controller('PumukitWebTVBundle:Index:categories')) %}
     {% endif %}
-  <div class="pumukit_announce row">
-    {% render(controller('PumukitWebTVBundle:Index:mostviewed')) %}
-    {% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %} 
-  </div>
+    <div class="pumukit_announce row">
+        {% render(controller('PumukitWebTVBundle:Index:mostviewed')) %}
+        {% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %}
+    </div>
 {% endblock %}

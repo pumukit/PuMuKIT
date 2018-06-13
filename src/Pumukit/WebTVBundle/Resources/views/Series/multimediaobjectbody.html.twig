@@ -1,112 +1,115 @@
 {% if magic_url is defined %}
-  {% set url_mmobj = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
+    {% set url_mmobj = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret}) %}
 {% else %}
-  {% set url_mmobj = url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) %}
+    {% set url_mmobj = url('pumukit_webtv_multimediaobject_index', {'id': mm.id}) %}
 {% endif %}
 <div class="media mmobj_serie">
-  <!-- PIC -->
-  <div class="media-left media-middle">
-    <div class="thumbnailwrapper">
-      {% for pic in mm.getPics() if pic.getUrl() is not empty %}
-        <div class="thumbnail bodyMm">
-          <a href="{{ url_mmobj }}">
-            <img alt="thumbnail" src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
-            <div class="thumbnailholder"></div>
-          </a>
-        </div>
-      {% else %}
-        <div class="thumbnail bodyMm">
-          <a href="{{ url_mmobj }}">
-            <img alt="thumbnail" src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
-            <div class="thumbnailholder"></div>
-          </a>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="media-body">
-    <!-- TITLE & SUBTITLE -->
-    <h4 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans )}}"</h4>
-    {% if mm.getSubtitle() %}
-        <h5 class="media-heading"><small>{{ mm.getSubtitle() | default (' ') }}</small></h5>
-    {% endif %}
-
-    <ul class="mmobj_objects">
-      <!-- MATTERHORN -->
-      {% if mm.getProperty('opencast') is not empty or mm.isMultistream() %}
-        <div class="file matterhorn material">
-          <a href="{{ url_mmobj }}">
-            <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>{% spaceless %}
-              {{ mm.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
-            {% endspaceless %}</a>
-            &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):(mm.isMultistream()?mm.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name }}</span>
-            &nbsp;|&nbsp; {{ mmobj_duration(mm) | duration_string }}
-            &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
-            {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
-        </div>
-      {% else %}
-        <!-- TRACKS -->
-        {% set tracks = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
-        {% for track in tracks if not track.getHide() %}
-          <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
-            <span class="glyphicon glyphicon-{{ mm.isOnlyAudio() ?'headphones':'facetime-video'}}" aria-hidden="true"></span>
-            {% if magic_url is defined %}
-              {% set url_track = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret, 'track_id': track.id}) %}
+    <!-- PIC -->
+    <div class="media-left media-middle">
+        <div class="thumbnailwrapper">
+            {% for pic in mm.getPics() if pic.getUrl() is not empty %}
+                <div class="thumbnail bodyMm">
+                    <a href="{{ url_mmobj }}">
+                        <img alt="thumbnail" src="{{ pic.getUrl() }}" class="serial img-responsive thumbnailimg">
+                        <div class="thumbnailholder"></div>
+                    </a>
+                </div>
             {% else %}
-              {% set url_track = url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) %}
-            {% endif %}
-            <a href="{{ url_track }}">{% spaceless %}
-              {% if track.isOnlyAudio %}
-                {{ mm.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
-              {% elseif track.containsTag('download') %}
-                {% trans %}Download master{% endtrans %}
-              {% else %}
-                {{ mm.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
-              {% endif %}
-            {% endspaceless %}</a>
-            &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage()|language_name}}</span>
-            &nbsp;({{ mmobj_duration(mm) | duration_string }})
-            &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
-            {% transchoice mm.getNumview() %}
-            {0}times|{1}time|]1,Inf]times
-            {% endtranschoice %}
-          </div>
-        {% endfor %}
-      {% endif %}
-      <!-- MATERIAL -->
-      {% for material in mm.getMaterials() if not material.getHide() %}
-        <div class="material">
-          <span class="glyphicon glyphicon-paperclip"></span>
-            <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                <div class="thumbnail bodyMm">
+                    <a href="{{ url_mmobj }}">
+                        <img alt="thumbnail" src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
+                        <div class="thumbnailholder"></div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-      {% endfor %}
-      <!-- LINK -->
-      {% for link in mm.getLinks() %}
-        <div class="link">
-          <a target="_blank" href="{{ link.getUrl() }}">
-            <span class="glyphicon glyphicon-globe"></span>
-            {{ link.getName() }}
-          </a>
-        </div>
-      {% endfor %}
-    </ul>
-    <!-- PERSONS ACT -->
-    <div class="persons">
-      {% for role in mm.getRoles() if role.getDisplay() %}
-        {% for person in mm.getPeopleByRole(role) %}
-          <div>
-            <div class="person">
-              {{ role.getText() }}
-              {% if person.getWeb() is not empty %}
-                <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
-              {% else %}
-                {{ person.getHName() }}
-              {% endif %}
-            </div>
-            {{ person.getInfo() }}
-          </div>
-        {% endfor %}
-      {% endfor %}
     </div>
-  </div>
+    <div class="media-body">
+        <!-- TITLE & SUBTITLE -->
+        <h4 class="media-heading">"{{ mm.getTitle() | default ('No title' | trans ) }}"</h4>
+        {% if mm.getSubtitle() %}
+            <h5 class="media-heading">
+                <small>{{ mm.getSubtitle() | default (' ') }}</small>
+            </h5>
+        {% endif %}
+
+        <ul class="mmobj_objects">
+            <!-- MATTERHORN -->
+            {% if mm.getProperty('opencast') is not empty or mm.isMultistream() %}
+                <div class="file matterhorn material">
+                    <a href="{{ url_mmobj }}">
+                        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>{% spaceless %}
+                            {{ mm.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
+                        {% endspaceless %}</a>
+                    &nbsp;|&nbsp;&nbsp;<span class="language">{{ (mm.getProperty('opencastlanguage')?(mm.getProperty('opencastlanguage')|lower):(mm.isMultistream()?mm.getFilteredTrackWithTags(['display'], [], [], []).getLanguage():'en'))|language_name }}</span>
+                    &nbsp;|&nbsp; {{ mmobj_duration(mm) | duration_string }}
+                    &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}: <span class="numView">{{ mm.getNumview() }}</span>
+                    {% if (mm.getNumview() == 1) %}{% trans %}time{% endtrans %}{% else %}{% trans %}times{% endtrans %}{% endif %}
+                </div>
+            {% else %}
+                <!-- TRACKS -->
+                {% set tracks = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
+                {% for track in tracks if not track.getHide() %}
+                    <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
+                        <span class="glyphicon glyphicon-{{ mm.isOnlyAudio() ?'headphones':'facetime-video' }}" aria-hidden="true"></span>
+                        {% if magic_url is defined %}
+                            {% set url_track = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret, 'track_id': track.id}) %}
+                        {% else %}
+                            {% set url_track = url('pumukit_webtv_multimediaobject_index', {'id': mm.id, 'track_id': track.id}) %}
+                        {% endif %}
+                        <a href="{{ url_track }}">{% spaceless %}
+                                {% if track.isOnlyAudio %}
+                                    {{ mm.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
+                                {% elseif track.containsTag('download') %}
+                                    {% trans %}Download master{% endtrans %}
+                                {% else %}
+                                    {{ mm.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
+                                {% endif %}
+                            {% endspaceless %}</a>
+                        &nbsp;|&nbsp;&nbsp;<span class="language">{{ track.getLanguage()|language_name }}</span>
+                        &nbsp;({{ mmobj_duration(mm) | duration_string }})
+                        &nbsp;|&nbsp; {% trans %}Viewed{% endtrans %}:
+                        <span class="numView">{{ mm.getNumview() }}</span>
+                        {% transchoice mm.getNumview() %}
+                            {0}times|{1}time|]1,Inf]times
+                        {% endtranschoice %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <!-- MATERIAL -->
+            {% for material in mm.getMaterials() if not material.getHide() %}
+                <div class="material">
+                    <span class="glyphicon glyphicon-paperclip"></span>
+                    <a target="_blank" href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                </div>
+            {% endfor %}
+            <!-- LINK -->
+            {% for link in mm.getLinks() %}
+                <div class="link">
+                    <a target="_blank" href="{{ link.getUrl() }}">
+                        <span class="glyphicon glyphicon-globe"></span>
+                        {{ link.getName() }}
+                    </a>
+                </div>
+            {% endfor %}
+        </ul>
+        <!-- PERSONS ACT -->
+        <div class="persons">
+            {% for role in mm.getRoles() if role.getDisplay() %}
+                {% for person in mm.getPeopleByRole(role) %}
+                    <div>
+                        <div class="person">
+                            {{ role.getText() }}
+                            {% if person.getWeb() is not empty %}
+                                <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
+                            {% else %}
+                                {{ person.getHName() }}
+                            {% endif %}
+                        </div>
+                        {{ person.getInfo() }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
 </div>

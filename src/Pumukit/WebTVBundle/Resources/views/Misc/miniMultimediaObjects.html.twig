@@ -1,38 +1,38 @@
 <div class="col-xs-12">
-  {% for multimediaObject in multimediaObjects %}
-    {% if multimediaObject.isPublished %}
-      {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) %}
+    {% for multimediaObject in multimediaObjects %}
+        {% if multimediaObject.isPublished %}
+            {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id}) %}
+        {% else %}
+            {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret }) %}
+        {% endif %}
+        <div class="row">
+            <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url }}'">
+                <div class="minithumbnail">
+                    <a href="{{ url }}">
+                        <div class="media-object play_icon small" alt=""></div>
+                        <img class="media-object thumbnailimg" src="{{ multimediaObject|first_url_pic() }}" alt="thumbnailimg">
+                        <div class="minithumbnailholder"></div>
+                    </a>
+                </div>
+                <div class="miniinfo-wrapper">
+                    <div class="miniinfo">
+                        <a href="{{ url }}">
+                            <div class="title">
+                                {#{{ multimediaObject.getTitle()[:80] }}{% if (80 == (multimediaObject.getTitle()[:80]|length)) %}...{% endif %}#}
+                                {{ multimediaObject.getTitle() }}
+                            </div>
+                        </a>
+                        <div class="subtitle">
+                            <small>{{ multimediaObject.getSubtitle() }}</small>
+                        </div>
+                        <div class="pull-left date">
+                            <small>{{ multimediaObject.recordDate | localizeddate('full', 'none' , app.request.locale, null,"d/MM/Y" ) }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
-      {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret }) %}
-    {% endif %}
-    <div class="row">
-      <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url }}'">
-        <div class="minithumbnail">
-          <a href="{{ url }}">
-            <div class="media-object play_icon small" alt=""></div>
-            <img class="media-object thumbnailimg" src="{{multimediaObject|first_url_pic()}}" alt="thumbnailimg">
-            <div class="minithumbnailholder"></div>
-          </a>
-        </div>
-        <div class="miniinfo-wrapper">
-          <div class="miniinfo">
-            <a href="{{ url }}">
-              <div class="title" >
-                {#{{ multimediaObject.getTitle()[:80] }}{% if (80 == (multimediaObject.getTitle()[:80]|length)) %}...{% endif %}#}
-                {{ multimediaObject.getTitle()}}
-              </div>
-            </a>
-            <div class="subtitle">
-              <small>{{ multimediaObject.getSubtitle() }}</small>
-            </div>
-            <div class="pull-left date">
-              <small>{{ multimediaObject.recordDate | localizeddate('full', 'none' , app.request.locale, null,"d/MM/Y" ) }}</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% else %}
-    {% trans %}There are no videos with these specifications{% endtrans %}.
-  {% endfor %}
+        {% trans %}There are no videos with these specifications{% endtrans %}.
+    {% endfor %}
 </div>

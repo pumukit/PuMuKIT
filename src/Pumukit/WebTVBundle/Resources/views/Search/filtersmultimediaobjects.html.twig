@@ -1,151 +1,198 @@
 <form id="form_search" name="busqueda" method="get" class="row">
-  <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
-  <div class="form-group col-md-{{ parent_tag_optional is null or blocked_tag ? 6 : 3}}">
-    <label for="search">{% trans %}Search{% endtrans %}:</label>
-    <div class="input-group">
-      <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder=" {% trans %}Search{% endtrans %}...">
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-default" title="search">
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-  {% if parent_tag is not null and (blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag)) %}
-    <div class="form-group col-md-3 col-sm-4">
-      <label for="tags">{{ parent_tag.title|trans}}:</label>
-      <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
-        <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-        {% for tag in parent_tag.children if tag.title != "" %}
-          <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
-        {% endfor %}
-      </select>
-    </div>
-  {% endif %}
-
-  {% if parent_tag_optional is not null and ( blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional)) %}
-    <div class="form-group col-md-3 col-sm-4">
-      <label for="tags">{{ parent_tag_optional.title|trans}}:</label>
-      <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
-        <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-        {% for tag in parent_tag_optional.children if tag.title != "" %}
-          <option value="{{tag.cod}}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
-        {% endfor %}
-      </select>
-    </div>
-  {% endif %}
-
-  <div class="form-group col-md-3 col-sm-4">
-    <label for="duration">{% trans %}Duration{% endtrans %}:</label>
-    <select id="duration" name="duration" class="form-control" onchange="submitForm(this);">
-      <option value="" {% if app.request.query.get('duration') == "" %} selected="selected" {% endif %}>{% trans%}All{% endtrans %}</option>
-      <option value="-5"  {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
-      <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
-      <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
-      <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
-      <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
-    </select>
-  </div>
-
-  <div class="form-group col-md-2 col-sm-4 col-xs-6">
-    <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
-    <select id="type" name="type" class="form-control"  onchange="submitForm(this);">
-      <option value="" {% if app.request.query.get('type') == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-      <option value="video" {% if app.request.query.get('type') == "video" %} selected="selected" {% endif %}>{% trans %}Video{% endtrans %}</option>
-      <option value="audio" {% if app.request.query.get('type') == "audio" %} selected="selected" {% endif %}>{% trans %}Audio{% endtrans %}</option>
-    </select>
-  </div>
-  <div class="form-group col-md-2 col-sm-2 col-xs-6">
-    <label for="language">{% trans %}Language{% endtrans %}:</label>
-    <select id="language" name="language" class="form-control"  onchange="submitForm(this);">
-      <option value="" {% if app.request.query.get('language') == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
-      {% for language in languages if language != "" %}
-        <option value="{{language}}" {% if app.request.query.get('language') == language %} selected="selected" {% endif %}>{{ language |language_name }}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div class="form-group col-md-6 col-sm-7 col-xs-12">
-    <div class="row">
-      {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
-      <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
-        <div class="col-xs-6">
-          <span  style="white-space: nowrap; overflow: hidden;">
-            <label for="start-input">{% trans %}Start date{% endtrans %}:</label>
-            <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
-          </span>
-          <div class="input-group date" id="start">
-            <input type='text' class="form-control" name="start" id="start-input" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onblur="submitForm(this);" {{ activated?'':'disabled'}}/>
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-            </span>
-          </div>
-        </div>
-        <div class="col-xs-6">
-          <label for="end-input">{% trans %}Finish date{% endtrans %}:</label>
-          <div class="input-group date" id="end">
-            <input type="text" class="form-control" name="end" id="end-input" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" onblur="submitForm(this);" {{ activated?'':'disabled'}}/>
-            <div class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+    <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
+    <div class="form-group col-md-{{ parent_tag_optional is null or blocked_tag ? 6 : 3 }}">
+        <label for="search">{% trans %}Search{% endtrans %}:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}" placeholder=" {% trans %}Search{% endtrans %}...">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" title="search">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
             </div>
-          </div>
         </div>
-      </div>
-      <div id="simple-date-search" {{ activated?'style="display:none"':'' }}>
-        <div class="col-md-12 col-xs-12">
-          <label for="year">{% trans %}Year{% endtrans %}</label>
-          <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %}Select by date range {% endtrans %}</a>
-          <select id='year' name='year' class='form-control' onchange="submitForm(this);" {{ activated?'disabled':''}}>
-            <option value="" {% if app.request.query.get('year') == "" %} selected="selected" {% endif %}>{% trans%}Any{% endtrans %}</option>
-            {% for year in search_years %}
-              <option value="{{year}}" {% if app.request.query.get('year') == year %} selected="selected" {% endif %}>{{year}}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
     </div>
-  </div>
+    {% if parent_tag is not null and (blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag)) %}
+        <div class="form-group col-md-3 col-sm-4">
+            <label for="tags">{{ parent_tag.title|trans }}:</label>
+            <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
+                <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
+                {% for tag in parent_tag.children if tag.title != "" %}
+                    <option value="{{ tag.cod }}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
 
-  <div class="form-group col-md-2 col-sm-3 col-xs-12">
-    <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
-    <input type="button" class="btn btn-default form-control" placeholder="{% trans %}Reset filters{% endtrans %}" value="{% trans %}Reset filters{% endtrans %}"
-           onclick="window.location.href=window.location.pathname">
-  </div>
+    {% if parent_tag_optional is not null and ( blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional)) %}
+        <div class="form-group col-md-3 col-sm-4">
+            <label for="tags">{{ parent_tag_optional.title|trans }}:</label>
+            <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
+                <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
+                {% for tag in parent_tag_optional.children if tag.title != "" %}
+                    <option value="{{ tag.cod }}" {% if tag.cod in tags_found %} selected="selected" {% endif %}>{{ tag.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
 
-  <script type="text/javascript">
-   $(function() {
-       var isMobile = $(window).width() <= 480 || Modernizr.touchevents;
-       if(isMobile && Modernizr.inputtypes.date) {
-           $('#start input').attr('type', 'date');
-           $('#end input').attr('type', 'date');
-           $('#advanced-date-search .input-group-addon').remove();
-           $('.date').removeClass('input-group');
-       }
-       else {
-           var language = "{{ app.request.getLocale() }}";
-           $( "#start" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD', locale: language });
-           $( "#start" ).on("dp.change", function(e){$("#form_search").submit();});
-           $( "#end" ).datetimepicker({useCurrent: false, viewMode: 'years', format: 'YYYY-MM-DD', locale: language });
-           $( "#end" ).on("dp.change", function(e){$("#form_search").submit();});
-       }
-   });
-   function submitForm(elem) {
-       $('#search_spinner').show();
-       $('#search_results').hide();
-       $('.pagination').hide();
-       elem.form.submit();
-   }
-   function toggleDateSelect() {
-       $('#simple-date-search, #advanced-date-search').toggle();
-       $('#year').prop('disabled', function(i, v) { return !v; });
-       $('#start .form-control').prop('disabled', function(i, v) { return !v; });
-       $('#end .form-control').prop('disabled', function(i, v) { return !v; });
-   }
-  </script>
+    <div class="form-group col-md-3 col-sm-4">
+        <label for="duration">{% trans %}Duration{% endtrans %}:</label>
+        <select id="duration" name="duration" class="form-control" onchange="submitForm(this);">
+            <option value="" {% if app.request.query.get('duration') == "" %} selected="selected" {% endif %}>
+                {% trans %}All{% endtrans %}
+            </option>
+            <option value="-5" {% if app.request.query.get('duration') == "-5" %} selected="selected" {% endif %}>
+                {% trans %}Up to 5 minutes{% endtrans %}
+            </option>
+            <option value="-10" {% if app.request.query.get('duration') == "-10" %} selected="selected" {% endif %}>
+                {% trans %}Up to 10 minutes{% endtrans %}
+            </option>
+            <option value="-30" {% if app.request.query.get('duration') == "-30" %} selected="selected" {% endif %}>
+                {% trans %}Up to 30 minutes{% endtrans %}
+            </option>
+            <option value="-60" {% if app.request.query.get('duration') == "-60" %} selected="selected" {% endif %}>
+                {% trans %}Up to 60 minutes{% endtrans %}
+            </option>
+            <option value="+60" {% if app.request.query.get('duration') == "+60" %} selected="selected" {% endif %}>
+                {% trans %}More than 60 minutes{% endtrans %}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-2 col-sm-4 col-xs-6">
+        <label for="type">{% trans %}Video/Audio{% endtrans %}:</label>
+        <select id="type" name="type" class="form-control" onchange="submitForm(this);">
+            <option value="" {% if app.request.query.get('type') == "" %} selected="selected" {% endif %}>
+                {% trans %}All{% endtrans %}
+            </option>
+            <option value="video" {% if app.request.query.get('type') == "video" %} selected="selected" {% endif %}>
+                {% trans %}Video{% endtrans %}
+            </option>
+            <option value="audio" {% if app.request.query.get('type') == "audio" %} selected="selected" {% endif %}>
+                {% trans %}Audio{% endtrans %}
+            </option>
+        </select>
+    </div>
+    <div class="form-group col-md-2 col-sm-2 col-xs-6">
+        <label for="language">{% trans %}Language{% endtrans %}:</label>
+        <select id="language" name="language" class="form-control" onchange="submitForm(this);">
+            <option value="" {% if app.request.query.get('language') == "" %} selected="selected" {% endif %}>
+                {% trans %}All{% endtrans %}
+            </option>
+            {% for language in languages if language != "" %}
+                <option value="{{ language }}" {% if app.request.query.get('language') == language %} selected="selected" {% endif %}>
+                    {{ language |language_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group col-md-6 col-sm-7 col-xs-12">
+        <div class="row">
+            {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
+            <div id="advanced-date-search" {{ activated?'':'style="display:none"' }}>
+                <div class="col-xs-6">
+                    <span style="white-space: nowrap; overflow: hidden;">
+                        <label for="start-input">{% trans %}Start date{% endtrans %}:</label>
+                        <a style="margin-right:-15px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %} Select by year {% endtrans %}</a>
+                    </span>
+                    <div class="input-group date" id="start">
+                        <input type='text' class="form-control" name="start" id="start-input" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" onblur="submitForm(this);" {{ activated?'':'disabled' }}/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <label for="end-input">{% trans %}Finish date{% endtrans %}:</label>
+                    <div class="input-group date" id="end">
+                        <input type="text" class="form-control" name="end" id="end-input" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" onblur="submitForm(this);" {{ activated?'':'disabled' }}/>
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="simple-date-search" {{ activated?'style="display:none"':'' }}>
+                <div class="col-md-12 col-xs-12">
+                    <label for="year">{% trans %}Year{% endtrans %}</label>
+                    <a style="padding-left:20px;cursor:pointer;" onclick="toggleDateSelect()">{% trans %}Select by date range {% endtrans %}</a>
+                    <select id='year' name='year' class='form-control' onchange="submitForm(this);" {{ activated?'disabled':'' }}>
+                        <option value="" {% if app.request.query.get('year') == "" %} selected="selected" {% endif %}>
+                            {% trans %}Any{% endtrans %}
+                        </option>
+                        {% for year in search_years %}
+                            <option value="{{ year }}" {% if app.request.query.get('year') == year %} selected="selected" {% endif %}>
+                                {{ year }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-md-2 col-sm-3 col-xs-12">
+        <label for="reset">{% trans %}Reset filters{% endtrans %}:</label>
+        <input type="button" class="btn btn-default form-control" placeholder="{% trans %}Reset filters{% endtrans %}" value="{% trans %}Reset filters{% endtrans %}" onclick="window.location.href=window.location.pathname" />
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var isMobile = $(window).width() <= 480 || Modernizr.touchevents;
+            if (isMobile && Modernizr.inputtypes.date) {
+                $('#start input').attr('type', 'date');
+                $('#end input').attr('type', 'date');
+                $('#advanced-date-search .input-group-addon').remove();
+                $('.date').removeClass('input-group');
+            }
+            else {
+                var language = "{{ app.request.getLocale() }}";
+                $("#start").datetimepicker({
+                    useCurrent: false,
+                    viewMode: 'years',
+                    format: 'YYYY-MM-DD',
+                    locale: language
+                });
+                $("#start").on("dp.change", function (e) {
+                    $("#form_search").submit();
+                });
+                $("#end").datetimepicker({
+                    useCurrent: false,
+                    viewMode: 'years',
+                    format: 'YYYY-MM-DD',
+                    locale: language
+                });
+                $("#end").on("dp.change", function (e) {
+                    $("#form_search").submit();
+                });
+            }
+        });
+
+        function submitForm(elem) {
+            $('#search_spinner').show();
+            $('#search_results').hide();
+            $('.pagination').hide();
+            elem.form.submit();
+        }
+
+        function toggleDateSelect() {
+            $('#simple-date-search, #advanced-date-search').toggle();
+            $('#year').prop('disabled', function (i, v) {
+                return !v;
+            });
+            $('#start .form-control').prop('disabled', function (i, v) {
+                return !v;
+            });
+            $('#end .form-control').prop('disabled', function (i, v) {
+                return !v;
+            });
+        }
+    </script>
 
 </form>
 
 <div>
-  <a href="{{ path('pumukit_webtv_search_series') }}">
-    {% trans %}Search by series{% endtrans %}
-  </a>
+    <a href="{{ path('pumukit_webtv_search_series') }}">
+        {% trans %}Search by series{% endtrans %}
+    </a>
 </div>
