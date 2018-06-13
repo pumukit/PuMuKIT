@@ -3,9 +3,6 @@
 {% block body %}
     <h1 class="title-for-crumbs">{{ title|trans }}</h1>
     {% for parent in allGrounds %}
-        {% if loop.index is even %}
-            <div class="cleafix"></div>
-        {% endif %}
         <div class="col-md-6 channel-list">
             <a href="{{ parent.url }}">
                 <h2>
@@ -56,6 +53,9 @@
                 </li>
             </ul>
         </div>
+        {% if loop.index is even %}
+            <div class="clearfix"></div>
+        {% endif %}
     {% endfor %}
     <div class="clearfix"></div>
     <hr>
