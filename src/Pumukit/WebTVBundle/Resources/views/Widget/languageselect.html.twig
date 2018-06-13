@@ -6,7 +6,8 @@
         <ul class="dropdown-menu">
             {% for lang in languages %}
                 <li role="separator" class="divider"></li>
-                <li><a href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ lang | language_name(false) }} </a>
+                <li>
+                    <a href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ lang | language_name(false) }} </a>
                 </li>
             {% endfor %}
             <li role="separator" class="divider"></li>

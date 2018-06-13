@@ -11,8 +11,9 @@
     </div>
     <div class="grid_5">
         {% if show_forceauth %}
-            <h3 style="text-align:center;margin-top: 3vh; font-size: 6vh; margin-bottom:6vh;">{% trans %}Log in with a valid user is required to watch it{% endtrans %}
-                .</h3>
+            <h3 style="text-align:center;margin-top: 3vh; font-size: 6vh; margin-bottom:6vh;">
+                {% trans %}Log in with a valid user is required to watch it{% endtrans %}.
+            </h3>
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div class="text-center">
                     <button id="pumukit_forbidden_login" type="submit" class="btn btn-primary btn-flat" name="submit" title="{% trans %}Log In{% endtrans %}">
