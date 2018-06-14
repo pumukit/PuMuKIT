@@ -5,7 +5,7 @@
                 <div class="minimmobj" style="cursor:pointer;" onclick="window.location='{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}'">
                     <div class="minithumbnail">
                         <a href="{{ url('pumukit_live_event_id', {'id' : events['_id'] }) }}">
-                            <div class="media-object play_icon small" alt=""></div>
+                            <div class="media-object play_icon small"></div>
                             {% if event['pics'] is defined and (event['pics']|length > 0) %}
                                 <img class="media-object thumbnailimg" src="{{ event_first_thumbnail(event) }}" style="height:100%" alt="{% trans %}Media Thumbnail{% endtrans %}">
                             {% else %}

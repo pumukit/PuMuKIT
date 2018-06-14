@@ -1,40 +1,42 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-  <div class="row">
-    <div class="col-xs-12">
-      <br>
-      <div class="row">
+    <div class="row">
         <div class="col-xs-12">
-          <h1 class="title-for-crumbs">{{ title }}</h1>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="title-for-crumbs">{{ title }}</h1>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                {% for result in results if result.numMmobjs > 0 %}
+                    <div class="row">
+                        - {{ result.tag.title }}
+                        [{% transchoice result.numMmobjs %}{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos{% endtranschoice %}
+                        ]
+                    </div>
+                {% endfor %}
+            </div>
+            {% for result in results if result.numMmobjs > 0 %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2>{{ result.tag.title }}
+                            <a href="{{ path_to_tag(result.tag.cod) }}" {{ result.numMmobjs > 0?'':'style="pointer-events:none"' }}>
+                                <small> ({% trans %} Show videos {% endtrans %})</small>
+                            </a>
+                        </h2>
+                    </div>
+                    {% set objects = result.objects %}
+                    {% include 'PumukitWebTVBundle:Channel:list.html.twig' %}
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="text-center">{% trans %}No resources available{% endtrans %}</h3>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-      </div>
-      <div class="col-xs-12">
-        {% for result in results if result.numMmobjs > 0%}
-          <div class="row">
-            - {{ result.tag.title }} [{% transchoice result.numMmobjs  %}{0}0 Videos|{1}%count% Video|]1,Inf[%count% Videos{% endtranschoice %}]
-          </div>
-        {% endfor %}
-      </div>
-      {% for result in results if result.numMmobjs > 0 %}
-        <div class="row">
-          <div class="col-xs-12">
-            <h2>{{ result.tag.title }}
-              <a href="{{ path_to_tag(result.tag.cod) }}" {{result.numMmobjs > 0?'':'style="pointer-events:none"'}}>
-                <small> ({% trans %} Show videos {% endtrans %})</small>
-              </a>
-            </h2>
-          </div>
-          {% set objects = result.objects%}
-          {% include 'PumukitWebTVBundle:Channel:list.html.twig' %}
-        </div>
-      {% else %}
-        <div class="row">
-          <div class="col-xs-12">
-            <h3 class="text-center">{% trans %}No resources available{% endtrans %}</h3>
-          </div>
-        </div>
-      {% endfor %}
     </div>
-  </div>
 {% endblock %}

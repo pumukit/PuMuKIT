@@ -1,8 +1,8 @@
 <h1 class="title-for-crumbs">Serie: {{ series.title|default("No title"|trans) }}</h1>
 <div class="cab_serial">
-  {% if series.getSubtitle() is not empty %}
-  <h5 class="subtitle">
-    {{ series.getSubtitle() }}
-  </h5>
-  {% endif %}
+    {% if series.getSubtitle() is not empty %}
+        <h5 class="subtitle">
+            {{ series.getSubtitle() }}
+        </h5>
+    {% endif %}
 </div>
