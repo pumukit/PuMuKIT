@@ -514,7 +514,7 @@
       </trans-unit>
       <trans-unit id="795a273f05736cc8c7b77d3a88bc9bee" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
-        <target xml:lang="es-ES" state="needs-translation">Try searching for something else:</target>
+        <target xml:lang="es-ES" state="translated">Intente usar otros criterios de búsqueda:</target>
       </trans-unit>
       <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
         <source>Home</source>
@@ -530,23 +530,23 @@
       </trans-unit>
       <trans-unit id="d6e6cb19e3b9c02f89d6cd54cfa7c613" resname="Business">
         <source>Business</source>
-        <target xml:lang="es-ES" state="needs-translation">Business</target>
+        <target xml:lang="es-ES" state="translated">Negocios</target>
       </trans-unit>
       <trans-unit id="ebad4be1614b6dfe62375ab4bf370622" resname="Natural Sciences">
         <source>Natural Sciences</source>
-        <target xml:lang="es-ES" state="needs-translation">Natural Sciences</target>
+        <target xml:lang="es-ES" state="translated">Ciencias Naturales</target>
       </trans-unit>
       <trans-unit id="a5e73d8e9203cea937ad6205c80036f2" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target xml:lang="es-ES" state="needs-translation">Health &amp; Medicine</target>
+        <target xml:lang="es-ES" state="translated">Salud &amp; Medicina</target>
       </trans-unit>
       <trans-unit id="81588d326cebe6416d3904db93603af1" resname="Law">
         <source>Law</source>
-        <target xml:lang="es-ES" state="needs-translation">Law</target>
+        <target xml:lang="es-ES" state="translated">Derecho</target>
       </trans-unit>
       <trans-unit id="95948e3320f29c1714d31c3070d1f61b" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target xml:lang="es-ES" state="needs-translation">Social Matters &amp; Education</target>
+        <target xml:lang="es-ES" state="translated">Aspectos Sociales &amp; Educación</target>
       </trans-unit>
       <trans-unit id="8b2f77e9a7ad8522b915e52c0ec86cbc" resname="Subjects">
         <source>Subjects</source>
@@ -563,6 +563,26 @@
       <trans-unit id="bd883caf9d4d144e6c67349123b13937" resname="Future events">
         <source>Future events</source>
         <target xml:lang="es-ES" state="translated">Eventos futuros</target>
+      </trans-unit>
+      <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
+        <source>Media Thumbnail</source>
+        <target xml:lang="es-ES" state="needs-translation">Media Thumbnail</target>
+      </trans-unit>
+      <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
+        <source>URL</source>
+        <target xml:lang="es-ES" state="needs-translation">URL</target>
+      </trans-unit>
+      <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
+        <source>Iframe</source>
+        <target xml:lang="es-ES" state="needs-translation">Iframe</target>
+      </trans-unit>
+      <trans-unit id="b63043e9e02fa37368bfb402813c5caf" resname="Twitter icon">
+        <source>Twitter icon</source>
+        <target xml:lang="es-ES" state="needs-translation">Twitter icon</target>
+      </trans-unit>
+      <trans-unit id="a14fa2166ed698f3d04061f57e5ab9b9" resname="loading">
+        <source>loading</source>
+        <target xml:lang="es-ES" state="needs-translation">loading</target>
       </trans-unit>
     </body>
   </file>

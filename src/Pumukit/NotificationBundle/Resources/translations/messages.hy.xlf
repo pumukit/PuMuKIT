@@ -69,6 +69,22 @@
         <source>Job Id</source>
         <target xml:lang="hy-AM" state="needs-translation">Job Id</target>
       </trans-unit>
+      <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
+        <source>Metadata</source>
+        <target xml:lang="hy-AM" state="needs-translation">Metadata</target>
+      </trans-unit>
+      <trans-unit id="6544bf0080fae39fefe95d729bf175f4" resname="Multimedia Object Title">
+        <source>Multimedia Object Title</source>
+        <target xml:lang="hy-AM" state="needs-translation">Multimedia Object Title</target>
+      </trans-unit>
+      <trans-unit id="d3a7a1dacbd10db0bed5401db874ac12" resname="Series Id">
+        <source>Series Id</source>
+        <target xml:lang="hy-AM" state="needs-translation">Series Id</target>
+      </trans-unit>
+      <trans-unit id="8bc8df68c1bbcb7463b2b309430e77e8" resname="Series Title">
+        <source>Series Title</source>
+        <target xml:lang="hy-AM" state="needs-translation">Series Title</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

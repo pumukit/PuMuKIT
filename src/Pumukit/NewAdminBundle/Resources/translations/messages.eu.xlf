@@ -3606,7 +3606,7 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       </trans-unit>
       <trans-unit id="e622429156edfbdf560c765a86d633ce" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
         <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
-        <target xml:lang="eu" state="translated">{0} |{1} 1 tarea pendiente.  |]1,Inf[ %count% tareas pendientes.</target>
+        <target xml:lang="eu" state="needs-translation">{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
       </trans-unit>
       <trans-unit id="215f26215b6734e1db7b1473532c0530" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
         <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
@@ -4309,11 +4309,11 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Event successfully updated.</source>
         <target xml:lang="eu" state="needs-translation">Event successfully updated.</target>
       </trans-unit>
-      <trans-unit id="360c27f740233cbea8da5fda1b050aaf" resname="Select an&#10;                                action...">
+      <trans-unit id="a1fbf3a50d8a486eeccf91f0a3a9b85f" resname="Select an&#10; action...">
         <source>Select an
-                                action...</source>
+ action...</source>
         <target xml:lang="eu" state="needs-translation">Select an
-                                action...</target>
+ action...</target>
       </trans-unit>
       <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
         <source>Create new series of live events</source>
@@ -4843,17 +4843,25 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
         <source>Edit Templates</source>
         <target xml:lang="eu" state="translated">Txantiloiak editatu</target>
       </trans-unit>
-      <trans-unit id="4fa154c6f5a3cc42591e049ef35c65cc" resname="Select objects">
-        <source>Select objects</source>
-        <target>Seleccionar objetos</target>
-      </trans-unit>
-      <trans-unit id="b0415d954b4db90d746a00c0a3e4ff28" resname="Modify all multimedia objects status">
-        <source>Modify all multimedia objects status</source>
-        <target>Modificar estado de objectos multimedia</target>
-      </trans-unit>
       <trans-unit id="d75d4b5790fbb3fd7b0062324a547d96" resname="Allow download">
         <source>Allow download</source>
         <target xml:lang="eu" state="needs-translation">Allow download</target>
+      </trans-unit>
+      <trans-unit id="227ef836b7915c9e12877a3a4f0f74ab" resname="Show empty series">
+        <source>Show empty series</source>
+        <target xml:lang="eu" state="needs-translation">Show empty series</target>
+      </trans-unit>
+      <trans-unit id="d7c00ac27e345f7048f6181b182bdbf9" resname="Today events list">
+        <source>Today events list</source>
+        <target xml:lang="eu" state="needs-translation">Today events list</target>
+      </trans-unit>
+      <trans-unit id="4fa154c6f5a3cc42591e049ef35c65cc" resname="Select objects">
+        <source>Select objects</source>
+        <target xml:lang="eu" state="needs-translation">Select objects</target>
+      </trans-unit>
+      <trans-unit id="b0415d954b4db90d746a00c0a3e4ff28" resname="Modify all multimedia objects status">
+        <source>Modify all multimedia objects status</source>
+        <target xml:lang="eu" state="needs-translation">Modify all multimedia objects status</target>
       </trans-unit>
       <trans-unit id="4a9dbb2891b6c56b287fb696a54e7016" resname="Already held event message">
         <source>Already held event message</source>
@@ -4862,10 +4870,6 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       <trans-unit id="9266ff1baace2c9c3ee22fa818cb7081" resname="Not yet held event message">
         <source>Not yet held event message</source>
         <target xml:lang="eu" state="needs-translation">Not yet held event message</target>
-      </trans-unit>
-      <trans-unit id="d7c00ac27e345f7048f6181b182bdbf9" resname="Today events list">
-        <source>Today events list</source>
-        <target xml:lang="eu" state="needs-translation">Today events list</target>
       </trans-unit>
       <trans-unit id="bd2135d039aaa998629afbc13c2fdc27" resname="Default live screen image">
         <source>Default live screen image</source>
@@ -4910,6 +4914,186 @@ Oharra: Esteka honek bideo gabeko erreproduzitzaile bat azalduko du, erakutsi da
       <trans-unit id="8e55bbde437f7d9ba1d6cbd9b1b274dc" resname="Click to edit messages, poster image and color text">
         <source>Click to edit messages, poster image and color text</source>
         <target xml:lang="eu" state="needs-translation">Click to edit messages, poster image and color text</target>
+      </trans-unit>
+      <trans-unit id="0095a9fa74d1713e43e370a7d7846224" resname="Export">
+        <source>Export</source>
+        <target xml:lang="eu" state="needs-translation">Export</target>
+      </trans-unit>
+      <trans-unit id="87557f11575c0ad78e4e28abedc13b6e" resname="End">
+        <source>End</source>
+        <target xml:lang="eu" state="needs-translation">End</target>
+      </trans-unit>
+      <trans-unit id="9a1ca27234c1c7454ab1ded1a3479b8e" resname="Show configuration for Twitter.">
+        <source>Show configuration for Twitter.</source>
+        <target xml:lang="eu" state="needs-translation">Show configuration for Twitter.</target>
+      </trans-unit>
+      <trans-unit id="d9e30479d3de74181f0a80e9a28513ce" resname="Click to edit Twitter configuration">
+        <source>Click to edit Twitter configuration</source>
+        <target xml:lang="eu" state="needs-translation">Click to edit Twitter configuration</target>
+      </trans-unit>
+      <trans-unit id="e0dad2922e09dcf2045cc4419436ab13" resname="Twitter hashtag">
+        <source>Twitter hashtag</source>
+        <target xml:lang="eu" state="needs-translation">Twitter hashtag</target>
+      </trans-unit>
+      <trans-unit id="29b5a22bb5b315cb68b2f4f95bb3df53" resname="Twitter hashtag without #">
+        <source>Twitter hashtag without #</source>
+        <target xml:lang="eu" state="needs-translation">Twitter hashtag without #</target>
+      </trans-unit>
+      <trans-unit id="4d2900f87d53445bad2db338bf31a6da" resname="Twitter widget id">
+        <source>Twitter widget id</source>
+        <target xml:lang="eu" state="needs-translation">Twitter widget id</target>
+      </trans-unit>
+      <trans-unit id="d8dc223dee68d7bc58f4843a169b4700" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.">
+        <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
+        <target xml:lang="eu" state="needs-translation">Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</target>
+      </trans-unit>
+      <trans-unit id="f1f61c18f955147adbf8cf46785b65de" resname="Publish to LMS">
+        <source>Publish to LMS</source>
+        <target xml:lang="eu" state="needs-translation">Publish to LMS</target>
+      </trans-unit>
+      <trans-unit id="29433a4cb7e4a516c124af31d7abda4d" resname="Enable Chat">
+        <source>Enable Chat</source>
+        <target xml:lang="eu" state="needs-translation">Enable Chat</target>
+      </trans-unit>
+      <trans-unit id="5aba75edc1588135361d21efeb337b40" resname="Click on the color bar to change color. A pop-up window will be shown.">
+        <source>Click on the color bar to change color. A pop-up window will be shown.</source>
+        <target xml:lang="eu" state="needs-translation">Click on the color bar to change color. A pop-up window will be shown.</target>
+      </trans-unit>
+      <trans-unit id="93543f21e4debe8b5fba883d915278ab" resname="Show tag on WebTV portal and edit categories on multimedia objects">
+        <source>Show tag on WebTV portal and edit categories on multimedia objects</source>
+        <target xml:lang="eu" state="needs-translation">Show tag on WebTV portal and edit categories on multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="64d545c1d066b6e617b9a678476af117" resname="Not valid to tagged objets">
+        <source>Not valid to tagged objets</source>
+        <target xml:lang="eu" state="needs-translation">Not valid to tagged objets</target>
+      </trans-unit>
+      <trans-unit id="3f77b0f8c8134375dbad111b53f21bd3" resname="Clone series">
+        <source>Clone series</source>
+        <target xml:lang="eu" state="needs-translation">Clone series</target>
+      </trans-unit>
+      <trans-unit id="b051e8313cddecef08067291f42f7501" resname="Are you sure you want to clone this series?">
+        <source>Are you sure you want to clone this series?</source>
+        <target xml:lang="eu" state="needs-translation">Are you sure you want to clone this series?</target>
+      </trans-unit>
+      <trans-unit id="c9d86714bfd2a09555d63025fe9268a7" resname="Series successfully cloned.">
+        <source>Series successfully cloned.</source>
+        <target xml:lang="eu" state="needs-translation">Series successfully cloned.</target>
+      </trans-unit>
+      <trans-unit id="631d2cc3c9fd429fe8726f2ce195a8a5" resname="No people.">
+        <source>No people.</source>
+        <target xml:lang="eu" state="needs-translation">No people.</target>
+      </trans-unit>
+      <trans-unit id="9ff3ad923f11da2cee0db1b8cdf0c700" resname="Multimedia object picture">
+        <source>Multimedia object picture</source>
+        <target xml:lang="eu" state="needs-translation">Multimedia object picture</target>
+      </trans-unit>
+      <trans-unit id="e39612beb08e93c9dcc1be56135467d6" resname="Playlist picture">
+        <source>Playlist picture</source>
+        <target xml:lang="eu" state="needs-translation">Playlist picture</target>
+      </trans-unit>
+      <trans-unit id="4e303b45dd07d09adcf18d5cdb77ba1d" resname="Event picture">
+        <source>Event picture</source>
+        <target xml:lang="eu" state="needs-translation">Event picture</target>
+      </trans-unit>
+      <trans-unit id="f5d9a79c2acab36383394a63cd695427" resname="Places and precinct">
+        <source>Places and precinct</source>
+        <target xml:lang="eu" state="needs-translation">Places and precinct</target>
+      </trans-unit>
+      <trans-unit id="8ed9a920db646d5ec45ce6fb42ae5bb0" resname="Place and precinct">
+        <source>Place and precinct</source>
+        <target xml:lang="eu" state="needs-translation">Place and precinct</target>
+      </trans-unit>
+      <trans-unit id="dd7bf230fde8d4836917806aff6a6b27" resname="Address">
+        <source>Address</source>
+        <target xml:lang="eu" state="needs-translation">Address</target>
+      </trans-unit>
+      <trans-unit id="ff578fa7d3785ef01d16ec91874f6868" resname="Precinct">
+        <source>Precinct</source>
+        <target xml:lang="eu" state="needs-translation">Precinct</target>
+      </trans-unit>
+      <trans-unit id="7510d629fb7ae3b8cf3ac2196083c349" resname="Error loading tag">
+        <source>Error loading tag</source>
+        <target xml:lang="eu" state="needs-translation">Error loading tag</target>
+      </trans-unit>
+      <trans-unit id="fd7fdc2d5919f44aa2c923d284c1d7cb" resname="Error deleting tag">
+        <source>Error deleting tag</source>
+        <target xml:lang="eu" state="needs-translation">Error deleting tag</target>
+      </trans-unit>
+      <trans-unit id="6bd8a67d6191e07536ce6e565d342a4c" resname="Place successfully deleted.">
+        <source>Place successfully deleted.</source>
+        <target xml:lang="eu" state="needs-translation">Place successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="49ad1d39e604f96f70d1674686a85e00" resname="Places successfully deleted.">
+        <source>Places successfully deleted.</source>
+        <target xml:lang="eu" state="needs-translation">Places successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="780ee991b9654d63e2690a2daf5f04f7" resname="Select one place to load data">
+        <source>Select one place to load data</source>
+        <target xml:lang="eu" state="needs-translation">Select one place to load data</target>
+      </trans-unit>
+      <trans-unit id="7614d745d1dc8da4087c7aaea6efe482" resname="Precinct successfully deleted.">
+        <source>Precinct successfully deleted.</source>
+        <target xml:lang="eu" state="needs-translation">Precinct successfully deleted.</target>
+      </trans-unit>
+      <trans-unit id="c535913b2ddc568f7578ae70c5704ef8" resname="Select one precinct to load data">
+        <source>Select one precinct to load data</source>
+        <target xml:lang="eu" state="needs-translation">Select one precinct to load data</target>
+      </trans-unit>
+      <trans-unit id="9faae851d37c11697cf7635f88c4dba2" resname="i18n.multiple.Published">
+        <source>i18n.multiple.Published</source>
+        <target xml:lang="eu" state="needs-translation">i18n.multiple.Published</target>
+      </trans-unit>
+      <trans-unit id="4da348187e2ae4d99df15d20731277ad" resname="i18n.multiple.Hidden">
+        <source>i18n.multiple.Hidden</source>
+        <target xml:lang="eu" state="needs-translation">i18n.multiple.Hidden</target>
+      </trans-unit>
+      <trans-unit id="c201ae97826d19321b63609fceb9f478" resname="i18n.multiple.Blocked">
+        <source>i18n.multiple.Blocked</source>
+        <target xml:lang="eu" state="needs-translation">i18n.multiple.Blocked</target>
+      </trans-unit>
+      <trans-unit id="bdebfc80add8f68f24497d2f281713d7" resname="Show advanced">
+        <source>Show advanced</source>
+        <target xml:lang="eu" state="needs-translation">Show advanced</target>
+      </trans-unit>
+      <trans-unit id="520d0db389f362bf79ef56ca0af3dcab" resname="Format">
+        <source>Format</source>
+        <target xml:lang="eu" state="needs-translation">Format</target>
+      </trans-unit>
+      <trans-unit id="571094bb27864b600d8e6b561a137a55" resname="Quality">
+        <source>Quality</source>
+        <target xml:lang="eu" state="needs-translation">Quality</target>
+      </trans-unit>
+      <trans-unit id="c04df5346b4959fb8ee19ecc2f66d526" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and&#10;        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,&#10;        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
+        <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
+        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
+        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+        <target xml:lang="eu" state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
+        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
+        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+      </trans-unit>
+      <trans-unit id="42a7b2626eae970122e01f65af2f5092" resname="No data">
+        <source>No data</source>
+        <target xml:lang="eu" state="needs-translation">No data</target>
+      </trans-unit>
+      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+        <source>No title</source>
+        <target xml:lang="eu" state="needs-translation">No title</target>
+      </trans-unit>
+      <trans-unit id="7c9debf579ec05266622d6138064e63e" resname="Precinct without series">
+        <source>Precinct without series</source>
+        <target xml:lang="eu" state="needs-translation">Precinct without series</target>
+      </trans-unit>
+      <trans-unit id="554cfab3938e21d9270bd6b75931f96f" resname="Videos">
+        <source>Videos</source>
+        <target xml:lang="eu" state="needs-translation">Videos</target>
+      </trans-unit>
+      <trans-unit id="c726094fe672d6aa723edea9d6143965" resname="Create new place">
+        <source>Create new place</source>
+        <target xml:lang="eu" state="needs-translation">Create new place</target>
+      </trans-unit>
+      <trans-unit id="fc0594103800e7799e8b031352378846" resname="Place successfully created.">
+        <source>Place successfully created.</source>
+        <target xml:lang="eu" state="needs-translation">Place successfully created.</target>
       </trans-unit>
     </body>
   </file>

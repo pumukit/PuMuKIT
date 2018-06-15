@@ -63,71 +63,103 @@
       </trans-unit>
       <trans-unit id="d56cc3fe0db39a01db08f43f90eef01d" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target xml:lang="gl" state="needs-translation">The event has not been held yet</target>
+        <target xml:lang="gl" state="translated">O evento aínda non celebróuse</target>
       </trans-unit>
       <trans-unit id="6cb2e290e1fbd2f5e3fdedb555b3ae69" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target xml:lang="gl" state="needs-translation">The event has already been held</target>
+        <target xml:lang="gl" state="translated">O evento xa celebróuse</target>
       </trans-unit>
       <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
         <source>Live</source>
-        <target xml:lang="gl" state="needs-translation">Live</target>
+        <target xml:lang="gl" state="translated">Directo</target>
       </trans-unit>
       <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
         <source>Private Video</source>
-        <target xml:lang="gl" state="needs-translation">Private Video</target>
+        <target xml:lang="gl" state="translated">Vídeo privado</target>
       </trans-unit>
       <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
-        <target xml:lang="gl" state="needs-translation">This video is private with restricted access</target>
+        <target xml:lang="gl" state="translated">Este vídeo é privado con acceso restrinxido</target>
       </trans-unit>
       <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
-        <target xml:lang="gl" state="needs-translation">Enter a valid password to watch it</target>
+        <target xml:lang="gl" state="translated">Introduza un contrasinal válido para velo</target>
       </trans-unit>
       <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
         <source>Introduce a password</source>
-        <target xml:lang="gl" state="needs-translation">Introduce a password</target>
+        <target xml:lang="gl" state="translated">Introduza o contrasinal</target>
       </trans-unit>
       <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
         <source>Password is not valid</source>
-        <target xml:lang="gl" state="needs-translation">Password is not valid</target>
+        <target xml:lang="gl" state="translated">O contrasinal non é válido</target>
       </trans-unit>
       <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
         <source>Log In</source>
-        <target xml:lang="gl" state="needs-translation">Log In</target>
+        <target xml:lang="gl" state="translated">Iniciar sesión</target>
       </trans-unit>
       <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
         <source>Enter pass</source>
-        <target xml:lang="gl" state="needs-translation">Enter pass</target>
+        <target xml:lang="gl" state="translated">Introduza o contrasinal</target>
       </trans-unit>
       <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
         <source>New contact from live event</source>
-        <target xml:lang="gl" state="needs-translation">New contact from live event</target>
+        <target xml:lang="gl" state="translated">Novo contacto dende o directo</target>
       </trans-unit>
-      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+      <trans-unit id="44fdec47036f482b68b748f9d786801b" resname="days">
         <source>days</source>
         <target xml:lang="gl" state="needs-translation">days</target>
       </trans-unit>
-      <trans-unit id="c78555b4f9ed11e78c3f9a214cf093ae" resname="Content">
+      <trans-unit id="f15c1cae7882448b3fb0404682e17e61" resname="Content">
         <source>Content</source>
         <target xml:lang="gl" state="needs-translation">Content</target>
       </trans-unit>
-      <trans-unit id="c7855852f9ed11e78c3f9a214cf093ae" resname="Obsolete browser">
+      <trans-unit id="354a63f6238072439da28c8b5ac3b265" resname="Obsolete browser">
         <source>Obsolete browser</source>
         <target xml:lang="gl" state="needs-translation">Obsolete browser</target>
       </trans-unit>
-      <trans-unit id="c7855992f9ed11e78c3f9a214cf093ae" resname="Iframe">
+      <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
         <source>Iframe</source>
         <target xml:lang="gl" state="needs-translation">Iframe</target>
       </trans-unit>
-      <trans-unit id="c7855abef9ed11e78c3f9a214cf093ae" resname="Media Thumbnail">
+      <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
         <target xml:lang="gl" state="needs-translation">Media Thumbnail</target>
       </trans-unit>
       <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target>Neste intre non hai emisións en directo</target>
+        <target xml:lang="gl" state="translated">Non hai eventos neste momento</target>
+      </trans-unit>
+      <trans-unit id="572743c5198afb6ae40cdcfbfa4a97ec" resname="email send">
+        <source>email send</source>
+        <target xml:lang="gl" state="needs-translation">email send</target>
+      </trans-unit>
+      <trans-unit id="f904fa91eb58b7c4d3675b9062db3be1" resname="please verify form data">
+        <source>please verify form data</source>
+        <target xml:lang="gl" state="needs-translation">please verify form data</target>
+      </trans-unit>
+      <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
+        <source>Event chat</source>
+        <target xml:lang="gl" state="translated">Chat do evento</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target xml:lang="gl" state="translated">Nome</target>
+      </trans-unit>
+      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target xml:lang="gl" state="translated">O nome non pode estar baleiro</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+        <source>Message</source>
+        <target xml:lang="gl" state="translated">Mensaxe</target>
+      </trans-unit>
+      <trans-unit id="9b6449cd47c236450bbc9ccf0a358a56" resname="Sorry but there was an error">
+        <source>Sorry but there was an error</source>
+        <target xml:lang="gl" state="translated">Sentímolo, pero houbo un erro</target>
+      </trans-unit>
+      <trans-unit id="cd8a74815a738bc4e89ef73f49bf5e16" resname="Chat icon">
+        <source>Chat icon</source>
+        <target xml:lang="gl" state="needs-translation">Chat icon</target>
       </trans-unit>
     </body>
   </file>

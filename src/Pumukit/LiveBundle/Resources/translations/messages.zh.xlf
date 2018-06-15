@@ -108,25 +108,61 @@
         <source>New contact from live event</source>
         <target xml:lang="zh-TW" state="needs-translation">New contact from live event</target>
       </trans-unit>
-      <trans-unit id="37fde888cba411e7abc4cec278b6b50a" resname="days">
+      <trans-unit id="44fdec47036f482b68b748f9d786801b" resname="days">
         <source>days</source>
         <target xml:lang="zh-TW" state="needs-translation">days</target>
       </trans-unit>
-      <trans-unit id="c78555b4f9ed11e78c3f9a214cf093ae" resname="Content">
+      <trans-unit id="f15c1cae7882448b3fb0404682e17e61" resname="Content">
         <source>Content</source>
         <target xml:lang="zh-TW" state="needs-translation">Content</target>
       </trans-unit>
-      <trans-unit id="c7855852f9ed11e78c3f9a214cf093ae" resname="Obsolete browser">
+      <trans-unit id="354a63f6238072439da28c8b5ac3b265" resname="Obsolete browser">
         <source>Obsolete browser</source>
         <target xml:lang="zh-TW" state="needs-translation">Obsolete browser</target>
       </trans-unit>
-      <trans-unit id="c7855992f9ed11e78c3f9a214cf093ae" resname="Iframe">
+      <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
         <source>Iframe</source>
         <target xml:lang="zh-TW" state="needs-translation">Iframe</target>
       </trans-unit>
-      <trans-unit id="c7855abef9ed11e78c3f9a214cf093ae" resname="Media Thumbnail">
+      <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
         <target xml:lang="zh-TW" state="needs-translation">Media Thumbnail</target>
+      </trans-unit>
+      <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
+        <source>There aren't events at this moment</source>
+        <target xml:lang="zh-TW" state="needs-translation">There aren't events at this moment</target>
+      </trans-unit>
+      <trans-unit id="572743c5198afb6ae40cdcfbfa4a97ec" resname="email send">
+        <source>email send</source>
+        <target xml:lang="zh-TW" state="needs-translation">email send</target>
+      </trans-unit>
+      <trans-unit id="f904fa91eb58b7c4d3675b9062db3be1" resname="please verify form data">
+        <source>please verify form data</source>
+        <target xml:lang="zh-TW" state="needs-translation">please verify form data</target>
+      </trans-unit>
+      <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
+        <source>Event chat</source>
+        <target xml:lang="zh-TW" state="needs-translation">Event chat</target>
+      </trans-unit>
+      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+        <source>Name</source>
+        <target xml:lang="zh-TW" state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+        <source>Name cannot be empty</source>
+        <target xml:lang="zh-TW" state="needs-translation">Name cannot be empty</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+        <source>Message</source>
+        <target xml:lang="zh-TW" state="needs-translation">Message</target>
+      </trans-unit>
+      <trans-unit id="9b6449cd47c236450bbc9ccf0a358a56" resname="Sorry but there was an error">
+        <source>Sorry but there was an error</source>
+        <target xml:lang="zh-TW" state="needs-translation">Sorry but there was an error</target>
+      </trans-unit>
+      <trans-unit id="cd8a74815a738bc4e89ef73f49bf5e16" resname="Chat icon">
+        <source>Chat icon</source>
+        <target xml:lang="zh-TW" state="needs-translation">Chat icon</target>
       </trans-unit>
     </body>
   </file>

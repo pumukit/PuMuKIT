@@ -77,19 +77,19 @@
       </trans-unit>
       <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
         <source>Metadata</source>
-        <target>Metadatos</target>
+        <target xml:lang="es-ES" state="translated">Metadatos</target>
       </trans-unit>
       <trans-unit id="6544bf0080fae39fefe95d729bf175f4" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target>Título del objeto multimedia</target>
+        <target xml:lang="es-ES" state="translated">Título del Objeto Multimedia</target>
       </trans-unit>
       <trans-unit id="d3a7a1dacbd10db0bed5401db874ac12" resname="Series Id">
         <source>Series Id</source>
-        <target>Identificador de la serie</target>
+        <target xml:lang="es-ES" state="translated">ID de la serie</target>
       </trans-unit>
       <trans-unit id="8bc8df68c1bbcb7463b2b309430e77e8" resname="Series Title">
         <source>Series Title</source>
-        <target>Título de la serie</target>
+        <target xml:lang="es-ES" state="translated">Título de la serie</target>
       </trans-unit>
     </body>
   </file>
