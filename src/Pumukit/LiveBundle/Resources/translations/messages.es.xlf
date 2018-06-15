@@ -107,23 +107,23 @@
       </trans-unit>
       <trans-unit id="44fdec47036f482b68b748f9d786801b" resname="days">
         <source>days</source>
-        <target xml:lang="es-ES" state="needs-translation">days</target>
+        <target xml:lang="es-ES" state="translated">días</target>
       </trans-unit>
       <trans-unit id="f15c1cae7882448b3fb0404682e17e61" resname="Content">
         <source>Content</source>
-        <target xml:lang="es-ES" state="needs-translation">Content</target>
+        <target xml:lang="es-ES" state="translated">Contenido</target>
       </trans-unit>
       <trans-unit id="354a63f6238072439da28c8b5ac3b265" resname="Obsolete browser">
         <source>Obsolete browser</source>
-        <target xml:lang="es-ES" state="needs-translation">Obsolete browser</target>
+        <target xml:lang="es-ES" state="translated">Navegador obsoleto</target>
       </trans-unit>
       <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
         <source>Iframe</source>
-        <target xml:lang="es-ES" state="needs-translation">Iframe</target>
+        <target xml:lang="es-ES" state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target xml:lang="es-ES" state="needs-translation">Media Thumbnail</target>
+        <target xml:lang="es-ES" state="translated">Miniatura</target>
       </trans-unit>
       <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
@@ -131,11 +131,11 @@
       </trans-unit>
       <trans-unit id="572743c5198afb6ae40cdcfbfa4a97ec" resname="email send">
         <source>email send</source>
-        <target xml:lang="es-ES" state="needs-translation">email send</target>
+        <target xml:lang="es-ES" state="translated">email enviado</target>
       </trans-unit>
       <trans-unit id="f904fa91eb58b7c4d3675b9062db3be1" resname="please verify form data">
         <source>please verify form data</source>
-        <target xml:lang="es-ES" state="needs-translation">please verify form data</target>
+        <target xml:lang="es-ES" state="translated">por favor, revisa los datos del formulario</target>
       </trans-unit>
       <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
         <source>Event chat</source>
@@ -159,7 +159,7 @@
       </trans-unit>
       <trans-unit id="cd8a74815a738bc4e89ef73f49bf5e16" resname="Chat icon">
         <source>Chat icon</source>
-        <target xml:lang="es-ES" state="needs-translation">Chat icon</target>
+        <target xml:lang="es-ES" state="translated">Icono de chat</target>
       </trans-unit>
     </body>
   </file>

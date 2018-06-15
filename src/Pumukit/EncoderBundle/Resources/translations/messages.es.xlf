@@ -177,11 +177,11 @@
       </trans-unit>
       <trans-unit id="87d487f6f605eb96e61be67988e41e6d" resname="Encoder">
         <source>Encoder</source>
-        <target xml:lang="es-ES" state="needs-translation">Encoder</target>
+        <target xml:lang="es-ES" state="translated">Codificador</target>
       </trans-unit>
       <trans-unit id="39ee0920cbc35fb2a758fe0f927070c6" resname="This cpu only executes jobs from the following profiles:">
         <source>This cpu only executes jobs from the following profiles:</source>
-        <target xml:lang="es-ES" state="needs-translation">This cpu only executes jobs from the following profiles:</target>
+        <target xml:lang="es-ES" state="translated">Esta cpu sólo ejecuta tareas para los siguientes perfiles:</target>
       </trans-unit>
     </body>
   </file>
