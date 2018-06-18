@@ -169,6 +169,14 @@
         <source>This CPU is in maintenance mode.</source>
         <target>This CPU is in maintenance mode.</target>
       </trans-unit>
+      <trans-unit id="87d487f6f605eb96e61be67988e41e6d" resname="Encoder">
+        <source>Encoder</source>
+        <target>Encoder</target>
+      </trans-unit>
+      <trans-unit id="39ee0920cbc35fb2a758fe0f927070c6" resname="This cpu only executes jobs from the following profiles:">
+        <source>This cpu only executes jobs from the following profiles:</source>
+        <target>This cpu only executes jobs from the following profiles:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

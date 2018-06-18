@@ -549,6 +549,26 @@
         <source>Future events</source>
         <target xml:lang="pt-PT" state="needs-translation">Future events</target>
       </trans-unit>
+      <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
+        <source>Media Thumbnail</source>
+        <target xml:lang="pt-PT" state="needs-translation">Media Thumbnail</target>
+      </trans-unit>
+      <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
+        <source>URL</source>
+        <target xml:lang="pt-PT" state="needs-translation">URL</target>
+      </trans-unit>
+      <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
+        <source>Iframe</source>
+        <target xml:lang="pt-PT" state="needs-translation">Iframe</target>
+      </trans-unit>
+      <trans-unit id="b63043e9e02fa37368bfb402813c5caf" resname="Twitter icon">
+        <source>Twitter icon</source>
+        <target xml:lang="pt-PT" state="needs-translation">Twitter icon</target>
+      </trans-unit>
+      <trans-unit id="a14fa2166ed698f3d04061f57e5ab9b9" resname="loading">
+        <source>loading</source>
+        <target xml:lang="pt-PT" state="needs-translation">loading</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

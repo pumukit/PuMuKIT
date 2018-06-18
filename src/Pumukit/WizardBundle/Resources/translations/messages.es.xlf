@@ -344,7 +344,7 @@
       </trans-unit>
       <trans-unit id="09038ef8099e1bea60c8397ce2ec6db9" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target xml:lang="es-ES" state="needs-translation">Multimedia Object title</target>
+        <target xml:lang="es-ES" state="translated">Título del Objeto Multimedia</target>
       </trans-unit>
     </body>
   </file>

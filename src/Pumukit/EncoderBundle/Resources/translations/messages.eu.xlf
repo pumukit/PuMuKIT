@@ -274,6 +274,14 @@
           <target xml:lang="eu">Esta CPU está en mantenimiento.</target>
         </alt-trans>
       </trans-unit>
+      <trans-unit id="87d487f6f605eb96e61be67988e41e6d" resname="Encoder">
+        <source>Encoder</source>
+        <target xml:lang="eu" state="needs-translation">Encoder</target>
+      </trans-unit>
+      <trans-unit id="39ee0920cbc35fb2a758fe0f927070c6" resname="This cpu only executes jobs from the following profiles:">
+        <source>This cpu only executes jobs from the following profiles:</source>
+        <target xml:lang="eu" state="needs-translation">This cpu only executes jobs from the following profiles:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
