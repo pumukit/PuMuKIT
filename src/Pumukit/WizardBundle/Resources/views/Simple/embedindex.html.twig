@@ -55,7 +55,7 @@
                 <div class="form-group" id="pumukitwizard_track_file">
                   <label for="url" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
                   <div class="input-group">
-                    <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/*" required="required">
+                    <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" required="required">
                     <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
                     <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
                   </div>
