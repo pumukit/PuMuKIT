@@ -32,8 +32,9 @@ jQuery(document).ready(function() {
     };
     var now = new Date();
     var anDate = new AnnounceDate( now.getMonth() + 1, now.getFullYear()  );
+    var emptyMmos = true;
 
-    function reloadMoreData()
+    function reloadMoreData(emptyMmos)
     {
         if( month_loaded && !in_array(anDate,loaded_months))
         {
@@ -53,11 +54,14 @@ jQuery(document).ready(function() {
                     if( $('.main-content').height() <= $(window).height() ) {
                         reloadMoreData();
                     }
+                }else if( emptyMmos ){
+                    emptyMmos = false;
+                    $(noMmo).show();
                 }
             });
         }
     }
-    reloadMoreData();
+    reloadMoreData(emptyMmos);
     $(window).scroll(function () {
         if ($(window).scrollTop() + window.innerHeight + $('footer').height() >= $(document).height()) {
             reloadMoreData();

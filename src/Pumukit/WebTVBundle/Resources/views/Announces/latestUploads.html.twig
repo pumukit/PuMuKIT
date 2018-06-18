@@ -9,8 +9,14 @@
   <h1 class="title-for-crumbs">{{template_title}}</h1>
   <div class="announces" id="announces">
   </div>
+  <div class="noMmo" id="noMmo" hidden>
+    <h2>
+      {% trans %}There are no multimedia objects{% endtrans %}
+    </h2>
+  </div>
   <div id="announces_loading" style="display:none"><img class="center-block" src="{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}"/></div>
   <script type="text/javascript">
    var url_latestuploads_pager = "{{ path('pumukit_webtv_announces_latestuploads_pager') }}";
   </script>
+  {# añadir mensaje hidden para mostrar cuando no haya MMOs #}
 {% endblock %}
