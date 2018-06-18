@@ -32,7 +32,7 @@
         "jasig/phpcas": "1.3.*",
         "suncat/mobile-detect-bundle": "0.10.*",
         "vipx/bot-detect-bundle": "^2.0",
-        "teltek/pmk2-stats-ui-bundle": "1.0.*@dev"
+        "teltek/pmk2-stats-ui-bundle": "1.0.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
