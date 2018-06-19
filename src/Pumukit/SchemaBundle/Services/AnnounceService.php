@@ -118,18 +118,28 @@ class AnnounceService
      */
     public function getNextLatestUploads($date, $withPudenewTag = true)
     {
-        $counter = 0;
         $dateStart = clone $date;
         $dateStart->modify('first day of next month');
         $dateEnd = clone $date;
         $dateEnd->modify('last day of next month');
         $dateEnd->setTime(23, 59, 59);
+
+        $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
+        $queryBuilderMms->sort('public_date', 'asc');
+        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+        $queryBuilderMms->limit(1);
+
+        $lastMm = $queryBuilderMms->getQuery()->getSingleResult();
+
         do {
-            ++$counter;
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag);
-        } while (empty($last) && $counter < 24);
+        } while (empty($last) && $lastMm && $lastMm->getPublicDate() <= $dateEnd);
+
+        if (empty($last)) {
+            $dateEnd = null;
+        }
 
         return array($dateEnd, $last);
     }

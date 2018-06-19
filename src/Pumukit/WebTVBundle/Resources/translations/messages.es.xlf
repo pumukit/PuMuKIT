@@ -472,6 +472,10 @@
         <source>Try searching for something else:</source>
         <target>Prueba a buscar otra cosa:</target>
       </trans-unit>
+      <trans-unit id="004b3a52924c1c8012893ca4ed30ddc7" resname="There are no multimedia objects">
+        <source>There are no multimedia objects</source>
+        <target>No hay objetos multimedia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
