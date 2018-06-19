@@ -584,6 +584,10 @@
         <source>loading</source>
         <target xml:lang="es-ES" state="needs-translation">loading</target>
       </trans-unit>
+      <trans-unit id="004b3a52924c1c8012893ca4ed30ddc7" resname="There are no multimedia objects">
+        <source>There are no multimedia objects</source>
+        <target>No hay objetos multimedia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
