@@ -11,6 +11,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class ViewsLog
 {
+    use Traits\Properties;
+
     /**
      * @var int
      *
