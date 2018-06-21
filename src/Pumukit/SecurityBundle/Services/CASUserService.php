@@ -180,7 +180,7 @@ class CASUserService
     {
         if (isset($attributes[self::CAS_GROUP_KEY])) {
             $groupCAS = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
-            foreach ($user->getGroups as $group) {
+            foreach ($user->getGroups() as $group) {
                 if (self::ORIGIN === $group->getOrigin()) {
                     $this->userService->deleteGroup($group, $user, true, false);
                 }
