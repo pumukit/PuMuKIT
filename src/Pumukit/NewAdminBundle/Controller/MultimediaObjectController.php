@@ -870,13 +870,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')
-              ->find($id);
-            $mmSeriesId = $multimediaObject->getSeries()->getId();
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
             if ($id === $this->get('session')->get('admin/mms/id')) {
                 $this->get('session')->remove('admin/mms/id');
             }
             $multimediaObject->setSeries($series);
+            if (Series::SORT_MANUAL === $series->getSorting()) {
+                $multimediaObject->setRank(9999);
+            }
+
             $dm->persist($multimediaObject);
         }
         $dm->persist($series);
