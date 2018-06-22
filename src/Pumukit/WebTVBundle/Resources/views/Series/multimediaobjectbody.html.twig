@@ -17,7 +17,7 @@
             {% else %}
                 <div class="thumbnail bodyMm">
                     <a href="{{ url_mmobj }}">
-                        <img alt="thumbnail" src="/bundles/pumukitwebtv/images/no_pic.jpg" class="serial img-responsive thumbnailimg">
+                        <img alt="thumbnail" src="{{ mm|first_url_pic(true) }}" class="serial img-responsive thumbnailimg">
                         <div class="thumbnailholder"></div>
                     </a>
                 </div>
