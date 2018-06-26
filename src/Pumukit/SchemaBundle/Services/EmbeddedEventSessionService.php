@@ -858,7 +858,7 @@ class EmbeddedEventSessionService
                 'event' => '$embeddedEvent',
                 'sessions' => '$embeddedEvent.embeddedEventSession',
                 'pics' => '$pics',
-                'embeddedBroadcast' => '$embeddedBroadcast'
+                'embeddedBroadcast' => '$embeddedBroadcast',
             ),
         );
         $pipeline[] = array('$unwind' => '$sessions');
