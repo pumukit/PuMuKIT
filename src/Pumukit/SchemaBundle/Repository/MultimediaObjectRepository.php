@@ -1495,11 +1495,14 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * TODO review and move to EmbeddedEventSessionService.
+     * @deprecated
+     * Use findNextSessions of EmbeddedEventSessionService
      *
      * @param $multimediaObjectId
      *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findNextEventSessions($multimediaObjectId)
     {
@@ -1572,11 +1575,15 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * TODO review and move to EmbeddedEventSessionService.
+     * @deprecated
+     * Use findCurrentSessions of EmbeddedEventSessionService
      *
-     * @param $multimediaObjectId
+     * @param null $multimediaObjectId
+     * @param int  $limit
      *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
@@ -1657,79 +1664,6 @@ class MultimediaObjectRepository extends DocumentRepository
                         'session' => '$session',
                         'multimediaObjectId' => '$multimediaObjectId',
                         'sessionEnds' => '$sessionEnds',
-                    ),
-                ),
-            ),
-        );
-
-        if ($limit > 0) {
-            $pipeline[] = array('$limit' => $limit);
-        }
-
-        return $collection->aggregate($pipeline)->toArray();
-    }
-
-    /**
-     * TODO review and move to EmbeddedEventSessionService.
-     */
-    public function findEventsMenu($limit = 0)
-    {
-        $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-
-        $todayStarts = strtotime(date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y'))));
-
-        $pipeline = array();
-
-        $pipeline[] = array(
-            '$match' => array(
-                'islive' => true,
-                'embeddedEvent.display' => true,
-                'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-            ),
-        );
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$_id',
-                'event' => '$embeddedEvent',
-                'sessions' => '$embeddedEvent.embeddedEventSession',
-            ),
-        );
-
-        $pipeline[] = array('$unwind' => '$sessions');
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$_id',
-                'event' => '$event',
-                'sessions' => '$sessions',
-                'seriesTitle' => '$seriesTitle',
-            ),
-        );
-
-        $pipeline[] = array(
-            '$match' => array(
-                'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
-            ),
-        );
-
-        $pipeline[] = array(
-            '$project' => array(
-                'multimediaObjectId' => '$multimediaObjectId',
-                'event' => '$event',
-                'seriesTitle' => '$seriesTitle',
-                'session' => '$sessions',
-            ),
-        );
-
-        $pipeline[] = array(
-            '$group' => array(
-                '_id' => '$multimediaObjectId',
-                'data' => array(
-                    '$addToSet' => array(
-                        'event' => '$event',
-                        'session' => '$session',
                     ),
                 ),
             ),

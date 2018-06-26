@@ -26,8 +26,7 @@ class WidgetController extends Controller implements WebTVController
     protected function getMenuParameters()
     {
         if ($this->container->hasParameter('pumukit_new_admin.advance_live_event') and $this->container->getParameter('pumukit_new_admin.advance_live_event')) {
-            $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findEventsMenu();
+            $events = $this->get('pumukitschema.eventsession')->findEventsMenu();
             $menuEvents = array();
             $nowOrFuture = false;
             foreach ($events as $event) {
