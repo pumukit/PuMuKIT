@@ -167,11 +167,13 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * Get precinct fulltitle.
+     * Get precinct full title.
      *
      * @param EmbbededTag $precinctEmbeddedTag
      *
      * @return string
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getPrecinctFulltitle($precinctEmbeddedTag)
     {
@@ -324,7 +326,9 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $event
      *
-     * @return date
+     * @return string|date
+     *
+     * @throws \Exception
      */
     public function getNextEventSession($event)
     {
@@ -352,6 +356,8 @@ class PumukitExtension extends \Twig_Extension
      * @param $multimediaObject
      *
      * @return object
+     *
+     * @throws \Exception
      */
     public function getLiveEventSession($multimediaObject)
     {
