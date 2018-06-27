@@ -70,7 +70,7 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
             new \Twig_SimpleFunction('next_event_session', array($this, 'getNextEventSession')),
             new \Twig_SimpleFunction('live_event_session', array($this, 'getLiveEventSession')),
-            new \Twig_SimpleFunction('precinct_of_mmoprecinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
+            new \Twig_SimpleFunction('precinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
             new \Twig_SimpleFunction('count_published_mmobjs', array($this, 'getMMobjsFromSerie')),
         );
     }
