@@ -16,16 +16,18 @@
             <div class="share_url">
                 <span>{% trans %} IFRAME: {% endtrans %}</span>
                 {% set trackid = (track.id is defined)?track.id:null %}
-                {% set iframe_value %}{% spaceless %}
-                    <iframe src='{{ url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackid}) }}'
-                            {{- " id='pumukitiframe'" -}}
-                            {{- " frameborder='0'" -}}
-                            {{- " border='0'" -}}
-                            {{- " width='560'" -}}
-                            {{- " height='315'" -}}
-                            {{- " allowfullscreen" -}}
-                    ></iframe>
-                {% endspaceless %}{% endset %}
+                {% set iframe_value %}
+                    {% spaceless %}
+                        <iframe src='{{ url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackid}) }}'
+                                {{- " id='pumukitiframe'" -}}
+                                {{- " frameborder='0'" -}}
+                                {{- " border='0'" -}}
+                                {{- " width='560'" -}}
+                                {{- " height='325'" -}}
+                                {{- " allowfullscreen" -}}
+                        ></iframe>
+                    {% endspaceless %}
+                {% endset %}
                 <input type="text" value="{{ iframe_value }}" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" aria-label="{% trans %}Iframe{% endtrans %}" title="{% trans %}Iframe{% endtrans %}" readonly/>
             </div>
         </li>
