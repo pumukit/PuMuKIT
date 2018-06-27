@@ -2,6 +2,7 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
+use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -70,7 +71,8 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
             new \Twig_SimpleFunction('next_event_session', array($this, 'getNextEventSession')),
             new \Twig_SimpleFunction('live_event_session', array($this, 'getLiveEventSession')),
-            new \Twig_SimpleFunction('precinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
+            new \Twig_SimpleFunction('precinct_of_mmoprecinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
+            new \Twig_SimpleFunction('count_published_mmobjs', array($this, 'getMMobjsFromSerie')),
         );
     }
 
@@ -371,5 +373,24 @@ class PumukitExtension extends \Twig_Extension
         }
 
         return $sessionData;
+    }
+
+    /**
+     * @param Series $series
+     *
+     * @return int
+     */
+    public function getMMobjsFromSerie($series)
+    {
+        $criteria = array(
+            'series' => new \MongoId($series),
+            'status' => MultimediaObject::STATUS_PUBLISHED,
+            'tags.cod' => 'PUCHWEBTV',
+            'islive' => false,
+        );
+
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+
+        return count($multimediaObjects);
     }
 }
