@@ -4,7 +4,6 @@ namespace Pumukit\WebTVBundle\Twig;
 
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RequestContext;
-use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
@@ -95,7 +94,7 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getPublicBroadcast()
     {
-        return Broadcast::BROADCAST_TYPE_PUB;
+        return EmbeddedBroadcast::TYPE_PUBLIC;
     }
 
     /**
