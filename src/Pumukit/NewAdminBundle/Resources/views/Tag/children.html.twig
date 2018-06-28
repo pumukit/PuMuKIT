@@ -32,7 +32,7 @@
                     {{ tag.cod }}
                     </span>
                 </td>
-                <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}" >
+                <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}">
                     <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
                       <i class="mdi- tag_icon"></i>
                         {{ tag.title }}
