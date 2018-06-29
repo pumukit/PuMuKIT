@@ -59,6 +59,20 @@
         </div>
 
         <div class="row" id="advanced" style="display: none;">
+            {% if mm.isMultistream() %}
+
+            {% trans %}Show{% endtrans %}:
+            <div class="btn-group btn-group-raised">
+              <button title="{% trans %}Show presenter{% endtrans %}" id="show-presenter" class="btn btn-xs">
+                {% trans %}presenter{% endtrans %}
+              </button>
+              <button title="{% trans %}Show presentation{% endtrans %}" id="show-presentation" class="btn btn-xs">
+                {% trans %}presentation{% endtrans %}
+              </button>
+            </div>
+
+            {% endif %}
+
             {% trans %}Format{% endtrans %}:
             <select id="pic-format">
                 <option value="jpeg">jpeg</option>
@@ -130,6 +144,25 @@
         var pic_format = document.querySelector("#pic-format");
         var pic_quality = document.querySelector("#pic-quality");
         var ctx_draw = canvas_draw.getContext("2d");
+
+
+        {% if mm.isMultistream() %}
+        var show_presenter = document.querySelector("#show-presenter");
+        var show_presentation = document.querySelector("#show-presentation");
+
+        show_presenter.addEventListener("click", function () {
+            console.log(video.src);
+            console.log("{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presenter/delivery'])) }}");
+            video.src = "{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presenter/delivery'])) }}";
+        }, false);
+
+        show_presentation.addEventListener("click", function () {
+            console.log(video.src);
+            console.log("{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presentation/delivery'])) }}");
+            video.src = "{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presentation/delivery'])) }}";
+        }, false);
+
+        {% endif %}
 
 
         if (video.readyState == 4) {
