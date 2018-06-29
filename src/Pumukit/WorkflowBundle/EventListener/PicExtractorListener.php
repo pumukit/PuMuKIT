@@ -49,6 +49,8 @@ class PicExtractorListener
 
     private function generatePic(MultimediaObject $multimediaObject, Track $track)
     {
+        $this->dm->refresh($multimediaObject);
+
         if ($multimediaObject->getPics()->isEmpty() && $this->autoExtractPic) {
             try {
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
