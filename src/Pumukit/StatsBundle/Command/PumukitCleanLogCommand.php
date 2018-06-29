@@ -3,22 +3,28 @@
 namespace Pumukit\StatsBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitCleanLogCommand extends ContainerAwareCommand
 {
     private $dm = null;
+    private $from = null;
 
     protected function configure()
     {
         $this
             ->setName('pumukit:stats:clean')
             ->setDescription('Clean bots from ViewsLog collections')
+            ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'Define period to clean the stats. Use a PHP Date Format')
             ->setHelp(<<<'EOT'
 Clean bots, crawlers, spiders and validators from ViewsLog collections.
 
-This command doesn't work in `prod` environments.
+Examples:
+<info>php app/console pumukit:stats:clean</info>
+<info>php app/console pumukit:stats:clean --from yesterday</info>
+<info>php app/console pumukit:stats:clean --from 'monday this week - 1 week'</info>
 
 EOT
           );
@@ -28,6 +34,11 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $detector = $this->getContainer()->get('vipx_bot_detect.detector');
+
+        $from = $input->getOption('from');
+        if ($from) {
+            $this->from = new \DateTimeImmutable($from);
+        }
 
         //TODO add to pumukit yml.
         $this->execRemoveQuery('TTK Zabbix Agent');
@@ -51,10 +62,15 @@ EOT
     private function execRemoveQuery($userAgent)
     {
         $qb = $this->dm->createQueryBuilder('PumukitStatsBundle:ViewsLog')
-          ->remove()
-          ->multiple(true)
-          ->field('userAgent')->equals($userAgent)
-          ->getQuery()
-          ->execute();
+            ->remove()
+            ->multiple(true)
+            ->field('userAgent')->equals($userAgent);
+
+        if ($this->from) {
+            $qb->field('date')->gte($this->from);
+        }
+
+        $qb->getQuery()
+            ->execute();
     }
 }
