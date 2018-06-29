@@ -38,7 +38,13 @@ class PicExtractorListener
 
     public function onJobSuccess(JobEvent $event)
     {
+        $SEMKey = 1234568;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
         $this->generatePic($event->getMultimediaObject(), $event->getTrack());
+
+        sem_release($seg);
     }
 
     private function generatePic(MultimediaObject $multimediaObject, Track $track)
