@@ -54,12 +54,13 @@ class EventController extends Controller implements WebTVController
      */
     public function liveListAction()
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
-
         $events = $this->get('pumukitschema.eventsession')->findEventsNow();
 
-        return array('events' => $events, 'defaultPic' => $defaultPic);
+        return array(
+            'events' => $events,
+            'defaultPic' => $defaultPic,
+        );
     }
 
     /**
@@ -71,12 +72,19 @@ class EventController extends Controller implements WebTVController
      */
     public function nextSessionListAction($id)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
+        $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
-        $events = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($id);
+        $criteria = array(
+            '_id' => new \MongoId($id),
+        );
+        $events = $embeddedEventSessionService->findNextSessions($criteria);
 
-        return array('events' => $events, 'sessionlist' => true, 'defaultPic' => $defaultPic);
+        return array(
+            'events' => $events,
+            'sessionlist' => true,
+            'defaultPic' => $defaultPic,
+        );
     }
 
     /**
@@ -93,7 +101,10 @@ class EventController extends Controller implements WebTVController
         $multimediaObject = $repo->find($id);
         $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
 
-        return array('multimediaObject' => $multimediaObject, 'enable_twitter' => $enableTwitter);
+        return array(
+            'multimediaObject' => $multimediaObject,
+            'enable_twitter' => $enableTwitter,
+        );
     }
 
     /**

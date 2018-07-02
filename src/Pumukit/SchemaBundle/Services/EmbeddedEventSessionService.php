@@ -271,7 +271,8 @@ class EmbeddedEventSessionService
     public function findWidgetEvents($limit = 0)
     {
         $pipeline = $this->initPipeline();
-        $now = new \MongoDate((new \DateTime('now'))->format('U'));
+        $date = new \DateTime('now');
+        $now = new \MongoDate($date->format('U'));
         $pipeline[] = array(
             '$match' => array(
                 'sessions.start' => array('$exists' => true),
@@ -284,6 +285,213 @@ class EmbeddedEventSessionService
             ),
         );
         $this->endPipeline($pipeline);
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        return $this->collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * Get current sessions with or without criteria.
+     *
+     * @param array $criteria
+     * @param int   $limit
+     *
+     * @return array
+     */
+    public function findCurrentSessions($criteria = array(), $limit = 0)
+    {
+        $pipeline = $this->initPipeline();
+
+        if ($criteria and !empty($criteria)) {
+            $pipeline[] = array(
+                '$match' => $criteria,
+            );
+        }
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$exists' => true),
+                'sessions.start' => array('$lt' => new \MongoDate()),
+                'sessionEnds' => array('$gt' => new \MongoDate()),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'session' => '$sessions',
+                'sessionEnds' => '$sessionEnds',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                        'session' => '$session',
+                        'multimediaObjectId' => '$multimediaObjectId',
+                        'sessionEnds' => '$sessionEnds',
+                    ),
+                ),
+            ),
+        );
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        return $this->collection->aggregate($pipeline)->toArray();
+    }
+
+    /**
+     * Get next sessions with or without criteria.
+     *
+     * @param array $criteria
+     * @param int   $limit
+     *
+     * @return array
+     */
+    public function findNextSessions($criteria = array(), $limit = 0)
+    {
+        $pipeline = $this->initPipeline();
+
+        if ($criteria and !empty($criteria)) {
+            $pipeline[] = array(
+                '$match' => $criteria,
+            );
+        }
+
+        $pipeline[] = array(
+            '$match' => array(
+                '$and' => array(
+                    array('sessions.start' => array('$exists' => true)),
+                    array('sessions.start' => array('$gt' => new \MongoDate())),
+                ),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'pics' => '$pics',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                        'session' => '$session',
+                        'multimediaObjectId' => '$multimediaObjectId',
+                        'pics' => '$pics',
+                    ),
+                ),
+            ),
+        );
+
+        if ($limit > 0) {
+            $pipeline[] = array('$limit' => $limit);
+        }
+
+        $result = $this->collection->aggregate($pipeline)->toArray();
+
+        foreach ($result as $key => $element) {
+            $orderSession = array();
+            foreach ($element['data'] as $eventData) {
+                $orderSession[$eventData['session']['start']->sec] = $eventData;
+            }
+            ksort($orderSession);
+            $result[$key]['data'] = array_values($orderSession);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get sessions to show on menu of WebTV.
+     *
+     * @param     $criteria
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findEventsMenu($criteria = array(), $limit = 0)
+    {
+        $date = date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y')));
+        $todayStarts = strtotime($date);
+
+        $pipeline = array();
+
+        $pipeline[] = array(
+            '$match' => array(
+                'islive' => true,
+                'embeddedEvent.display' => true,
+                'embeddedEvent.embeddedEventSession' => array('$exists' => true),
+            ),
+        );
+
+        if ($criteria and !empty($criteria)) {
+            $pipeline[] = array(
+                '$match' => $criteria,
+            );
+        }
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$embeddedEvent',
+                'sessions' => '$embeddedEvent.embeddedEventSession',
+            ),
+        );
+
+        $pipeline[] = array('$unwind' => '$sessions');
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$_id',
+                'event' => '$event',
+                'sessions' => '$sessions',
+                'seriesTitle' => '$seriesTitle',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$match' => array(
+                'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
+            ),
+        );
+
+        $pipeline[] = array(
+            '$project' => array(
+                'multimediaObjectId' => '$multimediaObjectId',
+                'event' => '$event',
+                'seriesTitle' => '$seriesTitle',
+                'session' => '$sessions',
+            ),
+        );
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$multimediaObjectId',
+                'data' => array(
+                    '$addToSet' => array(
+                        'event' => '$event',
+                        'session' => '$session',
+                    ),
+                ),
+            ),
+        );
 
         if ($limit > 0) {
             $pipeline[] = array('$limit' => $limit);
@@ -650,6 +858,7 @@ class EmbeddedEventSessionService
                 'event' => '$embeddedEvent',
                 'sessions' => '$embeddedEvent.embeddedEventSession',
                 'pics' => '$pics',
+                'embeddedBroadcast' => '$embeddedBroadcast',
             ),
         );
         $pipeline[] = array('$unwind' => '$sessions');
@@ -659,6 +868,7 @@ class EmbeddedEventSessionService
                 'event' => '$event',
                 'sessions' => '$sessions',
                 'pics' => '$pics',
+                'embeddedBroadcast' => '$embeddedBroadcast',
                 'sessionEnds' => array(
                     '$add' => array(
                         '$sessions.start',
@@ -941,7 +1151,8 @@ class EmbeddedEventSessionService
         );
         $pipeline[] = array('$unwind' => '$sessions');
         $now = new \MongoDate();
-        $today = new \MongoDate((new \DateTime('now'))->setTime(0, 0)->format('U'));
+        $todayDate = new \DateTime('now');
+        $today = new \MongoDate($todayDate->setTime(0, 0)->format('U'));
         $pipeline[] = array(
             '$match' => array(
                 'sessions.start' => array('$exists' => true),
@@ -1001,7 +1212,7 @@ class EmbeddedEventSessionService
      */
     public function isLiveBroadcasting()
     {
-        $events = $this->repo->findNowEventSessions();
+        $events = $this->findCurrentSessions();
 
         return count($events) > 0;
     }

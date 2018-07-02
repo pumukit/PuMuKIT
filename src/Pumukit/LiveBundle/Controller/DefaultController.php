@@ -76,8 +76,14 @@ class DefaultController extends Controller
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $nextSession = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
-        $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
+        $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
+
+        $criteria = array(
+            '_id' => new \MongoId($multimediaObject->getId()),
+        );
+
+        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria);
+        $nextSession = $embeddedEventSessionService->findNextSessions($criteria);
 
         if (count($nextSession) > 0 or count($nowSessions) > 0) {
             $translator = $this->get('translator');
@@ -148,8 +154,14 @@ class DefaultController extends Controller
             $activeContact = true;
         }
 
+        $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
+
+        $criteria = array(
+            '_id' => new \MongoId($multimediaObject->getId()),
+        );
+
+        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria);
         $now = new \DateTime();
-        $nowSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNowEventSessions($multimediaObject->getId());
         $firstNowSessionEnds = new \DateTime();
         $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
         $firstNowSessionRemainingDuration = 0;
@@ -159,8 +171,7 @@ class DefaultController extends Controller
             break;
         }
 
-        $nextSessions = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findNextEventSessions($multimediaObject->getId());
-
+        $nextSessions = $embeddedEventSessionService->findNextSessions($criteria);
         $date = new \DateTime();
         $firstNextSession = '';
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
