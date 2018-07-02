@@ -876,7 +876,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
             $multimediaObject->setSeries($series);
             if (Series::SORT_MANUAL === $series->getSorting()) {
-                $multimediaObject->setRank(9999);
+                $multimediaObject->setRank(-1);
             }
 
             $dm->persist($multimediaObject);
