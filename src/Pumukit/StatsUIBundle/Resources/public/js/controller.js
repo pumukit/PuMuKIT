@@ -113,7 +113,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     //FIXME: Change name to datepicker
     pmk.datepicker_mv = {
         'model' : {
-            'startDate': moment(pmk.min_date),
+            'startDate': moment().subtract(30, 'days'),
             'endDate':   moment()
         },
         'locale': {
