@@ -512,6 +512,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             $http({
                 method: 'GET',
                 url: '/api/media/' + type + '.json',
+                headers: { 'X-Requested-With' :'XMLHttpRequest'},
                 params:{
                     'criteria[id]' : $routeParams.id,
                 }
@@ -576,6 +577,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             $http({
                 method: 'GET',
                 url: '/api/media/'+ mv_data +'/most_viewed',
+                headers: { 'X-Requested-With' :'XMLHttpRequest'},
                 params: params,
             })
             .then(getMVSuccess)
@@ -657,6 +659,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     $http({
                         method: 'GET',
                         url: '/api/media/mmobj.json',
+                        headers: { 'X-Requested-With' :'XMLHttpRequest'},
                         params: {
                             'criteria[series]': data.id,
                         },
@@ -728,6 +731,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 $http({
                     method: 'GET',
                     url: '/api/media/views/' + tl_data,
+                    headers: { 'X-Requested-With' :'XMLHttpRequest'},
                     params: params,
                 })
                 .then(addDataElem)
@@ -837,6 +841,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 $http({
                     method: 'GET',
                     url: '/api/media/views' + his_data,
+                    headers: { 'X-Requested-With' :'XMLHttpRequest'},
                     params: params,
                 })
                 .then(addDataElem_his)
