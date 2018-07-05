@@ -448,8 +448,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             if (!init){
                 var updated_params = {};
                 if (origin == 'datepicker' || origin == 'all'){
-                    updated_params.from_date = check_all_history() ? null:pmk.datepicker_mv.model_debug.from_date;
-                    updated_params.to_date = check_all_history() ? null:pmk.datepicker_mv.model_debug.to_date;
+                    updated_params.from_date = pmk.datepicker_mv.model_debug.from_date;
+                    updated_params.to_date = pmk.datepicker_mv.model_debug.to_date;
                     updated_params.page = 1;
                 }
 
