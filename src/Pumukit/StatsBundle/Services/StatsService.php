@@ -319,28 +319,20 @@ class StatsService
      */
     private function getMongoProjectDateArray($groupBy, $dateField = '$date')
     {
-        $mongoProjectDate = array();
-        switch ($groupBy) {
-            case 'hour':
-                $mongoProjectDate[] = 'H';
-                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
-                $mongoProjectDate[] = 'T';
-                // no break
-            case 'day':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
-                $mongoProjectDate[] = '-';
-                // no break
-            default: //If it doesn't exists, it's 'month'
-            case 'month':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
-                $mongoProjectDate[] = '-';
-                // no break
-            case 'year':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
-                break;
-        }
+        $formats = array(
+            'hour' => '%Y-%m-%dT%HH',
+            'day' => '%Y-%m-%d',
+            'month' => '%Y-%m',
+            'year' => '%Y',
+        );
 
-        return array('$concat' => array_reverse($mongoProjectDate));
+        $format = $groupBy && isset($formats[$groupBy]) ? $formats[$groupBy] : $formats['month'];
+
+        return array(
+            '$dateToString' => array(
+                'format' => $format,
+                'date' => $dateField,
+        ), );
     }
 
     /**
