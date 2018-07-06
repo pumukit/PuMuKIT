@@ -3,7 +3,6 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\StatsBundle\Document\ViewsLog;
 
 class StatsService
 {
@@ -23,11 +22,11 @@ class StatsService
         $ids = array();
         $fromDate = new \DateTime(sprintf('-%s days', $days));
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation');
 
         $pipeline = array(
             array('$match' => array('date' => array('$gte' => $fromMongoDate))),
-            array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1))),
+            array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => '$numView'))),
             array('$sort' => array('numView' => -1)),
             array('$limit' => $limit * 2), //Get more elements due to tags post-filter.
         );
@@ -82,7 +81,7 @@ class StatsService
     {
         $ids = array();
 
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation');
 
         $matchExtra = array();
         $mmobjIds = $this->getMmobjIdsWithCriteria($criteria);
@@ -92,7 +91,7 @@ class StatsService
 
         $pipeline = array();
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
-        $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => 1)));
+        $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => '$numView')));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
@@ -150,7 +149,7 @@ class StatsService
     public function getSeriesMostViewedByRange(array $criteria = array(), array $options = array())
     {
         $ids = array();
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation');
 
         $matchExtra = array();
 
@@ -161,7 +160,7 @@ class StatsService
 
         $pipeline = array();
         $pipeline = $this->aggrPipeAddMatch($options['from_date'], $options['to_date'], $matchExtra);
-        $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => 1)));
+        $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => '$numView')));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
 
         $aggregation = $viewsLogColl->aggregate($pipeline);
@@ -245,7 +244,7 @@ class StatsService
      */
     public function getGroupedByAggrPipeline($options = array(), $matchExtra = array())
     {
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation');
         $options = $this->parseOptions($options);
 
         if (!$matchExtra) {
@@ -306,9 +305,9 @@ class StatsService
     private function aggrPipeAddProjectGroupDate($pipeline, $groupBy)
     {
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy);
-        $pipeline[] = array('$project' => array('date' => $mongoProjectDate));
+        $pipeline[] = array('$project' => array('numView' => '$numView', 'date' => $mongoProjectDate));
         $pipeline[] = array('$group' => array('_id' => '$date',
-                                              'numView' => array('$sum' => 1), ),
+                                              'numView' => array('$sum' => '$numView'), ),
         );
 
         return $pipeline;
