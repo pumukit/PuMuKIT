@@ -25,40 +25,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-
-        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
-
-        $pipeline = array(
-            array(
-                '$group' => array(
-                    '_id' => array(
-                        'mm' => '$multimediaObject',
-                        'day' => array(
-                            '$dateToString' => array(
-                                'format' => '%Y-%m-%d',
-                                'date' => '$date',
-                            ),
-                        ),
-                    ),
-                    'multimediaObject' => array('$first' => '$multimediaObject'),
-                    'series' => array('$first' => '$series'),
-                    'date' => array('$first' => '$date'),
-                    'numView' => array('$sum' => 1),
-                ),
-            ),
-            array(
-                '$project' => array(
-                    '_id' => 0,
-                    'multimediaObject' => 1,
-                    'series' => 1,
-                    'date' => 1,
-                    'numView' => 1,
-                ),
-            ),
-            array('$out' => 'ViewsAggregation'),
-        );
-
-        $viewsLogColl->aggregate($pipeline);
+        $viewsService = $this->getContainer()->get('pumukit_stats.stats');
+        $viewsService->aggregateViewsLog();
     }
 }
