@@ -340,8 +340,10 @@ class StatsService
         return array(
             '$dateToString' => array(
                 'format' => $format,
-                'date' => $dateField,
-                //'timezone' => date_default_timezone_get(), //New in MongoDB version 3.6
+                // New in MongoDB version 3.6
+                //'date' => $dateField,
+                //'timezone' => date_default_timezone_get(),
+                'date' => array('$add' => array($dateField, 1000 * intval(date('Z')))), // waiting for MongoDB 3.6
         ), );
     }
 
@@ -418,8 +420,10 @@ class StatsService
                         'day' => array(
                             '$dateToString' => array(
                                 'format' => '%Y-%m-%d',
-                                'date' => '$date',
-                                //'timezone' => date_default_timezone_get(), //New in MongoDB version 3.6
+                                // New in MongoDB version 3.6
+                                //'date' => '$date',
+                                //'timezone' => date_default_timezone_get(),
+                                'date' => array('$add' => array('$date', 1000 * intval(date('Z')))), // waiting for MongoDB 3.6
                             ),
                         ),
                     ),
