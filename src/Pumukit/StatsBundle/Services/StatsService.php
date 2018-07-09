@@ -341,7 +341,7 @@ class StatsService
             '$dateToString' => array(
                 'format' => $format,
                 'date' => $dateField,
-                'timezone' => date_default_timezone_get(),
+                //'timezone' => date_default_timezone_get(), //New in MongoDB version 3.6
         ), );
     }
 
@@ -419,7 +419,7 @@ class StatsService
                             '$dateToString' => array(
                                 'format' => '%Y-%m-%d',
                                 'date' => '$date',
-                                'timezone' => date_default_timezone_get(),
+                                //'timezone' => date_default_timezone_get(), //New in MongoDB version 3.6
                             ),
                         ),
                     ),
