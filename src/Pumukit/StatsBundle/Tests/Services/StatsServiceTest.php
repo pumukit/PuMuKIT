@@ -14,6 +14,7 @@ class StatsServiceTest extends WebTestCase
     private $dm;
     private $repo;
     private $factoryService;
+    private $viewsService;
 
     public function setUp()
     {
@@ -26,8 +27,12 @@ class StatsServiceTest extends WebTestCase
             ->getRepository('PumukitStatsBundle:ViewsLog');
         $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory');
+        $this->viewsService = static::$kernel->getContainer()
+            ->get('pumukit_stats.stats');
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
+            ->remove(array());
+        $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation')
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
             ->remove(array());
@@ -83,6 +88,8 @@ class StatsServiceTest extends WebTestCase
         $this->logView(new \DateTime('-20 days'), $list[5]);
         $this->logView(new \DateTime('-20 days'), $list[5]);
 
+        $this->viewsService->aggregateViewsLog();
+
         $list[1]->setTitle('OTHER MMOBJ');
 
         return $list;
@@ -117,6 +124,7 @@ class StatsServiceTest extends WebTestCase
         $this->dm = null;
         $this->repo = null;
         $this->factoryService = null;
+        $this->viewsService = null;
         gc_collect_cycles();
         parent::tearDown();
     }
