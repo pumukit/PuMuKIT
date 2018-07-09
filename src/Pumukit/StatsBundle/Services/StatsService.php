@@ -341,6 +341,7 @@ class StatsService
             '$dateToString' => array(
                 'format' => $format,
                 'date' => $dateField,
+                'timezone' => date_default_timezone_get(),
         ), );
     }
 
@@ -418,6 +419,7 @@ class StatsService
                             '$dateToString' => array(
                                 'format' => '%Y-%m-%d',
                                 'date' => '$date',
+                                'timezone' => date_default_timezone_get(),
                             ),
                         ),
                     ),
