@@ -25,7 +25,7 @@ class Live
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
      */
@@ -33,75 +33,75 @@ class Live
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $passwd;
 
     /**
      * @var int
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $live_type = self::LIVE_TYPE_WOWZA;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $width = 720;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $height = 576;
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $qualities;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $ip_source;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      */
     private $source_name;
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $index_play = false;
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $broadcasting = false;
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $debug = false;
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      * @Assert\NotBlank()
      */
     private $name = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $description = array('en' => '');
 

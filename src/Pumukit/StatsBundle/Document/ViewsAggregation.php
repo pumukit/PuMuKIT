@@ -23,7 +23,7 @@ class ViewsAggregation
     /**
      * @var \Date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $date;
@@ -31,7 +31,7 @@ class ViewsAggregation
     /**
      * @var string
      *
-     * @MongoDB\ObjectId
+     * @MongoDB\Field(type="object_id")
      * @MongoDB\Index
      */
     private $multimediaObject;
@@ -39,7 +39,7 @@ class ViewsAggregation
     /**
      * @var string
      *
-     * @MongoDB\ObjectId
+     * @MongoDB\Field(type="object_id")
      * @MongoDB\Index
      */
     private $series;
@@ -47,7 +47,7 @@ class ViewsAggregation
     /**
      * @var int
      *
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @MongoDB\Increment
      */
     private $numView;

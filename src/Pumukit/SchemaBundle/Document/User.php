@@ -38,14 +38,14 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     protected $fullname;
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     protected $origin = self::ORIGIN_LOCAL;
 

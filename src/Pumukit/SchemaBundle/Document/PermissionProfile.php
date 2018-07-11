@@ -15,10 +15,10 @@ class PermissionProfile
     const SCOPE_NONE = 'ROLE_SCOPE_NONE';
 
     public static $scopeDescription = array(
-                                            self::SCOPE_GLOBAL => 'Global Scope',
-                                            self::SCOPE_PERSONAL => 'Personal Scope',
-                                            self::SCOPE_NONE => 'No Scope',
-                                            );
+        self::SCOPE_GLOBAL => 'Global Scope',
+        self::SCOPE_PERSONAL => 'Personal Scope',
+        self::SCOPE_NONE => 'No Scope',
+    );
 
     /**
      * @var string
@@ -30,7 +30,7 @@ class PermissionProfile
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      */
     private $name = '';
@@ -38,35 +38,35 @@ class PermissionProfile
     /**
      * @var array
      *
-     * @MongoDB\Collection
+     * @MongoDB\Field(type="collection")
      */
     private $permissions = array();
 
     /**
      * @var bool
      *
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $system = false;
 
     /**
      * @var bool
      *
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $default = false;
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $scope = self::SCOPE_PERSONAL;
 
     /**
      * @var int
      *
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @Gedmo\SortablePosition
      */
     private $rank;

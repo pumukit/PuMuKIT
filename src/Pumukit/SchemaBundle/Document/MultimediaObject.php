@@ -56,14 +56,14 @@ class MultimediaObject
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @MongoDB\Index
      */
     private $type;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\Index
      */
     private $secret;
@@ -80,7 +80,7 @@ class MultimediaObject
      *       Do not use this field and do not create setter and/or getter.
      *
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $seriesTitle = array('en' => '');
 
@@ -131,82 +131,82 @@ class MultimediaObject
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @Gedmo\SortablePosition
      */
     private $rank;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $status = self::STATUS_NEW;
 
     /**
      * @var date
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $record_date;
 
     /**
      * @var date
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $public_date;
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $title = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $subtitle = array('en' => '');
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $description = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $comments;
 
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $line2 = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $copyright;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $license;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $duration = 0;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @MongoDB\Increment
      */
     private $numview = 0;

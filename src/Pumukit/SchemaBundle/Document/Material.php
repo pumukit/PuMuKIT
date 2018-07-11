@@ -13,13 +13,13 @@ class Material extends Element
 {
     /**
      * @var array
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $name = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $language;
 
