@@ -204,7 +204,7 @@ class EmbeddedBroadcast
     }
 
     /**
-     * @Assert\True(message = "Password required if not public")
+     * @Assert\IsTrue(message = "Password required if not public")
      */
     public function isPasswordValid()
     {

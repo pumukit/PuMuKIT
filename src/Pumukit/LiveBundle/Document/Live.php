@@ -191,7 +191,7 @@ class Live
     }
 
     /**
-     * @Assert\True(message = "Live type not valid")
+     * @Assert\IsTrue(message = "Live type not valid")
      */
     public function isValidLiveType()
     {
