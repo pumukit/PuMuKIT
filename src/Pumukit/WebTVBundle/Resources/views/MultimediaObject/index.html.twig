@@ -4,7 +4,24 @@
 {% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
+{% block meta %}
+    {{ parent() }}
+
+    {% set trackid = (track.id is defined)?track.id:null %}
+    {% if multimediaObject.isPublished %}
+        {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
+    {% else %}
+        {% set url = url('pumukit_webtv_multimediaobject_magicindex', {'secret': multimediaObject.secret, 'track_id': trackid }) %}
+    {% endif %}
+    <meta property="og:url" content="{{ url }}" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="{{ multimediaObject.title }}" />
+    <meta property="og:description" content="{{ multimediaObject.description }}" />
+    <meta property="og:image" content="{{ multimediaObject|first_url_pic(true) }}" />
+{% endblock %}
+
 {% block body_without_bar %}
+
     <div class="col-xs-12">
         <h1 class="title-for-crumbs always-hide">{{ multimediaObject.title|default("No title"|trans) }}</h1>
     </div>
