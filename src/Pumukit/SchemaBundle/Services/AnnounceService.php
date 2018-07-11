@@ -139,7 +139,9 @@ class AnnounceService
 
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
         $queryBuilderMms->sort('public_date', 'asc');
-        $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+        if ($withPudenewTag) {
+            $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
+        }
         $queryBuilderMms->limit(1);
 
         $lastMm = $queryBuilderMms->getQuery()->getSingleResult();
