@@ -21,28 +21,28 @@ class EmbeddedTag
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $title = array('en' => '');
 
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $description = array('en' => '');
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $slug;
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\Index
      */
     private $cod = '';
@@ -50,14 +50,14 @@ class EmbeddedTag
     /**
      * @var bool
      *
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $metatag = false;
 
     /**
      * @var bool
      *
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $display = false;
 
@@ -72,14 +72,14 @@ class EmbeddedTag
     /**
      * @var date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $created;
 
     /**
      * @var date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $updated;
 

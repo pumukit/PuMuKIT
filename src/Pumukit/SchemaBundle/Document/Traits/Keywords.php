@@ -12,14 +12,14 @@ trait Keywords
      * @deprecated in version 2.3
      * use keywords instead
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $keyword = array('en' => '');
 
     /**
      * @var array
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $keywords = array('en' => array());
 

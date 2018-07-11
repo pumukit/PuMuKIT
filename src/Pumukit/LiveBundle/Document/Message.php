@@ -20,7 +20,7 @@ class Message
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $author;
 
@@ -34,21 +34,21 @@ class Message
     /**
      * @var string message
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $message;
 
     /**
      * @var \DateTime
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $insertDate;
 
     /**
      * @var string cookie
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $cookie;
 

@@ -21,21 +21,21 @@ class Comments
     /**
      * @var \Date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $date;
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $text;
 
     /**
      * @var int
      *
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      * @MongoDB\EmbedOne(targetDocument="MultimediaObject")
      */
     private $multimedia_object_id;
@@ -53,7 +53,7 @@ class Comments
     /**
      * Set date.
      *
-     * @param @MongoDB\Date $date
+     * @param @MongoDB\Field(type="date") $date
      *
      * @return Comments
      */
@@ -67,7 +67,7 @@ class Comments
     /**
      * Get date.
      *
-     * @return @MongoDB\Date
+     * @return @MongoDB\Field(type="date")
      */
     public function getDate()
     {

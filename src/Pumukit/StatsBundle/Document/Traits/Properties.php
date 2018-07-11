@@ -9,7 +9,7 @@ trait Properties
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $properties = array();
 

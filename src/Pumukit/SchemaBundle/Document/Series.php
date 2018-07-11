@@ -56,7 +56,7 @@ class Series
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\Index
      */
     private $secret;
@@ -65,14 +65,14 @@ class Series
      * Flag with TYPE_SERIES or TYPE_PLAYLIST to determine the collection type.
      *
      * @var int
-     * @MongoDB\Integer
+     * @MongoDB\Field(type="int")eger
      * @MongoDB\Index
      */
     private $type;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $sorting = self::SORT_MANUAL;
 
@@ -107,7 +107,7 @@ class Series
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $announce = false;
 
@@ -117,63 +117,63 @@ class Series
      * and we want to force that the serie will be hide.
      *
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      * @MongoDB\Index
      */
     private $hide = true;
 
     /**
      * @var datetime
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $public_date;
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $title = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $subtitle = array('en' => '');
 
     /**
      * @var text
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $description = array('en' => '');
 
     /**
      * @var text
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $header = array('en' => '');
 
     /**
      * @var text
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $footer = array('en' => '');
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $copyright;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $license;
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $line2 = array('en' => '');
 

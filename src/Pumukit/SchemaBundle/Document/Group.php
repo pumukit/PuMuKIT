@@ -25,7 +25,7 @@ class Group implements GroupInterface
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      * @Assert\Regex("/^\w*$/")
      */
@@ -34,7 +34,7 @@ class Group implements GroupInterface
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @MongoDB\UniqueIndex(order="asc")
      */
     protected $name;
@@ -42,28 +42,28 @@ class Group implements GroupInterface
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     protected $comments;
 
     /**
      * @var string
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
      * @var date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $createdAt;
 
     /**
      * @var date
      *
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $updatedAt;
 

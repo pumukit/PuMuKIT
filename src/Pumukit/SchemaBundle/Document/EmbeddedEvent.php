@@ -22,55 +22,55 @@ class EmbeddedEvent
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $name;
 
     /**
      * @var string
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $description;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $author;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $producer;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $place;
 
     /**
      * @var \Datetime
-     * @MongoDB\Date
+     * @MongoDB\Field(type="date")
      */
     private $date;
 
     /**
      * @var int
-     * @MongoDB\Int
+     * @MongoDB\Field(type="int")
      */
     private $duration;
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $display = true;
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $create_serial = true;
 
@@ -88,7 +88,7 @@ class EmbeddedEvent
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      * @Assert\NotBlank()
      * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
      */
@@ -97,20 +97,20 @@ class EmbeddedEvent
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $alreadyHeldMessage = array('en' => '');
 
     /**
      * @var string
      *
-     * @MongoDB\Raw
+     * @MongoDB\Field(type="raw")
      */
     private $notYetHeldMessage = array('en' => '');
 
     /**
      * @var bool
-     * @MongoDB\Boolean
+     * @MongoDB\Field(type="boolean")
      */
     private $enableChat = false;
 

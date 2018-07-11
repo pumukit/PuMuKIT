@@ -19,19 +19,19 @@ class EmbeddedSocial
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $twitter;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $twitterHashtag;
 
     /**
      * @var string
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $email;
 
