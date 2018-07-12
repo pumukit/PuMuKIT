@@ -49,7 +49,7 @@ class MultimediaObject
 
     /**
      * @var bool
-     * @MongoDB\Bool
+     * @MongoDB\Field(type="boolean")
      * @MongoDB\Index
      */
     private $islive = false;
