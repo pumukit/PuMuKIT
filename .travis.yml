@@ -3,8 +3,7 @@ language: php
 dist: trusty
 
 php:
-  - 5.5
-  - 5.6
+  - 7.2
 
 env:
   - MONGO_VERSION=stable
@@ -23,7 +22,7 @@ addons:
       - libavcodec-extra-54
 
 before_script:
-  - yes '' | pecl -q install -f mongo-${MONGO_VERSION}
+  - pecl install -f mongodb-${MONGO_VERSION}
   - composer self-update
   - php -i
   - npm install -g pa11y
