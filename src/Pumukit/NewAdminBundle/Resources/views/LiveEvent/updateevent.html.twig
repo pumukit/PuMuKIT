@@ -16,6 +16,11 @@
                     {% trans %}Cancel{% endtrans %}
                     <div class="ripple-wrapper"></div>
                 </button>
+                {% if autocomplete_series is defined and autocomplete_series %}
+                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raidsed" data-id="{{ multimediaObject.id }}">
+                        {% trans %}Autocomplete series{% endtrans %}
+                    </button>
+                {% endif %}
                 <button class="btn btn-pumukit btn-raised" type="submit">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
@@ -239,4 +244,23 @@
     {% if enableTwitter %}
     $("#twitter-widget-id-tooltip").tooltip({container: 'body'});
     {% endif %}
+
+
+    $('#pumukit_new_admin_autocomplete_series').on('click',function(event) {
+        event.preventDefault();
+        var id = $(this).data('id');
+        var path = "{{ path('pumukit_new_admin_autocomplete_series_with_event_data', {'id': '__ID__'}) }}";
+        $.ajax({
+            url: path.replace('__ID__', id),
+            method: 'POST',
+            success: function () {
+                var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__ID__'}) }}";
+                url = url.replace('__ID__', id);
+                $('#edit_events').load(url);
+                var message = '{% trans %}Series successfully updated.{% endtrans %}';
+                success(message);
+            }
+        });
+        return false;
+    });
 </script>
