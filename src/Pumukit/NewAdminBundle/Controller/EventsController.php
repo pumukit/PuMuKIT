@@ -483,6 +483,8 @@ class EventsController extends Controller
         $enableContactForm = $this->container->getParameter('liveevent_contact_and_share');
         $twitterAccountsLinkColor = $this->container->getParameter('pumukit_live.twitter.accounts_link_color');
 
+        $autocompleteSeries = $this->container->getParameter('pumukit_new_admin.advance_live_event_autocomplete_series');
+
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
             try {
@@ -569,7 +571,7 @@ class EventsController extends Controller
             return new JsonResponse(array('event' => $multimediaObject->getEmbeddedEvent()));
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm);
+        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm, 'autocomplete_series' => $autocompleteSeries);
     }
 
     /**
@@ -984,5 +986,41 @@ class EventsController extends Controller
         });
 
         return $multimediaObjects;
+    }
+
+    /**
+     * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"mapping": {"id": "id"}})
+     *
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     */
+    public function autocompleteSeriesWithEventData(Request $request, MultimediaObject $multimediaObject)
+    {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+
+        $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => $multimediaObject->getSeries()->getId()));
+        if (!$series) {
+            throw new \Exception($translator->trans('Series not found'));
+        }
+
+        try {
+            $series->setI18nTitle($multimediaObject->getEmbeddedEvent()->getI18nName());
+            $series->setI18nDescription($multimediaObject->getEmbeddedEvent()->getI18nDescription());
+            foreach ($multimediaObject->getPics() as $pic) {
+                $series->addPic($pic);
+            }
+
+            $dm->flush();
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+
+        return new JsonResponse(array('success'));
     }
 }
