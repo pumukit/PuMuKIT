@@ -4,7 +4,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}" 
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"
            style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"></i>
       </div>
       <div class="row-content">
@@ -21,7 +21,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}" 
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"
            style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"></i>
       </div>
       <div class="row-content">
@@ -32,13 +32,13 @@
         <p class="list-group-item-text">{{ stats['waiting'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
-  </div>    
+  </div>
 </div>
 <div class="col-md-2 col-sm-6 col-xs-12">
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }}" 
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }}"
            style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }};"></i>
       </div>
       <div class="row-content">
@@ -47,13 +47,13 @@
         <p class="list-group-item-text">{{ stats['executing'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
-  </div>  
+  </div>
 </div>
 <div class="col-md-2 col-sm-6 col-xs-12">
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}" 
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"
            style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"></i>
       </div>
       <div class="row-content">
@@ -64,13 +64,13 @@
         <p class="list-group-item-text">{{ stats['finished'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
 <div class="col-md-2 col-sm-6 col-xs-12">
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}" 
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"
            style="background:{{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"></i>
       </div>
       <div class="row-content">
@@ -87,8 +87,17 @@
 
 <script type="text/javascript">
   $(function(){
-    var timeout = setTimeout("location.reload(true);", 30000);
-  
+    window.encoder_reload_timeout = setTimeout("location.reload(true);", 30000);
+
+    $('body').on('shown.bs.modal loaded.bs.modal', '.pmk-modal', function () {
+        clearTimeout(window.encoder_reload_timeout);
+    });
+
+    $('body').on('hidden.bs.modal', '.pmk-modal', function () {
+        clearTimeout(window.encoder_reload_timeout);
+        window.encoder_reload_timeout = setTimeout("location.reload(true);", 30000);
+    });
+
     var serialize = function(obj, prefix) {
       var str = [];
       for(var p in obj) {
@@ -101,10 +110,10 @@
       }
       return str.join("&");
     }
-  
+
     var queryDict = {}
     location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
-  
+
     $('.stats_jobs :checkbox').on('change', function(e){
       queryDict[e.target.id] = e.target.checked ? 1 : 0;
       window.location.href = window.location.pathname + "?" + serialize(queryDict);
