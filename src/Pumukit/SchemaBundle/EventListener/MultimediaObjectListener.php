@@ -35,6 +35,23 @@ class MultimediaObjectListener
             $multimediaObject->setType(MultimediaObject::TYPE_UNKNOWN);
         }
 
+        $textindex = array();
+        $title = $multimediaObject->getI18nTitle();
+        //FIXME array_keys($title) fail if english title empty
+        foreach (array_keys($title) as $lang) {
+            if ($multimediaObject->getTitle($lang)) {
+                $text = $multimediaObject->getTitle($lang);
+            }
+            if ($multimediaObject->getDescription($lang)) {
+                $text = $text . " | " . $multimediaObject->getDescription($lang);
+            }
+            if ($multimediaObject->getKeywords($lang)) {
+                $text =  $text . " | " . $multimediaObject->getKeywords($lang);
+            }
+            $textindex[] =  array("indexlanguage" => $lang, "text" => $text);
+        }
+        $multimediaObject->setTextIndex([$textindex]);
+
         $this->dm->flush();
     }
 }

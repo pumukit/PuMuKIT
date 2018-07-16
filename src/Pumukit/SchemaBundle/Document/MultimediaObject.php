@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
+ *   @MongoDB\Index(name="text_index", keys={"textindex"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
  * })
  */
 class MultimediaObject
@@ -216,6 +216,12 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
      */
     private $people;
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $textindex = array();
 
     /**
      * Used locale to override Translation listener`s locale
@@ -2008,5 +2014,25 @@ class MultimediaObject
         } else {
             return false;
         }
+    }
+    /**
+     * Set textindex.
+     *
+     * @param array      $textindex
+     */
+    public function setTextIndex($textindex)
+    {
+        $this->textindex = $textindex;
+    }
+
+    /**
+     * Get textindex.
+     *
+     *
+     * @return array
+     */
+    public function getTextIndex()
+    {
+        return $this->textindex;
     }
 }
