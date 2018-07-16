@@ -209,8 +209,7 @@ class SeriesRepositoryTest extends WebTestCase
         }
 
         // FIND ONE SERIES WITH TAG
-        $this->assertEquals(1, count($this->repo->findOneWithTag($tag2)));
-        $this->assertEquals(1, count($this->repo->findOneWithTag($tag3)));
+        $this->assertEquals($series1, $this->repo->findOneWithTag($tag2));
         $this->assertEquals($series3, $this->repo->findOneWithTag($tag3));
 
         // FIND SERIES WITH ANY TAG
@@ -303,10 +302,9 @@ class SeriesRepositoryTest extends WebTestCase
 
         // FIND ONE SERIES WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
-        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
+        $this->assertEquals($series1, $this->repo->findOneWithAllTags($arrayTags));
 
         $arrayTags = array($tag2, $tag3);
-        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
         $this->assertEquals($series3, $this->repo->findOneWithAllTags($arrayTags));
 
         // FIND SERIES WITHOUT TAG
@@ -350,7 +348,7 @@ class SeriesRepositoryTest extends WebTestCase
         }
 
         // FIND ONE SERIES WITHOUT TAG
-        $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag3)));
+        $this->assertEquals($series1, $this->repo->findOneWithoutTag($tag3));
 
         // FIND SERIES WITHOUT ALL TAGS
         $mm11->addTag($tag3);
@@ -448,10 +446,10 @@ class SeriesRepositoryTest extends WebTestCase
         $sortAsc = array('title' => 1);
         $sortDesc = array('title' => -1);
 
-        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag1)));
-        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag1, $sort)));
-        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag2, $sortAsc)));
-        $this->assertEquals(1, count($this->repo->createBuilderWithTag($tag3, $sortDesc)));
+        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag1)->getQuery()->execute()));
+        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag1, $sort)->getQuery()->execute()));
+        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag2, $sortAsc)->getQuery()->execute()));
+        $this->assertEquals(2, count($this->repo->createBuilderWithTag($tag3, $sortDesc)->getQuery()->execute()));
     }
 
     public function testFindByPicId()
@@ -468,7 +466,7 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($series1);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findByPicId($pic->getId())));
+        $this->assertEquals($series1, $this->repo->findByPicId($pic->getId()));
     }
 
     public function testFindSeriesByPersonId()
@@ -845,7 +843,6 @@ class SeriesRepositoryTest extends WebTestCase
         $this->assertNull($series->getMultimediaObjectWithAllTags(array($tag2, $tag1, $tag8)));
         $this->assertEquals(4, count($series->getMultimediaObjectsWithAnyTag(array($tag1, $tag7))));
         $this->assertEquals(array($mm1, $mm2, $mm3, $mm5), $series->getMultimediaObjectsWithAnyTag(array($tag1, $tag7)));
-        $this->assertEquals(1, count($series->getMultimediaObjectWithAnyTag(array($tag1))));
         $this->assertNull($series->getMultimediaObjectWithAnyTag(array($tag8)));
         $this->assertEquals(5, count($series->getFilteredMultimediaObjectsWithTags()));
         $this->assertEquals(3, count($series->getFilteredMultimediaObjectsWithTags(array($tag1))));
@@ -1011,10 +1008,10 @@ class SeriesRepositoryTest extends WebTestCase
         $this->dm->persist($series3);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series1->getProperty('dataexample'))));
-        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('data', $series2->getProperty('dataexample'))));
-        $this->assertEquals(0, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('data'))));
-        $this->assertEquals(1, count($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('dataexample'))));
+        $this->assertEquals($series1, $this->repo->findOneBySeriesProperty('dataexample', $series1->getProperty('dataexample')));
+        $this->assertNull($this->repo->findOneBySeriesProperty('data', $series2->getProperty('dataexample')));
+        $this->assertNull($this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('data')));
+        $this->assertEquals($series3, $this->repo->findOneBySeriesProperty('dataexample', $series3->getProperty('dataexample')));
     }
 
     public function testCount()

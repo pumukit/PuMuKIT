@@ -5,8 +5,6 @@ namespace Pumukit\SchemaBundle\Tests\Services;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 
 class PersonServiceTest extends WebTestCase
@@ -555,7 +553,7 @@ class PersonServiceTest extends WebTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->personService->countMultimediaObjectsWithPerson($personJohn)));
+        $this->assertEquals(1, $this->personService->countMultimediaObjectsWithPerson($personJohn));
     }
 
     public function testUpAndDownPersonWithRole()

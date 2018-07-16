@@ -10,7 +10,6 @@
 namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectInSeriesTest extends WebTestCase
 {

@@ -165,20 +165,18 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
         $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
         $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array('track6'))));
 
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags()));
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old'))));
-        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv'))));
-        $this->assertEquals(0, count($mmobj->getFilteredTrackWithTags(array(), array(), array('flv', 'master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old'))));
-
-        $this->assertEquals(1, count($mmobj->getFilteredTrackWithTags(array(), array(), array(), array('master', 'mosca'))));
-
-        $this->assertEquals(null, count($mmobj->getFilteredTrackWithTags(array('track6'))));
-        $this->assertEquals(null, count($mmobj->getFilteredTracksWithTags(array('track6'))));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags());
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array('master')));
+        $this->assertEquals($t2, $mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old')));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master')));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array(), array(), array('flv')));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array(), array(), array('flv', 'master')));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master')));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old')));
+        $this->assertEquals($t1, $mmobj->getFilteredTrackWithTags(array(), array(), array(), array('master', 'mosca')));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array('track6')));
     }
 
     public function testCreateMultimediaObjectAndFindByCriteria()
@@ -882,7 +880,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mmPublished);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findPrototype($series)));
+        $this->assertInstanceOf(MultimediaObject::class, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmNew, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmHide, $this->repo->findPrototype($series));
         $this->assertNotEquals($mmBloq, $this->repo->findPrototype($series));
@@ -1252,7 +1250,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITH TAG
-        $this->assertEquals(1, count($this->repo->findOneWithTag($tag1)));
+        $this->assertEquals($mm11, $this->repo->findOneWithTag($tag1));
 
         // FIND WITH ANY TAG
         $arrayTags = array($tag1, $tag2, $tag3);
@@ -1351,7 +1349,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         // FIND ONE WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
-        $this->assertEquals(1, count($this->repo->findOneWithAllTags($arrayTags)));
+        $this->assertEquals($mm11, $this->repo->findOneWithAllTags($arrayTags));
 
         // FIND WITHOUT TAG
         $this->assertEquals(9, $this->repo->findWithoutTag($tag3)->count(true));
@@ -1380,7 +1378,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITHOUT TAG
-        $this->assertEquals(1, count($this->repo->findOneWithoutTag($tag2)));
+        $this->assertEquals($mm23, $this->repo->findOneWithoutTag($tag2));
 
         // FIND WITH ALL TAGS
         // TODO
@@ -1506,10 +1504,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         // FIND ONE SERIES FIELD WITH ALL TAGS
         $arrayTags = array($tag1, $tag2);
-        $this->assertEquals(1, count($this->repo->findOneSeriesFieldWithAllTags($arrayTags)));
+        $this->assertEquals($series1->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
 
         $arrayTags = array($tag2, $tag3);
-        $this->assertEquals(1, count($this->repo->findOneSeriesFieldWithAllTags($arrayTags)));
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
     }
 

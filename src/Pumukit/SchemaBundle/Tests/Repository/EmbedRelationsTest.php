@@ -4,10 +4,7 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\SeriesType;
 
 class EmbedRelationsTest extends WebTestCase
 {
@@ -116,7 +113,7 @@ class EmbedRelationsTest extends WebTestCase
         $this->addTagToMultimediaObject();
 
         $this->assertEquals(1, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-        $this->assertEquals(1, count($this->repoTags->findOneByCod('B2A')));
+        $this->assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
     }
 
     public function testAddAndRemoveTagToMultimediaObject()
@@ -127,7 +124,7 @@ class EmbedRelationsTest extends WebTestCase
         $this->removeTagFromMultimediaObject();
 
         $this->assertEquals(0, count($this->repoMmobjs->findOneByDuration(300)->getTags()));
-        $this->assertEquals(1, count($this->repoTags->findOneByCod('B2A')));
+        $this->assertEquals('B2A', $this->repoTags->findOneByCod('B2A')->getCod());
     }
 
     private function createTestTree()

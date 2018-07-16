@@ -68,7 +68,7 @@ class FactoryServiceTest extends WebTestCase
 
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals(1, count($this->mmobjRepo->findAll()));
-        $this->assertEquals(1, count($this->mmobjRepo->findAll()[0]->getSeries()));
+        $this->assertEquals($series, $this->mmobjRepo->findAll()[0]->getSeries());
         //NOTE getMultimediaObjects gives us all multimedia objects in the series except prototype
         $this->assertEquals(0, count($this->seriesRepo->findAll()[0]->getMultimediaObjects()));
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
@@ -87,9 +87,7 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals(1, count($this->seriesRepo->findAll()));
         $this->assertEquals($series, $this->seriesRepo->findAll()[0]);
         $this->assertEquals(2, count($this->mmobjRepo->findAll()));
-        $this->assertEquals(1, count($this->mmobjRepo->findAll()[0]->getSeries()));
         $this->assertEquals($series->getId(), $this->mmobjRepo->findAll()[0]->getSeries()->getId());
-        $this->assertEquals(1, count($this->mmobjRepo->find($mmobj->getId())->getSeries()));
         $this->assertEquals($series->getId(), $this->mmobjRepo->find($mmobj->getId())->getSeries()->getId());
 
         $this->assertEquals(1, count($this->mmobjRepo->findWithoutPrototype($series)));

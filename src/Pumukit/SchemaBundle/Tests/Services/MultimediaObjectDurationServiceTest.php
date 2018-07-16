@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectDurationServiceTest extends WebTestCase
 {
