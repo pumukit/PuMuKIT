@@ -452,7 +452,7 @@ class Person
     public function getInfo()
     {
         $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
-        $aux = array_filter($aux, create_function('$a', 'return (!is_null($a)&&(""!=$a));'));
+        $aux = array_filter($aux, function ($a) { return !is_null($a) && ('' != $a); });
 
         return implode(', ', $aux);
     }
