@@ -1012,10 +1012,6 @@ class EventsController extends Controller
         try {
             $series->setI18nTitle($multimediaObject->getEmbeddedEvent()->getI18nName());
             $series->setI18nDescription($multimediaObject->getEmbeddedEvent()->getI18nDescription());
-            foreach ($multimediaObject->getPics() as $pic) {
-                $series->addPic($pic);
-            }
-
             $dm->flush();
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
