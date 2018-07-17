@@ -34,8 +34,30 @@ class PumukitListPicsCommand extends ContainerAwareCommand
             ->addOption('tags', null, InputOption::VALUE_OPTIONAL, 'List pics by tag.')
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Type can be series or mmobj', 'mm')
             ->addOption('size', null, InputOption::VALUE_OPTIONAL, 'List pics greater than selected size in KB.')
-            ->addOption('exists', null, InputOption::VALUE_OPTIONAL, "List that doesn't exists.")
+            ->addOption('exists', null, InputOption::VALUE_OPTIONAL, 'List exists or not exists file pics.')
             ->setHelp(<<<'EOT'
+            
+Command to get all pics like selected filters.
+
+Path example: --path="/mnt/storage/" ...
+Extension examples: --extension=".jpg" or --extension="jpg" or --extension=".jpg,.png" or --extension="jpg,png". Can be all myme_types...
+Tags examples: --tags="pumukit" or --tags="pumukit,auto,frame_0" ...
+Size examples: --size=1 or --size=10 or --size=100 ...
+Exists:
+      If you defined exists option, the command will return exists images or not exists images.
+      If you don't defined this option, the command will return all images
+      Example:
+              --exists="1" or --exists="0" or --exists="true" or --exists="false" ..
+              
+              
+Example commands:
+
+php app/console pumukit:pics:list --tags="master,youtube,hello" --extension=".png,.jpg" --exists=true --type="mm"
+php app/console pumukit:pics:list --tags="master,youtube,hello" --extension=".png,.jpg" --exists=true --type="series"
+php app/console pumukit:pics:list --tags="master,youtube" --extension=".png,.jpg" --exists=true
+php app/console pumukit:pics:list --size=10000
+php app/console pumukit:pics:list --tags="master" --size=10000
+
 EOT
             );
     }
