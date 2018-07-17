@@ -1398,14 +1398,13 @@ $(function() {
 
 
   {% if is_naked() %}
-  var naked_modal_handler = function (e) {
-     var top = e.relatedTarget.getBoundingClientRect().top - 50 - $('.modal-content:visible').height();
-     if (top > 26) {
-         $('.modal-dialog:visible').css("margin", top + "px auto 30px")
-     }else {
-         $('.modal-dialog:visible').css("margin", "26px auto 30px")
-     }
-  };
+    var naked_modal_handler = function (e) {
+      var modal_dialog = $(e.currentTarget).find('.modal-dialog');
+      var clicked_link = e.relatedTarget;
+      var modal_top = clicked_link.getBoundingClientRect().top - 50 - modal_dialog.height();
+      if (modal_top < 26) modal_top = 26;
+      modal_dialog.css("margin", modal_top +"px auto 30px");
+    };
 
   $('#myModal').on('shown.bs.modal', naked_modal_handler);
   $('#myAuxModal').on('shown.bs.modal', naked_modal_handler);
