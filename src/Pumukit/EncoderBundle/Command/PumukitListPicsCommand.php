@@ -54,6 +54,7 @@ Exists:
               
 Example commands:
 
+php app/console pumukit:pics:list --id="5b4dd4c22bb478607d8b456b" --exists=true --type="mm"
 php app/console pumukit:pics:list --tags="master,youtube,hello" --extension=".png,.jpg" --exists=true --type="mm"
 php app/console pumukit:pics:list --tags="master,youtube,hello" --extension=".png,.jpg" --exists=true --type="series"
 php app/console pumukit:pics:list --tags="master,youtube" --extension=".png,.jpg" --exists=true
