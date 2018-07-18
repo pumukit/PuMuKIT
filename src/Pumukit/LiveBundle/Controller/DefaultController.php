@@ -247,11 +247,19 @@ class DefaultController extends Controller
     public function playlistAction(Live $live)
     {
         $intro = $this->container->hasParameter('pumukit2.intro') ? $this->container->getParameter('pumukit2.intro') : null;
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $mmobjsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('properties.is_live_playlist' => true));
 
-        return array(
-            'live' => $live,
-            'intro' => $intro,
-        );
+        $response = array('live' => $live);
+        if ($mmobjsPlaylist) {
+            $response['items'] = $mmobjsPlaylist;
+        } elseif ($intro) {
+            $response['items'] = $intro;
+        } else {
+            $response['items'] = '/bundles/pumukitlive/video/default.mp4';
+        }
+
+        return $response;
     }
 
     /**
