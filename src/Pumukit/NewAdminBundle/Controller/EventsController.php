@@ -951,14 +951,14 @@ class EventsController extends Controller
         usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
             $validSessionA = null;
             foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
-                if ($sessionA->getStart() > $date) {
+                if ($sessionA->getStart() > $date or ($sessionA->getStart() <= $date and $sessionA->getEnds() > $date)) {
                     $validSessionA = $sessionA->getStart()->getTimestamp();
                     break;
                 }
             }
             $validSessionB = null;
             foreach ($b->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionB) {
-                if ($sessionB->getStart() > $date) {
+                if ($sessionB->getStart() > $date or ($sessionB->getStart() <= $date and $sessionB->getEnds() > $date)) {
                     $validSessionB = $sessionB->getStart()->getTimestamp();
                     break;
                 }
