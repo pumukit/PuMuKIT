@@ -197,7 +197,7 @@ class OpencastImportService
                 $opencastTrack = $tracks[$index];
             }
         } else {
-            return null;
+            throw new \Exception(sprintf("No media track info in MP '%s'", $multimediaObject->getProperty('opencast')));
         }
 
         $track = new Track();
