@@ -54,6 +54,7 @@
 
         <service id="pumukitencoder.pic" class="Pumukit\EncoderBundle\Services\PicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.mmspic"/>
         </service>
 
         <service id="pumukitencoder.remove" class="Pumukit\EncoderBundle\EventListener\RemoveListener">
