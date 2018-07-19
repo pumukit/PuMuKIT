@@ -102,7 +102,7 @@ class MultimediaObjectListenerTest extends WebTestCase
 
         $this->assertEquals(null, $mm->getMaster());
         $this->trackService->addTrackToMultimediaObject($mm, $track1, true);
-        $this->assertEquals(null, $mm->getMaster());
+        $this->assertEquals($track1, $mm->getMaster());
         $this->assertEquals(null, $mm->getMaster(false));
         $this->trackService->addTrackToMultimediaObject($mm, $track2, true);
         $this->assertEquals($track2, $mm->getMaster());
