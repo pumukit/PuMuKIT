@@ -3633,6 +3633,14 @@
         <source>Place successfully created.</source>
         <target xml:lang="gl" state="needs-translation">Place successfully created.</target>
       </trans-unit>
+      <trans-unit id="347c446c89d011e89a94a6cf71072f73" resname="Autocomplete series">
+        <source>Autocomplete series</source>
+        <target>Autocompletar a serie</target>
+      </trans-unit>
+      <trans-unit id="347c482289d011e89a94a6cf71072f73" resname="Series successfully updated.">
+        <source>Series successfully updated.</source>
+        <target>Serie actualizada correctamente.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
