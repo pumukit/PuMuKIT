@@ -1109,10 +1109,7 @@ class MultimediaObject
     {
         foreach ($this->tags as $tag) {
             if ($tag->getCod() == $tagToRemove->getCod()) {
-                $removed = $this->tags->removeElement($tag);
-                $this->tags = new ArrayCollection(array_values($this->tags->toArray()));
-
-                return $removed;
+                return $this->tags->removeElement($tag);
             }
         }
 
@@ -1261,7 +1258,6 @@ class MultimediaObject
     public function removeTrack(Track $track)
     {
         $this->tracks->removeElement($track);
-        $this->tracks = new ArrayCollection(array_values($this->tracks->toArray()));
 
         $this->updateDuration();
     }
@@ -1276,7 +1272,6 @@ class MultimediaObject
         $this->tracks = $this->tracks->filter(function ($track) use ($trackId) {
             return $track->getId() !== $trackId;
         });
-        $this->tracks = new ArrayCollection(array_values($this->tracks->toArray()));
 
         $this->updateDuration();
     }
@@ -1848,7 +1843,6 @@ class MultimediaObject
 
         if (0 === count($embeddedRole->getPeople())) {
             $this->people->removeElement($embeddedRole);
-            $this->people = new ArrayCollection(array_values($this->people->toArray()));
         }
 
         return $hasRemoved;
@@ -2004,7 +1998,6 @@ class MultimediaObject
     public function removeGroup(Group $group)
     {
         $this->groups->removeElement($group);
-        $this->groups = new ArrayCollection(array_values($this->groups->toArray()));
     }
 
     /**

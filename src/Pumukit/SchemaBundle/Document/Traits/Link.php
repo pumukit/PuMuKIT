@@ -63,7 +63,6 @@ trait Link
     public function removeLink(DocumentLink $link)
     {
         $this->links->removeElement($link);
-        $this->links = new ArrayCollection(array_values($this->links->toArray()));
     }
 
     /**
@@ -76,7 +75,6 @@ trait Link
         $this->links = $this->links->filter(function ($link) use ($linkId) {
             return $link->getId() !== $linkId;
         });
-        $this->links = new ArrayCollection(array_values($this->links->toArray()));
     }
 
     /**

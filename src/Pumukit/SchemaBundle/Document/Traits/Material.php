@@ -53,7 +53,6 @@ trait Material
     public function removeMaterial(DocumentMaterial $material)
     {
         $this->materials->removeElement($material);
-        $this->materials = new ArrayCollection(array_values($this->materials->toArray()));
     }
 
     /**
@@ -66,7 +65,6 @@ trait Material
         $this->materials = $this->materials->filter(function ($material) use ($materialId) {
             return $material->getId() !== $materialId;
         });
-        $this->materials = new ArrayCollection(array_values($this->materials->toArray()));
     }
 
     /**

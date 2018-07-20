@@ -53,7 +53,6 @@ trait Pic
     public function removePic(DocumentPic $pic)
     {
         $this->pics->removeElement($pic);
-        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
@@ -66,7 +65,6 @@ trait Pic
         $this->pics = $this->pics->filter(function ($pic) use ($picId) {
             return $pic->getId() !== $picId;
         });
-        $this->pics = new ArrayCollection(array_values($this->pics->toArray()));
     }
 
     /**
