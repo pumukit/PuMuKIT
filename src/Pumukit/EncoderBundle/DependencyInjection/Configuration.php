@@ -46,6 +46,8 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
+                            ->booleanNode('generate_pic')->defaultValue(true)
+                                ->info('When false, mmobj pics will not be generated from tracks generated using this profile')->end()
                             ->booleanNode('nocheckduration')->defaultValue(false)
                                 ->info('When true, the usual duration checks are not performed on this profile.')->end()
                             ->booleanNode('display')->defaultValue(false)
