@@ -43,7 +43,7 @@ class PicExtractorListener
         $profile = $this->profileService->getProfile($profileName);
         $generatePic = $profile['generate_pic'];
 
-        if(!$generatePic) {
+        if (!$generatePic) {
             return;
         }
 
