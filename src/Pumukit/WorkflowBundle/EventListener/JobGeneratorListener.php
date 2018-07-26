@@ -61,6 +61,7 @@ class JobGeneratorListener
         }
         $profile = $this->profiles[$profileName];
 
+        //NOTE: See TTK-7482
         foreach ($tag->getChildren() as $pubchannel) {
             if ($multimediaObject->containsTag($pubchannel)) {
                 if (!$master->containsTag('ENCODED_'.$pubchannel->getCod()) && false === strpos($profile['target'], $pubchannel->getCod())) {
