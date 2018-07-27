@@ -4,11 +4,9 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\SchemaBundle\Document\Track;
 
 class MultimediaObjectController extends PlayerController implements WebTVController
 {
@@ -136,8 +134,9 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         $referer = $request->headers->get('referer');
         $secretSeriesUrl = $this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret()), true);
         $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
+        $relatedLink = strpos($referer, 'magic');
 
-        $status = $fromSecret ?
+        $status = ($fromSecret || $relatedLink) ?
                 array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN) :
                 array(MultimediaObject::STATUS_PUBLISHED);
 
@@ -146,6 +145,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         return array(
             'series' => $series,
             'multimediaObjects' => $multimediaObjects,
+            'showMagicUrl' => ($fromSecret || $relatedLink),
         );
     }
 
