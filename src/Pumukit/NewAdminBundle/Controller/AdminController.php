@@ -173,7 +173,7 @@ class AdminController extends ResourceController implements NewAdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -264,13 +264,13 @@ class AdminController extends ResourceController implements NewAdminController
      *
      * @return FormInterface
      */
-    public function getForm($resource = null)
+    public function getForm($resource = null, Request $request)
     {
         $resourceName = $this->getResourceName();
         $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
 
         $translator = $this->get('translator');
-        $locale = $this->getRequest()->getLocale();
+        $locale = $request->getLocale();
 
         $form = $this->createForm(new $formType($translator, $locale), $resource);
 

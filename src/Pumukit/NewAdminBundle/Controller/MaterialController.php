@@ -100,7 +100,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
     }
@@ -110,7 +110,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -122,7 +122,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'down');
 

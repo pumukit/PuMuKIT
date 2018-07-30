@@ -684,7 +684,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -741,7 +741,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function invertAnnounceAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -799,7 +799,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function cutAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }

@@ -125,7 +125,7 @@ class SeriesPicController extends Controller implements NewAdminController
      */
     public function deleteAction(Request $request)
     {
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:Series');
@@ -148,7 +148,7 @@ class SeriesPicController extends Controller implements NewAdminController
      */
     public function upAction(Request $request)
     {
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:Series');
@@ -175,7 +175,7 @@ class SeriesPicController extends Controller implements NewAdminController
      */
     public function downAction(Request $request)
     {
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:Series');

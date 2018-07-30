@@ -148,7 +148,7 @@ class TagController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);

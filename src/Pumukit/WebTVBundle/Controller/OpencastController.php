@@ -63,7 +63,7 @@ class OpencastController extends PlayerController implements WebTVController
         }
 
         //Detect if it's mobile: (Refactor this using javascript... )
-        $userAgent = $this->getRequest()->headers->get('user-agent');
+        $userAgent = $request->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
         $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));

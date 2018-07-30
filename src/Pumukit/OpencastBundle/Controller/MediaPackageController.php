@@ -80,8 +80,8 @@ class MediaPackageController extends Controller
         $opencastService = $this->get('pumukit_opencast.import');
         $opencastService->importRecording($id, $request->get('invert'), $this->getUser());
 
-        if ($this->getRequest()->headers->get('referer')) {
-            return $this->redirect($this->getRequest()->headers->get('referer'));
+        if ($request->headers->get('referer')) {
+            return $this->redirect($request->headers->get('referer'));
         } else {
             return $this->redirectToRoute('pumukitopencast');
         }
