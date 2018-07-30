@@ -45,7 +45,7 @@ class JobGeneratorListenerTest extends WebTestCase
                    ->method('addUniqueJob')
                    ->will($this->returnArgument(1));
 
-        $logger = $this->getMockBuilder('Symfony\Component\HttpKernel\Log\LoggerInterface')
+        $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')
                        ->disableOriginalConstructor()
                        ->getMock();
 

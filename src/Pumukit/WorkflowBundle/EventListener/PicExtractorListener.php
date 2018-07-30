@@ -3,7 +3,7 @@
 namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;

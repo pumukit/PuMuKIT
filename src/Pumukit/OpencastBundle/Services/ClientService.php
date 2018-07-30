@@ -2,7 +2,7 @@
 
 namespace Pumukit\OpencastBundle\Services;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Role\Role;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\RoleHierarchy;
@@ -40,7 +40,7 @@ class ClientService
         $this->logger = $logger;
 
         if (!function_exists('curl_init')) {
-            $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+            $this->logger->error(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                     .') The function "curl_init" does not exist. '
                                     .'Curl is required to execute remote commands.');
             throw new \RuntimeException('Curl is required to execute remote commands.');
@@ -585,13 +585,13 @@ class ClientService
         $header = array('X-Requested-Auth: Digest',
                         'X-Opencast-Matterhorn-Authorization: true', );
 
-        $this->logger->addDebug(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+        $this->logger->debug(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                 .') Requested URL "'.$requestUrl.'" '
                                 .'with method "'.$method.'" '
                                 .'and params: '.$fields);
 
         if (false === $request = curl_init($requestUrl)) {
-            $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+            $this->logger->error(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                     .') Unable to create a new curl handle with URL: '.$requestUrl.'.');
             throw new \RuntimeException('Unable to create a new curl handle with URL: '.$requestUrl.'.');
         }
@@ -641,7 +641,7 @@ class ClientService
 
         if ('GET' == $method) {
             if (200 != $output['status']) {
-                $this->logger->addError(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
+                $this->logger->error(__CLASS__.'['.__FUNCTION__.'](line '.__LINE__
                                       .') Error ('.$output['status'].') Processing Request : '.$requestUrl.'.');
                 throw new \Exception(sprintf('Error %s Processing Request (%s)', $output['status'], $requestUrl), 1);
             }

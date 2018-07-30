@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class LDAPUserService
@@ -223,7 +223,7 @@ class LDAPUserService
                         $group = $this->getGroup($value, self::EDU_PERSON_AFFILIATION);
                         $this->userService->addGroup($group, $user, true, false);
                         $aGroups[] = $group->getKey();
-                        $this->logger->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
+                        $this->info(__CLASS__.' ['.__FUNCTION__.'] '.'Added Group: '.$group->getName());
                     } catch (\ErrorException $e) {
                         $this->logger->info(
                             __CLASS__.' ['.__FUNCTION__.'] '.'Invalid Group '.$value.': '.$e->getMessage()
