@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -75,14 +75,14 @@ class TrackUpdateType extends AbstractType
                       'label' => $this->translator->trans('URL', array(), null, $this->locale), ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Track',
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_track_update';
     }

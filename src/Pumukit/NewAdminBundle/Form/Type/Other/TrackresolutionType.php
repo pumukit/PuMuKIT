@@ -3,11 +3,11 @@
 namespace Pumukit\NewAdminBundle\Form\Type\Other;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrackresolutionType extends AbstractType
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'compound' => false,
@@ -19,7 +19,7 @@ class TrackresolutionType extends AbstractType
         return 'form';
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'trackresolution';
     }

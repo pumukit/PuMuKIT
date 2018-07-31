@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class RoleType extends AbstractType
@@ -48,14 +48,14 @@ class RoleType extends AbstractType
                       'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Role',
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_role';
     }

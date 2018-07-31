@@ -4,7 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
 use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
@@ -77,14 +77,14 @@ class LiveType extends AbstractType
         */
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\LiveBundle\Document\Live',
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_live';
     }

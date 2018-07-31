@@ -72,7 +72,7 @@ class UNESCOBasicType extends AbstractType
         );
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_unesco_basicform';
     }
