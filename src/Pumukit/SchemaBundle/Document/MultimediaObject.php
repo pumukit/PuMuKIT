@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"textindex"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
+ *   @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex"=10, "secondarytextindex"=1}})
  * })
  */
 class MultimediaObject
@@ -222,6 +222,12 @@ class MultimediaObject
      * @MongoDB\Raw
      */
     private $textindex = array();
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $secondarytextindex = array();
 
     /**
      * Used locale to override Translation listener`s locale
@@ -2015,6 +2021,7 @@ class MultimediaObject
             return false;
         }
     }
+
     /**
      * Set textindex.
      *
@@ -2034,5 +2041,26 @@ class MultimediaObject
     public function getTextIndex()
     {
         return $this->textindex;
+    }
+
+    /**
+     * Set secondarytextindex.
+     *
+     * @param array      $secondarytextindex
+     */
+    public function setSecondaryTextIndex($secondarytextindex)
+    {
+        $this->secondarytextindex = $secondarytextindex;
+    }
+
+    /**
+     * Get secondarytextindex.
+     *
+     *
+     * @return array
+     */
+    public function getSecondaryTextIndex()
+    {
+        return $this->secondarytextindex;
     }
 }
