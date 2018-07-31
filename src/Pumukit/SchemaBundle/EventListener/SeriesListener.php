@@ -32,6 +32,7 @@ class SeriesListener
         $this->updateTextIndex($series);
         $this->dm->flush();
     }
+
     /**
      * @param $series
      */
@@ -42,20 +43,20 @@ class SeriesListener
         $title = $series->getI18nTitle();
         $text = '';
         $secondarytext = '';
-        $mongo_langs = array("da", "nl", "en", "fi", "fr", "de", "hu", "it", "nb", "pt", "ro", "ru", "es", "sv", "tr", "ara", "prs", "pes", "urd", "zhs", "zht");
+        $mongo_langs = array('da', 'nl', 'en', 'fi', 'fr', 'de', 'hu', 'it', 'nb', 'pt', 'ro', 'ru', 'es', 'sv', 'tr', 'ara', 'prs', 'pes', 'urd', 'zhs', 'zht');
         foreach (array_keys($title) as $lang) {
             if (in_array($lang, $mongo_langs)) {
                 if ($series->getTitle($lang)) {
                     $text = $series->getTitle($lang);
                 }
                 if ($series->getKeywords($lang)) {
-                    $text =  $text . " | " . $series->getKeywords($lang);
+                    $text = $text.' | '.$series->getKeywords($lang);
                 }
                 if ($series->getDescription($lang)) {
                     $secondarytext = $series->getDescription($lang);
                 }
-                $textindex[] =  array("indexlanguage" => $lang, "text" => $this->sanitizeText($text));
-                $secondarytextindex[] = array("indexlanguage" => $lang, "text" => $this->sanitizeText($secondarytext));
+                $textindex[] = array('indexlanguage' => $lang, 'text' => $this->sanitizeText($text));
+                $secondarytextindex[] = array('indexlanguage' => $lang, 'text' => $this->sanitizeText($secondarytext));
             }
         }
         $series->setTextIndex($textindex);
@@ -64,6 +65,7 @@ class SeriesListener
 
     /**
      * @param $text
+     *
      * @return string
      */
     public function sanitizeText($text)
@@ -134,6 +136,7 @@ class SeriesListener
           'þ' => 'b',
           'ÿ' => 'y',
         );
+
         return strtolower(strtr($text, $unwanted_array));
     }
 }

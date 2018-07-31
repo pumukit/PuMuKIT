@@ -1033,7 +1033,7 @@ class Series
     /**
      * Set textindex.
      *
-     * @param array      $textindex
+     * @param array $textindex
      */
     public function setTextIndex($textindex)
     {
@@ -1054,7 +1054,7 @@ class Series
     /**
      * Set secondarytextindex.
      *
-     * @param array      $secondarytextindex
+     * @param array $secondarytextindex
      */
     public function setSecondaryTextIndex($secondarytextindex)
     {

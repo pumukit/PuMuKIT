@@ -48,20 +48,20 @@ class MultimediaObjectListener
         $title = $multimediaObject->getI18nTitle();
         $text = '';
         $secondarytext = '';
-        $mongo_langs = array("da", "nl", "en", "fi", "fr", "de", "hu", "it", "nb", "pt", "ro", "ru", "es", "sv", "tr", "ara", "prs", "pes", "urd", "zhs", "zht");
+        $mongo_langs = array('da', 'nl', 'en', 'fi', 'fr', 'de', 'hu', 'it', 'nb', 'pt', 'ro', 'ru', 'es', 'sv', 'tr', 'ara', 'prs', 'pes', 'urd', 'zhs', 'zht');
         foreach (array_keys($title) as $lang) {
             if (in_array($lang, $mongo_langs)) {
                 if ($multimediaObject->getTitle($lang)) {
                     $text = $multimediaObject->getTitle($lang);
                 }
                 if ($multimediaObject->getKeywords($lang)) {
-                    $text =  $text . " | " . $multimediaObject->getKeywords($lang);
+                    $text = $text.' | '.$multimediaObject->getKeywords($lang);
                 }
                 if ($multimediaObject->getDescription($lang)) {
                     $secondarytext = $multimediaObject->getDescription($lang);
                 }
-                $textindex[] =  array("indexlanguage" => $lang, "text" => $this->sanitizeText($text));
-                $secondarytextindex[] = array("indexlanguage" => $lang, "text" => $this->sanitizeText($secondarytext));
+                $textindex[] = array('indexlanguage' => $lang, 'text' => $this->sanitizeText($text));
+                $secondarytextindex[] = array('indexlanguage' => $lang, 'text' => $this->sanitizeText($secondarytext));
             }
         }
         $multimediaObject->setTextIndex($textindex);
@@ -70,6 +70,7 @@ class MultimediaObjectListener
 
     /**
      * @param $text
+     *
      * @return string
      */
     public function sanitizeText($text)
@@ -140,6 +141,7 @@ class MultimediaObjectListener
           'þ' => 'b',
           'ÿ' => 'y',
         );
+
         return strtolower(strtr($text, $unwanted_array));
     }
 }

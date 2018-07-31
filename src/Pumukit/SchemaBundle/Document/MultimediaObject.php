@@ -2025,7 +2025,7 @@ class MultimediaObject
     /**
      * Set textindex.
      *
-     * @param array      $textindex
+     * @param array $textindex
      */
     public function setTextIndex($textindex)
     {
@@ -2046,7 +2046,7 @@ class MultimediaObject
     /**
      * Set secondarytextindex.
      *
-     * @param array      $secondarytextindex
+     * @param array $secondarytextindex
      */
     public function setSecondaryTextIndex($secondarytextindex)
     {
