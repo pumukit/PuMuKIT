@@ -440,12 +440,17 @@ class EmbeddedPerson
      *
      * Returns strings with person info:
      * Firm, Post and Bio separated by commas
+     * or without Bio if param is false
+     *
+     * @param bool $withBio
      *
      * @return string
      */
-    public function getInfo()
+    public function getInfo($withBio = true)
     {
-        $aux = array($this->getPost(), $this->getFirm(), $this->getBio());
+        $aux = $withBio ?
+             array($this->getPost(), $this->getFirm(), $this->getBio()) :
+             array($this->getPost(), $this->getFirm());
         $aux = array_filter($aux, function ($a) {
             return !is_null($a) && ('' != $a);
         });
