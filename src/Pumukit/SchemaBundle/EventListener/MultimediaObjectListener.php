@@ -54,22 +54,17 @@ class MultimediaObjectListener
         $textIndex = array();
         $secondaryTextIndex = array();
         $title = $multimediaObject->getI18nTitle();
-        $text = '';
-        $secondaryText = '';
         foreach (array_keys($title) as $lang) {
-            if (TextIndexUtils::isSupportedLanguage($lang)) {
-                if ($multimediaObject->getTitle($lang)) {
-                    $text = $multimediaObject->getTitle($lang);
-                }
-                if ($multimediaObject->getKeywords($lang)) {
-                    $text = $text.' | '.$multimediaObject->getKeywords($lang);
-                }
-                if ($multimediaObject->getDescription($lang)) {
-                    $secondaryText = $multimediaObject->getDescription($lang);
-                }
-                $textIndex[] = array('indexlanguage' => $lang, 'text' => TextIndexUtils::cleanTextIndex($text));
-                $secondaryTextIndex[] = array('indexlanguage' => $lang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
-            }
+            $text = '';
+            $secondaryText = '';
+            $mongoLang = TextIndexUtils::getCloseLanguage($lang);
+
+            $text .= $multimediaObject->getTitle($lang);
+            $text .= ' | '.$multimediaObject->getKeywords($lang);
+            $secondaryText .= $multimediaObject->getDescription($lang);
+
+            $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));
+            $secondaryTextIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
         }
         $multimediaObject->setTextIndex($textIndex);
         $multimediaObject->setSecondaryTextIndex($secondaryTextIndex);

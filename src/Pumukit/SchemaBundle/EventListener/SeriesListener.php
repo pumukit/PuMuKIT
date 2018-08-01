@@ -42,22 +42,17 @@ class SeriesListener
         $textIndex = array();
         $secondaryTextIndex = array();
         $title = $series->getI18nTitle();
-        $text = '';
-        $secondaryText = '';
         foreach (array_keys($title) as $lang) {
-            if (TextIndexUtils::isSupportedLanguage($lang)) {
-                if ($series->getTitle($lang)) {
-                    $text = $series->getTitle($lang);
-                }
-                if ($series->getKeywords($lang)) {
-                    $text = $text.' | '.$series->getKeywords($lang);
-                }
-                if ($series->getDescription($lang)) {
-                    $secondaryText = $series->getDescription($lang);
-                }
-                $textIndex[] = array('indexlanguage' => $lang, 'text' => TextIndexUtils::cleanTextIndex($text));
-                $secondaryTextIndex[] = array('indexlanguage' => $lang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
-            }
+            $text = '';
+            $secondaryText = '';
+            $mongoLang = TextIndexUtils::getCloseLanguage($lang);
+
+            $text .= $series->getTitle($lang);
+            $text .= ' | '.$series->getKeywords($lang);
+            $secondaryText .= $series->getDescription($lang);
+
+            $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));
+            $secondaryTextIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
         }
         $series->setTextIndex($textIndex);
         $series->setSecondaryTextIndex($secondaryTextIndex);
