@@ -32,7 +32,7 @@ class TextIndexUtils
         }
 
         if ('gl' == $langCode) {
-            return 'es';
+            return 'pt';
         }
 
         return 'none';
