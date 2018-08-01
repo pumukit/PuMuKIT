@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SeriesSearchService
 {
@@ -108,7 +109,10 @@ class SeriesSearchService
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);
         } else {
-            $base[] = array('$text' => array('$search' => $text));
+            $base[] = array('$text' => array(
+                '$search' => TextIndexUtils::cleanTextIndex($text),
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+            ));
         }
 
         return $base;
