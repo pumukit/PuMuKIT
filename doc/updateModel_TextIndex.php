@@ -12,9 +12,8 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Debug;
-//
 use Symfony\Component\Console\Helper\ProgressBar;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+
 
 
 class UpgradePumukitCommand extends ContainerAwareCommand
@@ -30,7 +29,8 @@ class UpgradePumukitCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->updateSeriesTitleInMultimediaObjects($output);
-        $output->writeln('Mongo MultimediaObject collection updated TextIndex field.');
+        $output->writeln('');
+        $output->writeln('Mongo MultimediaObject and Series collection updated TextIndex field.');
     }
 
     /**
@@ -40,16 +40,33 @@ class UpgradePumukitCommand extends ContainerAwareCommand
      */
     protected function updateSeriesTitleInMultimediaObjects(OutputInterface $output)
     {
-        $service = $this->getContainer()->get('pumukitschema.schema.multimediaobject');
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $serviceMultimediaObject = $this->getContainer()->get('pumukitschema.schema.multimediaobject');
+        $serviceSeries = $this->getContainer()->get('pumukitschema.schema.series');
+
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+
         $multimediaObjects = $mmRepo->findAll();
+        $series = $seriesRepo->findAll();
+
         $progress = new ProgressBar($output, count($multimediaObjects));
         $progress->setFormat('verbose');
+        $output->writeln('Updating Multimedia Objects...');
         $progress->start();
         foreach ($multimediaObjects as $multimediaObject) {
             $progress->advance();
-            $service->updateTextIndex($multimediaObject);
+            $serviceMultimediaObject->updateTextIndex($multimediaObject);
+        }
+
+        $progress = new ProgressBar($output, count($series));
+        $progress->setFormat('verbose');
+        $output->writeln('');
+        $output->writeln('Updating Series...');
+        $progress->start();
+        foreach ($series as $serie) {
+            $progress->advance();
+            $serviceSeries->updateTextIndex($serie);
         }
         $dm->flush();
     }
