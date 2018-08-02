@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 /**
  * MultimediaObjectRepository.
