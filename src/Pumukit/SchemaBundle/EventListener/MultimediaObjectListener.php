@@ -60,7 +60,8 @@ class MultimediaObjectListener
             $mongoLang = TextIndexUtils::getCloseLanguage($lang);
 
             $text .= $multimediaObject->getTitle($lang);
-            $text .= ' | '.$multimediaObject->getKeywords($lang);
+            $text .= ' | '.$multimediaObject->getKeyword($lang);
+            $text .= ' | '.$multimediaObject->getSeriesTitle($lang);
             $secondaryText .= $multimediaObject->getDescription($lang);
 
             $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));

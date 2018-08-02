@@ -48,7 +48,7 @@ class SeriesListener
             $mongoLang = TextIndexUtils::getCloseLanguage($lang);
 
             $text .= $series->getTitle($lang);
-            $text .= ' | '.$series->getKeywords($lang);
+            $text .= ' | '.$series->getKeyword($lang);
             $secondaryText .= $series->getDescription($lang);
 
             $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));

@@ -861,6 +861,25 @@ class MultimediaObject
     }
 
     /**
+     * Get series title, only for performace use.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getSeriesTitle($locale = null)
+    {
+        if (null == $locale) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->seriesTitle[$locale])) {
+            return '';
+        }
+
+        return $this->seriesTitle[$locale];
+    }
+
+    /**
      * Set broadcast.
      *
      * @deprecated in version 2.3
