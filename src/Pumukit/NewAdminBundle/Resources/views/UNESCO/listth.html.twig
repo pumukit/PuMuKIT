@@ -15,7 +15,7 @@
             {% trans %}Series{% endtrans %}&nbsp;
             {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
                 {% if 'seriesTitle' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
                 {% endif %}
             {% endif %}
         </a>
@@ -27,7 +27,7 @@
             {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
                 {% set type = app.session.get('admin/unesco/element_sort')|split('.') %}
                 {% if 'title' == type[0] %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
                 {% endif %}
             {% endif %}
         </a>
@@ -37,7 +37,7 @@
             {% trans %}Duration{% endtrans %}
             {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
                 {% if 'tracks.duration' ==  app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
                 {% endif %}
             {% endif %}
         </a>
@@ -48,7 +48,7 @@
             {% trans %}RecDate{% endtrans %}&nbsp;
             {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
                 {% if 'record_date' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
                 {% endif %}
             {% endif %}
         </a>
@@ -59,12 +59,12 @@
             {% trans %}PubDate{% endtrans %}&nbsp;
             {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
                 {% if 'public_date' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':'&#x25BE;' }}
+                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
                 {% endif %}
             {% endif %}
         </a>
     </th>
 
-    <input type="hidden" name="unesco_short_type" id="pumukitnewadmin_unesco_sort_change_type" value="{{ app.session.get('admin/unesco/type')=='asc'?'desc':'asc' }}"/>
+    <input type="hidden" name="unesco_short_type" id="pumukitnewadmin_unesco_sort_change_type" value="{{ app.session.get('admin/unesco/type')=='desc'?'asc': app.session.get('admin/unesco/type')=='asc'?'score' : 'desc' }}"/>
 
 </tr>

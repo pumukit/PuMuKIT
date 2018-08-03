@@ -151,12 +151,23 @@ class UNESCOController extends Controller implements NewAdminController
         }
 
         if ($session->has('admin/unesco/element_sort')) {
-            $sort = $session->get('admin/unesco/type');
-            $multimediaObjects->sort($session->get('admin/unesco/element_sort'), $sort);
+            $element_sort = $session->get('admin/unesco/element_sort');
+            $sortType = $session->get('admin/unesco/type');
+
+            if ($sortType == 'score') {
+                $multimediaObjects->sortMeta('score', 'textScore');
+            } else {
+                $multimediaObjects->sort($element_sort, $sortType);
+            }
         } else {
-            $multimediaObjects->sort('public_date', 'desc');
-            $session->set('admin/unesco/type', 'desc');
-            $session->set('admin/unesco/element_sort', 'public_date');
+            if ($session->get('admin/unesco/text', false)) {
+                $multimediaObjects->sortMeta('score', 'textScore');
+                $session->set('admin/unesco/type', 'score');
+            } else {
+                $multimediaObjects->sort('public_date', 'desc');
+                $session->set('admin/unesco/type', 'desc');
+                $session->set('admin/unesco/element_sort', 'public_date');
+            }
         }
 
         $adapter = new DoctrineODMMongoDBAdapter($multimediaObjects);
@@ -209,6 +220,7 @@ class UNESCOController extends Controller implements NewAdminController
             $session->remove('UNESCO/criteria');
             $session->remove('UNESCO/form');
             $session->remove('UNESCO/formbasic');
+            $session->set('admin/unesco/text', false);
         }
 
         $session->remove('admin/unesco/tag');
@@ -237,6 +249,7 @@ class UNESCOController extends Controller implements NewAdminController
         $newCriteria = array();
         $tag = array();
 
+        // $session->set('admin/unesco/text', false);
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) and !empty($value)) {
@@ -258,6 +271,7 @@ class UNESCOController extends Controller implements NewAdminController
                     $formBasic = true;
                 } elseif ('text' === $key and !empty($value)) {
                     $newCriteria['$text'] = $value;
+                    $session->set('admin/unesco/text', true);
                     $formBasic = true;
                 } elseif ('broadcast' === $key and !empty($value)) {
                     if ('all' !== $value) {
@@ -298,6 +312,8 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 }
             }
+        } else {
+            $session->set('admin/unesco/text', false);
         }
 
         if (!empty($tag)) {
@@ -314,11 +330,19 @@ class UNESCOController extends Controller implements NewAdminController
             if ('title' === $request->request->get('sort_type')) {
                 $sort_type = 'title.'.$request->getLocale();
             }
-
+            if ($session->get('admin/unesco/text', false)) {
+                $sort_utype = 'score';
+            } else {
+                $sort_utype = $request->request->get('sort');
+            }
             $session->set('admin/unesco/element_sort', $sort_type);
-            $session->set('admin/unesco/type', $request->request->get('sort'));
+            $session->set('admin/unesco/type', $sort_utype);
 
             return new JsonResponse(array('success'));
+        }
+
+        if ($session->get('admin/unesco/text', false)) {
+            $session->set('admin/unesco/type', 'score');
         }
 
         $session->set('UNESCO/form', $criteria);
