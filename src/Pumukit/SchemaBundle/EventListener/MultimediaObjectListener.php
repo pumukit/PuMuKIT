@@ -64,6 +64,11 @@ class MultimediaObjectListener
             $text .= ' | '.$multimediaObject->getSeriesTitle($lang);
             $secondaryText .= $multimediaObject->getDescription($lang);
 
+            $persons = $multimediaObject->getPeopleByRole();
+            foreach ($persons as $key => $person) {
+                $secondaryText .= ' | '.$person->getName();
+            }
+
             $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));
             $secondaryTextIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
         }

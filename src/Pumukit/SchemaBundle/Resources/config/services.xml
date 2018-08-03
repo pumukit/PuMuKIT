@@ -44,6 +44,9 @@
             <tag name="kernel.event_listener" event="track.create" method="postUpdate" />
             <tag name="kernel.event_listener" event="track.update" method="postUpdate" />
             <tag name="kernel.event_listener" event="track.delete" method="postUpdate" />
+            <tag name="kernel.event_listener" event="personwithrole.create" method="postUpdate" />
+            <tag name="kernel.event_listener" event="personwithrole.update" method="postUpdate" />
+            <tag name="kernel.event_listener" event="personwithrole.delete" method="postUpdate" />
         </service>
 
         <service id="pumukitschema.factory" class="Pumukit\SchemaBundle\Services\FactoryService">
