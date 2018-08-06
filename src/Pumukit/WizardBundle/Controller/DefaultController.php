@@ -461,6 +461,9 @@ class DefaultController extends Controller
                     $series = $this->getSeries($seriesData);
                     $selectedPath = $request->get('file');
                     $finder = new Finder();
+                    if (!$this->getParameter('pumukit2.inbox_depth')) {
+                        $finder->depth('< 1');
+                    }
                     $finder->files()->in($selectedPath);
                     foreach ($finder as $f) {
                         $filePath = $f->getRealpath();
