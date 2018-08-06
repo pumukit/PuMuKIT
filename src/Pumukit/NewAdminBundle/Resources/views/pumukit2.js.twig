@@ -1877,7 +1877,7 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
                     if(type == 'dir') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
+                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
                                  '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
                                  '{% trans %}This directory{% endtrans %}' +
                                  '</a>';
