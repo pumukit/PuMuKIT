@@ -462,7 +462,7 @@ class DefaultController extends Controller
                     $selectedPath = $request->get('file');
                     $finder = new Finder();
                     if (!$this->getParameter('pumukit2.inbox_depth')) {
-                        $finder->depth('< 1');
+                        $finder->depth('== 0');
                     }
                     $finder->files()->in($selectedPath);
                     foreach ($finder as $f) {

@@ -51,7 +51,7 @@ class InboxController extends Controller implements NewAdminController
                 if (0 !== (count(glob("$f/*")))) {
                     $contentFinder = new Finder();
                     if (!$this->getParameter('pumukit2.inbox_depth')) {
-                        $contentFinder->depth('< 1');
+                        $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());
                     $res[] = array('path' => $f->getRealpath(),
