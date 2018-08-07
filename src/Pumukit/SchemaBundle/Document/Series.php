@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
+ *   @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  * })
  */
 class Series
@@ -176,6 +176,18 @@ class Series
      * @MongoDB\Field(type="raw")
      */
     private $line2 = array('en' => '');
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $textindex = array();
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $secondarytextindex = array();
 
     /**
      * Used locale to override Translation listener`s locale
@@ -1016,5 +1028,47 @@ class Series
         }
 
         return $r;
+    }
+
+    /**
+     * Set textindex.
+     *
+     * @param array $textindex
+     */
+    public function setTextIndex($textindex)
+    {
+        $this->textindex = $textindex;
+    }
+
+    /**
+     * Get textindex.
+     *
+     *
+     * @return array
+     */
+    public function getTextIndex()
+    {
+        return $this->textindex;
+    }
+
+    /**
+     * Set secondarytextindex.
+     *
+     * @param array $secondarytextindex
+     */
+    public function setSecondaryTextIndex($secondarytextindex)
+    {
+        $this->secondarytextindex = $secondarytextindex;
+    }
+
+    /**
+     * Get secondarytextindex.
+     *
+     *
+     * @return array
+     */
+    public function getSecondaryTextIndex()
+    {
+        return $this->secondarytextindex;
     }
 }

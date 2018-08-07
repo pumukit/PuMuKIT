@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
  * @MongoDB\Indexes({
- *   @MongoDB\Index(name="text_index", keys={"$**"="text"}, options={"language_override"="indexlanguage", "default_language"="none"})
+ *   @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  * })
  */
 class MultimediaObject
@@ -216,6 +216,18 @@ class MultimediaObject
      * @MongoDB\EmbedMany(targetDocument="EmbeddedRole")
      */
     private $people;
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $textindex = array();
+
+    /**
+     * @var array
+     * @MongoDB\Raw
+     */
+    private $secondarytextindex = array();
 
     /**
      * Used locale to override Translation listener`s locale
@@ -846,6 +858,25 @@ class MultimediaObject
         }
 
         return $this->series;
+    }
+
+    /**
+     * Get series title, only for performace use.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getSeriesTitle($locale = null)
+    {
+        if (null == $locale) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->seriesTitle[$locale])) {
+            return '';
+        }
+
+        return $this->seriesTitle[$locale];
     }
 
     /**
@@ -2008,5 +2039,47 @@ class MultimediaObject
         } else {
             return false;
         }
+    }
+
+    /**
+     * Set textindex.
+     *
+     * @param array $textindex
+     */
+    public function setTextIndex($textindex)
+    {
+        $this->textindex = $textindex;
+    }
+
+    /**
+     * Get textindex.
+     *
+     *
+     * @return array
+     */
+    public function getTextIndex()
+    {
+        return $this->textindex;
+    }
+
+    /**
+     * Set secondarytextindex.
+     *
+     * @param array $secondarytextindex
+     */
+    public function setSecondaryTextIndex($secondarytextindex)
+    {
+        $this->secondarytextindex = $secondarytextindex;
+    }
+
+    /**
+     * Get secondarytextindex.
+     *
+     *
+     * @return array
+     */
+    public function getSecondaryTextIndex()
+    {
+        return $this->secondarytextindex;
     }
 }

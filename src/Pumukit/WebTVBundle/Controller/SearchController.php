@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchController extends Controller implements WebTVController
 {
@@ -101,7 +102,11 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
-        $queryBuilder = $queryBuilder->sort('record_date', 'desc');
+        if ($searchFound == '') {
+            $queryBuilder = $queryBuilder->sort('record_date', 'desc');
+        } else {
+            $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        }
         // --- END Create QueryBuilder ---
 
         // --- Execute QueryBuilder and get paged results ---
@@ -189,7 +194,10 @@ class SearchController extends Controller implements WebTVController
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ('' != $searchFound) {
-            $queryBuilder->field('$text')->equals(array('$search' => $searchFound));
+            $queryBuilder->field('$text')->equals(array(
+                '$search' => TextIndexUtils::cleanTextIndex($searchFound),
+                '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
+            ));
         }
 
         return $queryBuilder;
