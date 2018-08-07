@@ -14,11 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-
-
 class UpgradePumukitCommand extends ContainerAwareCommand
 {
     private $dm;
+
     protected function configure()
     {
         $this
@@ -26,6 +25,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
             ->setDescription('Update TextIndex in Multimedia Objects')
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->updateSeriesTitleInMultimediaObjects($output);
@@ -40,6 +40,7 @@ class UpgradePumukitCommand extends ContainerAwareCommand
      */
     protected function updateSeriesTitleInMultimediaObjects(OutputInterface $output)
     {
+        $ii = 0;
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $serviceMultimediaObject = $this->getContainer()->get('pumukitschema.schema.multimediaobject');
         $serviceSeries = $this->getContainer()->get('pumukitschema.schema.series');
@@ -47,31 +48,42 @@ class UpgradePumukitCommand extends ContainerAwareCommand
         $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
 
-        $multimediaObjects = $mmRepo->findAll();
-        $series = $seriesRepo->findAll();
+        $multimediaObjects = $mmRepo->createQueryBuilder()->getQuery()->execute();
 
         $progress = new ProgressBar($output, count($multimediaObjects));
         $progress->setFormat('verbose');
         $output->writeln('Updating Multimedia Objects...');
         $progress->start();
         foreach ($multimediaObjects as $multimediaObject) {
+            ++$ii;
             $progress->advance();
             $serviceMultimediaObject->updateTextIndex($multimediaObject);
+            if ($ii % 20) {
+                $dm->flush();
+                $dm->clear();
+            }
         }
+        $dm->flush();
+        $dm->clear();
 
+        $series = $seriesRepo->createQueryBuilder()->getQuery()->execute();
         $progress = new ProgressBar($output, count($series));
         $progress->setFormat('verbose');
         $output->writeln('');
         $output->writeln('Updating Series...');
         $progress->start();
         foreach ($series as $serie) {
+            ++$ii;
             $progress->advance();
             $serviceSeries->updateTextIndex($serie);
+            if ($ii % 20) {
+                $dm->flush();
+                $dm->clear();
+            }
         }
         $dm->flush();
     }
 }
-
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
