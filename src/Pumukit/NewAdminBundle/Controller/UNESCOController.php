@@ -249,7 +249,7 @@ class UNESCOController extends Controller implements NewAdminController
         $newCriteria = array();
         $tag = array();
 
-        // $session->set('admin/unesco/text', false);
+        $session->set('admin/unesco/text', false);
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) and !empty($value)) {
@@ -312,8 +312,6 @@ class UNESCOController extends Controller implements NewAdminController
                     $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 }
             }
-        } else {
-            $session->set('admin/unesco/text', false);
         }
 
         if (!empty($tag)) {

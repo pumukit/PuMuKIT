@@ -102,7 +102,11 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
-        $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        if ($searchFound == '') {
+            $queryBuilder = $queryBuilder->sort('record_date', 'desc');
+        } else {
+            $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        }
         // --- END Create QueryBuilder ---
 
         // --- Execute QueryBuilder and get paged results ---
