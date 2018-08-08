@@ -89,7 +89,12 @@ class OpencastImportService
 
             $language = $this->getMediaPackageField($mediaPackage, 'language');
             if ($language) {
-                $multimediaObject->setProperty('opencastlanguage', strtolower($language));
+                $parsedLocale = \Locale::parseLocale($language);
+                if (in_array($parsedLocale['language'], $this->otherLocales)) {
+                    $multimediaObject->setProperty('opencastlanguage', $parsedLocale['language']);
+                } else {
+                    $multimediaObject->setProperty('opencastlanguage', \Locale::getDefault());
+                }
             } else {
                 $multimediaObject->setProperty('opencastlanguage', \Locale::getDefault());
             }
@@ -204,7 +209,14 @@ class OpencastImportService
 
         $language = $this->getMediaPackageField($mediaPackage, 'language');
         if ($language) {
-            $track->setLanguage(strtolower($language));
+            $parsedLocale = \Locale::parseLocale($language);
+            if (in_array($parsedLocale['language'], $this->otherLocales)) {
+                $track->setLanguage($parsedLocale['language']);
+            } else {
+                $track->setLanguage(\Locale::getDefault());
+            }
+        } else {
+            $track->setLanguage(\Locale::getDefault());
         }
 
         $tagsArray = $this->getMediaPackageField($opencastTrack, 'tags');
