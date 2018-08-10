@@ -44,6 +44,12 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
         $queryBuilder = $this->searchQueryBuilder($queryBuilder, $searchFound);
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
+        if ('' == $searchFound) {
+            $queryBuilder = $queryBuilder->sort('public_date', 'desc');
+        } else {
+            $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        }
+
         // --- END Create QueryBuilder ---
 
         // --- Execute QueryBuilder and get paged results ---
@@ -102,7 +108,7 @@ class SearchController extends Controller implements WebTVController
         $queryBuilder = $this->dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound);
         $queryBuilder = $this->languageQueryBuilder($queryBuilder, $languageFound);
         $queryBuilder = $this->tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
-        if ($searchFound == '') {
+        if ('' == $searchFound) {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         } else {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
