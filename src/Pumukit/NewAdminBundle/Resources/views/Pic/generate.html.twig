@@ -151,11 +151,11 @@
         var show_presentation = document.querySelector("#show-presentation");
 
         show_presenter.addEventListener("click", function () {
-            video.src = "{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presenter/delivery'])) }}";
+            video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery'])) }}";
         }, false);
 
         show_presentation.addEventListener("click", function () {
-            video.src = "{{ track_url(mm.getFilteredTrackWithTags([], ['display', 'presentation/delivery'])) }}";
+            video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery'])) }}";
         }, false);
 
         {% endif %}
