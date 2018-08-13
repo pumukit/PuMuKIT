@@ -3,7 +3,6 @@
 namespace Pumukit\SchemaBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 class MultimediaObjectViews
@@ -20,19 +19,10 @@ class MultimediaObjectViews
         $track = $event->getTrack();
         $multimediaObject = $event->getMultimediaObject();
 
-        if (!$this->isViewableTrack($track)) {
-            return;
-        }
-
         $multimediaObject->incNumview();
         $track && $track->incNumview();
 
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-    }
-
-    private function isViewableTrack(Track $track = null)
-    {
-        return !$track || !$track->containsTag('presentation/delivery');
     }
 }

@@ -5,7 +5,6 @@ namespace Pumukit\StatsBundle\EventListener;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
@@ -26,18 +25,17 @@ class Log
     {
         $req = $this->requestStack->getMasterRequest();
         $track = $event->getTrack();
-        if (!$this->isViewableTrack($track)) {
-            return;
-        }
 
-        $log = new ViewsLog($req->getUri(),
-                            $req->getClientIp(),
-                            $req->headers->get('user-agent'),
-                            $req->headers->get('referer'),
-                            $event->getMultimediaObject()->getId(),
-                            $event->getMultimediaObject()->getSeries()->getId(),
-                            $event->getTrack() ? $event->getTrack()->getId() : null,
-                            $this->getUser());
+        $log = new ViewsLog(
+            $req->getUri(),
+            $req->getClientIp(),
+            $req->headers->get('user-agent'),
+            $req->headers->get('referer'),
+            $event->getMultimediaObject()->getId(),
+            $event->getMultimediaObject()->getSeries()->getId(),
+            $event->getTrack() ? $event->getTrack()->getId() : null,
+            $this->getUser()
+        );
 
         $this->dm->persist($log);
         $this->dm->flush();
@@ -52,18 +50,5 @@ class Log
         }
 
         return null;
-    }
-
-    /**
-     * Check if the track is 'viewable'.
-     *
-     * @param Track $track
-     *
-     * @return bool
-     */
-    private function isViewableTrack(Track $track = null)
-    {
-        //'presentation/delivery' corresponds to the opencast slides, thus should not be counted
-        return !$track || !$track->containsTag('presentation/delivery');
     }
 }

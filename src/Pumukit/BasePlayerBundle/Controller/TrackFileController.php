@@ -103,6 +103,10 @@ class TrackFileController extends Controller
             return false;
         }
 
+        if ($track->containsTag('presentation/delivery')) {
+            return false;
+        }
+
         $range = $request->headers->get('range');
         $start = $request->headers->get('start');
         if (!$range && !$start) {
