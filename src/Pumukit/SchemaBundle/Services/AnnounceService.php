@@ -137,20 +137,26 @@ class AnnounceService
         $dateEnd->modify('last day of next month');
         $dateEnd->setTime(23, 59, 59);
 
+        $sortKey = $useRecordDate ? 'record_date' : 'public_date';
         $queryBuilderMms = $this->mmobjRepo->createQueryBuilder();
-        $queryBuilderMms->sort('public_date', 'asc');
+        $queryBuilderMms->sort($sortKey, 'asc');
         if ($withPudenewTag) {
             $queryBuilderMms->field('tags.cod')->equals('PUDENEW');
         }
         $queryBuilderMms->limit(1);
 
         $lastMm = $queryBuilderMms->getQuery()->getSingleResult();
+        if (!$lastMm) {
+            return array(null, array());
+        }
+
+        $lastDate = $useRecordDate ? $lastMm->getRecordDate() : $lastMm->getPublicDate();
 
         do {
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
-            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag);
-        } while (empty($last) && $lastMm && $lastMm->getPublicDate() <= $dateEnd);
+            $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag, $useRecordDate);
+        } while (empty($last) && $lastMm && $lastDate <= $dateEnd);
 
         if (empty($last)) {
             $dateEnd = null;
