@@ -41,11 +41,6 @@ pumukit_web_tv_file:
     resource: @PumukitWebTVBundle/Resources/config/routing.yml
     prefix:   /
 
-pumukit_encoder:
-    resource: "@PumukitEncoderBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 pumukitnewadmin:
     resource: @PumukitNewAdminBundle/Resources/config/routing.yml
     prefix:   /
