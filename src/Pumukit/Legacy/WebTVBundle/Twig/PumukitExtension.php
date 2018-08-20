@@ -40,11 +40,6 @@ class PumukitExtension extends \Twig_Extension
         $this->mmobjDurationService = $mmobjDurationService;
     }
 
-    public function getName()
-    {
-        return 'pumukit_extension';
-    }
-
     public function getFilters()
     {
         return array(

@@ -25,11 +25,6 @@ class BasePlayerExtension extends \Twig_Extension
         $this->trackService = $trackService;
     }
 
-    public function getName()
-    {
-        return 'baseplayer_extension';
-    }
-
     /**
      * Get functions.
      */

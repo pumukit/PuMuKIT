@@ -21,11 +21,6 @@ class LiveTwigExtension extends \Twig_Extension
         $this->eventsService = $eventsService;
     }
 
-    public function getName()
-    {
-        return 'pumukit_live_twig_extension';
-    }
-
     public function getFunctions()
     {
         return array(
@@ -44,6 +39,8 @@ class LiveTwigExtension extends \Twig_Extension
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      *
      * @param Live $live
+     *
+     * @return string
      */
     public function genHlsUrl(Live $live)
     {

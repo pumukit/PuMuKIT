@@ -17,14 +17,6 @@ class CoreExtension extends \Twig_Extension
     }
 
     /**
-     * Get name.
-     */
-    public function getName()
-    {
-        return 'pumukit_core_extension';
-    }
-
-    /**
      * Get functions.
      */
     public function getFunctions()
