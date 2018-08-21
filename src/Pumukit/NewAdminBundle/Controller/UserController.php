@@ -56,7 +56,7 @@ class UserController extends AdminController implements NewAdminController
         $userService = $this->get('pumukitschema.user');
 
         $user = $userService->instantiate();
-        $form = $this->getForm($user, $request);
+        $form = $this->getForm($user, $request->getLocale());
 
         if ($form->handleRequest($request)->isValid()) {
             try {

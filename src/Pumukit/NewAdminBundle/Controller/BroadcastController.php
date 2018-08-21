@@ -74,7 +74,7 @@ class BroadcastController extends AdminController implements NewAdminController
         $config = $this->getConfiguration();
 
         $broadcast = $this->createNew();
-        $form = $this->getForm($broadcast, $request);
+        $form = $this->getForm($broadcast, $request->getLocale());
 
         if ($form->handleRequest($request)->isValid()) {
             try {
@@ -124,7 +124,7 @@ class BroadcastController extends AdminController implements NewAdminController
         $config = $this->getConfiguration();
 
         $broadcast = $this->findOr404($request);
-        $form = $this->getForm($broadcast, $request);
+        $form = $this->getForm($broadcast, $request->getLocale());
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {

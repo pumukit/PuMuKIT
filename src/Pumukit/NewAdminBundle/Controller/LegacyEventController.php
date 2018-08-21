@@ -69,7 +69,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     public function createAction(Request $request)
     {
         $resource = $this->createNew();
-        $form = $this->getForm($resource, $request);
+        $form = $this->getForm($resource, $request->getLocale());
 
         if ($form->handleRequest($request)->isValid()) {
             $resource = $this->update($resource);
@@ -162,7 +162,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
-        $form = $this->getForm($resource, $request);
+        $form = $this->getForm($resource, $request->getLocale());
 
         if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
             try {
