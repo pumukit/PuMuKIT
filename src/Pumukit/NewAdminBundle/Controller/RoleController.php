@@ -33,7 +33,8 @@ class RoleController extends SortableAdminController implements NewAdminControll
         $form = $this->createForm(new RoleType($translator, $locale), $role);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $personService->updateRole($role);
                 } catch (\Exception $e) {

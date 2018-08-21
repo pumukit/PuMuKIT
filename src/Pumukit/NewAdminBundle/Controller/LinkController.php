@@ -27,7 +27,8 @@ class LinkController extends Controller implements NewAdminController
         $link = new Link();
         $form = $this->createForm(new LinkType($translator, $locale), $link);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
@@ -60,7 +61,8 @@ class LinkController extends Controller implements NewAdminController
         $link = $multimediaObject->getLinkById($request->get('id'));
         $form = $this->createForm(new LinkType($translator, $locale), $link);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {

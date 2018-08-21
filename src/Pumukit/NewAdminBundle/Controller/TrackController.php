@@ -95,7 +95,8 @@ class TrackController extends Controller implements NewAdminController
 
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {

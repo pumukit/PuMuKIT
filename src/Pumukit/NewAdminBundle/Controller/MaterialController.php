@@ -44,7 +44,8 @@ class MaterialController extends Controller implements NewAdminController
         $material = $multimediaObject->getMaterialById($request->get('id'));
         $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
