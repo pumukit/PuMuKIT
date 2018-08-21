@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
+<<<<<<< HEAD
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
@@ -70,7 +71,7 @@
         <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.person"/>
-            <argument type="service" id="security.context"/>
+            <argument type="service" id="security.token_storage"/>
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
             <tag name="kernel.event_listener" event="kernel.controller"/>
         </service>
@@ -89,4 +90,5 @@
         </service>
 
     </services>
+
 </container>

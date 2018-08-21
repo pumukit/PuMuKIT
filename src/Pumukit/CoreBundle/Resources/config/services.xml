@@ -14,7 +14,7 @@
     <service id="pumukitcore.filter" class="Pumukit\CoreBundle\EventListener\FilterListener">
       <argument type="service" id="doctrine_mongodb.odm.document_manager" />
       <argument type="service" id="pumukitschema.person"/>
-      <argument type="service" id="security.context"/>
+      <argument type="service" id="security.token_storage"/>
       <argument>%pumukitschema.enable_add_user_as_person%</argument>
       <tag name="kernel.event_listener" event="kernel.controller" />
     </service>
