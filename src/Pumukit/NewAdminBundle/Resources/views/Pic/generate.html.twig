@@ -145,21 +145,23 @@
         var pic_quality = document.querySelector("#pic-quality");
         var ctx_draw = canvas_draw.getContext("2d");
 
-
         {% if mm.isMultistream() %}
         var show_presenter = document.querySelector("#show-presenter");
         var show_presentation = document.querySelector("#show-presentation");
 
         show_presenter.addEventListener("click", function () {
             video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery'])) }}";
+            $("#show-presenter").addClass('btn-primary');
+            $("#show-presentation").removeClass('btn-primary');
         }, false);
 
         show_presentation.addEventListener("click", function () {
             video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery'])) }}";
+            $("#show-presentation").addClass('btn-primary');
+            $("#show-presenter").removeClass('btn-primary');
         }, false);
 
         {% endif %}
-
 
         if (video.readyState == 4) {
             init_extractpic();
