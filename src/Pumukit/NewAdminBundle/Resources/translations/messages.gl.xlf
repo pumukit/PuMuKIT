@@ -663,7 +663,7 @@
       </trans-unit>
       <trans-unit id="8811fbe6bfa2ad820807c0503ce72741" resname="Cut multimedia object">
         <source>Cut multimedia object</source>
-        <target xml:lang="gl" state="needs-translation">Cut multimedia object</target>
+        <target xml:lang="gl" state="translated">Cortar obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="f3d80d25283c5191fcac9573ced74dee" resname="Paste multimedia objects">
         <source>Paste multimedia objects</source>
@@ -2321,7 +2321,7 @@
       </trans-unit>
       <trans-unit id="e622429156edfbdf560c765a86d633ce" resname="{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.">
         <source>{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</source>
-        <target xml:lang="gl" state="needs-translation">{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.</target>
+        <target xml:lang="gl" state="translated">{0} |{1} 1 tarefa pendente.  |]1,Inf[ %count% tarefas pendentes.</target>
       </trans-unit>
       <trans-unit id="215f26215b6734e1db7b1473532c0530" resname="{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.">
         <source>{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.</source>
@@ -2761,7 +2761,7 @@
       </trans-unit>
       <trans-unit id="cebc3c89f89b41e6d438bf6da6f7b42d" resname="Relations list">
         <source>Relations list</source>
-        <target xml:lang="gl" state="needs-translation">Relations list</target>
+        <target xml:lang="gl" state="translated">Listado de relaciones</target>
       </trans-unit>
       <trans-unit id="bb888443b314817bdf461c0fe4f573a6" resname="Modify broadcast profile">
         <source>Modify broadcast profile</source>
@@ -2850,8 +2850,7 @@
       <trans-unit id="a1fbf3a50d8a486eeccf91f0a3a9b85f" resname="Select an&#10; action...">
         <source>Select an
  action...</source>
-        <target xml:lang="gl" state="needs-translation">Select an
- action...</target>
+        <target xml:lang="gl" state="translated">Elixa unha acción...</target>
       </trans-unit>
       <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
         <source>Create new series of live events</source>
@@ -2945,7 +2944,7 @@
       </trans-unit>
       <trans-unit id="cb8f0f48a862980ccbebe8745aab7300" resname="(active)">
         <source>(active)</source>
-        <target xml:lang="gl" state="needs-translation">(active)</target>
+        <target xml:lang="gl" state="translated">(activo)</target>
       </trans-unit>
       <trans-unit id="8a2390562ba61b0f6416b585032a68bf" resname="List multimedia objects in ascending order of title">
         <source>List multimedia objects in ascending order of title</source>
@@ -2961,7 +2960,7 @@
       </trans-unit>
       <trans-unit id="db0f481303d58eca53dbb87e35452a30" resname="Warning: This link will give a 404 error while this series is hidden.">
         <source>Warning: This link will give a 404 error while this series is hidden.</source>
-        <target xml:lang="gl" state="needs-translation">Warning: This link will give a 404 error while this series is hidden.</target>
+        <target xml:lang="gl" state="translated">Advertencia. O enlace devolve un erro 404 mentras esta serie está oculta.</target>
       </trans-unit>
       <trans-unit id="e5a005c3d96b863b567a679c7b85cb70" resname="Magic URL">
         <source>Magic URL</source>
@@ -2969,7 +2968,7 @@
       </trans-unit>
       <trans-unit id="1ac85bf74cc03d4903d3166a7c69c993" resname="Generate a new magic series link">
         <source>Generate a new magic series link</source>
-        <target xml:lang="gl" state="needs-translation">Generate a new magic series link</target>
+        <target xml:lang="gl" state="translated">Xenerar un novo enlace máxico</target>
       </trans-unit>
       <trans-unit id="38d1f3cf744f02f270f3b2b6320bcbfe" resname="Update Series Metadata">
         <source>Update Series Metadata</source>
@@ -2977,7 +2976,7 @@
       </trans-unit>
       <trans-unit id="6e44dd426c4706a72f5707f1cca964e5" resname="Play track">
         <source>Play track</source>
-        <target xml:lang="gl" state="needs-translation">Play track</target>
+        <target xml:lang="gl" state="translated">Reproducir pista</target>
       </trans-unit>
       <trans-unit id="e363c9e8863649d099a9a041d14fe852" resname="Series URL">
         <source>Series URL</source>
@@ -2989,15 +2988,18 @@
       </trans-unit>
       <trans-unit id="bcc18832c544762c1627681056900ad8" resname="generate new thumbnail">
         <source>generate new thumbnail</source>
-        <target xml:lang="gl" state="needs-translation">generate new thumbnail</target>
+        <target xml:lang="gl" state="translated">xenerar nova miniatura</target>
       </trans-unit>
       <trans-unit id="0afe551a8297755d1a34d9d174722eb0" resname="Prev Frame">
         <source>Prev Frame</source>
-        <target xml:lang="gl" state="needs-translation">Prev Frame</target>
+        <target xml:lang="gl" state="translated">Fotograma anterior</target>
+        <alt-trans>
+          <target xml:lang="gl">Frame anterior</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="85c95f6a17cbc9bf1e5cf035cb4ab89e" resname="Next Frame">
         <source>Next Frame</source>
-        <target xml:lang="gl" state="needs-translation">Next Frame</target>
+        <target xml:lang="gl" state="translated">Fotograma seguinte</target>
       </trans-unit>
       <trans-unit id="036b8c11fad0be8eaf39e0c82f0c4679" resname="Take image">
         <source>Take image</source>
@@ -3009,7 +3011,7 @@
       </trans-unit>
       <trans-unit id="aec967b721d5260f0f65cb2b474c5be3" resname="Upload a local file.">
         <source>Upload a local file.</source>
-        <target xml:lang="gl" state="needs-translation">Upload a local file.</target>
+        <target xml:lang="gl" state="translated">Subir ficheiro local.</target>
       </trans-unit>
       <trans-unit id="8dc27378e60f7f5f7df6290d2fdaed01" resname="Thumbnail generated.">
         <source>Thumbnail generated.</source>
@@ -3535,11 +3537,11 @@
       </trans-unit>
       <trans-unit id="f5d9a79c2acab36383394a63cd695427" resname="Places and precinct">
         <source>Places and precinct</source>
-        <target xml:lang="gl" state="needs-translation">Places and precinct</target>
+        <target xml:lang="gl" state="translated">Lugares e recintos</target>
       </trans-unit>
       <trans-unit id="8ed9a920db646d5ec45ce6fb42ae5bb0" resname="Place and precinct">
         <source>Place and precinct</source>
-        <target xml:lang="gl" state="needs-translation">Place and precinct</target>
+        <target xml:lang="gl" state="translated">Lugar e recinto</target>
       </trans-unit>
       <trans-unit id="dd7bf230fde8d4836917806aff6a6b27" resname="Address">
         <source>Address</source>

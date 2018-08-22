@@ -811,7 +811,10 @@
       </trans-unit>
       <trans-unit id="c05969aadc543591c235d8b67b586878" resname="Modify broadcast profile of videos template">
         <source>Modify broadcast profile of videos template</source>
-        <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de las plantillas de vídeo</target>
+        <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de la plantilla de vídeos</target>
+        <alt-trans>
+          <target xml:lang="es-ES">Modificar perfil de difusión de las plantillas de vídeo</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="b64fc3b2b8500852e8c631abc4a3e1c5" resname="Modify broadcast profile of multimedia object">
         <source>Modify broadcast profile of multimedia object</source>
@@ -2892,8 +2895,7 @@
       <trans-unit id="a1fbf3a50d8a486eeccf91f0a3a9b85f" resname="Select an&#10; action...">
         <source>Select an
  action...</source>
-        <target xml:lang="es-ES" state="needs-translation">Select an
- action...</target>
+        <target xml:lang="es-ES" state="translated">Seleccione una acción...</target>
       </trans-unit>
       <trans-unit id="c6b3ca853b0c9ae86ab0f3525f24a6ba" resname="Create new series of live events">
         <source>Create new series of live events</source>
@@ -2972,10 +2974,7 @@
                             In case this series already exists in the database, a pull-down list will be shown,
                             where you can select it and use it. If it doesn't exist in the database,
                             create a new entrance with the written name.</source>
-        <target xml:lang="es-ES" state="needs-translation">Add the name of the series you want to use.
-                            In case this series already exists in the database, a pull-down list will be shown,
-                            where you can select it and use it. If it doesn't exist in the database,
-                            create a new entrance with the written name.</target>
+        <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.</target>
       </trans-unit>
       <trans-unit id="cf26c0d5b71f36207ad9b694d77ab7c5" resname="Video URL">
         <source>Video URL</source>
@@ -3114,8 +3113,7 @@
       <trans-unit id="408c624b14b33497a9595c77338e22d9" resname="Publishing&#10;                        Decisions">
         <source>Publishing
                         Decisions</source>
-        <target xml:lang="es-ES" state="needs-translation">Publishing
-                        Decisions</target>
+        <target xml:lang="es-ES" state="translated">Decisiones de publicación</target>
       </trans-unit>
       <trans-unit id="b718adec73e04ce3ec720dd11a06a308" resname="ID">
         <source>ID</source>
@@ -3355,20 +3353,17 @@
       <trans-unit id="a33e4cfc99ad017b0c06278054108189" resname="Modify broadcast profile of videos&#10;            template">
         <source>Modify broadcast profile of videos
             template</source>
-        <target xml:lang="es-ES" state="needs-translation">Modify broadcast profile of videos
-            template</target>
+        <target xml:lang="es-ES" state="translated">Modificar perfil de difusión de la plantilla de vídeos</target>
       </trans-unit>
       <trans-unit id="c4f19e79f10ce1ebb91e5fd9934b3717" resname="Modify broadcast profile of live&#10;                event">
         <source>Modify broadcast profile of live
                 event</source>
-        <target xml:lang="es-ES" state="needs-translation">Modify broadcast profile of live
-                event</target>
+        <target xml:lang="es-ES" state="translated">Modificar perfil de difusión del evento</target>
       </trans-unit>
       <trans-unit id="a232086cbb7dbcf101c7fae3b2a30031" resname="Modify broadcast profile of multimedia&#10;                object">
         <source>Modify broadcast profile of multimedia
                 object</source>
-        <target xml:lang="es-ES" state="needs-translation">Modify broadcast profile of multimedia
-                object</target>
+        <target xml:lang="es-ES" state="translated">Modificar perfil de difusión del objeto multimedia</target>
       </trans-unit>
       <trans-unit id="f4295a80d088167a35cd118ceb2d311e" resname="Delete error. Live channel channel is associated to live event.">
         <source>Delete error. Live channel channel is associated to live event.</source>
@@ -3407,10 +3402,7 @@
             In case this series already exists in the database, a pull-down list will be shown,
             where you can select it and use it. If it doesn't exist in the database,
             create a new entrance with the written name.</source>
-        <target xml:lang="es-ES" state="needs-translation">Add the name of the series you want to use.
-            In case this series already exists in the database, a pull-down list will be shown,
-            where you can select it and use it. If it doesn't exist in the database,
-            create a new entrance with the written name.</target>
+        <target xml:lang="es-ES" state="translated">Escriba el nombre de la serie que desea utilizar. En caso de que ya exista en la base de datos aparecerá en una lista deplegable, donde usted puede seleccionarla y usarla. Si no existe en la base de datos cree una entrada nueva con el nombre escrito.</target>
       </trans-unit>
       <trans-unit id="e7439b5ca1f88bed2622be1ba9e317d5" resname="Create date">
         <source>Create date</source>
@@ -3589,11 +3581,11 @@
       </trans-unit>
       <trans-unit id="f5d9a79c2acab36383394a63cd695427" resname="Places and precinct">
         <source>Places and precinct</source>
-        <target xml:lang="es-ES" state="needs-translation">Places and precinct</target>
+        <target xml:lang="es-ES" state="translated">Lugares y recintos</target>
       </trans-unit>
       <trans-unit id="8ed9a920db646d5ec45ce6fb42ae5bb0" resname="Place and precinct">
         <source>Place and precinct</source>
-        <target xml:lang="es-ES" state="needs-translation">Place and precinct</target>
+        <target xml:lang="es-ES" state="translated">Lugar y recinto</target>
       </trans-unit>
       <trans-unit id="dd7bf230fde8d4836917806aff6a6b27" resname="Address">
         <source>Address</source>
@@ -3659,9 +3651,7 @@
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
         &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
         &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target xml:lang="es-ES" state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
-        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
-        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
+        <target xml:lang="es-ES" state="translated">Introduzca el nombre de la persona que quiere añadir. En caso de que esa persona ya exista en la base de datos, aparecerá una lista desplegable en donde podrá seleccionarla y &lt;strong&gt;usarla&lt;/strong&gt;. Si no existe en la base de datos, &lt;strong&gt;cree&lt;/strong&gt; una nueva entrada con el nombre</target>
       </trans-unit>
       <trans-unit id="42a7b2626eae970122e01f65af2f5092" resname="No data">
         <source>No data</source>
