@@ -137,7 +137,7 @@
         var advanced = document.querySelector("#advanced-button");
         var canvas_draw = document.querySelector("#canvas-draw-frames");
         var frames = document.querySelector("#frames");
-        var sumbit = document.querySelector("#gen_pic_submit");
+        var submit = document.querySelector("#gen_pic_submit");
         var init_img = img.src;
         var upload_img = document.querySelector("#file-upload-button");
         var pic_size = document.querySelector("#pic-size");
@@ -146,6 +146,15 @@
         var ctx_draw = canvas_draw.getContext("2d");
 
         {% if mm.isMultistream() %}
+
+        {% if 'presenter/delivery' in track.tags %}
+            $("#show-presenter").addClass('btn-primary');
+            $("#show-presentation").removeClass('btn-primary');
+        {% elseif 'presentation/delivery' in track.tags %}
+            $("#show-presentation").addClass('btn-primary');
+            $("#show-presenter").removeClass('btn-primary');
+        {% endif %}
+
         var show_presenter = document.querySelector("#show-presenter");
         var show_presentation = document.querySelector("#show-presentation");
 
@@ -259,7 +268,7 @@
         });
 
 
-        sumbit.addEventListener("click", function (event) {
+        submit.addEventListener("click", function (event) {
             event.preventDefault();
 
             var data = img.src;
