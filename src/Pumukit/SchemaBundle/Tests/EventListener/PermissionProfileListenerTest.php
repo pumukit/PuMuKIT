@@ -22,6 +22,7 @@ class PermissionProfileListenerTest extends WebTestCase
     private $userService;
     private $permissionProfileService;
     private $listener;
+    private $logger;
 
     public function setUp()
     {
@@ -49,8 +50,10 @@ class PermissionProfileListenerTest extends WebTestCase
             $permissionService, $this->permissionProfileService,
             $personalScopeDeleteOwners, $genUserSalt
         );
+        $this->logger = static::$kernel->getContainer()
+            ->get('logger');
 
-        $this->listener = new PermissionProfileListener($this->dm, $this->userService);
+        $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', array($this->listener, 'postUpdate'));
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')
