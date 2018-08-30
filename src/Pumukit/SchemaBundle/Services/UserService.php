@@ -61,7 +61,7 @@ class UserService
     public function addOwnerUserToMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
         $multimediaObject = $this->addOwnerUserToObject($multimediaObject, $user, $executeFlush);
-        $series = $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
+        $this->addOwnerUserToObject($multimediaObject->getSeries(), $user, $executeFlush);
         if ($executeFlush) {
             $this->dm->flush();
         }
@@ -117,7 +117,7 @@ class UserService
     public function removeOwnerUserFromMultimediaObject(MultimediaObject $multimediaObject, User $user, $executeFlush = true)
     {
         $multimediaObject = $this->removeOwnerUserFromObject($multimediaObject, $user, $executeFlush);
-        $series = $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
+        $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
 
         return $multimediaObject;
     }
@@ -196,12 +196,13 @@ class UserService
      * @param User $user
      * @param bool $executeFlush
      * @param bool $checkOrigin
+     * @param bool $execute_dispatch
      *
      * @return User
      *
      * @throws \Exception
      */
-    public function update(User $user, $executeFlush = true, $checkOrigin = true)
+    public function update(User $user, $executeFlush = true, $checkOrigin = true, $execute_dispatch = true)
     {
         if ($checkOrigin && !$user->isLocal()) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
@@ -229,7 +230,9 @@ class UserService
             $this->dm->flush();
         }
 
-        $this->dispatcher->dispatchUpdate($user);
+        if ($execute_dispatch) {
+            $this->dispatcher->dispatchUpdate($user);
+        }
 
         return $user;
     }
@@ -433,7 +436,6 @@ class UserService
         }
         $user->setPermissionProfile($defaultPermissionProfile);
         $user->setEnabled($enabled);
-        //$user->setOrigin('cas');
 
         return $user;
     }
