@@ -30,6 +30,7 @@
         <service id="pumukitschema.schema.permissionprofile" class="Pumukit\SchemaBundle\EventListener\PermissionProfileListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.user" />
+            <argument type="service" id="logger" />
             <tag name="kernel.event_listener" event="permissionprofile.update" method="postUpdate" />
         </service>
 
