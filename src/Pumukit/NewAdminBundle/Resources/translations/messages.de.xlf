@@ -2793,7 +2793,7 @@
         <source>Event successfully updated.</source>
         <target xml:lang="de" state="needs-translation">Event successfully updated.</target>
       </trans-unit>
-      <trans-unit id="a1fbf3a50d8a486eeccf91f0a3a9b85f" resname="Select an&#10; action...">
+      <trans-unit id="a1fbf3a50d8a486eeccf91f0a3a9b85f" resname="Select an action...">
         <source>Select an action...</source>
         <target xml:lang="de" state="needs-translation">Select an action...</target>
       </trans-unit>
