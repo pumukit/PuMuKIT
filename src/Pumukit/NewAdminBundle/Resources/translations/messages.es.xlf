@@ -2301,7 +2301,7 @@
       </trans-unit>
       <trans-unit id="3832dee32fb5053c64441a629488b42a" resname="Admin users">
         <source>Admin users</source>
-        <target xml:lang="gl" state="translated">Administración de usuarios</target>
+        <target xml:lang="es-ES" state="translated">Administración de usuarios</target>
       </trans-unit>
       <trans-unit id="83a203553faed8d8ecc37700756273be" resname="Permission profiles">
         <source>Permission profiles</source>
