@@ -6,6 +6,7 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedSocial;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -26,7 +27,7 @@ use Pumukit\SchemaBundle\Document\Person;
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  * @Route("liveevent/")
  */
-class EventsController extends Controller
+class EventsController extends Controller implements NewAdminController
 {
     private $regex = '/^[0-9a-z]{24}$/';
 
@@ -366,6 +367,8 @@ class EventsController extends Controller
      * clone Event and series.
      *
      * @param MultimediaObject $multimediaObject
+     *
+     * @throws \Exception
      */
     private function cloneEvent(MultimediaObject $multimediaObject)
     {
@@ -417,18 +420,40 @@ class EventsController extends Controller
      * @param MultimediaObject $multimediaObject
      *
      * @return JsonResponse
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     private function deleteEventAndSeries(MultimediaObject $multimediaObject)
     {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
+        $aggregate = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $user = $this->getUser();
+        $pipeline = array();
+        $pipeline[] = array('$match' => array('series' => new \MongoId($multimediaObject->getSeries()->getId())));
+        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            $pipeline[] = array('$match' => array('people.people.email' => array('$ne' => $user->getEmail())));
+            $pipeline[] = array('$match' => array('people.cod' => 'owner'));
+        }
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => array('id' => '$_id'),
+            ),
+        );
+        $mmObjsNotOwner = $aggregate->aggregate($pipeline)->toArray();
+
         $factoryService = $this->container->get('pumukitschema.factory');
         $translator = $this->container->get('translator');
 
-        $series = $multimediaObject->getSeries();
-        $count = count($series->getMultimediaObjects());
-        if (1 === $count) {
-            $factoryService->deleteSeries($series);
+        if (count($mmObjsNotOwner)) {
+            $factoryService->deleteMultimediaObject($multimediaObject);
         } else {
-            return new JsonResponse(array('status' => $translator->trans('Series have some multimediaObjects')));
+            $series = $multimediaObject->getSeries();
+            $count = count($series->getMultimediaObjects());
+            if (1 === $count) {
+                $factoryService->deleteSeries($series);
+            } else {
+                return new JsonResponse(array('status' => $translator->trans('Series have some multimediaObjects')));
+            }
         }
     }
 
@@ -768,6 +793,8 @@ class EventsController extends Controller
      * @param $session_id
      *
      * @return JsonResponse
+     *
+     * @throws \Exception
      */
     public function sessionCloneAction($multimediaObject, $session_id)
     {
@@ -801,11 +828,13 @@ class EventsController extends Controller
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      * @Template("PumukitNewAdminBundle:LiveEvent:updatesessionmodal.html.twig")
      *
-     * @param $request
+     * @param Request $request
      * @param $multimediaObject
-     * @param $session_id
+     * @param bool $session_id
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
@@ -858,11 +887,25 @@ class EventsController extends Controller
         $value = $request->query->get('term');
 
         $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
-        $pipeline = array(
-            array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i'))),
-            array('$group' => array('_id' => array('id' => '$_id', 'title' => '$title'))),
-            array('$limit' => 100),
+
+        $user = $this->getUser();
+        $pipeline = array();
+        $pipeline[] = array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i')));
+
+        if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
+            $pipeline[] = array('$match' => array('properties.owners' => $user->getId()));
+        }
+
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => array(
+                    'id' => '$_id',
+                    'title' => '$title',
+                ),
+            ),
         );
+
+        $pipeline[] = array('$limit' => 100);
 
         $series = $aggregate->aggregate($pipeline)->toArray();
 
