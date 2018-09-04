@@ -371,6 +371,22 @@ class JobService
     }
 
     /**
+     * Get all jobs status.
+     *
+     * @return array
+     */
+    public function getAllJobsStatusWithOwner($owner)
+    {
+        return array(
+            'paused' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_PAUSED), array(), $owner)),
+            'waiting' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_WAITING), array(), $owner)),
+            'executing' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_EXECUTING), array(), $owner)),
+            'finished' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_FINISHED), array(), $owner)),
+            'error' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_ERROR), array(), $owner)),
+        );
+    }
+
+    /**
      * Get next job.
      *
      * Returns the job in waiting status with higher priority (tie: timeini older)

@@ -39,6 +39,32 @@ class JobRepository extends DocumentRepository
     }
 
     /**
+     * Find all jobs with given status.
+     */
+    public function findWithStatusAndOwner(array $status, $sort = array(), $owner)
+    {
+        return $this->createQueryWithStatusAndOwner($status, $sort, $owner)
+          ->getQuery()
+          ->execute();
+    }
+
+    /**
+     * Find all jobs with given status.
+     */
+    public function createQueryWithStatusAndOwner(array $status, $sort = array(), $owner)
+    {
+        $qb = $this->createQueryBuilder()
+            ->field('status')->in($status)
+            ->field('email')->equals($owner->getEmail());
+
+        if (null != $sort) {
+            $qb->sort($sort);
+        }
+
+        return $qb;
+    }
+
+    /**
      * Find the job with higher priority with given status.
      */
     public function findHigherPriorityWithStatus(array $status)

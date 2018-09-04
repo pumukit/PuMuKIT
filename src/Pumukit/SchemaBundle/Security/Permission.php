@@ -37,6 +37,8 @@ class Permission
     const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
     const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
+    const DISABLED_TRACK_PROFILES = 'ROLE_DISABLED_WIZARD_TRACK_PROFILES';
+    const DISABLED_TRACK_PRIORITY = 'ROLE_DISABLED_WIZARD_TRACK_PRIORITY';
 
     public static $permissionDescription = array(
         self::ACCESS_DASHBOARD => array(
@@ -244,6 +246,20 @@ class Permission
         ),
         self::ACCESS_SERIES_STYLE => array(
             'description' => 'Access Series Styles',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::DISABLED_TRACK_PRIORITY => array(
+            'description' => 'Disabled track priority on wizard',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::DISABLED_TRACK_PROFILES => array(
+            'description' => 'Disabled track profiles on wizard',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),

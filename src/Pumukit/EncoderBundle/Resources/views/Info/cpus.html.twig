@@ -29,7 +29,15 @@
         <small>{{ cpu.host }}</small>
         <div>
           <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
-            <label><input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}></label>
+              {% if is_granted('ROLE_SCOPE_PERSONAL') %}
+                  <label>
+                      <input type="checkbox" disabled {% if not deactivated %}checked="checked"{% endif %}>
+                  </label>
+              {% else %}
+                    <label>
+                        <input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}>
+                    </label>
+              {% endif %}
           </div>
         </div>
       </div>
