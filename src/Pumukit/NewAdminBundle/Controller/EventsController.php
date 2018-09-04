@@ -430,9 +430,10 @@ class EventsController extends Controller implements NewAdminController
         $user = $this->getUser();
         $pipeline = array();
         $pipeline[] = array('$match' => array('series' => new \MongoId($multimediaObject->getSeries()->getId())));
+        $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $pipeline[] = array('$match' => array('people.people.email' => array('$ne' => $user->getEmail())));
-            $pipeline[] = array('$match' => array('people.cod' => 'owner'));
+            $pipeline[] = array('$match' => array('people.cod' => $ownerKey));
         }
         $pipeline[] = array(
             '$group' => array(
