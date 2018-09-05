@@ -147,14 +147,14 @@
         $.ajax({
             url: $(this).data('href'),
             method: 'POST',
-            success: function () {
+            success: function (data) {
                 var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
                 $('#list_events').load(mm);
                 var message = '{% trans %}Event successfully updated.{% endtrans %}';
                 success(message);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + textStatus);
+                no_success(jqXHR.responseJSON.status);
             }
         });
         return false;

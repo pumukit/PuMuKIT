@@ -445,15 +445,16 @@ class EventsController extends Controller implements NewAdminController
         $factoryService = $this->container->get('pumukitschema.factory');
         $translator = $this->container->get('translator');
 
-        if (count($mmObjsNotOwner)) {
-            $factoryService->deleteMultimediaObject($multimediaObject);
+        if (0 !== count($mmObjsNotOwner)) {
+            throw new \Exception($translator->trans('Error: Series have another owners on others multimedia objects'));
         } else {
             $series = $multimediaObject->getSeries();
             $count = count($series->getMultimediaObjects());
             if (1 === $count) {
+                $factoryService->deleteMultimediaObject($multimediaObject);
                 $factoryService->deleteSeries($series);
             } else {
-                return new JsonResponse(array('status' => $translator->trans('Series have some multimediaObjects')));
+                throw new \Exception($translator->trans('Error: Series have some multimediaObjects'));
             }
         }
     }
