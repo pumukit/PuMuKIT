@@ -3577,6 +3577,14 @@
         <source>Series successfully updated.</source>
         <target>Series successfully updated.</target>
       </trans-unit>
+      <trans-unit id="536b16c2b10411e88981529269fb1459" resname="Error: Series have another owners on others events">
+        <source>Error: Series have another owners on others events</source>
+        <target>Error: Series have another owners on others events</target>
+      </trans-unit>
+      <trans-unit id="536b1a8cb10411e88981529269fb1459" resname="Error: Series have some events">
+        <source>Error: Series have some events</source>
+        <target>Error: Series have some events</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

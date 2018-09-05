@@ -446,7 +446,7 @@ class EventsController extends Controller implements NewAdminController
         $translator = $this->container->get('translator');
 
         if (0 !== count($mmObjsNotOwner)) {
-            throw new \Exception($translator->trans('Error: Series have another owners on others multimedia objects'));
+            throw new \Exception($translator->trans('Error: Series have another owners on others events'));
         } else {
             $series = $multimediaObject->getSeries();
             $count = count($series->getMultimediaObjects());
@@ -454,7 +454,7 @@ class EventsController extends Controller implements NewAdminController
                 $factoryService->deleteMultimediaObject($multimediaObject);
                 $factoryService->deleteSeries($series);
             } else {
-                throw new \Exception($translator->trans('Error: Series have some multimediaObjects'));
+                throw new \Exception($translator->trans('Error: Series have some events'));
             }
         }
     }
