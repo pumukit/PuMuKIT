@@ -147,7 +147,7 @@
         $.ajax({
             url: $(this).data('href'),
             method: 'POST',
-            success: function (data) {
+            success: function () {
                 var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
                 $('#list_events').load(mm);
                 var message = '{% trans %}Event successfully updated.{% endtrans %}';
