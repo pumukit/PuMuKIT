@@ -3684,6 +3684,14 @@
         <source>Series successfully updated.</source>
         <target>Serie actualizada correctamente.</target>
       </trans-unit>
+      <trans-unit id="536b16c2b10411e88981529269fb1459" resname="Error: Series have another owners on others events">
+        <source>Error: Series have another owners on others events</source>
+        <target>Error: La serie contiene otros eventos de los que no eres propiertario.</target>
+      </trans-unit>
+      <trans-unit id="536b1a8cb10411e88981529269fb1459" resname="Error: Series have some events">
+        <source>Error: Series have some events</source>
+        <target>Error: No se puede borrar la serie por que contiene otros eventos.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

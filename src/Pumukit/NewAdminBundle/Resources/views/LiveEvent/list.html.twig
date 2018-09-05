@@ -154,7 +154,7 @@
                 success(message);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + textStatus);
+                no_success(jqXHR.responseJSON.status);
             }
         });
         return false;
