@@ -3,7 +3,6 @@
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\EncoderBundle\Document\Job;
 
 class ProfileService
 {
@@ -93,7 +92,9 @@ class ProfileService
 
         $tags = array('copy');
         $masterNotCopyProfiles = array_filter($masterProfiles, function ($profile) use ($tags) {
-            return 0 != count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags']))));
+            if (isset($profile['tags'])) {
+                return 0 != count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags']))));
+            }
         });
 
         if ($masterNotCopyProfiles) {
