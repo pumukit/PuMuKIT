@@ -3651,6 +3651,22 @@
         <source>Error: Series have some events</source>
         <target>Erro: Non se pode borrala serie por que conten outros eventos.</target>
       </trans-unit>
+      <trans-unit id="949d38a8b1a611e896f8529269fb1459" resname="Cloned event successfully">
+        <source>Cloned event successfully</source>
+        <target>Evento clonado correctamente</target>
+      </trans-unit>
+      <trans-unit id="949d3b82b1a611e896f8529269fb1459" resname="Deleted event successfully">
+        <source>Deleted event successfully</source>
+        <target>Evento borrado correctamente</target>
+      </trans-unit>
+      <trans-unit id="949d3f6ab1a611e896f8529269fb1459" resname="Delete event and series successfully">
+        <source>Delete event and series successfully</source>
+        <target>Evento e serie borrados correctamente</target>
+      </trans-unit>
+      <trans-unit id="949d40e6b1a611e896f8529269fb1459" resname="Option not allowed">
+        <source>Option not allowed</source>
+        <target>Opción non permitida</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
