@@ -319,34 +319,39 @@ class EventsController extends Controller implements NewAdminController
      */
     public function menuOptionsAction($type, MultimediaObject $multimediaObject)
     {
+        $translator = $this->container->get('translator');
+        $message = '';
         try {
             switch ($type) {
                 case 'clone':
-                    $this->cloneEvent($multimediaObject);
+                    $message = $this->cloneEvent($multimediaObject);
                     break;
                 case 'delete':
-                    $this->deleteEvent($multimediaObject);
+                    $message = $this->deleteEvent($multimediaObject);
                     $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 case 'deleteAll':
-                    $this->deleteEventAndSeries($multimediaObject);
+                    $message = $this->deleteEventAndSeries($multimediaObject);
                     $this->container->get('session')->set('admin/live/event/id', null);
                     break;
                 default:
+                    $message = 'Option not allowed';
                     break;
             }
         } catch (\Exception $e) {
             return new JsonResponse(array('status' => $e->getMessage()), 409);
         }
 
-        return new JsonResponse(array());
+        return new JsonResponse(array('status' => $translator->trans($message)));
     }
 
     /**
+     * @return JsonResponse
+     * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
+     *
      * @param Request $request
      *
      * @return JsonResponse
-     * @Route("delete/selected/", name="pumukit_new_admin_live_event_delete_selected")
      */
     public function deleteSelectedEventsAction(Request $request)
     {
@@ -367,6 +372,8 @@ class EventsController extends Controller implements NewAdminController
      * clone Event and series.
      *
      * @param MultimediaObject $multimediaObject
+     *
+     * @return string
      *
      * @throws \Exception
      */
@@ -401,17 +408,27 @@ class EventsController extends Controller implements NewAdminController
         $cloneMultimediaObject->setEmbeddedEvent($event);
         $dm->persist($cloneMultimediaObject);
         $dm->flush();
+
+        $message = 'Cloned event successfully';
+
+        return $message;
     }
 
     /**
      * Delete event and multimediaObject.
      *
      * @param MultimediaObject $multimediaObject
+     *
+     * @return string
      */
     private function deleteEvent(MultimediaObject $multimediaObject)
     {
         $factoryService = $this->container->get('pumukitschema.factory');
         $factoryService->deleteMultimediaObject($multimediaObject);
+
+        $message = 'Deleted event successfully';
+
+        return $message;
     }
 
     /**
@@ -419,7 +436,7 @@ class EventsController extends Controller implements NewAdminController
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return JsonResponse
+     * @return string
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
@@ -457,6 +474,10 @@ class EventsController extends Controller implements NewAdminController
                 throw new \Exception($translator->trans('Error: Series have some events'));
             }
         }
+
+        $message = 'Delete event and series successfully';
+
+        return $message;
     }
 
     /**
