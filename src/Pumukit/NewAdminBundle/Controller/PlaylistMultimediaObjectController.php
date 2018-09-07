@@ -207,7 +207,7 @@ class PlaylistMultimediaObjectController extends Controller
         $value = $request->query->get('search', '');
 
         $criteria = array('search' => $value);
-        $criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria);
+        $criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
 
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
         $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
