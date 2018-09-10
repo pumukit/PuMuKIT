@@ -71,6 +71,9 @@
                 "opencast_player": "PUMUKIT2_OPENCAST_PLAYER"
             }
         },
-        "branch-alias": null
+        "branch-alias": null,
+        "symfony": {
+            "require": "2.8.*"
+        }
     }
 }
