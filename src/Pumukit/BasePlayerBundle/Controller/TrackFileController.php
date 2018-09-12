@@ -3,6 +3,7 @@
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class TrackFileController extends Controller
 {
     /**
-     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
-     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext" )
+     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
+     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
+     *
+     * @param $id
+     * @param Request $request
+     *
+     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Exception
      */
     public function indexAction($id, Request $request)
     {
-        list($mmobj, $track) = $this->getMmobjAndTrack($id);
+        list($mmobj, $track) = $this->getMmobjAndTrack($request, $id);
 
         if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
@@ -55,11 +63,18 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index" )
+     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
+     *
+     * @param $id
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
      */
     public function trackPlayedAction($id, Request $request)
     {
-        list($mmobj, $track) = $this->getMmobjAndTrack($id);
+        list($mmobj, $track) = $this->getMmobjAndTrack($request, $id);
 
         if ('on_play' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
             return new JsonResponse(array('status' => 'error'));
@@ -74,21 +89,47 @@ class TrackFileController extends Controller
         return new JsonResponse(array('status' => 'success'));
     }
 
-    private function getMmobjAndTrack($id)
+    /**
+     * @param $request
+     * @param $id
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    private function getMmobjAndTrack($request, $id)
     {
-        $mmobjRepo = $this
-          ->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $mmobj = $mmobjRepo->findOneByTrackId($id);
         if (!$mmobj) {
             throw $this->createNotFoundException("Not mmobj found with the track id: $id");
         }
-        $track = $mmobj->getTrackById($id);
 
-        return array($mmobj, $track);
+        if (!$this->canShowMultimediaObject($request, $mmobj, $this->getUser())) {
+            throw new \Exception('Not allowed URL');
+        }
+
+        $track = $mmobj->getTrackById($id);
+        if ($track->isHide()) {
+            $logger = $this->container->get('logger');
+            $logger->warning('Trying to reproduce an hide track');
+        }
+
+        return array(
+            $mmobj,
+            $track,
+        );
     }
 
+    /**
+     * @param Track $track
+     * @param $timestamp
+     * @param $secret
+     * @param $ip
+     *
+     * @return mixed
+     */
     protected function getHash(Track $track, $timestamp, $secret, $ip)
     {
         $url = $track->getUrl();
@@ -97,6 +138,12 @@ class TrackFileController extends Controller
         return str_replace('=', '', strtr(base64_encode(md5("${timestamp}${path}${ip} ${secret}", true)), '+/', '-_'));
     }
 
+    /**
+     * @param Track   $track
+     * @param Request $request
+     *
+     * @return bool
+     */
     protected function shouldIncreaseViews(Track $track, Request $request)
     {
         if ('on_load' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
@@ -122,9 +169,66 @@ class TrackFileController extends Controller
         return false;
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     * @param Track|null       $track
+     */
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, Track $track = null)
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
+    }
+
+    /**
+     * @param $request
+     * @param $mmobj
+     * @param $user
+     *
+     * @return bool
+     */
+    private function canShowMultimediaObject($request, $mmobj, $user)
+    {
+        $mmobjService = $this->get('pumukitschema.multimedia_object');
+
+        if ($user && $user->hasRole(PermissionProfile::SCOPE_PERSONAL) && $mmobjService->isUserOwner($user, $mmobj)) {
+            return true;
+        }
+
+        if (!$user || $user->hasRole(PermissionProfile::SCOPE_NONE) || ($user->hasRole(PermissionProfile::SCOPE_PERSONAL) && !$mmobjService->isUserOwner($user, $mmobj))) {
+            if (MultimediaObject::STATUS_BLOCKED === $mmobj->getStatus()) {
+                return false;
+            }
+
+            if ($mmobjService->isHidden($mmobj, 'PUCHWEBTV') || $mmobjService->isHidden($mmobj, 'PUCHPODCAST')) {
+                return true;
+            }
+
+            /* Legacy code */
+            if ($mmobjService->isHidden($mmobj, 'PUCHMOODLE') || $mmobjService->isHidden($mmobj, 'PUCHOPENEDX')) {
+                return true;
+            }
+
+            if ($mmobjService->isHidden($mmobj, 'PUCHLMS')) {
+                $referer = $request->headers->get('referer');
+                if (!$referer || !$this->container->hasParameter('pumukit_lms.domains')) {
+                    return false;
+                }
+
+                $allowedDomains = $this->container->getParameter('pumukit_lms.domains');
+                foreach ($allowedDomains as $domain) {
+                    if (false !== stripos($referer, $domain)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        if ($user && $user->hasRole(PermissionProfile::SCOPE_GLOBAL)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
