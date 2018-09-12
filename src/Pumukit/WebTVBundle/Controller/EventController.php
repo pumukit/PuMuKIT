@@ -78,7 +78,7 @@ class EventController extends Controller implements WebTVController
         $criteria = array(
             '_id' => new \MongoId($id),
         );
-        $events = $embeddedEventSessionService->findNextSessions($criteria);
+        $events = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
         return array(
             'events' => $events,

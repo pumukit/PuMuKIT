@@ -2,7 +2,6 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
@@ -298,12 +297,13 @@ class EmbeddedEventSessionService
      *
      * @param array $criteria
      * @param int   $limit
+     * @param bool  $all      true to not filter by display
      *
      * @return array
      */
-    public function findCurrentSessions($criteria = array(), $limit = 0)
+    public function findCurrentSessions($criteria = array(), $limit = 0, $all = false)
     {
-        $pipeline = $this->initPipeline();
+        $pipeline = $this->initPipeline($all);
 
         if ($criteria and !empty($criteria)) {
             $pipeline[] = array(
@@ -355,12 +355,13 @@ class EmbeddedEventSessionService
      *
      * @param array $criteria
      * @param int   $limit
+     * @param bool  $all      true to not filter by display
      *
      * @return array
      */
-    public function findNextSessions($criteria = array(), $limit = 0)
+    public function findNextSessions($criteria = array(), $limit = 0, $all = false)
     {
-        $pipeline = $this->initPipeline();
+        $pipeline = $this->initPipeline($all);
 
         if ($criteria and !empty($criteria)) {
             $pipeline[] = array(
@@ -840,18 +841,22 @@ class EmbeddedEventSessionService
     /**
      * Init pipeline.
      *
+     * @param bool $all true to not filter by display
+     *
      * @return array
      */
-    private function initPipeline()
+    private function initPipeline($all = false)
     {
         $pipeline = array();
         $pipeline[] = array(
             '$match' => array(
                 'islive' => true,
-                'embeddedEvent.display' => true,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
         );
+        if (!$all) {
+            $pipeline[0]['$match']['embeddedEvent.display'] = true;
+        }
         $pipeline[] = array(
             '$project' => array(
                 'multimediaObjectId' => '$_id',
