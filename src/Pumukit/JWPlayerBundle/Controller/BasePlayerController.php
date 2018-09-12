@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\CoreBundle\Controller\PersonalController;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
@@ -44,7 +43,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return array(
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
@@ -90,7 +89,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
 
         return array(
             'autostart' => $request->query->get('autostart', 'false'),
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
@@ -115,7 +114,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         $this->dispatchViewEvent($multimediaObject);
 
         return array(
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntro($request->query->get('intro')),
+            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
             'multimediaObject' => $multimediaObject,
             'object' => $multimediaObject,
             'is_mobile_device' => $isMobileDevice,
