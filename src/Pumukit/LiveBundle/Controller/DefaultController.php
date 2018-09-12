@@ -82,8 +82,8 @@ class DefaultController extends Controller
             '_id' => new \MongoId($multimediaObject->getId()),
         );
 
-        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria);
-        $nextSession = $embeddedEventSessionService->findNextSessions($criteria);
+        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
+        $nextSession = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
         if (count($nextSession) > 0 or count($nowSessions) > 0) {
             $translator = $this->get('translator');
@@ -160,7 +160,7 @@ class DefaultController extends Controller
             '_id' => new \MongoId($multimediaObject->getId()),
         );
 
-        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria);
+        $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
         $now = new \DateTime();
         $firstNowSessionEnds = new \DateTime();
         $firstNowSessionEnds = $firstNowSessionEnds->getTimestamp();
@@ -171,7 +171,7 @@ class DefaultController extends Controller
             break;
         }
 
-        $nextSessions = $embeddedEventSessionService->findNextSessions($criteria);
+        $nextSessions = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
         $date = new \DateTime();
         $firstNextSession = '';
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
