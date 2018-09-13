@@ -1331,12 +1331,14 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $addGroups = array();
         $deleteGroups = array();
         $addGroupsIds = array();
+        $allGroupsIds = array();
+
         foreach ($groups as $group) {
             $addGroups[$group->getId()] = array(
-                                                'key' => $group->getKey(),
-                                                'name' => $group->getName(),
-                                                'origin' => $group->getOrigin(),
-                                                );
+                'key' => $group->getKey(),
+                'name' => $group->getName(),
+                'origin' => $group->getOrigin(),
+            );
             $addGroupsIds[] = new \MongoId($group->getId());
         }
         $allGroups = $this->getAllGroups();
@@ -1346,10 +1348,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $groupsToDelete = $groupService->findByIdNotInOf($addGroupsIds, $allGroupsIds);
         foreach ($groupsToDelete as $group) {
             $deleteGroups[$group->getId()] = array(
-                                                   'key' => $group->getKey(),
-                                                   'name' => $group->getName(),
-                                                   'origin' => $group->getOrigin(),
-                                                   );
+                'key' => $group->getKey(),
+                'name' => $group->getName(),
+                'origin' => $group->getOrigin(),
+            );
         }
 
         return array('addGroups' => $addGroups, 'deleteGroups' => $deleteGroups);
