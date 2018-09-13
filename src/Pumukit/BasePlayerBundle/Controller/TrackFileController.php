@@ -3,7 +3,6 @@
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,7 @@ class TrackFileController extends Controller
      */
     public function indexAction($id, Request $request)
     {
-        list($mmobj, $track) = $this->getMmobjAndTrack($request, $id);
+        list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
         if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
@@ -66,15 +65,14 @@ class TrackFileController extends Controller
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      *
      * @param $id
-     * @param Request $request
      *
      * @return JsonResponse
      *
      * @throws \Exception
      */
-    public function trackPlayedAction($id, Request $request)
+    public function trackPlayedAction($id)
     {
-        list($mmobj, $track) = $this->getMmobjAndTrack($request, $id);
+        list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
         if ('on_play' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
             return new JsonResponse(array('status' => 'error'));
@@ -90,14 +88,13 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @param $request
      * @param $id
      *
      * @return array
      *
      * @throws \Exception
      */
-    private function getMmobjAndTrack($request, $id)
+    private function getMmobjAndTrack($id)
     {
         $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
@@ -106,14 +103,14 @@ class TrackFileController extends Controller
             throw $this->createNotFoundException("Not mmobj found with the track id: $id");
         }
 
-        if (!$this->canShowMultimediaObject($request, $mmobj, $this->getUser())) {
-            throw new \Exception('Not allowed URL');
-        }
-
         $track = $mmobj->getTrackById($id);
         if ($track->isHide()) {
             $logger = $this->container->get('logger');
             $logger->warning('Trying to reproduce an hide track');
+        }
+
+        if ($this->isGranted('play', $mmobj)) {
+            throw $this->createNotFoundException("Not mmobj found with the public track id: $id");
         }
 
         return array(
@@ -177,58 +174,5 @@ class TrackFileController extends Controller
     {
         $event = new ViewedEvent($multimediaObject, $track);
         $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
-    }
-
-    /**
-     * @param $request
-     * @param $mmobj
-     * @param $user
-     *
-     * @return bool
-     */
-    private function canShowMultimediaObject($request, $mmobj, $user)
-    {
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
-
-        if ($user && $user->hasRole(PermissionProfile::SCOPE_PERSONAL) && $mmobjService->isUserOwner($user, $mmobj)) {
-            return true;
-        }
-
-        if (!$user || $user->hasRole(PermissionProfile::SCOPE_NONE) || ($user->hasRole(PermissionProfile::SCOPE_PERSONAL) && !$mmobjService->isUserOwner($user, $mmobj))) {
-            if (MultimediaObject::STATUS_BLOCKED === $mmobj->getStatus()) {
-                return false;
-            }
-
-            if ($mmobjService->isHidden($mmobj, 'PUCHWEBTV') || $mmobjService->isHidden($mmobj, 'PUCHPODCAST')) {
-                return true;
-            }
-
-            /* Legacy code */
-            if ($mmobjService->isHidden($mmobj, 'PUCHMOODLE') || $mmobjService->isHidden($mmobj, 'PUCHOPENEDX')) {
-                return true;
-            }
-
-            if ($mmobjService->isHidden($mmobj, 'PUCHLMS')) {
-                $referer = $request->headers->get('referer');
-                if (!$referer || !$this->container->hasParameter('pumukit_lms.domains')) {
-                    return false;
-                }
-
-                $allowedDomains = $this->container->getParameter('pumukit_lms.domains');
-                foreach ($allowedDomains as $domain) {
-                    if (false !== stripos($referer, $domain)) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        if ($user && $user->hasRole(PermissionProfile::SCOPE_GLOBAL)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
