@@ -4,6 +4,7 @@ namespace Pumukit\BasePlayerBundle\Tests\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -39,6 +40,10 @@ class TrackUrlServiceTest extends WebTestCase
         $track = new Track();
         $series = new Series();
         $mmobj = new MultimediaObject();
+        $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $tag = new Tag();
+        $tag->setCod('PUCHWEBTV');
+        $mmobj->addTag($tag);
         $track->setUrl('funnyurl.mp4');
         $mmobj->setSeries($series);
         $mmobj->addTrack($track);
