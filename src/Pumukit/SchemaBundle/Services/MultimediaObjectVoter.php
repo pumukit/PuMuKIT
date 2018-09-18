@@ -62,7 +62,7 @@ class MultimediaObjectVoter extends Voter
         }
 
         /* Legacy code */
-        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHMOODLE') || $this->mmobjService->isHidden($multimediaObject, 'PUCHOPENEDX')) {
+        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHOPENEDX')) {
             return true;
         }
 
