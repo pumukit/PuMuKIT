@@ -94,6 +94,7 @@
 
         <service id="pumukitschema.multimedia_object_voter" class="Pumukit\SchemaBundle\Services\MultimediaObjectVoter">
             <argument type="service" id="pumukitschema.multimedia_object"/>
+            <tag name="security.voter" />
         </service>        
 
         <service id="pumukitschema.sorted_multimedia_object" class="Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService">
