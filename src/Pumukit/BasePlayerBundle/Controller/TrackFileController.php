@@ -109,7 +109,7 @@ class TrackFileController extends Controller
             $logger->warning('Trying to reproduce an hide track');
         }
 
-        if ($this->isGranted('play', $mmobj)) {
+        if (!$this->isGranted('play', $mmobj)) {
             throw $this->createNotFoundException("Not mmobj found with the public track id: $id");
         }
 
