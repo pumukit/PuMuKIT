@@ -17,6 +17,11 @@ class SeriesPicController extends Controller implements NewAdminController
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")
+     *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array
      */
     public function createAction(Series $series, Request $request)
     {
@@ -28,6 +33,10 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     *
+     * @param Series $series
+     *
+     * @return array
      */
     public function listAction(Series $series)
     {
@@ -41,6 +50,11 @@ class SeriesPicController extends Controller implements NewAdminController
      * Assign a picture from an url or from an existing one to the series.
      *
      * @Template("PumukitNewAdminBundle:Pic:list.html.twig")
+     *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Series $series, Request $request)
     {
@@ -64,6 +78,11 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:upload.html.twig")
+     *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array
      */
     public function uploadAction(Series $series, Request $request)
     {
@@ -76,7 +95,7 @@ class SeriesPicController extends Controller implements NewAdminController
                 $picService = $this->get('pumukitschema.seriespic');
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $media = $picService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $picService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return array(
@@ -99,6 +118,10 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * Delete pic.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -118,6 +141,10 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * Up pic.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function upAction(Request $request)
     {
@@ -141,6 +168,10 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * Down pic.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function downAction(Request $request)
     {
@@ -164,6 +195,11 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:picstoaddlist.html.twig")
+     *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array
      */
     public function picstoaddlistAction(Series $series, Request $request)
     {
@@ -193,6 +229,11 @@ class SeriesPicController extends Controller implements NewAdminController
 
     /**
      * @Template("PumukitNewAdminBundle:Pic:banner.html.twig")
+     *
+     * @param Series  $series
+     * @param Request $request
+     *
+     * @return array
      */
     public function bannerAction(Series $series, Request $request)
     {
