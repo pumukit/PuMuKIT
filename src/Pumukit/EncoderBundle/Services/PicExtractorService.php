@@ -100,8 +100,7 @@ class PicExtractorService
      */
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
     {
-        $currentDir = 'series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
-        $absCurrentDir = $this->targetPath.'/'.$currentDir;
+        $absCurrentDir = $currentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
