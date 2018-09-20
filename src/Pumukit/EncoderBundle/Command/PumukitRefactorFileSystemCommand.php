@@ -323,7 +323,6 @@ EOT
         $builder->setArguments($parameters);
 
         $builder->setTimeout(3600);
-        $builder->setWorkingDirectory(__DIR__);
         $process = $builder->getProcess();
         try {
             $process->mustRun();
