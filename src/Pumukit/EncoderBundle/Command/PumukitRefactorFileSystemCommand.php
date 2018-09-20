@@ -2,7 +2,7 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
-use http\Exception\UnexpectedValueException;
+use UnexpectedValueException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
