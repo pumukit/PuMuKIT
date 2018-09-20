@@ -31,7 +31,10 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             }
 
             if ($track->containsTag('download')) {
-                return $this->redirect($track->getUrl());
+                $url = $track->getUrl();
+                $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
+
+                return $this->redirect($url);
             }
         }
 
@@ -91,7 +94,10 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             }
 
             if ($track->containsTag('download')) {
-                return $this->redirect($track->getUrl());
+                $url = $track->getUrl();
+                $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
+
+                return $this->redirect($url);
             }
         }
 
