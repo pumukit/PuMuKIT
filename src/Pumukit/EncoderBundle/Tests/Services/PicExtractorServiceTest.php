@@ -89,11 +89,9 @@ class PicExtractorServiceTest extends WebTestCase
         $this->assertNotNull($pic->getWidth());
         $this->assertNotNull($pic->getHeight());
 
-        $picPath = $this->resourcesDir.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
-        $this->assertStringStartsWith($picPath, $pic->getPath());
+        $this->assertStringStartsWith($this->resourcesDir, $pic->getPath());
 
-        $picUrl = $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId().'/';
-        $this->assertStringStartsWith($picUrl, $pic->getUrl());
+        $this->assertStringStartsWith($this->targetUrl, $pic->getUrl());
 
         $this->deleteCreatedFiles();
     }
