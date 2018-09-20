@@ -100,8 +100,7 @@ class PicExtractorService
      */
     private function createPic(MultimediaObject $multimediaObject, Track $track, $frame = 25)
     {
-        $currentDir = 'series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
-        $absCurrentDir = $this->targetPath.'/'.$currentDir;
+        $absCurrentDir = $this->mmsPicService->getTargetPath($multimediaObject);
 
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
@@ -140,8 +139,7 @@ class PicExtractorService
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        //log $process->getOutput()
-        $picUrl = $this->targetUrl.'/'.$currentDir.'/'.$picFileName;
+        $picUrl = $this->mmsPicService->getTargetUrl($multimediaObject).'/'.$picFileName;
         $picPath = $absCurrentDir.'/'.$picFileName;
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);

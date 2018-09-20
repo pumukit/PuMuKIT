@@ -40,7 +40,7 @@ class MaterialService
      */
     public function getTargetPath(MultimediaObject $multimediaObject)
     {
-        return $this->targetPath.'/'.$multimediaObject->getId();
+        return $this->targetPath.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
     }
 
     /**
@@ -52,7 +52,7 @@ class MaterialService
      */
     public function getTargetUrl(MultimediaObject $multimediaObject)
     {
-        return $this->targetUrl.'/'.$multimediaObject->getId();
+        return $this->targetUrl.'/series/'.$multimediaObject->getSeries()->getId().'/video/'.$multimediaObject->getId();
     }
 
     /**
