@@ -17,6 +17,10 @@ class MultimediaObjectListener
 
     private function getTracksType($tracks)
     {
+        if (0 === count($tracks)) {
+            return MultimediaObject::TYPE_UNKNOWN;
+        }
+
         foreach ($tracks as $track) {
             if (!$track->isOnlyAudio()) {
                 return MultimediaObject::TYPE_VIDEO;
