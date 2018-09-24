@@ -2,6 +2,7 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
@@ -20,7 +21,7 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function setUp()
     {
-        if (false == TestCommand::commandExists('avconv')) {
+        if (false == TestCommand::commandExists('/usr/local/bin/avconv')) {
             $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
         }
 
@@ -30,7 +31,7 @@ class PicExtractorServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->mmsPicService = static::$kernel->getContainer()->get('pumukitschema.mmspic');
+        $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
         $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
         $this->targetPath = $this->resourcesDir;
@@ -40,10 +41,11 @@ class PicExtractorServiceTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
 
+        $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);
         $width = 304;
         $height = 242;
         $command = 'avconv -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
-        $this->picExtractor = new PicExtractorService($this->dm, $this->mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
+        $this->picExtractor = new PicExtractorService($this->dm, $mmsPicService, $width, $height, $this->targetPath, $this->targetUrl, $command);
     }
 
     public function tearDown()
