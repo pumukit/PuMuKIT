@@ -3,6 +3,17 @@
 {% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
 {% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
 
+{% block meta %}
+
+    {{ parent() }}
+
+    <meta property="og:url" content="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ series.title }}" />
+    <meta property="og:description" content="{{ series.description }}" />
+    <meta property="og:image" content="{{ series|first_url_pic(true) }}" />
+{% endblock %}
+
 {% block body %}
     {% set last_date = '' %}
     {% set last_subseriestitle = '' %}
