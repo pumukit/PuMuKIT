@@ -295,6 +295,7 @@ EOT
         if (!file_exists($dirName)) {
             if (mkdir($dirName, 0755, true)) {
                 $this->createProcessToMove($oldPath, $newPath);
+
                 return true;
             } else {
                 throw new \Exception('Error trying to create folders of '.$dirName);
