@@ -92,6 +92,7 @@ class PumukitAdminExtension extends \Twig_Extension
             new \Twig_SimpleFunction('trans_i18n_broadcast', array($this, 'getI18nEmbeddedBroadcast')),
             new \Twig_SimpleFunction('date_from_mongo_id', array($this, 'getDateFromMongoId')),
             new \Twig_SimpleFunction('default_poster', array($this, 'getDefaultPoster')),
+            new \Twig_SimpleFunction('sort_roles', array($this, 'getSortRoles')),
         );
     }
 
@@ -711,5 +712,26 @@ class PumukitAdminExtension extends \Twig_Extension
     public function getDefaultPoster()
     {
         return $this->eventService->getDefaultPoster();
+    }
+
+    /**
+     * @param $multimediaObject
+     * @param bool $display
+     *
+     * @return array
+     */
+    public function getSortRoles($multimediaObject, $display = true)
+    {
+        $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy(array('display' => $display), array('rank' => 1));
+
+        $aRoles = array();
+        foreach ($roles as $role) {
+            $embeddedRole = $multimediaObject->getEmbeddedRole($role);
+            if ($embeddedRole && 0 != count($embeddedRole->getPeople())) {
+                $aRoles[] = $embeddedRole;
+            }
+        }
+
+        return $aRoles;
     }
 }
