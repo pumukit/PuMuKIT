@@ -216,8 +216,6 @@ EOT
         $pipeline = array(
             array(
                 '$match' => array(
-                    'status' => array('$ne' => -2),
-                    'islive' => false,
                     'pics' => array('$exists' => true),
                 ),
             ),
@@ -248,8 +246,6 @@ EOT
         $pipeline = array(
             array(
                 '$match' => array(
-                    'status' => array('$ne' => -2),
-                    'islive' => false,
                     'materials' => array('$exists' => true),
                 ),
             ),
@@ -288,6 +284,8 @@ EOT
      * @param $oldPath
      * @param $newPath
      *
+     * @return bool
+     *
      * @throws \Exception
      */
     private function moveElement($oldPath, $newPath)
@@ -297,6 +295,8 @@ EOT
         if (!file_exists($dirName)) {
             if (mkdir($dirName, 0755, true)) {
                 $this->createProcessToMove($oldPath, $newPath);
+
+                return true;
             } else {
                 throw new \Exception('Error trying to create folders of '.$dirName);
             }
