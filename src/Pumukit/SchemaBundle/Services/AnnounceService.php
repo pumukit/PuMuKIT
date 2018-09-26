@@ -102,7 +102,10 @@ class AnnounceService
         $last = array();
 
         foreach ($lastSeries as $serie) {
-            $last[] = $serie;
+            $haveMmojb = $this->mmobjRepo->findBy(array('series' => new \MongoId($serie->getId())));
+            if (0 !== count($haveMmojb)) {
+                $last[] = $serie;
+            }
         }
         foreach ($lastMms as $mm) {
             $last[] = $mm;
