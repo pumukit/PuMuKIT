@@ -64,13 +64,14 @@ class TrackFileController extends Controller
     /**
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      *
+     * @param Request $request
      * @param $id
      *
      * @return JsonResponse
      *
      * @throws \Exception
      */
-    public function trackPlayedAction($id)
+    public function trackPlayedAction(Request $request, $id)
     {
         list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
