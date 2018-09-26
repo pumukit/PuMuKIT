@@ -2,8 +2,8 @@
 
 namespace Pumukit\CoreBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Filesystem\Filesystem;
@@ -25,8 +25,8 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:delete:orphan:files')
             ->setDescription('Pumukit delete orphan files on folders')
-            ->addOption('path', null, InputArgument::OPTIONAL, 'Path to check')
-            ->addOption('delete', null, InputArgument::OPTIONAL, 'Delete files and folders')
+            ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Path to check', null)
+            ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete files and folders')
             ->setHelp(<<<'EOT'
             
             Pumukit delete orphan files on specific path. This command show if the path's file exist on:
@@ -44,7 +44,7 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
                 1. List orphan files
                     php app/console pumukit:delete:orphan:files --path="/var/www/html/pumukit2/web/uploads/material"
                 2. Delete orphan files
-                    php app/console pumukit:delete:orphan:files --path="/var/www/html/pumukit2/web/uploads/material" --delete=true         
+                    php app/console pumukit:delete:orphan:files --path="/var/www/html/pumukit2/web/uploads/material" --delete         
                   
 EOT
             );
@@ -100,19 +100,13 @@ EOT
         foreach ($files as $file) {
             $filePath = $file->getRelativePathName();
             $absoluteFilePath = $file->getPathName();
-            $directoryPath = $file->getRelativePath();
 
             $existsInMongoDB = $this->findInMongoDB($filePath);
             if (!$existsInMongoDB) {
                 $this->output->writeln('No file found in MongoDB '.$filePath);
                 $this->logger->info('No file found in MongoDB '.$filePath);
 
-                if (in_array(strtolower($this->delete), array(
-                    'false',
-                    'true',
-                    '1',
-                    '0',
-                ))) {
+                if ($this->delete) {
                     try {
                         $this->output->writeln('Trying to delete file....');
                         unlink($absoluteFilePath);
