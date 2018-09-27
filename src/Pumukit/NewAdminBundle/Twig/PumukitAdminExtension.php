@@ -587,8 +587,6 @@ class PumukitAdminExtension extends \Twig_Extension
         $result = array($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked);
 
         return $this->countMmobjsByStatus[$series->getId()] = $result;
-
-        return $result;
     }
 
     //TODO: Pass to a SERVICE
