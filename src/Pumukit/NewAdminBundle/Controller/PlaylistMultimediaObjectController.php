@@ -266,8 +266,8 @@ class PlaylistMultimediaObjectController extends Controller
             }
             $playlist->getPlaylist()->addMultimediaObject($mmobj);
             $dm->persist($playlist);
-            $dm->flush();
         }
+        $dm->flush();
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_list', array('id' => $playlist->getId())));
     }

@@ -111,9 +111,9 @@ EOT
         foreach ($mms as $multimediaObject) {
             $output->writeln('Fixing '.$type.'_jobs of multimedia object '.$multimediaObject->getId());
             $multimediaObject->removeProperty($type.'_jobs');
-            $this->dm->persist($multimediaObject);
-            $this->dm->flush();
         }
+
+        $this->dm->flush();
     }
 
     private function syncTags(InputInterface $input, OutputInterface $output)

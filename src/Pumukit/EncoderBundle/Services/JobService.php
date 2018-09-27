@@ -943,6 +943,7 @@ class JobService
      */
     private function checkService()
     {
+        $existsJobsToUpdate = false;
         $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
         $yesterday = new \DateTime('-1 day');
 
@@ -954,8 +955,13 @@ class JobService
                 $this->logger->error(
                     $message.$job->getId()
                 );
-                $this->dm->flush();
+
+                $existsJobsToUpdate = true;
             }
+        }
+
+        if ($existsJobsToUpdate) {
+            $this->dm->flush();
         }
     }
 
