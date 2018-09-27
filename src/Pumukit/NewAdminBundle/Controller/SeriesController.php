@@ -594,6 +594,7 @@ class SeriesController extends AdminController implements NewAdminController
         $repoTags = $dm->getRepository('PumukitSchemaBundle:Tag');
         $tagService = $this->get('pumukitschema.tag');
 
+        $executeFlush = false;
         foreach ($values as $id => $value) {
             $mm = $repo->find($id);
             if ($mm) {
@@ -613,15 +614,16 @@ class SeriesController extends AdminController implements NewAdminController
                     }
                 }
 
-                if (
-                    $this->isGranted(Permission::CHANGE_MMOBJECT_STATUS) &&
-                    $value['status'] != $mm->getStatus()
-                ) {
+                if ($this->isGranted(Permission::CHANGE_MMOBJECT_STATUS) && $value['status'] != $mm->getStatus()) {
                     $mm->setStatus($value['status']);
                     $dm->persist($mm);
-                    $dm->flush();
+                    $executeFlush = true;
                 }
             }
+        }
+
+        if ($executeFlush) {
+            $dm->flush();
         }
     }
 
