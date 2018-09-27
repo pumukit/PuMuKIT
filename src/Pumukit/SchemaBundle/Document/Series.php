@@ -911,8 +911,6 @@ class Series
     public function getMultimediaObjectWithTag(Tag $tag)
     {
         foreach ($this->multimedia_objects as $mmo) {
-            //if ($mmo->tags->contains($tag)) {
-            //FIXME no pasa el test phpunit cuando se llama desde seriestest
             if ($mmo->containsTag($tag)) {
                 return $mmo;
             }
