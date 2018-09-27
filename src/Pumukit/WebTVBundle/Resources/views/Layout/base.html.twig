@@ -16,7 +16,7 @@
         <meta name="revisit-after" content="1 days"/>
         <meta name="description" content="{{ pumukit2_info.description }}"/>
         <meta name="language" content="{{ app.request.locale }}"/>
-        <meta name="Keywords" content="{{ pumukit2_info.keywords }}"/>
+        <meta name="keywords" content="{% block keywords %}{{ pumukit2_info.keywords }}{% endblock %}"/>
     {% endblock %}
     <title>{% block title %}{{ pumukit2_info.title }}{% endblock %}</title>
 
