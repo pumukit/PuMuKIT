@@ -6,7 +6,6 @@
 {% block meta %}
 
     {{ parent() }}
-
     <meta property="og:url" content="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ series.title }}" />

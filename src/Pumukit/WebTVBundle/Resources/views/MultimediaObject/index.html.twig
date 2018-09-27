@@ -2,13 +2,13 @@
 {% set hide_slidebar = true %}
 
 {% block title %}{{ parent() }} - {{ multimediaObject.title }}{% endblock %}
-{% block keywords %}{{ parent() }} - {{ multimediaObject.keywords }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ multimediaObject.keyword }}{% endblock %}
 
 {% block meta %}
     {{ parent() }}
 
-    {% set trackid = (track.id is defined)?track.id:null %}
     {% if multimediaObject.isPublished %}
+        {% set trackid = (track.id is defined)?track.id:null %}
         {% set url = url('pumukit_webtv_multimediaobject_index', {'id': multimediaObject.id, 'track_id': trackid}) %}
         <meta property="og:url" content="{{ url }}" />
         <meta property="og:type" content="video.other" />
