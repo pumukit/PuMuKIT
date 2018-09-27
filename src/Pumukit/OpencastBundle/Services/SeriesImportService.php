@@ -5,7 +5,6 @@ namespace Pumukit\OpencastBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesImportService
 {
@@ -32,7 +31,7 @@ class SeriesImportService
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesTitle, $seriesOpencastId, $loggedInUser);
             }
-        } elseif (null != ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
+        } elseif (null !== ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
             $series = $seriesRepo->findOneBy(array('properties.opencastspatial' => $seriesOpencastSpatial));
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');

@@ -21,7 +21,7 @@ class PicExtractorServiceTest extends WebTestCase
 
     public function setUp()
     {
-        if (false == TestCommand::commandExists('/usr/local/bin/avconv')) {
+        if (false === TestCommand::commandExists('/usr/local/bin/avconv')) {
             $this->markTestSkipped('PicExtractor test marks as skipped (No avconv).');
         }
 

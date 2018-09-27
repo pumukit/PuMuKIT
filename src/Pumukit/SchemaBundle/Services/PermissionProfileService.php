@@ -71,7 +71,7 @@ class PermissionProfileService
         }
 
         $default = $this->repo->findOneByDefault(true);
-        if ((null == $default) || (!$default->isDefault())) {
+        if ((null === $default) || (!$default->isDefault())) {
             $default = $this->setDefaultPermissionProfile();
             $this->dispatcher->dispatchUpdate($default);
         }
@@ -92,7 +92,7 @@ class PermissionProfileService
         $totalPermissions = count($this->permissionService->getAllPermissions());
         $default = $this->repo->findDefaultCandidate($totalPermissions);
 
-        if (null == $default) {
+        if (null === $default) {
             return false;
         }
 

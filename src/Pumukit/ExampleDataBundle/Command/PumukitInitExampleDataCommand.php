@@ -11,11 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\StatsBundle\Document\ViewsLog;
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
@@ -24,6 +20,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
     private $dm = null;
     private $repo = null;
     private $roleRepo;
+    private $pmk2AllLocales;
+    private $seriesRepo;
 
     protected function configure()
     {
@@ -81,7 +79,7 @@ EOT
             }
 
             $zip = new ZipArchive();
-            if (true == $zip->open($newFile, ZIPARCHIVE::CREATE)) {
+            if (true === $zip->open($newFile, ZIPARCHIVE::CREATE)) {
                 $zip->extractTo(realpath(dirname(__FILE__).'/../Resources/public/'));
                 $zip->close();
             }
@@ -404,7 +402,7 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
         $language = 'es';
         $description = array();
-        if (true == $audio) {
+        if (true === $audio) {
             $path = realpath(dirname(__FILE__).'/../Resources/public/videos/'.$folder.'/'.$track.'.m4a');
             $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
             $jobService->createTrackWithFile($path, 'audio_aac', $multimediaObject, $language, $description);
@@ -418,9 +416,10 @@ EOT
     private function load_tags_multimediaobject($multimediaObject, $tags)
     {
         $tags_repository = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        for ($i = 0; $i < count($tags); ++$i) {
+        $tagService = $this->getContainer()->get('pumukitschema.tag');
+        $limit = count($tags);
+        for ($i = 0; $i < $limit; ++$i) {
             $tag = $tags_repository->findOneBy(array('cod' => $tags[$i]));
-            $tagService = $this->getContainer()->get('pumukitschema.tag');
             $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         }
     }
@@ -526,7 +525,7 @@ EOT
     private function getRoleWithCode($code)
     {
         $role = $this->roleRepo->findOneByCod($code);
-        if (null == $role) {
+        if (null === $role) {
             throw new \Exception("Role with code '".$code."' not found. Please, init pumukit roles.");
         }
 

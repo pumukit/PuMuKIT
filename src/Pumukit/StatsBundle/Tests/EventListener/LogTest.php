@@ -4,7 +4,6 @@ namespace Pumukit\StatsBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\EventListener\Log;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;

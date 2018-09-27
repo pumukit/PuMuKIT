@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Security\Permission;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
@@ -207,7 +206,7 @@ EOT
     {
         /* NECCESSARY CHECKS*/
         if (!file_exists($file_route)) {
-            $output->writeln('<error>'.$repoName.': Error stating '.$file.": File doesn't exist</error>");
+            $output->writeln('<error>'.$repoName.': Error stating '.$file_route.": File doesn't exist</error>");
 
             return -1;
         }
@@ -265,7 +264,8 @@ EOT
                     switch ($repoName) {
                     case 'tag':
                         $csvTagsArray = array();
-                        for ($i = 0; $i < count($currentRow); ++$i) {
+                        $limit = count($currentRow);
+                        for ($i = 0; $i < $limit; ++$i) {
                             $key = $csvTagHeaders[$i]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)
                             $csvTagsArray[$key] = $currentRow[$i];
                         }

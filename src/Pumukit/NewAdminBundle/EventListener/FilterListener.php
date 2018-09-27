@@ -56,19 +56,19 @@ class FilterListener
 
                     $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
 
-                    if (null != $people = $this->getPeopleMongoQuery($person)) {
+                    if (null !== $people = $this->getPeopleMongoQuery($person)) {
                         $filter->setParameter('people', $people);
                     }
 
-                    if (null != $person) {
+                    if (null !== $person) {
                         $filter->setParameter('person_id', $person->getId());
                     }
 
-                    if (null != $roleCode = $this->personService->getPersonalScopeRoleCode()) {
+                    if (null !== $roleCode = $this->personService->getPersonalScopeRoleCode()) {
                         $filter->setParameter('role_code', $roleCode);
                     }
 
-                    if (null != $groups = $this->getGroupsMongoQuery($loggedInUser)) {
+                    if (null !== $groups = $this->getGroupsMongoQuery($loggedInUser)) {
                         $filter->setParameter('groups', $groups);
                     }
                     $filter->setParameter('series_groups', $loggedInUser->getGroupsIds());
@@ -93,7 +93,7 @@ class FilterListener
     private function getPeopleMongoQuery(Person $person = null)
     {
         $people = array();
-        if ((null != $person) && (null != ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
+        if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = array();
             $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
@@ -107,7 +107,7 @@ class FilterListener
      */
     private function getLoggedInUser()
     {
-        if (null != $token = $this->securityContext->getToken()) {
+        if (null !== $token = $this->securityContext->getToken()) {
             return $token->getUser();
         }
 

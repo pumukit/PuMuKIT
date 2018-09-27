@@ -35,7 +35,7 @@ class WorkflowService
         if ($this->deleteArchiveMediaPackage) {
             if ($mediaPackageId) {
                 $deletionWorkflow = $this->getAllWorkflowInstances($mediaPackageId, $this->deletionWorkflowName);
-                if (null != $deletionWorkflow) {
+                if (null !== $deletionWorkflow) {
                     $errors = $this->stopSucceededWorkflow($deletionWorkflow, $errors);
                     $workflows = $this->getAllWorkflowInstances($mediaPackageId);
                     foreach ($workflows as $workflow) {

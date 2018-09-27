@@ -3,7 +3,6 @@
 namespace Pumukit\EncoderBundle\Tests\Funcional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;

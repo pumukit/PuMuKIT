@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
 class SearchController extends Controller
@@ -81,7 +80,8 @@ class SearchController extends Controller
         $tags = $repository_tags->findall();
 
         //Buscamos coincidencia del Tag si se modifica el campo del filtro: <Tags>
-        for ($i = 0; $i < count($tags); ++$i) {
+        $limit = count($tags);
+        for ($i = 0; $i < $limit; ++$i) {
             if ($tags[$i]->getTitle() == $tag_found) {
                 $tag_search = $tags[$i];
             }

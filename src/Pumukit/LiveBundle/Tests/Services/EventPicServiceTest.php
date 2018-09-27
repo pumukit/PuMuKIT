@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\LiveBundle\Services\LegacyEventPicService;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
-use Pumukit\SchemaBundle\Document\Pic;
 
 class EventPicServiceTest extends WebTestCase
 {

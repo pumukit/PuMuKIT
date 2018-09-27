@@ -95,8 +95,9 @@
         </ul>
         <!-- PERSONS ACT -->
         <div class="persons">
-            {% for role in mm.getRoles() if role.getDisplay() %}
-                {% for person in mm.getPeopleByRole(role) %}
+            {% set roles = sort_roles(multimediaObject, true) %}
+            {% for role in roles %}
+                {% for person in role.people %}
                     <div>
                         <div class="person">
                             {{ role.getText() }}
