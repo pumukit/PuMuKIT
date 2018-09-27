@@ -63,7 +63,7 @@ class User extends BaseUser
     {
         $this->groups = new ArrayCollection();
         parent::__construct();
-        if (false == $genUserSalt) {
+        if (false === $genUserSalt) {
             $this->salt = '';
         }
     }

@@ -381,7 +381,7 @@ class FactoryService
      */
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
-        if (null != $series = $multimediaObject->getSeries()) {
+        if (null !== $series = $multimediaObject->getSeries()) {
             $series->removeMultimediaObject($multimediaObject);
             $this->dm->persist($series);
             $this->seriesDispatcher->dispatchUpdate($series);
@@ -667,8 +667,8 @@ class FactoryService
      */
     private function addLoggedInUserAsPerson(MultimediaObject $multimediaObject, User $loggedInUser = null)
     {
-        if ($this->addUserAsPerson && (null != $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
-            if (null != $role = $this->personService->getPersonalScopeRole()) {
+        if ($this->addUserAsPerson && (null !== $person = $this->personService->getPersonFromLoggedInUser($loggedInUser))) {
+            if (null !== $role = $this->personService->getPersonalScopeRole()) {
                 $multimediaObject = $this->personService->createRelationPerson($person, $role, $multimediaObject);
             }
         }

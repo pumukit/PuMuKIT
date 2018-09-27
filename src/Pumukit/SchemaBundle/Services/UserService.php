@@ -85,7 +85,7 @@ class UserService
     {
         if (null != $object) {
             $owners = $object->getProperty('owners');
-            if (null == $owners) {
+            if (null === $owners) {
                 $owners = array();
             }
             if (!in_array($user->getId(), $owners)) {
@@ -209,7 +209,7 @@ class UserService
         }
         if (!$user->isSuperAdmin()) {
             $permissionProfile = $user->getPermissionProfile();
-            if (null == $permissionProfile) {
+            if (null === $permissionProfile) {
                 throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
             }
             /** NOTE: User roles have:
@@ -431,7 +431,7 @@ class UserService
             $user->setEmail($email);
         }
         $defaultPermissionProfile = $this->permissionProfileService->getDefault();
-        if (null == $defaultPermissionProfile) {
+        if (null === $defaultPermissionProfile) {
             throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
         }
         $user->setPermissionProfile($defaultPermissionProfile);

@@ -15,7 +15,7 @@ class InspectionMediainfoServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (false == TestCommand::commandExists('mediainfo')) {
+        if (false === TestCommand::commandExists('mediainfo')) {
             $this->markTestSkipped('Mediainfo test marks skipped (No mediainfo command).');
         }
 

@@ -237,7 +237,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $permissionProfiles = $this->buildPermissionProfiles($checkedPermissions, $selectedScopes);
         foreach ($permissionProfiles as $profileId => $p) {
             $permissionProfile = $this->findPermissionProfile($allPermissionProfiles, $profileId);
-            if (null == $permissionProfile) {
+            if (null === $permissionProfile) {
                 continue;
             }
             try {

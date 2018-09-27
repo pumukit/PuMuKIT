@@ -339,7 +339,7 @@ class UserController extends AdminController implements NewAdminController
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
 
-        if (null != $person = $userToDelete->getPerson()) {
+        if (null !== $person = $userToDelete->getPerson()) {
             try {
                 $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
             } catch (\Exception $e) {

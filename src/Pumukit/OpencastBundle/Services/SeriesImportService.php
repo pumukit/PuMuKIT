@@ -32,7 +32,7 @@ class SeriesImportService
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesTitle, $seriesOpencastId, $loggedInUser);
             }
-        } elseif (null != ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
+        } elseif (null !== ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
             $series = $seriesRepo->findOneBy(array('properties.opencastspatial' => $seriesOpencastSpatial));
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');

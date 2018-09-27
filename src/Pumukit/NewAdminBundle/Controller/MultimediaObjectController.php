@@ -623,7 +623,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     private function getAllParents($element, $tags, $top_parent)
     {
-        if (null != $element->getParent()) {
+        if (null !== $element->getParent()) {
             $parentMissing = true;
             foreach ($tags as $tag) {
                 if ($element->getParent() == $tag) {

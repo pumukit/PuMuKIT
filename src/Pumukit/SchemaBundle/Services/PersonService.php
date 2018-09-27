@@ -379,7 +379,7 @@ class PersonService
      */
     public function referencePersonIntoUser(User $user)
     {
-        if ($this->addUserAsPerson && (null == $person = $user->getPerson())) {
+        if ($this->addUserAsPerson && (null === $person = $user->getPerson())) {
             $person = $this->createFromUser($user);
 
             $user->setPerson($person);
@@ -407,7 +407,7 @@ class PersonService
     public function getPersonFromLoggedInUser(User $loggedInUser = null)
     {
         if (null != $loggedInUser) {
-            if (null == $person = $loggedInUser->getPerson()) {
+            if (null === $person = $loggedInUser->getPerson()) {
                 $loggedInUser = $this->referencePersonIntoUser($loggedInUser);
                 $person = $loggedInUser->getPerson();
             }
@@ -430,7 +430,7 @@ class PersonService
     public function getPersonalScopeRole()
     {
         $personalScopeRole = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
-        if ($this->addUserAsPerson && (null == $personalScopeRole)) {
+        if ($this->addUserAsPerson && (null === $personalScopeRole)) {
             throw new \Exception('Invalid Personal Scope Role Code: "'.$this->personalScopeRoleCode
                                  .'". There is no Role with this data. '
                                  .'Change it on parameters.yml or use default value by deleting '

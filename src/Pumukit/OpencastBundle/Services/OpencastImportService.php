@@ -66,7 +66,7 @@ class OpencastImportService
             $onemultimediaobjects = $multimediaobjectsRepo->findOneBy(array('properties.opencast' => $mediaPackageId));
         }
 
-        if (null == $onemultimediaobjects) {
+        if (null === $onemultimediaobjects) {
             $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $loggedInUser);
             $multimediaObject->setSeries($series);
 

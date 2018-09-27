@@ -392,7 +392,7 @@ class PlaylistMultimediaObjectController extends Controller
         $filter = $dm->getFilterCollection()->enable('personal');
         $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
         $people = array();
-        if ((null != $person) && (null != ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
+        if ((null !== $person) && (null !== ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
             $people['$elemMatch'] = array();
             $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
