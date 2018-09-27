@@ -72,8 +72,9 @@
         {% endif %}
         <!-- PERSONS ACT -->
         <div class="persons">
-            {% for role in multimediaObject.getRoles() if role.getDisplay() %}
-                {% for person in multimediaObject.getPeopleByRole(role) %}
+            {% set roles = sort_roles(multimediaObject, true) %}
+            {% for role in roles %}
+                {% for person in role.people %}
                     <div>
                         <div class="person"><span class="glyphicon glyphicon-user"></span>
                             {{ role.getText() }}

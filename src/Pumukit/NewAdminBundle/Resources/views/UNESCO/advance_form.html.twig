@@ -149,9 +149,9 @@
                     <label for="{{ role.getCod() }}" class="col-md-3 control-label">{{ role.getName(app.request.getLocale()) }}</label>
                     <div class="col-md-9">
                         <input type="text" id="{{ role.getCod() }}" class="form-control" name="criteria[roles][{{ role.getCod() }}]" placeholder="{{ role.getName(app.request.getLocale()) }}"
-                                {% if app.request.session.get('UNESCO/form')['roles'] is defined and app.request.session.get('UNESCO/form')['roles'][role.getCod()] is not empty %}
-                                    value="{{ app.request.session.get('UNESCO/form')['roles'][role.getCod()] }}"
-                                {% endif %}
+                            {% if app.request.session.get('UNESCO/form')['roles'] is defined and app.request.session.get('UNESCO/form')['roles'][role.getCod()] is defined and app.request.session.get('UNESCO/form')['roles'][role.getCod()] is not empty %}
+                                value="{{ app.request.session.get('UNESCO/form')['roles'][role.getCod()] }}"
+                            {% endif %}
                         />
                     </div>
                 </div>
