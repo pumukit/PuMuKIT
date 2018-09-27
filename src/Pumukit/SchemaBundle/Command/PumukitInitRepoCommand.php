@@ -17,6 +17,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $dm = null;
     private $tagsRepo = null;
     private $rolesRepo = null;
+    private $pmk2_allLocales;
 
     private $tagsPath = '../Resources/data/tags/';
     private $rolesPath = '../Resources/data/roles/';
@@ -48,6 +49,9 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
+        $this->rolesRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
+        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+
         $repoName = $input->getArgument('repo');
 
         if ($input->getOption('force')) {
@@ -103,8 +107,6 @@ EOT
 
     protected function executeTags(InputInterface $input, OutputInterface $output, $force = true)
     {
-        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->tagsPath);
         $file = $input->getArgument('file');
@@ -131,8 +133,6 @@ EOT
 
     protected function executeRoles(InputInterface $input, OutputInterface $output)
     {
-        $this->rolesRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
-
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->rolesPath);
         $file = $input->getArgument('file');

@@ -353,7 +353,7 @@ class StatsService
     {
         $qb = $this->repo->createStandardQueryBuilder();
         if ($criteria) {
-            $mmobjIds = $qb->addAnd($criteria);
+            $qb->addAnd($criteria);
         }
 
         return $qb->distinct('_id')->getQuery()->execute()->toArray();
@@ -363,7 +363,7 @@ class StatsService
     {
         $qb = $this->repoSeries->createQueryBuilder();
         if ($criteria) {
-            $mmobjIds = $qb->addAnd($criteria);
+            $qb->addAnd($criteria);
         }
 
         return $qb->distinct('_id')->getQuery()->execute()->toArray();

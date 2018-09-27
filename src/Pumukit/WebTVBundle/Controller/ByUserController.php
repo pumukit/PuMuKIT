@@ -56,7 +56,7 @@ class ByUserController extends Controller implements WebTVController
         $person = $user->getPerson();
         $series = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, array('public_date' => -1));
 
-        $pagerfanta = $this->createPager($series, $request->query->get('page', 1));
+        $pagerfanta = $this->createPager($series, $request->query->get('page', 1), $limit);
         $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', array('username' => $user->getUsername()));
 
         $title = $user->getFullname();
@@ -108,6 +108,8 @@ class ByUserController extends Controller implements WebTVController
             'objects' => $last,
             'date' => $date,
             'number_cols' => $numberCols,
+            'limit' => $limit,
+            'scroll_list' => $scroll_list,
         )), 200);
         $response->headers->set('X-Date', $dateHeader);
         $response->headers->set('X-Date-Month', $date->format('m'));

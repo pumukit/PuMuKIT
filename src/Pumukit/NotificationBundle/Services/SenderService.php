@@ -14,7 +14,6 @@ class SenderService
 
     private $mailer;
     private $templating;
-    private $jobService;
     private $senderEmail;
     private $senderName;
     private $enableMultiLang;

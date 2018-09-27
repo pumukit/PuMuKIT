@@ -191,7 +191,6 @@ class EventRepository extends DocumentRepository
             ->sort('date', 1)
             ->getQuery()->execute();
 
-        $duration = 0;
         foreach ($currentDayEvents as $event) {
             $eventDate = new \DateTime($event->getDate()->format('Y-m-d H:i:s'));
             if (($eventDate <= $hoursDatetime) && ($currentDatetime <= $eventDate->add(new \DateInterval('PT'.$event->getDuration().'M')))) {

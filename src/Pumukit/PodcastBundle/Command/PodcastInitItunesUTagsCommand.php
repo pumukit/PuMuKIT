@@ -12,8 +12,8 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class PodcastInitItunesUTagsCommand extends ContainerAwareCommand
 {
-    private $dm = null;
-    private $tagRepo = null;
+    private $dm;
+    private $tagRepo;
     private $tagsPath = '../Resources/data/tags/';
 
     protected function configure()
@@ -52,8 +52,6 @@ EOT
 
     protected function executeTags(InputInterface $input, OutputInterface $output)
     {
-        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/'.$this->tagsPath);
         $file = $input->getArgument('file');
@@ -62,8 +60,8 @@ EOT
 
             return -1;
         }
-        $root = $this->tagsRepo->findOneByCod('ROOT');
-        if (null === $root) {
+        $root = $this->tagRepo->findOneByCod('ROOT');
+        if (null == $root) {
             $output->writeln("<error>Tags: There's no ROOT tag. Please exec pumukit:init:repo tag</error>");
 
             return -1;
@@ -117,7 +115,7 @@ EOT
                 if (0 == $row % 100) {
                     echo 'Row '.$row."\n";
                 }
-                $previous_content = $currentRow;
+
                 ++$row;
             }
             fclose($file);
@@ -131,7 +129,7 @@ EOT
 
     private function createTagFromCsvArray($csv_array, $tag_parent = null)
     {
-        if ($tag = $this->tagsRepo->findOneByCod($csv_array[1])) {
+        if ($tag = $this->tagRepo->findOneByCod($csv_array[1])) {
             throw new \LengthException('Nothing done - Tag retrieved from DB id: '.$tag->getId().' cod: '.$tag->getCod());
         }
 

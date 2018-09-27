@@ -181,7 +181,6 @@ class PersonController extends AdminController implements NewAdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $pluralName = $this->getPluralResourceName();
         $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
@@ -509,16 +508,15 @@ class PersonController extends AdminController implements NewAdminController
      */
     public function deleteRelationAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
+        $translator = $this->get('translator');
+        $personService = $this->get('pumukitschema.person');
+        $person = $personService->findPersonById($request->get('id'));
+
         if ($role->getCod() === $this->container->getParameter('pumukitschema.personal_scope_role_code')) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
         $owner = $request->get('owner', false);
         try {
-            $series = $multimediaObject->getSeries();
-            $seriesId = $series->getId();
-            $personService = $this->get('pumukitschema.person');
-            $userService = $this->get('pumukitschema.user');
-            $translator = $this->get('translator');
             $person = $personService->findPersonById($request->get('id'));
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
             $multimediaObject = $personService->deleteRelation($person, $role, $multimediaObject);
@@ -686,7 +684,6 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         if ($selectedPersonId) {
-            $newPerson = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Person')->find($selectedPersonId);
             $adapter = $resources->getAdapter();
             $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
             $position = 1;
@@ -699,13 +696,14 @@ class PersonController extends AdminController implements NewAdminController
             $maxPerPage = $session->get('admin/person/paginate', 10);
             $page = intval(ceil($position / $maxPerPage));
         } else {
+            $maxPerPage = $session->get('admin/person/paginate', 10);
             $page = $session->get('admin/person/page', 1);
         }
 
         $resources
-            ->setMaxPerPage($session->get('admin/person/paginate', 10))
+            ->setMaxPerPage($maxPerPage)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get('admin/person/page', 1));
+            ->setCurrentPage($page);
 
         return $resources;
     }

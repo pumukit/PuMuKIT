@@ -80,7 +80,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
             }
             if ($request->files->has('file')) {
                 $picService = $this->get('pumukitschema.mmspic');
-                $media = $picService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
+                $picService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
             }
         } catch (\Exception $e) {
             return array(

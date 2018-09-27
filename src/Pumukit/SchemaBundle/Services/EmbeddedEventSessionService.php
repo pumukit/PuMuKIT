@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class EmbeddedEventSessionService
 {
     private $dm;
-    private $repo;
     private $collection;
     private $defaultPoster;
     private $defaultThumbnail;
@@ -168,7 +167,6 @@ class EmbeddedEventSessionService
     public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
         $this->defaultPoster = $defaultPoster;
         $this->defaultThumbnail = $defaultThumbnail;

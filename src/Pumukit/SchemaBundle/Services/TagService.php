@@ -10,14 +10,12 @@ class TagService
 {
     private $dm;
     private $repository;
-    private $mmobjRepo;
     private $dispatcher;
 
     public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
         $this->repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $this->dispatcher = $dispatcher;
     }
 

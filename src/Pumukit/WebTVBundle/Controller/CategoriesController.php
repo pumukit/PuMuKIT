@@ -40,7 +40,6 @@ class CategoriesController extends Controller implements WebTVController
         //Create array structure
         //TODO Move this logic to a service.
         $tagsArray = array();
-        $parentPathLength = strlen($groundsRoot->getPath());
         foreach ($tagsTree as $tag) {
             $path = sprintf('%s__object', $tag->getPath());
             $keys = explode('|', $path);

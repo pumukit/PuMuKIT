@@ -409,9 +409,6 @@ class UNESCOController extends Controller implements NewAdminController
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-        $isPublished = null;
-        $playableResource = null;
-
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
         $allBundles = $this->container->getParameter('kernel.bundles');

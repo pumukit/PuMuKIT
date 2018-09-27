@@ -12,7 +12,6 @@ use Pumukit\LiveBundle\Document\Event;
 class LegacyEventPicService
 {
     private $dm;
-    private $repo;
     private $targetPath;
     private $targetUrl;
     private $forceDeleteOnDisk;
@@ -25,7 +24,6 @@ class LegacyEventPicService
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
-        $this->repo = $this->dm->getRepository('PumukitLiveBundle:Event');
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 
@@ -102,7 +100,7 @@ class LegacyEventPicService
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {
                     $dirDeleted = rmdir($dirname);
-                    if (!$deleted) {
+                    if (!$dirDeleted) {
                         throw new \Exception("Error deleting directory '".$dirname."'on disk");
                     }
                 }

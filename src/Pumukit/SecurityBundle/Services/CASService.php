@@ -8,7 +8,6 @@ class CASService
     private $casPort;
     private $casUri;
     private $casAllowedIpClients;
-    private $environment;
     private $initialize = false;
     private $env;
     private $cacheDir;

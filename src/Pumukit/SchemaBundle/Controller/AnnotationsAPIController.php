@@ -181,8 +181,8 @@ class AnnotationsAPIController extends Controller
 
         $value = $request->get('value');
         $annotation->setValue($value);
-        $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
-        $annonRepo = $this->get('doctrine_mongodb.odm.document_manager')->flush();
+        $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
+        $this->get('doctrine_mongodb.odm.document_manager')->flush();
         $data = array(
             'annotation' => array(
                 'annotationId' => $annotation->getId(),

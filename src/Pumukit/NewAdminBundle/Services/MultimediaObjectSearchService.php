@@ -2,24 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Services;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class MultimediaObjectSearchService
 {
-    private $dm;
-
-    /**
-     * MultimediaObjectSearchService constructor.
-     *
-     * @param DocumentManager $documentManager
-     */
-    public function __construct(DocumentManager $documentManager)
-    {
-        $this->dm = $documentManager;
-    }
-
     /**
      * @param $reqCriteria
      * @param $locale

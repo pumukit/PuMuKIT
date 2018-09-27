@@ -48,19 +48,18 @@ class OpencastController extends PlayerController implements WebTVController
 
     public function doAction(MultimediaObject $multimediaObject, Request $request)
     {
-        if (!$opencasturl = $multimediaObject->getProperty('opencasturl')) {
+        if (!$opencastUrl = $multimediaObject->getProperty('opencasturl')) {
             throw $this->createNotFoundException('The multimedia Object has no Opencast url!');
         }
 
-        $mmobjService = $this->get('pumukitschema.multimedia_object');
         if ($this->container->hasParameter('pumukit_opencast.use_redirect') && $this->container->getParameter('pumukit_opencast.use_redirect')) {
             $event = new ViewedEvent($multimediaObject, null);
             $this->get('event_dispatcher')->dispatch(BasePlayerEvents::MULTIMEDIAOBJECT_VIEW, $event);
-            if ($invert = $multimediaObject->getProperty('opencastinvert')) {
-                $opencasturl .= '&display=invert';
+            if ($multimediaObject->getProperty('opencastinvert')) {
+                $opencastUrl .= '&display=invert';
             }
 
-            return $this->redirect($opencasturl);
+            return $this->redirect($opencastUrl);
         }
 
         //Detect if it's mobile: (Refactor this using javascript... )

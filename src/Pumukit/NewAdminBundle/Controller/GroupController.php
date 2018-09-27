@@ -64,8 +64,6 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function createAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
         $group = $this->createNew();
         $form = $this->getForm($group);
 
@@ -107,7 +105,6 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function updateAction(Request $request)
     {
-        $dm = $this->get('doctrine_mongodb')->getManager();
         $group = $this->findOr404($request);
         if (!$group->isLocal()) {
             return new Response('Not allowed to update not local Group', Response::HTTP_METHOD_NOT_ALLOWED);

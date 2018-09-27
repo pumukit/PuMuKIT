@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -17,7 +16,6 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
     private $dm;
     private $output;
     private $input;
-    private $finder;
     private $fileSystem;
     private $pics;
     private $materials;
@@ -60,7 +58,6 @@ EOT
 
         $this->pics = $this->input->getOption('pics');
         $this->materials = $this->input->getOption('materials');
-        $this->finder = new Finder();
         $this->fileSystem = new Filesystem();
     }
 
@@ -92,7 +89,7 @@ EOT
                 throw new \Exception($exception->getMessage());
             }
 
-            $output->writeln('Refactor pics done');
+            $this->output->writeln('Refactor pics done');
         }
 
         if ($this->materials) {
@@ -103,7 +100,7 @@ EOT
                 throw new \Exception($exception->getMessage());
             }
 
-            $output->writeln('Refactor materials done');
+            $this->output->writeln('Refactor materials done');
         }
     }
 

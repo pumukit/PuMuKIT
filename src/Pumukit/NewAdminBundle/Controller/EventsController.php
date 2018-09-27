@@ -624,41 +624,6 @@ class EventsController extends Controller implements NewAdminController
     }
 
     /**
-     * @param $roleCod
-     * @param $name
-     * @param $multimediaObject
-     * @param $dm
-     *
-     * @return mixed
-     */
-    private function addPeopleData($roleCod, $name, $multimediaObject, $dm)
-    {
-        $people = $multimediaObject->getPeopleByRoleCod($roleCod);
-        $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $roleCod));
-
-        if (!$people) {
-            $person = new Person();
-            $person->setName($name);
-            $dm->persist($person);
-            $multimediaObject->addPersonWithRole($person, $role);
-        } else {
-            $personService = $this->get('pumukitschema.person');
-
-            $embeddedPerson = $people[0];
-            $person = $personService->findPersonById($embeddedPerson->getId());
-            if ($person) {
-                $person->setName($name);
-                $embeddedPerson->setName($name);
-                $personService->updatePerson($person);
-            } else {
-                throw $this->createNotFoundException('The person does not exist');
-            }
-        }
-
-        return $multimediaObject;
-    }
-
-    /**
      * @Route("series/{id}", name="pumukit_new_admin_live_event_seriestab")
      * @ParamConverter("series", class="PumukitSchemaBundle:Series", options={"mapping": {"id": "id"}})
      * @Template("PumukitNewAdminBundle:Series:updatemeta.html.twig")

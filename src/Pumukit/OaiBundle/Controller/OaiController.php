@@ -23,22 +23,20 @@ class OaiController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $verb = $request->query->get('verb');
-
         switch ($request->query->get('verb')) {
-        case 'Identify':
-            return $this->identify();
-        case 'ListMetadataFormats':
-            return $this->listMetadataFormats($request);
-        case 'ListSets':
-            return $this->listSets($request);
-        case 'ListIdentifiers':
-        case 'ListRecords':
-            return $this->listIdentifiers($request);
-        case 'GetRecord':
-            return $this->getRecord($request);
-        default:
-            return $this->error('badVerb', 'Illegal OAI verb');
+            case 'Identify':
+                return $this->identify();
+            case 'ListMetadataFormats':
+                return $this->listMetadataFormats($request);
+            case 'ListSets':
+                return $this->listSets($request);
+            case 'ListIdentifiers':
+            case 'ListRecords':
+                return $this->listIdentifiers($request);
+            case 'GetRecord':
+                return $this->getRecord($request);
+            default:
+                return $this->error('badVerb', 'Illegal OAI verb');
         }
     }
 
@@ -342,7 +340,7 @@ class OaiController extends Controller
 
         if ($this->container->getParameter('pumukitoai.use_dc_thumbnail')) {
             $thumbnail = $this->get('pumukitschema.pic')->getFirstUrlPic($object, true);
-            $XMLiden = $XMLoai_dc->addChild('dc:thumbnail', $thumbnail, 'http://purl.org/dc/elements/1.1/');
+            $XMLoai_dc->addChild('dc:thumbnail', $thumbnail, 'http://purl.org/dc/elements/1.1/');
         }
 
         foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
@@ -420,22 +418,12 @@ class OaiController extends Controller
         $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
     }
 
-    //TODO Delete using ResumptionToken
-    private function validateToken($resumptionToken)
-    {
-        if (null !== $resumptionToken) {
-            $error = false;
-
-            return array('pag' => (((int) $resumptionToken) + 1), 'error' => $error);
-        }
-    }
-
     private function genResponse($responseXml, $verb)
     {
         $XML = new SimpleXMLExtended('<OAI-PMH></OAI-PMH>');
         $XML->addAttribute('xmlns', 'http://www.openarchives.org/OAI/2.0/');
         $XML->addAttribute('xsi:schemaLocation', 'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd', 'http://www.w3.org/2001/XMLSchema-instance');
-        $XMLresponseDate = $XML->addChild('responseDate', date("Y-m-d\TH:i:s\Z"));
+        $XML->addChild('responseDate', date("Y-m-d\TH:i:s\Z"));
 
         $toDom = dom_import_simplexml($XML);
         $fromDom = dom_import_simplexml($responseXml);

@@ -96,28 +96,6 @@ class WorkflowService
     }
 
     /**
-     * Get workflows template.
-     *
-     * @param array  $workflows
-     * @param string $template
-     *
-     * @return array
-     */
-    private function getWorkflowsWithTemplate(array $workflows = array(), $template = '')
-    {
-        $templateWorkflows = array();
-        foreach ($workflows as $workflow) {
-            if (isset($workflow['template'])) {
-                if ($template == $workflow['template']) {
-                    $templateWorkflows[] = $workflow;
-                }
-            }
-        }
-
-        return $templateWorkflows;
-    }
-
-    /**
      * Is workflow succeeded.
      *
      * @param array $workflow
@@ -175,25 +153,4 @@ class WorkflowService
         return $errors;
     }
 
-    /**
-     * Get workflows with mediapackage id.
-     *
-     * @param array  $workflows
-     * @param string $mediaPackageId
-     *
-     * @return array
-     */
-    private function getWorkflowsWithMediaPackageId(array $workflows = array(), $mediaPackageId = '')
-    {
-        $mediaPackageIdWorkflows = array();
-        foreach ($workflows as $workflow) {
-            if (isset($workflow['mediapackage']['id'])) {
-                if ($workflow['mediapackage']['id'] == $mediaPackageId) {
-                    $mediaPackageIdWorkflows[] = $workflow;
-                }
-            }
-        }
-
-        return $mediaPackageIdWorkflows;
-    }
 }

@@ -2,7 +2,6 @@
 
 namespace Pumukit\ExampleDataBundle\Command;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,8 +16,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
     const PATH_VIDEO = 'http://static.campusdomar.es/pumukit_videos.zip';
 
-    private $dm = null;
-    private $repo = null;
+    private $dm;
+    private $repo;
     private $roleRepo;
     private $pmk2AllLocales;
     private $seriesRepo;
@@ -324,7 +323,7 @@ EOT
         $progress->advance();
         $progress->finish();
         if (!$input->getOption('noviewlogs')) {
-            $this->load_viewsLog($this->dm, $output);
+            $this->load_viewsLog($output);
         }
         if (!$input->getOption('reusezip')) {
             unlink($newFile);
@@ -370,9 +369,8 @@ EOT
             $picFile = new UploadedFile($picPath, 'pic'.$pic.'.png', null, null, null, true);
             $series = $seriesPicService->addPicFile($series, $picFile);
         }
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $dm->persist($series);
-        $dm->flush();
+        $this->dm->persist($series);
+        $this->dm->flush();
     }
 
     private function load_multimediaobject($multimediaObject, $series, $title)
@@ -443,15 +441,14 @@ EOT
             $picFile = new UploadedFile($picPath, 'pic'.$pic.'.png', null, null, null, true);
             $multimediaObject = $mmsPicService->addPicFile($multimediaObject, $picFile);
         }
-        $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $dm->persist($multimediaObject);
-        $dm->flush();
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
     }
 
-    private function load_viewsLog(DocumentManager $dm, $output)
+    private function load_viewsLog($output)
     {
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $viewsLogColl = $dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $mmobjRepo = $this->dmgetRepository('PumukitSchemaBundle:MultimediaObject');
+        $viewsLogColl = $this->dmgetDocumentCollection('PumukitStatsBundle:ViewsLog');
 
         $allMmobjs = $mmobjRepo->findStandardBy(array());
         $useragents = array('Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
@@ -489,12 +486,12 @@ EOT
                                 'multimediaObject' => new \MongoId($mmobj->getId()),
                                 'series' => new \MongoId($mmobj->getSeries()->getId()), );
                 $mmobj->incNumview();
-                $dm->persist($mmobj);
+                $this->dmpersist($mmobj);
             }
         }
         $progress->setProgress(count($allMmobjs));
         $viewsLogColl->batchInsert($logs);
-        $dm->flush();
+        $this->dmflush();
         $progress->finish();
     }
 
