@@ -690,7 +690,7 @@ class PumukitAdminExtension extends \Twig_Extension
                 $sessionEnds = $sessionStart->add(new \DateInterval('PT'.$session->getDuration().'S'));
                 if ($session->getStart()->getTimestamp() > $now) {
                     $aSessions[$session->getStart()->getTimestamp()][] = $session;
-                } elseif (($session->getStart()->getTimestamp() < $now) and ($sessionEnds->getTimestamp() > $now)) {
+                } elseif (($session->getStart()->getTimestamp() < $now) && ($sessionEnds->getTimestamp() > $now)) {
                     $aSessions[$session->getStart()->getTimestamp()][] = $session;
                 }
             }
