@@ -400,8 +400,11 @@ class TagService
     /**
      * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
-     * @param array[MultimediaObject] $mmobjs
-     * @param array[Tag]              $tags
+     * @param array $mmobjs
+     * @param array $newTags
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function resetCategoriesForCollections(array $mmobjs, array $newTags)
     {
@@ -419,10 +422,14 @@ class TagService
     /**
      * Resets only the 'Categories' tags. Those are all except for the 'PUBCHANNEL' and 'PUBDECISION' tags.
      *
-     * @param array[MultimediaObject] $mmobjs
-     * @param array[string]           $tags
+     * @param MultimediaObject $mmobj
+     * @param array            $newTags
+     * @param bool             $executeFlush
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
-    public function resetCategories(array $mmobjs, array $newTags, $executeFlush = true)
+    public function resetCategories(MultimediaObject $mmobj, array $newTags, $executeFlush = true)
     {
         foreach ($mmobj->getTags() as $originalEmbeddedTag) {
             if ($originalEmbeddedTag->isPubTag()) {
