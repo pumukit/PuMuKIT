@@ -447,8 +447,8 @@ EOT
 
     private function load_viewsLog($output)
     {
-        $mmobjRepo = $this->dmgetRepository('PumukitSchemaBundle:MultimediaObject');
-        $viewsLogColl = $this->dmgetDocumentCollection('PumukitStatsBundle:ViewsLog');
+        $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
         $allMmobjs = $mmobjRepo->findStandardBy(array());
         $useragents = array('Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
@@ -486,12 +486,12 @@ EOT
                                 'multimediaObject' => new \MongoId($mmobj->getId()),
                                 'series' => new \MongoId($mmobj->getSeries()->getId()), );
                 $mmobj->incNumview();
-                $this->dmpersist($mmobj);
+                $this->dm->persist($mmobj);
             }
         }
         $progress->setProgress(count($allMmobjs));
         $viewsLogColl->batchInsert($logs);
-        $this->dmflush();
+        $this->dm->flush();
         $progress->finish();
     }
 
