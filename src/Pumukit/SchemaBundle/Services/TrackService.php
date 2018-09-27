@@ -4,7 +4,6 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;

@@ -4,7 +4,6 @@ namespace Pumukit\EncoderBundle\Tests\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
 
 class RemoveListenerTest extends WebTestCase
