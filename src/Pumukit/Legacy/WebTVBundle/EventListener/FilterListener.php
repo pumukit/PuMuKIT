@@ -45,7 +45,7 @@ class FilterListener
     {
         $broadcastRepo = $this->dm->getRepository('PumukitSchemaBundle:Broadcast');
         $privateBroadcastIds = $broadcastRepo->findDistinctIdsByBroadcastTypeId(Broadcast::BROADCAST_TYPE_PRI);
-        if (null != $privateBroadcastIds) {
+        if (null !== $privateBroadcastIds) {
             return $privateBroadcastIds->toArray();
         }
 
@@ -55,7 +55,7 @@ class FilterListener
     private function getBroadcastCriteria()
     {
         $privateBroadcastIds = $this->getPrivateBroadcastIds();
-        if (null != $privateBroadcastIds) {
+        if (null !== $privateBroadcastIds) {
             return array('$nin' => $privateBroadcastIds);
         }
 

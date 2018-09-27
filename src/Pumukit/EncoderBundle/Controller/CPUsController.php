@@ -26,11 +26,11 @@ class CPUsController extends Controller
         $activateMaintenance = null;
         $activate = $request->get('activate');
         $deactivate = $request->get('deactivate');
-        if ((null !== $activate && (true == $activate || 'activate' === $activate || 'true' === $activate || '' === $activate))
-            || (null != $deactivate && (false == $deactivate || 'false' === $deactivate))) {
+        if ((null !== $activate && (true === $activate || 'activate' === $activate || 'true' === $activate || '' === $activate))
+            || (null !== $deactivate && (false === $deactivate || 'false' === $deactivate))) {
             $activateMaintenance = 'activate';
-        } elseif ((null !== $deactivate && (true == $deactivate || 'deactivate' === $deactivate || 'true' === $deactivate || '' === $deactivate))
-                || (null != $activate && (false == $activate || 'false' === $activate))) {
+        } elseif ((null !== $deactivate && (true === $deactivate || 'deactivate' === $deactivate || 'true' === $deactivate || '' === $deactivate))
+                || (null !== $activate && (false === $activate || 'false' === $activate))) {
             $activateMaintenance = 'deactivate';
         }
         if (!$activateMaintenance) {

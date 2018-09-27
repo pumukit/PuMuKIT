@@ -58,7 +58,7 @@ class AdminFilter extends BsonFilter
     private function getSeriesMongoQuery($personId, $roleCode, $groups)
     {
         $seriesIds = array();
-        if ((null != $personId) && (null != $roleCode)) {
+        if ((null !== $personId) && (null !== $roleCode)) {
             $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
             $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
             $seriesIds['$in'] = $referencedSeries->toArray();

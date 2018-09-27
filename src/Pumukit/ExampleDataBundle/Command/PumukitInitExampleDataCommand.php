@@ -81,7 +81,7 @@ EOT
             }
 
             $zip = new ZipArchive();
-            if (true == $zip->open($newFile, ZIPARCHIVE::CREATE)) {
+            if (true === $zip->open($newFile, ZIPARCHIVE::CREATE)) {
                 $zip->extractTo(realpath(dirname(__FILE__).'/../Resources/public/'));
                 $zip->close();
             }
@@ -404,7 +404,7 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
         $language = 'es';
         $description = array();
-        if (true == $audio) {
+        if (true === $audio) {
             $path = realpath(dirname(__FILE__).'/../Resources/public/videos/'.$folder.'/'.$track.'.m4a');
             $jobService->createTrackWithFile($path, 'master_copy', $multimediaObject, $language, $description);
             $jobService->createTrackWithFile($path, 'audio_aac', $multimediaObject, $language, $description);
@@ -526,7 +526,7 @@ EOT
     private function getRoleWithCode($code)
     {
         $role = $this->roleRepo->findOneByCod($code);
-        if (null == $role) {
+        if (null === $role) {
             throw new \Exception("Role with code '".$code."' not found. Please, init pumukit roles.");
         }
 
