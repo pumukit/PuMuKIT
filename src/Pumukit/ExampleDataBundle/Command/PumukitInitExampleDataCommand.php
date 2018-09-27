@@ -11,11 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\StatsBundle\Document\ViewsLog;
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
@@ -24,6 +20,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
     private $dm = null;
     private $repo = null;
     private $roleRepo;
+    private $pmk2AllLocales;
+    private $seriesRepo;
 
     protected function configure()
     {
@@ -418,9 +416,10 @@ EOT
     private function load_tags_multimediaobject($multimediaObject, $tags)
     {
         $tags_repository = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
-        for ($i = 0; $i < count($tags); ++$i) {
+        $tagService = $this->getContainer()->get('pumukitschema.tag');
+        $limit = count($tags);
+        for ($i = 0; $i < $limit; ++$i) {
             $tag = $tags_repository->findOneBy(array('cod' => $tags[$i]));
-            $tagService = $this->getContainer()->get('pumukitschema.tag');
             $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         }
     }

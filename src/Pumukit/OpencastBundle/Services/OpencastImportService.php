@@ -98,7 +98,8 @@ class OpencastImportService
             $tracks = $this->getMediaPackageField($media, 'track');
             if (isset($tracks[0])) {
                 // NOTE: Multiple tracks
-                for ($i = 0; $i < count($tracks); ++$i) {
+                $limit = count($tracks);
+                for ($i = 0; $i < $limit; ++$i) {
                     $track = $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
                 }
             } else {
@@ -109,7 +110,8 @@ class OpencastImportService
             $attachments = $this->getMediaPackageField($mediaPackage, 'attachments');
             $attachment = $this->getMediaPackageField($attachments, 'attachment');
             if (isset($attachment[0])) {
-                for ($j = 0; $j < count($attachment); ++$j) {
+                $limit = count($attachment);
+                for ($j = 0; $j < $limit; ++$j) {
                     $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j);
                 }
             } else {
@@ -146,7 +148,8 @@ class OpencastImportService
             $tracks = $this->getMediaPackageField($media, 'track');
             if (isset($tracks[0])) {
                 // NOTE: Multiple tracks
-                for ($i = 0; $i < count($tracks); ++$i) {
+                $limit = count($tracks);
+                for ($i = 0; $i < $limit; ++$i) {
                     $track = $tracks[$i];
                     $opencastUrls = $this->addOpencastUrl($opencastUrls, $track);
                 }
@@ -205,7 +208,8 @@ class OpencastImportService
         $tags = $this->getMediaPackageField($tagsArray, 'tag');
         if (isset($tags[0])) {
             // NOTE: Multiple tags
-            for ($i = 0; $i < count($tags); ++$i) {
+            $limit = count($tags);
+            for ($i = 0; $i < $limit; ++$i) {
                 $track = $this->addTagToTrack($tags, $track, $i);
             }
         } else {
