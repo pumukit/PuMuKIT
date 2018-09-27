@@ -137,7 +137,7 @@ class UNESCOController extends Controller implements NewAdminController
         $page = $session->get('admin/unesco/page', 1);
         $maxPerPage = $session->get('admin/unesco/paginate', 10);
 
-        if (isset($tag) or $session->has('admin/unesco/tag')) {
+        if (isset($tag) || $session->has('admin/unesco/tag')) {
             $tag = (isset($tag) ? $tag : $session->get('admin/unesco/tag'));
         }
         if ($session->has('UNESCO/criteria')) {
@@ -252,28 +252,28 @@ class UNESCOController extends Controller implements NewAdminController
         $session->set('admin/unesco/text', false);
         if ($criteria) {
             foreach ($criteria as $key => $value) {
-                if (('id' === $key) and !empty($value)) {
+                if (('id' === $key) && !empty($value)) {
                     $newCriteria['_id'] = new \MongoId($value);
                     $formBasic = true;
-                } elseif (('seriesID' === $key) and !empty($value)) {
+                } elseif (('seriesID' === $key) && !empty($value)) {
                     $newCriteria['series'] = new \MongoId($value);
                     $formBasic = true;
-                } elseif ('type' === $key and !empty($value)) {
+                } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
                         $newCriteria['type'] = intval($value);
                         $formBasic = true;
                     }
-                } elseif ('duration' === $key and !empty($value)) {
+                } elseif ('duration' === $key && !empty($value)) {
                     $newCriteria['tracks.duration'] = $value;
                     $formBasic = true;
-                } elseif ('year' === $key and !empty($value)) {
+                } elseif ('year' === $key && !empty($value)) {
                     $newCriteria['year'] = $value;
                     $formBasic = true;
-                } elseif ('text' === $key and !empty($value)) {
+                } elseif ('text' === $key && !empty($value)) {
                     $newCriteria['$text'] = $value;
                     $session->set('admin/unesco/text', true);
                     $formBasic = true;
-                } elseif ('broadcast' === $key and !empty($value)) {
+                } elseif ('broadcast' === $key && !empty($value)) {
                     if ('all' !== $value) {
                         $newCriteria['embeddedBroadcast.type'] = $value;
                     }
@@ -281,13 +281,13 @@ class UNESCOController extends Controller implements NewAdminController
                     if ('-1' !== $value) {
                         $newCriteria['status'] = intval($value);
                     }
-                } elseif ('announce' === $key and !empty($value)) {
+                } elseif ('announce' === $key && !empty($value)) {
                     $tag[] = 'PUDENEW';
-                } elseif ('puderadio' === $key and !empty($value)) {
+                } elseif ('puderadio' === $key && !empty($value)) {
                     $tag[] = 'PUDERADIO';
-                } elseif ('pudetv' === $key and !empty($value)) {
+                } elseif ('pudetv' === $key && !empty($value)) {
                     $tag[] = 'PUDETV';
-                } elseif ('genre' === $key and !empty($value)) {
+                } elseif ('genre' === $key && !empty($value)) {
                     $tag[] = $value;
                 } elseif ('roles' === $key) {
                     foreach ($value as $key2 => $field) {
@@ -299,13 +299,13 @@ class UNESCOController extends Controller implements NewAdminController
                     $key,
                     array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate')
                 )) {
-                    if ('initPublicDate' === $key and !empty($value)) {
+                    if ('initPublicDate' === $key && !empty($value)) {
                         $newCriteria['public_date_init'] = $value;
-                    } elseif ('finishPublicDate' === $key and !empty($value)) {
+                    } elseif ('finishPublicDate' === $key && !empty($value)) {
                         $newCriteria['public_date_finish'] = $value;
-                    } elseif ('initRecordDate' === $key and !empty($value)) {
+                    } elseif ('initRecordDate' === $key && !empty($value)) {
                         $newCriteria['record_date_init'] = $value;
-                    } elseif ('finishRecordDate' === $key and !empty($value)) {
+                    } elseif ('finishRecordDate' === $key && !empty($value)) {
                         $newCriteria['record_date_finish'] = $value;
                     }
                 } elseif (!empty($value)) {
@@ -697,7 +697,7 @@ class UNESCOController extends Controller implements NewAdminController
         $session->set('admin/unesco/tag', $tag);
 
         $tagCondition = $tag;
-        if (isset($tag) and !in_array($tag, array('1', '2'))) {
+        if (isset($tag) && !in_array($tag, array('1', '2'))) {
             $tagCondition = (strtoupper(substr($tag, 0, 1)));
         }
 
@@ -718,7 +718,7 @@ class UNESCOController extends Controller implements NewAdminController
                 break;
         }
 
-        if (isset($criteria) and !empty($criteria)) {
+        if (isset($criteria) && !empty($criteria)) {
             $query = $this->addCriteria($query, $criteria);
         }
 
@@ -736,46 +736,46 @@ class UNESCOController extends Controller implements NewAdminController
         $request = $this->get('request_stack')->getMasterRequest();
 
         foreach ($criteria as $key => $field) {
-            if ('roles' === $key and count($field) >= 1) {
+            if ('roles' === $key && count($field) >= 1) {
                 foreach ($field as $key2 => $value) {
                     $query->field('people')->elemMatch($query->expr()->field('cod')->equals($key2)->field('people.name')->equals($value));
                 }
-            } elseif ('public_date_init' === $key and !empty($field)) {
+            } elseif ('public_date_init' === $key && !empty($field)) {
                 $public_date_init = $field;
-            } elseif ('public_date_finish' === $key and !empty($field)) {
+            } elseif ('public_date_finish' === $key && !empty($field)) {
                 $public_date_finish = $field;
-            } elseif ('record_date_init' === $key and !empty($field)) {
+            } elseif ('record_date_init' === $key && !empty($field)) {
                 $record_date_init = $field;
-            } elseif ('record_date_finish' === $key and !empty($field)) {
+            } elseif ('record_date_finish' === $key && !empty($field)) {
                 $record_date_finish = $field;
-            } elseif ('$text' === $key and !empty($field)) {
+            } elseif ('$text' === $key && !empty($field)) {
                 $this->get('pumukitnewadmin.multimedia_object_search')
                     ->completeSearchQueryBuilder($field, $query, $request->getLocale());
-            } elseif ('type' === $key and !empty($field)) {
+            } elseif ('type' === $key && !empty($field)) {
                 if ('all' !== $field) {
                     $query->field('type')->equals($field);
                 }
-            } elseif ('tracks.duration' == $key and !empty($field)) {
+            } elseif ('tracks.duration' == $key && !empty($field)) {
                 $query = $this->findDuration($query, $key, $field);
-            } elseif ('year' === $key and !empty($field)) {
+            } elseif ('year' === $key && !empty($field)) {
                 $query = $this->findDuration($query, 'year', $field);
             } else {
                 $query->field($key)->equals($field);
             }
         }
 
-        if (isset($public_date_init) and isset($public_date_finish)) {
+        if (isset($public_date_init) && isset($public_date_finish)) {
             $query->field('public_date')->range(
                 new \MongoDate(strtotime($public_date_init)),
                 new \MongoDate(strtotime($public_date_finish))
             );
-        } elseif (isset($public_date_init) and !empty($public_date_init)) {
+        } elseif (isset($public_date_init) && !empty($public_date_init)) {
             $date = date($public_date_init.'T23:59:59');
             $query->field('public_date')->range(
                 new \MongoDate(strtotime($public_date_init)),
                 new \MongoDate(strtotime($date))
             );
-        } elseif (isset($public_date_finish) and !empty($public_date_finish)) {
+        } elseif (isset($public_date_finish) && !empty($public_date_finish)) {
             $date = date($public_date_finish.'T23:59:59');
             $query->field('public_date')->range(
                 new \MongoDate(strtotime($public_date_finish)),
@@ -783,7 +783,7 @@ class UNESCOController extends Controller implements NewAdminController
             );
         }
 
-        if (isset($record_date_init) and isset($record_date_finish)) {
+        if (isset($record_date_init) && isset($record_date_finish)) {
             $query->field('record_date')->range(
                 new \MongoDate(strtotime($record_date_init)),
                 new \MongoDate(strtotime($record_date_finish))

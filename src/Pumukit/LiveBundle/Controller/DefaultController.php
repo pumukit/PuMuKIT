@@ -85,7 +85,7 @@ class DefaultController extends Controller
         $nowSessions = $embeddedEventSessionService->findCurrentSessions($criteria, 0, true);
         $nextSession = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
-        if (count($nextSession) > 0 or count($nowSessions) > 0) {
+        if (count($nextSession) > 0 || count($nowSessions) > 0) {
             $translator = $this->get('translator');
             $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
@@ -149,7 +149,7 @@ class DefaultController extends Controller
 
         $activeContact = false;
         $captchaPublicKey = '';
-        if ($this->container->hasParameter('liveevent_contact_and_share') and $this->container->getParameter('liveevent_contact_and_share')) {
+        if ($this->container->hasParameter('liveevent_contact_and_share') && $this->container->getParameter('liveevent_contact_and_share')) {
             $captchaPublicKey = $this->container->getParameter('captcha_public_key');
             $activeContact = true;
         }
@@ -175,7 +175,7 @@ class DefaultController extends Controller
         $date = new \DateTime();
         $firstNextSession = '';
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
-            if ($session->getStart() < $date and $session->getEnds() > $date) {
+            if ($session->getStart() < $date && $session->getEnds() > $date) {
                 $firstNextSession = $session->getStart()->getTimestamp() * 1000;
                 break;
             } elseif ($session->getStart() > $date) {

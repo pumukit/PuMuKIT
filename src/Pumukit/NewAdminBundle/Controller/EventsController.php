@@ -186,7 +186,7 @@ class EventsController extends Controller implements NewAdminController
                     $criteria['embeddedEvent.name.'.$request->getLocale()] = new \MongoRegex('/'.$data['name'].'/i');
                 }
             }
-            if ($data['date']['from'] and $data['date']['to']) {
+            if ($data['date']['from'] && $data['date']['to']) {
                 $start = strtotime($data['date']['from']);
                 $ends = strtotime($data['date']['to'].'23:59:59');
 
@@ -230,7 +230,7 @@ class EventsController extends Controller implements NewAdminController
         $mms = new Pagerfanta($adapter);
 
         $mms->setMaxPerPage(10)->setNormalizeOutOfRangePages(true);
-        if (($mms->getNbPages() < $mms->getCurrentPage()) or ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
+        if (($mms->getNbPages() < $mms->getCurrentPage()) || ($mms->getNbPages() < $session->get('admin/live/event/page'))) {
             $mms->setCurrentPage(1);
         } else {
             $mms->setCurrentPage($page);
@@ -273,7 +273,7 @@ class EventsController extends Controller implements NewAdminController
             if ('embeddedEvent.name' === $request->request->get('field')) {
                 $field = 'embeddedEvent.name.'.$request->getLocale();
             }
-            if ($session->has('admin/live/event/sort/field') and $session->get('admin/live/event/sort/field') === $field) {
+            if ($session->has('admin/live/event/sort/field') && $session->get('admin/live/event/sort/field') === $field) {
                 $session->set('admin/live/event/sort/type', (('desc' == $session->get('admin/live/event/sort/type')) ? 'asc' : 'desc'));
             } else {
                 $session->set('admin/live/event/sort/type', 'desc');
@@ -1017,14 +1017,14 @@ class EventsController extends Controller implements NewAdminController
         usort($multimediaObjects, function ($a, $b) use ($sortType, $date) {
             $validSessionA = null;
             foreach ($a->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionA) {
-                if ($sessionA->getStart() > $date or ($sessionA->getStart() <= $date and $sessionA->getEnds() > $date)) {
+                if ($sessionA->getStart() > $date || ($sessionA->getStart() <= $date && $sessionA->getEnds() > $date)) {
                     $validSessionA = $sessionA->getStart()->getTimestamp();
                     break;
                 }
             }
             $validSessionB = null;
             foreach ($b->getEmbeddedEvent()->getEmbeddedEventSession() as $sessionB) {
-                if ($sessionB->getStart() > $date or ($sessionB->getStart() <= $date and $sessionB->getEnds() > $date)) {
+                if ($sessionB->getStart() > $date || ($sessionB->getStart() <= $date && $sessionB->getEnds() > $date)) {
                     $validSessionB = $sessionB->getStart()->getTimestamp();
                     break;
                 }
