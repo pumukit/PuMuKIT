@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class TestPersonalController extends Controller implements PersonalController
 {
@@ -25,7 +24,5 @@ class TestPersonalController extends Controller implements PersonalController
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
         return new Response($response);
-
-        return new Response('haha');
     }
 }
