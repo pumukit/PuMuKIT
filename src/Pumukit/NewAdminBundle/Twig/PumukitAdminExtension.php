@@ -720,7 +720,14 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSortRoles($multimediaObject, $display = true)
     {
-        $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy(array('display' => $display), array('rank' => 1));
+        static $rolesCached = array();
+
+        if (array_key_exists($display, $rolesCached)) {
+            $roles = $rolesCached[$display];
+        } else {
+            $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy(array('display' => $display), array('rank' => 1));
+            $rolesCached[$display] = $roles;
+        }
 
         $aRoles = array();
         foreach ($roles as $role) {
