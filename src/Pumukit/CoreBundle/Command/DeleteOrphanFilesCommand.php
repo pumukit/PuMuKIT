@@ -175,8 +175,9 @@ EOT
         $dirName = pathinfo($directoryPath);
         try {
             rmdir($dirName['dirname']);
-        } catch (\Exception $exception) {
             $this->logger->info('Deleted empty directory '.$directoryPath);
+        } catch (\Exception $exception) {
+            $this->logger->info('Cannot delete directory because is not empty '.$directoryPath);
         }
     }
 }
