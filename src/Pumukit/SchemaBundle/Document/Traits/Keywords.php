@@ -34,7 +34,7 @@ trait Keywords
      */
     public function setKeyword($keyword, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->keyword[$locale] = $keyword;
@@ -53,7 +53,7 @@ trait Keywords
      */
     public function getKeyword($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->keywords[$locale])) {

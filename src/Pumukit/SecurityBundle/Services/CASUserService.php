@@ -163,7 +163,7 @@ class CASUserService
     protected function getPermissionProfile()
     {
         $defaultPermissionProfile = $this->permissionProfileService->getDefault();
-        if (null == $defaultPermissionProfile) {
+        if (null === $defaultPermissionProfile) {
             throw new \Exception('Unable to assign a Permission Profile to the new User. There is no default Permission Profile');
         }
 

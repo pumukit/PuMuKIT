@@ -209,7 +209,7 @@ class PersonService
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
         $role->increaseNumberPeopleInMultimediaObject();
-        if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null != $person->getUser())) {
+        if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null !== $person->getUser())) {
             $this->userService->addOwnerUserToMultimediaObject($multimediaObject, $person->getUser(), false);
         }
         $this->dm->persist($multimediaObject);
@@ -305,7 +305,7 @@ class PersonService
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
             $role->decreaseNumberPeopleInMultimediaObject();
-            if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null != $person->getUser())) {
+            if ($this->addUserAsPerson && ($this->personalScopeRoleCode === $role->getCod()) && (null !== $person->getUser())) {
                 $this->userService->removeOwnerUserFromMultimediaObject($multimediaObject, $person->getUser(), false);
             }
         }
@@ -327,7 +327,7 @@ class PersonService
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
         }
 
-        if ((null != $user = $person->getUser()) && !$deleteFromUser) {
+        if ((null !== $user = $person->getUser()) && !$deleteFromUser) {
             throw new \Exception('Could not remove Person with id "'.$person->getId().'". There is an User with id "'.$user->getId().'" and usernname "'.$user->getUsername().'" referenced. Delete the user to delete this Person.');
         }
 
@@ -406,7 +406,7 @@ class PersonService
      */
     public function getPersonFromLoggedInUser(User $loggedInUser = null)
     {
-        if (null != $loggedInUser) {
+        if (null !== $loggedInUser) {
             if (null === $person = $loggedInUser->getPerson()) {
                 $loggedInUser = $this->referencePersonIntoUser($loggedInUser);
                 $person = $loggedInUser->getPerson();

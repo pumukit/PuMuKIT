@@ -318,7 +318,7 @@ class DefaultController extends Controller
     {
         $privatekey = $this->container->getParameter('captcha_private_key');
 
-        if (null == $response || 0 == strlen($response)) {
+        if (null === $response || 0 == strlen($response)) {
             return false;
         }
 

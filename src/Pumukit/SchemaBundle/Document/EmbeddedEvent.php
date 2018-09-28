@@ -146,7 +146,7 @@ class EmbeddedEvent
      */
     public function setName($name, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->name[$locale] = $name;
@@ -161,7 +161,7 @@ class EmbeddedEvent
      */
     public function getName($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
@@ -198,7 +198,7 @@ class EmbeddedEvent
      */
     public function getDescription($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -214,7 +214,7 @@ class EmbeddedEvent
      */
     public function setDescription($description, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
 

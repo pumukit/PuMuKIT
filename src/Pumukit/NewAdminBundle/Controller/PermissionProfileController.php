@@ -224,7 +224,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
 
         $newDefaultPermissionProfile = $this->find($selectedDefault);
-        if (null != $newDefaultPermissionProfile) {
+        if (null !== $newDefaultPermissionProfile) {
             if (!$newDefaultPermissionProfile->isDefault()) {
                 $newDefaultPermissionProfile->setDefault(true);
                 $newDefaultPermissionProfile = $permissionProfileService->update($newDefaultPermissionProfile);
