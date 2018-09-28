@@ -60,7 +60,7 @@ class TrackController extends Controller implements NewAdminController
         $jobService = $this->get('pumukitencoder.job');
 
         try {
-            if (empty($_FILES) && empty($_POST)) {
+            if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
             if (($request->files->has('resource')) && ('file' == $request->get('file_type'))) {
