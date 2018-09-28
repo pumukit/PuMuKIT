@@ -77,7 +77,7 @@ class ByUserController extends Controller implements WebTVController
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
      * @Template()
      */
-    public function userObjectsPager(User $user, Request $request)
+    public function userObjectsPagerAction(User $user, Request $request)
     {
         list($scroll_list, $numberCols, $limit, $roleCode) = $this->getParameters();
         $type = $request->get('type');
