@@ -38,6 +38,8 @@ class PermissionProfileService
         $this->dm->persist($permissionProfile);
         $this->dm->flush();
 
+        $this->checkDefault($permissionProfile);
+
         if ($dispatchCreate) {
             $this->dispatcher->dispatchCreate($permissionProfile);
         } else {
