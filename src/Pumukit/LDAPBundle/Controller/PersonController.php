@@ -97,7 +97,7 @@ class PersonController extends Controller
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try {
             $person = $personService->findPersonByEmail($email);
-            if (null == $person) {
+            if (null === $person) {
                 $person = $this->createPersonFromLDAP($cn, $email);
             }
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);

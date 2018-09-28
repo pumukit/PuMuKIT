@@ -83,7 +83,7 @@ class UserService
      */
     private function addOwnerUserToObject($object, User $user, $executeFlush = true)
     {
-        if (null != $object) {
+        if (null !== $object) {
             $owners = $object->getProperty('owners');
             if (null === $owners) {
                 $owners = array();
@@ -124,7 +124,7 @@ class UserService
 
     private function removeOwnerUserFromObject($object, User $user, $executeFlush = true)
     {
-        if (null != $object) {
+        if (null !== $object) {
             $owners = $object->getProperty('owners');
             if (in_array($user->getId(), $owners)) {
                 if ($object->isCollection()) {
@@ -134,7 +134,7 @@ class UserService
                       ->field('series')->equals($object);
                     $deleteOwnerInSeries = true;
                     foreach ($multimediaObjects as $multimediaObject) {
-                        if (null != $owners = $multimediaObject->getProperty('owners')) {
+                        if (null !== $owners = $multimediaObject->getProperty('owners')) {
                             if (in_array($user->getId(), $owners)) {
                                 $deleteOwnerInSeries = false;
                             }
@@ -154,7 +154,7 @@ class UserService
 
     private function removeUserFromOwnerProperty($object, User $user, $executeFlush = true)
     {
-        if (null != $object) {
+        if (null !== $object) {
             $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
                 return $ownerId !== $user->getId();
             });
@@ -178,7 +178,7 @@ class UserService
      */
     public function create(User $user)
     {
-        if (null != ($permissionProfile = $user->getPermissionProfile())) {
+        if (null !== ($permissionProfile = $user->getPermissionProfile())) {
             $user = $this->setUserScope($user, null, $permissionProfile->getScope());
             $user = $this->addRoles($user, $permissionProfile->getPermissions(), false);
         }

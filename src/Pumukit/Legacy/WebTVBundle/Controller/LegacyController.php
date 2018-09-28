@@ -135,7 +135,7 @@ class LegacyController extends Controller
           ->field('properties.pumukit1magic')->equals($hash)
           ->getQuery()->getSingleResult();
 
-        if (null == $series) {
+        if (null === $series) {
             throw $this->createNotFoundException();
         }
 

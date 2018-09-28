@@ -495,14 +495,14 @@ class TagServiceTest extends WebTestCase
     {
         if ($withROOT) {
             $rootTag = $this->tagRepo->findOneByCod('ROOT');
-            if (null == $rootTag) {
+            if (null === $rootTag) {
                 $rootTag = new Tag();
                 $rootTag->setCod('ROOT');
                 $this->dm->persist($rootTag);
             }
         } else {
             $rootTag = $this->tagRepo->findOneByCod('grandparent');
-            if (null == $rootTag) {
+            if (null === $rootTag) {
                 $rootTag = new Tag();
                 $rootTag->setCod('grandparent');
                 $this->dm->persist($rootTag);
@@ -512,7 +512,7 @@ class TagServiceTest extends WebTestCase
         $locale = 'en';
 
         $parentTag = $this->tagRepo->findOneByCod('parent');
-        if (null == $parentTag) {
+        if (null === $parentTag) {
             $parentTag = new Tag();
             $parentTag->setLocale($locale);
             $parentTag->setCod('parent');
@@ -529,7 +529,7 @@ class TagServiceTest extends WebTestCase
         $this->dm->persist($tag);
 
         $broTag = $this->tagRepo->findOneByCod('brother');
-        if (null == $broTag) {
+        if (null === $broTag) {
             $broTag = new Tag();
             $broTag->setLocale($locale);
             $broTag->setCod('brother');
