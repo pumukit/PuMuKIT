@@ -537,7 +537,7 @@ class UNESCOController extends Controller implements NewAdminController
      * @return JsonResponse
      * @Route("/delete/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_delete_tag")
      */
-    public function deleteTagDnD($tagCod, $multimediaObjectId)
+    public function deleteTagDnDAction($tagCod, $multimediaObjectId)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
@@ -569,7 +569,7 @@ class UNESCOController extends Controller implements NewAdminController
      * @return JsonResponse
      * @Route("/add/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_add_tag")
      */
-    public function addTagDnD($tagCod, $multimediaObjectId)
+    public function addTagDnDAction($tagCod, $multimediaObjectId)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $tagService = $this->container->get('pumukitschema.tag');
@@ -595,7 +595,7 @@ class UNESCOController extends Controller implements NewAdminController
      * @return JsonResponse
      * @Route("/option/selected/{option}", name="pumukitnewadmin_unesco_options_list")
      */
-    public function optionsMultimediaObjects(Request $request, $option)
+    public function optionsMultimediaObjectsAction(Request $request, $option)
     {
         $session = $this->get('session');
         $session->remove('admin/unesco/tag');

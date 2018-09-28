@@ -490,7 +490,7 @@ class MultimediaObject
      */
     public function setTitle($title, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->title[$locale] = $title;
@@ -505,7 +505,7 @@ class MultimediaObject
      */
     public function getTitle($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->title[$locale])) {
@@ -543,7 +543,7 @@ class MultimediaObject
      */
     public function setSubtitle($subtitle, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->subtitle[$locale] = $subtitle;
@@ -558,7 +558,7 @@ class MultimediaObject
      */
     public function getSubtitle($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->subtitle[$locale])) {
@@ -596,7 +596,7 @@ class MultimediaObject
      */
     public function setDescription($description, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->description[$locale] = $description;
@@ -611,7 +611,7 @@ class MultimediaObject
      */
     public function getDescription($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
@@ -669,7 +669,7 @@ class MultimediaObject
      */
     public function setLine2($line2, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->line2[$locale] = $line2;
@@ -684,7 +684,7 @@ class MultimediaObject
      */
     public function getLine2($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->line2[$locale])) {
@@ -869,7 +869,7 @@ class MultimediaObject
      */
     public function getSeriesTitle($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->seriesTitle[$locale])) {

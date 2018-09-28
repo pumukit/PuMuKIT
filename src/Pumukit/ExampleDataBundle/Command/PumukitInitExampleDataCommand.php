@@ -535,7 +535,7 @@ EOT
     private function checkSeriesExists($seriesTitle)
     {
         $exist = $this->seriesRepo->findOneBySeriesProperty('dataexample', $seriesTitle);
-        if (null != $exist) {
+        if (null !== $exist) {
             return true;
         } else {
             return false;

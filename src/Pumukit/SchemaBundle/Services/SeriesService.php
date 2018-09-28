@@ -57,11 +57,11 @@ class SeriesService
             $firstFound = $multimediaObject;
             break;
         }
-        if (null == $firstFound) {
+        if (null === $firstFound) {
             return false;
         }
         $embeddedBroadcast = $firstFound->getEmbeddedBroadcast();
-        if (null == $embeddedBroadcast) {
+        if (null === $embeddedBroadcast) {
             return false;
         }
         $type = $embeddedBroadcast->getType();
