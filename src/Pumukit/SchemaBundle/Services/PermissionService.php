@@ -206,7 +206,7 @@ class PermissionService
         reset($dependencies);
         while (false !== ($elem = current($dependencies))) {
             if (!array_key_exists($elem, $allPermissions)) {
-                throw new \InvalidArgumentException(sprintf('The permission with role \'%s\' does not exist in the configuration', $elem['value']));
+                throw new \InvalidArgumentException(sprintf('The permission with role \'%s\' does not exist in the configuration', $elem));
             }
             foreach ($allPermissions[$elem]['dependencies'][$scope] as $newDep) {
                 if ($newDep != $permission && !in_array($newDep, $dependencies)) {
