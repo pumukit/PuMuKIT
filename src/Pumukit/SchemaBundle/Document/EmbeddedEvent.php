@@ -442,7 +442,7 @@ class EmbeddedEvent
      */
     public function setAlreadyHeldMessage($message, $locale = null)
     {
-        if ($locale == null) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->alreadyHeldMessage[$locale] = $message;
@@ -455,7 +455,7 @@ class EmbeddedEvent
      */
     public function getAlreadyHeldMessage($locale = null)
     {
-        if ($locale == null) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->alreadyHeldMessage[$locale])) {
@@ -492,7 +492,7 @@ class EmbeddedEvent
      */
     public function setNotYetHeldMessage($message, $locale = null)
     {
-        if ($locale == null) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->notYetHeldMessage[$locale] = $message;
@@ -505,7 +505,7 @@ class EmbeddedEvent
      */
     public function getNotYetHeldMessage($locale = null)
     {
-        if ($locale == null) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->notYetHeldMessage[$locale])) {
