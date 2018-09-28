@@ -29,7 +29,7 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete files and folders')
             ->setHelp(<<<'EOT'
             
-            Pumukit delete orphan files on specific path. This command show if the path's file exist on:
+            Pumukit delete orphan files on specific path. This command shows if the path's file exists on:
             
             a) pics.path of multimedia object
             b) materials.path of multimedia object
@@ -176,7 +176,7 @@ EOT
         try {
             rmdir($dirName['dirname']);
         } catch (\Exception $exception) {
-            $this->logger->info('Delete empty directory '.$directoryPath);
+            $this->logger->info('Deleted empty directory '.$directoryPath);
         }
     }
 }
