@@ -264,7 +264,7 @@ class EventsController extends Controller implements NewAdminController
      *
      * @Route("add/sorting/", name="pumukit_new_admin_live_event_set_sorting")
      */
-    public function addSessionSorting(Request $request)
+    public function addSessionSortingAction(Request $request)
     {
         $session = $this->get('session');
 
@@ -1065,7 +1065,7 @@ class EventsController extends Controller implements NewAdminController
      *
      * @throws \Exception
      */
-    public function autocompleteSeriesWithEventData(Request $request, MultimediaObject $multimediaObject)
+    public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
