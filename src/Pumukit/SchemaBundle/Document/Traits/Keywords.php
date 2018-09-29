@@ -104,7 +104,7 @@ trait Keywords
      */
     public function containsKeyword($keyword, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
 
@@ -121,7 +121,7 @@ trait Keywords
      */
     public function addKeyword($keyword, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
 
@@ -144,7 +144,7 @@ trait Keywords
      */
     public function removeKeyword($keyword, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
 
@@ -171,7 +171,7 @@ trait Keywords
      */
     public function setKeywords(array $keywords, $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         $this->keywords[$locale] = $keywords;
@@ -186,7 +186,7 @@ trait Keywords
      */
     public function getKeywords($locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->locale;
         }
         if (!isset($this->keyword[$locale])) {

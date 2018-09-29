@@ -25,7 +25,5 @@
 /bin/
 /composer.phar
 *~
-*.swp
 \#*\#
 TAGS
-.idea
