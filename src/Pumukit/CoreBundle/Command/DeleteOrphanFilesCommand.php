@@ -81,11 +81,7 @@ EOT
             throw new \Exception('Path doesnt exists');
         }
 
-        try {
-            $this->findFilesOfPath($this->path);
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $this->findFilesOfPath($this->path);
     }
 
     /**
@@ -107,13 +103,9 @@ EOT
                 $this->logger->info('No file found in MongoDB '.$filePath);
 
                 if ($this->delete) {
-                    try {
-                        $this->output->writeln('Trying to delete file....');
-                        unlink($absoluteFilePath);
-                        $this->output->writeln('File deleted '.$filePath);
-                    } catch (\Exception $exception) {
-                        throw new \Exception($exception->getMessage());
-                    }
+                    $this->output->writeln('Trying to delete file....');
+                    unlink($absoluteFilePath);
+                    $this->output->writeln('File deleted '.$filePath);
                     $this->isEmptyDirectory($absoluteFilePath);
                 }
             }
