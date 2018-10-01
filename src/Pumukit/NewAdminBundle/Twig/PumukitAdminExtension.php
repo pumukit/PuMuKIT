@@ -722,7 +722,7 @@ class PumukitAdminExtension extends \Twig_Extension
     {
         static $rolesCached = array();
 
-        if (array_key_exists(var_export($display,true), $rolesCached)) {
+        if (array_key_exists(var_export($display, true), $rolesCached)) {
             $roles = $rolesCached[$display];
         } else {
             $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy(array('display' => $display), array('rank' => 1));
