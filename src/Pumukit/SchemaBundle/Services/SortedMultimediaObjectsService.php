@@ -28,7 +28,7 @@ class SortedMultimediaObjectsService
     {
         $sorting = $series->getSortingCriteria();
 
-        $mms =$this->repo->findOrderedBy($series, $sorting);
+        $mms = $this->repo->findOrderedBy($series, $sorting);
 
         $rank = 1;
         foreach ($mms as $mm) {
