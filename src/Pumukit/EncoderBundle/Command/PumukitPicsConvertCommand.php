@@ -36,7 +36,7 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pumukit:pics:convert')
-            ->setDescription('Pumukit list pics')
+            ->setDescription('Command to get all pics like selected filters and create new images with low size.')
             ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'List pics by id.')
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'List pics by path.')
             ->addOption('extension', null, InputOption::VALUE_OPTIONAL, 'List pics by extension.')
