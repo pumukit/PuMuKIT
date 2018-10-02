@@ -25,7 +25,7 @@ class PumukitListPicsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pumukit:pics:list')
-            ->setDescription('Pumukit list pics')
+            ->setDescription('Command to get all pics like selected filters.')
             ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'List pics by id.')
             ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'List pics by path.')
             ->addOption('extension', null, InputOption::VALUE_OPTIONAL, 'List pics by extension.')
