@@ -59,6 +59,11 @@ class PermissionService
                 ),
             );
 
+            // No activated-by-default permission for publication channels with configuration.
+            if ($pubchannel->getProperty('modal_path')) {
+                continue;
+            }
+
             $return[Permission::getRoleTagDefaultForPubChannel($pubchannel->getCod())] = array(
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" activated by default',
                 'dependencies' => array(
