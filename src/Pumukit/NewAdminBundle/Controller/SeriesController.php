@@ -603,9 +603,11 @@ class SeriesController extends AdminController implements NewAdminController
                         $tag = $repoTags->find($channelId);
                         if (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
                             if ($mustContainsTag && (!($mm->containsTag($tag)))) {
-                                $tagAdded = $tagService->addTag($mm, $tag);
+                                $tagAdded = $tagService->addTag($mm, $tag, false);
+                                $executeFlush = true;
                             } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
-                                $tagAdded = $tagService->removeTag($mm, $tag);
+                                $tagAdded = $tagService->removeTag($mm, $tag, false);
+                                $executeFlush = true;
                             }
                         }
                     }
