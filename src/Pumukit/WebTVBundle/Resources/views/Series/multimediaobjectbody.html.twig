@@ -95,7 +95,7 @@
         </ul>
         <!-- PERSONS ACT -->
         <div class="persons">
-            {% set roles = sort_roles(multimediaObject, true) %}
+            {% set roles = sort_roles(mm, true) %}
             {% for role in roles %}
                 {% for person in role.people %}
                     <div>
