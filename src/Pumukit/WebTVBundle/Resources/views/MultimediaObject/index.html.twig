@@ -37,7 +37,7 @@
     <div class="col-lg-4 col-md-5">
         <span class="hidden-sm hidden-xs"><br/></span>
         {% if not multimediaObject.getSeries().isHide() %}
-            {% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined})) %}
+            {% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined ? magic_url : false})) %}
         {% endif %}
         {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
     </div>
