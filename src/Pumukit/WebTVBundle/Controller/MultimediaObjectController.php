@@ -141,8 +141,10 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         $secretSeriesUrl = $this->generateUrl('pumukit_webtv_series_magicindex', array('secret' => $series->getSecret()), true);
         $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
         $relatedLink = strpos($referer, 'magic');
+        $multimediaObjectMagicUrl = $request->get('magicUrl', false);
 
-        $status = ($fromSecret || $relatedLink) ?
+        $showMagicUrl = ($fromSecret || $relatedLink || $multimediaObjectMagicUrl);
+        $status = ($showMagicUrl) ?
                 array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN) :
                 array(MultimediaObject::STATUS_PUBLISHED);
 
@@ -151,7 +153,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         return array(
             'series' => $series,
             'multimediaObjects' => $multimediaObjects,
-            'showMagicUrl' => ($fromSecret || $relatedLink),
+            'showMagicUrl' => $showMagicUrl,
         );
     }
 
