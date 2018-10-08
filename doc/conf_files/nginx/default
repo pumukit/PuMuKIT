@@ -7,6 +7,11 @@ server {
     server_name localhost;
     root /var/www/pumukit2/web;
 
+    location ^~ /uploads {
+             access_log off;
+             add_header Cache-Control "public, max-age=86400";
+    }
+
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app.php$is_args$args;

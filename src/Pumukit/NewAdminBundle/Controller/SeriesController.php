@@ -600,14 +600,14 @@ class SeriesController extends AdminController implements NewAdminController
                 if ($this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL)) {
                     foreach ($value['channels'] as $channelId => $mustContainsTag) {
                         $mustContainsTag = ('true' == $mustContainsTag);
-                        $dm->clear(); //See #12692
                         $tag = $repoTags->find($channelId);
-                        $mm = $repo->find($id);
                         if (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
                             if ($mustContainsTag && (!($mm->containsTag($tag)))) {
-                                $tagAdded = $tagService->addTag($mm, $tag);
+                                $tagAdded = $tagService->addTag($mm, $tag, false);
+                                $executeFlush = true;
                             } elseif ((!($mustContainsTag)) && $mm->containsTag($tag)) {
-                                $tagAdded = $tagService->removeTag($mm, $tag);
+                                $tagAdded = $tagService->removeTag($mm, $tag, false);
+                                $executeFlush = true;
                             }
                         }
                     }
@@ -615,7 +615,6 @@ class SeriesController extends AdminController implements NewAdminController
 
                 if ($this->isGranted(Permission::CHANGE_MMOBJECT_STATUS) && $value['status'] != $mm->getStatus()) {
                     $mm->setStatus($value['status']);
-                    $dm->persist($mm);
                     $executeFlush = true;
                 }
             }
