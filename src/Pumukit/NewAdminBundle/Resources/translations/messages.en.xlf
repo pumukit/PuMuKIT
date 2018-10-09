@@ -3601,6 +3601,14 @@
         <source>Option not allowed</source>
         <target>Option not allowed</target>
       </trans-unit>
+      <trans-unit id="b4cc92abd26e31b783d6ac779cc7fd3a" resname="Sync metadata">
+        <source>Sync metadata</source>
+        <target>Sync metadata</target>
+      </trans-unit>
+      <trans-unit id="21206d10460ef70e9baaac6cc33ec948" resname="Sync metadata for all multimedia objects">
+        <source>Sync metadata for all multimedia objects</source>
+        <target>Sync metadata for all multimedia objects</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
