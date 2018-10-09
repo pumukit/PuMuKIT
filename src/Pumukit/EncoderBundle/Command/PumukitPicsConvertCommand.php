@@ -133,6 +133,9 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!extension_loaded('gd')) {
+            throw new \Exception('GD extension not installed. See http://php.net/manual/en/image.installation.php for installation options.');
+        }
         $validInput = $this->checkInputOptions();
         if (!$validInput['success']) {
             throw new \Exception($validInput['message']);
