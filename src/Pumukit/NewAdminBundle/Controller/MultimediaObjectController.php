@@ -1595,4 +1595,226 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return new JsonResponse(array('paellalayout' => $multimediaObject->getProperty('paellalayout')));
     }
+
+    private $syncFields = array(
+        'comments' => 'Comments',
+        'copyright' => 'Copyright',
+        'description' => 'Description',
+        'groups' => 'Groups',
+        'headline' => 'Headline',
+        'keywords' => 'Keywords',
+        'license' => 'License',
+        'owners' => 'Owners',
+        'publicdate' => 'Publication Date',
+        'publishingdecisions' => 'Publishing Decisions',
+        'recorddate' => 'Record Date',
+        'subseries' => 'Subseries',
+    );
+
+    /**
+     * Sync selected metadata on all mmobjs of the series.
+     *
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return array
+     *
+     * @throws \Exception
+     *
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     *
+     * @Template("PumukitNewAdminBundle:MultimediaObject:modalsyncmetadata.html.twig")
+     */
+    public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $tags = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('metatag' => true), array('cod' => 1));
+        if (!$tags) {
+            throw new \Exception($translator->trans('No tags defined with metatag'));
+        }
+        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findBy(array(), array("name.$locale" => 1));
+        if (0 === count($roles)) {
+            throw new \Exception($translator->trans('No roles defined'));
+        }
+
+        return array(
+            'fields' => $this->syncFields,
+            'multimediaObject' => $multimediaObject,
+            'tags' => $tags,
+            'roles' => $roles,
+        );
+    }
+
+    /**
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return bool
+     */
+    public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+            array(
+                'status' => array('$ne' => -2),
+                'islive' => false,
+                'series' => new \MongoId($multimediaObject->getSeries()->getId()),
+                '_id' => array('$ne' => new \MongoId($multimediaObject->getId())),
+            )
+        );
+
+        if (!$multimediaObject) {
+            return false;
+        }
+
+        $syncFieldsSelected = $request->request->all();
+
+        if (empty($syncFieldsSelected)) {
+            return false;
+        }
+
+        $this->syncMetadaData($multimediaObjects, $multimediaObject, $syncFieldsSelected);
+
+        return true;
+    }
+
+    private function syncMetadaData($multimediaObjects, $originData, $syncFieldsSelected)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            foreach ($syncFieldsSelected as $key => $field) {
+                $case = explode('_', $key);
+                switch ($case[1]) {
+                    case 'description':
+                        $multimediaObject->setI18nDescription($originData->getI18nDescription());
+                        break;
+                    case 'comments':
+                        $multimediaObject->setComments($originData->getComments());
+                        break;
+                    case 'keywords':
+                        $multimediaObject->setI18nKeyword($originData->getI18nKeyword());
+                        break;
+                    case 'license':
+                        $multimediaObject->setLicense($originData->getLicense());
+                        break;
+                    case 'copyright':
+                        $multimediaObject->setCopyright($originData->getCopyright());
+                        break;
+                    case 'owners':
+                        $roleOwner = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => 'owner'));
+                        $role = $originData->getEmbeddedRole($roleOwner);
+
+                        $oldRole = $multimediaObject->getEmbeddedRole($roleOwner);
+                        if ($oldRole) {
+                            foreach ($oldRole->getPeople() as $person) {
+                                $multimediaObject->removePersonWithRole($person, $roleOwner);
+                            }
+                        }
+
+                        foreach ($role->getPeople() as $person) {
+                            $multimediaObject->addPersonWithRole($person, $roleOwner);
+                        }
+
+                        break;
+                    case 'groups':
+                        foreach ($multimediaObject->getGroups() as $group) {
+                            $multimediaObject->removeGroup($group);
+                        }
+
+                        $groups = $originData->getGroups();
+                        foreach ($groups as $group) {
+                            $multimediaObject->addGroup($group);
+                        }
+
+                        break;
+                    case 'publicdate':
+                        $multimediaObject->setPublicDate($originData->getPublicDate());
+                        break;
+                    case 'recorddate':
+                        $multimediaObject->setRecordDate($originData->getRecordDate());
+                        break;
+                    case 'headline':
+                        $multimediaObject->setI18nLine2($originData->getI18nLine2());
+                        break;
+                    case 'subseries':
+                        $multimediaObject->setProperty('subseriestitle', $originData->getProperty('subseriestitle'));
+                        $multimediaObject->setProperty('subseries', $originData->getProperty('subseries'));
+                        break;
+                    case 'publishingdecisions':
+                        $pubDecisions = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBDECISIONS'));
+                        if (!$pubDecisions) {
+                            return false;
+                        }
+                        foreach ($multimediaObject->getTags() as $tag) {
+                            if ($tag->isChildOf($pubDecisions)) {
+                                $multimediaObject->removeTag($tag);
+                            } elseif ($tag->getCod() === $pubDecisions->getCod()) {
+                                $multimediaObject->removeTag($pubDecisions);
+                            }
+                        }
+
+                        foreach ($originData->getTags() as $tag) {
+                            if ($tag->isChildOf($pubDecisions)) {
+                                $multimediaObject->addTag($tag);
+                            } elseif ($tag->getCod() === $pubDecisions->getCod()) {
+                                $multimediaObject->addTag($pubDecisions);
+                            }
+                        }
+
+                        break;
+                    default:
+                        if ('tag' === $case[0]) {
+                            $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(
+                                array('_id' => new \MongoId($case[1]))
+                            );
+
+                            foreach ($multimediaObject->getTags() as $embeddedTag) {
+                                if ($embeddedTag->isChildOf($tag)) {
+                                    $multimediaObject->removeTag($embeddedTag);
+                                } elseif ($embeddedTag->getCod() === $tag->getCod()) {
+                                    $multimediaObject->removeTag($tag);
+                                }
+                            }
+
+                            foreach ($originData->getTags() as $embeddedTag) {
+                                if ($embeddedTag->isChildOf($tag)) {
+                                    $multimediaObject->addTag($embeddedTag);
+                                } elseif ($embeddedTag->getCod() === $tag->getCod()) {
+                                    $multimediaObject->addTag($tag);
+                                }
+                            }
+                        } elseif ('role' === $case[0]) {
+                            $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(
+                                array('_id' => new \MongoId($case[1]))
+                            );
+
+                            $embeddedRole = $multimediaObject->getEmbeddedRole($role);
+                            if ($embeddedRole) {
+                                foreach ($embeddedRole->getPeople() as $person) {
+                                    $multimediaObject->removePersonWithRole($person, $role);
+                                }
+                            }
+
+                            $originEmbeddedRole = $originData->getEmbeddedRole($role);
+                            if (!$originEmbeddedRole) {
+                                break;
+                            }
+
+                            foreach ($originEmbeddedRole->getPeople() as $person) {
+                                $multimediaObject->addPersonWithRole($person, $role);
+                            }
+                        }
+
+                        break;
+                }
+            }
+        }
+
+        $dm->flush();
+
+        return true;
+    }
 }

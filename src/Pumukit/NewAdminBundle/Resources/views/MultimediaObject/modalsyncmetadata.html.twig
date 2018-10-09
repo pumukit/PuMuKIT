@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title text-center">
+        {% trans %}Sync metadata for all multimedia objects{% endtrans %}
+    </h3>
+    <hr/>
+</div>
+
+<form action="{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id' : multimediaObject.getId() } ) }}" method="POST">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="text-center">
+                    <strong>{% trans %}Metadata{% endtrans %}</strong>
+                </h4>
+                <hr/>
+                <div class="row">
+                    {% for title, field in fields %}
+                        <div class="col-md-2 text-right">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="metadata_{{ title }}"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            {{ field|trans }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">
+                    <strong>{% trans %}Tags{% endtrans %}</strong>
+                </h4>
+                <hr/>
+                <div class="row">
+                    {% for tag in tags if tag.cod != 'ROOT' %}
+                        <div class="col-md-2 text-right">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="tag_{{ tag.getId() }}"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            {{ tag.getTitle() }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">
+                    <strong>{% trans %}People{% endtrans %}</strong>
+                </h4>
+                <hr/>
+                <div class="row">
+                    {% for rol in roles if rol.cod != 'owner' %}
+                        <div class="col-md-2 text-right">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="role_{{ rol.getId() }}"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            {{ rol.getName() }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">
+            {% trans %}Cancel{% endtrans %}
+        </button>
+        <button type="submit" class="btn btn-pumukit btn-raised">
+            {% trans %}Save changes{% endtrans %}
+        </button>
+    </div>
+
+</form>

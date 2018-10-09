@@ -14,6 +14,11 @@
                 </div>
             </div>
             <div class="col-xs-6 text-right">
+                <div class="btn btn-pumukit btn-raised">
+                    <a title="{% trans %}Sync metadata{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal"  style="color:white;text-decoration: none;">
+                        {% trans %}Sync{% endtrans %}
+                    </a>
+                </div>
                 <button id="pumukitnewadmin_mms_updatepub_cancel" type="button" class="btn btn-default btn-raised">{% trans %}
                     Cancel{% endtrans %}</button>
                 <button type="submit" class="btn btn-pumukit btn-raised" onclick="return procesaOk();">{% trans %}
