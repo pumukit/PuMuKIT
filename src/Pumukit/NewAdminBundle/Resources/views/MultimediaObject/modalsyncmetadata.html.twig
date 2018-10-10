@@ -21,7 +21,7 @@
                         <div class="col-md-2 text-right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="metadata_{{ title }}"/>
+                                    <input type="checkbox" name="metadata_{{ title }}_all"/>
                                 </label>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                         <div class="col-md-2 text-right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="tag_{{ tag.getId() }}"/>
+                                    <input type="checkbox" name="metadata_tag_{{ tag.getId() }}"/>
                                 </label>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                         <div class="col-md-2 text-right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="role_{{ rol.getId() }}"/>
+                                    <input type="checkbox" name="metadata_role_{{ rol.getId() }}"/>
                                 </label>
                             </div>
                         </div>
