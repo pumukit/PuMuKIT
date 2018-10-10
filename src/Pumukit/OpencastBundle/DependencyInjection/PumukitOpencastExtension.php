@@ -2,7 +2,9 @@
 
 namespace Pumukit\OpencastBundle\DependencyInjection;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -133,5 +135,13 @@ class PumukitOpencastExtension extends Extension
         $permissions = array(array('role' => 'ROLE_ACCESS_IMPORTER', 'description' => 'Access Importer'));
         $newPermissions = array_merge($container->getParameter('pumukitschema.external_permissions'), $permissions);
         $container->setParameter('pumukitschema.external_permissions', $newPermissions);
+
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.xml');
+
+        if($config['sync_series_with_opencast']){
+            $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader->load('serieslistener.xml');
+        }
     }
 }
