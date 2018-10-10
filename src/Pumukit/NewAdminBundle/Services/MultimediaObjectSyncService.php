@@ -67,7 +67,7 @@ class MultimediaObjectSyncService
     /**
      * @param MultimediaObject $multimediaObject
      *
-     * @return array|bool
+     * @return array
      */
     public function getMultimediaObjectsToSync(MultimediaObject $multimediaObject)
     {
@@ -79,10 +79,6 @@ class MultimediaObjectSyncService
                 '_id' => array('$ne' => new \MongoId($multimediaObject->getId())),
             )
         );
-
-        if (!$multimediaObjects) {
-            return false;
-        }
 
         return $multimediaObjects;
     }
@@ -101,6 +97,8 @@ class MultimediaObjectSyncService
             $sync[] = $this->doSyncMetadata($multimediaObject, $originData, $syncFieldsSelected);
         }
 
+        $this->dm->flush();
+
         return $sync;
     }
 
@@ -111,21 +109,21 @@ class MultimediaObjectSyncService
      *
      * @return bool
      */
-    private function doSyncMetadata(MultimediaObject $multimediaObject, MultimediaObject $originData, array $syncFieldsSelected)
+    public function doSyncMetadata(MultimediaObject $multimediaObject, MultimediaObject $originData, array $syncFieldsSelected)
     {
         foreach ($syncFieldsSelected as $key => $field) {
             $case = explode('_', $key);
 
-            if (!array_key_exists($case[1], $this->syncMethods)) {
+            if (!array_key_exists($case[1], $this->syncMethods) && !array_key_exists($case[1], $this->notCallUserFunc)) {
                 return false;
             }
 
-            if (!in_array($case[1], $this->notCallUserFunc)) {
+            if (array_key_exists($case[1], $this->syncMethods)) {
                 $method = $this->syncMethods[$case[1]];
-                call_user_func($method, $multimediaObject, $originData);
+                call_user_func(array($this, $method), $multimediaObject, $originData);
             } else {
                 $method = $this->notCallUserFunc[$case[1]];
-                call_user_func($method, $multimediaObject, $originData, $case[2]);
+                call_user_func(array($this, $method), $multimediaObject, $originData, $case[2]);
             }
         }
 
@@ -319,7 +317,7 @@ class MultimediaObjectSyncService
         );
 
         foreach ($multimediaObject->getTags() as $embeddedTag) {
-            if ($embeddedTag->isChildOf($tag)) {
+            if ($embeddedTag->isDescendantOf($tag)) {
                 $multimediaObject->removeTag($embeddedTag);
             } elseif ($embeddedTag->getCod() === $tag->getCod()) {
                 $multimediaObject->removeTag($tag);
@@ -327,7 +325,7 @@ class MultimediaObjectSyncService
         }
 
         foreach ($originData->getTags() as $embeddedTag) {
-            if ($embeddedTag->isChildOf($tag)) {
+            if ($embeddedTag->isDescendantOf($tag)) {
                 $multimediaObject->addTag($embeddedTag);
             } elseif ($embeddedTag->getCod() === $tag->getCod()) {
                 $multimediaObject->addTag($tag);

@@ -1617,7 +1617,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $locale = $request->getLocale();
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
-        $tags = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('metatag' => true), array('cod' => 1));
+        $tags = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(
+            array('metatag' => true, 'cod' => array('$nin' => array('YOUTUBE', 'PUBCHANNELS', 'PUBDECISIONS'))),
+            array('cod' => 1)
+        );
         if (!$tags) {
             throw new \Exception($translator->trans('No tags defined with metatag'));
         }
@@ -1638,21 +1641,26 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * @param Request          $request
      * @param MultimediaObject $multimediaObject
      *
-     * @return bool
+     * @return JsonResponse
      */
     public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
     {
+        $translator = $this->get('translator');
+        $message = $translator->trans('Sync metadata was fail.');
+
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
         $multimediaObjects = $syncService->getMultimediaObjectsToSync($multimediaObject);
 
         $syncFieldsSelected = $request->request->all();
         if (empty($syncFieldsSelected)) {
-            return false;
+            $message = $translator->trans('No fields selected to sync');
         }
 
-        $syncService->syncMetadata($multimediaObjects, $multimediaObject, $syncFieldsSelected);
+        if ($multimediaObjects) {
+            $syncService->syncMetadata($multimediaObjects, $multimediaObject, $syncFieldsSelected);
+            $message = $translator->trans('Sync metadata was done successfully');
+        }
 
-        return true;
+        return new JsonResponse($message, JsonResponse::HTTP_OK);
     }
-
 }

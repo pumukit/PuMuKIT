@@ -8,7 +8,7 @@
     <hr/>
 </div>
 
-<form action="{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id' : multimediaObject.getId() } ) }}" method="POST">
+<form id="sync_metadata_mmo" action="{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id' : multimediaObject.getId() } ) }}" method="POST">
     <div class="modal-body">
         <div class="row">
             <div class="col-md-4">
@@ -57,16 +57,16 @@
                 </h4>
                 <hr/>
                 <div class="row">
-                    {% for rol in roles if rol.cod != 'owner' %}
+                    {% for role in roles if role.cod != 'owner' %}
                         <div class="col-md-2 text-right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="metadata_role_{{ rol.getId() }}"/>
+                                    <input type="checkbox" name="metadata_role_{{ role.getId() }}"/>
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-10">
-                            {{ rol.getName() }}
+                            {{ role.getName() }}
                         </div>
                     {% endfor %}
                 </div>
@@ -86,3 +86,38 @@
     </div>
 
 </form>
+
+<script>
+    $('#sync_metadata_mmo').on('submit', function (event) {
+        "use strict";
+
+        event.preventDefault();
+
+        var url_list = "{{ path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId() }) }}";
+
+        $('#myModal').modal('hide');
+        $.ajax({
+            url: '{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id':  multimediaObject.getId() }) }}',
+            method: 'POST',
+            data: $('#sync_metadata_mmo').serialize(),
+            success: function (response, textStatus, jqXHR) {
+                {% if app.request.get('_route') == 'pumukitnewadmin_unesco_index' %}
+                    url_list = "{{ path('pumukitnewadmin_unesco_list') }}";
+                {% endif %}
+
+                var message = '{% trans %}There was an error sync up metadata.{% endtrans %}';
+                if (jqXHR.responseText.indexOf('modal-header') !== -1) {
+                    no_success(message);
+                } else {
+                    $('#list_mms').load(url_list);
+                    message = '{% trans %}Sync up metadata was successfully.{% endtrans %}';
+                    success(message);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                no_success(errorThrown + ': ' + textStatus);
+            }
+        });
+        return false;
+    });
+</script>
