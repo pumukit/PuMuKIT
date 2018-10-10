@@ -180,9 +180,9 @@ class MultimediaObjectSyncService
      */
     public function syncKeywords(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
-        $keywords = $originData->getI18nKeyword();
+        $keywords = $originData->getI18nKeywords();
 
-        $multimediaObject->setI18nKeyword($keywords);
+        $multimediaObject->setI18nKeywords($keywords);
     }
 
     /**
