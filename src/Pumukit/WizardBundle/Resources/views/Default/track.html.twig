@@ -10,7 +10,7 @@
     <fieldset class="well">
       <legend hidden>{% trans %}File{% endtrans %}</legend>
       <div class="col-md-10">
-        {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') %}
+        {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') or is_granted('ROLE_SUPER_ADMIN')  %}
         <div class="form-group" id="pumukitwizard_track_profile">
           <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
           {% for key, profile in master_profiles %}
@@ -51,7 +51,7 @@
           {% endfor %}
         </div>
         {% endif %}
-          {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PRIORITY') %}
+          {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PRIORITY') or is_granted('ROLE_SUPER_ADMIN') %}
         <div class="form-group" id="pumukitwizard_track_priority">
           <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
           <div class="radio">
