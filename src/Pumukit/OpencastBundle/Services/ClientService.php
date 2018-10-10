@@ -449,7 +449,7 @@ class ClientService
     }
 
     /**
-     * Updates the Opencast series metadata
+     * Updates the Opencast series metadata.
      *
      * Updates the Opencast series metadata based on the associated PuMuKIT series. If
      * the Opencast series does not exist, it creates a new Opencast series and updates
@@ -459,9 +459,10 @@ class ClientService
      *
      * @return array
      */
-    public function updateOpencastSeries($series){
+    public function updateOpencastSeries($series)
+    {
         $seriesOpencastId = $series->getProperty('opencast');
-        if($seriesOpencastId === null){
+        if ($seriesOpencastId === null) {
             return;
         }
         $metadata = array(
@@ -484,14 +485,15 @@ class ClientService
         $requestUrl = "/api/series/$seriesOpencastId/metadata";
         $requestUrl .= "?type=$type";
         $output = $this->request($requestUrl, $params, 'PUT', false);
-        if($output['status'] !== 200){
+        if ($output['status'] !== 200) {
             throw new \Exception('Error trying to update an Opencast series metadata. Error '.$output['status'].':  '.$output['error'].' : '.$output['var'], $output['status']);
         }
+
         return $output;
     }
 
     /**
-     * Creates an Opencast series
+     * Creates an Opencast series.
      *
      * Creates an Opencast series and associates it to the PuMuKIT series.
      * The Opencast series metadata is taken from the PuMuKIT series.
@@ -500,7 +502,8 @@ class ClientService
      *
      * @return array
      */
-    public function createOpencastSeries($series){
+    public function createOpencastSeries($series)
+    {
         $metadata = array(
             array(
                 'flavor' => 'dublincore/series',
@@ -523,14 +526,15 @@ class ClientService
         );
         $requestUrl = '/api/series';
         $output = $this->request($requestUrl, $params, 'POST', false);
-        if($output['status'] !== 201){
-            throw new \Exception('Error trying to create an Opencast series. Error '.$output['status'].':  "'.$output['error'] .' : '.$output['var'], $output['status']);
+        if ($output['status'] !== 201) {
+            throw new \Exception('Error trying to create an Opencast series. Error '.$output['status'].':  "'.$output['error'].' : '.$output['var'], $output['status']);
         }
+
         return $output;
     }
 
     /**
-     * Deletes an Opencast series
+     * Deletes an Opencast series.
      *
      * Deletes the Opencast series metadata associated to the PuMuKIT series.
      *
@@ -538,16 +542,18 @@ class ClientService
      *
      * @return array
      */
-    public function deleteOpencastSeries($series){
+    public function deleteOpencastSeries($series)
+    {
         $seriesOpencastId = $series->getProperty('opencast');
-        if($seriesOpencastId === null){
+        if ($seriesOpencastId === null) {
             return;
         }
         $requestUrl = "/api/series/$seriesOpencastId";
         $output = $this->request($requestUrl, array(), 'DELETE', false);
-        if($output['status'] !== 204){
+        if ($output['status'] !== 204) {
             throw new \Exception('Error trying to delete an Opencast series. Error '.$output['status'].':  "'.$output['error'].' : '.$output['var'], $output['status']);
         }
+
         return $output;
     }
 

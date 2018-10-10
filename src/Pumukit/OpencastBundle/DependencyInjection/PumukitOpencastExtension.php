@@ -139,7 +139,7 @@ class PumukitOpencastExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        if($config['sync_series_with_opencast']){
+        if ($config['sync_series_with_opencast']) {
             $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
             $loader->load('serieslistener.xml');
         }
