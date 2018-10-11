@@ -1595,4 +1595,72 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         return new JsonResponse(array('paellalayout' => $multimediaObject->getProperty('paellalayout')));
     }
+
+    /**
+     * Sync selected metadata on all mmobjs of the series.
+     *
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return array
+     *
+     * @throws \Exception
+     *
+     * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "id"})
+     *
+     * @Template("PumukitNewAdminBundle:MultimediaObject:modalsyncmetadata.html.twig")
+     */
+    public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $translator = $this->get('translator');
+        $locale = $request->getLocale();
+        $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
+
+        $tags = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(
+            array('metatag' => true, 'display' => true, 'properties.hide_in_tag_group' => array('$exists' => false)),
+            array('cod' => 1)
+        );
+        if (!$tags) {
+            throw new \Exception($translator->trans('No tags defined with metatag'));
+        }
+        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findBy(array(), array("name.$locale" => 1));
+        if (0 === count($roles)) {
+            throw new \Exception($translator->trans('No roles defined'));
+        }
+
+        return array(
+            'fields' => $syncService->getSyncFields(),
+            'multimediaObject' => $multimediaObject,
+            'tags' => $tags,
+            'roles' => $roles,
+        );
+    }
+
+    /**
+     * @param Request          $request
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return JsonResponse
+     */
+    public function updateMultimediaObjectSyncAction(Request $request, MultimediaObject $multimediaObject)
+    {
+        $translator = $this->get('translator');
+        $message = $translator->trans('Sync metadata was fail.');
+
+        $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
+        $multimediaObjects = $syncService->getMultimediaObjectsToSync($multimediaObject);
+
+        $syncFieldsSelected = $request->request->all();
+        if (empty($syncFieldsSelected)) {
+            $message = $translator->trans('No fields selected to sync');
+        }
+
+        if ($multimediaObjects) {
+            $syncService->syncMetadata($multimediaObjects, $multimediaObject, $syncFieldsSelected);
+            $message = $translator->trans('Sync metadata was done successfully');
+        }
+
+        return new JsonResponse($message, JsonResponse::HTTP_OK);
+    }
 }

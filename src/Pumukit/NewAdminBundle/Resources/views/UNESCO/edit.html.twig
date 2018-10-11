@@ -37,6 +37,11 @@
             {#<li>
                 <a href="#socialMm" aria-controls="socialMm" role="tab" data-toggle="tab">{% trans %}Social{% endtrans %}</a>
             </li>#}
+            <li class="pull-right">
+                <a title="{% trans %}Sync metadata{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal"  style="color:white;text-decoration: none;">
+                    {% trans %}Sync metadata{% endtrans %}
+                </a>
+            </li>
         </ul>
 
         <div class="tab-content">

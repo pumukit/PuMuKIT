@@ -221,6 +221,18 @@ pumukitnewadmin_mms_updatebroadcast:
     defaults:
         _controller: pumukitnewadmin.controller.mms:updateBroadcastAction
 
+pumukitnewadmin_mms_sync_metadata:
+    pattern: /{id}/sync/metadata
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:modalSyncMedatadaAction
+
+pumukitnewadmin_mms_update_sync_metadata:
+    pattern: /{id}/update/sync/metadata
+    methods: [GET, POST]
+    defaults:
+        _controller: pumukitnewadmin.controller.mms:updateMultimediaObjectSyncAction
+
 pumukitnewadmin_mms_user_last_relation:
     pattern: /user/lastrelation
     methods: [POST]
