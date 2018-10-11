@@ -56,6 +56,12 @@ class PicService
         $pipeline = array(array('$match' => array('pics' => array('$exists' => true))));
         array_push($pipeline, array('$unwind' => '$pics'));
 
+        $match = array(
+            '$match' => array('pics.path' => array('$exists' => true)),
+        );
+
+        array_push($pipeline, $match);
+
         if ($id) {
             $match = array(
                 '$match' => array('_id' => new \MongoId($id)),
@@ -105,12 +111,14 @@ class PicService
         $data = $pics->toArray();
         $pics = reset($data);
 
-        if (isset($exists)) {
-            $pics = $this->checkExistsFiles($pics, $exists);
-        }
+        if ($pics) {
+            if (isset($exists)) {
+                $pics = $this->checkExistsFiles($pics, $exists);
+            }
 
-        if (isset($size)) {
-            $pics = $this->checkSizeFiles($pics, $size);
+            if (isset($size)) {
+                $pics = $this->checkSizeFiles($pics, $size);
+            }
         }
 
         return $pics;

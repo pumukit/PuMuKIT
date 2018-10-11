@@ -35,7 +35,7 @@ class PumukitListPicsCommand extends ContainerAwareCommand
             ->addOption('exists', null, InputOption::VALUE_OPTIONAL, 'List exists or not exists file pics.')
             ->setHelp(<<<'EOT'
             
-Command to get all pics like selected filters.
+Command to get all pics like selected filters. The predefined filter is that the pics must have "path" attribute.
 
 Id example: --id="5b4dd4c22bb478607d8b456b"
 Path example: --path="/mnt/storage/" ...
@@ -96,12 +96,8 @@ EOT
             throw new \Exception($validInput['message']);
         }
 
-        try {
-            $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
-            list($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type) = $inputs;
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
+        list($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type) = $inputs;
 
         $pics = $this->picService->findPicsByOptions($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
 
@@ -166,12 +162,9 @@ EOT
 
         foreach ($data['pics'] as $pic) {
             if (isset($pic['path'])) {
-                $message = $pic['path'].' - MongoDB: ';
-                if ('series' == $this->type) {
-                    $message .= "<info>db.Series.find({'pics.path': '".$pic['path']."'}).pretty();</info>";
-                } else {
-                    $message .= "<info>db.MultimediaObject.find({'pics.path': '".$pic['path']."' }).pretty();</info>";
-                }
+                $message = $pic['path'];
+            } elseif (isset($pic['url'])) {
+                $message = $pic['url'];
             } else {
                 $message = $pic;
             }
