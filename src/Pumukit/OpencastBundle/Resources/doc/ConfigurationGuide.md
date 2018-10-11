@@ -98,8 +98,11 @@ The recommendation on a production environment is to run commands every day, e.g
 The `pumukit:opencast:workflow:stop` console command allows to stop all Opencast succeeded workflows of
 a removed media package.
 
-If the `delete_archive_mediapackage` parameter is set to true, there is no need to add this command to
-the crontab configuration.
+If the `delete_archive_mediapackage` parameter is set to `false`, there is no need to add this command to
+the crontab configuration as media packages won't be removed in Opencast.
+
+If the `delete_archive_mediapackage` parameter is set to `true`, and you want to delete all Opencast
+succeeded workflows of a removed media package, you must add this command to the crontab configuration.
 
 Configure cron to execute this command periodically.
 

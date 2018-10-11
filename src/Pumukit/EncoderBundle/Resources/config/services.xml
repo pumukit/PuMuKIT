@@ -52,6 +52,11 @@
             <argument>%pumukit.picextractor.command%</argument>
         </service>
 
+        <service id="pumukitencoder.pic" class="Pumukit\EncoderBundle\Services\PicService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="pumukitschema.mmspic"/>
+        </service>
+
         <service id="pumukitencoder.remove" class="Pumukit\EncoderBundle\EventListener\RemoveListener">
             <argument type="service" id="service_container" />
             <tag name="kernel.event_listener" event="track.delete" method="postTrackRemove"/>
