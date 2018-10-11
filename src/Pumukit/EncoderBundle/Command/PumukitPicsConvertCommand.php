@@ -52,7 +52,7 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
             ->addOption('no_replace', null, InputOption::VALUE_NONE, 'Replace original image or not')
             ->setHelp(<<<'EOT'
         
-Command to get all pics like selected filters and create new images with low size.
+Command to get all pics like selected filters and create new images with low size. The predefined filter is that the pics must have "path" attribute.
 
 Filters: 
 
