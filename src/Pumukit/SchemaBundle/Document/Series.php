@@ -65,7 +65,7 @@ class Series
      * Flag with TYPE_SERIES or TYPE_PLAYLIST to determine the collection type.
      *
      * @var int
-     * @MongoDB\Field(type="int")eger
+     * @MongoDB\Field(type="int")
      * @MongoDB\Index
      */
     private $type;
