@@ -58,8 +58,9 @@ class OpencastImportService
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
         $this->importRecordingFromMediaPackage($mediaPackage, $invert, $loggedInUser);
     }
+
     /**
-     * Import recording given a mediaPackage
+     * Import recording given a mediaPackage.
      *
      * Given a media package
      * create a multimedia object
