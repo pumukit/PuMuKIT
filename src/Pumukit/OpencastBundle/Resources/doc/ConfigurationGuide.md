@@ -5,7 +5,7 @@ This is the Opencast Bundle Configuration Guide. Check our [README](README.md) t
 ## Index
 
 1. [Parameters](#1-parameters)
-2. [Opencast Import Workflow](#2-opencast-import-workflow)
+2. [Opencast Export To PuMuKIT Workflow](#2-opencast-export-to-pumukit-workflow)
 3. [Cron tool](#-cron-tool)
 
 ## 1. Parameters
