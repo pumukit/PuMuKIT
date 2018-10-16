@@ -18,7 +18,6 @@ class ImportController extends Controller
     public function eventAction(Request $request)
     {
         $mediapackage = json_decode($request->request->get('mediapackage'), true);
-        $this->get('logger')->info(json_encode($mediapackage));
 
         if (!isset($mediapackage['mediapackage']['id'])) {
             $this->get('logger')->warning('No mediapackage ID, ERROR 400 returned');
@@ -26,9 +25,8 @@ class ImportController extends Controller
             return new Response('No mediapackage ID', 400);
         }
 
-        $mediapackageId = $mediapackage['mediapackage']['id'];
         $opencastImportService = $this->get('pumukit_opencast.import');
-        $opencastImportService->importRecording($mediapackageId);
+        $opencastImportService->importRecordingFromMediaPackage($mediapackage['mediapackage']);
 
         return new Response('Success', 200);
     }

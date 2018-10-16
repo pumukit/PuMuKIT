@@ -29,7 +29,7 @@ pumukit_opencast:
         use_flavour: true
         flavour: composition/delivery
     error_if_file_not_exist: true
-    sync_series_with_opencast: true
+    sync_series_with_opencast: false
     url_mapping:
         -
           url: 'http://demo.opencast.org/static/engage-player/'
@@ -88,7 +88,7 @@ You'll need to change some configuration values with those from your environment
         <configuration key="url">https://pumukit-host/api/opencast/import_event</configuration>
         <configuration key="format">json</configuration>
         <configuration key="debug">no</configuration>
-        <configuration key="mediapackage.type">workflow</configuration>
+        <configuration key="mediapackage.type">search</configuration>
         <configuration key="auth.enabled">yes</configuration>
         <configuration key="auth.username">user_import</configuration>
         <configuration key="auth.password">password_import</configuration>
