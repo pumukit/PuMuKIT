@@ -56,7 +56,22 @@ class OpencastImportService
     public function importRecording($opencastId, $invert = false, User $loggedInUser = null)
     {
         $mediaPackage = $this->opencastClient->getMediaPackage($opencastId);
+        $this->importRecordingFromMediaPackage($mediaPackage, $invert, $loggedInUser);
+    }
 
+    /**
+     * Import recording given a mediaPackage.
+     *
+     * Given a media package
+     * create a multimedia object
+     * with the media package metadata
+     *
+     * @param array     $mediaPackage
+     * @param bool      $invert
+     * @param User|null $loggedInUser
+     */
+    public function importRecordingFromMediaPackage($mediaPackage, $invert = false, User $loggedInUser = null)
+    {
         $series = $this->seriesImportService->importSeries($mediaPackage, $loggedInUser);
 
         $onemultimediaobjects = null;
@@ -128,7 +143,7 @@ class OpencastImportService
             $multimediaObject = $this->mmsService->updateMultimediaObject($multimediaObject);
 
             if ($track) {
-                $opencastUrls = $this->getOpencastUrls($opencastId);
+                $opencastUrls = $this->getOpencastUrls($mediaPackageId);
                 $this->opencastService->genAutoSbs($multimediaObject, $opencastUrls);
             }
         }

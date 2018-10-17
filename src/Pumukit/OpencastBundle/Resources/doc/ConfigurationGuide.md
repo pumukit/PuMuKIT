@@ -5,7 +5,8 @@ This is the Opencast Bundle Configuration Guide. Check our [README](README.md) t
 ## Index
 
 1. [Parameters](#1-parameters)
-2. [Cron tool](#2-cron-tool)
+2. [Opencast Export To PuMuKIT Workflow](#2-opencast-export-to-pumukit-workflow)
+3. [Cron tool](#-cron-tool)
 
 ## 1. Parameters
 
@@ -28,7 +29,7 @@ pumukit_opencast:
         use_flavour: true
         flavour: composition/delivery
     error_if_file_not_exist: true
-    sync_series_with_opencast: true
+    sync_series_with_opencast: false
     url_mapping:
         -
           url: 'http://demo.opencast.org/static/engage-player/'
@@ -64,8 +65,40 @@ Optional:
 
 For more info about Opencast Matterhorn parameters go to [Opencast Documentation](https://bitbucket.org/opencast-community/matterhorn/src/d9890525acc0c14ee20b2523da4873551c6a91f2/etc/config.properties?at=master)
 
+## 2. Opencast Export to PuMuKIT Workflow
 
-## 2. Cron tool
+To automate the process to import your Opencast events to PuMuKIT, the best option is to include a post-mediapackage operation on your Opencast workflow.
+
+In order to do this:
+
+1. Create a new user with the "Access API" permission.
+2. Include a post operation using the following format at the end of the Opencast workflows on which you want to publish videos to PuMuKIT:
+You'll need to change some configuration values with those from your environment:
+* url: Replace "pumukit-host" with the domain name of your PuMuKIT deployment
+* auth.username: Replace "user_import" with the username from Step 1
+* auth.password: Replace "password_import" with the password from Step 1
+```
+    <!-- Publish to PuMuKIT -->
+    <operation
+      id="post-mediapackage"
+      max-attempts="2"
+      exception-handler-workflow="ng-partial-error"
+      description="Publishing to PuMuKIT">
+      <configurations>
+        <configuration key="url">https://pumukit-host/api/opencast/import_event</configuration>
+        <configuration key="format">json</configuration>
+        <configuration key="debug">no</configuration>
+        <configuration key="mediapackage.type">search</configuration>
+        <configuration key="auth.enabled">yes</configuration>
+        <configuration key="auth.username">user_import</configuration>
+        <configuration key="auth.password">password_import</configuration>
+      </configurations>
+    </operation>
+```
+For more information about Workflows, check the Administration Guide for your Opencast version: https://docs.opencast.org/
+
+
+## 3. Cron tool
 
 List of PuMuKIT commands that must be configured with the cron tool.
 
