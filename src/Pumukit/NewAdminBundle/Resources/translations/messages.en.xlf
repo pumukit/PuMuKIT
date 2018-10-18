@@ -3569,45 +3569,77 @@
         <source>Place successfully created.</source>
         <target>Place successfully created.</target>
       </trans-unit>
-      <trans-unit id="347c446c89d011e89a94a6cf71072f73" resname="Autocomplete series">
+      <trans-unit id="3f3c2ecdebc4beb51fe397b66bb7cc31" resname="Autocomplete series">
         <source>Autocomplete series</source>
         <target>Autocomplete series</target>
       </trans-unit>
-      <trans-unit id="347c482289d011e89a94a6cf71072f73" resname="Series successfully updated.">
+      <trans-unit id="7daf65477c5f93f578dd27d41d985d00" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
         <target>Series successfully updated.</target>
       </trans-unit>
-      <trans-unit id="536b16c2b10411e88981529269fb1459" resname="Error: Series have another owners on others events">
+      <trans-unit id="2dc4407144457dd607fd46dd199f92cf" resname="Error: Series have another owners on others events">
         <source>Error: Series have another owners on others events</source>
         <target>Error: Series have another owners on others events</target>
       </trans-unit>
-      <trans-unit id="536b1a8cb10411e88981529269fb1459" resname="Error: Series have some events">
+      <trans-unit id="06ede8046cb6ac92631abe0dccfd187f" resname="Error: Series have some events">
         <source>Error: Series have some events</source>
         <target>Error: Series have some events</target>
       </trans-unit>
-      <trans-unit id="949d38a8b1a611e896f8529269fb1459" resname="Cloned event successfully">
+      <trans-unit id="5f451f5724897c38ffc95027aaea1e5a" resname="Cloned event successfully">
         <source>Cloned event successfully</source>
         <target>Cloned event successfully</target>
       </trans-unit>
-      <trans-unit id="949d3b82b1a611e896f8529269fb1459" resname="Deleted event successfully">
+      <trans-unit id="26404135dba214022dbf435a37e542e9" resname="Deleted event successfully">
         <source>Deleted event successfully</source>
         <target>Deleted event successfully</target>
       </trans-unit>
-      <trans-unit id="949d3f6ab1a611e896f8529269fb1459" resname="Delete event and series successfully">
+      <trans-unit id="8c4110605c0366a4c741d9e83b472edb" resname="Delete event and series successfully">
         <source>Delete event and series successfully</source>
         <target>Delete event and series successfully</target>
       </trans-unit>
-      <trans-unit id="949d40e6b1a611e896f8529269fb1459" resname="Option not allowed">
+      <trans-unit id="ad901391ce205a6fb0838c13b9e53760" resname="Option not allowed">
         <source>Option not allowed</source>
         <target>Option not allowed</target>
-      </trans-unit>
-      <trans-unit id="b4cc92abd26e31b783d6ac779cc7fd3a" resname="Sync metadata">
-        <source>Sync metadata</source>
-        <target>Sync metadata</target>
       </trans-unit>
       <trans-unit id="21206d10460ef70e9baaac6cc33ec948" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
         <target>Sync metadata for all multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="8509c2d9d170ffad6ed95a6948e44b1b" resname="Select metadata to sync on all multimedia objects of this series">
+        <source>Select metadata to sync on all multimedia objects of this series</source>
+        <target>Select metadata to sync on all multimedia objects of this series</target>
+      </trans-unit>
+      <trans-unit id="d8e87c0927539672f54462c837be0b7f" resname="Sync">
+        <source>Sync</source>
+        <target>Sync</target>
+      </trans-unit>
+      <trans-unit id="5f2336c5421763c5789bd0a42993d429" resname="There was an error sync up metadata.">
+        <source>There was an error sync up metadata.</source>
+        <target>There was an error sync up metadata.</target>
+      </trans-unit>
+      <trans-unit id="a6526c0572ca99b88a6cb8fa4bb43bf1" resname="Sync up metadata was successfully.">
+        <source>Sync up metadata was successfully.</source>
+        <target>Sync up metadata was successfully.</target>
+      </trans-unit>
+      <trans-unit id="498f79c4c5bbde77f1bceb6c86fd0f6d" resname="Show">
+        <source>Show</source>
+        <target>Show</target>
+      </trans-unit>
+      <trans-unit id="552c318bd1f356494f3ccebb8c15bcf1" resname="Show presenter">
+        <source>Show presenter</source>
+        <target>Show presenter</target>
+      </trans-unit>
+      <trans-unit id="6b58966e9b36ce3b56ed3928f7f8e150" resname="presenter">
+        <source>presenter</source>
+        <target>presenter</target>
+      </trans-unit>
+      <trans-unit id="da4cf00d5acbe8a772e049d1d78422bb" resname="Show presentation">
+        <source>Show presentation</source>
+        <target>Show presentation</target>
+      </trans-unit>
+      <trans-unit id="2486923a98e77fd0740381d01acd1782" resname="presentation">
+        <source>presentation</source>
+        <target>presentation</target>
       </trans-unit>
     </body>
   </file>
