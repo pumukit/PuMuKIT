@@ -1,3 +1,8 @@
+{% set modify_owners = false %}
+{% if is_granted('ROLE_MODIFY_OWNER') %}
+    {% set modifiy_owners = true %}
+{% endif %}
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -18,16 +23,18 @@
                 <hr/>
                 <div class="row">
                     {% for title, field in fields %}
-                        <div class="col-md-2 text-right">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="metadata_{{ title }}_all"/>
-                                </label>
+                        {% if title != 'owners' or (title == 'owners' and modify_owners) or is_granted('ROLE_SUPER_ADMIN') %}
+                            <div class="col-md-2 text-right">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="metadata_{{ title }}_all"/>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-10">
-                            {{ field|trans }}
-                        </div>
+                            <div class="col-md-10">
+                                {{ field|trans }}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
