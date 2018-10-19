@@ -5,8 +5,10 @@ namespace Pumukit\CoreBundle\Command;
 use Assetic\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class CreateMMOCommand extends ContainerAwareCommand
 {
@@ -19,6 +21,12 @@ class CreateMMOCommand extends ContainerAwareCommand
     private $factoryService;
     private $tagService;
 
+    private $validStatuses = array(
+        'published' => MultimediaObject::STATUS_PUBLISHED,
+        'blocked' => MultimediaObject::STATUS_BLOCKED,
+        'hidden' => MultimediaObject::STATUS_HIDDEN,
+    );
+
     protected function configure()
     {
         $this
@@ -26,6 +34,7 @@ class CreateMMOCommand extends ContainerAwareCommand
             ->setDescription('This command create a multimedia object from a file')
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
+            ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')', null)
             ->setHelp(<<<'EOT'
 This command create a multimedia object from a multimedia file path
 
@@ -35,6 +44,8 @@ Basic example:
 Complete example:
 <info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE</info>
 
+Complete example with hidden status:
+<info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
 EOT
             );
@@ -54,6 +65,16 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $status = null;
+        if ($input->getOption('status')) {
+            $statusText = $input->getOption('status');
+            if (!array_key_exists($statusText, $this->validStatuses)) {
+                throw new \Exception('The status  ('.$statusText.') is not a valid. Use \'published\', \'blocked\' or \'hidden\'');
+            }
+
+            $status = $this->validStatuses['$statusText'];
+        }
+
         if ('IN_CLOSE_WRITE' != $input->getArgument('inotify_event')) {
             return false;
         }
@@ -110,6 +131,9 @@ EOT
 
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
         $multimediaObject->setTitle($title);
+        if (null !== $status) {
+            $multimediaObject->setStatus($status);
+        }
         $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
         $track = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, array());
