@@ -13,7 +13,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     public function __construct($command = null, LoggerInterface $logger = null)
     {
-        $this->command = $command ?: 'avprobe -v quiet -of json -show_format -show_streams "{{file}}"';
+        $this->command = $command ?: 'ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"';
         $this->logger = $logger;
     }
 
@@ -39,7 +39,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
         $duration = 0;
         if (isset($json->format->duration)) {
-            $duration = ceil(intval((string) $json->format->duration));
+            $duration = ceil(floatval($json->format->duration));
         }
 
         return $duration;
@@ -69,8 +69,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $track->setMimetype(mime_content_type($track->getPath()));
         $bitrate = isset($json->format->bit_rate) ? intval($json->format->bit_rate) : 0;
         $track->setBitrate($bitrate);
-        $duration = isset($json->format->duration) ? intval((string) $json->format->duration) : 0;
-        $track->setDuration(ceil($duration));
+        $duration = ceil(floatval($json->format->duration));
+        $track->setDuration($duration);
         $size = isset($json->format->size) ? (string) $json->format->size : 0;
         $track->setSize($size);
 
@@ -99,7 +99,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     {
         if (null !== $json->streams) {
             foreach ($json->streams as $stream) {
-                if ((isset($stream->codec_type)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type)) {
+                if ((isset($stream->codec_type)) && ('audio' == $stream->codec_type || 'video' == $stream->codec_type) && ('ansi' != $stream->codec_name)) {
                     return true;
                 }
             }
