@@ -37,6 +37,7 @@ class BasePlayerExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('track_url', array($this, 'generateTrackFileUrl')),
+            new \Twig_SimpleFunction('direct_track_url', array($this, 'generateDirectTrackFileUrl')),
         );
     }
 
@@ -56,6 +57,17 @@ class BasePlayerExtension extends \Twig_Extension
     public function generateTrackFileUrl($track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->trackService->generateTrackFileUrl($track, $reference_type);
+    }
+
+    /**
+     * @param Track  $track    Track to get an url for
+     * @param string $clientIp Client IP from request
+     *
+     * @return string
+     */
+    public function generateTrackFileUrl($track, $clientIp)
+    {
+        return $this->trackService->generateDirectTrackFileUrl($track, $clientIp);
     }
 
     /**

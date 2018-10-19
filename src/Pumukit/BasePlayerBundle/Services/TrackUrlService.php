@@ -10,11 +10,15 @@ class TrackUrlService
 {
     private $dm;
     private $router;
+    private $secret;
+    private $secureDuration;
 
-    public function __construct(DocumentManager $dm, UrlGeneratorInterface $router)
+    public function __construct(DocumentManager $dm, UrlGeneratorInterface $router, $secret, $secureDuration)
     {
         $this->dm = $dm;
         $this->router = $router;
+        $this->secret = $secret;
+        $this->secureDuration = $secureDuration;
     }
 
     public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -31,5 +35,21 @@ class TrackUrlService
         $url = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
 
         return $url;
+    }
+
+    public function generateDirectTrackFileUrl(Track $track, $clientIp)
+    {
+        $timestamp = time() + $this->secureDuration;
+        $hash = $this->getHash($track, $timestamp, $secret, $clientIp);
+
+        return $track->getUrl()."?md5=${hash}&expires=${timestamp}&".http_build_query($request->query->all(), null, '&');
+    }
+
+    protected function getHash(Track $track, $timestamp, $secret, $ip)
+    {
+        $url = $track->getUrl();
+        $path = parse_url($url, PHP_URL_PATH);
+
+        return str_replace('=', '', strtr(base64_encode(md5("${timestamp}${path}${ip} ${secret}", true)), '+/', '-_'));
     }
 }
