@@ -82,7 +82,7 @@ class EmbeddedEvent
 
     /**
      * @var DocumentLive
-     * @MongoDB\ReferenceOne(targetDocument="Pumukit\LiveBundle\Document\Live")
+     * @MongoDB\ReferenceOne(targetDocument="Pumukit\LiveBundle\Document\Live", cascade="ALL")
      */
     private $live;
 

@@ -69,7 +69,7 @@ class MultimediaObject
     private $secret;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Series", inversedBy="multimedia_objects", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="Series", simple=true, inversedBy="multimedia_object")
      * @Gedmo\SortableGroup
      * @MongoDB\Index
      */
@@ -89,7 +89,7 @@ class MultimediaObject
      *
      * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade="ALL")
      */
     private $broadcast;
 
