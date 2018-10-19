@@ -338,7 +338,7 @@ EOT
         );
 
         array_push($pipeline, $group);
-        $pics = $collection->aggregate($pipeline);
+        $pics = $collection->aggregate($pipeline, array('cursor' => array()));
 
         return $pics;
     }
@@ -369,7 +369,7 @@ EOT
         );
 
         array_push($pipeline, $group);
-        $materials = $collection->aggregate($pipeline);
+        $materials = $collection->aggregate($pipeline, array('cursor' => array()));
 
         return $materials;
     }

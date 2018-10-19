@@ -36,7 +36,7 @@ class StatsService
             array('$limit' => $limit * 2), //Get more elements due to tags post-filter.
         );
 
-        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $aggregation = $viewsLogColl->aggregate($pipeline, array('cursor' => array()));
 
         $mostViewed = array();
 
@@ -99,7 +99,7 @@ class StatsService
         $pipeline[] = array('$group' => array('_id' => '$multimediaObject', 'numView' => array('$sum' => $this->sumValue)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
 
-        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $aggregation = $viewsLogColl->aggregate($pipeline, array('cursor' => array()));
 
         $totalInAggegation = count($aggregation);
         $total = count($mmobjIds);
@@ -168,7 +168,7 @@ class StatsService
         $pipeline[] = array('$group' => array('_id' => '$series', 'numView' => array('$sum' => $this->sumValue)));
         $pipeline[] = array('$sort' => array('numView' => $options['sort']));
 
-        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $aggregation = $viewsLogColl->aggregate($pipeline, array('cursor' => array()));
 
         $totalInAggegation = count($aggregation);
         $total = count($seriesIds);
@@ -267,7 +267,7 @@ class StatsService
         $pipeline = $this->aggrPipeAddProjectGroupDate($pipeline, $options['group_by']);
         $pipeline[] = array('$sort' => array('_id' => $options['sort']));
 
-        $aggregation = $viewsLogColl->aggregate($pipeline);
+        $aggregation = $viewsLogColl->aggregate($pipeline, array('cursor' => array()));
 
         $total = count($aggregation);
         $aggregation = $this->getPagedAggregation($aggregation->toArray(), $options['page'], $options['limit']);
@@ -443,6 +443,6 @@ class StatsService
             array('$out' => 'ViewsAggregation'),
         );
 
-        $viewsLogColl->aggregate($pipeline, array('allowDiskUse' => true));
+        $viewsLogColl->aggregate($pipeline, array('cursor' => array(), 'allowDiskUse' => true));
     }
 }

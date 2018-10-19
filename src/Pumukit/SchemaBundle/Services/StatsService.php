@@ -107,7 +107,7 @@ class StatsService
         $pipeline[] = array('$sort' => array('_id' => $sort));
         $pipeline[] = array('$skip' => $page * $limit);
         $pipeline[] = array('$limit' => $limit);
-        $aggregation = $dmColl->aggregate($pipeline);
+        $aggregation = $dmColl->aggregate($pipeline, array('cursor' => array()));
 
         return $aggregation;
     }

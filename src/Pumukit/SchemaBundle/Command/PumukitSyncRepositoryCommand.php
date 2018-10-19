@@ -46,7 +46,7 @@ EOT
 
         $jobsByStatus = $jobColl->aggregate(array(
             array('$group' => array('_id' => '$status', 'count' => array('$sum' => 1))),
-        ));
+        ), array('cursor' => array()));
         foreach ($jobsByStatus as $jg) {
             if (in_array($jg['_id'], array(Job::STATUS_PAUSED, Job::STATUS_WAITING))) {
                 $jobsPending += $jg['count'];
@@ -58,12 +58,12 @@ EOT
         $jobsPendingInMmObj = $mmObjColl->aggregate(array(
             array('$unwind' => '$properties.pending_jobs'),
             array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-        ))[0]['count'];
+        ), array('cursor' => array()))[0]['count'];
 
         $jobsExecutingInMmObj = $mmObjColl->aggregate(array(
             array('$unwind' => '$properties.executing_jobs'),
             array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-        ))[0]['count'];
+        ), array('cursor' => array()))[0]['count'];
 
         if ($jobsPending != $jobsPendingInMmObj) {
             $this->cleanJobsProperties('pending', $output);
@@ -128,7 +128,7 @@ EOT
             array('$project' => array('_id' => '$tags.cod')),
             array('$unwind' => '$_id'),
             array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
-        ));
+        ), array('cursor' => array()));
 
         $tagsInMM = array();
         foreach ($tagsInMMAggResult as $i) {
@@ -137,7 +137,7 @@ EOT
 
         $tagParentsAggResult = $tagColl->aggregate(array(
             array('$group' => array('_id' => '$parent', 'count' => array('$sum' => 1))),
-        ));
+        ), array('cursor' => array()));
 
         $tagParents = array();
         foreach ($tagParentsAggResult as $i) {

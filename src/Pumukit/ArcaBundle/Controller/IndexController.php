@@ -22,7 +22,7 @@ class IndexController extends Controller
             array('$group' => array('_id' => array('$year' => '$record_date'))),
         );
 
-        $years = $mmObjColl->aggregate($pipeline);
+        $years = $mmObjColl->aggregate($pipeline, array('cursor' => array()));
 
         return array('years' => $years);
     }

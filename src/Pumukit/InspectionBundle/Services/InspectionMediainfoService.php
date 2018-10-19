@@ -90,6 +90,7 @@ class InspectionMediainfoService implements InspectionServiceInterface
 
     private function xmlHasMediaContent($xml)
     {
+        //var_dump($xml->media->track);
         if (null !== $xml->File->track) {
             foreach ($xml->File->track as $track) {
                 if ('Audio' == $track['type'] || 'Video' == $track['type']) {

@@ -57,7 +57,7 @@ class APIKeywordsController extends Controller
             $pipeline[] = array('$limit' => $limit);
         }
 
-        $kws = $coll->aggregate($pipeline);
+        $kws = $coll->aggregate($pipeline, array('cursor' => array()));
         $data = $serializer->serialize($kws->toArray(), $format);
 
         return new Response($data);

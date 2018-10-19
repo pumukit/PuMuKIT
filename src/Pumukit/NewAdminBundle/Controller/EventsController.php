@@ -457,7 +457,7 @@ class EventsController extends Controller implements NewAdminController
                 '_id' => array('id' => '$_id'),
             ),
         );
-        $mmObjsNotOwner = $aggregate->aggregate($pipeline)->toArray();
+        $mmObjsNotOwner = $aggregate->aggregate($pipeline, array('cursor' => array()))->toArray();
 
         $factoryService = $this->container->get('pumukitschema.factory');
         $translator = $this->container->get('translator');
@@ -930,7 +930,7 @@ class EventsController extends Controller implements NewAdminController
 
         $pipeline[] = array('$limit' => 100);
 
-        $series = $aggregate->aggregate($pipeline)->toArray();
+        $series = $aggregate->aggregate($pipeline, array('cursor' => array()))->toArray();
 
         $result = array();
         foreach ($series as $key => $dataSeries) {
