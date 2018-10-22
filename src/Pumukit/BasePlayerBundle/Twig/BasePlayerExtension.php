@@ -49,8 +49,8 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     * @param Track $track    Track to get an url for
-     * @param bool  $absolute return absolute path
+     * @param $track
+     * @param int $reference_type
      *
      * @return string
      */
@@ -60,20 +60,22 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     * @param Track  $track    Track to get an url for
-     * @param string $clientIp Client IP from request
+     * @param $track
+     * @param $request
      *
      * @return string
+     *
+     * @throws \Exception
      */
-    public function generateDirectTrackFileUrl($track, $clientIp)
+    public function generateDirectTrackFileUrl($track, $request)
     {
-        return $this->trackService->generateDirectTrackFileUrl($track, $clientIp);
+        return $this->trackService->generateDirectTrackFileUrl($track, $request);
     }
 
     /**
      * @param MultimediaObject $mmobj
      *
-     * @return Track
+     * @return null|\Pumukit\SchemaBundle\Document\Track
      */
     public function getFirstPublicTrackFilter(MultimediaObject $mmobj)
     {

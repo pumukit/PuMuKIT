@@ -21,6 +21,12 @@ class TrackUrlService
         $this->secureDuration = $secureDuration;
     }
 
+    /**
+     * @param Track $track
+     * @param int   $reference_type
+     *
+     * @return string
+     */
     public function generateTrackFileUrl(Track $track, $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $ext = pathinfo(parse_url($track->getUrl(), PHP_URL_PATH), PATHINFO_EXTENSION);
@@ -37,14 +43,30 @@ class TrackUrlService
         return $url;
     }
 
-    public function generateDirectTrackFileUrl(Track $track, $clientIp)
+    /**
+     * @param Track $track
+     * @param $request
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function generateDirectTrackFileUrl(Track $track, $request)
     {
         $timestamp = time() + $this->secureDuration;
-        $hash = $this->getHash($track, $timestamp, $secret, $clientIp);
+        $hash = $this->getHash($track, $timestamp, $this->secret, $request->getClientIp());
 
         return $track->getUrl()."?md5=${hash}&expires=${timestamp}&".http_build_query($request->query->all(), null, '&');
     }
 
+    /**
+     * @param Track $track
+     * @param $timestamp
+     * @param $secret
+     * @param $ip
+     *
+     * @return mixed
+     */
     protected function getHash(Track $track, $timestamp, $secret, $ip)
     {
         $url = $track->getUrl();
