@@ -23,7 +23,7 @@
                 <hr/>
                 <div class="row">
                     {% for title, field in fields %}
-                        {% if (title != 'owners' and title != 'groups') or ((title == 'owners' or title == 'groups') and modify_owners) or is_granted('ROLE_SUPER_ADMIN') %}
+                        {% if (title != 'owners' and title != 'groups' and title != 'publishingdecisions') or ((title == 'owners' or title == 'groups') and modify_owners) or (title == 'publishingdecisions' and is_granted('ROLE_ACCESS_PUBLICATION_TAB') ) or is_granted('ROLE_SUPER_ADMIN') %}
                             <div class="col-md-2 text-right">
                                 <div class="checkbox">
                                     <label>
