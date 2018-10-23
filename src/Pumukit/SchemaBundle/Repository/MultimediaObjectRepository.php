@@ -75,6 +75,26 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Count multimedia objects in a series
+     * without the template (prototype).
+     *
+     * @param Series $series
+     *
+     * @return ArrayCollection
+     */
+    public function countWithoutPrototype(Series $series)
+    {
+        $aux = $this->createQueryBuilder()
+             ->field('series')->references($series)
+             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+             ->sort('rank', 1)
+             ->getQuery()
+             ->count();
+
+        return $aux;
+    }
+
+    /**
      * Find multimedia objects by pic id.
      *
      * @param string $picId

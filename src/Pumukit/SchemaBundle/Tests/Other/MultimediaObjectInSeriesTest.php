@@ -50,7 +50,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
 
         $this->factoryService->createMultimediaObject($series);
 
-        $coll_mms = $series->getMultimediaObjects();
+        $coll_mms = $this->seriesRepo->getMultimediaObjects($series);
 
         //echo "Assert\n";
         $this->assertEquals(1, count($coll_mms));
@@ -76,7 +76,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
 
         $i = 0;
         foreach ($this->seriesRepo->findAll() as $s) {
-            foreach ($s->getMultimediaObjects() as $mm) {
+            foreach ($this->seriesRepo->getMultimediaObjects($s) as $mm) {
                 ++$i;
             }
         }

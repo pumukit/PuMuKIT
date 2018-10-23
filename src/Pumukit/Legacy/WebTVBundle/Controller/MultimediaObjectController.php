@@ -137,7 +137,10 @@ class MultimediaObjectController extends Controller
     public function seriesAction(MultimediaObject $multimediaObject)
     {
         $series = $multimediaObject->getSeries();
-        $multimediaObjects = $series->getMultimediaObjects();
+        $seriesRepo = $this
+                 ->get('doctrine_mongodb.odm.document_manager')
+                 ->getRepository('PumukitSchemaBundle:Series');
+        $multimediaObjects = $seriesRepo->getMultimediaObjects($series);
 
         $tagRepo = $this
         ->get('doctrine_mongodb.odm.document_manager')

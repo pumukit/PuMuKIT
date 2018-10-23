@@ -809,7 +809,6 @@ class DefaultController extends Controller
      */
     private function removeInvalidMultimediaObject(MultimediaObject $multimediaObject, Series $series)
     {
-        $series->removeMultimediaObject($multimediaObject);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $dm->remove($multimediaObject);
         $dm->flush();

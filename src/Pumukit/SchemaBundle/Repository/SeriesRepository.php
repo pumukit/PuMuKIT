@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * SeriesRepository.
@@ -686,5 +687,19 @@ class SeriesRepository extends DocumentRepository
         return $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
             ->countMmobjsBySeries($seriesList);
+    }
+
+    public function getMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findWithoutPrototype($series);
+    }
+
+    public function countMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->countWithoutPrototype($series);
     }
 }
