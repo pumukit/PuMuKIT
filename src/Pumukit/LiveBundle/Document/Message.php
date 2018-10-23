@@ -26,7 +26,7 @@ class Message
 
     /**
      * @var string multimediaObject
-     * @MongoDB\ReferenceOne(targetDocument="Pumukit\SchemaBundle\Document\MultimediaObject", inversedBy="multimedia_object", simple=true, cascade="ALL")
+     * @MongoDB\ReferenceOne(targetDocument="Pumukit\SchemaBundle\Document\MultimediaObject", inversedBy="multimedia_object", simple=true, cascade={"persist"})
      * @MongoDB\Index
      */
     private $multimediaObject;

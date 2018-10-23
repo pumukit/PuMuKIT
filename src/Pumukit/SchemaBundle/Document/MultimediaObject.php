@@ -89,7 +89,7 @@ class MultimediaObject
      *
      * @deprecated in version 2.3
      * use EmbeddedBroadcast instead
-     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade="ALL")
+     * @MongoDB\ReferenceOne(targetDocument="Broadcast", inversedBy="multimedia_object", simple=true, cascade={"persist"})
      */
     private $broadcast;
 

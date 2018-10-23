@@ -22,7 +22,7 @@ class Person
     protected $id;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", simple=true, cascade="ALL")
+     * @MongoDB\ReferenceOne(targetDocument="User", inversedBy="person", simple=true, cascade={"persist"})
      */
     private $user;
 
