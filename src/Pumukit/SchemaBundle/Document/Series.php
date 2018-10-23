@@ -92,8 +92,7 @@ class Series
      * @var ArrayCollection
      * @MongoDB\ReferenceMany(targetDocument="MultimediaObject", mappedBy="series",
      *                                                           repositoryMethod="findWithoutPrototype",
-     *                                                           sort={"rank"=1}, simple=true, orphanRemoval=true,
-     *                                                           cascade={"persist"})
+     *                                                           sort={"rank"=1}, simple=true, orphanRemoval=true)
      * @Serializer\Exclude
      */
     private $multimedia_objects;
