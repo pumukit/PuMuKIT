@@ -26,8 +26,9 @@ class OpencastImportService
     private $otherLocales;
     private $defaultTagImported;
     private $seriesImportService;
+    private $customLanguages;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales, $defaultTagImported, SeriesImportService $seriesImportService)
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, TrackService $trackService, TagService $tagService, MultimediaObjectService $mmsService, ClientService $opencastClient, OpencastService $opencastService, InspectionServiceInterface $inspectionService, array $otherLocales, $defaultTagImported, SeriesImportService $seriesImportService, array $customLanguages)
     {
         $this->opencastClient = $opencastClient;
         $this->dm = $documentManager;
@@ -40,6 +41,7 @@ class OpencastImportService
         $this->otherLocales = $otherLocales;
         $this->defaultTagImported = $defaultTagImported;
         $this->seriesImportService = $seriesImportService;
+        $this->customLanguages = $customLanguages;
     }
 
     /**
@@ -342,7 +344,7 @@ class OpencastImportService
         $language = $this->getMediaPackageField($mediaPackage, 'language');
         if ($language) {
             $parsedLocale = \Locale::parseLocale($language);
-            if (in_array($parsedLocale['language'], $this->otherLocales)) {
+            if (!$this->customLanguages || in_array($parsedLocale['language'], $this->customLanguages)) {
                 return $parsedLocale['language'];
             }
         }

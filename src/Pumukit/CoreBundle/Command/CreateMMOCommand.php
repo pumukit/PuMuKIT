@@ -72,7 +72,7 @@ EOT
                 throw new \Exception('The status  ('.$statusText.') is not a valid. Use \'published\', \'blocked\' or \'hidden\'');
             }
 
-            $status = $this->validStatuses['$statusText'];
+            $status = $this->validStatuses[$statusText];
         }
 
         if ('IN_CLOSE_WRITE' != $input->getArgument('inotify_event')) {

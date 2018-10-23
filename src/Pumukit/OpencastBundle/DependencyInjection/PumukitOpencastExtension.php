@@ -76,6 +76,10 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit_opencast.client'))
               ->addArgument(new Parameter('pumukit2.locales'));
 
+            $pumukit2customlanguages = $container->hasParameter('pumukit2.customlanguages') ?
+                new Parameter('pumukit2.customlanguages') :
+                array();
+
             $container
               ->register('pumukit_opencast.import', "Pumukit\OpencastBundle\Services\OpencastImportService")
               ->addArgument(new Reference('doctrine_mongodb.odm.document_manager'))
@@ -88,7 +92,8 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit.inspection'))
               ->addArgument(new Parameter('pumukit2.locales'))
               ->addArgument(new Parameter('pumukit_opencast.default_tag_imported'))
-              ->addArgument(new Reference('pumukit_opencast.series_importer'));
+              ->addArgument(new Reference('pumukit_opencast.series_importer'))
+              ->addArgument($pumukit2customlanguages);
 
             $container
               ->register('pumukit_opencast.workflow', "Pumukit\OpencastBundle\Services\WorkflowService")
