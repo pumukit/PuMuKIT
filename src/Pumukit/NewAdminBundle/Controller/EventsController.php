@@ -466,7 +466,7 @@ class EventsController extends Controller implements NewAdminController
             throw new \Exception($translator->trans('Error: Series have another owners on others events'));
         } else {
             $series = $multimediaObject->getSeries();
-            $seriesRepo = $dm->getRepository("PumukitSchemaBundle:Series");
+            $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
             $count = $seriesRepo->countMultimediaObjects($series);
             if (1 === $count) {
                 $factoryService->deleteMultimediaObject($multimediaObject);

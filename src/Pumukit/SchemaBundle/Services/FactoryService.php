@@ -34,7 +34,7 @@ class FactoryService
     public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
-        $this->seriesRepo = $this->dm->getRepository("PumukitSchemaBundle:Series");
+        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
