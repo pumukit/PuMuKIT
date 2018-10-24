@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="pumukit.picextractor.command.ffmpeg">ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
-        <parameter key="pumukit.picextractor.command.libav">avconv -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
+        <parameter key="pumukit.picextractor.command.libav">ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"</parameter>
         <parameter key="pumukit.picextractor.command">%pumukit.picextractor.command.libav%</parameter>
     </parameters>
 
