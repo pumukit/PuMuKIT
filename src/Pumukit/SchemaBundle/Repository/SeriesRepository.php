@@ -641,7 +641,7 @@ class SeriesRepository extends DocumentRepository
             $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
             $command = array(array('$group' => $group));
 
-            return $seriesCollection->aggregate($command)->toArray();
+            return $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
         }
 
         $match = [];
@@ -649,7 +649,7 @@ class SeriesRepository extends DocumentRepository
         $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
 
         $command = array(array('$match' => $match), array('$group' => $group));
-        $aSeries = $seriesCollection->aggregate($command)->toArray();
+        $aSeries = $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
 
         /* Find mmo user groups */
         $mmoCollection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -665,7 +665,7 @@ class SeriesRepository extends DocumentRepository
         $group = array('_id' => array('id' => '$series', 'title' => '$seriesTitle'));
 
         $command = array($unwind, array('$match' => $match), array('$group' => $group));
-        $aMMO = $mmoCollection->aggregate($command)->toArray();
+        $aMMO = $mmoCollection->aggregate($command, array('cursor' => array()))->toArray();
 
         $aSeries = array_merge($aSeries, $aMMO);
         usort($aSeries, function ($a, $b) {
