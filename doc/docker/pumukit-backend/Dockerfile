@@ -14,34 +14,54 @@ RUN apk add --no-cache \
 ;
 
 ARG APCU_VERSION=5.1.12
+ARG MONGODB_VERSION=1.5.3
+ARG XDEBUG_VERSION=2.6.1
+
 RUN set -eux; \
  	apk add --no-cache --virtual .build-deps \
  		$PHPIZE_DEPS \
  		icu-dev \
-# 		libzip-dev \
-# 		zlib-dev \
+		openldap-dev \
+		gettext-dev \
+		libpng-dev \
+		expat-dev \
+ 		libzip-dev \
+ 		zlib-dev \
+		libxml2-dev \
+		libxslt-dev \
  	; \
  	\
-# 	docker-php-ext-configure zip --with-libzip; \
+ 	docker-php-ext-configure zip --with-libzip; \
  	docker-php-ext-install -j$(nproc) \
  		intl \
 		exif \
-# 		zip \
+		intl \
+		ldap \
+		gettext \
+		pcntl \
+		gd \
+		shmop \
+		sockets \
+		sysvmsg \
+		sysvsem \
+		sysvshm \
+ 		zip \
+		wddx \
+		xsl \
  	; \
  	pecl install \
  		apcu-${APCU_VERSION} \
+		mongodb-${MONGODB_VERSION} \
+		xdebug-${XDEBUG_VERSION} \
  	; \
- 	pecl clear-cache; \
+ 	pecl clear-cache ;\
  	docker-php-ext-enable \
  		apcu \
  		opcache \
+		mongodb \
  	;
 
 
-
-
-# RUN apt-get update && \
-#     apt-get -y install software-properties-common
 
 
 # #Install dependencies of PuMuKIT-2
