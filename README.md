@@ -1,4 +1,4 @@
-PuMuKIT-2 [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2)
+PuMuKIT-2 [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2) [![Docker Repository on Quay](https://quay.io/repository/pnieto/pumukit2/status "Docker Repository on Quay")](https://quay.io/repository/pnieto/pumukit2)
 =========
 
 PuMuKIT-2 is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
