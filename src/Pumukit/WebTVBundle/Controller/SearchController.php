@@ -288,7 +288,7 @@ class SearchController extends Controller implements WebTVController
         if (null !== $tagsFound) {
             $tagsFound = array_values(array_diff($tagsFound, array('All', '')));
         }
-        if (count($tagsFound) > 0) {
+        if (null !== $tagsFound && count($tagsFound) > 0) {
             $queryBuilder->field('tags.cod')->all($tagsFound);
         }
 

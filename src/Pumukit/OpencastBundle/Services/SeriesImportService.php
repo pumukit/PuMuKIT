@@ -83,7 +83,7 @@ class SeriesImportService
         if (!isset($metadata) || !isset($metadata['catalog'])) {
             return null;
         }
-        if (isset($metadata['catalog']['type']) && $metadata['catalog']['type'] === 'dublincore/episode') {
+        if (isset($metadata['catalog']['type']) && 'dublincore/episode' === $metadata['catalog']['type']) {
             return $this->opencastClient->getSpatialField($metadata['catalog']['url']);
         }
         foreach ($metadata['catalog'] as $catalog) {

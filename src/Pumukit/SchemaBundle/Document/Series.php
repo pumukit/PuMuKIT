@@ -357,6 +357,7 @@ class Series
     {
         //TODO:
         throw new \Exception('PMK2.5 PHP7 use service');
+
         return $this->multimedia_objects->contains($multimedia_object);
     }
 
@@ -368,6 +369,7 @@ class Series
     public function addMultimediaObject(MultimediaObject $multimedia_object)
     {
         throw new \Exception('PMK2.5 PHP7 use service');
+
         return $this->multimedia_objects->add($multimedia_object);
     }
 
@@ -390,6 +392,7 @@ class Series
     public function getMultimediaObjects()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
+
         return $this->multimedia_objects;
     }
 
