@@ -4,8 +4,9 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
+use PHPUnit\Framework\TestCase;
 
-class PermissionProfileTest extends \PHPUnit_Framework_TestCase
+class PermissionProfileTest extends TestCase
 {
     public function testSetterAndGetter()
     {

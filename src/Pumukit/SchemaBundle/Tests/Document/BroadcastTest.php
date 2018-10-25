@@ -4,11 +4,12 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-
-/**
+/*
  * @deprecated in version 2.3
  */
-class BroadcastTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class BroadcastTest extends TestCase
 {
     public function testSetterAndGetter()
     {

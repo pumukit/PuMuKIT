@@ -50,7 +50,8 @@ class LogTest extends WebTestCase
     private function createMockRequestStack()
     {
         $request = Request::create('/');
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack', array(), array(), '', false);
+        $requestStack = $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack', array(), array(), '', false)
+                      ->getMock();
         $requestStack->expects($this->once())->method('getMasterRequest')->will($this->returnValue($request));
 
         return $requestStack;

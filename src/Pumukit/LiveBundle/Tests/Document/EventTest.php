@@ -5,8 +5,9 @@ namespace Pumukit\LiveBundle\Tests\Document;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Pic;
+use PHPUnit\Framework\TestCase;
 
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends TestCase
 {
     public function testSetterAndGetter()
     {

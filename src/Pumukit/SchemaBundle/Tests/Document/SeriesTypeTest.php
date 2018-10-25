@@ -3,8 +3,9 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\SeriesType;
+use PHPUnit\Framework\TestCase;
 
-class SeriesTypeTest extends \PHPUnit_Framework_TestCase
+class SeriesTypeTest extends TestCase
 {
     public function testGetterAndSetter()
     {

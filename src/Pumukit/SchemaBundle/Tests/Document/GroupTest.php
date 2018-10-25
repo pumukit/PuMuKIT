@@ -3,8 +3,9 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Group;
+use PHPUnit\Framework\TestCase;
 
-class GroupTest extends \PHPUnit_Framework_TestCase
+class GroupTest extends TestCase
 {
     public function testSetterAndGetter()
     {

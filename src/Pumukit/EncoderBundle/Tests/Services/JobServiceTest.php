@@ -42,8 +42,10 @@ class JobServiceTest extends WebTestCase
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $cpuService = new CpuService($this->getDemoCpus(), $this->dm);
-        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $inspectionService = $this->getMock('Pumukit\InspectionBundle\Services\InspectionServiceInterface');
+        $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+                    ->getMock();
+        $inspectionService = $this->getMockBuilder('Pumukit\InspectionBundle\Services\InspectionServiceInterface')
+                           ->getMock();
         $inspectionService->expects($this->any())->method('getDuration')->will($this->returnValue(5));
         $this->resourcesDir = realpath(__DIR__.'/../Resources').'/';
         $this->jobService = new JobService($this->dm, $profileService, $cpuService,

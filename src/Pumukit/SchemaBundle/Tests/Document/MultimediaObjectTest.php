@@ -10,10 +10,11 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Link;
-
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
-class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MultimediaObjectTest extends TestCase
 {
     public function testGetterAndSetter()
     {

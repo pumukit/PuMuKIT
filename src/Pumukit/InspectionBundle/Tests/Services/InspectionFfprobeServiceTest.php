@@ -5,8 +5,9 @@ namespace Pumukit\InspectionBundle\Tests\Services;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\Track;
+use PHPUnit\Framework\TestCase;
 
-class InspectionFfprobeServiceTest extends \PHPUnit_Framework_TestCase
+class InspectionFfprobeServiceTest extends TestCase
 {
     private $resources_dir;
     private $wrong_file_textfile;

@@ -43,7 +43,8 @@ class FuncionalTest extends WebTestCase
         $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
         $this->dm->flush();
 
-        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+                    ->getMock();
         $logger = new Logger('job_service_test_logger');
         $logger->pushHandler(new StreamHandler(realpath(__DIR__.'/../Resources').'/encoder_test.log', Logger::WARNING));
         $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService,
