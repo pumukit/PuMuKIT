@@ -22,7 +22,7 @@
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.11.3",
+        "symfony/monolog-bundle": "^3.0.2",
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
@@ -40,8 +40,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "phpunit/phpunit": "4.8.*",
-        "friendsofphp/php-cs-fixer": "2.x"
+        "phpunit/phpunit": "7.*"
     },
     "scripts": {
         "symfony-scripts": [
