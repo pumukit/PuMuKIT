@@ -1,9 +1,9 @@
-ARG PHP_VERSION=7.2
-ARG NGINX_VERSION=1.15
-
-
 FROM php:${PHP_VERSION}-fpm-alpine AS pumukit_backend
 MAINTAINER Pablo Nieto, pnieto@teltek.es
+
+
+ARG PHP_VERSION=7.2
+ARG NGINX_VERSION=1.15
 
 
 RUN apk add --no-cache \
