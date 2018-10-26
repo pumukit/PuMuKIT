@@ -98,9 +98,10 @@ COPY web web/
 COPY src src/
 COPY composer.json ./
 COPY composer.lock ./
+COPY doc/docker/pumukit/parameters.yml app/config/parameters.yml
 
 RUN set -eux; \
-    composer install -a -n --no-scripts \
+    composer install -a -n --no-scripts; \
     composer clear-cache
 
 

@@ -1,0 +1,28 @@
+# This file is auto-generated during the composer install
+parameters:
+    mongodb_server: 'mongodb://mongo:27017'
+    mongodb_database: pumukit
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true
+    pumukit2.info:
+        title: UPumukitTV
+        description: 'Pumukit University TV Website'
+        keywords: 'webtv, Tv, Pumukit University, uvigo, uvigotv, pumukit'
+        email: tv@pumukit.tv
+        logo: /bundles/pumukitwebtv/images/webtv/logo80px.png
+    pumukit2.locales:
+        - en
+        - es
+    pumukit2.uploads_dir: '%kernel.root_dir%/../web/uploads'
+    pumukit2.uploads_url: /uploads
+    pumukit2.inbox: '%kernel.root_dir%/../web/storage/inbox'
+    pumukit2.tmp: '%kernel.root_dir%/../web/storage/tmp'
+    pumukit2.delete_on_disk: true
+    pumukit2.use_series_channels: false
