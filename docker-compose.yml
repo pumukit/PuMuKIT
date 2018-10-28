@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  php:
+    image: pnieto/pumukit2
+    build:
+      context: ./
+      target: pumukit_backend
+      cache_from:
+        - pnieto/pumukit2
+        - pnieto/nginx
+    depends_on:
+      - db
+    env_file:
+      - ./doc/docker/.env
+    # Comment out these volumes in production
+    volumes:
+      - ./api:/srv/api:rw,cached
+      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+      # - ./api/var:/srv/api/var:rw
+
+  h2-proxy:
+    image: pnieto/nginx
+    build:
+      context: ./
+      target: pumukit_frontend
+      cache_from:
+        - pnieto/pumukit2
+        - pnieto/nginx
+    depends_on:
+      - php
+    # Comment out this volume in production
+    volumes:
+      - ./api/public:/srv/api/public:ro
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    # In production, you may want to use a managed database service
+    image: mongo:3.6
+    volumes:
+      - db-data:/data/db:rw
+
+volumes:
+  db-data: {}
