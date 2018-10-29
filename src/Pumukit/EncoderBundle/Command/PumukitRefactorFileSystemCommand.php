@@ -38,11 +38,11 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
                 Example to use:
                 
                 1. Refactor pics
-                    php app/console pumukit:refactor:files:path --pics=true
+                    php app/console pumukit:refactor:files:path --pics
                 2. Refactor materials
-                    php app/console pumukit:refactor:files:path --materials=true
+                    php app/console pumukit:refactor:files:path --materials
                 3. Refactor both
-                    php app/console pumukit:refactor:files:path --pics=true --materials=true            
+                    php app/console pumukit:refactor:files:path --pics --materials            
 EOT
         );
     }
