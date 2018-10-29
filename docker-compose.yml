@@ -5,7 +5,6 @@ services:
     image: pnieto/pumukit2
     build:
       context: ./
-      target: pumukit_backend
       cache_from:
         - pnieto/pumukit2
         - pnieto/nginx
@@ -22,8 +21,7 @@ services:
   h2-proxy:
     image: pnieto/nginx
     build:
-      context: ./
-      target: pumukit_frontend
+      context: ./doc/docker/nginx
       cache_from:
         - pnieto/pumukit2
         - pnieto/nginx
