@@ -22,5 +22,5 @@ COPY conf/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/pumukit
 
-COPY --from=pumukit_backend /srv/pumukit/web web/
+COPY --from=pnieto/pumukit2:latest /srv/pumukit/web web/
 
