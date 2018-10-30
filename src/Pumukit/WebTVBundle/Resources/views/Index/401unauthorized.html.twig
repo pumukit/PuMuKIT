@@ -1,16 +1,16 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 {% block body_base %}
-    <h1 class="widget" style="text-align: center; margin-top: 10vh; padding-top: 10vh; font-size: 10vh; margin-bottom:6vh;">
+    <h1 class="widget widget_unauthorized_error">
         {% trans %}Private Video{% endtrans %}
     </h1>
     <div class="grid_10 mm_player">
         <div class="date"></div>
-        <h2 style="text-align:center;margin-top: 3vh; font-size: 6vh; margin-bottom:2vh;">
+        <h2 class="widget_unauthorized_error_message">
             {% trans %}This video is private with restricted access{% endtrans %}.
         </h2>
     </div>
     <div class="grid_5">
-        <h3 style="text-align:center;margin-top: 3vh; font-size: 6vh; margin-bottom:6vh;">
+        <h3 class="widget_unauthorized_message">
             {% trans %}Enter a valid password to watch it{% endtrans %}.
         </h3>
         <div class="text-center">
@@ -19,7 +19,7 @@
                     <input id="broadcast_password" name="broadcast_password" type="password" aria-label="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256" style="margin-top: 2vh;margin-left:5px; margin-right: 5px; margin-bottom: 4vh; width: 190px;"/>
                 </div>
                 <div class="col-md-12 text-center">
-                    <span id="player_password_check_fail" style="color: red; margin: 0px 10px;{{ invalid_password ? '':'display: none;' }}">
+                    <span id="player_password_check_fail" style="{{ invalid_password ? '':'display: none;' }}">
                         {% trans %}Password is not valid{% endtrans %}.
                     </span>
                 </div>
