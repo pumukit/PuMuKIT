@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\EncoderBundle\Command;
+namespace Pumukit\CoreBundle\Command;
 
 use Symfony\Component\Console\Input\InputOption;
 use UnexpectedValueException;
@@ -155,7 +155,7 @@ EOT
                 $checkFile = file_exists($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
                 if ($checkFile) {
                     $this->output->writeln('Setting path for '.$elem->getUrl());
-                    $elem->setPath($elem->getUrl());
+                    $elem->setPath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
                     $haveChanges = true;
                 }
             }
