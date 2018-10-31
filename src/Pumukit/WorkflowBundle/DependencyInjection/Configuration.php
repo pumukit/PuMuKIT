@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
               ->info('Extract thumbnail automatically')
             ->end()
             ->scalarNode('auto_extract_pic_percentage')
-                ->defaultValue("50%")
+                ->defaultValue('50%')
                 ->info('Extract thumbnail automatically on this percentage')
             ->end()
           ->end();
