@@ -154,7 +154,7 @@ class UNESCOController extends Controller implements NewAdminController
             $element_sort = $session->get('admin/unesco/element_sort');
             $sortType = $session->get('admin/unesco/type');
 
-            if ($sortType == 'score') {
+            if ('score' == $sortType) {
                 $multimediaObjects->sortMeta('score', 'textScore');
             } else {
                 $multimediaObjects->sort($element_sort, $sortType);
@@ -294,6 +294,10 @@ class UNESCOController extends Controller implements NewAdminController
                         if (!empty($field)) {
                             $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.preg_quote($field).'.*/i');
                         }
+                    }
+                } elseif ('group' === $key) {
+                    if ('all' !== $value) {
+                        $newCriteria['groups'] = new \MongoId($value);
                     }
                 } elseif (in_array(
                     $key,
@@ -516,9 +520,12 @@ class UNESCOController extends Controller implements NewAdminController
 
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
 
+        $groups = $this->getAllGroups();
+
         return array(
             //'form' => $form->createView(),
             'disable_pudenew' => $disablePudenew,
+            'groups' => $groups,
             'genre' => $aGenre,
             'roles' => $roles,
             'statusPub' => $statusPub,
