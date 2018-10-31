@@ -299,10 +299,7 @@ class UNESCOController extends Controller implements NewAdminController
                     if ('all' !== $value) {
                         $newCriteria['groups'] = new \MongoId($value);
                     }
-                } elseif (in_array(
-                    $key,
-                    array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate')
-                )) {
+                } elseif (in_array($key, array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate'))) {
                     if ('initPublicDate' === $key && !empty($value)) {
                         $newCriteria['public_date_init'] = $value;
                     } elseif ('finishPublicDate' === $key && !empty($value)) {
@@ -312,6 +309,8 @@ class UNESCOController extends Controller implements NewAdminController
                     } elseif ('finishRecordDate' === $key && !empty($value)) {
                         $newCriteria['record_date_finish'] = $value;
                     }
+                } elseif ('filename' === $key && !empty($value)) {
+                    $newCriteria['tracks.originalName'] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 } elseif (!empty($value)) {
                     $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 }
