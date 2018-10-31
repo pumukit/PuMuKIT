@@ -21,6 +21,7 @@
             <argument type="service" id="logger"/>
             <argument type="service" id="pumukitencoder.profile"/>
             <argument>%pumukit_workflow.auto_extract_pic%</argument>
+            <argument>%pumukit_workflow.auto_extract_pic_percentage%</argument>
             <tag name="kernel.event_listener" event="job.success" method="onJobSuccess" />
         </service>
     </services>

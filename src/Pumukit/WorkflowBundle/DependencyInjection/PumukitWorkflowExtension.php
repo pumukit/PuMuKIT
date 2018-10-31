@@ -23,6 +23,7 @@ class PumukitWorkflowExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pumukit_workflow.auto_extract_pic', $config['auto_extract_pic']);
+        $container->setParameter('pumukit_workflow.auto_extract_pic_percentage', $config['auto_extract_pic_percentage']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

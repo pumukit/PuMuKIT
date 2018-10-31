@@ -22,8 +22,10 @@ class PicExtractorListener
     private $defaultAudioPicOriginalName;
     private $autoExtractPic;
     private $audioPicCopy;
+    private $profileService;
+    private $autoExtractPicPercentage;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, PicExtractorService $picExtractorService, LoggerInterface $logger, $profileService, $autoExtractPic = true)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, PicExtractorService $picExtractorService, LoggerInterface $logger, $profileService, $autoExtractPic = true, $autoExtractPicPercentage = '50%')
     {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
@@ -35,6 +37,7 @@ class PicExtractorListener
         $this->defaultAudioPicOriginalName = 'sound_bn.png';
         $this->autoExtractPic = $autoExtractPic;
         $this->profileService = $profileService;
+        $this->autoExtractPicPercentage = $autoExtractPicPercentage;
     }
 
     public function onJobSuccess(JobEvent $event)
@@ -104,7 +107,7 @@ class PicExtractorListener
 
     private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track)
     {
-        $outputMessage = $this->picExtractorService->extractPic($multimediaObject, $track, 'Auto');
+        $outputMessage = $this->picExtractorService->extractPic($multimediaObject, $track, $this->autoExtractPicPercentage);
         if (false !== strpos($outputMessage, 'Error')) {
             throw new \Exception($outputMessage.". MultimediaObject '".$multimediaObject->getId()."' with track '".$track->getId()."'");
         }
