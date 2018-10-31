@@ -3601,6 +3601,22 @@
         <source>Option not allowed</source>
         <target>Option not allowed</target>
       </trans-unit>
+      <trans-unit id="1351017ac6423911223bc19a8cb7c653" resname="Filename">
+        <source>Filename</source>
+        <target>Filename</target>
+      </trans-unit>
+      <trans-unit id="52ad00c5af8c0250847c11b8d6b7d128" resname="Original name">
+        <source>Original name</source>
+        <target>Original name</target>
+      </trans-unit>
+      <trans-unit id="2a9630ec3561784ad06cf00a2825e086" resname="No name">
+        <source>No name</source>
+        <target>No name</target>
+      </trans-unit>
+      <trans-unit id="5da73d6bbb5fef33ef2b4b59df49ba19" resname="Upload date">
+        <source>Upload date</source>
+        <target>Upload date</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

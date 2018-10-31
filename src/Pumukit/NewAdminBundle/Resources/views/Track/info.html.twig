@@ -60,7 +60,7 @@
                         <input id="originalName" name="originalName" readonly="readonly" class="form-control" value="{{ track.getOriginalName|default('No name'|trans) }}" />
                     </div>
                     <div class="form-group">
-                        <label for="uploadData" class="control-label">{% trans %}Upload data{% endtrans %}:</label>
+                        <label for="uploadData" class="control-label">{% trans %}Upload date{% endtrans %}:</label>
                         <input id="uploadData" name="uploadData" readonly="readonly" class="form-control" value="{{ job.getTimeIni()| localizeddate('medium', 'medium', app.request.getLocale()) }}" />
                     </div>
                 </div>
