@@ -1,9 +1,9 @@
 <?php
 
-namespace Pumukit\EncoderBundle\Command;
+namespace Pumukit\CoreBundle\Command;
 
+use Symfony\Component\Console\Input\InputOption;
 use UnexpectedValueException;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -28,22 +28,23 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:refactor:files:path')
             ->setDescription('Pumukit refactor wrongs path for images and materials')
-            ->addOption('pics', null, InputArgument::OPTIONAL, 'Refactor pics')
-            ->addOption('materials', null, InputArgument::OPTIONAL, 'Refactor materials')
-            ->setHelp(<<<'EOT'
+            ->addOption('pics', null, InputOption::VALUE_NONE, 'Refactor pics')
+            ->addOption('materials', null, InputOption::VALUE_NONE, 'Refactor materials')
+            ->setHelp(
+            <<<'EOT'
                 
                 Pumukit refactor wrongs path for images and materials
                 
                 Example to use:
                 
                 1. Refactor pics
-                    php app/console pumukit:refactor:files:path --pics=true
+                    php app/console pumukit:refactor:files:path --pics
                 2. Refactor materials
-                    php app/console pumukit:refactor:files:path --materials=true
+                    php app/console pumukit:refactor:files:path --materials
                 3. Refactor both
-                    php app/console pumukit:refactor:files:path --pics=true --materials=true            
+                    php app/console pumukit:refactor:files:path --pics --materials            
 EOT
-            );
+        );
     }
 
     /**
@@ -77,7 +78,13 @@ EOT
             throw new \Exception('Please select one type');
         }
 
-        if ($this->pics && in_array(strtolower($this->pics), array('false', 'true', '1', '0'))) {
+        try {
+            $this->repairMongoDBPicsAndMaterial();
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+
+        if ($this->pics) {
             $output->writeln('Trying to refactor pics paths ...');
             try {
                 $this->refactorPicsPath();
@@ -88,7 +95,7 @@ EOT
             $output->writeln('Refactor pics done');
         }
 
-        if ($this->materials && in_array(strtolower($this->materials), array('false', 'true', '1', '0'))) {
+        if ($this->materials) {
             $output->writeln('Trying to refactor materials paths ...');
             try {
                 $this->refactorMaterialsPath();
@@ -97,6 +104,65 @@ EOT
             }
 
             $output->writeln('Refactor materials done');
+        }
+    }
+
+    private function repairMongoDBPicsAndMaterial()
+    {
+        if ($this->pics) {
+            $this->repairMongoDBPics();
+        }
+
+        if ($this->materials) {
+            $this->repairMongoDBMaterials();
+        }
+    }
+
+    private function repairMongoDBPics()
+    {
+        $multimediaObjects = $this->findPicsWithoutPaths();
+
+        if (!$multimediaObjects) {
+            return true;
+        }
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            $elements = $multimediaObject->getPics();
+            $this->fixPath($elements);
+        }
+    }
+
+    private function repairMongoDBMaterials()
+    {
+        $multimediaObjects = $this->findMaterialsWithoutPaths();
+
+        if (!$multimediaObjects) {
+            return true;
+        }
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            $elements = $multimediaObject->getMaterials();
+            $this->fixPath($elements);
+        }
+    }
+
+    private function fixPath($elements)
+    {
+        $haveChanges = false;
+        foreach ($elements as $elem) {
+            $path = $elem->getPath();
+            if (!isset($path)) {
+                $checkFile = file_exists($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                if ($checkFile) {
+                    $this->output->writeln('Setting path for '.$elem->getUrl());
+                    $elem->setPath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                    $haveChanges = true;
+                }
+            }
+        }
+
+        if ($haveChanges) {
+            $this->dm->flush();
         }
     }
 
@@ -110,6 +176,10 @@ EOT
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
             foreach ($multimediaObject['pics'] as $pic) {
+                if (!isset($pic['path'])) {
+                    continue;
+                }
+
                 $multimediaObjectId = $multimediaObject['_id']->{'$id'};
                 if (false === stripos($pic['url'], '/pic/series/')) {
                     $oldDirname = $pic['path'];
@@ -137,7 +207,9 @@ EOT
                     try {
                         $this->updateMultimediaObjectPic($multimediaObjectId, $pic['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
-                        $this->logger->error('Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']);
+                        $this->logger->error(
+                            'Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']
+                        );
                         continue;
                     }
 
@@ -146,9 +218,7 @@ EOT
             }
 
             if ($haveChanges && isset($oldDirname)) {
-                if (!rmdir(dirname($oldDirname))) {
-                    $this->logger->error('Cannot delete directory '.$oldDirname.' because is not empty');
-                }
+                $this->deleteDirectory($haveChanges, $oldDirname);
             }
         }
     }
@@ -163,6 +233,10 @@ EOT
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
             foreach ($multimediaObject['materials'] as $material) {
+                if (!isset($material['path'])) {
+                    continue;
+                }
+
                 $multimediaObjectId = $multimediaObject['_id']->{'$id'};
                 if (false === stripos($material['url'], '/material/series/')) {
                     $oldDirname = $material['path'];
@@ -188,9 +262,11 @@ EOT
                     }
 
                     try {
-                        $this->updateMultimediaObjectPic($multimediaObjectId, $material['path'], $newPath, $newUrl);
+                        $this->updateMultimediaObjectMaterial($multimediaObjectId, $material['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
-                        $this->logger->error('Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']);
+                        $this->logger->error(
+                            'Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']
+                        );
                         continue;
                     }
 
@@ -199,11 +275,41 @@ EOT
             }
 
             if ($haveChanges && isset($oldDirname)) {
-                if (!rmdir(dirname($oldDirname))) {
-                    $this->logger->error('Cannot delete directory '.$oldDirname.' because is not empty');
-                }
+                $this->deleteDirectory($haveChanges, $oldDirname);
             }
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    private function findPicsWithoutPaths()
+    {
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+            array(
+                'pics' => array('$exists' => true),
+                'pics.url' => array('$exists' => true),
+                'pics.path' => array('$exists' => false),
+            )
+        );
+
+        return $multimediaObjects;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function findMaterialsWithoutPaths()
+    {
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+            array(
+                'materials' => array('$exists' => true),
+                'materials.url' => array('$exists' => true),
+                'materials.path' => array('$exists' => false),
+            )
+        );
+
+        return $multimediaObjects;
     }
 
     /**
@@ -364,5 +470,40 @@ EOT
         $this->dm->flush();
 
         return true;
+    }
+
+    /**
+     * @param $multimediaObjectId
+     * @param $oldPath
+     * @param $newPath
+     * @param $newUrl
+     *
+     * @return bool
+     */
+    private function updateMultimediaObjectMaterial($multimediaObjectId, $oldPath, $newPath, $newUrl)
+    {
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+            array('_id' => new \MongoId($multimediaObjectId))
+        );
+
+        foreach ($multimediaObject->getMaterials() as $material) {
+            if ($material->getPath() && $material->getPath() === $oldPath) {
+                $material->setPath($newPath);
+                $material->setUrl($newUrl);
+            }
+        }
+
+        $this->dm->flush();
+
+        return true;
+    }
+
+    private function deleteDirectory($haveChanges, $oldDirName)
+    {
+        if ($haveChanges && isset($oldDirName)) {
+            if (!rmdir(dirname($oldDirName))) {
+                $this->logger->error('Cannot delete directory '.$oldDirName.' because is not empty');
+            }
+        }
     }
 }
