@@ -152,10 +152,10 @@ trait Keywords
             return false;
         }
 
-        $key = array_search($keyword, $this->keywords[$lang], true);
+        $key = array_search($keyword, $this->keywords[$locale], true);
 
         if (false !== $key) {
-            unset($this->keywords[$lang][$key]);
+            unset($this->keywords[$locale][$key]);
 
             return true;
         }
