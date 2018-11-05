@@ -295,7 +295,7 @@ class DefaultController extends Controller
 
         $status = array();
         $statusSelected = false;
-        if($this->isGranted(Permission::ACCESS_PUBLICATION_TAB)) {
+        if ($this->isGranted(Permission::ACCESS_PUBLICATION_TAB)) {
             $status = array(
                 MultimediaObject::STATUS_PUBLISHED => 'Published',
                 MultimediaObject::STATUS_HIDDEN => 'Hidden',
@@ -339,6 +339,7 @@ class DefaultController extends Controller
      */
     public function uploadAction(Request $request)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
         $formData = $request->get('pumukitwizard_form_data', array());
         $sameSeries = $this->getSameSeriesValue($formData, $request->get('same_series', false));
         $showSeries = !$sameSeries;
@@ -382,7 +383,11 @@ class DefaultController extends Controller
             $description = $this->getKeyData('description', $trackData);
 
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
-            $status = $this->getKeyData('status', $this->getKeyData('status', $formData['multimediaobject']));
+
+            $status = null;
+            if (isset($formData['multimediaobject']['status'])) {
+                $status = $formData['multimediaobject']['status'];
+            }
 
             //$showSeries = false;
             /* if (('null' === $seriesId) || (null === $seriesId)) { */
@@ -471,8 +476,7 @@ class DefaultController extends Controller
                         }
                     }
 
-                    if($multimediaObject && isset($status)) {
-                        dump('entra');
+                    if ($multimediaObject && isset($status)) {
                         $multimediaObject->setStatus(intval($status));
                     }
 
@@ -514,14 +518,13 @@ class DefaultController extends Controller
                             foreach ($pubchannel as $tagCode => $valueOn) {
                                 $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                             }
-
-                            if($multimediaObject && isset($status)) {
-                                dump('entra');
+                            if ($multimediaObject && isset($status)) {
                                 $multimediaObject->setStatus(intval($status));
                             }
                         }
                     }
                 }
+                $dm->flush();
             } catch (\Exception $e) {
                 // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
