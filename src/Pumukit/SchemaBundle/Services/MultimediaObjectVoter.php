@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class MultimediaObjectVoter extends Voter
 {
+    const EDIT = 'edit';
     const PLAY = 'play';
 
     private $mmobjService;
@@ -22,7 +23,7 @@ class MultimediaObjectVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, array(self::PLAY))) {
+        if (!in_array($attribute, array(self::EDIT, self::PLAY))) {
             return false;
         }
 
@@ -39,6 +40,8 @@ class MultimediaObjectVoter extends Voter
         $user = $token->getUser();
 
         switch ($attribute) {
+        case self::EDIT:
+            return $this->canEdit($multimediaObject, $user);
         case self::PLAY:
             return $this->canPlay($multimediaObject, $user);
         }
@@ -46,14 +49,23 @@ class MultimediaObjectVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
-    protected function canPlay($multimediaObject, $user = null)
+    protected function canEdit($multimediaObject, $user = null)
     {
-        //Private playo
         if ($user instanceof User && ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
             return true;
         }
 
         if ($user instanceof User && $user->hasRole(PermissionProfile::SCOPE_PERSONAL) && $this->mmobjService->isUserOwner($user, $multimediaObject)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function canPlay($multimediaObject, $user = null)
+    {
+        // Private play
+        if ($this->canEdit($multimediaObject, $user))
             return true;
         }
 
