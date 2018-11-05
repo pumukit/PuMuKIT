@@ -96,8 +96,6 @@
             <div class="form-group" style="margin-top:10px;">
                 <label for="originalName" class="col-md-3 control-label">{% trans %}Original name{% endtrans %}</label>
                 <div class="col-md-9">
-
-                    {% dump(app.request.session.get('UNESCO/form')['originalName']) %}
                     <input id="originalName" class="form-control" name="criteria[originalName]" placeholder="{% trans %}Original name{% endtrans %}"
                             {% if app.request.session.get('UNESCO/form')['originalName'] is defined and app.request.session.get('UNESCO/form')['originalName'] is not empty %}
                                 value="{{ app.request.session.get('UNESCO/form')['originalName']}}"
