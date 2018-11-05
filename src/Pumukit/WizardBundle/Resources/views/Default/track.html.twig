@@ -26,7 +26,9 @@
                             {% for key, profile in master_profiles %}
                                 {% if profile['wizard'] == true %}
                                     <div class="radio">
-                                        <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}
+                                        <label>
+                                            <input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>
+                                            {{ key }}
                                         </label>
                                     </div>
                                 {% endif %}
@@ -35,16 +37,15 @@
                     {% endif %}
                     {% if not is_naked() %}
                         <div class="form-group" id="pumukitwizard_track_pubchannel">
-                            <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}
-                                :</label>
+                            <label for="pumukitwizard_track_pubchannel" class="control-label">
+                                {% trans %}Publication Channels{% endtrans %}:
+                            </label>
                             {% for pub in pub_channels if not pub.getProperty('modal_path') %}
                                 {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper) %}
                                     <div style="color: grey" class="checkbox">
                                         <label>
-                                            <input type="checkbox"
-                                                   disabled="disabled"
-                                                   {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %}
-                                            /> {{ pub.getTitle() }}
+                                            <input type="checkbox" disabled="disabled" {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %} />
+                                            {{ pub.getTitle() }}
                                         </label>
                                     </div>
                                 {% else %}
@@ -67,16 +68,22 @@
                         <div class="form-group" id="pumukitwizard_track_priority">
                             <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
                             <div class="radio">
-                                <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>
+                                    {% trans %}Low-Priority{% endtrans %}
+                                </label>
                             </div>
                             <div class="radio">
-                                <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>
+                                    {% trans %}Normal-Priority{% endtrans %}
+                                </label>
                             </div>
                             <div class="radio">
-                                <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>
+                                    {% trans %}High-Priority{% endtrans %}
+                                </label>
                             </div>
                         </div>
                     {% endif %}
@@ -93,16 +100,21 @@
                             <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
                             {% if 'single' == form_data.type.option %}
                                 <div class="radio">
-                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}
+                                    <label>
+                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                        {% trans %}Inbox on server{% endtrans %}
                                     </label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}
+                                    <label>
+                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
+                                        {% trans %}Local hard drive{% endtrans %}
                                     </label>
                                 </div>
                             {% elseif 'multiple' == form_data.type.option %}
                                 <div class="radio">
-                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/> {% trans %}Inbox directory on server{% endtrans %}
+                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/>
+                                        {% trans %}Inbox directory on server{% endtrans %}
                                     </label>
                                 </div>
                             {% endif %}
@@ -112,12 +124,14 @@
                     {% endif %}
                     {% if 'single' == form_data.type.option %}
                         <div class="form-group" id="pumukitwizard_track_file">
-                            <label for="url" id="pumukitwizard_track_file_label" class="control-label">{% trans %}Audio/video file{% endtrans %}
-                                :</label>
+                            <label for="url" id="pumukitwizard_track_file_label" class="control-label">
+                                {% trans %}Audio/video file{% endtrans %}:
+                            </label>
                             <div class="input-group">
                                 <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" aria-labelledby="pumukitwizard_track_file_label">
-                                <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}
-                                    ...</span>
+                                <span id="file_upload_progress" style="color:blue; display:none;">
+                                    {% trans %}Progress{% endtrans %}...
+                                </span>
                             </div>
                             <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
                                 <strong>
@@ -152,8 +166,10 @@
                 <div class="col-md-8">
                     <div class="text-right">
                         <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">
-                            &laquo; {% trans %}Back{% endtrans %}</button>
-                        <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">{% trans %}Next{% endtrans %}
+                            &laquo; {% trans %}Back{% endtrans %}
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">
+                            {% trans %}Next{% endtrans %}
                             &raquo;
                         </button>
                     </div>
