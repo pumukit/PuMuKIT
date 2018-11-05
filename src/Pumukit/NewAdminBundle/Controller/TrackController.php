@@ -127,7 +127,7 @@ class TrackController extends Controller implements NewAdminController
         $isPlayable = $track->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
-        $job = array();
+        $job = null;
         if ($track->getPath()) {
             $job = $dm->getRepository('PumukitEncoderBundle:Job')->findOneBy(array('path_end' => $track->getPath()));
         }

@@ -94,11 +94,13 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
-                <label for="filename" class="col-md-3 control-label">{% trans %}Filename{% endtrans %}</label>
+                <label for="originalName" class="col-md-3 control-label">{% trans %}Original name{% endtrans %}</label>
                 <div class="col-md-9">
-                    <input id="filename" class="form-control" name="criteria[filename]" placeholder="{% trans %}Filename{% endtrans %}"
-                            {% if app.request.session.get('UNESCO/form')['filename'] is defined and app.request.session.get('UNESCO/form')['filename'] is not empty %}
-                                placeholder="{{ app.request.session.get('UNESCO/form')['filename']}}"
+
+                    {% dump(app.request.session.get('UNESCO/form')['originalName']) %}
+                    <input id="originalName" class="form-control" name="criteria[originalName]" placeholder="{% trans %}Original name{% endtrans %}"
+                            {% if app.request.session.get('UNESCO/form')['originalName'] is defined and app.request.session.get('UNESCO/form')['originalName'] is not empty %}
+                                value="{{ app.request.session.get('UNESCO/form')['originalName']}}"
                             {% endif %}
                     />
                 </div>

@@ -309,7 +309,7 @@ class UNESCOController extends Controller implements NewAdminController
                     } elseif ('finishRecordDate' === $key && !empty($value)) {
                         $newCriteria['record_date_finish'] = $value;
                     }
-                } elseif ('filename' === $key && !empty($value)) {
+                } elseif ('originalName' === $key && !empty($value)) {
                     $newCriteria['tracks.originalName'] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 } elseif (!empty($value)) {
                     $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');

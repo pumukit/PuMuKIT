@@ -773,7 +773,7 @@ class JobService
 
         $track = new Track();
         if ($pathFile && $profile['master']) {
-            $pathInfo = pathinfo($pathFile, PATHINFO_FILENAME);
+            $pathInfo = pathinfo($pathFile, PATHINFO_BASENAME);
             $track->setOriginalName($pathInfo);
         }
 

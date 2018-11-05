@@ -3601,10 +3601,6 @@
         <source>Option not allowed</source>
         <target>Option not allowed</target>
       </trans-unit>
-      <trans-unit id="1351017ac6423911223bc19a8cb7c653" resname="Filename">
-        <source>Filename</source>
-        <target>Filename</target>
-      </trans-unit>
       <trans-unit id="52ad00c5af8c0250847c11b8d6b7d128" resname="Original name">
         <source>Original name</source>
         <target>Original name</target>
