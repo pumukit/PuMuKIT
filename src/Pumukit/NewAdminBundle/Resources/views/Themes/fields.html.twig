@@ -249,7 +249,26 @@
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
+                {% if form.vars.id in ['pumukitnewadmin_series_i18n_keyword','pumukitnewadmin_mms_meta_i18n_keyword'] %}
+                    {% dump('pumukitnewadmin_series_i18n_keyword') %}
+                    <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>&nbsp;
+
+                    <span class="input-group-addon copy-button" style="color: #767676;" data-copy="{{ form.vars.id }}_{{ locale }}">Copy</span>
+
+                    <script>
+                        $('.copy-button').on('click', function(event) {
+                            var id = $(this).data('copy');
+                            var input = document.getElementById(id);
+                            input.click();
+                            input.focus();
+                            input.select();
+                            document.execCommand("copy");
+                        });
+                    </script>
+
+                {% else %}
+                    <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
+                {% endif %}
             </div>
         {% endfor -%}
     {% endif -%}
