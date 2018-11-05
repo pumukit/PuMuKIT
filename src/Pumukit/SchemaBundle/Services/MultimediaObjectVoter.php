@@ -65,7 +65,7 @@ class MultimediaObjectVoter extends Voter
     protected function canPlay($multimediaObject, $user = null)
     {
         // Private play
-        if ($this->canEdit($multimediaObject, $user))
+        if ($this->canEdit($multimediaObject, $user)) {
             return true;
         }
 
