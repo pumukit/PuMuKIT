@@ -293,8 +293,28 @@ class DefaultController extends Controller
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
 
+        $status = array();
+        $statusSelected = false;
+        if($this->isGranted(Permission::ACCESS_PUBLICATION_TAB)) {
+            $status = array(
+                MultimediaObject::STATUS_PUBLISHED => 'Published',
+                MultimediaObject::STATUS_HIDDEN => 'Hidden',
+                MultimediaObject::STATUS_BLOCKED => 'Blocked',
+            );
+
+            if ($this->isGranted(Permission::INIT_STATUS_PUBLISHED)) {
+                $statusSelected = MultimediaObject::STATUS_PUBLISHED;
+            } elseif ($this->isGranted(Permission::INIT_STATUS_HIDDEN)) {
+                $statusSelected = MultimediaObject::STATUS_HIDDEN;
+            } else {
+                $statusSelected = MultimediaObject::STATUS_BLOCKED;
+            }
+        }
+
         return array(
             'form_data' => $formData,
+            'status' => $status,
+            'statusSelected' => $statusSelected,
             'master_profiles' => $masterProfiles,
             'pub_channels' => $pubChannelsTags,
             'languages' => $languages,
@@ -362,6 +382,7 @@ class DefaultController extends Controller
             $description = $this->getKeyData('description', $trackData);
 
             $pubchannel = $this->getKeyData('pubchannel', $trackData);
+            $status = $this->getKeyData('status', $this->getKeyData('status', $formData['multimediaobject']));
 
             //$showSeries = false;
             /* if (('null' === $seriesId) || (null === $seriesId)) { */
@@ -450,6 +471,11 @@ class DefaultController extends Controller
                         }
                     }
 
+                    if($multimediaObject && isset($status)) {
+                        dump('entra');
+                        $multimediaObject->setStatus(intval($status));
+                    }
+
                     if ($showTags) {
                         $tagCode = $this->getKeyData('tag', $formData['multimediaobject']);
                         if ('0' != $tagCode) {
@@ -487,6 +513,11 @@ class DefaultController extends Controller
                             }
                             foreach ($pubchannel as $tagCode => $valueOn) {
                                 $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                            }
+
+                            if($multimediaObject && isset($status)) {
+                                dump('entra');
+                                $multimediaObject->setStatus(intval($status));
                             }
                         }
                     }

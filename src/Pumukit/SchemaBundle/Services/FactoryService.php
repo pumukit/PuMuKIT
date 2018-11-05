@@ -213,6 +213,8 @@ class FactoryService
         if ($loggedInUser) {
             if ($loggedInUser->hasRole(Permission::INIT_STATUS_PUBLISHED)) {
                 $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
+            } elseif($loggedInUser->hasRole(Permission::INIT_STATUS_HIDDEN)) {
+                $mm->setStatus(MultimediaObject::STATUS_HIDDEN);
             }
             foreach ($loggedInUser->getRoles() as $role) {
                 if ($pubCh = Permission::getPubChannelForRoleTagDefault($role)) {
