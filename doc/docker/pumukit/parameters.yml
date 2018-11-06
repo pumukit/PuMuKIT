@@ -1,6 +1,6 @@
 # This file is auto-generated during the composer install
 parameters:
-    mongodb_server: 'mongodb://mongo:27017'
+    mongodb_server: 'mongodb://db:27017'
     mongodb_database: pumukit
     mailer_transport: smtp
     mailer_host: 127.0.0.1

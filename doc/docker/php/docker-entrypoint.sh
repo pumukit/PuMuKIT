@@ -6,15 +6,12 @@ if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
 
-if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
-	mkdir -p var/cache var/log
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+/wait
 
-	while ! exec 6<>/dev/tcp/db/27017; do
-	    echo "$(date) - still trying to connect to mongo"
-	    sleep 1
-        done
+if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
+	mkdir -p app/cache
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX app/cache app/logs
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX app/cache app/logs
 
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction

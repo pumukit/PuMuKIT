@@ -90,21 +90,26 @@ WORKDIR /srv/pumukit
 ARG APP_ENV=prod
 
 # copy only specifically what we need
-COPY app app/
-COPY bin bin/
-COPY doc doc/
-COPY web web/
-COPY src src/
-COPY composer.json ./
-COPY composer.lock ./
-COPY doc/docker/pumukit/parameters.yml app/config/parameters.yml
+COPY --chown=www-data:www-data app app/
+COPY --chown=www-data:www-data bin bin/
+COPY --chown=www-data:www-data doc doc/
+COPY --chown=www-data:www-data web web/
+COPY --chown=www-data:www-data src src/
+COPY --chown=www-data:www-data composer.json ./
+COPY --chown=www-data:www-data composer.lock ./
+COPY --chown=www-data:www-data doc/docker/pumukit/parameters.yml app/config/parameters.yml
 
 RUN set -eux; \
     composer install -a -n --no-scripts; \
+    php app/console a:i; \
     composer clear-cache
 
 COPY doc/docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
+
+## Add the wait script to the image
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.4.0/wait /wait
+RUN chmod +x /wait
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
