@@ -4,10 +4,22 @@ ARG NGINX_VERSION=1.15
 FROM php:${PHP_VERSION}-fpm-alpine
 MAINTAINER Pablo Nieto, pnieto@teltek.es
 
-
 ARG APCU_VERSION=5.1.12
 ARG PHP_MONGODB_VERSION=1.5.3
 ARG XDEBUG_VERSION=2.6.1
+
+RUN apk  add --no-cache \
+    	     		--update \
+	     		libgcc \
+			libstdc++ \
+			ca-certificates \
+			libcrypto1.0 \
+			libssl1.0 \
+			libgomp \
+			expat \
+;
+
+COPY --from=jrottenberg/ffmpeg:4.0-alpine /usr/local /usr/local
 
 
 RUN apk add --no-cache \
