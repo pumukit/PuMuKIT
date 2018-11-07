@@ -276,6 +276,7 @@ class OpencastImportService
         }
 
         $track->addTag('opencast');
+        $track->addTag('display');
 
         $type = $this->getMediaPackageField($opencastTrack, 'type');
         if ($type) {
