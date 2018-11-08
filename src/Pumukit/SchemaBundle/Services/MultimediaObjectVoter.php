@@ -81,7 +81,7 @@ class MultimediaObjectVoter extends Voter
             }
         }
         if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-            if (!$this->isViewerOrWithScope($user) || $this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
+            if (!$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
                 return false;
             }
         }
@@ -106,7 +106,9 @@ class MultimediaObjectVoter extends Voter
 
     protected function isViewerOrWithScope($user = null)
     {
-        return $user && ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) || $user->hasRole(PermissionProfile::SCOPE_NONE));
+        return $user &&
+            ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+             $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN'));
     }
 
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
@@ -115,8 +117,10 @@ class MultimediaObjectVoter extends Voter
         if (!$user) {
             return false;
         }
+
         $userGroups = $user->getGroups()->toArray();
         $playGroups = $broadcast->getGroups()->toArray();
+
         $commonPlayGroups = array_intersect($playGroups, $userGroups);
 
         return $commonPlayGroups;
