@@ -77,9 +77,12 @@ class Group implements GroupInterface
 
     /**
      * Constructor.
+     *
+     * @param string $key
      */
-    public function __construct()
+    public function __construct($key = null)
     {
+        $this->key = $key;
         $this->createdAt = new \Datetime('now');
         $this->updatedAt = new \Datetime('now');
     }
@@ -281,6 +284,6 @@ class Group implements GroupInterface
      */
     public function __toString()
     {
-        return $this->key;
+        return is_null($this->key) ? '' : $this->key ;
     }
 }

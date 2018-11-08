@@ -7,7 +7,9 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class MultimediaObjectVoterTest extends WebTestCase
@@ -60,6 +62,18 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
         $this->assertFalse($can);
+
+        $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $brodcast = new EmbeddedBroadcast();
+        $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+        $mmobj->setEmbeddedBroadcast($brodcast);
+
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $this->assertFalse($can);
+
+        $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $this->assertFalse($can);
     }
 
     public function testTrackAccessGlobalScope()
@@ -91,6 +105,18 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj->setStatus(MultimediaObject::STATUS_BLOCKED);
 
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertTrue($can);
+
+        $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $brodcast = new EmbeddedBroadcast();
+        $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+        $mmobj->setEmbeddedBroadcast($brodcast);
+
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertTrue($can);
+
+        $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
         $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
         $this->assertTrue($can);
     }
@@ -128,6 +154,27 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
         $this->assertFalse($can);
+
+        $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $brodcast = new EmbeddedBroadcast();
+        $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
+        $mmobj->setEmbeddedBroadcast($brodcast);
+
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertTrue($can);
+
+        $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertFalse($can);
+
+        $group = new Group('key1');
+        $brodcast->addGroup($group);
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertFalse($can);
+
+        $user->addGroup($group);
+        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $this->assertTrue($can);
 
         $this->userService->addOwnerUserToMultimediaObject($mmobj, $user, false);
 
