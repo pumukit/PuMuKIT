@@ -85,7 +85,7 @@ RUN set -eux; \
 
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY doc/docker/php/php.ini /usr/local/etc/php/php.ini
+COPY doc/docker/pumukit/php.ini /usr/local/etc/php/php.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -116,7 +116,7 @@ RUN set -eux; \
     php app/console a:i; \
     composer clear-cache
 
-COPY doc/docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY doc/docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ## Add the wait script to the image

@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
   php:
-    image: pnieto/pumukit2
+    image: teltek/pumukit
     build:
       context: ./
       cache_from:
-        - pnieto/pumukit2
-        - pnieto/nginx
+        - teltek/pumukit2
+        - teltek/nginx
     depends_on:
       - db
     env_file:
@@ -17,12 +17,12 @@ services:
       - ./web/uploads:/srv/pumukit/web/uploads:rw,cached
 
   h2-proxy:
-    image: pnieto/nginx
+    image: teltek/nginx
     build:
       context: ./doc/docker/nginx
       cache_from:
-        - pnieto/pumukit2
-        - pnieto/nginx
+        - teltek/pumukit2
+        - teltek/nginx
     depends_on:
       - php
     volumes:
