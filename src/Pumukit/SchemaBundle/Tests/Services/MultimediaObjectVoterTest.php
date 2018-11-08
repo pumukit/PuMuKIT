@@ -14,6 +14,9 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class MultimediaObjectVoterTest extends WebTestCase
 {
+    private $voter;
+    private $userService;
+
     public function setUp()
     {
         $options = array('environment' => 'test');

@@ -76,20 +76,24 @@ class MultimediaObjectVoter extends Voter
         // Test broadcast
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcastNotNull();
         if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
-            if (!$this->isViewerOrWithScope($user)) {
+            if (!$user instanceof User || !$this->isViewerOrWithScope($user)) {
                 return false;
             }
         }
         if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-            if (!$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
+            if (!$user instanceof User || !$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
                 return false;
             }
         }
-        /* TODO
-           if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-           $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
-           }
-        */
+
+        // OUT OF SCOPE: Share URL and password is as easy as share only the URL.
+        /*
+        if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
+            $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
+            if ($password != $embeddedBroadcast->getPassword()) {
+                return false;
+            }
+        }*/
 
         // Public play
         if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
@@ -104,11 +108,10 @@ class MultimediaObjectVoter extends Voter
         return false;
     }
 
-    protected function isViewerOrWithScope($user = null)
+    protected function isViewerOrWithScope(User $user)
     {
-        return $user &&
-            ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
-             $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN'));
+        return $user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+                $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN');
     }
 
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
