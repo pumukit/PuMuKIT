@@ -94,7 +94,6 @@
 
         <service id="pumukitschema.multimedia_object_voter" class="Pumukit\SchemaBundle\Services\MultimediaObjectVoter">
             <argument type="service" id="pumukitschema.multimedia_object"/>
-            <argument type="service" id="pumukitschema.embeddedbroadcast" />
             <argument type="service" id="request_stack" />
             <tag name="security.voter" />
         </service>
