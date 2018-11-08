@@ -76,12 +76,12 @@ class MultimediaObjectVoter extends Voter
         // Test broadcast
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcastNotNull();
         if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
-            if (!$this->isViewerOrWithScope($user)) {
+            if ($user instanceof User && !$this->isViewerOrWithScope($user)) {
                 return false;
             }
         }
         if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-            if (!$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
+            if ($user instanceof User && !$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
                 return false;
             }
         }
@@ -104,11 +104,10 @@ class MultimediaObjectVoter extends Voter
         return false;
     }
 
-    protected function isViewerOrWithScope($user = null)
+    protected function isViewerOrWithScope(User $user)
     {
-        return $user &&
-            ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
-             $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN'));
+        return $user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ||
+                $user->hasRole(PermissionProfile::SCOPE_NONE) || $user->hasRole('ROLE_SUPER_ADMIN');
     }
 
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
