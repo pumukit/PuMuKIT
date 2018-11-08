@@ -74,24 +74,22 @@ class MultimediaObjectVoter extends Voter
         }
 
         // Test broadcast
-        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
-        if ($embeddedBroadcast) {
-            if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
-                if (!$this->isViewerOrWithScope($user)) {
-                    return false;
-                }
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcastNotNull();
+        if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
+            if (!$this->isViewerOrWithScope($user)) {
+                return false;
             }
-            if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-                if (!$this->isViewerOrWithScope($user) || $this->isUserRelatedToBroadcast($multimediaObject, $user)) {
-                    return false;
-                }
-            }
-            /* TODO
-            if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
-                $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
-            }
-            */
         }
+        if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
+            if (!$this->isViewerOrWithScope($user) || $this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
+                return false;
+            }
+        }
+        /* TODO
+           if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
+           $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
+           }
+        */
 
         // Public play
         if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
@@ -112,17 +110,13 @@ class MultimediaObjectVoter extends Voter
     }
 
     // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
-    protected function isUserRelatedToBroadcast(MultimediaObject $multimediaObject, User $user)
+    protected function isUserRelatedToBroadcast(EmbeddedBroadcast $broadcast, User $user)
     {
         if (!$user) {
             return false;
         }
         $userGroups = $user->getGroups()->toArray();
-        if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
-            $playGroups = $embeddedBroadcast->getGroups()->toArray();
-        } else {
-            $playGroups = array();
-        }
+        $playGroups = $broadcast->getGroups()->toArray();
         $commonPlayGroups = array_intersect($playGroups, $userGroups);
 
         return $commonPlayGroups;
