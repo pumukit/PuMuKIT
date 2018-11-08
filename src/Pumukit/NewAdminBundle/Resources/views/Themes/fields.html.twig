@@ -240,42 +240,51 @@
 
 
 {# Pumukit2 Widgets #}
-
-{% block texti18n_widget -%}
+{% block texti18nadvance_widget -%}
     {%- if form.vars.locales|length == 1%}
         {% set locale = form.vars.locales[0] %}
-         <div class="input-group">
+        <div class="input-group">
             <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            {% if form.vars.id in ['pumukitnewadmin_series_i18n_keyword','pumukitnewadmin_mms_meta_i18n_keyword','pumukitnewadmin_mmtemplate_meta_i18n_keyword'] %}
-                <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">Copy</span>
-            {% endif %}
-         </div>
+            <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">
+                <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
+            </span>
+        </div>
     {% else %}
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                {% if form.vars.id in ['pumukitnewadmin_series_i18n_keyword','pumukitnewadmin_mms_meta_i18n_keyword','pumukitnewadmin_mmtemplate_meta_i18n_keyword'] %}
-                    <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>&nbsp;
-                    <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">Copy</span>
-                {% else %}
-                    <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
-                {% endif %}
+                <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>&nbsp;
+                <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">
+                    <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
+                </span>
             </div>
         {% endfor -%}
     {% endif -%}
-    {% if form.vars.id in ['pumukitnewadmin_series_i18n_keyword','pumukitnewadmin_mms_meta_i18n_keyword','pumukitnewadmin_mmtemplate_meta_i18n_keyword'] %}
-        <script>
-            $('.copy-button').on('click', function(event) {
-                var id = $(this).data('copy');
-                var input = document.getElementById(id);
-                var originalStyle = input.style.display;
-                input.style.display = 'block';
-                input.select();
-                document.execCommand("copy");
-                input.style.display = originalStyle;
-            });
-        </script>
-    {% endif %}
+    <script>
+        $('.copy-button').on('click', function(event) {
+            var id = $(this).data('copy');
+            var input = document.getElementById(id);
+            var originalStyle = input.style.display;
+            input.style.display = 'block';
+            input.select();
+            document.execCommand("copy");
+            input.style.display = originalStyle;
+        });
+    </script>
+{% endblock texti18nadvance_widget %}
+
+{% block texti18n_widget -%}
+    {%- if form.vars.locales|length == 1%}
+        {% set locale = form.vars.locales[0] %}
+        <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
+    {% else %}
+        {%- for locale in form.vars.locales %}
+            <div class="input-group">
+                <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
+                <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
+            </div>
+        {% endfor -%}
+    {% endif -%}
 {%- endblock texti18n_widget %}
 
 {% block textareai18n_widget -%}

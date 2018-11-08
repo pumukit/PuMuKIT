@@ -17,6 +17,10 @@
           <argument>%pumukit2.locales%</argument>
       <tag name="form.type" alias="texti18n" />
     </service>
+    <service id="form.type.texti18nadvance" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType">
+          <argument>%pumukit2.locales%</argument>
+      <tag name="form.type" alias="texti18nadvance" />
+    </service>
 
     <service id="form.type.textareai18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType">
           <argument>%pumukit2.locales%</argument>
