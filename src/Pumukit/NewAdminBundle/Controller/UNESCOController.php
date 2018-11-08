@@ -154,7 +154,7 @@ class UNESCOController extends Controller implements NewAdminController
             $element_sort = $session->get('admin/unesco/element_sort');
             $sortType = $session->get('admin/unesco/type');
 
-            if ($sortType == 'score') {
+            if ('score' == $sortType) {
                 $multimediaObjects->sortMeta('score', 'textScore');
             } else {
                 $multimediaObjects->sort($element_sort, $sortType);
@@ -295,10 +295,11 @@ class UNESCOController extends Controller implements NewAdminController
                             $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.preg_quote($field).'.*/i');
                         }
                     }
-                } elseif (in_array(
-                    $key,
-                    array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate')
-                )) {
+                } elseif ('group' === $key) {
+                    if ('all' !== $value) {
+                        $newCriteria['groups'] = new \MongoId($value);
+                    }
+                } elseif (in_array($key, array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate'))) {
                     if ('initPublicDate' === $key && !empty($value)) {
                         $newCriteria['public_date_init'] = $value;
                     } elseif ('finishPublicDate' === $key && !empty($value)) {
@@ -308,6 +309,8 @@ class UNESCOController extends Controller implements NewAdminController
                     } elseif ('finishRecordDate' === $key && !empty($value)) {
                         $newCriteria['record_date_finish'] = $value;
                     }
+                } elseif ('originalName' === $key && !empty($value)) {
+                    $newCriteria['tracks.originalName'] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 } elseif (!empty($value)) {
                     $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
                 }
@@ -516,9 +519,12 @@ class UNESCOController extends Controller implements NewAdminController
 
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
 
+        $groups = $this->getAllGroups();
+
         return array(
             //'form' => $form->createView(),
             'disable_pudenew' => $disablePudenew,
+            'groups' => $groups,
             'genre' => $aGenre,
             'roles' => $roles,
             'statusPub' => $statusPub,

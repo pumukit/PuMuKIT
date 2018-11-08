@@ -121,12 +121,20 @@ class TrackController extends Controller implements NewAdminController
      */
     public function infoAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod('PUCHWEBTV') && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
 
+        $job = null;
+        if ($track->getPath()) {
+            $job = $dm->getRepository('PumukitEncoderBundle:Job')->findOneBy(array('path_end' => $track->getPath()));
+        }
+
         return array(
             'track' => $track,
+            'job' => $job,
             'mm' => $multimediaObject,
             'is_playable' => $isPlayable,
             'is_published' => $isPublished,

@@ -94,8 +94,10 @@
 
         <service id="pumukitschema.multimedia_object_voter" class="Pumukit\SchemaBundle\Services\MultimediaObjectVoter">
             <argument type="service" id="pumukitschema.multimedia_object"/>
+            <argument type="service" id="pumukitschema.embeddedbroadcast" />
+            <argument type="service" id="request_stack" />
             <tag name="security.voter" />
-        </service>        
+        </service>
 
         <service id="pumukitschema.sorted_multimedia_object" class="Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>

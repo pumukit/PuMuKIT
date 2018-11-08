@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MultimediaObjectVoter extends Voter
 {
@@ -14,10 +15,14 @@ class MultimediaObjectVoter extends Voter
     const PLAY = 'play';
 
     private $mmobjService;
+    private $embeddedBroadcastService;
+    private $requestStack;
 
-    public function __construct(MultimediaObjectService $mmobjService)
+    public function __construct(MultimediaObjectService $mmobjService, EmbeddedBroadcastService $embeddedBroadcastService, RequestStack $requestStack)
     {
         $this->mmobjService = $mmobjService;
+        $this->embeddedBroadcastService = $embeddedBroadcastService;
+        $this->requestStack = $requestStack;
     }
 
     protected function supports($attribute, $subject)
@@ -67,6 +72,12 @@ class MultimediaObjectVoter extends Voter
         // Private play
         if ($this->canEdit($multimediaObject, $user)) {
             return true;
+        }
+
+        // Test broadcast
+        $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
+        if (!$this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password)) {
+            return false;
         }
 
         // Public play

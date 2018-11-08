@@ -1,152 +1,191 @@
 {% extends 'PumukitWizardBundle:Default:index.html.twig' %}
 {% block wizard_body %}
-{% render(controller('PumukitWizardBundle:Default:steps', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) %}
-<div class="well">
-  <form id="pumukitwizard_track_form"
-        enctype="multipart/form-data" target="iframeUpload"
-        action="{{ path('pumukitwizard_default_upload') }}" method="POST">
-    <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
-    {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
-    <fieldset class="well">
-      <legend hidden>{% trans %}File{% endtrans %}</legend>
-      <div class="col-md-10">
-        {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') or is_granted('ROLE_SUPER_ADMIN')  %}
-        <div class="form-group" id="pumukitwizard_track_profile">
-          <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
-          {% for key, profile in master_profiles %}
-              {% if profile['wizard'] == true %}
-                <div class="radio">
-                  <label><input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>{{ key }}</label>
+    {% render(controller('PumukitWizardBundle:Default:steps', {'step': 3, 'option': form_data.type.option, 'show_series': show_series, 'same_series': same_series})) %}
+    <div class="well">
+        <form id="pumukitwizard_track_form"
+              enctype="multipart/form-data" target="iframeUpload"
+              action="{{ path('pumukitwizard_default_upload') }}" method="POST">
+            <iframe name="iframeUpload" style="display:none" src="" title="{% trans %}Upload file{% endtrans %}"></iframe>
+            {% include 'PumukitWizardBundle:Default:hidden.html.twig' with {'step': 'track'} %}
+            <fieldset class="well">
+                <legend hidden>{% trans %}File{% endtrans %}</legend>
+                <div class="col-md-10">
+                    {% if status is not empty %}
+                        <div class="form-group" id="pumukitwizard_status">
+                            <label for="pumukitwizard_status" class="control-label">{% trans %}Status{% endtrans %}</label>
+                            <select id="pumukitwizard_status" name="pumukitwizard_form_data[multimediaobject][status]" class="form-control">
+                                {% for key, value in status %}
+                                    <option value="{{ key }}" {% if key == statusSelected %}selected{% endif %}>{{ value|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                    {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') or is_granted('ROLE_SUPER_ADMIN') %}
+                        <div class="form-group" id="pumukitwizard_track_profile">
+                            <label for="pumukitwizard_track_profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
+                            {% for key, profile in master_profiles %}
+                                {% if profile['wizard'] == true %}
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="pumukitwizard_form_data[track][profile]" id="pumukitwizard_track_profile_{{ key }}" value="{{ key }}" {{ (loop.first)?'checked':'' }}>
+                                            {{ key }}
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if not is_naked() %}
+                        <div class="form-group" id="pumukitwizard_track_pubchannel">
+                            <label for="pumukitwizard_track_pubchannel" class="control-label">
+                                {% trans %}Publication Channels{% endtrans %}:
+                            </label>
+                            {% for pub in pub_channels if not pub.getProperty('modal_path') %}
+                                {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper) %}
+                                    <div style="color: grey" class="checkbox">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %} />
+                                            {{ pub.getTitle() }}
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
+                                                   id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
+                                                   class="pub_channel_input_checkbox"
+                                                   {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %}
+                                            />
+                                            {{ pub.getTitle() }}
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PRIORITY') or is_granted('ROLE_SUPER_ADMIN') %}
+                        <div class="form-group" id="pumukitwizard_track_priority">
+                            <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>
+                                    {% trans %}Low-Priority{% endtrans %}
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>
+                                    {% trans %}Normal-Priority{% endtrans %}
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>
+                                    {% trans %}High-Priority{% endtrans %}
+                                </label>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-group" id="pumukitwizard_new_track_language">
+                        <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
+                        <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
+                            {% for locale, language in languages %}
+                                <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':'' }}>{{ language }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+                        <div class="form-group">
+                            <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
+                            {% if 'single' == form_data.type.option %}
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                        {% trans %}Inbox on server{% endtrans %}
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
+                                        {% trans %}Local hard drive{% endtrans %}
+                                    </label>
+                                </div>
+                            {% elseif 'multiple' == form_data.type.option %}
+                                <div class="radio">
+                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/>
+                                        {% trans %}Inbox directory on server{% endtrans %}
+                                    </label>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
+                    {% endif %}
+                    {% if 'single' == form_data.type.option %}
+                        <div class="form-group" id="pumukitwizard_track_file">
+                            <label for="url" id="pumukitwizard_track_file_label" class="control-label">
+                                {% trans %}Audio/video file{% endtrans %}:
+                            </label>
+                            <div class="input-group">
+                                <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" aria-labelledby="pumukitwizard_track_file_label">
+                                <span id="file_upload_progress" style="color:blue; display:none;">
+                                    {% trans %}Progress{% endtrans %}...
+                                </span>
+                            </div>
+                            <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
+                                <strong>
+                                    <i class="mdi-action-info"></i>
+                                </strong>
+                                {% trans with {'%max_filesize%': php_upload_max_filesize()} %}Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.{% endtrans %}
+                            </div>
+                        </div>
+                        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+                            <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
+                                {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
+                            </div>
+                        {% endif %}
+                    {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+                        <div class="form-group" id="pumukitwizard_track_directory">
+                            {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
+                        </div>
+                    {% endif %}
+                    <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
                 </div>
-              {% endif %}
-          {% endfor %}
-        </div>
-        {% endif %}
-        {% if not is_naked() %}
-        <div class="form-group" id="pumukitwizard_track_pubchannel">
-          <label for="pumukitwizard_track_pubchannel" class="control-label">{% trans %}Publication Channels{% endtrans %}:</label>
-          {% for pub in pub_channels if not pub.getProperty('modal_path') %}
-          {% if not pub.getDisplay() or is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper) %}
-          <div style="color: grey" class="checkbox">
-            <label>
-              <input type="checkbox"
-                     disabled="disabled"
-                     {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %}
-                     />  {{ pub.getTitle() }}
-            </label>
-          </div>
-          {% else %}
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"
-                     name="pumukitwizard_form_data[track][pubchannel][{{ pub.cod }}]"
-                     id="pumukitwizard_track_pubchannel_{{ pub.cod }}"
-                     class="pub_channel_input_checkbox"
-                     {% if is_granted('ROLE_TAG_DEFAULT_' ~ pub.cod|upper) %}checked="checked"{% endif %}
-                     />
-              {{ pub.getTitle() }}
-            </label>
-          </div>
-          {% endif %}
-          {% endfor %}
-        </div>
-        {% endif %}
-          {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PRIORITY') or is_granted('ROLE_SUPER_ADMIN') %}
-        <div class="form-group" id="pumukitwizard_track_priority">
-          <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>{% trans %}Low-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>{% trans %}Normal-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>{% trans %}High-Priority{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          </div>
-        </div>
-        {% endif %}
-        <div class="form-group" id="pumukitwizard_new_track_language">
-          <label for="pumukitwizard_track_language" class="control-label">{% trans %}Video/Audio language{% endtrans %}</label>
-          <select id="pumukitwizard_track_language" name="pumukitwizard_form_data[track][language]" class="form-control">
-            {% for locale, language in languages %}
-            <option value="{{ locale }}" {{ (locale == app.request.getLocale())?'selected="selected"':''}}>{{ language }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-        <div class="form-group">
-          <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
-          {% if 'single' == form_data.type.option %}
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/> {% trans %}Inbox on server{% endtrans %}</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/> {% trans %}Local hard drive{% endtrans %}</label>
-          </div>
-          {% elseif 'multiple' == form_data.type.option %}
-          <div class="radio">
-            <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/> {% trans %}Inbox directory on server{% endtrans %}</label>
-          </div>
-          {% endif %}
-        </div>
-        {% else %}
-        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
-        {% endif %}
-        {% if 'single' == form_data.type.option %}
-        <div class="form-group" id="pumukitwizard_track_file">
-          <label for="url" id="pumukitwizard_track_file_label" class="control-label">{% trans %}Audio/video file{% endtrans %}:</label>
-          <div class="input-group">
-            <input type="file" name="resource" id="resource" value="" size="70" accept="audio/*,video/mp4,video/x-m4v,video/*" aria-labelledby="pumukitwizard_track_file_label">
-            <span id="file_upload_progress" style="color:blue; display:none;">{% trans %}Progress{% endtrans %}...</span>
-          </div>
-          <div class="alert-dismissible alert-danger" style="margin: 20px 0px; padding: 15px;">
-            <strong>
-              <i class="mdi-action-info"></i>
-            </strong>
-            {% trans with {'%max_filesize%': php_upload_max_filesize()} %}Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.{% endtrans %}
-          </div>
-        </div>
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-        <div class="form-group" id="pumukitwizard_track_inbox" style="display: none">
-          {{ render(controller('PumukitNewAdminBundle:Inbox:Form')) }}
-        </div>
-        {% endif %}
-        {% elseif ('multiple' == form_data.type.option) and app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-        <div class="form-group" id="pumukitwizard_track_directory">
-          {{ render(controller('PumukitNewAdminBundle:Inbox:Form', {'onlyDir': true})) }}
-        </div>
-        {% endif %}
-        <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
-      </div>
-    </fieldset>
-    <div class="row">
-      <div class="col-md-4">
-          {% spaceless %}
-          {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
-          <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-          {% else %}
-          <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
-          {% endif %}
-          {% endspaceless %}
-      </div>
-      <div class="col-md-8">
-        <div class="text-right">
-          <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">&laquo; {% trans %}Back{% endtrans %}</button>
-          <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">{% trans %}Next{% endtrans %} &raquo;</button>
-        </div>
-      </div>
+            </fieldset>
+            <div class="row">
+                <div class="col-md-4">
+                    {% spaceless %}
+                        {% if same_series and form_data.series.id is defined and form_data.series.id is not null %}
+                            <a href="{{ path('pumukitnewadmin_mms_index', {'id': form_data.series.id}) }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                        {% else %}
+                            <a href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</a>
+                        {% endif %}
+                    {% endspaceless %}
+                </div>
+                <div class="col-md-8">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-default btn-raised pumukitwizard-btn-back">
+                            &laquo; {% trans %}Back{% endtrans %}
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-raised" id="pumukitwizard_track_next_button">
+                            {% trans %}Next{% endtrans %}
+                            &raquo;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-  </form>
-</div>
 
-<script type="text/javascript">
-{# USED to integrate with Moodle#}
-(function(){
-  var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled');
-  if (aux) {
-    $('#pumukitwizard_track_pubchannel_'+ aux).prop('checked', true)
-  }
-})();
-</script>
+    <script type="text/javascript">
+        {# USED to integrate with Moodle#}
+        (function () {
+            var aux = $('#naked_backoffice_pubchannel_default_enabled').data('enabled');
+            if (aux) {
+                $('#pumukitwizard_track_pubchannel_' + aux).prop('checked', true)
+            }
+        })();
+    </script>
 
 {% endblock wizard_body %}
