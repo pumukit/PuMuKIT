@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -15,13 +16,11 @@ class MultimediaObjectVoter extends Voter
     const PLAY = 'play';
 
     private $mmobjService;
-    private $embeddedBroadcastService;
     private $requestStack;
 
-    public function __construct(MultimediaObjectService $mmobjService, EmbeddedBroadcastService $embeddedBroadcastService, RequestStack $requestStack)
+    public function __construct(MultimediaObjectService $mmobjService, RequestStack $requestStack)
     {
         $this->mmobjService = $mmobjService;
-        $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->requestStack = $requestStack;
     }
 
@@ -54,7 +53,7 @@ class MultimediaObjectVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
-    protected function canEdit($multimediaObject, $user = null)
+    protected function canEdit(MultimediaObject $multimediaObject, $user = null)
     {
         if ($user instanceof User && ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
             return true;
@@ -67,7 +66,7 @@ class MultimediaObjectVoter extends Voter
         return false;
     }
 
-    protected function canPlay($multimediaObject, $user = null)
+    protected function canPlay(MultimediaObject $multimediaObject, $user = null)
     {
         // Private play
         if ($this->canEdit($multimediaObject, $user)) {
@@ -75,9 +74,23 @@ class MultimediaObjectVoter extends Voter
         }
 
         // Test broadcast
-        $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
-        if (!$this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password)) {
-            return false;
+        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+        if ($embeddedBroadcast) {
+            if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
+                if (!$this->isViewerOrWithScope($user)) {
+                    return false;
+                }
+            }
+            if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
+                if (!$this->isViewerOrWithScope($user) || $this->isUserRelatedToBroadcast($multimediaObject, $user)) {
+                    return false;
+                }
+            }
+            /* TODO
+            if (EmbeddedBroadcast::TYPE_PASSWORD === $embeddedBroadcast->getType()) {
+                $password = $this->requestStack->getMasterRequest()->get('broadcast_password');
+            }
+            */
         }
 
         // Public play
@@ -91,5 +104,27 @@ class MultimediaObjectVoter extends Voter
         }
 
         return false;
+    }
+
+    protected function isViewerOrWithScope($user = null)
+    {
+        return $user && ($user->hasRole(PermissionProfile::SCOPE_GLOBAL) || $user->hasRole(PermissionProfile::SCOPE_PERSONAL) || $user->hasRole(PermissionProfile::SCOPE_NONE));
+    }
+
+    // Related to EmbeddedBroadcastService::isUserRelatedToMultimediaObject
+    protected function isUserRelatedToBroadcast(MultimediaObject $multimediaObject, User $user)
+    {
+        if (!$user) {
+            return false;
+        }
+        $userGroups = $user->getGroups()->toArray();
+        if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
+            $playGroups = $embeddedBroadcast->getGroups()->toArray();
+        } else {
+            $playGroups = array();
+        }
+        $commonPlayGroups = array_intersect($playGroups, $userGroups);
+
+        return $commonPlayGroups;
     }
 }
