@@ -968,7 +968,7 @@ class MultimediaObject
     /**
      * Get embeddedBroadcast.
      *
-     * @return EmbeddedBroadcast
+     * @return EmbeddedBroadcast|null
      */
     public function getEmbeddedBroadcast()
     {
