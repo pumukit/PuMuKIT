@@ -2,11 +2,11 @@ version: '3.4'
 
 services:
   php:
-    image: teltek/pumukit2
+    image: teltek/pumukit
     build:
       context: ./
       cache_from:
-        - teltek/pumukit2
+        - teltek/pumukit
         - teltek/nginx
     depends_on:
       - db
@@ -21,7 +21,7 @@ services:
     build:
       context: ./doc/docker/nginx
       cache_from:
-        - teltek/pumukit2
+        - teltek/pumukit
         - teltek/nginx
     depends_on:
       - php
