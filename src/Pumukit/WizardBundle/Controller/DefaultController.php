@@ -295,7 +295,7 @@ class DefaultController extends Controller
 
         $status = array();
         $statusSelected = false;
-        if ($this->isGranted(Permission::ACCESS_PUBLICATION_TAB)) {
+        if ($this->isGranted(Permission::ACCESS_PUBLICATION_TAB) && $this->isGranted(Permission::CHANGE_MMOBJECT_STATUS)) {
             $status = array(
                 MultimediaObject::STATUS_PUBLISHED => 'Published',
                 MultimediaObject::STATUS_HIDDEN => 'Hidden',
