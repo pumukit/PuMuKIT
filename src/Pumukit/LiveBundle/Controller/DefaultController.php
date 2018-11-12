@@ -189,6 +189,23 @@ class DefaultController extends Controller
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
+        if (0 === count($nowSessions) and 0 === count($nextSessions)) {
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+                array(
+                    'series' => new \MongoId($multimediaObject->getSeries()->getId()),
+                    'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
+                    'islive' => false,
+                )
+            );
+            if ($multimediaObject) {
+                return $this->redirectToRoute(
+                    'pumukit_playlistplayer_index',
+                    array('id' => $multimediaObject->getSeries()->getId())
+                );
+            }
+        }
+
         return array(
             'multimediaObject' => $multimediaObject,
             'firstNextSession' => $firstNextSession,
