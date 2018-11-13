@@ -30,7 +30,7 @@
     var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_text_color(event) }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
 
     var image = image + width;
-    var text = "{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans) }}";
+    var text = '{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans)|raw }}';
     var finalText = '<br/><span id=\"warning\"></span></p>';
 
     var background = image + style + text + finalText;
@@ -40,7 +40,7 @@
 
     if(nextSessionsCount == 0 && nowSessionsCount == 0) {
 
-        var text = "{{ event.getAlreadyHeldMessage()|default('The event has already been held'|trans) }}";
+        var text = '{{ event.getAlreadyHeldMessage()|default('The event has already been held'|trans)|raw }}';
         background = image + style + text + finalText;
         $("#directo-{{ id }}").html(background);
 
