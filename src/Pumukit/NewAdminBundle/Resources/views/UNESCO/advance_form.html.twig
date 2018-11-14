@@ -206,10 +206,10 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
-                <label for="group" class="col-md-3 control-label">{% trans %}Groups{% endtrans %}</label>
+                <label for="group" class="col-md-3 control-label">{% trans %}Group{% endtrans %}</label>
                 <div class="col-md-9">
                     <select id="group" name="criteria[group]" class="form-control">
-                        <option value="all">{% trans %}All{% endtrans %}</option>
+                        <option value="all">{% trans %}Without filter{% endtrans %}</option>
                         {% for key, group in groups %}
                             <option value="{{ group.getId() }}"
                                     {% if app.request.session.get('UNESCO/form')['group'] is defined and
