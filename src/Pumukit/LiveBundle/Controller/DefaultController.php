@@ -28,7 +28,7 @@ class DefaultController extends Controller
     {
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live_id', array('id' => $live->getId()));
 
-        return $this->iframeAction($live, $request, false);
+        return $this->doLive($live, $request, false);
     }
 
     /**
@@ -42,6 +42,11 @@ class DefaultController extends Controller
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function iframeAction(Live $live, Request $request, $iframe = true)
+    {
+        return $this->doLive($live, $request, true);
+    }
+
+    protected function doLive(Live $live, Request $request, $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array(
@@ -189,7 +194,7 @@ class DefaultController extends Controller
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
-        if (0 === count($nowSessions) and 0 === count($nextSessions)) {
+        if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
             $dm = $this->get('doctrine_mongodb')->getManager();
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
                 array(
