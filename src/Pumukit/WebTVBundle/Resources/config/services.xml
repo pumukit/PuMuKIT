@@ -19,7 +19,7 @@
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router.request_context" on-invalid="ignore" />
           <argument>%pumukit_web_tv.default_pic%</argument>
-          <argument type="service" id="pumukitschema.material" />
+          <argument type="service" id="pumukitschema.caption" />
           <argument type="service" id="pumukitschema.pic" />
           <argument type="service" id="pumukit_web_tv.link_service" />
           <argument type="service" id="pumukitschema.mmsduration" />
