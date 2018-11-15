@@ -1,145 +1,17 @@
 {% set id = random() %}
 {% set live = event.live %}
 
-<div id="jwplayererror-{{ id }}" style="width:100%; margin: 0 auto; color:red;"></div>
-
-{% if isIE and versionIE < 9.0 %}
-    <div style="width:100%; margin: 0 auto; color:red;">
-        {% trans %}JWPlayer does not support your browser version{% endtrans %} {{ isIE }}.
-        {% trans %}Please use 9.0 or higher version or use another browser.{% endtrans %}
-    </div>
-{% else %}
-    <div>
-        <div id="showFlashMessage-{{ id }}" style="background: red; padding: 10px; font-size: 1.5em; font-weight: bold; border: 5px #990000 solid; margin-bottom: 10px; color: #222222; width: {{ width is defined ? width : '100%' }}" hidden>
-            <img alt="{% trans %}Obsolete browser{% endtrans %}" src="{{ asset('bundles/pumukitlive/images/obsolete.png') }}" />
-            <span>
-                {% trans %}The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.{% endtrans %}
-                <a target="_blank" style="color: white; text-decoration: underline; padding: 10px;" href="https://get.adobe.com/flashplayer/">https://get.adobe.com/flashplayer/</a>
-            </span>
-        </div>
-        <div id="directo-{{ id }}" style="width:100%; margin: 0 auto; position: relative;"></div>
-    </div>
-
-    <div id="countdownClock" hidden></div>
-{% endif %}
+{% include "PumukitLiveBundle:Advance:player.html.twig" %}
 
 <script type="text/javascript">
+    {% include "PumukitLiveBundle:Advance/Sessions:common.js.twig" %}
 
-    var image = "<img src=\"{{ asset(poster(event)) }}\"";
-    var width = 'width="100%">';
-    var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_text_color(event) }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
-
-    var image = image + width;
-    var text = '{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans)|raw }}';
-    var finalText = '<br/><span id=\"warning\"></span></p>';
-
-    var background = image + style + text + finalText;
-
-    var nextSessionsCount = "{{ nextSessions|length }}";
-    var nowSessionsCount = "{{ nowSessions|length }}";
-
-    if(nextSessionsCount == 0 && nowSessionsCount == 0) {
-
-        var text = '{{ event.getAlreadyHeldMessage()|default('The event has already been held'|trans)|raw }}';
-        background = image + style + text + finalText;
-        $("#directo-{{ id }}").html(background);
-
-        var date = new Date();
-        $('#warning').countdown(date.setMinutes(date.getMinutes() + 1)).on('finish.countdown', function() {
-            location.reload();
-        });
-
-    } else if (nextSessionsCount > 0 && nowSessionsCount == 0) {
-        var nextSessionStarts = "{% if nextSessions is not empty %}{{ firstNextSession }}{% endif %}";
-        var date = new Date(parseInt(nextSessionStarts));
-        var secondsToEvent = {% if secondsToEvent is not null %}{{ secondsToEvent }}{% else %}0{% endif %};
-        if(secondsToEvent) {
-            var rand = 1000*Math.floor((Math.random()*60));
-            var date = new Date().getTime() + secondsToEvent + rand;
-            date = new Date(date);
-        }
-
-        if(date < new Date()) {
-            location.reload();
-        }
-
-        $("#directo-{{ id }}").html(background);
-        $("#warning").countdown(date, function(event) {
-            $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
-        }).on('finish.countdown', function(event) {
-            location.reload();
-        });
+    if(nextSessionsCount === 0 && nowSessionsCount === 0) {
+        {% include "PumukitLiveBundle:Advance/Sessions:withoutSessions.js.twig" %}
+    } else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
+        {% include "PumukitLiveBundle:Advance/Sessions:futureSessions.js.twig" %}
     } else if (nowSessionsCount > 0) {
-        var nowSessionsEnds = "{% if nowSessions is not empty %}{{ firstNowSessionEnds }}{% endif %}";
-        date = new Date(parseInt(nowSessionsEnds));
-
-        var secondsToEventEnds = {% if firstNowSessionDuration is defined %}{{ firstNowSessionDuration }}{% else %}0{% endif %};
-        if(secondsToEventEnds) {
-            var date = new Date().getTime() + secondsToEventEnds;
-            date = new Date(date);
-        }
-
-        $("#countdownClock").countdown(date , function(event) {
-            $(this).text(event.strftime('%D ' + "{% trans %}days{% endtrans %}" + ' %-H:%M:%S'));
-        }).on('finish.countdown', function(event) {
-            location.reload();
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var isMobile = "{{ mobile_device ? 'yes':'no' }}";
-            var hasFlash = false;
-            try {
-                hasFlash = Boolean(new ActiveXObject('ShockwaveFlash.ShockwaveFlash'));
-            } catch (exception) {
-                hasFlash = ('undefined' != typeof navigator.mimeTypes['application/x-shockwave-flash']);
-            }
-            if ((hasFlash && ('no' === isMobile)) || ('yes' === isMobile)) {
-                {% if height is defined %}
-                var height = "{{ height }}";
-                {% endif %}
-            } else {
-                {% if height is defined %}
-                var height = "{{ height * 0.75 }}";
-                {% endif %}
-                document.getElementById('showFlashMessage-{{ id }}').style.display = 'table';
-            }
-            var livePlayerInstance = jwplayer("directo-{{ id }}").setup({
-                {% if live is defined and live and event.url is empty %}
-                    {% if live.broadcasting %}
-                        {% if mobile_device %}
-                            file: "{{ generate_hls_url(live) }}",
-                        {% else %}
-                            file: "{{ live.url }}/{{ live.sourcename }}",
-                        {% endif %}
-                    {% else %}
-                        playlist: "{{ path('pumukit_live_playlist_id', { 'id': live.id }) }}",
-                    {% endif %}
-                {% elseif event.url is defined and event.url is not empty %}
-                    file: "{{ event.url }}",
-                {% endif %}
-                {% if isIE and versionIE == 10 %}
-                    autostart: 'true',
-                {% else %}
-                    autostart: true,
-                {% endif %}
-                width: "{{ width is defined ? width : '100%' }}",
-                {% if height is defined %}
-                    height: height,
-                {% endif %}
-                {% if controlbar is defined %}
-                    controlbar: "{{ controlbar }}",
-                {% endif %}
-                {% if stretching is defined %}
-                    stretching: "{{ stretching }}",
-                {% endif %}
-                {% if aspectratio is defined %}
-                    aspectratio: "{{ aspectratio }}",
-                {% endif %}
-                logo: {hide: true},
-                analytics: {enabled: false},
-                androidhls: true
-            });
-        });
+        {% include "PumukitLiveBundle:Advance/Sessions:nowSessions.js.twig" %}
+        {% include "PumukitLiveBundle:Advance:player.js.twig" %}
     }
 </script>
