@@ -205,12 +205,12 @@ class DefaultController extends Controller
                 ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC)
                 ->field('series')->equals(new \MongoId($multimediaObject->getSeries()->getId()))
                 ->field('tracks.tags')->equals('display')
-                ->getQuery()->execute();
+                ->getQuery()->execute()->getSingleResult();
 
-            if ($multimediaObjectsPlaylist->current()) {
+            if ($multimediaObjectsPlaylist) {
                 return $this->redirectToRoute(
                     'pumukit_playlistplayer_index',
-                    array('id' => $multimediaObjectsPlaylist->current()->getSeries()->getId())
+                    array('id' => $multimediaObjectsPlaylist->getSeries()->getId())
                 );
             }
         }
