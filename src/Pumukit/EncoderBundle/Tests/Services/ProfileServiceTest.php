@@ -96,6 +96,7 @@ class ProfileServiceTest extends WebTestCase
     public function testInvalidTargetPath()
     {
         $profileService = new ProfileService($this->getDemoProfilesWithNonExistingPath(), $this->dm);
+        $profileService->validateProfilesDirOut();
     }
 
     private function getDemoProfiles()

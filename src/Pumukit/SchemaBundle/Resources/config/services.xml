@@ -189,6 +189,9 @@
             <argument>%pumukit2.delete_on_disk%</argument>
         </service>
 
+        <service id="pumukitschema.caption" class="Pumukit\SchemaBundle\Services\CaptionService">
+        </service>
+
         <service id="pumukitschema.track" class="Pumukit\SchemaBundle\Services\TrackService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.track_dispatcher"/>
