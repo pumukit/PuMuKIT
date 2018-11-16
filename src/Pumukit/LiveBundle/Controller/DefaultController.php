@@ -106,7 +106,11 @@ class DefaultController extends Controller
                 $multimediaObjects->next();
                 $multimediaObject = $multimediaObjects->current();
 
-                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
+                if ($multimediaObject->getDisplayTrack()) {
+                    return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
+                }
+
+                return $this->iframeEventAction($multimediaObject, $request, false);
             } elseif (count($multimediaObjects) > 1) {
                 if (!$series->isHide()) {
                     return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
