@@ -34,14 +34,13 @@ class DefaultController extends Controller
     /**
      * @param Live    $live
      * @param Request $request
-     * @param bool    $iframe
      *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitLiveBundle:Default:iframe.html.twig")
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function iframeAction(Live $live, Request $request, $iframe = true)
+    public function iframeAction(Live $live, Request $request)
     {
         return $this->doLive($live, $request, true);
     }
@@ -200,17 +199,18 @@ class DefaultController extends Controller
 
         if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
             $dm = $this->get('doctrine_mongodb')->getManager();
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
-                array(
-                    'series' => new \MongoId($multimediaObject->getSeries()->getId()),
-                    'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
-                    'islive' => false,
-                )
-            );
-            if ($multimediaObject) {
+            $multimediaObjectsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+                ->field('tags.cod')->equals('PUCHWEBTV')
+                ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC)
+                ->field('series')->equals(new \MongoId($multimediaObject->getSeries()->getId()))
+                ->field('tracks.tags')->equals('display')
+                ->getQuery()->execute()->getSingleResult();
+
+            if ($multimediaObjectsPlaylist) {
                 return $this->redirectToRoute(
                     'pumukit_playlistplayer_index',
-                    array('id' => $multimediaObject->getSeries()->getId())
+                    array('id' => $multimediaObjectsPlaylist->getSeries()->getId())
                 );
             }
         }
