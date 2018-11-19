@@ -6,7 +6,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Services\MaterialService;
+use Pumukit\SchemaBundle\Services\CaptionService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -24,17 +24,17 @@ class PumukitExtension extends \Twig_Extension
     protected $context;
 
     private $dm;
-    private $materialService;
+    private $captionService;
     private $picService;
     private $linkService;
     private $mmobjDurationService;
 
-    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, MaterialService $materialService, PicService $picService, LinkService $linkService, $mmobjDurationService)
+    public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, $mmobjDurationService)
     {
         $this->dm = $documentManager;
         $this->context = $context;
         $this->defaultPic = $defaultPic;
-        $this->materialService = $materialService;
+        $this->captionService = $captionService;
         $this->picService = $picService;
         $this->linkService = $linkService;
         $this->mmobjDurationService = $mmobjDurationService;
@@ -273,7 +273,7 @@ class PumukitExtension extends \Twig_Extension
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
-        return $this->materialService->getCaptions($multimediaObject);
+        return $this->captionService->getCaptions($multimediaObject);
     }
 
     /**

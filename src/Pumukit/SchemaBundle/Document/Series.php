@@ -272,6 +272,16 @@ class Series
     }
 
     /**
+     * True is playlist.
+     *
+     * @return bool
+     */
+    public function isPlaylist()
+    {
+        return self::TYPE_PLAYLIST === $this->type;
+    }
+
+    /**
      * Get sorting type.
      *
      * @return int

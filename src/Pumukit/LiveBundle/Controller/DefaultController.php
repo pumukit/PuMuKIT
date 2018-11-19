@@ -28,20 +28,24 @@ class DefaultController extends Controller
     {
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live_id', array('id' => $live->getId()));
 
-        return $this->iframeAction($live, $request, false);
+        return $this->doLive($live, $request, false);
     }
 
     /**
      * @param Live    $live
      * @param Request $request
-     * @param bool    $iframe
      *
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
      * @Template("PumukitLiveBundle:Default:iframe.html.twig")
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function iframeAction(Live $live, Request $request, $iframe = true)
+    public function iframeAction(Live $live, Request $request)
+    {
+        return $this->doLive($live, $request, true);
+    }
+
+    protected function doLive(Live $live, Request $request, $iframe = true)
     {
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', array(
@@ -101,7 +105,11 @@ class DefaultController extends Controller
                 $multimediaObjects->next();
                 $multimediaObject = $multimediaObjects->current();
 
-                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
+                if ($multimediaObject->getDisplayTrack()) {
+                    return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
+                }
+
+                return $this->iframeEventAction($multimediaObject, $request, false);
             } elseif (count($multimediaObjects) > 1) {
                 if (!$series->isHide()) {
                     return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
@@ -187,6 +195,24 @@ class DefaultController extends Controller
         $secondsToEvent = null;
         if (!empty($firstNextSession)) {
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
+        }
+
+        if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $multimediaObjectsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+                ->field('tags.cod')->equals('PUCHWEBTV')
+                ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC)
+                ->field('series')->equals(new \MongoId($multimediaObject->getSeries()->getId()))
+                ->field('tracks.tags')->equals('display')
+                ->getQuery()->execute()->getSingleResult();
+
+            if ($multimediaObjectsPlaylist) {
+                return $this->redirectToRoute(
+                    'pumukit_playlistplayer_index',
+                    array('id' => $multimediaObjectsPlaylist->getSeries()->getId())
+                );
+            }
         }
 
         return array(

@@ -27,7 +27,7 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                         'required' => false,
                         'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('i18n_keyword', 'texti18n',
+            ->add('i18n_keyword', 'texti18nadvance',
                   array(
                         'required' => false,
                         'attr' => array('class' => 'mmobj materialtags', 'aria-label' => $this->translator->trans('Keywords', array(), null, $this->locale)),

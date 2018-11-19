@@ -12,10 +12,16 @@
         <parameter key="pumukit2.inbox_depth">true</parameter>
     </parameters>
 
+
     <services>
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
             <argument>%pumukit2.locales%</argument>
-            <tag name="form.type" alias="texti18n"/>
+            <tag name="form.type" alias="texti18n" />
+        </service>
+
+        <service id="form.type.texti18nadvance" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType">
+            <argument>%pumukit2.locales%</argument>
+            <tag name="form.type" alias="texti18nadvance" />
         </service>
 
         <service id="form.type.textareai18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType">
