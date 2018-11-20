@@ -94,33 +94,33 @@ class DefaultController extends Controller
             $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
             return $this->iframeEventAction($multimediaObject, $request, false);
-        } else {
-            $series = $multimediaObject->getSeries();
-            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
-                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-                ->field('tags.cod')->equals('PUCHWEBTV')
-                ->field('series')->equals(new \MongoId($series->getId()))
-                ->field('tracks.tags')->equals('display')
-                ->getQuery()->execute();
-            if (1 === count($multimediaObjects)) {
-                $multimediaObjects->next();
-                $multimediaObject = $multimediaObjects->current();
+        }
 
-                if ($multimediaObject->getDisplayTrack()) {
-                    return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()));
-                }
+        $series = $multimediaObject->getSeries();
+        $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+            ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+            ->field('tags.cod')->equals('PUCHWEBTV')
+            ->field('series')->equals(new \MongoId($series->getId()))
+            ->field('tracks.tags')->equals('display');
+        $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
+        $multimediaObjects = $qb->getQuery()->execute();
 
-                return $this->iframeEventAction($multimediaObject, $request, false);
-            } elseif (count($multimediaObjects) > 1) {
-                if (!$series->isHide()) {
-                    return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
-                } else {
-                    return $this->iframeEventAction($multimediaObject, $request, false);
-                }
+        if (1 === count($multimediaObjects)) {
+            $multimediaObjects->next();
+            $mm = $multimediaObjects->current();
+
+            if ($mm->getDisplayTrack()) {
+                return $this->redirectToRoute('pumukit_webtv_multimediaobject_index', array('id' => $mm->getId()));
+            }
+        } elseif (count($multimediaObjects) > 1) {
+            if (!$series->isHide()) {
+                return $this->redirectToRoute('pumukit_webtv_series_index', array('id' => $series->getId()));
             } else {
                 return $this->iframeEventAction($multimediaObject, $request, false);
             }
         }
+
+        return $this->iframeEventAction($multimediaObject, $request, false);
     }
 
     /**
@@ -200,13 +200,13 @@ class DefaultController extends Controller
 
         if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
             $dm = $this->get('doctrine_mongodb')->getManager();
-            $multimediaObjectsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+            $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
                 ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
                 ->field('tags.cod')->equals('PUCHWEBTV')
-                ->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC)
                 ->field('series')->equals(new \MongoId($multimediaObject->getSeries()->getId()))
-                ->field('tracks.tags')->equals('display')
-                ->getQuery()->execute()->getSingleResult();
+                ->field('tracks.tags')->equals('display');
+            $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
+            $multimediaObjectsPlaylist = $qb->getQuery()->execute()->getSingleResult();
 
             if ($multimediaObjectsPlaylist) {
                 return $this->redirectToRoute(

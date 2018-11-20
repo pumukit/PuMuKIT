@@ -24,7 +24,7 @@ class PlaylistController extends BasePlaylistController
             $criteria = array(
                 'islive' => false,
                 'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
-                'tracks.tags' => 'display',
+                'tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)),
             );
             $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, array('rank' => 'asc'));
         } else {
