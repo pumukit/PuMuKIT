@@ -100,8 +100,9 @@ class DefaultController extends Controller
                 ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
                 ->field('tags.cod')->equals('PUCHWEBTV')
                 ->field('series')->equals(new \MongoId($series->getId()))
+                ->field('tracks.tags')->equals('display')
                 ->getQuery()->execute();
-            if (1 == count($multimediaObjects)) {
+            if (1 === count($multimediaObjects)) {
                 $multimediaObjects->next();
                 $multimediaObject = $multimediaObjects->current();
 
