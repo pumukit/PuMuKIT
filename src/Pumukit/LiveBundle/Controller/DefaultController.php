@@ -97,12 +97,8 @@ class DefaultController extends Controller
         }
 
         $series = $multimediaObject->getSeries();
-        $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
-            ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-            ->field('tags.cod')->equals('PUCHWEBTV')
-            ->field('series')->equals(new \MongoId($series->getId()))
-            ->field('tracks.tags')->equals('display');
-        $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
+
+        $qb = $this->getMultimediaObjects($series->getId());
         $multimediaObjects = $qb->getQuery()->execute();
 
         if (1 === count($multimediaObjects)) {
@@ -199,19 +195,13 @@ class DefaultController extends Controller
         }
 
         if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
-                ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-                ->field('tags.cod')->equals('PUCHWEBTV')
-                ->field('series')->equals(new \MongoId($multimediaObject->getSeries()->getId()))
-                ->field('tracks.tags')->equals('display');
-            $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
-            $multimediaObjectsPlaylist = $qb->getQuery()->execute()->getSingleResult();
+            $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
+            $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
 
-            if ($multimediaObjectsPlaylist) {
+            if ($multimediaObjectPlaylist) {
                 return $this->redirectToRoute(
                     'pumukit_playlistplayer_index',
-                    array('id' => $multimediaObjectsPlaylist->getSeries()->getId())
+                    array('id' => $multimediaObjectPlaylist->getSeries()->getId())
                 );
             }
         }
@@ -233,6 +223,23 @@ class DefaultController extends Controller
             'isIE' => $isIE,
             'versionIE' => $versionIE,
         );
+    }
+
+    /**
+     * @param $seriesId
+     *
+     * @return mixed
+     */
+    private function getMultimediaObjects($seriesId)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+            ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+            ->field('tags.cod')->equals('PUCHWEBTV')
+            ->field('series')->equals(new \MongoId($seriesId));
+        $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
+
+        return $qb;
     }
 
     /**
