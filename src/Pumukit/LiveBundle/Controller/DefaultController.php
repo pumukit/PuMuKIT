@@ -196,6 +196,7 @@ class DefaultController extends Controller
 
         if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
+            $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
 
             if ($multimediaObjectPlaylist) {
