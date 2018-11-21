@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -150,9 +151,10 @@ class MultimediaObjectPicService
     public function addPicMem(MultimediaObject $multimediaObject, $pic, $format = 'png')
     {
         $absCurrentDir = $this->getTargetPath($multimediaObject);
-        if (!file_exists($absCurrentDir)) {
-            mkdir($absCurrentDir);
-        }
+
+        $fs = new Filesystem();
+        $fs->mkdir($absCurrentDir);
+
         $fileName = uniqid().'.'.$format;
         $path = $absCurrentDir.'/'.$fileName;
         while (file_exists($path)) {
