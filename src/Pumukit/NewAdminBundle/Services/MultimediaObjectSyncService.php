@@ -12,18 +12,18 @@ class MultimediaObjectSyncService
     private $publishingDecisionCode = 'PUBDECISIONS';
 
     private $syncFields = array(
-        'comments' => 'Comments',
-        'copyright' => 'Copyright',
-        'description' => 'Description',
-        'groups' => 'Groups',
-        'headline' => 'Headline',
-        'keywords' => 'Keywords',
-        'license' => 'License',
-        'owners' => 'Owners',
-        'publicdate' => 'Publication Date',
         'publishingdecisions' => 'Publishing Decisions',
+        'description' => 'Description',
+        'comments' => 'Comments',
+        'keywords' => 'Keywords',
+        'copyright' => 'Copyright',
+        'license' => 'License',
+        'publicdate' => 'Publication Date',
         'recorddate' => 'Record Date',
+        'headline' => 'Headline',
         'subseries' => 'Subseries',
+        'owners' => 'Owners',
+        'groups' => 'Groups',
     );
 
     private $syncMethods = array(
