@@ -24,15 +24,13 @@
                 <div class="row">
                     {% for title, field in fields %}
                         {% if (title != 'owners' and title != 'groups') or ((title == 'owners' or title == 'groups') and modify_owners) or is_granted('ROLE_SUPER_ADMIN') %}
-                            <div class="col-md-2 text-right">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="metadata_{{ title }}_all"/>
+                            <div class="col-md-12">
+                                <div class="checkbox" style="display:table-row">
+                                    <label for="metadata_{{ title }}_all">
+                                        <input id="metadata_{{ title }}_all" type="checkbox" name="metadata_{{ title }}_all"/>
+                                        {{ field|trans }}
                                     </label>
                                 </div>
-                            </div>
-                            <div class="col-md-10">
-                                {{ field|trans }}
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -45,15 +43,13 @@
                 <hr/>
                 <div class="row">
                     {% for tag in tags if tag.cod != 'ROOT' %}
-                        <div class="col-md-2 text-right">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="metadata_tag_{{ tag.getId() }}"/>
+                        <div class="col-md-12">
+                            <div class="checkbox" style="display:table-row">
+                                <label for="metadata_tag_{{ tag.getId() }}">
+                                    <input id="metadata_tag_{{ tag.getId() }}" type="checkbox" name="metadata_tag_{{ tag.getId() }}"/>
+                                    {{ tag.getTitle() }}
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-10">
-                            {{ tag.getTitle() }}
                         </div>
                     {% endfor %}
                 </div>
@@ -65,15 +61,13 @@
                 <hr/>
                 <div class="row">
                     {% for role in roles if role.cod != 'owner' %}
-                        <div class="col-md-2 text-right">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="metadata_role_{{ role.getId() }}"/>
+                        <div class="col-md-12">
+                            <div class="checkbox" style="display:table-row">
+                                <label for="metadata_role_{{ role.getId() }}">
+                                    <input id="metadata_role_{{ role.getId() }}" type="checkbox" name="metadata_role_{{ role.getId() }}"/>
+                                    {{ role.getName() }}
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-10">
-                            {{ role.getName() }}
                         </div>
                     {% endfor %}
                 </div>
