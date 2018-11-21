@@ -57,7 +57,7 @@ class APIController extends Controller implements NewAdminController
         try {
             $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
-            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $error = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
             $data = $serializer->serialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
@@ -122,7 +122,7 @@ class APIController extends Controller implements NewAdminController
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
-            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $error = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
             $data = $serializer->serialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);
@@ -185,7 +185,7 @@ class APIController extends Controller implements NewAdminController
         try {
             $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
         } catch (\Exception $e) {
-            $data = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
+            $error = array('error' => sprintf('Invalid criteria (%s)', $e->getMessage()));
             $data = $serializer->serialize($error, $request->getRequestFormat());
 
             return new Response($data, 400);

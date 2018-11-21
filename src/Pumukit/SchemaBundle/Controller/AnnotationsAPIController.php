@@ -212,6 +212,8 @@ class AnnotationsAPIController extends Controller
      */
     public function deleteAction(Annotation $annotation, Request $request)
     {
+        $serializer = $this->get('serializer');
+
         $this->get('doctrine_mongodb.odm.document_manager')->remove($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
 

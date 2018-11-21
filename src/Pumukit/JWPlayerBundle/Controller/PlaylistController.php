@@ -2,6 +2,7 @@
 
 namespace Pumukit\JWPlayerBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
@@ -18,7 +19,13 @@ class PlaylistController extends BasePlaylistController
     public function indexAction(Series $series, Request $request)
     {
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
-        $mmobjs = $playlistService->getPlaylistMmobjs($series);
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        if (!$series->isPlaylist()) {
+            $criteria = array('islive' => false, 'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC);
+            $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, array('rank' => 'asc'));
+        } else {
+            $mmobjs = $playlistService->getPlaylistMmobjs($series);
+        }
 
         return array(
             'playlist_mmobjs' => $mmobjs,

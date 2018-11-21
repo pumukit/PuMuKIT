@@ -33,6 +33,7 @@ class Permission
     const MODIFY_OWNER = 'ROLE_MODIFY_OWNER';
     const ADD_OWNER = 'ROLE_ADD_OWNER';
     const INIT_STATUS_PUBLISHED = 'ROLE_INIT_STATUS_PUBLISHED';
+    const INIT_STATUS_HIDDEN = 'ROLE_INIT_STATUS_HIDDEN';
     const SHOW_CODES = 'ROLE_SHOW_CODES';
     const ROLE_SEND_NOTIFICATION_COMPLETE = 'ROLE_SEND_NOTIFICATION_COMPLETE';
     const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
@@ -239,6 +240,13 @@ class Permission
         ),
         self::INIT_STATUS_PUBLISHED => array(
             'description' => 'Init Multimedia Objects in published status',
+            'dependencies' => array(
+                PermissionProfile::SCOPE_GLOBAL => array(),
+                PermissionProfile::SCOPE_PERSONAL => array(),
+            ),
+        ),
+        self::INIT_STATUS_HIDDEN => array(
+            'description' => 'Init Multimedia Objects in hidden status',
             'dependencies' => array(
                 PermissionProfile::SCOPE_GLOBAL => array(),
                 PermissionProfile::SCOPE_PERSONAL => array(),

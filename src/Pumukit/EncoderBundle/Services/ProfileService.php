@@ -26,8 +26,6 @@ class ProfileService
         $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profiles = $profiles;
         $this->default_profiles = $default_profiles;
-
-        $this->validateProfilesDirOut();
     }
 
     /**
@@ -143,10 +141,19 @@ class ProfileService
 
     /**
      * Validate Profiles directories out.
+     * Note BC. @deprecated in next version.
      */
-    private function validateProfilesDirOut()
+    public function validateProfilesDirOut()
     {
-        foreach ($this->profiles as $profile) {
+        static::validateProfilesDir($this->profiles);
+    }
+
+    /**
+     * Validate Profiles directories out.
+     */
+    public static function validateProfilesDir(array $profiles)
+    {
+        foreach ($profiles as $profile) {
             $dirOut = realpath($profile['streamserver']['dir_out']);
             if (!$dirOut) {
                 throw new \InvalidArgumentException("The path '".$profile['streamserver']['dir_out']."' for dir_out of the streamserver '".$profile['streamserver']['name']."' doesn't exist.");

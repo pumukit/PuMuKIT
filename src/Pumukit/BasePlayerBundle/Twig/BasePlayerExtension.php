@@ -37,6 +37,7 @@ class BasePlayerExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('track_url', array($this, 'generateTrackFileUrl')),
+            new \Twig_SimpleFunction('direct_track_url', array($this, 'generateDirectTrackFileUrl')),
         );
     }
 
@@ -48,8 +49,8 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
-     * @param Track $track    Track to get an url for
-     * @param bool  $absolute return absolute path
+     * @param $track
+     * @param int $reference_type
      *
      * @return string
      */
@@ -59,9 +60,22 @@ class BasePlayerExtension extends \Twig_Extension
     }
 
     /**
+     * @param $track
+     * @param $request
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function generateDirectTrackFileUrl($track, $request)
+    {
+        return $this->trackService->generateDirectTrackFileUrl($track, $request);
+    }
+
+    /**
      * @param MultimediaObject $mmobj
      *
-     * @return Track
+     * @return null|\Pumukit\SchemaBundle\Document\Track
      */
     public function getFirstPublicTrackFilter(MultimediaObject $mmobj)
     {

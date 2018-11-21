@@ -23,6 +23,13 @@ class Track extends Element
      *
      * @MongoDB\Field(type="string")
      */
+    private $originalName;
+
+    /**
+     * @var string
+     *
+     * @MongoDB\Field(type="string")
+     */
     private $acodec;
 
     /**
@@ -140,6 +147,26 @@ class Track extends Element
     public function getAcodec()
     {
         return $this->acodec;
+    }
+
+    /**
+     * Set originalName.
+     *
+     * @param string $originalName
+     */
+    public function setOriginalName($originalName)
+    {
+        $this->originalName = $originalName;
+    }
+
+    /**
+     * Get originalName.
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
     }
 
     /**

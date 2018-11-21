@@ -21,7 +21,16 @@
 {% block body_without_bar %}
 
     <div class="col-xs-12">
-        <h1 class="title-for-crumbs always-hide">{{ multimediaObject.title|default("No title"|trans) }}</h1>
+        <h1 class="title-for-crumbs always-hide">
+            {{ multimediaObject.title|default("No title"|trans) }}
+            <span class="pull-right">
+                 {% if is_granted('edit', multimediaObject) %}
+                    <a href="{{ path('pumukitnewadmin_mms_shortener', {id: multimediaObject.id})}}" title="{% trans %}Edit multimedia object{% endtrans %}" target="_blank" class="edit_button" aria-expanded="false" aria-controls="editBars" role="button">
+                        <span class="glyphicon glyphicon-pencil edit-pmk-icon"></span>
+                    </a>
+                 {% endif %}
+            </span>
+        </h1>
     </div>
     <div class="col-lg-8 col-md-7">
         <span class="hidden-sm hidden-xs"><br/></span>

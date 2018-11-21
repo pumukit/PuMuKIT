@@ -573,7 +573,7 @@ class JobService
      *
      * @throws \Exception
      */
-    public function searchError($profile, $var, $duration_in, $duration_end)
+    public function searchError($profile, $var, $durationIn, $durationEnd)
     {
         // This allows to configure a profile for videos without timestamps to be reindexed.
         if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
@@ -581,8 +581,8 @@ class JobService
         }
 
         $duration_conf = 25;
-        if (($duration_in < $duration_end - $duration_conf) || ($duration_in > $duration_end + $duration_conf)) {
-            throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $duration_in, $duration_end));
+        if (($durationIn < $durationEnd - $duration_conf) || ($durationIn > $durationEnd + $duration_conf)) {
+            throw new \Exception(sprintf('Final duration (%s) and initial duration (%s) are differents', $durationEnd, $durationIn));
         }
 
         return true;
@@ -728,7 +728,7 @@ class JobService
     {
         $multimediaObject = $this->getMultimediaObject($job);
 
-        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription());
+        return $this->createTrack($multimediaObject, $job->getPathEnd(), $job->getProfile(), $job->getLanguageId(), $job->getI18nDescription(), $job->getPathIni());
     }
 
     /**
@@ -755,7 +755,7 @@ class JobService
             throw new \Exception('Error to copy file');
         }
 
-        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description);
+        return $this->createTrack($multimediaObject, $pathEnd, $profileName, $language, $description, $pathFile);
     }
 
     /**
@@ -767,11 +767,16 @@ class JobService
      *
      * @return Track
      */
-    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array())
+    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array(), $pathFile = null)
     {
         $profile = $this->profileService->getProfile($profileName);
 
         $track = new Track();
+        if ($pathFile && $profile['master']) {
+            $pathInfo = pathinfo($pathFile, PATHINFO_BASENAME);
+            $track->setOriginalName($pathInfo);
+        }
+
         $track->addTag('profile:'.$profileName);
         if ($profile['master']) {
             $track->addTag('master');

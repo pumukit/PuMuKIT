@@ -94,8 +94,9 @@
 
         <service id="pumukitschema.multimedia_object_voter" class="Pumukit\SchemaBundle\Services\MultimediaObjectVoter">
             <argument type="service" id="pumukitschema.multimedia_object"/>
+            <argument type="service" id="request_stack" />
             <tag name="security.voter" />
-        </service>        
+        </service>
 
         <service id="pumukitschema.sorted_multimedia_object" class="Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
@@ -186,6 +187,9 @@
             <argument>%pumukit2.uploads_dir%/material</argument>
             <argument>%pumukit2.uploads_url%/material</argument>
             <argument>%pumukit2.delete_on_disk%</argument>
+        </service>
+
+        <service id="pumukitschema.caption" class="Pumukit\SchemaBundle\Services\CaptionService">
         </service>
 
         <service id="pumukitschema.track" class="Pumukit\SchemaBundle\Services\TrackService">

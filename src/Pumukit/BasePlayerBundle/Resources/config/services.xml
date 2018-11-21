@@ -8,6 +8,8 @@
         <service id="pumukit_baseplayer.trackurl" class="Pumukit\BasePlayerBundle\Services\TrackUrlService">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router" />
+          <argument>%pumukitplayer.secure_secret%</argument>
+          <argument>%pumukitplayer.secure_duration%</argument>
         </service>
 
         <service id="pumukit_baseplayer.seriesplaylist" class="Pumukit\BasePlayerBundle\Services\SeriesPlaylistService">

@@ -235,8 +235,10 @@ class FeedController extends Controller
     private function completeTracksInfo($channel, $multimediaObjects, $values, $trackType = 'video')
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $router = $this->get('router');
         $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
         $itunesUTag = $tagRepo->findOneByCod('ITUNESU');
+
         foreach ($multimediaObjects as $multimediaObject) {
             $track = $this->getPodcastTrack($multimediaObject, $trackType);
             if ($track) {
@@ -259,7 +261,10 @@ class FeedController extends Controller
                     }
                 }
 
-                $item->addChild('link', $this->getAbsoluteUrl($track->getUrl()));
+                if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+                    $link = $router->generate('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), true);
+                    $item->addChild('link', $link);
+                }
 
                 $enclosure = $item->addChild('enclosure');
                 $enclosure->addAttribute('url', $this->getAbsoluteUrl($track->getUrl()));

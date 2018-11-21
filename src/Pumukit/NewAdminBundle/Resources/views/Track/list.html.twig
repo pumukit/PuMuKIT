@@ -53,7 +53,7 @@
         </a>
       </td>
       <td>
-        {% if track.containsTag('opencast') or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
+        {% if (mm.getProperty('opencast') and track.containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
           <i class="mdi-content-block" style="color:#009587"></i>
         {% else %}
           <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"

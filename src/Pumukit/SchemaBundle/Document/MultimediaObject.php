@@ -956,6 +956,20 @@ class MultimediaObject
      *
      * @return EmbeddedBroadcast
      */
+    public function getEmbeddedBroadcastNotNull()
+    {
+        if ($this->embeddedBroadcast) {
+            return $this->embeddedBroadcast;
+        }
+
+        return new EmbeddedBroadcast();
+    }
+
+    /**
+     * Get embeddedBroadcast.
+     *
+     * @return EmbeddedBroadcast|null
+     */
     public function getEmbeddedBroadcast()
     {
         return $this->embeddedBroadcast;

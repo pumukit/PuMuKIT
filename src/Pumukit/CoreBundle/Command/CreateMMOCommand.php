@@ -20,6 +20,7 @@ class CreateMMOCommand extends ContainerAwareCommand
     private $inspectionService;
     private $factoryService;
     private $tagService;
+    private $pmk2AllLocales;
 
     private $validStatuses = array(
         'published' => MultimediaObject::STATUS_PUBLISHED,
@@ -61,6 +62,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
         $this->tagService = $this->getContainer()->get('pumukitschema.tag');
+        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -72,7 +74,7 @@ EOT
                 throw new \Exception('The status  ('.$statusText.') is not a valid. Use \'published\', \'blocked\' or \'hidden\'');
             }
 
-            $status = $this->validStatuses['$statusText'];
+            $status = $this->validStatuses[$statusText];
         }
 
         if ('IN_CLOSE_WRITE' != $input->getArgument('inotify_event')) {
@@ -126,11 +128,17 @@ EOT
 
         $series = $this->seriesRepo->findOneBy(array('title.'.$locale => $seriesTitle));
         if (!$series) {
-            $series = $this->factoryService->createSeries(null, array($locale => $seriesTitle));
+            $seriesTitleAllLocales = array($locale => $seriesTitle);
+            foreach ($this->pmk2AllLocales as $l) {
+                $seriesTitleAllLocales[$l] = $seriesTitle;
+            }
+            $series = $this->factoryService->createSeries(null, $seriesTitleAllLocales);
         }
 
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
-        $multimediaObject->setTitle($title);
+        foreach ($this->pmk2AllLocales as $l) {
+            $multimediaObject->setTitle($title, $l);
+        }
         if (null !== $status) {
             $multimediaObject->setStatus($status);
         }
