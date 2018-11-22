@@ -1,5 +1,6 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
     {% set video_url = url('pumukit_live_event_id', {id: multimediaObject.id}) %}
+    {% set video_iframe_url = url('pumukit_live_event_iframe_id', {id: multimediaObject.id}) %}
     <div class="row">
         <div class="background_id col-lg-6">
             <form class="form-horizontal">
@@ -19,6 +20,15 @@
                             <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
                             <span class="input-group-addon">
                                 <a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}">
+                                    <i class="mdi-action-exit-to-app"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Iframe:</label>
+                        <div class="col-xs-10 input-group hidden-naked">
+                            <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_iframe_url }}">
+                            <span class="input-group-addon">
+                                <a href="{{ video_iframe_url }}" target="_blank" title="{% trans %}Iframe URL{% endtrans %}">
                                     <i class="mdi-action-exit-to-app"></i>
                                 </a>
                             </span>
