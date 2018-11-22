@@ -200,9 +200,11 @@ class DefaultController extends Controller
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
 
             if ($multimediaObjectPlaylist) {
+                $autostart = $request->query->has('autostart') ? $request->query->get('autostart') : 'false';
+
                 return $this->redirectToRoute(
                     'pumukit_playlistplayer_index',
-                    array('id' => $multimediaObjectPlaylist->getSeries()->getId())
+                    array('id' => $multimediaObjectPlaylist->getSeries()->getId(), 'autostart' => $autostart)
                 );
             }
         }
