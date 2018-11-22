@@ -10,10 +10,10 @@ use Symfony\Component\Translation\TranslatorInterface;
 class CustomLanguageType extends AbstractType
 {
     public static $addonLanguages = array(
-      'lse' => 'Spanish Sign Language',
-      'ssp' => 'Spanish Sign Language',
-      'lsi' => 'International Sign Language',
-      'sgn' => 'International Sign Language',
+        'lse' => 'Spanish Sign Language',
+        'ssp' => 'Spanish Sign Language',
+        'lsi' => 'International Sign Language',
+        'sgn' => 'International Sign Language',
     );
 
     private $translator;
@@ -31,8 +31,8 @@ class CustomLanguageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'choices' => self::getLanguageNames($this->customLanguages, $this->translator),
-                                     ));
+            'choices' => self::getLanguageNames($this->customLanguages, $this->translator),
+        ));
     }
 
     // TODO FIX THIS
@@ -45,8 +45,8 @@ class CustomLanguageType extends AbstractType
             foreach ($customLanguages as $aux) {
                 $code = strtolower($aux);
                 $choices[$code] = isset($languageNames[$code]) ?
-                  $languageNames[$code] :
-                  (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
+                                $languageNames[$code] :
+                                (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
             }
         } else {
             $choices = $languageNames;

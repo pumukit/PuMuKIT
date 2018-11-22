@@ -23,15 +23,15 @@ class PermissionProfileType extends AbstractType
         $builder
             ->add('name', 'text',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ));
+                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
-                                     ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
+        ));
     }
 
     public function getName()

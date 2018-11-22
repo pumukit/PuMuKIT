@@ -28,31 +28,31 @@ class RoleType extends AbstractType
                   array('required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Read only', array(), null, $this->locale)), ))
             ->add('cod', 'text', array(
-                                       'attr' => array(
-                                                       'pattern' => "^\w*$",
-                                                       'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
-                                                       'oninput' => "setCustomValidity('')", ),
-                                       'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
+                'attr' => array(
+                    'pattern' => "^\w*$",
+                    'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
+                    'oninput' => "setCustomValidity('')", ),
+                'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
             ->add('xml', 'text',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('XML', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('XML', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('XML', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('XML', array(), null, $this->locale), ))
             ->add('i18n_name', 'texti18n',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('i18n_text', 'textareai18n',
                   array(
-                        'required' => false,
-                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
+                      'required' => false,
+                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\SchemaBundle\Document\Role',
-    ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\Role',
+        ));
     }
 
     public function getName()

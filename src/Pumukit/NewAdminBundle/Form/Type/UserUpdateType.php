@@ -42,16 +42,16 @@ class UserUpdateType extends AbstractType
                       'attr' => array('autocomplete' => 'off'),
                       'required' => false,
                       'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
-          /* TODO check password
-            ->add('plain_password', 'repeated', array(
-            'type' => 'password',
-            'options' => array('attr' => array('oninvalid' => "setCustomValidity('password-field')")),
-            'required' => false,
-            'invalid_message' => 'The password fields must match.',
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repita Password'),
-            'attr' => array('style' => 'width: 420px')))
-          */
+            /* TODO check password
+               ->add('plain_password', 'repeated', array(
+               'type' => 'password',
+               'options' => array('attr' => array('oninvalid' => "setCustomValidity('password-field')")),
+               'required' => false,
+               'invalid_message' => 'The password fields must match.',
+               'first_options'  => array('label' => 'Password'),
+               'second_options' => array('label' => 'Repita Password'),
+               'attr' => array('style' => 'width: 420px')))
+            */
             ->add('email', 'email',
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
@@ -67,11 +67,11 @@ class UserUpdateType extends AbstractType
             if ($user->hasRole('ROLE_SUPER_ADMIN')) {
                 $event->getForm()->remove('permissionProfile');
                 $event->getForm()->add('permissionProfilePlacebo', 'choice',
-                    array(
-                        'mapped' => false,
-                        'choices' => array('ROLE_SUPER_ADMIN' => 'System Super Administrator'),
-                        'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
+                                       array(
+                                           'mapped' => false,
+                                           'choices' => array('ROLE_SUPER_ADMIN' => 'System Super Administrator'),
+                                           'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
+                                           'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
             }
         });
     }
@@ -79,8 +79,8 @@ class UserUpdateType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\SchemaBundle\Document\User',
-    ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\User',
+        ));
     }
 
     public function getName()

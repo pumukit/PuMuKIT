@@ -24,26 +24,26 @@ class EventType extends AbstractType
         $builder
             ->add('name', 'text',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Event', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Event', array(), null, $this->locale), ))
             ->add('i18n_description', 'textareai18n',
                   array(
-                        'required' => false,
-                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
+                      'required' => false,
+                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('place', 'text',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Location', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('Location', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
             ->add('live', null,
                   array(
-                        'required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
             ->add('schedule', new EventscheduleType(),
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Schedule', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Schedule', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('Schedule', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Schedule', array(), null, $this->locale), ))
             ->add('display', 'checkbox',
                   array('required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Announce', array(), null, $this->locale)),
@@ -53,8 +53,8 @@ class EventType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\LiveBundle\Document\Event',
-    ));
+            'data_class' => 'Pumukit\LiveBundle\Document\Event',
+        ));
     }
 
     public function getName()

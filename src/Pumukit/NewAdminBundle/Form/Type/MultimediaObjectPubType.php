@@ -24,10 +24,10 @@ class MultimediaObjectPubType extends AbstractType
         $builder
             ->add('status', 'choice',
                   array('choices' => array(
-                                           MultimediaObject::STATUS_PUBLISHED => 'Published',
-                                           MultimediaObject::STATUS_BLOQ => 'Blocked',
-                                           MultimediaObject::STATUS_HIDE => 'Hidden',
-                                           ),
+                      MultimediaObject::STATUS_PUBLISHED => 'Published',
+                      MultimediaObject::STATUS_BLOQ => 'Blocked',
+                      MultimediaObject::STATUS_HIDE => 'Hidden',
+                  ),
                         'disabled' => $options['not_granted_change_status'],
                         'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
@@ -37,9 +37,9 @@ class MultimediaObjectPubType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
-        'not_granted_change_status' => true,
-                                     ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+            'not_granted_change_status' => true,
+        ));
     }
 
     public function getName()

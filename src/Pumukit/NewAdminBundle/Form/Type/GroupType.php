@@ -23,29 +23,29 @@ class GroupType extends AbstractType
         $builder
             ->add('key', 'text',
                   array(
-                        'attr' => array(
-                                        'aria-label' => $this->translator->trans('Key', array(), null, $this->locale),
-                                        'pattern' => "^\w*$",
-                                        'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
-                                        'oninput' => "setCustomValidity('')", ),
-                        'label' => $this->translator->trans('Key', array(), null, $this->locale), ))
+                      'attr' => array(
+                          'aria-label' => $this->translator->trans('Key', array(), null, $this->locale),
+                          'pattern' => "^\w*$",
+                          'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
+                          'oninput' => "setCustomValidity('')", ),
+                      'label' => $this->translator->trans('Key', array(), null, $this->locale), ))
             ->add('name', 'text',
                   array(
-                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
+                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
             ->add('comments', 'textarea',
                   array(
-                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Comments', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Comments', array(), null, $this->locale),
-                        'required' => false, ))
+                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Comments', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Comments', array(), null, $this->locale),
+                      'required' => false, ))
             ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'data_class' => 'Pumukit\SchemaBundle\Document\Group',
-    ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\Group',
+        ));
     }
 
     public function getName()
