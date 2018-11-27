@@ -1,10 +1,20 @@
-<div class="widget_Slidebar" id="total">
-    <h2>TOTAL</h2>
-    <div style="padding: 2px 5px">
-        <ul style="list-style-type:none">
-            <li>{{ counts.series }} {% trans %}Series{% endtrans %}</li>
-            <li>{{ counts.mms }} {% trans %}Videos{% endtrans %}</li>
-            <li>{{ counts.hours }} {% trans %}Hours{% endtrans %}</li>
-        </ul>
+<div class="widget_slidebar" id="total">
+    <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="stats-circle stats-circle-1 center-block">
+            <span>{{ counts.series }}</span>
+            <div class="stats-label">{% trans %}Series{% endtrans %}</div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="stats-circle stats-circle-2 center-block">
+            <span>{{ counts.mms }}</span>
+            <div class="stats-label">{% trans %}Videos{% endtrans %}</div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="stats-circle stats-circle-3 center-block">
+            <span>{{ counts.hours }}</span>
+            <div class="stats-label">{% trans %}Hours{% endtrans %}</div>
+        </div>
     </div>
 </div>
