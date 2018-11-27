@@ -554,6 +554,8 @@ class FactoryService
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
+        $new->setTextIndex($src->getTextIndex());
+        $new->setSecondaryTextIndex($src->getSecondaryTextIndex());
         // NOTE: #7408 Specify which properties are clonable
         $new->setProperty('subseries', $src->getProperty('subseries'));
         $new->setProperty('subseriestitle', $src->getProperty('subseriestitle'));
