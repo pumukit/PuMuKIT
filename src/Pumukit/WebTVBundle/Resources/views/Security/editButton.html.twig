@@ -1,0 +1,5 @@
+{% if access is defined and access %}
+    <a href="{{ path('pumukitnewadmin_mms_shortener', {id: multimediaObject.id})}}" title="{% trans %}Edit multimedia object{% endtrans %}" target="_blank" class="edit_button" aria-expanded="false" aria-controls="editBars" role="button">
+        <span class="glyphicon glyphicon-pencil edit-pmk-icon"></span>
+    </a>
+{% endif %}
