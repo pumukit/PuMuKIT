@@ -23,13 +23,7 @@
     <div class="col-xs-12">
         <h1 class="title-for-crumbs always-hide">
             {{ multimediaObject.title|default("No title"|trans) }}
-            <span class="pull-right">
-                 {% if is_granted('edit', multimediaObject) %}
-                    <a href="{{ path('pumukitnewadmin_mms_shortener', {id: multimediaObject.id})}}" title="{% trans %}Edit multimedia object{% endtrans %}" target="_blank" class="edit_button" aria-expanded="false" aria-controls="editBars" role="button">
-                        <span class="glyphicon glyphicon-pencil edit-pmk-icon"></span>
-                    </a>
-                 {% endif %}
-            </span>
+            <span class="pull-right edit-button"></span>
         </h1>
     </div>
     <div class="col-lg-8 col-md-7">
@@ -53,4 +47,20 @@
     {% if cinema_mode is defined and cinema_mode %}
         <script type="application/javascript">$("#paellaiframe").detach().prependTo(".main-content");</script>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}",
+                method: 'GET',
+                success: function (response) {
+                    $('.edit-button').html(response);
+                }
+            });
+        });
+    </script>
 {% endblock %}
