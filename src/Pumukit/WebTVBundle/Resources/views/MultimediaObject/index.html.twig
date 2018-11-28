@@ -56,7 +56,7 @@
         $(document).ready(function() {
             $.ajax({
                 url: "{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}",
-                method: 'POST',
+                method: 'GET',
                 success: function (response) {
                     $('.edit-button').html(response);
                 }
