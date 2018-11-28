@@ -98,7 +98,7 @@
             <div class="panel-body">
                 {% set none_attach = true %}
 
-                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() %}
+                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
                     {% set none_attach = false %}
                     <div class="material">
                         <span class="glyphicon glyphicon-facetime-video"></span>
@@ -113,7 +113,7 @@
                     </div>
                 {% endfor %}
                 <!--MATERIALS-->
-                {% for material in multimediaObject.getMaterials() if not material.getHide() %}
+                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
                     {% set none_attach = false %}
                     <div class="material">
                         <span class="glyphicon glyphicon-paperclip"></span>
@@ -121,7 +121,7 @@
                     </div>
                 {% endfor %}
                 <!--LINKS-->
-                {% for link in multimediaObject.getLinks() %}
+                {% for link in multimediaObject.getLinks() and showDownloads %}
                     {% set none_attach = false %}
                     <div class="link">
                         <a target="_blank" href="{{ link.getUrl() }}">
