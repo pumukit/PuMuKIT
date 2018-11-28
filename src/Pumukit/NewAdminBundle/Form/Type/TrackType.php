@@ -23,11 +23,11 @@ class TrackType extends AbstractType
         $builder
             ->add('i18n_description', 'texti18n',
                   array(
-                        'required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-          ->add('language', 'customlanguage',
-                array(
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
+            ->add('language', 'customlanguage',
+                  array(
                       'required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ));
@@ -36,8 +36,8 @@ class TrackType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'data_class' => 'Pumukit\SchemaBundle\Document\Track',
-                                     ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\Track',
+        ));
     }
 
     public function getName()

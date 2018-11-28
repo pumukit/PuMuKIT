@@ -159,7 +159,8 @@ class TrackController extends Controller implements NewAdminController
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         if ($track) {
-            if ($track->containsTag('opencast') || ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
+            if (($track->containsTag('opencast') && $multimediaObject->getProperty('opencast')) ||
+                ($track->isMaster() && !$this->isGranted(Permission::ACCESS_ADVANCED_UPLOAD))) {
                 return new Response('You don\'t have enough permissions to delete this track. Contact your administrator.', Response::HTTP_FORBIDDEN);
             }
             $multimediaObject = $this->get('pumukitschema.track')->removeTrackFromMultimediaObject($multimediaObject, $request->get('id'));

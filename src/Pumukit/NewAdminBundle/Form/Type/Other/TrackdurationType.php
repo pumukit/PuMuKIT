@@ -10,8 +10,8 @@ class TrackdurationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'compound' => false,
-    ));
+            'compound' => false,
+        ));
     }
 
     public function getName()

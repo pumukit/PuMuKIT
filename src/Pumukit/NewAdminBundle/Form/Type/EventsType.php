@@ -27,50 +27,50 @@ class EventsType extends AbstractType
     {
         $builder
             ->add('i18n_name', TextI18nType::class,
-                array(
-                    'required' => true,
-                    'label' => $this->translator->trans('Title', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
+                  array(
+                      'required' => true,
+                      'label' => $this->translator->trans('Title', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
             ->add('i18n_description', TextareaI18nType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Description', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Description', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
             ->add('place', TextType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Location', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Location', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
             ->add('live', null,
-                array(
-                    'choice_label' => 'info',
-                    'query_builder' => function ($repo) {
-                        return $repo->createAbcSortQueryBuilder($this->locale);
-                    },
-                    'label' => $this->translator->trans('Channels', array(), null, $this->locale),
-                    'attr' => array('class' => 'form-control'), ))
+                  array(
+                      'choice_label' => 'info',
+                      'query_builder' => function ($repo) {
+                          return $repo->createAbcSortQueryBuilder($this->locale);
+                      },
+                      'label' => $this->translator->trans('Channels', array(), null, $this->locale),
+                      'attr' => array('class' => 'form-control'), ))
             ->add('display', CheckboxType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Announce', array(), null, $this->locale), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Announce', array(), null, $this->locale), ))
             ->add('create_serial', 'hidden',
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Create series', array(), null, $this->locale), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Create series', array(), null, $this->locale), ))
             ->add('duration', IntegerType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Duration', array(), null, $this->locale), 'attr' => array('class' => 'form-control'), ))
             ->add('i18n_already_held_message', TextI18nType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Already held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Already held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
             ->add('i18n_not_yet_held_message', TextI18nType::class,
-                array(
-                    'required' => false,
-                    'label' => $this->translator->trans('Not yet held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
+                  array(
+                      'required' => false,
+                      'label' => $this->translator->trans('Not yet held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
             ->add('enable_chat', 'checkbox',
-                array(
-                    'required' => false,
-                    'attr' => array('aria-label' => $this->translator->trans('Enable Chat', array(), null, $this->locale)),
-                    'label' => $this->translator->trans('Enable Chat', array(), null, $this->locale), ));
+                  array(
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Enable Chat', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Enable Chat', array(), null, $this->locale), ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

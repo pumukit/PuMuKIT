@@ -31,9 +31,9 @@ class LicenseType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'required' => true,
-                                     'choices' => $this->licenses,
-                                     ));
+            'required' => true,
+            'choices' => $this->licenses,
+        ));
     }
 
     /**

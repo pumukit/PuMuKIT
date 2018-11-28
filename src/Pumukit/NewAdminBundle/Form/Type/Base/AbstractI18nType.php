@@ -24,8 +24,8 @@ abstract class AbstractI18nType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-        'compound' => false,
-    ));
+            'compound' => false,
+        ));
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

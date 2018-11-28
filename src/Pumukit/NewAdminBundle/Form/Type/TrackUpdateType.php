@@ -25,50 +25,50 @@ class TrackUpdateType extends AbstractType
         $builder
             ->add('i18n_description', 'texti18n',
                   array(
-                        'required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
             ->add('hide', 'checkbox',
                   array(
-                        'required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
             ->add('allowDownload', 'checkbox',
                   array(
-                        'required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Allow download', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Allow download', array(), null, $this->locale), ))
+                      'required' => false,
+                      'attr' => array('aria-label' => $this->translator->trans('Allow download', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Allow download', array(), null, $this->locale), ))
             ->add('language', 'customlanguage',
                   array(
-                        'required' => true,
-                        'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ))
-          ->add('durationinminutesandseconds', new TrackdurationType(),
-                array(
+                      'required' => true,
+                      'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
+                      'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ))
+            ->add('durationinminutesandseconds', new TrackdurationType(),
+                  array(
                       'required' => true,
                       'disabled' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Duration', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Duration', array(), null, $this->locale), ))
-          ->add('resolution', new TrackresolutionType(),
-                array(
+            ->add('resolution', new TrackresolutionType(),
+                  array(
                       'required' => true,
                       'disabled' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Resolution', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Resolution', array(), null, $this->locale), ))
-          ->add('size', 'integer',
-                array(
+            ->add('size', 'integer',
+                  array(
                       'required' => true,
                       'disabled' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Size', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Size', array(), null, $this->locale), ))
-          ->add('path', 'text',
-                array(
+            ->add('path', 'text',
+                  array(
                       'required' => true,
                       'disabled' => true,
                       'attr' => array('aria-label' => $this->translator->trans('File', array(), null, $this->locale)),
                       'label' => $this->translator->trans('File', array(), null, $this->locale), ))
-          ->add('url', 'text',
-                array(
+            ->add('url', 'text',
+                  array(
                       'required' => true,
                       'disabled' => true,
                       'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
@@ -78,8 +78,8 @@ class TrackUpdateType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                                     'data_class' => 'Pumukit\SchemaBundle\Document\Track',
-                                     ));
+            'data_class' => 'Pumukit\SchemaBundle\Document\Track',
+        ));
     }
 
     public function getName()

@@ -26,7 +26,7 @@ class EmbeddedEventSessionType extends AbstractType
             ->add('start', new Html5dateType(),
                   array('data_class' => 'DateTime', 'label' => $this->translator->trans('Start', array(), null, $this->locale), 'attr' => array('class' => 'form-control')))
             ->add('duration', new Html5dateType(),
-                array('data_class' => 'DateTime', 'label' => $this->translator->trans('End', array(), null, $this->locale),
+                  array('data_class' => 'DateTime', 'label' => $this->translator->trans('End', array(), null, $this->locale),
                         'required' => false, 'attr' => array('class' => 'form-control'), ))
             ->add('notes', TextareaType::class,
                   array('label' => $this->translator->trans('Notes', array(), null, $this->locale), 'required' => false, 'attr' => array('class' => 'form-control')));
