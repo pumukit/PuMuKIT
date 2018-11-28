@@ -147,7 +147,7 @@ class ClientService
 
         $return = array(0, array());
 
-        if ($decode['search-results']['total'] == 0) {
+        if (0 == $decode['search-results']['total']) {
             return $return;
         }
 
@@ -180,7 +180,7 @@ class ClientService
         }
         $decode = $this->decodeJson($output['var']);
 
-        if ($decode['search-results']['total'] == 0) {
+        if (0 == $decode['search-results']['total']) {
             return;
         }
         if ($decode['search-results']['limit'] > 1) {
@@ -207,7 +207,7 @@ class ClientService
         }
         $decode = $this->decodeJson($output['var']);
 
-        if ($decode['search-results']['total'] == 0) {
+        if (0 == $decode['search-results']['total']) {
             return;
         }
         if ($decode['search-results']['limit'] > 1) {
@@ -238,7 +238,7 @@ class ClientService
         }
         $decode = $this->decodeJson($output['var']);
 
-        if ($decode['search-results']['total'] == 0) {
+        if (0 == $decode['search-results']['total']) {
             return;
         }
         if ($decode['search-results']['limit'] > 1) {
@@ -505,6 +505,8 @@ class ClientService
         default:
             throw new \Exception('Method "'.$method.'" not allowed.');
         }
+
+        /*curl_setopt($request, CURLOPT_VERBOSE, true);*/
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);
