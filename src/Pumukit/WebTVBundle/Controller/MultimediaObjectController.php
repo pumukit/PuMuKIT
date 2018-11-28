@@ -189,15 +189,17 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     {
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
+        $showDownloads = true;
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
         if ($response instanceof Response) {
-            return $this->render('PumukitWebTVBundle:MultimediaObject:emptyinfo.html.twig');
+            $showDownloads = false;
         }
         $editorChapters = $this->getChapterMarks($multimediaObject);
 
         return array(
             'multimediaObject' => $multimediaObject,
             'editor_chapters' => $editorChapters,
+            'showDownloads' => $showDownloads,
         );
     }
 }
