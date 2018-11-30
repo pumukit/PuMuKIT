@@ -264,7 +264,7 @@ class DefaultController extends Controller
 
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live', array('id' => $live->getId()));
 
-        return $this->iframeAction($live, $request, false);
+        return $this->doLive($live, $request, false);
     }
 
     protected function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
