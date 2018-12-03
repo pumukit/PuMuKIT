@@ -2,6 +2,7 @@
 
 namespace Pumukit\PodcastBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,9 @@ class FeedController extends Controller
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('tags.cod')->equals('PUCHPODCAST');
+        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('tracks.tags')->equals('podcast');
         $series = $qb->distinct('series')
           ->getQuery()
@@ -104,12 +108,16 @@ class FeedController extends Controller
 
     private function createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio = false)
     {
-        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('tags.cod')->equals('PUCHPODCAST');
+        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('tracks')->elemMatch(
-            $qb->expr()->field('only_audio')->equals($isOnlyAudio)
-                ->field('tags')->equals('podcast')
+            $qb->expr()
+                ->field('only_audio')->equals($isOnlyAudio)
+                ->field('tags')->all(array('podcast'))
+                ->field('hide')->equals(false)
         );
 
         return $qb;
@@ -134,9 +142,12 @@ class FeedController extends Controller
     {
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $qb = $mmObjRepo->createStandardQueryBuilder()
-          ->field('series')->references($series)
-          ->field('tracks.tags')->equals('podcast');
+        $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('tags.cod')->equals('PUCHPODCAST');
+        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
+        $qb->field('series')->references($series);
+        $qb->field('tracks.tags')->equals('podcast');
 
         return $qb->getQuery()->execute();
     }
