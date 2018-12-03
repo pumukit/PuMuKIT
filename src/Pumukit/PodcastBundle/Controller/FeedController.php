@@ -2,6 +2,7 @@
 
 namespace Pumukit\PodcastBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +29,8 @@ class FeedController extends Controller
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $qb = $mmObjRepo->createStandardQueryBuilder();
-        $qb->field('tracks.tags')->equals('podcast');
-        $series = $qb->distinct('series')
-          ->getQuery()
-          ->execute();
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
+        $series = $qb->distinct('series')->getQuery()->execute();
 
         $xml = new \SimpleXMLElement('<list/>');
         foreach ($series as $s) {
@@ -104,12 +103,13 @@ class FeedController extends Controller
 
     private function createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio = false)
     {
-        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('tracks')->elemMatch(
-            $qb->expr()->field('only_audio')->equals($isOnlyAudio)
-                ->field('tags')->equals('podcast')
+            $qb->expr()
+                ->field('only_audio')->equals($isOnlyAudio)
+                ->field('tags')->all(array('podcast'))
         );
 
         return $qb;
@@ -134,9 +134,9 @@ class FeedController extends Controller
     {
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $qb = $mmObjRepo->createStandardQueryBuilder()
-          ->field('series')->references($series)
-          ->field('tracks.tags')->equals('podcast');
+        $qb = $mmObjRepo->createStandardQueryBuilder();
+        $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
+        $qb->field('series')->references($series);
 
         return $qb->getQuery()->execute();
     }
