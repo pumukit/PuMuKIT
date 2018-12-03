@@ -1,125 +1,134 @@
 {% extends 'PumukitNewAdminBundle::layout.html.twig' %}
 {% block body %}
-  <h3 class="cab_body_div">
-    <a title="{% trans %}Back to playlist list{% endtrans %}" href="{{ path('pumukitnewadmin_playlist_index') }}" class="btn btn-pumukit btn-raised pull-right">
-      « {% trans %}Back to playlist list{% endtrans %}
-    </a>
-    <ul class="breadcrumb" style="margin-bottom: 5px;">
-      <li><a href="{{ path('pumukitnewadmin_playlist_index') }}">Playlist{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %} ({{ playlist.getTitle() }}){% endif %}</a></li>
-      {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
-        <li class="active">{% trans %}My Multimedia Objects{% endtrans %}</li>
-      {% else %}
-        <li class="active">{% trans %}Multimedia Objects{% endtrans %}</li>
-      {% endif %}
-    </ul>
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-      <input type="hidden" name="playlist_id" id="mms_playlist_id" value="{{ playlist.id }}" />
-    {% endif %}
-  </h3>
+    <h3 class="cab_body_div">
+        <a title="{% trans %}Back to playlist list{% endtrans %}" href="{{ path('pumukitnewadmin_playlist_index') }}" class="btn btn-pumukit btn-raised pull-right">
+            « {% trans %}Back to playlist list{% endtrans %}
+        </a>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li>
+                <a href="{{ path('pumukitnewadmin_playlist_index') }}">
+                    {% trans %}Moodle Playlists{% endtrans %}
+                </a>
+            </li>
+            <span {% if not is_naked() %}style="color:#008175"{% endif %}>
+                /
+                {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %} {{ playlist.getTitle() }}{% endif %}
+            </span>
 
-  <div class="row">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-      <div id="tv_admin_content" class="col-md-10">
-        <div class="well">
-          <div id="list_playlistmms">
-            {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:list.html.twig' %}
-          </div>
-          <div class="row">
-            <div class="col-xs-4">
-              <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}"
-                      onchange="playlist_mms_options('playlistmm', $(this), 'playlistmms', '{{playlist.id}}');">
-                <option disabled="" value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
-                <option disabled="">---</option>
-                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-              </select>
+        </ul>
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+            <input type="hidden" name="playlist_id" id="mms_playlist_id" value="{{ playlist.id }}"/>
+        {% endif %}
+    </h3>
+
+    <div class="row">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+            <div id="tv_admin_content" class="col-md-10">
+                <div class="well">
+                    <div id="list_playlistmms">
+                        {% include 'PumukitNewAdminBundle:PlaylistMultimediaObject:list.html.twig' %}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}"
+                                    onchange="playlist_mms_options('playlistmm', $(this), 'playlistmms', '{{ playlist.id }}');">
+                                <option disabled="" value="default" selected="selected">{% trans %}Select an action{% endtrans %}
+                                    ...
+                                </option>
+                                <option disabled="">---</option>
+                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <a title="{% trans %}Add multimedia object{% endtrans %}"
+                               class="btn btn-pumukit btn-raised"
+                               href="{{ path('pumukitnewadmin_playlistmms_modal', {'id':playlist.id}) }}"
+                               data-toggle="modal"
+                               data-backdrop="static"
+                               data-target="#myModal">
+                                {% trans %}Add{% endtrans %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <div id="edit_playlistmm">
+                        {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
+                            <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
+                                {% render(url('pumukitnewadmin_playlistmms_info', {'id': app.session.get('admin/playlistmms/id')})) %}
+                            </div>
+                        {% else %}
+                            <legend>{% trans %}Info{% endtrans %}</legend>
+                            {% trans %}Select any multimedia object.{% endtrans %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-8 text-right">
-              <a title="{% trans %}Add multimedia object{% endtrans %}"
-                 class="btn btn-pumukit btn-raised"
-                 href="{{path('pumukitnewadmin_playlistmms_modal', {'id':playlist.id})}}"
-                 data-toggle="modal"
-                 data-backdrop="static"
-                 data-target="#myModal">
-                {% trans %}Add{% endtrans %}
-              </a>
+
+            <div id="tv_admin_bar" class="col-md-2 hidden-xs hidden-sm">
+                <div id="preview_playlistmm" class="well">
+                    {% if(app.session.get('admin/playlistmms/id', false)) %}
+                        {{ render_hinclude(url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')})) }}
+                    {% else %}
+                        <legend>{% trans %}Preview{% endtrans %}</legend>
+                        {% trans %}Select any multimedia object.{% endtrans %}
+                    {% endif %}
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="well">
-          <div id="edit_playlistmm">
-            {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
-              <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
-                {% render(url('pumukitnewadmin_playlistmms_info', {'id': app.session.get('admin/playlistmms/id')})) %}
-              </div>
-            {% else %}
-              <legend>{% trans %}Info{% endtrans %}</legend>
-              {% trans %}Select any multimedia object.{% endtrans %}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-
-      <div id="tv_admin_bar" class="col-md-2 hidden-xs hidden-sm">
-        <div id="preview_playlistmm" class="well">
-          {% if(app.session.get('admin/playlistmms/id', false)) %}
-            {{ render_hinclude(url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')})) }}
-          {% else %}
-            <legend>{% trans %}Preview{% endtrans %}</legend>
-            {% trans %}Select any multimedia object.{% endtrans %}
-          {% endif %}
-        </div>
-      </div>
-    {% else %}
-      <div class="col-md-12">
-        <div class="well">
-          {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-        </div>
-      </div>
-    {% endif %}
-  </div>
-
-  <div class="pmk-modal modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="well">
+                    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
 
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+    <div class="pmk-modal modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
+        <script type="text/javascript">
+            window.update_preview_mms = function (id) {
+                var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
+                $.ajax({
+                    url: route.replace('__id__', id),
+                    type: 'POST',
+                    success: function (response) {
+                        $('#preview').html(response);
+                    }
+                });
+            }
+        </script>
+    {% endif %}
     <script type="text/javascript">
-     window.update_preview_mms = function(id) {
-         var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
-         $.ajax({
-             url: route.replace('__id__', id),
-             type: 'POST',
-             success: function(response){$('#preview').html(response);}
-         });
-     }
-    </script>
-  {% endif %}
-  <script type="text/javascript">
-   function playlist_mms_options(element, selector, pluralName, playlistId) {
-       var option = selector.val();
-       switch(option) {
-           case 'delete_selected':
-               mm_delete_selected(element, pluralName, playlistId);
-               break;
-       }
-       selector.val('default');
-   }
-   function mm_delete_selected(element, pluralName, playlistId) {
-       var ids = {};
-       $('.' + element + '_checkbox:checked').each(function(){
-           var $this = $(this);
-           ids[$this.data('pos')] = $this.attr("id");
-       });
-       if (Object.keys(ids).length == 0) return;
-       var url ="{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
-       url = url.replace('__ids__', JSON.stringify(ids));
-       $('#list_playlistmms').load(url, function(){
-           //TODO: reload show and info.
-       });
-   }
+        function playlist_mms_options(element, selector, pluralName, playlistId) {
+            var option = selector.val();
+            switch (option) {
+                case 'delete_selected':
+                    mm_delete_selected(element, pluralName, playlistId);
+                    break;
+            }
+            selector.val('default');
+        }
 
-  </script>
+        function mm_delete_selected(element, pluralName, playlistId) {
+            var ids = {};
+            $('.' + element + '_checkbox:checked').each(function () {
+                var $this = $(this);
+                ids[$this.data('pos')] = $this.attr("id");
+            });
+            if (Object.keys(ids).length == 0) return;
+            var url = "{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
+            url = url.replace('__ids__', JSON.stringify(ids));
+            $('#list_playlistmms').load(url, function () {
+                //TODO: reload show and info.
+            });
+        }
+
+    </script>
 {% endblock %}
