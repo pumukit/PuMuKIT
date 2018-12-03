@@ -29,13 +29,8 @@ class FeedController extends Controller
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $qb = $mmObjRepo->createStandardQueryBuilder();
-        $qb->field('tags.cod')->equals('PUCHPODCAST');
-        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
-        $qb->field('tracks.tags')->equals('podcast');
-        $series = $qb->distinct('series')
-          ->getQuery()
-          ->execute();
+        $series = $qb->distinct('series')->getQuery()->execute();
 
         $xml = new \SimpleXMLElement('<list/>');
         foreach ($series as $s) {
@@ -110,14 +105,11 @@ class FeedController extends Controller
     {
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
-        $qb->field('tags.cod')->equals('PUCHPODCAST');
-        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('tracks')->elemMatch(
             $qb->expr()
                 ->field('only_audio')->equals($isOnlyAudio)
                 ->field('tags')->all(array('podcast'))
-                ->field('hide')->equals(false)
         );
 
         return $qb;
@@ -143,11 +135,8 @@ class FeedController extends Controller
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $qb = $mmObjRepo->createStandardQueryBuilder();
-        $qb->field('tags.cod')->equals('PUCHPODCAST');
-        $qb->field('status')->equals(MultimediaObject::STATUS_PUBLISHED);
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('series')->references($series);
-        $qb->field('tracks.tags')->equals('podcast');
 
         return $qb->getQuery()->execute();
     }
