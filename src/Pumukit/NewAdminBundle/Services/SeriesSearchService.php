@@ -58,6 +58,8 @@ class SeriesSearchService
                 }
             } elseif (('_id' === $property) && ('' !== $value)) {
                 $new_criteria['_id'] = $value;
+            } elseif (('subtitle' === $property) && ('' !== $value)) {
+                $new_criteria['subtitle.'.$locale] = new \MongoRegex("/$value/i");
             } elseif ('playlist.multimedia_objects' === $property && ('' !== $value)) {
                 $new_criteria['playlist.multimedia_objects'] = array('$size' => 0);
             }

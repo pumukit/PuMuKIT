@@ -30,6 +30,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="filters_search_subtitle" class="control-label">
+                                    {% trans %}Search in subtitle{% endtrans %}:
+                                </label>
+                                <div>
+                                    <input type="text" class="form-control" name="criteria[subtitle]" id="filters_search_subtitle" value="{{ criteria['subtitle']|default("") }}">
+                                </div>
+                            </div>
+
                             {# <div class="form-group">
                               <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
                               <div>
@@ -108,9 +117,11 @@
         $('filters_date_to').value = '';
         $('filters_announce').value = 'diff';
         $('filters_status').value = 'all';
+        $('filters_search_subtitle').value = '';
     }
 
     function on_filter_series_list(event) {
+        "use strict";
         var from_date = $('#filters_date_from');
         var to_date = $('#filters_date_to');
         if (to_date.val() != "" && from_date.val() >= to_date.val()) {
