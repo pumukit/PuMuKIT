@@ -193,6 +193,8 @@ class JobService
             throw new \Exception('The media file duration is zero');
         }
 
+        $this->logger->info('[addJob] new Job');
+
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
         $job->setProfile($profileName);
