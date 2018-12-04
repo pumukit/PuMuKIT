@@ -443,6 +443,6 @@ class StatsService
             array('$out' => 'ViewsAggregation'),
         );
 
-        $viewsLogColl->aggregate($pipeline);
+        $viewsLogColl->aggregate($pipeline, array('allowDiskUse' => true));
     }
 }

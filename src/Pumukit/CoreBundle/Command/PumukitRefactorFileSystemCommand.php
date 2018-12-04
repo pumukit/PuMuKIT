@@ -26,7 +26,7 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('pumukit:refactor:files:path')
+            ->setName('pumukit:files:refactor:path')
             ->setDescription('Pumukit refactor wrongs path for images and materials')
             ->addOption('pics', null, InputOption::VALUE_NONE, 'Refactor pics')
             ->addOption('materials', null, InputOption::VALUE_NONE, 'Refactor materials')
@@ -38,11 +38,11 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
                 Example to use:
                 
                 1. Refactor pics
-                    php app/console pumukit:refactor:files:path --pics
+                    php app/console pumukit:files:refactor:path --pics
                 2. Refactor materials
-                    php app/console pumukit:refactor:files:path --materials
+                    php app/console pumukit:files:refactor:path --materials
                 3. Refactor both
-                    php app/console pumukit:refactor:files:path --pics --materials            
+                    php app/console pumukit:files:refactor:path --pics --materials            
 EOT
         );
     }
@@ -68,7 +68,7 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return bool|int|null
+     * @return int|void|null
      *
      * @throws \Exception
      */
@@ -323,6 +323,7 @@ EOT
             array(
                 '$match' => array(
                     'pics' => array('$exists' => true),
+                    'pics.path' => array('$regex' => 'uploads/pic/', '$options' => 'i'),
                 ),
             ),
         );
@@ -353,6 +354,7 @@ EOT
             array(
                 '$match' => array(
                     'materials' => array('$exists' => true),
+                    'materials.path' => array('$regex' => 'uploads/pic/', '$options' => 'i'),
                 ),
             ),
         );

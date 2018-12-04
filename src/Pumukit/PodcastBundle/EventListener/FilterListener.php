@@ -3,6 +3,7 @@
 namespace Pumukit\PodcastBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -17,14 +18,33 @@ class FilterListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
+        $activateFilter = $this->activateFilter($event);
+
+        if ($activateFilter) {
+            $this->settingParametersFilter();
+        }
+    }
+
+    private function activateFilter($event)
+    {
         $req = $event->getRequest();
         $routeParams = $req->attributes->get('_route_params');
 
-        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()
-        && (false !== strpos($req->attributes->get('_controller'), 'PodcastBundle'))
-        && (!isset($routeParams['filter']) || $routeParams['filter'])) {
-            $filter = $this->dm->getFilterCollection()->enable('frontend');
-            $filter->setParameter('pub_channel_tag', 'PUCHPODCAST');
-        }
+        $isMasterRequest = HttpKernelInterface::MASTER_REQUEST === $event->getRequestType();
+        $isPodCastBundle = false !== strpos($req->attributes->get('_controller'), 'PodcastBundle');
+        $isDefinedFilter = !isset($routeParams['filter']) || $routeParams['filter'];
+
+        $activateFilter = $isMasterRequest && $isPodCastBundle && $isDefinedFilter;
+
+        return $activateFilter;
+    }
+
+    private function settingParametersFilter()
+    {
+        $filter = $this->dm->getFilterCollection()->enable('frontend');
+
+        $filter->setParameter('pub_channel_tag', 'PUCHPODCAST');
+        $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
+        $filter->setParameter('display_track_tag', 'podcast');
     }
 }
