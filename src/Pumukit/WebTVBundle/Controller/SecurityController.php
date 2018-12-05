@@ -16,7 +16,7 @@ class SecurityController extends Controller implements WebTVController
      *
      * @return array
      *
-     * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
+     * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject", defaults={"show_hide": true})
      * @Template("PumukitWebTVBundle:Security:editButton.html.twig")
      */
     public function canEditAction(Request $request, MultimediaObject $multimediaObject)
