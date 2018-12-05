@@ -45,6 +45,13 @@ class Tag
      *
      * @MongoDB\Field(type="raw")
      */
+    private $label = array('en' => '');
+
+    /**
+     * @var string
+     *
+     * @MongoDB\Field(type="raw")
+     */
     private $description = array('en' => '');
 
     /**
@@ -188,6 +195,39 @@ class Tag
         }
 
         return $this->title[$locale];
+    }
+
+    /**
+     * Set label.
+     *
+     * @param string      $label
+     * @param string|null $locale
+     */
+    public function setLabel($label, $locale = null)
+    {
+        if (null === $locale) {
+            $locale = $this->locale;
+        }
+        $this->label[$locale] = $label;
+    }
+
+    /**
+     * Get label.
+     *
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function getLabel($locale = null)
+    {
+        if (null === $locale) {
+            $locale = $this->locale;
+        }
+        if (!isset($this->label[$locale])) {
+            return $this->title[$locale];
+        }
+
+        return $this->label;
     }
 
     /**
