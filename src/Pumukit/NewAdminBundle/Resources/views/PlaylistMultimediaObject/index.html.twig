@@ -2,12 +2,16 @@
 {% block body %}
     <h3 class="cab_body_div">
         <a title="{% trans %}Back to playlist list{% endtrans %}" href="{{ path('pumukitnewadmin_playlist_index') }}" class="btn btn-pumukit btn-raised pull-right">
-            « {% trans %}Back to playlist list{% endtrans %}
+            « {% trans %}Return{% endtrans %}
         </a>
         <ul class="breadcrumb" style="margin-bottom: 5px;">
             <li>
                 <a href="{{ path('pumukitnewadmin_playlist_index') }}">
-                    {% trans %}Moodle Playlists{% endtrans %}
+                    {% if is_naked() %}
+                        {% trans %}My Moodle Playlists{% endtrans %}
+                    {% else %}
+                        {% trans %}Moodle Playlists{% endtrans %}
+                    {% endif %}
                 </a>
             </li>
             <span {% if not is_naked() %}style="color:#008175"{% endif %}>

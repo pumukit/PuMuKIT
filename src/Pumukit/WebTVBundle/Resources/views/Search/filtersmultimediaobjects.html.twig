@@ -13,7 +13,7 @@
     </div>
     {% if parent_tag is not null and (blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag)) %}
         <div class="form-group col-md-3 col-sm-4">
-            <label for="tags">{{ parent_tag.title|trans }}:</label>
+            <label for="tags">{{ parent_tag.label }}:</label>
             <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
                 <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
                 {% for tag in parent_tag.children if tag.title != "" %}
@@ -25,7 +25,7 @@
 
     {% if parent_tag_optional is not null and ( blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag_optional)) %}
         <div class="form-group col-md-3 col-sm-4">
-            <label for="tags">{{ parent_tag_optional.title|trans }}:</label>
+            <label for="tags">{{ parent_tag_optional.label }}:</label>
             <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
                 <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
                 {% for tag in parent_tag_optional.children if tag.title != "" %}
