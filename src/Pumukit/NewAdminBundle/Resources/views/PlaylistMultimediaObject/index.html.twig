@@ -7,7 +7,7 @@
         <ul class="breadcrumb" style="margin-bottom: 5px;">
             <li>
                 <a href="{{ path('pumukitnewadmin_playlist_index') }}">
-                    {% if is_naked() %}
+                    {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') and is_naked() %}
                         {% trans %}My Moodle Playlists{% endtrans %}
                     {% else %}
                         {% trans %}Moodle Playlists{% endtrans %}
