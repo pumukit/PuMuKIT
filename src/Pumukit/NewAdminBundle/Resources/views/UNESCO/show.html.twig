@@ -68,7 +68,7 @@
                                         <li>
                                             {{ role.getText() }}
                                             {% if act.getWeb() is not empty %}
-                                                <a target="_black" title="{{ act.getWeb() }}" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
+                                                <a target="_black" title="{{ act.getHName() }}" href="{{ act.getWeb() }}">{{ act.getHName() }}</a>
                                             {% else %}
                                                 <span title="{{ act.getHName() }}">{{ act.getHName() }}</span>
                                             {% endif %}
