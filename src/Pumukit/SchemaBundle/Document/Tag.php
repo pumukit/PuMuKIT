@@ -224,7 +224,7 @@ class Tag
             $locale = $this->locale;
         }
         if (!isset($this->label[$locale])) {
-            return $this->title[$locale];
+            return $this->getTitle($locale);
         }
 
         return $this->label;
