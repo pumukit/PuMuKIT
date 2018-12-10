@@ -227,7 +227,7 @@ class Tag
             return $this->getTitle($locale);
         }
 
-        return $this->label;
+        return $this->label[$locale];
     }
 
     /**
