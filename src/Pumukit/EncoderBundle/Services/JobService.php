@@ -419,6 +419,8 @@ class JobService
 
         $nextJob = $this->getNextJob();
         if (!isset($nextJob)) {
+            sem_release($seg);
+
             return null;
         }
         $profile = $nextJob->getProfile();
