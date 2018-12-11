@@ -48,6 +48,15 @@ class MultimediaObject
     private $id;
 
     /**
+     * Numerical identifier
+     *
+     * @var int
+     * @MongoDB\Field(type="int")
+     * @MongoDB\Index
+     */
+    private $numerical_id;
+
+    /**
      * @var bool
      * @MongoDB\Field(type="boolean")
      * @MongoDB\Index
@@ -278,6 +287,26 @@ class MultimediaObject
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get numerical id.
+     *
+     * @return int
+     */
+    public function getNumericalID()
+    {
+        return $this->numerical_id;
+    }
+
+    /**
+     * Set numerical id.
+     *
+     * @return int
+     */
+    public function setNumericalID($numericalID)
+    {
+        return $this->numerical_id = $numericalID;
     }
 
     /**
