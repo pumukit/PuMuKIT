@@ -26,6 +26,9 @@ class NumericalIDCommand extends ContainerAwareCommand
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter force the execution of this action')
             ->setHelp(<<<EOT
             
+            Example:
+            
+            php app/console pumukit:update:numerical:id --step=generate
 EOT
             );
     }
