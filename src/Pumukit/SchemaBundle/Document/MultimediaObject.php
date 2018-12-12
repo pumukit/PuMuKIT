@@ -48,7 +48,7 @@ class MultimediaObject
     private $id;
 
     /**
-     * Numerical identifier
+     * Numerical identifier.
      *
      * @var int
      * @MongoDB\Field(type="int")
