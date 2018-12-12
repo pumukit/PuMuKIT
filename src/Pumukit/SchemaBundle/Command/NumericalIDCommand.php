@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,6 +15,7 @@ class NumericalIDCommand extends ContainerAwareCommand
     private $step;
     private $force;
     private $output;
+    private $limit;
 
     protected function configure()
     {
@@ -33,6 +35,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->step = $input->getOption('step');
         $this->force = (true === $input->getOption('force'));
+        $this->limit = 100;
 
         $this->output = $output;
     }
@@ -46,9 +49,6 @@ EOT
             case 'generate':
                 $this->generateNewNumericalID();
                 break;
-            case 'update':
-                $this->updateNumericalID();
-                break;
             default:
                 $output->writeln(' ***** Please select an valid step');
         }
@@ -57,92 +57,59 @@ EOT
     private function generateNewNumericalID()
     {
         $this->output->writeln(
-            array('<info> ***** Generate numerical ID *****</info>'),
+            array('<info> ***** Executing pumukit:update:numerical:id *****</info>'),
             array('Checking status...')
         );
 
         $status = $this->checkStatus();
-
         if (!$status) {
             return false;
         }
 
-        // TODO: Generate numerical ID
+        $lastNumericalIDSeries = $this->getLastNumericalID(true);
+        $lastNumericalIDMultimediaObject = $this->getLastNumericalID(false);
 
-        return true;
-    }
-
-    private function updateNumericalID()
-    {
-        //$this->updateSeriesNumericalID();
-
-        $this->updateMultimediaObjectNumericalID();
-    }
-
-    private function updateSeriesNumericalID()
-    {
-        $this->output->writeln(
-            array('<info> ***** Updating series numerical ID ***** </info>')
+        $criteria = array(
+            'numerical_id' => array('$exists' => false),
         );
 
-        $series = $this->getSeries(array(), true);
+        $multimediaObjects = $this->getMultimediaObjects($criteria, false);
 
-        $progressBar = new ProgressBar($this->output, count($series));
-        $progressBar->start();
-
-        $i = 0;
-        foreach ($series as $oneSeries) {
-            $i++;
-            $oneSeries->setNumericalID($oneSeries->getProperty('pumukit1id'));
-            $progressBar->advance();
-            if (0 == $i % 100) {
-                $this->dm->flush();
-                $this->dm->clear();
-            }
-        }
-
-        $this->dm->flush();
-        $progressBar->finish();
-    }
-
-    private function updateMultimediaObjectNumericalID()
-    {
         $this->output->writeln(
             array(
                 '',
-                '<info> ***** Updating multimedia objects numerical ID *****</info>'
+                '<warning> ***** Updating multimedia objects *****</warning>',
             )
         );
 
-        $multimediaObjects = $this->getMultimediaObjects(array(), true, 100);
+        $this->generateNumericalID($multimediaObjects, $lastNumericalIDMultimediaObject);
 
-        $progressBar = new ProgressBar($this->output, count($multimediaObjects));
-        $progressBar->start();
+        $series = $this->getSeries($criteria, false);
 
-        $i = 0;
-        foreach ($multimediaObjects as $oneSeries) {
-            $i++;
-            $oneSeries->setNumericalID($oneSeries->getProperty('pumukit1id'));
-            $progressBar->advance();
-            $this->dm->flush();
-        }
+        $this->output->writeln(
+            array(
+                '',
+                '<warning> ***** Updating series *****</warning>',
+            )
+        );
+        $this->generateNumericalID($series, $lastNumericalIDSeries);
 
-        $progressBar->finish();
+        die;
     }
 
     private function checkStatus()
     {
         $criteria = array(
-            'numericalID' => array('$exists' => false),
+            'numerical_id' => array('$exists' => false),
         );
 
-        $multimediaObjects = $this->getMultimediaObjects($criteria, true);
+        $multimediaObjects = $this->getMultimediaObjects($criteria, true, $this->limit);
         $series = $this->getSeries($criteria, true);
 
         if ($multimediaObjects || $series) {
             $this->output->writeln(
                 array(
-                    '<error>'.sprintf('There are %s multimedia objects and %s series with pumukit1id and not numerical ID, please execute step update first', count($multimediaObjects), count($series)).'</error>',
+                    '<error>'.sprintf('There are %s multimedia objects and %s series with pumukit1id and not numerical ID, please execute query first', count($multimediaObjects), count($series)).'</error>',
                 )
             );
 
@@ -152,11 +119,11 @@ EOT
         return true;
     }
 
-    private function getMultimediaObjects($criteria, $withPumukit1Id = false, $limit = 0)
+    private function getMultimediaObjects($criteria, $withPumukit1Id = false)
     {
         $criteria = $this->createCriteria($criteria, $withPumukit1Id);
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria, $limit);
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 
         return $multimediaObjects;
     }
@@ -173,8 +140,55 @@ EOT
     private function createCriteria($criteria, $withPumukit1Id)
     {
         $newCriteria = $criteria;
+        $newCriteria['status'] = array('$ne' => MultimediaObject::STATUS_PROTOTYPE);
         $newCriteria['properties.pumukit1id'] = array('$exists' => $withPumukit1Id);
 
         return $newCriteria;
+    }
+
+    private function getLastNumericalID($series = false)
+    {
+        if ($series) {
+            $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
+                ->field('numerical_id')->exists(true)
+                ->sort(array('numerical_id' => -1))
+                ->getQuery()
+                ->getSingleResult();
+
+            $lastNumericalID = $series->getNumericalID();
+        } else {
+            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
+                ->field('numerical_id')->exists(true)
+                ->sort(array('numerical_id' => -1))
+                ->getQuery()
+                ->getSingleResult();
+
+            $lastNumericalID = $multimediaObject->getNumericalID();
+        }
+
+        return $lastNumericalID;
+    }
+
+    private function generateNumericalID($elements, $lastNumericalID)
+    {
+        $progressBar = new ProgressBar($this->output, count($elements));
+        $progressBar->setFormat('verbose');
+        $progressBar->start();
+
+        $i = 0;
+        foreach ($elements as $element) {
+            ++$i;
+            $nextNumericalID = $lastNumericalID + 1;
+            $element->setNumericalID($nextNumericalID);
+            $lastNumericalID = $nextNumericalID;
+            $progressBar->advance();
+
+            if (0 == $i % 50) {
+                $this->dm->flush();
+            }
+        }
+
+        $this->dm->flush();
+        $progressBar->finish();
     }
 }
