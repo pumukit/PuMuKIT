@@ -52,7 +52,7 @@ class MultimediaObject
      *
      * @var int
      * @MongoDB\Field(type="int")
-     * @MongoDB\Index
+     * @MongoDB\UniqueIndex(safe=1)
      */
     private $numerical_id;
 

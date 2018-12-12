@@ -696,7 +696,10 @@ class FactoryService
             ->getQuery()
             ->getSingleResult();
 
-        $lastNumericalID = $multimediaObject->getNumericalID();
+        $lastNumericalID = 0;
+        if ($multimediaObject) {
+            $lastNumericalID = $multimediaObject->getNumericalID();
+        }
 
         $newNumericalID = $lastNumericalID + 1;
 
@@ -716,7 +719,10 @@ class FactoryService
             ->getQuery()
             ->getSingleResult();
 
-        $lastNumericalID = $series->getNumericalID();
+        $lastNumericalID = 0;
+        if ($series) {
+            $lastNumericalID = $series->getNumericalID();
+        }
 
         $newNumericalID = $lastNumericalID + 1;
 
