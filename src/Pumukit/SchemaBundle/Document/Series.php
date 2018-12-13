@@ -163,18 +163,6 @@ class Series
 
     /**
      * @var string
-     * @MongoDB\Field(type="string")
-     */
-    private $copyright;
-
-    /**
-     * @var string
-     * @MongoDB\Field(type="string")
-     */
-    private $license;
-
-    /**
-     * @var string
      * @MongoDB\Field(type="raw")
      */
     private $line2 = array('en' => '');
@@ -812,41 +800,49 @@ class Series
     /**
      * Set copyright.
      *
+     * @deprecated Dont use this method, use setProperty('copyright', $copyright)
+     *
      * @param string $copyright
      */
     public function setCopyright($copyright)
     {
-        $this->copyright = $copyright;
+        $this->setProperty('copyright', $copyright);
     }
 
     /**
      * Get copyright.
      *
+     * @deprecated Dont use this method, use getProperty('copyright')
+     *
      * @return string
      */
     public function getCopyright()
     {
-        return $this->copyright;
+        return $this->getProperty('copyright');
     }
 
     /**
      * Set license.
      *
+     * @deprecated  Dont use this method, use setProperty('license', $license)
+     *
      * @param string $license
      */
     public function setLicense($license)
     {
-        $this->license = $license;
+        $this->setProperty('license', $license);
     }
 
     /**
      * Get license.
      *
+     * @deprecated Dont use this method, use getProperty('license')
+     *
      * @return string $license
      */
     public function getLicense()
     {
-        return $this->license;
+        return $this->getProperty('license');
     }
 
     /**
