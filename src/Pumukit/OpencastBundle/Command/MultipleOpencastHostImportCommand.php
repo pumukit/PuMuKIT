@@ -42,18 +42,22 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             
             <info> ** Example ( check and list ):</info>
             
-            <comment>php app/console pumukit:opencast:multiple:host:import --user=myuser --password=mypassword --host=myopencastdomain</comment>
+            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
             
             This example will be check the conection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
-            <comment>php app/console pumukit:opencast:multiple:host:import --user=myuser --password=mypassword --host=myopencastdomain --force</comment>
+            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
 
 EOT
             );
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
@@ -63,10 +67,10 @@ EOT
         $this->opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
         $this->logger = $this->getContainer()->get('logger');
 
-        $this->user = $this->input->getOption('user');
-        $this->password = $this->input->getOption('password');
-        $this->host = $this->input->getOption('host');
-        $this->force = (true === $this->input->getOption('user'));
+        $this->user = trim($this->input->getOption('user'));
+        $this->password = trim($this->input->getOption('password'));
+        $this->host = trim($this->input->getOption('host'));
+        $this->force = (true === $this->input->getOption('force'));
 
         $this->clientService = new ClientService(
             $this->host,
@@ -85,16 +89,31 @@ EOT
         );
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|void|null
+     *
+     * @throws \Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->checkInputs();
 
         if ($this->checkOpencastStatus()) {
             $multimediaObjects = $this->getMultimediaObjects();
-            $this->importOpencastTracks($multimediaObjects);
+            if ($this->force) {
+                $this->importOpencastTracks($multimediaObjects);
+            } else {
+                $this->showMultimediaObjects($multimediaObjects);
+            }
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     private function checkInputs()
     {
         if (!$this->user || !$this->password || !$this->host) {
@@ -102,6 +121,9 @@ EOT
         }
     }
 
+    /**
+     * @return bool
+     */
     private function checkOpencastStatus()
     {
         if ($this->clientService->getAdminUrl()) {
@@ -111,6 +133,9 @@ EOT
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     private function getMultimediaObjects()
     {
         $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
@@ -122,8 +147,20 @@ EOT
         return $multimediaObjects;
     }
 
+    /**
+     * @param $multimediaObjects
+     */
     private function importOpencastTracks($multimediaObjects)
     {
+        $this->output->writeln(
+            array(
+                '',
+                '<info> **** Adding tracks to multimedia object **** </info>',
+                '',
+                '<comment> ----- Total: </comment>'.count($multimediaObjects),
+            )
+        );
+
         foreach ($multimediaObjects as $multimediaObject) {
             $mediaPackage = $this->clientService->getMediapackage($multimediaObject->getProperty('opencast'));
             $media = $this->getMediaPackageField($mediaPackage, 'media');
@@ -139,7 +176,13 @@ EOT
         }
     }
 
-    public function getMediaPackageField($mediaFields = array(), $field = '')
+    /**
+     * @param array  $mediaFields
+     * @param string $field
+     *
+     * @return mixed|null
+     */
+    private function getMediaPackageField($mediaFields = array(), $field = '')
     {
         if ($mediaFields && $field) {
             if (isset($mediaFields[$field])) {
@@ -148,5 +191,24 @@ EOT
         }
 
         return null;
+    }
+
+    /**
+     * @param $multimediaObjects
+     */
+    private function showMultimediaObjects($multimediaObjects)
+    {
+        $this->output->writeln(
+            array(
+                '',
+                '<info> **** Finding Multimedia Objects **** </info>',
+                '',
+                '<comment> ----- Total: </comment>'.count($multimediaObjects),
+            )
+        );
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            $this->output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencast'));
+        }
     }
 }
