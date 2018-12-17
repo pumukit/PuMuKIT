@@ -7,9 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\CoreBundle\Controller\AdminController;
 
-class SecurityController extends Controller implements AdminController
+class SecurityController extends Controller
 {
     /**
      * @param Request          $request
