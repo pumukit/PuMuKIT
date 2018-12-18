@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Hateoas\Model\Embedded;
 
 /**
  * Pumukit\SchemaBundle\Document\MultimediaObject.
