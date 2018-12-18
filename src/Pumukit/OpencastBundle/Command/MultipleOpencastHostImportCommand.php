@@ -45,12 +45,14 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             <info> ** Example ( check and list ):</info>
             
             <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
+            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
             
             This example will be check the conection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
             <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
+            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
             );
