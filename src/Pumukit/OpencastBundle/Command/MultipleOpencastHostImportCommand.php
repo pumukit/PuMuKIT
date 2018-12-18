@@ -18,6 +18,7 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
     private $user;
     private $password;
     private $host;
+    private $id;
     private $force;
     private $clientService;
 
@@ -29,6 +30,7 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             ->addOption('user', 'u', InputOption::VALUE_REQUIRED, 'Opencast user')
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'Opencast password')
             ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Path to selected tracks from PMK using regex')
+            ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'ID of multimedia object to import')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<'EOT'
             
@@ -70,6 +72,7 @@ EOT
         $this->user = trim($this->input->getOption('user'));
         $this->password = trim($this->input->getOption('password'));
         $this->host = trim($this->input->getOption('host'));
+        $this->id = trim($this->input->getOption('id'));
         $this->force = (true === $this->input->getOption('force'));
 
         $this->clientService = new ClientService(
@@ -119,6 +122,13 @@ EOT
         if (!$this->user || !$this->password || !$this->host) {
             throw new \Exception('Please, set values for user, password and host');
         }
+
+        if ($this->id or empty($this->id)) {
+            $validate = preg_match('/^[a-f\d]{24}$/i', $this->id);
+            if (0 === $validate || false === $validate) {
+                throw new \Exception('Please, use a valid ID');
+            }
+        }
     }
 
     /**
@@ -138,11 +148,15 @@ EOT
      */
     private function getMultimediaObjects()
     {
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
-            array(
-                'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
-            )
+        $criteria = array(
+            'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
         );
+
+        if ($this->id) {
+            $criteria['_id'] = new \MongoId($this->id);
+        }
+
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 
         return $multimediaObjects;
     }
