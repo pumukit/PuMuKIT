@@ -25,7 +25,7 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('pumukit:opencast:multiple:host:import')
+            ->setName('pumukit:opencast:import:multiple:host')
             ->setDescription('Import tracks from opencast passing data')
             ->addOption('user', 'u', InputOption::VALUE_REQUIRED, 'Opencast user')
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'Opencast password')
@@ -44,15 +44,15 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             
             <info> ** Example ( check and list ):</info>
             
-            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
-            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
             
-            This example will be check the conection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
+            This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
-            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
-            <comment>php app/console pumukit:opencast:multiple:host:import --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
             );
@@ -74,7 +74,7 @@ EOT
         $this->user = trim($this->input->getOption('user'));
         $this->password = trim($this->input->getOption('password'));
         $this->host = trim($this->input->getOption('host'));
-        $this->id = trim($this->input->getOption('id'));
+        $this->id = $this->input->getOption('id');
         $this->force = (true === $this->input->getOption('force'));
 
         $this->clientService = new ClientService(
@@ -125,7 +125,11 @@ EOT
             throw new \Exception('Please, set values for user, password and host');
         }
 
-        if ($this->id or empty($this->id)) {
+        if (empty($this->id)) {
+            throw new \Exception('Please, use a valid ID');
+        }
+
+        if ($this->id) {
             $validate = preg_match('/^[a-f\d]{24}$/i', $this->id);
             if (0 === $validate || false === $validate) {
                 throw new \Exception('Please, use a valid ID');
