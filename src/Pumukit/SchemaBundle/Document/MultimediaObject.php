@@ -106,6 +106,12 @@ class MultimediaObject
     private $embeddedEvent;
 
     /**
+     * @var ArrayCollection
+     * @MongoDB\EmbedMany(targetDocument="EmbeddedSegment")
+     */
+    private $embeddedSegments;
+
+    /**
      * @var EmbeddedSocial
      * @MongoDB\EmbedOne(targetDocument="EmbeddedSocial")
      */
@@ -949,6 +955,49 @@ class MultimediaObject
     public function setEmbeddedEvent(EmbeddedEvent $embeddedEvent)
     {
         $this->embeddedEvent = $embeddedEvent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEmbeddedSegments()
+    {
+        return $this->embeddedSegments;
+    }
+
+    /**
+     * @param array $embeddedSegments
+     */
+    public function setEmbeddedSegments(array $embeddedSegments)
+    {
+        $this->embeddedSegments = $embeddedSegments;
+    }
+
+    /**
+     * @param EmbeddedSegment $embeddedSegment
+     */
+    public function addEmbeddedSegment(EmbeddedSegment $embeddedSegment)
+    {
+        $this->embeddedSegments[] = $embeddedSegment;
+    }
+
+    /**
+     * @param EmbeddedSegment $embeddedSegment
+     *
+     * @return bool
+     */
+    public function removeEmbeddedSegment(EmbeddedSegment $embeddedSegment)
+    {
+        foreach ($this->embeddedSegments as $segment) {
+            if ($segment->getId() === $embeddedSegment->getId()) {
+                $removed = $this->embeddedSegments->removeElement($embeddedSegment);
+                $this->embeddedSegments = new ArrayCollection(array_values($this->embeddedSegments->toArray()));
+
+                return $removed;
+            }
+        }
+
+        return false;
     }
 
     /**

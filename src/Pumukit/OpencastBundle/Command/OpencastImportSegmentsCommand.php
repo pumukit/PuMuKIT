@@ -2,13 +2,14 @@
 
 namespace Pumukit\OpencastBundle\Command;
 
-use Pumukit\OpencastBundle\Services\ClientService;
+use Pumukit\SchemaBundle\Document\EmbeddedSegment;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\OpencastBundle\Services\ClientService;
 
-class MultipleOpencastHostImportCommand extends ContainerAwareCommand
+class OpencastImportSegmentsCommand extends ContainerAwareCommand
 {
     private $output;
     private $input;
@@ -25,8 +26,8 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('pumukit:opencast:import:multiple:host')
-            ->setDescription('Import tracks from opencast passing data')
+            ->setName('pumukit:opencast:import:segments')
+            ->setDescription('Import segments from OC to PMK')
             ->addOption('user', 'u', InputOption::VALUE_REQUIRED, 'Opencast user')
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'Opencast password')
             ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Path to selected tracks from PMK using regex')
@@ -40,19 +41,19 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             
             ---------------
             
-            Command to import all tracks from Opencast to PuMuKIT defining Opencast configuration
+            Command to import segments from Opencast to PuMuKIT defining Opencast configuration
             
             <info> ** Example ( check and list ):</info>
             
-            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
-            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
+            <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
+            <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
             
             This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
-            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
-            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
+            <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
+            <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
             );
@@ -109,7 +110,7 @@ EOT
         if ($this->checkOpencastStatus()) {
             $multimediaObjects = $this->getMultimediaObjects();
             if ($this->force) {
-                $this->importOpencastTracks($multimediaObjects);
+                $this->importSegments($multimediaObjects);
             } else {
                 $this->showMultimediaObjects($multimediaObjects);
             }
@@ -170,47 +171,35 @@ EOT
     /**
      * @param $multimediaObjects
      */
-    private function importOpencastTracks($multimediaObjects)
+    private function importSegments($multimediaObjects)
     {
         $this->output->writeln(
             array(
                 '',
-                '<info> **** Adding tracks to multimedia object **** </info>',
+                '<info> **** Import segments on multimedia object **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
             )
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $mediaPackage = $this->clientService->getMediapackage($multimediaObject->getProperty('opencast'));
-            $media = $this->getMediaPackageField($mediaPackage, 'media');
-            $tracks = $this->getMediaPackageField($media, 'track');
-            if (isset($tracks[0])) {
-                $limit = count($tracks);
-                for ($i = 0; $i < $limit; ++$i) {
-                    $this->opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
+            $mediaPackage = $this->clientService->getFullMediaPackage($multimediaObject->getProperty('opencast'));
+            if (isset($mediaPackage['segments']) && isset($mediaPackage['segments']['segment'])) {
+                $segments = $mediaPackage['segments']['segment'];
+                $embeddedSegments = array();
+                foreach ($segments as $segment) {
+                    $embeddedSegments[] = $this->createNewSegment($segment);
                 }
-            } else {
-                $this->opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
+
+                if ($embeddedSegments) {
+                    $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: '.count($segments));
+                    $multimediaObject->setEmbeddedSegments($embeddedSegments);
+                    $this->dm->flush();
+                } else {
+                    $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: 0');
+                }
             }
         }
-    }
-
-    /**
-     * @param array  $mediaFields
-     * @param string $field
-     *
-     * @return mixed|null
-     */
-    private function getMediaPackageField($mediaFields = array(), $field = '')
-    {
-        if ($mediaFields && $field) {
-            if (isset($mediaFields[$field])) {
-                return $mediaFields[$field];
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -228,7 +217,25 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencast'));
+            $mediaPackage = $this->clientService->getFullMediaPackage($multimediaObject->getProperty('opencast'));
+            $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: '.count($mediaPackage['segments']['segment']));
         }
+    }
+
+    private function createNewSegment($segment)
+    {
+        $embeddedSegment = new EmbeddedSegment();
+
+        $embeddedSegment->setIndex($segment['index']);
+        $embeddedSegment->setTime($segment['time']);
+        $embeddedSegment->setDuration($segment['duration']);
+        $embeddedSegment->setRelevance($segment['relevance']);
+        $embeddedSegment->setHit(boolval($segment['hit']));
+        $embeddedSegment->setText($segment['text']);
+        $embeddedSegment->setPreview($segment['previews']['preview']['$']);
+
+        $this->dm->persist($embeddedSegment);
+
+        return $embeddedSegment;
     }
 }
