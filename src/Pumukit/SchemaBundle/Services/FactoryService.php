@@ -116,11 +116,11 @@ class FactoryService
 
         $mm = $this->createMultimediaObjectPrototype($series, $loggedInUser);
 
-        $this->generateNumericalIDSeries($series);
-
         $this->dm->persist($mm);
         $this->dm->persist($series);
         $this->dm->flush();
+
+        $this->generateNumericalIDSeries($series);
 
         return $series;
     }
@@ -227,12 +227,11 @@ class FactoryService
 
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
-        $this->generateNumericalIDMultimediaObject($mm);
-
         $this->dm->persist($mm);
         $this->dm->persist($series);
         if ($flush) {
             $this->dm->flush();
+            $this->generateNumericalIDMultimediaObject($mm);
         }
 
         return $mm;
@@ -704,6 +703,7 @@ class FactoryService
         $newNumericalID = $lastNumericalID + 1;
 
         $mm->setNumericalID($newNumericalID);
+        $this->dm->flush();
         sem_release($seg);
     }
 
@@ -727,6 +727,7 @@ class FactoryService
         $newNumericalID = $lastNumericalID + 1;
 
         $oneSeries->setNumericalID($newNumericalID);
+        $this->dm->flush();
         sem_release($seg);
     }
 }
