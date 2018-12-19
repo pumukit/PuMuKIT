@@ -88,7 +88,7 @@ EOT
             false,
             'delete-archive',
             false,
-            false,
+            true,
             null,
             $this->logger,
             null
@@ -124,10 +124,6 @@ EOT
     {
         if (!$this->user || !$this->password || !$this->host) {
             throw new \Exception('Please, set values for user, password and host');
-        }
-
-        if (empty($this->id)) {
-            throw new \Exception('Please, use a valid ID');
         }
 
         if ($this->id) {
@@ -184,21 +180,26 @@ EOT
 
         foreach ($multimediaObjects as $multimediaObject) {
             $mediaPackage = $this->clientService->getFullMediaPackage($multimediaObject->getProperty('opencast'));
+
+            $segments = 0;
             if (isset($mediaPackage['segments']) && isset($mediaPackage['segments']['segment'])) {
-                $segments = $mediaPackage['segments']['segment'];
+                if (!isset($mediaPackage['segments']['segment'][0])) {
+                    $segments = array($mediaPackage['segments']['segment']);
+                } else {
+                    $segments = $mediaPackage['segments']['segment'];
+                }
                 $embeddedSegments = array();
                 foreach ($segments as $segment) {
                     $embeddedSegments[] = $this->createNewSegment($segment);
                 }
 
                 if ($embeddedSegments) {
-                    $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: '.count($segments));
                     $multimediaObject->setEmbeddedSegments($embeddedSegments);
                     $this->dm->flush();
-                } else {
-                    $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: 0');
                 }
             }
+            $numSegments = isset($mediaPackage['segments']['segment']) ? count($segments) : 0;
+            $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' MediaPackage: -'.$multimediaObject->getProperty('opencast').' - Segments: '.$numSegments);
         }
     }
 
@@ -218,7 +219,17 @@ EOT
 
         foreach ($multimediaObjects as $multimediaObject) {
             $mediaPackage = $this->clientService->getFullMediaPackage($multimediaObject->getProperty('opencast'));
-            $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' - Segments: '.count($mediaPackage['segments']['segment']));
+            $numSegments = 0;
+            if (isset($mediaPackage['segments'])) {
+                if (!isset($mediaPackage['segments']['segment'][0])) {
+                    $segments = array($mediaPackage['segments']['segment']);
+                } else {
+                    $segments = $mediaPackage['segments']['segment'];
+                }
+
+                $numSegments = isset($mediaPackage['segments']['segment']) ? count($segments) : 0;
+            }
+            $this->output->writeln(' Multimedia object: '.$multimediaObject->getId().' MediaPackage: -'.$multimediaObject->getProperty('opencast').' - Segments: '.$numSegments);
         }
     }
 
