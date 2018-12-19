@@ -87,7 +87,7 @@ EOT
             false,
             'delete-archive',
             false,
-            false,
+            true,
             null,
             $this->logger,
             null
@@ -123,10 +123,6 @@ EOT
     {
         if (!$this->user || !$this->password || !$this->host) {
             throw new \Exception('Please, set values for user, password and host');
-        }
-
-        if (empty($this->id)) {
-            throw new \Exception('Please, use a valid ID');
         }
 
         if ($this->id) {
@@ -228,7 +224,7 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencast'));
+            $this->output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencasturl'));
         }
     }
 }
