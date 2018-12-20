@@ -61,6 +61,11 @@ class Configuration implements ConfigurationInterface
                   ->defaultValue('title')
                   ->info('Format used with dc:subject. All: "120000 - Mathematics", Code: "120000", Title: "Mathematics", E-ciencia: "12 Matemáticas"')
               ->end()
+              ->enumNode('dc_identifier_url_mapping')
+                  ->values(array('all', 'portal_and_track', 'portal', 'iframe', 'track'))
+                  ->defaultValue('portal')
+                  ->info('URL used with dc:identifier. URL to delivery track (.mp4), URL to iframe (.html), URL to portal (.html) or a combination')
+              ->end()
             ->end()
         ;
 

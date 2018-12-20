@@ -8,7 +8,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class SecurityController extends Controller implements WebTVController
+class SecurityController extends Controller
 {
     /**
      * @param Request          $request

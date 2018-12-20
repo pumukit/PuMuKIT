@@ -148,6 +148,12 @@ class Series
     private $description = array('en' => '');
 
     /**
+     * @var string
+     * @MongoDB\Field(type="string")
+     */
+    private $comments;
+
+    /**
      * @var text
      * @MongoDB\Field(type="raw")
      */
@@ -632,6 +638,26 @@ class Series
         }
 
         return $this->description[$locale];
+    }
+
+    /**
+     * Set comments.
+     *
+     * @param string $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * Get comments.
+     *
+     * @return string
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**
