@@ -2,7 +2,7 @@ pumukitnewadmin_role_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.role:indexAction
+        _controller: PumukitNewAdminBundle:Role:index
         _sylius:
             filterable: true
             sorting:
@@ -12,7 +12,7 @@ pumukitnewadmin_role_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:createAction
+        _controller: PumukitNewAdminBundle:Role:create
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -20,7 +20,7 @@ pumukitnewadmin_role_update:
     pattern: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:updateAction
+        _controller: PumukitNewAdminBundle:Role:update
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -28,7 +28,7 @@ pumukitnewadmin_role_batch_delete:
     pattern: /delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.role:batchDeleteAction
+        _controller: PumukitNewAdminBundle:Role:batchDelete
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -36,7 +36,7 @@ pumukitnewadmin_role_delete:
     pattern: /{id}
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.role:deleteAction
+        _controller: PumukitNewAdminBundle:Role:delete
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -44,7 +44,7 @@ pumukitnewadmin_role_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:copyAction
+        _controller: PumukitNewAdminBundle:Role:copy
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -52,7 +52,7 @@ pumukitnewadmin_role_up:
     pattern: /{id}/up
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:upAction
+        _controller: PumukitNewAdminBundle:Role:up
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -60,7 +60,7 @@ pumukitnewadmin_role_down:
     pattern: /{id}/down
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:downAction
+        _controller: PumukitNewAdminBundle:Role:down
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -68,7 +68,7 @@ pumukitnewadmin_role_top:
     pattern: /{id}/top
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:topAction
+        _controller: PumukitNewAdminBundle:Role:top
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -76,7 +76,7 @@ pumukitnewadmin_role_bottom:
     pattern: /{id}/bottom
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:bottomAction
+        _controller: PumukitNewAdminBundle:Role:bottom
         _sylius:
             redirect: pumukitnewadmin_role_index
 
@@ -84,10 +84,10 @@ pumukitnewadmin_role_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:listAction
+        _controller: PumukitNewAdminBundle:Role:list
 
 pumukitnewadmin_role_export:
     pattern: /export
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.role:exportRolesAction
+        _controller: PumukitNewAdminBundle:Role:exportRoles

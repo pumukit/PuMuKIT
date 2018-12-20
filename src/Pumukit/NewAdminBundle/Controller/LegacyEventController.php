@@ -2,17 +2,20 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Pumukit\LiveBundle\Document\Event;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
 class LegacyEventController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'event';
+    public static $repoName = 'PumukitLiveBundle:Event';
+
     /**
      * @var array
      */
@@ -25,10 +28,8 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
-        $criteria = $this->getCriteria($config);
-        list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
 
         $update_session = true;
         foreach ($events as $event) {
@@ -67,17 +68,11 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function createAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
         $resource = $this->createNew();
         $form = $this->getForm($resource);
 
         if ($form->handleRequest($request)->isValid()) {
-            $resource = $this->domainManager->create($resource);
-
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($resource, 201));
-            }
+            $resource = $this->update($resource);
 
             if (null === $resource) {
                 return new JsonResponse(array('eventId' => null));
@@ -87,15 +82,11 @@ class LegacyEventController extends AdminController implements NewAdminControlle
             return new JsonResponse(array('eventId' => $resource->getId()));
         }
 
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
-        }
-
         return $this->render('PumukitNewAdminBundle:LegacyEvent:create.html.twig',
                              array(
-                                   'event' => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                                 'event' => $resource,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
@@ -105,14 +96,12 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function listAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
-        $criteria = $this->getCriteria($config);
-        list($events, $month, $year, $calendar) = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
 
         $repo = $this
-             ->get('doctrine_mongodb.odm.document_manager')
-             ->getRepository('PumukitLiveBundle:Event');
+              ->get('doctrine_mongodb.odm.document_manager')
+              ->getRepository('PumukitLiveBundle:Event');
 
         $eventsMonth = $repo->findInMonth($month, $year);
 
@@ -144,6 +133,20 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     }
 
     /**
+     * Overwrite to update the session.
+     */
+    public function showAction(Request $request)
+    {
+        $resourceName = $this->getResourceName();
+
+        $data = $this->findOr404($request);
+
+        return $this->render('PumukitNewAdminBundle:LegacyEvent:show.html.twig',
+                             array($this->getResourceName() => $data)
+        );
+    }
+
+    /**
      * Update Action
      * Overwrite to return list and not index
      * and show toast message.
@@ -156,8 +159,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource);
@@ -170,28 +172,20 @@ class LegacyEventController extends AdminController implements NewAdminControlle
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($resource, 204));
-            }
-
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
-        }
-
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
         }
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:update.html.twig',
                              array(
-                                   $resourceName => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                                 $resourceName => $resource,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
      * Get calendar.
      */
-    private function getCalendar($config, $request)
+    private function getCalendar($request)
     {
         /*if (!$this->getUser()->hasAttribute('page', 'tv_admin/event'))
           $this->getUser()->setAttribute('page', 1, 'tv_admin/event');*/
@@ -272,10 +266,8 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * Gets the criteria values.
      */
-    public function getCriteria($config)
+    public function getCriteria($criteria)
     {
-        $criteria = $config->getCriteria();
-
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/event/criteria');
         } elseif ($criteria) {
@@ -312,7 +304,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
         $sorting = array('date' => -1);
         $repository = $this->getRepository();
@@ -326,34 +318,31 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $y = '';
         $calendar = array();
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $page = $request->get('page');
-                $session->set($session_namespace.'/page', $page);
-            }
-
-            // ADDED FROM ADMIN CONTROLLER
-            if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
-            }
-
-            $resources
-                ->setMaxPerPage($config->getPaginationMaxPerPage())
-                ->setNormalizeOutOfRangePages(true);
-
-            $resources->setCurrentPage($page);
-        } else {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $page = $request->get('page');
+            $session->set($session_namespace.'/page', $page);
         }
 
-        list($m, $y, $calendar) = $this->getCalendar($config, $request);
+        // ADDED FROM ADMIN CONTROLLER
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        }
+
+        $resources
+            ->setMaxPerPage(10)
+            ->setNormalizeOutOfRangePages(true);
+
+        $resources->setCurrentPage($page);
+
+        list($m, $y, $calendar) = $this->getCalendar($request);
 
         return array($resources, $m, $y, $calendar);
+    }
+
+    public function createNew()
+    {
+        return new Event();
     }
 }

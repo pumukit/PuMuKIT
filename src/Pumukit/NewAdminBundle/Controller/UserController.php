@@ -15,6 +15,9 @@ use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
  */
 class UserController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'user';
+    public static $repoName = 'PumukitSchemaBundle:User';
+
     /**
      * Overwrite to check Users creation.
      *
@@ -26,10 +29,9 @@ class UserController extends AdminController implements NewAdminController
     public function indexAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $config = $this->getConfiguration();
 
-        $criteria = $this->getCriteria($config);
-        $users = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $users = $this->getResources($request, $criteria);
         $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
         $profiles = $repo->findAll();
 
@@ -63,15 +65,8 @@ class UserController extends AdminController implements NewAdminController
             } catch (\Exception $e) {
                 throw $e;
             }
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($user, 201));
-            }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
-        }
-
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
         }
 
         return $this->render(
@@ -120,15 +115,8 @@ class UserController extends AdminController implements NewAdminController
             } catch (\Exception $e) {
                 throw $e;
             }
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($user, 204));
-            }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
-        }
-
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
         }
 
         return $this->render(
@@ -384,8 +372,8 @@ class UserController extends AdminController implements NewAdminController
         $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
 
         return $repo->createQueryBuilder()->where(
-                "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
-            )->count()->getQuery()->execute();
+            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
+        )->count()->getQuery()->execute();
     }
 
     private function getUniqueAdminUser()
@@ -393,21 +381,19 @@ class UserController extends AdminController implements NewAdminController
         $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
 
         return $repo->createQueryBuilder()->where(
-                "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
-            )->getQuery()->getSingleResult();
+            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
+        )->getQuery()->getSingleResult();
     }
 
     /**
      * Gets the criteria values.
      *
-     * @param $config
+     * @param $criteria
      *
      * @return array
      */
-    public function getCriteria($config)
+    public function getCriteria($criteria)
     {
-        $criteria = $config->getCriteria();
-
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/user/criteria');
         } elseif ($criteria) {

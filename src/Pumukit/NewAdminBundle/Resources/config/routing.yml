@@ -57,10 +57,6 @@ pumukitnewadmin_person:
     resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
     prefix: /admin/person
 
-pumukitnewadmin_broadcast:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/broadcast.yml
-    prefix: /admin/broadcast
-
 pumukitnewadmin_role:
     resource: @PumukitNewAdminBundle/Resources/config/routes/role.yml
     prefix: /admin/role
@@ -89,7 +85,7 @@ pumukitnewadmin_mms_shortener:
     pattern: /admin/mm/{id}/
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.mms:shortenerAction
+        _controller: PumukitNewAdminBundle:MultimediaObject:shortenerAction
 
 pumukitnewadmin_playlistmms:
     resource: @PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml

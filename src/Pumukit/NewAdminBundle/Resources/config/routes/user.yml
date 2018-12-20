@@ -2,7 +2,7 @@ pumukitnewadmin_user_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.user:indexAction
+        _controller: PumukitNewAdminBundle:User:index
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_user_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.user:createAction
+        _controller: PumukitNewAdminBundle:User:create
         _sylius:
             redirect: pumukitnewadmin_user_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_user_update:
     pattern: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.user:updateAction
+        _controller: PumukitNewAdminBundle:User:update
         _sylius:
             redirect: pumukitnewadmin_user_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_user_batch_delete:
     pattern: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.user:batchDeleteAction
+        _controller: PumukitNewAdminBundle:User:batchDelete
         _sylius:
             redirect: pumukitnewadmin_user_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_user_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.user:deleteAction
+        _controller: PumukitNewAdminBundle:User:delete
         _sylius:
             redirect: pumukitnewadmin_user_index
 
@@ -42,28 +42,28 @@ pumukitnewadmin_user_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.user:listAction
+        _controller: PumukitNewAdminBundle:User:list
 
 pumukitnewadmin_user_promote:
     pattern: /promote
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.user:promoteAction
+        _controller: PumukitNewAdminBundle:User:promote
 
 pumukitnewadmin_user_editgroups:
     pattern: /editgroups
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.user:editGroupsAction
+        _controller: PumukitNewAdminBundle:User:editGroups
 
 pumukitnewadmin_user_updategroups:
     pattern: /updategroups
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.user:updateGroupsAction
+        _controller: PumukitNewAdminBundle:User:updateGroups
 
 pumukitnewadmin_user_getgroups:
     pattern: /getgroups
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.user:getGroupsAction
+        _controller: PumukitNewAdminBundle:User:getGroups

@@ -17,6 +17,9 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
  */
 class GroupController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'group';
+    public static $repoName = 'PumukitSchemaBundle:Group';
+
     /**
      * Index.
      *
@@ -24,16 +27,15 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfiguration();
-        $criteria = $this->getCriteria($config);
-        $groups = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $groups = $this->getResources($request, $criteria);
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $origins = $dm
-                ->createQueryBuilder('PumukitSchemaBundle:Group')
-                ->distinct('origin')
-                ->getQuery()
-                ->execute();
+                 ->createQueryBuilder('PumukitSchemaBundle:Group')
+                 ->distinct('origin')
+                 ->getQuery()
+                 ->execute();
 
         return array('groups' => $groups, 'origins' => $origins->toArray());
     }
@@ -45,9 +47,8 @@ class GroupController extends AdminController implements NewAdminController
      */
     public function listAction(Request $request)
     {
-        $config = $this->getConfiguration();
-        $criteria = $this->getCriteria($config);
-        $groups = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $groups = $this->getResources($request, $criteria);
 
         return array('groups' => $groups);
     }
@@ -64,7 +65,6 @@ class GroupController extends AdminController implements NewAdminController
     public function createAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $config = $this->getConfiguration();
 
         $group = $this->createNew();
         $form = $this->getForm($group);
@@ -78,10 +78,6 @@ class GroupController extends AdminController implements NewAdminController
                     return new JsonResponse(array($e->getMessage()), Response::HTTP_BAD_REQUEST);
                 }
 
-                if ($this->config->isApiRequest()) {
-                    return $this->handleView($this->view($group, 201));
-                }
-
                 if (null === $group) {
                     return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
                 }
@@ -92,15 +88,11 @@ class GroupController extends AdminController implements NewAdminController
             }
         }
 
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
-        }
-
         return $this->render('PumukitNewAdminBundle:Group:create.html.twig',
                              array(
-                                   'group' => $group,
-                                   'form' => $form->createView(),
-                                   ));
+                                 'group' => $group,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
@@ -116,7 +108,6 @@ class GroupController extends AdminController implements NewAdminController
     public function updateAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $config = $this->getConfiguration();
         $group = $this->findOr404($request);
         if (!$group->isLocal()) {
             return new Response('Not allowed to update not local Group', Response::HTTP_METHOD_NOT_ALLOWED);
@@ -131,22 +122,14 @@ class GroupController extends AdminController implements NewAdminController
                 return new JsonResponse(array('status' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
             }
 
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($group, 204));
-            }
-
             return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
-        }
-
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
         }
 
         return $this->render('PumukitNewAdminBundle:Group:update.html.twig',
                              array(
-                                   'group' => $group,
-                                   'form' => $form->createView(),
-                                   ));
+                                 'group' => $group,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
@@ -221,35 +204,27 @@ class GroupController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
         $repository = $this->getRepository();
         $session = $this->get('session');
         $sessionNamespace = 'admin/group';
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set($sessionNamespace.'/page', $request->get('page', 1));
-            }
-
-            if ($request->get('paginate', null)) {
-                $session->set($sessionNamespace.'/paginate', $request->get('paginate', 10));
-            }
-
-            $resources
-                ->setMaxPerPage($session->get($sessionNamespace.'/paginate', 10))
-                ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($sessionNamespace.'/page', 1));
-        } else {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $session->set($sessionNamespace.'/page', $request->get('page', 1));
         }
+
+        if ($request->get('paginate', null)) {
+            $session->set($sessionNamespace.'/paginate', $request->get('paginate', 10));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($sessionNamespace.'/paginate', 10))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get($sessionNamespace.'/page', 1));
 
         return $resources;
     }
@@ -261,7 +236,7 @@ class GroupController extends AdminController implements NewAdminController
      *
      * @return array
      */
-    private function getSorting(Request $request)
+    public function getSorting(Request $request = null, $session_namespace = null)
     {
         $session = $this->get('session');
         if ($sorting = $request->get('sorting')) {
@@ -306,15 +281,15 @@ class GroupController extends AdminController implements NewAdminController
         $deleteMessage = $groupService->getDeleteMessage($group, $locale);
 
         return array(
-                     'group' => $group,
-                     'action' => $action,
-                     'users' => $users,
-                     'admin_multimedia_objects' => $adminMultimediaObjects,
-                     'viewer_multimedia_objects' => $viewerMultimediaObjects,
-                     'countResources' => $countResources,
-                     'can_delete' => $canBeDeleted,
-                     'delete_group_message' => $deleteMessage,
-                     );
+            'group' => $group,
+            'action' => $action,
+            'users' => $users,
+            'admin_multimedia_objects' => $adminMultimediaObjects,
+            'viewer_multimedia_objects' => $viewerMultimediaObjects,
+            'countResources' => $countResources,
+            'can_delete' => $canBeDeleted,
+            'delete_group_message' => $deleteMessage,
+        );
     }
 
     /**
@@ -348,11 +323,11 @@ class GroupController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'group' => $group,
-                     'action' => $action,
-                     'resources' => $resources,
-                     'resource_name' => $resourceName,
-                     );
+            'group' => $group,
+            'action' => $action,
+            'resources' => $resources,
+            'resource_name' => $resourceName,
+        );
     }
 
     /**
@@ -418,10 +393,10 @@ class GroupController extends AdminController implements NewAdminController
         }
 
         return new JsonResponse(array(
-                                      'canbedeleted' => $value,
-                                      'deleteMessage' => $deleteMessage,
-                                      'groupName' => $group->getName(),
-                                      ));
+            'canbedeleted' => $value,
+            'deleteMessage' => $deleteMessage,
+            'groupName' => $group->getName(),
+        ));
     }
 
     /**
@@ -484,14 +459,19 @@ class GroupController extends AdminController implements NewAdminController
         return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
     }
 
-    public function getCriteria($config)
+    public function getCriteria($criteria)
     {
-        $new_criteria = parent::getCriteria($config);
+        $new_criteria = parent::getCriteria($criteria);
         if (isset($new_criteria['origin']) &&
             '/all/i' == (string) $new_criteria['origin']) {
             unset($new_criteria['origin']);
         }
 
         return $new_criteria;
+    }
+
+    public function createNew()
+    {
+        return new Group();
     }
 }

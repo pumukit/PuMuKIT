@@ -94,16 +94,16 @@ class PlaylistController extends CollectionController
 
             return $this->render('PumukitNewAdminBundle:Playlist:list.html.twig',
                                  array('series' => $resources)
-                                 );
+            );
         }
 
         return $this->render('PumukitNewAdminBundle:Playlist:update.html.twig',
                              array(
-                                   'series' => $series,
-                                   'form' => $form->createView(),
-                                   'template' => '_template',
-                                   )
-                             );
+                                 'series' => $series,
+                                 'form' => $form->createView(),
+                                 'template' => '_template',
+                             )
+        );
     }
 
     /**
@@ -156,11 +156,11 @@ class PlaylistController extends CollectionController
 
         // Removes ids on session (if the series/mmobj does not exist now, we should get rid of the stored id)
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                          ->getRepository('PumukitSchemaBundle:Series');
+                    ->getRepository('PumukitSchemaBundle:Series');
         $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                   ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-//        $this->get('doctrine_mongodb.odm.document_manager')->clear();
+        //        $this->get('doctrine_mongodb.odm.document_manager')->clear();
         $playlist = $seriesRepo->find($this->get('session')->get('admin/playlist/id'));
         if (!$playlist) {
             $this->get('session')->remove('admin/playlist/id');
@@ -223,7 +223,7 @@ class PlaylistController extends CollectionController
     /**
      * Gets the sorting values from the request and initialize session vars accordingly if necessary.
      */
-    private function getSorting(Request $request)
+    private function getSorting(Request $request = null, $session_namespace = null)
     {
         $session = $this->get('session');
 

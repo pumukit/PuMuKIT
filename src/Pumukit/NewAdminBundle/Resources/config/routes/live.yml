@@ -2,7 +2,7 @@ pumukitnewadmin_live_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.live:indexAction
+        _controller: PumukitNewAdminBundle:Live:index
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_live_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.live:createAction
+        _controller: PumukitNewAdminBundle:Live:create
         _sylius:
             redirect: pumukitnewadmin_live_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_live_update:
     pattern: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.live:updateAction
+        _controller: PumukitNewAdminBundle:Live:update
         _sylius:
             redirect: pumukitnewadmin_live_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_live_batch_delete:
     pattern: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.live:batchDeleteAction
+        _controller: PumukitNewAdminBundle:Live:batchDelete
         _sylius:
             redirect: pumukitnewadmin_live_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_live_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.live:deleteAction
+        _controller: PumukitNewAdminBundle:Live:delete
         _sylius:
             redirect: pumukitnewadmin_live_index
 
@@ -42,7 +42,7 @@ pumukitnewadmin_live_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.live:copyAction
+        _controller: PumukitNewAdminBundle:Live:copy
         _sylius:
             redirect: pumukitnewadmin_live_index
 
@@ -50,12 +50,12 @@ pumukitnewadmin_live_show:
     pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.live:showAction
+        _controller: PumukitNewAdminBundle:Live:show
 
 pumukitnewadmin_live_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.live:listAction
+        _controller: PumukitNewAdminBundle:Live:list
         _sylius:
             filterable: true

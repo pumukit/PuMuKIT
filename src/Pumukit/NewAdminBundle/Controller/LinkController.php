@@ -35,18 +35,18 @@ class LinkController extends Controller implements NewAdminController
             }
 
             return $this->render('PumukitNewAdminBundle:Link:list.html.twig',
-                 array(
-                       'links' => $multimediaObject->getLinks(),
-                       'mmId' => $multimediaObject->getId(),
-                       )
-                 );
+                                 array(
+                                     'links' => $multimediaObject->getLinks(),
+                                     'mmId' => $multimediaObject->getId(),
+                                 )
+            );
         }
 
         return array(
-             'link' => $link,
-             'form' => $form->createView(),
-             'mm' => $multimediaObject,
-             );
+            'link' => $link,
+            'form' => $form->createView(),
+            'mm' => $multimediaObject,
+        );
     }
 
     /**
@@ -68,18 +68,18 @@ class LinkController extends Controller implements NewAdminController
             }
 
             return $this->render('PumukitNewAdminBundle:Link:list.html.twig',
-                 array(
-                       'links' => $multimediaObject->getLinks(),
-                       'mmId' => $multimediaObject->getId(),
-                       )
-                 );
+                                 array(
+                                     'links' => $multimediaObject->getLinks(),
+                                     'mmId' => $multimediaObject->getId(),
+                                 )
+            );
         }
 
         return array(
-             'link' => $link,
-             'form' => $form->createView(),
-             'mm' => $multimediaObject,
-             );
+            'link' => $link,
+            'form' => $form->createView(),
+            'mm' => $multimediaObject,
+        );
     }
 
     /**
@@ -93,9 +93,9 @@ class LinkController extends Controller implements NewAdminController
         $this->addFlash('success', 'delete');
 
         return array(
-             'links' => $multimediaObject->getLinks(),
-             'mmId' => $multimediaObject->getId(),
-             );
+            'links' => $multimediaObject->getLinks(),
+            'mmId' => $multimediaObject->getId(),
+        );
     }
 
     /**
@@ -109,9 +109,9 @@ class LinkController extends Controller implements NewAdminController
         $this->addFlash('success', 'delete');
 
         return array(
-             'mmId' => $multimediaObject->getId(),
-             'links' => $multimediaObject->getLinks(),
-             );
+            'mmId' => $multimediaObject->getId(),
+            'links' => $multimediaObject->getLinks(),
+        );
     }
 
     /**
@@ -125,8 +125,8 @@ class LinkController extends Controller implements NewAdminController
         $this->addFlash('success', 'delete');
 
         return array(
-             'mmId' => $multimediaObject->getId(),
-             'links' => $multimediaObject->getLinks(),
-             );
+            'mmId' => $multimediaObject->getId(),
+            'links' => $multimediaObject->getLinks(),
+        );
     }
 }

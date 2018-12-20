@@ -613,27 +613,27 @@ class UNESCOController extends Controller implements NewAdminController
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         switch ($option) {
-            case 'delete_selected':
-                $factoryService = $this->get('pumukitschema.factory');
-                foreach ($data as $multimediaObjectId) {
-                    $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
-                    $factoryService->deleteMultimediaObject($multimediaObject);
+        case 'delete_selected':
+            $factoryService = $this->get('pumukitschema.factory');
+            foreach ($data as $multimediaObjectId) {
+                $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+                $factoryService->deleteMultimediaObject($multimediaObject);
+            }
+            break;
+        case 'invert_announce_selected':
+            $tagService = $this->container->get('pumukitschema.tag');
+            $pudeNew = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUDENEW'));
+            foreach ($data as $multimediaObjectId) {
+                $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
+                if ($multimediaObject->containsTag($pudeNew)) {
+                    $tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
+                } else {
+                    $tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
                 }
-                break;
-            case 'invert_announce_selected':
-                $tagService = $this->container->get('pumukitschema.tag');
-                $pudeNew = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUDENEW'));
-                foreach ($data as $multimediaObjectId) {
-                    $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObjectId)));
-                    if ($multimediaObject->containsTag($pudeNew)) {
-                        $tagService->removeTagFromMultimediaObject($multimediaObject, $pudeNew->getId());
-                    } else {
-                        $tagService->addTagToMultimediaObject($multimediaObject, $pudeNew->getId());
-                    }
-                }
-                break;
-            default:
-                break;
+            }
+            break;
+        default:
+            break;
         }
 
         return new JsonResponse(array('success'));
@@ -708,20 +708,20 @@ class UNESCOController extends Controller implements NewAdminController
         }
 
         switch ($tagCondition) {
-            case '1':
-                $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'UNESCO'));
-                $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder(
-                )->field('tags._id')->notEqual(new \MongoId($unescoTag->getId()));
-                break;
-            case 'U':
-                $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tag));
-                $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder(
-                )->field('tags._id')->equals(new \MongoId($unescoTag->getId()));
-                break;
-            case '2':
-            default:
-                $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
-                break;
+        case '1':
+            $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'UNESCO'));
+            $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder(
+            )->field('tags._id')->notEqual(new \MongoId($unescoTag->getId()));
+            break;
+        case 'U':
+            $unescoTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tag));
+            $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder(
+            )->field('tags._id')->equals(new \MongoId($unescoTag->getId()));
+            break;
+        case '2':
+        default:
+            $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+            break;
         }
 
         if (isset($criteria) && !empty($criteria)) {

@@ -19,9 +19,9 @@ class LegacyEventPicController extends Controller implements NewAdminController
     public function createAction(Event $event, Request $request)
     {
         return array(
-                     'resource' => $event,
-                     'resource_name' => 'event',
-                     );
+            'resource' => $event,
+            'resource_name' => 'event',
+        );
     }
 
     /**
@@ -52,17 +52,17 @@ class LegacyEventPicController extends Controller implements NewAdminController
             }
         } catch (\Exception $e) {
             return array(
-                         'event' => $event,
-                         'uploaded' => 'failed',
-                         'message' => $e->getMessage(),
-                         );
+                'event' => $event,
+                'uploaded' => 'failed',
+                'message' => $e->getMessage(),
+            );
         }
 
         return array(
-                     'event' => $event,
-                     'uploaded' => 'success',
-                     'message' => 'New Pic added.',
-                     );
+            'event' => $event,
+            'uploaded' => 'success',
+            'message' => 'New Pic added.',
+        );
     }
 
     /**

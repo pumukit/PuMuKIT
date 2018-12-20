@@ -112,7 +112,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -131,7 +131,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -154,7 +154,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -224,8 +224,8 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
             return new JsonResponse('done');
         } else {
             $track = $request->query->has('track_id') ?
-               $multimediaObject->getTrackById($request->query->get('track_id')) :
-               $multimediaObject->getDisplayTrack();
+                   $multimediaObject->getTrackById($request->query->get('track_id')) :
+                   $multimediaObject->getDisplayTrack();
 
             if (!$track || $track->isOnlyAudio()) {
                 throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");
@@ -253,9 +253,9 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setMaxPerPage($limit)
-          ->setNormalizeOutOfRangePages(true)
-          ->setCurrentPage($page);
+            ->setMaxPerPage($limit)
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($page);
 
         return $pics;
     }

@@ -21,9 +21,9 @@ class PlaylistPicController extends Controller implements NewAdminController
     public function createAction(Series $playlist, Request $request)
     {
         return array(
-                     'resource' => $playlist,
-                     'resource_name' => 'playlist',
-                     );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+        );
     }
 
     /**
@@ -32,9 +32,9 @@ class PlaylistPicController extends Controller implements NewAdminController
     public function listAction(Series $playlist)
     {
         return array(
-                   'resource' => $playlist,
-                   'resource_name' => 'playlist',
-                   );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+        );
     }
 
     /**
@@ -57,9 +57,9 @@ class PlaylistPicController extends Controller implements NewAdminController
         }
 
         return array(
-                     'resource' => $playlist,
-                     'resource_name' => 'playlist',
-                     );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+        );
     }
 
     /**
@@ -80,21 +80,21 @@ class PlaylistPicController extends Controller implements NewAdminController
             }
         } catch (\Exception $e) {
             return array(
-                         'resource' => $playlist,
-                         'resource_name' => 'playlist',
-                         'uploaded' => 'failed',
-                         'message' => $e->getMessage(),
-                         'isBanner' => $isBanner,
-                         );
+                'resource' => $playlist,
+                'resource_name' => 'playlist',
+                'uploaded' => 'failed',
+                'message' => $e->getMessage(),
+                'isBanner' => $isBanner,
+            );
         }
 
         return array(
-                     'resource' => $playlist,
-                     'resource_name' => 'playlist',
-                     'uploaded' => 'success',
-                     'message' => 'New Pic added.',
-                     'isBanner' => $isBanner,
-                     );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+            'uploaded' => 'success',
+            'message' => 'New Pic added.',
+            'isBanner' => $isBanner,
+        );
     }
 
     /**
@@ -105,7 +105,7 @@ class PlaylistPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -124,7 +124,7 @@ class PlaylistPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -147,7 +147,7 @@ class PlaylistPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-          ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -183,12 +183,12 @@ class PlaylistPicController extends Controller implements NewAdminController
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
         return array(
-                     'resource' => $playlist,
-                     'resource_name' => 'playlist',
-                     'pics' => $pics,
-                     'page' => $page,
-                     'total' => $total,
-                     );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+            'pics' => $pics,
+            'page' => $page,
+            'total' => $total,
+        );
     }
 
     /**
@@ -197,9 +197,9 @@ class PlaylistPicController extends Controller implements NewAdminController
     public function bannerAction(Series $playlist, Request $request)
     {
         return array(
-                     'resource' => $playlist,
-                     'resource_name' => 'playlist',
-                     );
+            'resource' => $playlist,
+            'resource_name' => 'playlist',
+        );
     }
 
     /**
@@ -217,9 +217,9 @@ class PlaylistPicController extends Controller implements NewAdminController
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setMaxPerPage($limit)
-          ->setNormalizeOutOfRangePages(true)
-          ->setCurrentPage($page);
+            ->setMaxPerPage($limit)
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($page);
 
         return $pics;
     }

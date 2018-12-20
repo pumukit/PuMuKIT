@@ -8,12 +8,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\NewAdminBundle\Form\Type\RoleType;
+use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
  */
 class RoleController extends SortableAdminController implements NewAdminController
 {
+    public static $resourceName = 'role';
+    public static $repoName = 'PumukitSchemaBundle:Role';
+
     /**
      * Update role.
      *
@@ -49,44 +53,35 @@ class RoleController extends SortableAdminController implements NewAdminControll
         }
 
         return array(
-                     'role' => $role,
-                     'form' => $form->createView(),
-                     );
+            'role' => $role,
+            'form' => $form->createView(),
+        );
     }
 
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = $this->getSorting($request);
         $sorting['rank'] = 'asc';
-        $repository = $this->getRepository();
         $session = $this->get('session');
-        $session_namespace = 'admin/'.$config->getResourceName();
+        $session_namespace = 'admin/'.$this->getResourceName();
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
-            }
-
-            if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
-            }
-
-            $resources
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
-                ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
-        } else {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->get('page', 1));
         }
+
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get($session_namespace.'/page', 1));
 
         return $resources;
     }
@@ -96,10 +91,9 @@ class RoleController extends SortableAdminController implements NewAdminControll
      */
     public function deleteAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
         $resourceId = $resource->getId();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         if (0 !== $resource->getNumberPeopleInMultimediaObject()) {
             return new Response("Can not delete role '".$resource->getName()."', There are Multimedia objects with this role. ", 409);
@@ -121,8 +115,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
             $ids = json_decode($ids, true);
         }
 
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
@@ -142,5 +135,10 @@ class RoleController extends SortableAdminController implements NewAdminControll
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+    }
+
+    public function createNew()
+    {
+        return new Role();
     }
 }

@@ -6,12 +6,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Pumukit\LiveBundle\Document\Live;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
  */
 class LiveController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'live';
+    public static $repoName = 'PumukitLiveBundle:Live';
+
     /**
      * Create Action
      * Overwrite to return json response
@@ -23,17 +27,11 @@ class LiveController extends AdminController implements NewAdminController
      */
     public function createAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
         $resource = $this->createNew();
         $form = $this->getForm($resource);
 
         if ($form->handleRequest($request)->isValid()) {
-            $resource = $this->domainManager->create($resource);
-
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($resource, 201));
-            }
+            $resource = $this->update($resource);
 
             if (null === $resource) {
                 return new JsonResponse(array('liveId' => null));
@@ -43,57 +41,44 @@ class LiveController extends AdminController implements NewAdminController
             return new JsonResponse(array('liveId' => $resource->getId()));
         }
 
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
-        }
-
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
                              array(
-                                   'live' => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                                 'live' => $resource,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
-        $sorting = $config->getSorting();
-        $repository = $this->getRepository();
+        $sorting = $this->getSorting();
         $session = $this->get('session');
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
-            }
-            $page = $session->get($session_namespace.'/page', 1);
-
-            if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
-            }
-
-            $resources
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
-              ->setNormalizeOutOfRangePages(true);
-
-            if ($newLiveId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
-                $page = $resources->getNbPages();
-                $session->set($session_namespace.'/page', $page);
-            }
-            $resources->setCurrentPage($page);
-        } else {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->get('page', 1));
         }
+        $page = $session->get($session_namespace.'/page', 1);
+
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setNormalizeOutOfRangePages(true);
+
+        if ($newLiveId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
+            $page = $resources->getNbPages();
+            $session->set($session_namespace.'/page', $page);
+        }
+        $resources->setCurrentPage($page);
 
         return $resources;
     }
@@ -103,10 +88,9 @@ class LiveController extends AdminController implements NewAdminController
      */
     public function deleteAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
         $resourceId = $resource->getId();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
@@ -135,8 +119,7 @@ class LiveController extends AdminController implements NewAdminController
             $ids = json_decode($ids, true);
         }
 
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $aResult = $this->checkEmptyChannels($ids);
         if (!$aResult['emptyChannels']) {
@@ -163,6 +146,7 @@ class LiveController extends AdminController implements NewAdminController
     private function checkEmptyChannels($ids)
     {
         $emptyChannels = true;
+        $channelId = null;
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         foreach ($ids as $id) {
@@ -175,5 +159,10 @@ class LiveController extends AdminController implements NewAdminController
         }
 
         return array('emptyChannels' => $emptyChannels, 'channelId' => $channelId);
+    }
+
+    public function createNew()
+    {
+        return new Live();
     }
 }

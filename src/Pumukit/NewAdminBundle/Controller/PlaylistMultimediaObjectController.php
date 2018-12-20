@@ -188,8 +188,8 @@ class PlaylistMultimediaObjectController extends Controller
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $mmobjs = new Pagerfanta($adapter);
         $mmobjs
-          ->setMaxPerPage($limit)
-          ->setNormalizeOutOfRangePages(true);
+            ->setMaxPerPage($limit)
+            ->setNormalizeOutOfRangePages(true);
 
         $mmobjs->setCurrentPage($page);
 
@@ -413,15 +413,15 @@ class PlaylistMultimediaObjectController extends Controller
     public function addModalAction(Request $request)
     {
         $repoSeries = $this->getDoctrine()
-                           ->getRepository('PumukitSchemaBundle:Series');
+                    ->getRepository('PumukitSchemaBundle:Series');
         $repoMms = $this->getDoctrine()
-                        ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                 ->getRepository('PumukitSchemaBundle:MultimediaObject');
 
         $series = $repoSeries->createQueryBuilder()
-                             ->field('type')->equals(Series::TYPE_PLAYLIST)
-                             ->sort('public_date', -1)
-                             ->getQuery()
-                             ->execute();
+                ->field('type')->equals(Series::TYPE_PLAYLIST)
+                ->sort('public_date', -1)
+                ->getQuery()
+                ->execute();
 
         $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
 

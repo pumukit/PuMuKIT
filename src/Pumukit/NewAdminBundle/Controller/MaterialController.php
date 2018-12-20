@@ -28,10 +28,10 @@ class MaterialController extends Controller implements NewAdminController
         $form = $this->createForm(new MaterialType($translator, $locale), $material);
 
         return array(
-                     'material' => $material,
-                     'form' => $form->createView(),
-                     'mm' => $multimediaObject,
-                     );
+            'material' => $material,
+            'form' => $form->createView(),
+            'mm' => $multimediaObject,
+        );
     }
 
     /**
@@ -56,10 +56,10 @@ class MaterialController extends Controller implements NewAdminController
 
         return $this->render('PumukitNewAdminBundle:Material:update.html.twig',
                              array(
-                                   'material' => $material,
-                                   'form' => $form->createView(),
-                                   'mmId' => $multimediaObject->getId(),
-                                   ));
+                                 'material' => $material,
+                                 'form' => $form->createView(),
+                                 'mmId' => $multimediaObject->getId(),
+                             ));
     }
 
     /**
@@ -82,17 +82,17 @@ class MaterialController extends Controller implements NewAdminController
             }
         } catch (\Exception $e) {
             return array(
-                         'mm' => $multimediaObject,
-                         'uploaded' => 'failed',
-                         'message' => $e->getMessage(),
-                         );
+                'mm' => $multimediaObject,
+                'uploaded' => 'failed',
+                'message' => $e->getMessage(),
+            );
         }
 
         return array(
-                     'mm' => $multimediaObject,
-                     'uploaded' => 'success',
-                     'message' => 'New Material added.',
-                     );
+            'mm' => $multimediaObject,
+            'uploaded' => 'success',
+            'message' => 'New Material added.',
+        );
     }
 
     /**
@@ -135,8 +135,8 @@ class MaterialController extends Controller implements NewAdminController
     public function listAction(MultimediaObject $multimediaObject)
     {
         return array(
-                     'mmId' => $multimediaObject->getId(),
-                     'materials' => $multimediaObject->getMaterials(),
-                     );
+            'mmId' => $multimediaObject->getId(),
+            'materials' => $multimediaObject->getMaterials(),
+        );
     }
 }

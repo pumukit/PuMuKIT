@@ -18,8 +18,6 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
      */
     public function updatemetaAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
         $factoryService = $this->get('pumukitschema.factory');
         $personService = $this->get('pumukitschema.person');
         $groupService = $this->get('pumukitschema.group');
@@ -52,31 +50,23 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $this->domainManager->update($mmtemplate);
-
-            if ($config->isApiRequest()) {
-                return $this->handleView($this->view($formMeta));
-            }
+            $this->update($mmtemplate);
 
             return new JsonResponse(array('mmtemplate' => 'updatemeta'));
         }
 
-        if ($config->isApiRequest()) {
-            return $this->handleView($this->view($formMeta));
-        }
-
         return $this->render('PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
-                             array(
-                                   'mm' => $resource,
-                                   'form_meta' => $formMeta->createView(),
-                                   'series' => $series,
-                                   'roles' => $roles,
-                                   'personal_scope_role' => $personalScopeRole,
-                                   'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'pub_decisions' => $pubDecisionsTags,
-                                   'parent_tags' => $parentTags,
-                                   'groups' => $allGroups,
-                                   )
-                             );
+            array(
+                'mm' => $resource,
+                'form_meta' => $formMeta->createView(),
+                'series' => $series,
+                'roles' => $roles,
+                'personal_scope_role' => $personalScopeRole,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'pub_decisions' => $pubDecisionsTags,
+                'parent_tags' => $parentTags,
+                'groups' => $allGroups,
+            )
+        );
     }
 }

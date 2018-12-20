@@ -163,7 +163,7 @@ class EventsController extends Controller implements NewAdminController
                 $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
                     'start' => array('$lte' => $date),
                     'ends' => array('$gte' => $date),
-                    ));
+                ));
             } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
@@ -323,20 +323,20 @@ class EventsController extends Controller implements NewAdminController
         $message = '';
         try {
             switch ($type) {
-                case 'clone':
-                    $message = $this->cloneEvent($multimediaObject);
-                    break;
-                case 'delete':
-                    $message = $this->deleteEvent($multimediaObject);
-                    $this->container->get('session')->set('admin/live/event/id', null);
-                    break;
-                case 'deleteAll':
-                    $message = $this->deleteEventAndSeries($multimediaObject);
-                    $this->container->get('session')->set('admin/live/event/id', null);
-                    break;
-                default:
-                    $message = 'Option not allowed';
-                    break;
+            case 'clone':
+                $message = $this->cloneEvent($multimediaObject);
+                break;
+            case 'delete':
+                $message = $this->deleteEvent($multimediaObject);
+                $this->container->get('session')->set('admin/live/event/id', null);
+                break;
+            case 'deleteAll':
+                $message = $this->deleteEventAndSeries($multimediaObject);
+                $this->container->get('session')->set('admin/live/event/id', null);
+                break;
+            default:
+                $message = 'Option not allowed';
+                break;
             }
         } catch (\Exception $e) {
             return new JsonResponse(array('status' => $e->getMessage()), 409);
@@ -684,8 +684,8 @@ class EventsController extends Controller implements NewAdminController
             'pumukitnewadmin_series_template',
         );
         $showSeriesTypeTab = $this->container->hasParameter(
-                'pumukit2.use_series_channels'
-            ) && $this->container->getParameter('pumukit2.use_series_channels');
+            'pumukit2.use_series_channels'
+        ) && $this->container->getParameter('pumukit2.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
