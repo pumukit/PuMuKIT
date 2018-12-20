@@ -25,7 +25,7 @@
                 <td>&nbsp;</td><td>&nbsp;</td>
               {% else %}
               <td>
-                <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal">
+                <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myAuxModal{{ template }}">
                   <i class="mdi-editor-mode-edit"></i>
                 </a>
               </td>
@@ -66,7 +66,7 @@
               <td>
                 <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}"
                    href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
-                   data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                   data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
                   {% trans %}new{% endtrans %}...
                 </a>
               </td>
