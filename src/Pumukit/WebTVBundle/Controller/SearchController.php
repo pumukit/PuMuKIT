@@ -2,6 +2,7 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -112,6 +113,10 @@ class SearchController extends Controller implements WebTVController
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         } else {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        }
+
+        if ($request->attributes->get('only_public')) {
+            $queryBuilder->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         }
         // --- END Create QueryBuilder ---
 
