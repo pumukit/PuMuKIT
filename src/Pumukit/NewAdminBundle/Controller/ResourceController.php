@@ -13,7 +13,7 @@ class ResourceController extends Controller
     public static $resourceName = 'series';
     public static $repoName = 'PumukitSchemaBundle:Series';
 
-    public function getResourceName(Request $request = null)
+    public function getResourceName()
     {
         return static::$resourceName;
     }

@@ -1454,11 +1454,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $criteria = $request->get('criteria', array());
 
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$this->getResourceName($request).'/criteria');
+            $this->get('session')->remove('admin/'.$this->getResourceName().'/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$this->getResourceName($request).'/criteria', $criteria);
+            $this->get('session')->set('admin/'.$this->getResourceName().'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$this->getResourceName($request).'/criteria', array());
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', array());
 
         $new_criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
 
@@ -1516,8 +1516,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         return  array($key => $value);
     }
 
-    public function getResourceName(Request $request = null)
+    public function getResourceName()
     {
+        $request = $this->container->get('request_stack')->getMasterRequest();
         $sRoute = $request->get('_route');
 
         return (false === strpos($sRoute, 'all')) ? 'mms' : 'mmslist';
