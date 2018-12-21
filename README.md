@@ -1,4 +1,4 @@
-PuMuKIT-2 [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2) [![Docker Repository on Quay](https://quay.io/repository/pnieto/pumukit2/status "Docker Repository on Quay")](https://quay.io/repository/pnieto/pumukit2)
+PuMuKIT-2 [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
 =======
 
 
