@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-<<<<<<< HEAD
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
@@ -12,7 +11,6 @@
         <parameter key="pumukit2.show_mms_list_all_menu">false</parameter>
         <parameter key="pumukit2.inbox_depth">true</parameter>
     </parameters>
-
 
     <services>
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
