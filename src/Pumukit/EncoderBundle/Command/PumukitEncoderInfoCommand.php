@@ -33,7 +33,7 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
         $jobService->executeNextJob();
 
-        if ($id = $input->getArgument('id')) {
+        if ($input->getArgument('id')) {
             $this->showInfo($input->getArgument('id'), $output);
         } else {
             $this->showList($input->getOption('all'), $output);

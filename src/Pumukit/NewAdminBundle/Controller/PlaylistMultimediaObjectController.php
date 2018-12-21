@@ -35,8 +35,6 @@ class PlaylistMultimediaObjectController extends Controller
             $session->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mms = $this->getPlaylistMmobjs($series, $request);
 
         // Removes the session mmobj (shown on info and preview) if it does not belong to THIS playlist.

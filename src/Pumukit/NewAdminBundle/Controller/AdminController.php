@@ -153,9 +153,6 @@ class AdminController extends ResourceController implements NewAdminController
     {
         $pluralName = $this->getPluralResourceName();
         $resourceName = $this->getResourceName();
-        $session = $this->get('session');
-
-        $sorting = $request->get('sorting');
 
         $criteria = $this->getCriteria($request->get('criteria', array()));
         $resources = $this->getResources($request, $criteria);

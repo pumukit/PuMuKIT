@@ -286,13 +286,6 @@ class FeedController extends Controller
         return $channel;
     }
 
-    private function getXMLErrorElement(\Exception $e)
-    {
-        $xml = new \SimpleXMLElement('<error>'.$e->getMessage().'</error>');
-
-        return $xml;
-    }
-
     private function getPodcastTrack(MultimediaObject $multimediaObject, $trackType = 'video')
     {
         if ('all' === $trackType) {

@@ -18,7 +18,6 @@ class APIController extends Controller implements NewAdminController
      */
     public function mmobjMostViewedAction(Request $request)
     {
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
@@ -53,7 +52,6 @@ class APIController extends Controller implements NewAdminController
      */
     public function seriesMostViewedAction(Request $request)
     {
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
@@ -88,7 +86,6 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsAction(Request $request)
     {
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
@@ -136,7 +133,6 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsMmobjAction(Request $request)
     {
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
@@ -177,7 +173,6 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsSeriesAction(Request $request)
     {
-        $viewsRepo = $this->get('doctrine_mongodb')->getRepository('PumukitStatsBundle:ViewsLog');
         $serializer = $this->get('serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 

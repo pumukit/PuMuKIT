@@ -35,7 +35,6 @@ class RouteFoundHttpListener
             $request = $event->getRequest();
             $this->requestFixer->fixRequestLocale($request);
 
-            $requestUri = $request->getRequestUri();
             $pathInfo = $request->getPathInfo();
             $name = substr($pathInfo, 1);
 

@@ -76,7 +76,7 @@ class PlaylistPicController extends Controller implements NewAdminController
                 $picService = $this->get('pumukitschema.seriespic');
                 $isBanner = $request->query->get('banner', false);
                 $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
-                $media = $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
+                $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
             return array(

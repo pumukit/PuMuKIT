@@ -36,7 +36,6 @@ class ChannelController extends Controller implements WebTVController
     public function seriesAction(Request $request, $channelNumber)
     {
         $numberCols = $this->container->getParameter('columns_objs_bytag');
-        $limit = $this->container->getParameter('limit_objs_bytag');
 
         $repoSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
         $repoMmobj = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');

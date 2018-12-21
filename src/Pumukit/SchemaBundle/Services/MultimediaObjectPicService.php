@@ -227,7 +227,7 @@ class MultimediaObjectPicService
                 $finder->files()->in($dirname);
                 if (0 === $finder->count()) {
                     $dirDeleted = rmdir($dirname);
-                    if (!$deleted) {
+                    if (!$dirDeleted) {
                         throw new \Exception("Error deleting directory '".$dirname."'on disk");
                     }
                 }

@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitAggregateCommand extends ContainerAwareCommand
 {
-    private $dm = null;
-
     protected function configure()
     {
         $this

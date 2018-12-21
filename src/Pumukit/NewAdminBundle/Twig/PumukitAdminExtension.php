@@ -464,33 +464,6 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get duration in minutes
-     * Returns duration file in minutes.
-     *
-     * @return int minutes
-     */
-    private function getDurationInMinutes($duration)
-    {
-        return floor($duration / 60);
-    }
-
-    /**
-     * Get duration in seconds
-     * Returns duration file in seconds.
-     *
-     * @return int seconds
-     */
-    private function getDurationInSeconds($duration)
-    {
-        $aux = $duration % 60;
-        if ($aux < 10) {
-            $aux = '0'.$aux;
-        }
-
-        return $aux;
-    }
-
-    /**
      * Filter profiles to show only audio profiles.
      *
      * @return array

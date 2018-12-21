@@ -194,14 +194,14 @@ class MultimediaObjectController extends Controller
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request)
     {
-        if ($opencasturl = $multimediaObject->getProperty('opencasturl')) {
+        if ($opencastUrl = $multimediaObject->getProperty('opencasturl')) {
             $this->incNumView($multimediaObject);
             $this->dispatch($multimediaObject);
-            if ($invert = $multimediaObject->getProperty('opencastinvert')) {
-                $opencasturl .= '&display=invert';
+            if ($multimediaObject->getProperty('opencastinvert')) {
+                $opencastUrl .= '&display=invert';
             }
 
-            return $this->redirect($opencasturl);
+            return $this->redirect($opencastUrl);
         }
     }
 

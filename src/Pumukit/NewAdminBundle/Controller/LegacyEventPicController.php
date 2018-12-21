@@ -31,7 +31,7 @@ class LegacyEventPicController extends Controller implements NewAdminController
     {
         if ($url = $request->get('url')) {
             $picService = $this->get('pumukitlive.legacyeventpic');
-            $event = $picService->addPicUrl($event, $url);
+            $picService->addPicUrl($event, $url);
         }
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
@@ -48,7 +48,7 @@ class LegacyEventPicController extends Controller implements NewAdminController
             }
             if ($request->files->has('file')) {
                 $picService = $this->get('pumukitlive.legacyeventpic');
-                $media = $picService->addPicFile($event, $request->files->get('file'));
+                $picService->addPicFile($event, $request->files->get('file'));
             }
         } catch (\Exception $e) {
             return array(
@@ -70,7 +70,7 @@ class LegacyEventPicController extends Controller implements NewAdminController
      */
     public function deleteAction(Event $event, Request $request)
     {
-        $event = $this->get('pumukitlive.legacyeventpic')->removePicFromEvent($event);
+        $this->get('pumukitlive.legacyeventpic')->removePicFromEvent($event);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_event_list'));
     }

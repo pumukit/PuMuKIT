@@ -9,7 +9,6 @@ use Pumukit\EncoderBundle\Document\CpuStatus;
 class CpuService
 {
     private $dm;
-    private $repo;
     private $cpus;
 
     const TYPE_LINUX = 'linux';

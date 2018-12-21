@@ -129,7 +129,6 @@ class APIController extends Controller implements NewAdminController
         }
 
         $sort = $request->get('sort') ?: array();
-        $prototypes = $request->get('prototypes') ?: false;
 
         if (!$limit || $limit > 100) {
             $limit = 100;

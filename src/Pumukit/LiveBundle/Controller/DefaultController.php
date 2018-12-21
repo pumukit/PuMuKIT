@@ -139,8 +139,6 @@ class DefaultController extends Controller
             ));
         }
 
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
         $userAgent = $request->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));

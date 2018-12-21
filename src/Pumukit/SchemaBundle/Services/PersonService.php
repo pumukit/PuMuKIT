@@ -5,7 +5,6 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -534,26 +533,5 @@ class PersonService
         }
 
         return $embeddedPerson;
-    }
-
-    /**
-     * Update embedded role.
-     *
-     * @param Role         $role
-     * @param EmbeddedRole $embeddedRole
-     *
-     * @return EmbeddedRole
-     */
-    private function updateEmbeddedRole(Role $role, EmbeddedRole $embeddedRole)
-    {
-        if (null !== $role) {
-            $embeddedRole->setCod($role->getCod());
-            $embeddedRole->setXml($role->getXml());
-            $embeddedRole->setDisplay($role->getDisplay());
-            $embeddedRole->setI18nName($role->getI18nName());
-            $embeddedRole->setLocale($role->getLocale());
-        }
-
-        return $embeddedRole;
     }
 }

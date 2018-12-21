@@ -8,13 +8,11 @@ class StatsService
 {
     private $dm;
     private $repoMmobj;
-    private $repoSeries;
 
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
         $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
     }
 
     public function getMmobjRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')

@@ -281,7 +281,6 @@ class SearchController extends Controller implements WebTVController
 
     protected function tagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral = false)
     {
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
         if (null !== $blockedTag) {
             $tagsFound[] = $blockedTag->getCod();
         }

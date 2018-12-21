@@ -307,16 +307,10 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     public function getResources(Request $request, $criteria)
     {
         $sorting = array('date' => -1);
-        $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/event';
 
-        $newEventId = $request->get('newEventId');
         $page = $session->get($session_namespace.'/page', 1);
-
-        $m = '';
-        $y = '';
-        $calendar = array();
 
         $resources = $this->createPager($criteria, $sorting);
 

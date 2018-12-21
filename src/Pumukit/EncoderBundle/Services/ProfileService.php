@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class ProfileService
 {
     private $dm;
-    private $repo;
     private $profiles;
     private $default_profiles;
 
@@ -23,7 +22,6 @@ class ProfileService
     public function __construct(array $profiles, DocumentManager $documentManager, array $default_profiles = array())
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
         $this->profiles = $profiles;
         $this->default_profiles = $default_profiles;
     }

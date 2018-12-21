@@ -18,8 +18,6 @@ use Pagerfanta\Pagerfanta;
  */
 class MediaPackageController extends Controller
 {
-    private $dm = null;
-
     /**
      * @Route("/opencast/mediapackage", name="pumukitopencast")
      * @Template()

@@ -24,7 +24,6 @@ class Log
     public function onMultimediaObjectViewed(ViewedEvent $event)
     {
         $req = $this->requestStack->getMasterRequest();
-        $track = $event->getTrack();
 
         $log = new ViewsLog(
             $req->getUri(),

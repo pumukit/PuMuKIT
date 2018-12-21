@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Person;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
@@ -621,41 +620,6 @@ class EventsController extends Controller implements NewAdminController
         }
 
         return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm, 'autocomplete_series' => $autocompleteSeries);
-    }
-
-    /**
-     * @param $roleCod
-     * @param $name
-     * @param $multimediaObject
-     * @param $dm
-     *
-     * @return mixed
-     */
-    private function addPeopleData($roleCod, $name, $multimediaObject, $dm)
-    {
-        $people = $multimediaObject->getPeopleByRoleCod($roleCod);
-        $role = $dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $roleCod));
-
-        if (!$people) {
-            $person = new Person();
-            $person->setName($name);
-            $dm->persist($person);
-            $multimediaObject->addPersonWithRole($person, $role);
-        } else {
-            $personService = $this->get('pumukitschema.person');
-
-            $embeddedPerson = $people[0];
-            $person = $personService->findPersonById($embeddedPerson->getId());
-            if ($person) {
-                $person->setName($name);
-                $embeddedPerson->setName($name);
-                $personService->updatePerson($person);
-            } else {
-                throw $this->createNotFoundException('The person does not exist');
-            }
-        }
-
-        return $multimediaObject;
     }
 
     /**
