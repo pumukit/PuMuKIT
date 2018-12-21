@@ -8,61 +8,45 @@ class SortableAdminController extends AdminController implements NewAdminControl
 {
     public function upAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
 
         $new_rank = $resource->getRank() + 1;
         $resource->setRank($new_rank);
-        $this->domainManager->update($resource);
+        $this->update($resource);
 
-        return $this->redirectToRoute(
-            $config->getRedirectRoute('index'),
-            $config->getRedirectParameters()
-        );
+        return $this->redirectToIndex();
     }
 
     public function downAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
 
         $new_rank = $resource->getRank() - 1;
         $resource->setRank($new_rank);
-        $this->domainManager->update($resource);
+        $this->update($resource);
 
-        return $this->redirectToRoute(
-            $config->getRedirectRoute('index'),
-            $config->getRedirectParameters()
-        );
+        return $this->redirectToIndex();
     }
 
     public function topAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
 
         $new_rank = -1;
         $resource->setRank($new_rank);
-        $this->domainManager->update($resource);
+        $this->update($resource);
 
-        return $this->redirectToRoute(
-            $config->getRedirectRoute('index'),
-            $config->getRedirectParameters()
-        );
+        return $this->redirectToIndex();
     }
 
     public function bottomAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
 
         $new_rank = 0;
         $resource->setRank($new_rank);
-        $this->domainManager->update($resource);
+        $this->update($resource);
 
-        return $this->redirectToRoute(
-            $config->getRedirectRoute('index'),
-            $config->getRedirectParameters()
-        );
+        return $this->redirectToIndex();
     }
 }

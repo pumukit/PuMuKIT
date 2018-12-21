@@ -3,8 +3,9 @@
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Pumukit\SchemaBundle\Document\Material;
+use PHPUnit\Framework\TestCase;
 
-class MaterialTest extends \PHPUnit_Framework_TestCase
+class MaterialTest extends TestCase
 {
     public function testGetterAndSetter()
     {

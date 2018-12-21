@@ -32,19 +32,6 @@ window.submit_delete_user = function(id, userFullname)
     }
 }
 
-window.submit_delete_broadcast = function(id, countMm)
-{
-    if (countMm == 0){
-        if (window.confirm("{% trans %}Are you sure you want to delete this broadcast?{% endtrans %}")){
-            var url = "{{ path('pumukitnewadmin_broadcast_delete', {'id': '__id__'})|raw }}";
-            var message = '{% trans %}Broadcast successfully deleted.{% endtrans %}';
-            $('#list_broadcasts').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
-        }
-    }else{
-        window.alert("{% trans %}Impossible to delete, broadcast with{% endtrans %} "+countMm+" {% trans %}multimedia object(s).{% endtrans %}");
-    }
-}
-
 window.submit_delete_live = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
@@ -1831,9 +1818,6 @@ get_batch_delete_route = function(element, ids)
             break;
         case 'role':
             route = '{{ path('pumukitnewadmin_role_batch_delete', {'ids': '__ids__'})|raw }}';
-            break;
-        case 'broadcast':
-            route = '{{ path('pumukitnewadmin_broadcast_batch_delete', {'ids': '__ids__'})|raw }}';
             break;
         case 'group':
             route = '{{ path('pumukitnewadmin_group_batch_delete', {'ids': '__ids__'})|raw }}';

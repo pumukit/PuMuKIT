@@ -288,7 +288,7 @@ class SearchController extends Controller implements WebTVController
         if (null !== $tagsFound) {
             $tagsFound = array_values(array_diff($tagsFound, array('All', '')));
         }
-        if (count($tagsFound) > 0) {
+        if (null !== $tagsFound && count($tagsFound) > 0) {
             $queryBuilder->field('tags.cod')->all($tagsFound);
         }
 
@@ -309,7 +309,7 @@ class SearchController extends Controller implements WebTVController
             array('$group' => array('_id' => array('$year' => '$record_date'))),
             array('$sort' => array('_id' => 1)),
         );
-        $yearResults = $mmObjColl->aggregate($pipeline);
+        $yearResults = $mmObjColl->aggregate($pipeline, array('cursor' => array()));
         $years = array();
         foreach ($yearResults as $year) {
             $years[] = $year['_id'];
@@ -325,7 +325,7 @@ class SearchController extends Controller implements WebTVController
             array('$group' => array('_id' => array('$year' => '$public_date'))),
             array('$sort' => array('_id' => 1)),
         );
-        $yearResults = $mmObjColl->aggregate($pipeline);
+        $yearResults = $mmObjColl->aggregate($pipeline, array('cursor' => array()));
         $years = array();
         foreach ($yearResults as $year) {
             $years[] = $year['_id'];

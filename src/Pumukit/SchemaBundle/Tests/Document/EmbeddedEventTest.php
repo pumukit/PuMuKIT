@@ -5,8 +5,9 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\LiveBundle\Document\Live;
+use PHPUnit\Framework\TestCase;
 
-class EmbeddedEventTest extends \PHPUnit_Framework_TestCase
+class EmbeddedEventTest extends TestCase
 {
     public function testSetterAndGetter()
     {

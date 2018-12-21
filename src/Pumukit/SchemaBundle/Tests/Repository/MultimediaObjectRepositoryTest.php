@@ -2878,8 +2878,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($series2);
         $this->dm->flush();
 
-        $series1->addMultimediaObject($mm1);
-        $series2->addMultimediaObject($mm2);
         $mm1->setSeries($series1);
         $mm2->setSeries($series2);
         $this->dm->persist($mm1);

@@ -30,11 +30,12 @@ class LinkService
         $multimediaObject->addLink($link);
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
-
         $this->dispatcher->dispatchCreate($multimediaObject, $link);
 
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
 
         return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
     }

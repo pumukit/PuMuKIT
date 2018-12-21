@@ -2,7 +2,7 @@ pumukitnewadmin_seriespic_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:indexAction
+        _controller: PumukitNewAdminBundle:SeriesPic:index
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_seriespic_create:
     pattern: /create/{id}
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:createAction
+        _controller: PumukitNewAdminBundle:SeriesPic:create
         _sylius:
             redirect: pumukitnewadmin_series_index
 
@@ -18,13 +18,13 @@ pumukitnewadmin_seriespic_update:
     pattern: /{id}/update
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:updateAction
+        _controller: PumukitNewAdminBundle:SeriesPic:update
 
 pumukitnewadmin_seriespic_batch_delete:
     pattern: /batch_delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:batchDeleteAction
+        _controller: PumukitNewAdminBundle:SeriesPic:batchDelete
         _sylius:
             redirect: pumukitnewadmin_series_index
 
@@ -32,51 +32,51 @@ pumukitnewadmin_seriespic_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:deleteAction
+        _controller: PumukitNewAdminBundle:SeriesPic:delete
 
 
 pumukitnewadmin_seriespic_up:
     pattern: /{id}/up
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:upAction
+        _controller: PumukitNewAdminBundle:SeriesPic:up
 
 
 pumukitnewadmin_seriespic_down:
     pattern: /{id}/down
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:downAction
+        _controller: PumukitNewAdminBundle:SeriesPic:down
 
 
 pumukitnewadmin_seriespic_list:
     pattern: /{id}/list
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:listAction
+        _controller: PumukitNewAdminBundle:SeriesPic:list
 
 
 pumukitnewadmin_seriespic_show:
     pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:showAction
+        _controller: PumukitNewAdminBundle:SeriesPic:show
 
 
 pumukitnewadmin_seriespic_upload:
     pattern: /{id}/upload
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:uploadAction
+        _controller: PumukitNewAdminBundle:SeriesPic:upload
 
 pumukitnewadmin_seriespic_picstoaddlist:
     pattern: /{id}/picstoaddlist
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:picstoaddlistAction
+        _controller: PumukitNewAdminBundle:SeriesPic:picstoaddlist
 
 pumukitnewadmin_seriespic_banner:
     pattern: /{id}/banner
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.seriespic:bannerAction
+        _controller: PumukitNewAdminBundle:SeriesPic:banner

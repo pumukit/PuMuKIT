@@ -5,8 +5,9 @@ namespace Pumukit\SchemaBundle\Tests\Document;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Pic;
+use PHPUnit\Framework\TestCase;
 
-class SeriesTest extends \PHPUnit_Framework_TestCase
+class SeriesTest extends TestCase
 {
     public function testGetterAndSetter()
     {

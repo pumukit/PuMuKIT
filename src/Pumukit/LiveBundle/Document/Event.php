@@ -22,7 +22,7 @@ class Event
     /**
      * @var Live
      *
-     * @MongoDB\ReferenceOne(targetDocument="Live")
+     * @MongoDB\ReferenceOne(targetDocument="Live", cascade={"persist"})
      */
     private $live;
 

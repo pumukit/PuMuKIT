@@ -26,9 +26,9 @@ class SeriesPicController extends Controller implements NewAdminController
     public function createAction(Series $series, Request $request)
     {
         return array(
-                     'resource' => $series,
-                     'resource_name' => 'series',
-                     );
+            'resource' => $series,
+            'resource_name' => 'series',
+        );
     }
 
     /**
@@ -41,9 +41,9 @@ class SeriesPicController extends Controller implements NewAdminController
     public function listAction(Series $series)
     {
         return array(
-                   'resource' => $series,
-                   'resource_name' => 'series',
-                   );
+            'resource' => $series,
+            'resource_name' => 'series',
+        );
     }
 
     /**
@@ -71,9 +71,9 @@ class SeriesPicController extends Controller implements NewAdminController
         }
 
         return array(
-                     'resource' => $series,
-                     'resource_name' => 'series',
-                     );
+            'resource' => $series,
+            'resource_name' => 'series',
+        );
     }
 
     /**
@@ -99,21 +99,21 @@ class SeriesPicController extends Controller implements NewAdminController
             }
         } catch (\Exception $e) {
             return array(
-                         'resource' => $series,
-                         'resource_name' => 'series',
-                         'uploaded' => 'failed',
-                         'message' => $e->getMessage(),
-                         'isBanner' => $isBanner,
-                         );
+                'resource' => $series,
+                'resource_name' => 'series',
+                'uploaded' => 'failed',
+                'message' => $e->getMessage(),
+                'isBanner' => $isBanner,
+            );
         }
 
         return array(
-                     'resource' => $series,
-                     'resource_name' => 'series',
-                     'uploaded' => 'success',
-                     'message' => 'New Pic added.',
-                     'isBanner' => $isBanner,
-                     );
+            'resource' => $series,
+            'resource_name' => 'series',
+            'uploaded' => 'success',
+            'message' => 'New Pic added.',
+            'isBanner' => $isBanner,
+        );
     }
 
     /**
@@ -128,7 +128,7 @@ class SeriesPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -151,7 +151,7 @@ class SeriesPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-      ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -178,7 +178,7 @@ class SeriesPicController extends Controller implements NewAdminController
         $picId = $this->getRequest()->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-          ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository('PumukitSchemaBundle:Series');
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -219,12 +219,12 @@ class SeriesPicController extends Controller implements NewAdminController
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
         return array(
-                     'resource' => $series,
-                     'resource_name' => 'series',
-                     'pics' => $pics,
-                     'page' => $page,
-                     'total' => $total,
-                     );
+            'resource' => $series,
+            'resource_name' => 'series',
+            'pics' => $pics,
+            'page' => $page,
+            'total' => $total,
+        );
     }
 
     /**
@@ -238,9 +238,9 @@ class SeriesPicController extends Controller implements NewAdminController
     public function bannerAction(Series $series, Request $request)
     {
         return array(
-                     'resource' => $series,
-                     'resource_name' => 'series',
-                     );
+            'resource' => $series,
+            'resource_name' => 'series',
+        );
     }
 
     /**
@@ -258,9 +258,9 @@ class SeriesPicController extends Controller implements NewAdminController
         $pics = new Pagerfanta($adapter);
 
         $pics
-          ->setMaxPerPage($limit)
-          ->setNormalizeOutOfRangePages(true)
-          ->setCurrentPage($page);
+            ->setMaxPerPage($limit)
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($page);
 
         return $pics;
     }

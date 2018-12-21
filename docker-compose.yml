@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  php:
+    image: teltek/pumukit
+    build:
+      context: ./
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - db
+    env_file:
+      - ./doc/docker/.env
+    volumes:
+      - ./web/storage:/srv/pumukit/web/storage:rw,cached
+      - ./web/uploads:/srv/pumukit/web/uploads:rw,cached
+
+  h2-proxy:
+    image: teltek/nginx
+    build:
+      context: ./doc/docker/nginx
+      cache_from:
+        - teltek/pumukit
+        - teltek/nginx
+    depends_on:
+      - php
+    volumes:
+      - ./web/storage/downloads:/srv/pumukit/web/storage/downloads:ro
+      - ./web/uploads:/srv/pumukit/web/uploads:ro
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    image: mongo:3.6
+    volumes:
+      - db-data:/data/db:rw
+
+volumes:
+  db-data: {}

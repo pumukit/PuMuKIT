@@ -216,7 +216,7 @@ class EmbeddedEventSessionService
         $this->endPipeline($pipeline);
         $pipeline[] = array('$limit' => 10);
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -236,7 +236,7 @@ class EmbeddedEventSessionService
         $this->endPipeline($pipeline);
         $pipeline[] = array('$limit' => 20);
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -259,7 +259,7 @@ class EmbeddedEventSessionService
         );
         $this->endPipeline($pipeline);
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -289,7 +289,7 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -347,7 +347,7 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -405,7 +405,7 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        $result = $this->collection->aggregate($pipeline)->toArray();
+        $result = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
 
         foreach ($result as $key => $element) {
             $orderSession = array();
@@ -498,7 +498,7 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -745,7 +745,7 @@ class EmbeddedEventSessionService
     public function findFutureEvents($multimediaObjectId = null, $limit = 0)
     {
         $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
-        $result = $this->collection->aggregate($pipeline)->toArray();
+        $result = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
         $orderSession = array();
         $now = new \DateTime('now');
         foreach ($result as $key => $element) {
@@ -784,7 +784,7 @@ class EmbeddedEventSessionService
     public function countFutureEvents($multimediaObjectId = null)
     {
         $pipeline = $this->getFutureEventsPipeline($multimediaObjectId);
-        $result = $this->collection->aggregate($pipeline)->toArray();
+        $result = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
 
         return count($result);
     }
@@ -835,7 +835,7 @@ class EmbeddedEventSessionService
             ),
         );
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        return $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -1012,7 +1012,7 @@ class EmbeddedEventSessionService
                 ),
             ),
         );
-        $data = $this->collection->aggregate($pipeline)->toArray();
+        $data = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
         if (isset($data[0]['data']['pics'])) {
             return $data[0]['data']['pics'];
         }
@@ -1072,7 +1072,7 @@ class EmbeddedEventSessionService
                 ),
             ),
         );
-        $data = $this->collection->aggregate($pipeline)->toArray();
+        $data = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
         if (isset($data[0]['data']['properties'])) {
             return $data[0]['data']['properties'];
         }
@@ -1091,7 +1091,7 @@ class EmbeddedEventSessionService
     public function findNextLiveEvents($multimediaObjectId = null, $limit = 0)
     {
         $pipeline = $this->getNextLiveEventsPipeline($multimediaObjectId);
-        $result = $this->collection->aggregate($pipeline)->toArray();
+        $result = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
         $orderSession = array();
         $now = new \DateTime('now');
         foreach ($result as $key => $element) {

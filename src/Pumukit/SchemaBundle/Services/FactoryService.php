@@ -17,6 +17,7 @@ class FactoryService
     const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
+    private $seriesRepo;
     private $tagService;
     private $personService;
     private $userService;
@@ -33,6 +34,7 @@ class FactoryService
     public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
+        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
@@ -204,7 +206,6 @@ class FactoryService
         }
 
         $mm->setSeries($series);
-        $series->addMultimediaObject($mm);
 
         $mm->setPublicDate(new \DateTime('now'));
         $mm->setRecordDate($mm->getPublicDate());
@@ -249,7 +250,7 @@ class FactoryService
     {
         $mm = $this->doCreateMultimediaObject($series, $flush, $loggedInUser);
 
-        $this->seriesDispatcher->dispatchUpdate($series);
+        //$this->seriesDispatcher->dispatchUpdate($series);
         $this->mmsDispatcher->dispatchCreate($mm);
 
         return $mm;
@@ -364,13 +365,11 @@ class FactoryService
 
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach ($multimediaObjects as $mm) {
-            $series->removeMultimediaObject($mm);
             $this->dm->remove($mm);
             $this->mmsDispatcher->dispatchDelete($mm);
         }
 
         $this->dm->remove($series);
-
         $this->dm->flush();
 
         $this->seriesDispatcher->dispatchDelete($series);
@@ -384,8 +383,7 @@ class FactoryService
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
         if (null !== $series = $multimediaObject->getSeries()) {
-            $series->removeMultimediaObject($multimediaObject);
-            $this->dm->persist($series);
+            //TODO: Kept this until I'm sure there are no event listeners depending on mmobj changes to do operations on te series
             $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
@@ -483,12 +481,10 @@ class FactoryService
 
         $multimediaObjectPrototype = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
         $newMultimediaObject = $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
-        $newSeries->addMultimediaObject($newMultimediaObject);
 
-        foreach ($series->getMultimediaObjects() as $multimediaObject) {
+        foreach ($this->seriesRepo->getMultimediaObjects($series) as $multimediaObject) {
             if (!$multimediaObject->isLive()) {
                 $newMultimediaObject = $this->cloneMultimediaObject($multimediaObject, $newSeries);
-                $newSeries->addMultimediaObject($newMultimediaObject);
             }
         }
 

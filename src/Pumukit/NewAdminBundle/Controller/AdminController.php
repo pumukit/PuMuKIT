@@ -2,7 +2,6 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,21 +13,15 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfiguration();
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $resources = $this->getResources($request, $criteria);
 
-        $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $pluralName = $this->getPluralResourceName();
+        $resourceName = $this->getResourceName();
 
-        $pluralName = $config->getPluralResourceName();
-
-        $view = $this
-            ->view()
-            ->setTemplate($config->getTemplate('index.html'))
-            ->setTemplateVar($pluralName)
-            ->setData($resources)
-        ;
-
-        return $this->handleView($view);
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':index.html.twig',
+                             array($pluralName => $resources)
+        );
     }
 
     /**
@@ -43,8 +36,7 @@ class AdminController extends ResourceController implements NewAdminController
     public function createAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $resource = $this->createNew();
         $form = $this->getForm($resource);
@@ -57,10 +49,6 @@ class AdminController extends ResourceController implements NewAdminController
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($resource, 201));
-            }
-
             if (null === $resource) {
                 return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
             }
@@ -68,15 +56,11 @@ class AdminController extends ResourceController implements NewAdminController
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
-        }
-
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
                              array(
-                                   $resourceName => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                                 $resourceName => $resource,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
@@ -92,8 +76,7 @@ class AdminController extends ResourceController implements NewAdminController
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource);
@@ -106,22 +89,14 @@ class AdminController extends ResourceController implements NewAdminController
                 return new JsonResponse(array('status' => $e->getMessage()), 409);
             }
 
-            if ($this->config->isApiRequest()) {
-                return $this->handleView($this->view($resource, 204));
-            }
-
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
-        }
-
-        if ($this->config->isApiRequest()) {
-            return $this->handleView($this->view($form));
         }
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
                              array(
-                                   $resourceName => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                                 $resourceName => $resource,
+                                 'form' => $form->createView(),
+                             ));
     }
 
     /**
@@ -133,16 +108,11 @@ class AdminController extends ResourceController implements NewAdminController
 
         $new_resource = $resource->cloneResource();
 
-        $this->domainManager->create($new_resource);
+        $this->create($new_resource);
 
         $this->addFlash('success', 'copy');
 
-        $config = $this->getConfiguration();
-
-        return $this->redirectToRoute(
-            $config->getRedirectRoute('index'),
-            $config->getRedirectParameters()
-        );
+        return $this->redirectToIndex();
     }
 
     /**
@@ -150,17 +120,13 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function showAction(Request $request)
     {
-        $config = $this->getConfiguration();
+        $resourceName = $this->getResourceName();
+
         $data = $this->findOr404($request);
 
-        $view = $this
-            ->view()
-            ->setTemplate($config->getTemplate('show.html'))
-            ->setTemplateVar($config->getResourceName())
-            ->setData($data)
-        ;
-
-        return $this->handleView($view);
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':show.html.twig',
+                             array($this->getResourceName() => $data)
+        );
     }
 
     /**
@@ -168,10 +134,9 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function deleteAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $resource = $this->findOr404($request);
         $resourceId = $resource->getId();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $this->get('pumukitschema.factory')->deleteResource($resource);
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
@@ -186,18 +151,17 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function listAction(Request $request)
     {
-        $config = $this->getConfiguration();
-        $pluralName = $config->getPluralResourceName();
-        $resourceName = $config->getResourceName();
+        $pluralName = $this->getPluralResourceName();
+        $resourceName = $this->getResourceName();
         $session = $this->get('session');
 
         $sorting = $request->get('sorting');
 
-        $criteria = $this->getCriteria($config);
-        $resources = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $resources = $this->getResources($request, $criteria);
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
-            array($pluralName => $resources)
+                             array($pluralName => $resources)
         );
     }
 
@@ -206,14 +170,8 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function delete($resource)
     {
-        $config = $this->getConfiguration();
-        $event = $this->dispatchEvent('pre_delete', $resource);
-        if (!$event->isStopped()) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/id');
-            $this->removeAndFlush($resource);
-        }
-
-        return $event;
+        $this->get('session')->remove('admin/'.$this->getResourceName().'/id');
+        $this->removeAndFlush($resource);
     }
 
     public function batchDeleteAction(Request $request)
@@ -224,8 +182,7 @@ class AdminController extends ResourceController implements NewAdminController
             $ids = json_decode($ids, true);
         }
 
-        $config = $this->getConfiguration();
-        $resourceName = $config->getResourceName();
+        $resourceName = $this->getResourceName();
 
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
@@ -245,27 +202,24 @@ class AdminController extends ResourceController implements NewAdminController
 
     public function find($id)
     {
-        $config = $this->getConfiguration();
         $repository = $this->getRepository();
 
         $criteria = array('id' => $id);
 
-        return $this->resourceResolver->getResource($repository, 'findOneBy', array($criteria));
+        return $repository->findOneBy($criteria);
     }
 
     /**
      * Gets the criteria values.
      */
-    public function getCriteria($config)
+    public function getCriteria($criteria)
     {
-        $criteria = $config->getCriteria();
-
         if (array_key_exists('reset', $criteria)) {
-            $this->get('session')->remove('admin/'.$config->getResourceName().'/criteria');
+            $this->get('session')->remove('admin/'.$this->getResourceName().'/criteria');
         } elseif ($criteria) {
-            $this->get('session')->set('admin/'.$config->getResourceName().'/criteria', $criteria);
+            $this->get('session')->set('admin/'.$this->getResourceName().'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$config->getResourceName().'/criteria', array());
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', array());
 
         $new_criteria = array();
         foreach ($criteria as $property => $value) {
@@ -281,35 +235,27 @@ class AdminController extends ResourceController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
-        $sorting = $config->getSorting();
-        $repository = $this->getRepository();
+        $sorting = $this->getSorting($request);
+
         $session = $this->get('session');
-        $session_namespace = 'admin/'.$config->getResourceName();
+        $session_namespace = 'admin/'.$this->getResourceName();
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
-            }
-
-            if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
-            }
-
-            $resources
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
-                ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
-        } else {
-            $resources = $this
-                ->resourceResolver
-                ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->get('page', 1));
         }
+
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get($session_namespace.'/page', 1));
 
         return $resources;
     }
@@ -323,9 +269,8 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function getForm($resource = null)
     {
-        $formName = $this->config->getFormType();
-        $prefix = 'pumukitnewadmin_';
-        $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst(substr($formName, strlen($prefix))).'Type';
+        $resourceName = $this->getResourceName();
+        $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
 
         $translator = $this->get('translator');
         $locale = $this->getRequest()->getLocale();
@@ -357,6 +302,8 @@ class AdminController extends ResourceController implements NewAdminController
 
     /**
      * @throws \Exception
+     *
+     * TODO: Move to RoleController
      */
     public function exportRolesAction()
     {
@@ -407,6 +354,8 @@ class AdminController extends ResourceController implements NewAdminController
 
     /**
      * @throws \Exception
+     *
+     * TODO: Move to PermissionProfileController
      */
     public function exportPermissionProfilesAction()
     {

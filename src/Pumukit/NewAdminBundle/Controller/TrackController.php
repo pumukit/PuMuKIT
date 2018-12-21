@@ -106,12 +106,12 @@ class TrackController extends Controller implements NewAdminController
         }
 
         return $this->render('PumukitNewAdminBundle:Track:update.html.twig',
-            array(
-                'track' => $track,
-                'form' => $form->createView(),
-                'mmId' => $multimediaObject->getId(),
-                'profiles' => $profiles,
-            )
+                             array(
+                                 'track' => $track,
+                                 'form' => $form->createView(),
+                                 'mmId' => $multimediaObject->getId(),
+                                 'profiles' => $profiles,
+                             )
         );
     }
 

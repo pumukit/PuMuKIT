@@ -111,7 +111,7 @@ class Tag
 
     /**
      * @Gedmo\TreeParent
-     * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children")
+     * @MongoDB\ReferenceOne(targetDocument="Tag", inversedBy="children", cascade={"persist"})
      * @MongoDB\Index
      */
     private $parent;

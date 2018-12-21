@@ -3,7 +3,7 @@ pumukitnewadmin_playlist_index:
     methods: [GET]
     defaults:
 
-        _controller: pumukitnewadmin.controller.playlist:indexAction
+        _controller: PumukitNewAdminBundle:Playlist:index
         _sylius:
             filterable: true
 
@@ -11,13 +11,13 @@ pumukitnewadmin_playlist_search:
     pattern: /search
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:searchAction
+        _controller: PumukitNewAdminBundle:Playlist:search
 
 pumukitnewadmin_playlist_create:
     pattern: /create
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:createAction
+        _controller: PumukitNewAdminBundle:Playlist:create
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -25,13 +25,13 @@ pumukitnewadmin_playlist_update:
     pattern: /{id}/update
     methods: [GET, POST, DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:updateAction
+        _controller: PumukitNewAdminBundle:Playlist:update
 
 pumukitnewadmin_playlist_batch_delete:
     pattern: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:batchDeleteAction
+        _controller: PumukitNewAdminBundle:Playlist:batchDelete
         _sylius:
             redirect: pumukitnewadmin_playlist_list
 
@@ -39,7 +39,7 @@ pumukitnewadmin_playlist_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:deleteAction
+        _controller: PumukitNewAdminBundle:Playlist:delete
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -47,13 +47,13 @@ pumukitnewadmin_playlist_generate_magic_url:
     pattern: /{id}/generatemagic
     methods: [POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:generateMagicUrlAction
+        _controller: PumukitNewAdminBundle:Playlist:generateMagicUrl
 
 pumukitnewadmin_playlist_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:copyAction
+        _controller: PumukitNewAdminBundle:Playlist:copy
         _sylius:
             redirect: pumukitnewadmin_playlist_index
 
@@ -61,16 +61,16 @@ pumukitnewadmin_playlist_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:listAction
+        _controller: PumukitNewAdminBundle:Playlist:list
 
 pumukitnewadmin_playlist_invert_announce:
     pattern: /invertannounce
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:invertAnnounceAction
+        _controller: PumukitNewAdminBundle:Playlist:invertAnnounce
 
 pumukitnewadmin_playlist_show:
     pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.playlist:showAction
+        _controller: PumukitNewAdminBundle:Playlist:show

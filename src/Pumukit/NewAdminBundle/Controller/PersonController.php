@@ -15,6 +15,9 @@ use Pumukit\NewAdminBundle\Form\Type\PersonType;
 
 class PersonController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'person';
+    public static $repoName = 'PumukitSchemaBundle:Person';
+
     /**
      * Index.
      *
@@ -23,11 +26,9 @@ class PersonController extends AdminController implements NewAdminController
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfiguration();
-
-        $criteria = $this->getCriteria($config, $request->getLocale());
+        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
-        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
+        $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
@@ -36,9 +37,9 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'people' => $resources,
-                     'countMmPeople' => $countMmPeople,
-                     );
+            'people' => $resources,
+            'countMmPeople' => $countMmPeople,
+        );
     }
 
     /**
@@ -77,9 +78,9 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'person' => $person,
-                     'form' => $form->createView(),
-                     );
+            'person' => $person,
+            'form' => $form->createView(),
+        );
     }
 
     /**
@@ -118,9 +119,9 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'person' => $person,
-                     'form' => $form->createView(),
-                     );
+            'person' => $person,
+            'form' => $form->createView(),
+        );
     }
 
     /**
@@ -137,9 +138,9 @@ class PersonController extends AdminController implements NewAdminController
         $series = $personService->findSeriesWithPerson($person, $limit);
 
         return array(
-                     'person' => $person,
-                     'series' => $series,
-                     );
+            'person' => $person,
+            'series' => $series,
+        );
     }
 
     /**
@@ -150,11 +151,10 @@ class PersonController extends AdminController implements NewAdminController
      */
     public function listAction(Request $request)
     {
-        $config = $this->getConfiguration();
-        $criteria = $this->getCriteria($config, $request->getLocale());
+        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
 
         $selectedPersonId = $request->get('selectedPersonId', null);
-        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
+        $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
         $countMmPeople = array();
@@ -163,9 +163,9 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'people' => $resources,
-                     'countMmPeople' => $countMmPeople,
-                     );
+            'people' => $resources,
+            'countMmPeople' => $countMmPeople,
+        );
     }
 
     /**
@@ -181,12 +181,10 @@ class PersonController extends AdminController implements NewAdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $config = $this->getConfiguration();
-        $pluralName = $config->getPluralResourceName();
-
-        $criteria = $this->getCriteria($config, $request->getLocale());
+        $pluralName = $this->getPluralResourceName();
+        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
-        $resources = $this->getResources($request, $config, $criteria, $selectedPersonId);
+        $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         $ldapEnabled = $this->container->has('pumukit_ldap.ldap');
@@ -200,14 +198,14 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         return array(
-                     'people' => $resources,
-                     'mm' => $multimediaObject,
-                     'role' => $role,
-                     'template' => $template,
-                     'ldap_enabled' => $ldapEnabled,
-                     'owner' => $owner,
-                     'personal_scope_role_code' => $personalScopeRole->getCod(),
-                     );
+            'people' => $resources,
+            'mm' => $multimediaObject,
+            'role' => $role,
+            'template' => $template,
+            'ldap_enabled' => $ldapEnabled,
+            'owner' => $owner,
+            'personal_scope_role_code' => $personalScopeRole->getCod(),
+        );
     }
 
     /**
@@ -260,24 +258,24 @@ class PersonController extends AdminController implements NewAdminController
 
             return $this->render($twigTemplate,
                                  array(
-                                       'people' => $multimediaObject->getPeopleByRole($role, true),
-                                       'role' => $role,
-                                       'personal_scope_role_code' => $personalScopeRoleCode,
-                                       'mm' => $multimediaObject,
-                                       'template' => $template,
-                                       ));
+                                     'people' => $multimediaObject->getPeopleByRole($role, true),
+                                     'role' => $role,
+                                     'personal_scope_role_code' => $personalScopeRoleCode,
+                                     'mm' => $multimediaObject,
+                                     'template' => $template,
+                                 ));
         }
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
         return array(
-                     'person' => $person,
-                     'role' => $role,
-                     'mm' => $multimediaObject,
-                     'template' => $template,
-                     'form' => $form->createView(),
-                     'owner' => $owner,
-                     );
+            'person' => $person,
+            'role' => $role,
+            'mm' => $multimediaObject,
+            'template' => $template,
+            'form' => $form->createView(),
+            'owner' => $owner,
+        );
     }
 
     /**
@@ -321,12 +319,12 @@ class PersonController extends AdminController implements NewAdminController
 
                 return $this->render($twigTemplate,
                                      array(
-                                           'people' => $multimediaObject->getPeopleByRole($role, true),
-                                           'role' => $role,
-                                           'personal_scope_role_code' => $personalScopeRoleCode,
-                                           'mm' => $multimediaObject,
-                                           'template' => $template,
-                                           ));
+                                         'people' => $multimediaObject->getPeopleByRole($role, true),
+                                         'role' => $role,
+                                         'personal_scope_role_code' => $personalScopeRoleCode,
+                                         'mm' => $multimediaObject,
+                                         'template' => $template,
+                                     ));
             } else {
                 $errors = $this->get('validator')->validate($person);
                 $textStatus = '';
@@ -341,13 +339,13 @@ class PersonController extends AdminController implements NewAdminController
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
         return array(
-                     'person' => $person,
-                     'role' => $role,
-                     'mm' => $multimediaObject,
-                     'template' => $template,
-                     'form' => $form->createView(),
-                     'owner' => $owner,
-                     );
+            'person' => $person,
+            'role' => $role,
+            'mm' => $multimediaObject,
+            'template' => $template,
+            'form' => $form->createView(),
+            'owner' => $owner,
+        );
     }
 
     /**
@@ -388,12 +386,12 @@ class PersonController extends AdminController implements NewAdminController
 
         return $this->render($twigTemplate,
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role, true),
-                                   'role' => $role,
-                                   'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'mm' => $multimediaObject,
-                                   'template' => $template,
-                                   ));
+                                 'people' => $multimediaObject->getPeopleByRole($role, true),
+                                 'role' => $role,
+                                 'personal_scope_role_code' => $personalScopeRoleCode,
+                                 'mm' => $multimediaObject,
+                                 'template' => $template,
+                             ));
     }
 
     /**
@@ -417,11 +415,11 @@ class PersonController extends AdminController implements NewAdminController
         $out = [];
         foreach ($people as $p) {
             $out[] = array(
-                           'id' => $p->getId(),
-                           'label' => $p->getName(),
-                           'desc' => $p->getPost().' '.$p->getFirm(),
-                           'value' => $p->getName(),
-                           );
+                'id' => $p->getId(),
+                'label' => $p->getName(),
+                'desc' => $p->getPost().' '.$p->getFirm(),
+                'value' => $p->getName(),
+            );
         }
 
         return new JsonResponse($out);
@@ -457,12 +455,12 @@ class PersonController extends AdminController implements NewAdminController
 
         return $this->render($twigTemplate,
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role, true),
-                                   'role' => $role,
-                                   'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'mm' => $multimediaObject,
-                                   'template' => $template,
-                                   ));
+                                 'people' => $multimediaObject->getPeopleByRole($role, true),
+                                 'role' => $role,
+                                 'personal_scope_role_code' => $personalScopeRoleCode,
+                                 'mm' => $multimediaObject,
+                                 'template' => $template,
+                             ));
     }
 
     /**
@@ -495,12 +493,12 @@ class PersonController extends AdminController implements NewAdminController
 
         return $this->render($twigTemplate,
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role, true),
-                                   'role' => $role,
-                                   'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'mm' => $multimediaObject,
-                                   'template' => $template,
-                                   ));
+                                 'people' => $multimediaObject->getPeopleByRole($role, true),
+                                 'role' => $role,
+                                 'personal_scope_role_code' => $personalScopeRoleCode,
+                                 'mm' => $multimediaObject,
+                                 'template' => $template,
+                             ));
     }
 
     /**
@@ -540,12 +538,12 @@ class PersonController extends AdminController implements NewAdminController
 
         return $this->render($twigTemplate,
                              array(
-                                   'people' => $multimediaObject->getPeopleByRole($role, true),
-                                   'role' => $role,
-                                   'personal_scope_role_code' => $personalScopeRoleCode,
-                                   'mm' => $multimediaObject,
-                                   'template' => $template,
-                                   ));
+                                 'people' => $multimediaObject->getPeopleByRole($role, true),
+                                 'role' => $role,
+                                 'personal_scope_role_code' => $personalScopeRoleCode,
+                                 'mm' => $multimediaObject,
+                                 'template' => $template,
+                             ));
     }
 
     /**
@@ -616,10 +614,8 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Gets the criteria values.
      */
-    public function getCriteria($config, $locale = 'en')
+    public function getCriteria($criteria, $locale = 'en')
     {
-        $criteria = $config->getCriteria();
-
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/person/criteria');
         } elseif ($criteria) {
@@ -660,7 +656,7 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Get sorting for person.
      */
-    private function getSorting(Request $request)
+    public function getSorting(Request $request = null, $session_namespace = null)
     {
         $session = $this->get('session');
 
@@ -678,50 +674,38 @@ class PersonController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria.
      */
-    public function getResources(Request $request, $config, $criteria, $selectedPersonId = null)
+    public function getResources(Request $request, $criteria, $selectedPersonId = null)
     {
         $sorting = $this->getSorting($request);
-
-        $repository = $this->getRepository();
         $session = $this->get('session');
 
-        if ($config->isPaginated()) {
-            $resources = $this
-              ->resourceResolver
-              ->getResource($repository, 'createPaginator', array($criteria, $sorting))
-              ;
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set('admin/person/page', $request->get('page', 1));
-            }
-
-            if ($selectedPersonId) {
-                $newPerson = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Person')->find($selectedPersonId);
-                $adapter = $resources->getAdapter();
-                $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
-                $position = 1;
-                foreach ($returnedPerson as $person) {
-                    if ($selectedPersonId == $person->getId()) {
-                        break;
-                    }
-                    ++$position;
-                }
-                $maxPerPage = $session->get('admin/person/paginate', 10);
-                $page = intval(ceil($position / $maxPerPage));
-            } else {
-                $page = $session->get('admin/person/page', 1);
-            }
-
-            $resources
-              ->setMaxPerPage($config->getPaginationMaxPerPage())
-              ->setNormalizeOutOfRangePages(true)
-              ->setCurrentPage($session->get('admin/person/page', 1));
-        } else {
-            $resources = $this
-              ->resourceResolver
-              ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()))
-              ;
+        if ($request->get('page', null)) {
+            $session->set('admin/person/page', $request->get('page', 1));
         }
+
+        if ($selectedPersonId) {
+            $newPerson = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Person')->find($selectedPersonId);
+            $adapter = $resources->getAdapter();
+            $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
+            $position = 1;
+            foreach ($returnedPerson as $person) {
+                if ($selectedPersonId == $person->getId()) {
+                    break;
+                }
+                ++$position;
+            }
+            $maxPerPage = $session->get('admin/person/paginate', 10);
+            $page = intval(ceil($position / $maxPerPage));
+        } else {
+            $page = $session->get('admin/person/page', 1);
+        }
+
+        $resources
+            ->setMaxPerPage($session->get('admin/person/paginate', 10))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get('admin/person/page', 1));
 
         return $resources;
     }

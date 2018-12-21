@@ -95,7 +95,7 @@ class CpuService
             }
             if (($cpu['jobs'] / $cpu['max']) < ($optimalCpu['jobs'] / $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
-            } elseif (($cpu['jobs'] === 0) && ($optimalCpu['jobs'] === 0) && ($cpu['max'] > $optimalCpu['max'])) {
+            } elseif ((0 === $cpu['jobs']) && (0 === $optimalCpu['jobs']) && ($cpu['max'] > $optimalCpu['max'])) {
                 $optimalCpu = $cpu;
             }
         }
@@ -158,7 +158,7 @@ class CpuService
 
     public function isCompatible($cpu, $profile)
     {
-        return $profile === null || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']);
+        return null === $profile || empty($cpu['profiles']) || in_array($profile, $cpu['profiles']);
     }
 
     public function getCpuNamesInMaintenanceMode()

@@ -138,7 +138,7 @@ class ProfileServiceTest extends WebTestCase
                                                        'framerate' => '25/1',
                                                        'channels' => 1,
                                                        'audio' => false,
-                                                       'bat' => 'avconv -y -i "{{input}}" -acodec libvo_aacenc -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
+                                                       'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
                                                        'streamserver' => array(
                                                                                'type' => ProfileService::STREAMSERVER_STORE,
                                                                                'host' => '192.168.5.125',
@@ -147,7 +147,7 @@ class ProfileServiceTest extends WebTestCase
                                                                                'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/',
                                                                                ),
-                                                       'app' => 'avconv',
+                                                       'app' => 'ffmpeg',
                                                        'rel_duration_size' => 1,
                                                        'rel_duration_trans' => 1,
                                                        ),

@@ -10,10 +10,11 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Link;
-
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
-class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MultimediaObjectTest extends TestCase
 {
     public function testGetterAndSetter()
     {
@@ -167,7 +168,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsTrack($track2));
 
         $tracksArray = array($track1, $track3);
-        $this->assertEquals($tracksArray, $mm->getTracks()->toArray());
+        $this->assertEquals($tracksArray, array_values($mm->getTracks()->toArray()));
     }
 
     public function testPicsInMultimediaObject()
@@ -197,7 +198,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsPic($pic2));
 
         $picsArray = array($pic1, $pic3);
-        $this->assertEquals($picsArray, $mm->getPics()->toArray());
+        $this->assertEquals($picsArray, array_values($mm->getPics()->toArray()));
         $this->assertEquals($pic1, $mm->getPic());
 
         $mm->addPic($pic4);
@@ -228,7 +229,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsMaterial($material2));
 
         $materialsArray = array($material1, $material3);
-        $this->assertEquals($materialsArray, $mm->getMaterials()->toArray());
+        $this->assertEquals($materialsArray, array_values($mm->getMaterials()->toArray()));
     }
 
     public function testLinksInMultimediaObject()
@@ -255,7 +256,7 @@ class MultimediaObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mm->containsLink($link2));
 
         $linksArray = array($link1, $link3);
-        $this->assertEquals($linksArray, $mm->getLinks()->toArray());
+        $this->assertEquals($linksArray, array_values($mm->getLinks()->toArray()));
     }
 
     public function testUpdateMmDurationWhenAddTracks()

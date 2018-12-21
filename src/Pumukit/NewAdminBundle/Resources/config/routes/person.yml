@@ -2,7 +2,7 @@ pumukitnewadmin_person_index:
     pattern: /
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.person:indexAction
+        _controller: PumukitNewAdminBundle:Person:index
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_person_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:createAction
+        _controller: PumukitNewAdminBundle:Person:create
         _sylius:
             redirect: pumukitnewadmin_person_index
 
@@ -18,13 +18,13 @@ pumukitnewadmin_person_update:
     pattern: /{id}/update
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:updateAction
+        _controller: PumukitNewAdminBundle:Person:update
 
 pumukitnewadmin_person_batch_delete:
     pattern: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.person:batchDeleteAction
+        _controller: PumukitNewAdminBundle:Person:batchDelete
         _sylius:
             redirect: pumukitnewadmin_person_list
 
@@ -32,7 +32,7 @@ pumukitnewadmin_person_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.person:deleteAction
+        _controller: PumukitNewAdminBundle:Person:delete
         _sylius:
             redirect: pumukitnewadmin_person_index
 
@@ -40,7 +40,7 @@ pumukitnewadmin_person_copy:
     pattern: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:copyAction
+        _controller: PumukitNewAdminBundle:Person:copy
         _sylius:
             redirect: pumukitnewadmin_person_index
 
@@ -48,13 +48,13 @@ pumukitnewadmin_person_show:
     pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.person:showAction
+        _controller: PumukitNewAdminBundle:Person:show
 
 pumukitnewadmin_person_up:
     pattern: /{id}/{roleId}/{mmId}/up
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:upAction
+        _controller: PumukitNewAdminBundle:Person:up
         _sylius:
             redirect: pumukitnewadmin_person_index
 
@@ -62,7 +62,7 @@ pumukitnewadmin_person_down:
     pattern: /{id}/{roleId}/{mmId}/down
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:downAction
+        _controller: PumukitNewAdminBundle:Person:down
         _sylius:
             redirect: pumukitnewadmin_person_index
 
@@ -70,13 +70,13 @@ pumukitnewadmin_person_list_autocomplete:
     pattern: /{mmId}/{roleId}/listautocomplete
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.person:listAutocompleteAction
+        _controller: PumukitNewAdminBundle:Person:listAutocomplete
 
 pumukitnewadmin_person_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:listAction
+        _controller: PumukitNewAdminBundle:Person:list
         _sylius:
             filterable: true
 
@@ -84,28 +84,28 @@ pumukitnewadmin_person_create_relation:
     pattern: /{mmId}/{roleId}/createrelation
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:createRelationAction
+        _controller: PumukitNewAdminBundle:Person:createRelation
 
 pumukitnewadmin_person_update_relation:
     pattern: /{id}/{roleId}/{mmId}/updaterelation
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:updateRelationAction
+        _controller: PumukitNewAdminBundle:Person:updateRelation
 
 pumukitnewadmin_person_delete_relation:
     pattern: /{id}/{roleId}/{mmId}/delete_relation
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.person:deleteRelationAction
+        _controller: PumukitNewAdminBundle:Person:deleteRelation
 
 pumukitnewadmin_person_link:
     pattern: /{mmId}/{roleId}/{id}/link
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:linkAction
+        _controller: PumukitNewAdminBundle:Person:link
 
 pumukitnewadmin_person_auto_complete:
     pattern: /autocomplete/{mmId}/{roleId}
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.person:autoCompleteAction
+        _controller: PumukitNewAdminBundle:Person:autoComplete

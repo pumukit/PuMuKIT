@@ -26,12 +26,12 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true, cascade={"persist"})
      */
     private $permissionProfile;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true)
+     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true, cascade={"persist"})
      */
     private $person;
 

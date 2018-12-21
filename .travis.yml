@@ -3,8 +3,7 @@ language: php
 dist: trusty
 
 php:
-  - 5.5
-  - 5.6
+  - 7.2
 
 env:
   - MONGO_VERSION=stable
@@ -23,7 +22,7 @@ addons:
       - libavcodec-extra-54
 
 before_script:
-  - yes '' | pecl -q install -f mongo-${MONGO_VERSION}
+  - pecl install -f mongodb-${MONGO_VERSION}
   - composer self-update
   - php -i
   - npm install -g pa11y
@@ -39,7 +38,7 @@ script:
     - php app/console lint:twig src
     - php app/console lint:twig app
     - ./bin/travis_checks/check_var_dumps
-    - php bin/php-cs-fixer fix src --rules=@Symfony --dry-run -v
+    - php bin/php-cs-fixer.phar fix src --rules=@Symfony --dry-run -v
     - php bin/phpunit -c app
     - php app/console doctrine:mongodb:schema:create
     - php app/console pumukit:init:repo all --force

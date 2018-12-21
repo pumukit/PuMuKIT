@@ -3,8 +3,9 @@
 namespace Pumukit\LiveBundle\Tests\Document;
 
 use Pumukit\LiveBundle\Document\Live;
+use PHPUnit\Framework\TestCase;
 
-class LiveTest extends \PHPUnit_Framework_TestCase
+class LiveTest extends TestCase
 {
     public function testGetterAndSetter()
     {

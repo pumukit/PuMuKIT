@@ -568,7 +568,7 @@ class PumukitAdminExtension extends \Twig_Extension
             array('$group' => array('_id' => '$status',
                                     'count' => array('$sum' => 1), )),
         );
-        $mmobjCounts = $seriesColl->aggregate($aggrPipe)->toArray();
+        $mmobjCounts = $seriesColl->aggregate($aggrPipe, array('cursor' => array()))->toArray();
 
         foreach ($mmobjCounts as $mmobjCount) {
             switch ($mmobjCount['_id']) {

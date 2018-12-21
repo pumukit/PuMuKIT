@@ -2,4 +2,4 @@
 #     pattern: /{id}/show
 #     methods: [GET]
 #     defaults:
-#         _controller: pumukitnewadmin.controller.collection:showAction
+#         _controller: PumukitNewAdminBundle:Collection:showAction

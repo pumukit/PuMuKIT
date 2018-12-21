@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * SeriesRepository.
@@ -640,7 +641,7 @@ class SeriesRepository extends DocumentRepository
             $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
             $command = array(array('$group' => $group));
 
-            return $seriesCollection->aggregate($command)->toArray();
+            return $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
         }
 
         $match = [];
@@ -648,7 +649,7 @@ class SeriesRepository extends DocumentRepository
         $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
 
         $command = array(array('$match' => $match), array('$group' => $group));
-        $aSeries = $seriesCollection->aggregate($command)->toArray();
+        $aSeries = $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
 
         /* Find mmo user groups */
         $mmoCollection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -664,7 +665,7 @@ class SeriesRepository extends DocumentRepository
         $group = array('_id' => array('id' => '$series', 'title' => '$seriesTitle'));
 
         $command = array($unwind, array('$match' => $match), array('$group' => $group));
-        $aMMO = $mmoCollection->aggregate($command)->toArray();
+        $aMMO = $mmoCollection->aggregate($command, array('cursor' => array()))->toArray();
 
         $aSeries = array_merge($aSeries, $aMMO);
         usort($aSeries, function ($a, $b) {
@@ -686,5 +687,19 @@ class SeriesRepository extends DocumentRepository
         return $this->getDocumentManager()
             ->getRepository('PumukitSchemaBundle:MultimediaObject')
             ->countMmobjsBySeries($seriesList);
+    }
+
+    public function getMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->findWithoutPrototype($series);
+    }
+
+    public function countMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->countWithoutPrototype($series);
     }
 }

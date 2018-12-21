@@ -153,7 +153,7 @@ class CategoriesController extends Controller implements WebTVController
             array('$group' => array('_id' => '$tags.cod', 'count' => array('$sum' => 1))),
         );
 
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline, array('cursor' => array()));
         $mmobjCount = array();
         foreach ($aggregation as $a) {
             $mmobjCount[(string) $a['_id']] = $a['count'];

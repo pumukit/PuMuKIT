@@ -462,7 +462,7 @@ class ClientService
     public function updateOpencastSeries($series)
     {
         $seriesOpencastId = $series->getProperty('opencast');
-        if ($seriesOpencastId === null) {
+        if (null === $seriesOpencastId) {
             throw new \Exception('Error trying to update an Opencast series. Error: No opencast ID', 404);
         }
         $metadata = array(
@@ -485,7 +485,7 @@ class ClientService
         $requestUrl = "/api/series/$seriesOpencastId/metadata";
         $requestUrl .= "?type=$type";
         $output = $this->request($requestUrl, $params, 'PUT', true);
-        if ($output['status'] !== 200) {
+        if (200 !== $output['status']) {
             throw new \Exception('Error trying to update an Opencast series metadata. Error '.$output['status'].':  '.$output['error'].' : '.$output['var'], $output['status']);
         }
 
@@ -526,7 +526,7 @@ class ClientService
         );
         $requestUrl = '/api/series';
         $output = $this->request($requestUrl, $params, 'POST', true);
-        if ($output['status'] !== 201) {
+        if (201 !== $output['status']) {
             throw new \Exception('Error trying to create an Opencast series. Error '.$output['status'].':  "'.$output['error'].' : '.$output['var'], $output['status']);
         }
 
@@ -545,12 +545,12 @@ class ClientService
     public function deleteOpencastSeries($series)
     {
         $seriesOpencastId = $series->getProperty('opencast');
-        if ($seriesOpencastId === null) {
+        if (null === $seriesOpencastId) {
             return;
         }
         $requestUrl = "/api/series/$seriesOpencastId";
         $output = $this->request($requestUrl, array(), 'DELETE', true);
-        if ($output['status'] !== 204) {
+        if (204 !== $output['status']) {
             throw new \Exception('Error trying to delete an Opencast series. Error '.$output['status'].':  "'.$output['error'].' : '.$output['var'], $output['status']);
         }
 

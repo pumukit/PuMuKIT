@@ -16,6 +16,9 @@ use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
  */
 class PermissionProfileController extends AdminController implements NewAdminController
 {
+    public static $resourceName = 'permissionprofile';
+    public static $repoName = 'PumukitSchemaBundle:PermissionProfile';
+
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session.
      *
@@ -23,12 +26,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $session = $this->get('session');
         $sorting = $request->get('sorting');
 
-        $criteria = $this->getCriteria($config);
-        $permissionProfiles = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $permissionProfiles = $this->getResources($request, $criteria);
 
         list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
@@ -53,12 +55,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function listAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $session = $this->get('session');
         $sorting = $request->get('sorting');
 
-        $criteria = $this->getCriteria($config);
-        $permissionProfiles = $this->getResources($request, $config, $criteria);
+        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $permissionProfiles = $this->getResources($request, $criteria);
 
         $page = $session->get('admin/permissionprofile/page', 1);
         $maxPerPage = $session->get('admin/permissionprofile/paginate', 9);
@@ -85,16 +86,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      * Overwrite to give PermissionProfileType name correctly.
      *
      * @Template()
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
-        $config = $this->getConfiguration();
 
         $permissionProfile = new PermissionProfile();
         $form = $this->getForm($permissionProfile);
@@ -124,16 +120,11 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      * and show toast message.
      *
      * @Template()
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
      */
     public function updateAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
-        $config = $this->getConfiguration();
 
         $permissionProfile = $this->findOr404($request);
         $form = $this->getForm($permissionProfile);
@@ -158,8 +149,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      * Overwrite to get form with translations.
      *
      * @param object|null $permissionProfile
-     *
-     * @return FormInterface
      */
     public function getForm($permissionProfile = null)
     {
@@ -179,7 +168,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function deleteAction(Request $request)
     {
-        $config = $this->getConfiguration();
         $permissionProfile = $this->findOr404($request);
         $permissionProfileId = $permissionProfile->getId();
         $changeDefault = $permissionProfile->isDefault();
@@ -327,38 +315,29 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      *
      * Override to get 9 resources per page
      */
-    public function getResources(Request $request, $config, $criteria)
+    public function getResources(Request $request, $criteria)
     {
-        $sorting = $config->getSorting();
+        $sorting = $this->getSorting();
         if (!isset($sorting['rank'])) {
             $sorting['rank'] = 1;
         }
-        $repository = $this->getRepository();
         $session = $this->get('session');
         $session_namespace = 'admin/permissionprofile';
 
-        if ($config->isPaginated()) {
-            $resources = $this
-                       ->resourceResolver
-                       ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+        $resources = $this->createPager($criteria, $sorting);
 
-            if ($request->get('page', null)) {
-                $session->set($session_namespace.'/page', $request->get('page', 1));
-            }
-
-            if ($request->get('paginate', null)) {
-                $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
-            }
-
-            $resources
-                ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
-                ->setNormalizeOutOfRangePages(true)
-                ->setCurrentPage($session->get($session_namespace.'/page', 1));
-        } else {
-            $resources = $this
-                       ->resourceResolver
-                       ->getResource($repository, 'findBy', array($criteria, $sorting, $config->getLimit()));
+        if ($request->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->get('page', 1));
         }
+
+        if ($request->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
+        }
+
+        $resources
+            ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
+            ->setNormalizeOutOfRangePages(true)
+            ->setCurrentPage($session->get($session_namespace.'/page', 1));
 
         return $resources;
     }

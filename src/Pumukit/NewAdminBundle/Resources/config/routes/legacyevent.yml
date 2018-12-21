@@ -2,7 +2,7 @@ pumukitnewadmin_event_index:
     pattern: /
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.event:indexAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:index
         _sylius:
             filterable: true
 
@@ -10,7 +10,7 @@ pumukitnewadmin_event_create:
     pattern: /create
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.event:createAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:create
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -18,7 +18,7 @@ pumukitnewadmin_event_update:
     pattern: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.event:updateAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:update
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -26,7 +26,7 @@ pumukitnewadmin_event_batch_delete:
     pattern: /batchdelete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.event:batchDeleteAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:batchDelete
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -34,7 +34,7 @@ pumukitnewadmin_event_delete:
     pattern: /{id}/delete
     methods: [DELETE]
     defaults:
-        _controller: pumukitnewadmin.controller.event:deleteAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:delete
         _sylius:
             redirect: pumukitnewadmin_event_index
 
@@ -42,13 +42,13 @@ pumukitnewadmin_event_show:
     pattern: /{id}/show
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.event:showAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:show
 
 pumukitnewadmin_event_list:
     pattern: /list
     methods: [GET, POST]
     defaults:
-        _controller: pumukitnewadmin.controller.event:listAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:list
         _sylius:
             filterable: true
 
@@ -56,4 +56,4 @@ pumukitnewadmin_event_updatesession:
     pattern: /updatesession
     methods: [GET]
     defaults:
-        _controller: pumukitnewadmin.controller.event:updateSessionAction
+        _controller: PumukitNewAdminBundle:LegacyEvent:updateSession

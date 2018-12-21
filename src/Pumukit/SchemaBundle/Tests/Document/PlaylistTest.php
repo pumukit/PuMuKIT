@@ -21,9 +21,9 @@ class PlaylistTest extends WebTestCase
         $mmobjA = new MultimediaObject();
         $mmobjB = new MultimediaObject();
         $mmobjC = new MultimediaObject();
-        $playlist->addMultimediaObject($mmobjA);
-        $playlist->addMultimediaObject($mmobjB);
-        $playlist->addMultimediaObject($mmobjC);
+        $mmobjA->setSeries($playlist);
+        $mmobjB->setSeries($playlist);
+        $mmobjC->setSeries($playlist);
         $this->assertEquals(0, $playlist->getPlaylist()->getMultimediaObjects()->count());
         $playlist->getPlaylist()->addMultimediaObject($mmobjA);
         $playlist->getPlaylist()->addMultimediaObject($mmobjB);

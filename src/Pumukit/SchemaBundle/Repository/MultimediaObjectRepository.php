@@ -75,6 +75,26 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
+     * Count multimedia objects in a series
+     * without the template (prototype).
+     *
+     * @param Series $series
+     *
+     * @return ArrayCollection
+     */
+    public function countWithoutPrototype(Series $series)
+    {
+        $aux = $this->createQueryBuilder()
+             ->field('series')->references($series)
+             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
+             ->sort('rank', 1)
+             ->getQuery()
+             ->count();
+
+        return $aux;
+    }
+
+    /**
      * Find multimedia objects by pic id.
      *
      * @param string $picId
@@ -236,7 +256,7 @@ class MultimediaObjectRepository extends DocumentRepository
             array('$unwind' => '$people'),
         );
 
-        $aggregation = $collection->aggregate($pipeline);
+        $aggregation = $collection->aggregate($pipeline, array('cursor' => array()));
 
         $people = array();
 
@@ -290,7 +310,7 @@ class MultimediaObjectRepository extends DocumentRepository
             array('$unwind' => '$people'),
         );
 
-        $aggregation = $collection->aggregate($pipeline);
+        $aggregation = $collection->aggregate($pipeline, array('cursor' => array()));
 
         $persons = array();
 
@@ -1613,7 +1633,7 @@ class MultimediaObjectRepository extends DocumentRepository
             ),
         );
 
-        $result = $collection->aggregate($pipeline)->toArray();
+        $result = $collection->aggregate($pipeline, array('cursor' => array()))->toArray();
 
         foreach ($result as $key => $element) {
             $orderSession = array();
@@ -1726,7 +1746,7 @@ class MultimediaObjectRepository extends DocumentRepository
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $collection->aggregate($pipeline)->toArray();
+        return $collection->aggregate($pipeline, array('cursor' => array()))->toArray();
     }
 
     /**
@@ -1761,7 +1781,7 @@ class MultimediaObjectRepository extends DocumentRepository
             array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
         );
 
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline, array('cursor' => array()));
         $mmobjCount = array();
 
         foreach ($aggregation as $a) {
@@ -1805,7 +1825,7 @@ class MultimediaObjectRepository extends DocumentRepository
             array_unshift($pipeline, $preCriteria);
         }
 
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline);
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline, array('cursor' => array()));
         $mmobjCount = array();
 
         foreach ($aggregation as $a) {
