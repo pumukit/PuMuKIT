@@ -576,7 +576,7 @@ class JobService
      *
      * @throws \Exception
      */
-    public function searchError($profile, $var, $durationIn, $durationEnd)
+    public function searchError($profile, $durationIn, $durationEnd)
     {
         // This allows to configure a profile for videos without timestamps to be reindexed.
         if (isset($profile['nocheckduration']) && $profile['nocheckduration']) {
@@ -821,9 +821,9 @@ class JobService
     /**
      * Get not finished jobs with multimedia object id.
      *
-     * @param string $mmId
+     * @param $mmId
      *
-     * @return ArrayCollection $jobs with mmId
+     * @return mixed $jobs with mmId
      */
     public function getNotFinishedJobsByMultimediaObjectId($mmId)
     {

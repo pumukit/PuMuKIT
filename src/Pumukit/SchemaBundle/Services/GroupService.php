@@ -38,6 +38,8 @@ class GroupService
      * @param Group $group
      *
      * @return Group
+     *
+     * @throws \Exception
      */
     public function create(Group $group)
     {
@@ -67,6 +69,8 @@ class GroupService
      * @param bool  $executeFlush
      *
      * @return Group
+     *
+     * @throws \Exception
      */
     public function update(Group $group, $executeFlush = true)
     {
@@ -84,7 +88,7 @@ class GroupService
             }
         }
 
-        $group->setUpdatedAt(new \Datetime('now'));
+        $group->setUpdatedAt(new \DateTime());
         $this->dm->persist($group);
         if ($executeFlush) {
             $this->dm->flush();
@@ -100,6 +104,9 @@ class GroupService
      *
      * @param Group $group
      * @param bool  $executeFlush
+     * @param bool  $checkOrigin
+     *
+     * @throws \Exception
      */
     public function delete(Group $group, $executeFlush = true, $checkOrigin = true)
     {
@@ -287,11 +294,13 @@ class GroupService
 
     /**
      * Find users in group.
+     * ss.
      *
      * @param Group $group
      * @param array $sort
+     * @param int   $limit
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findUsersInGroup(Group $group, $sort = array(), $limit = 0)
     {
@@ -323,7 +332,7 @@ class GroupService
     /**
      * Find all.
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function findAll()
     {
@@ -336,7 +345,7 @@ class GroupService
      *
      * @param array $ids
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findByIdNotIn($ids = array())
     {
@@ -352,7 +361,7 @@ class GroupService
      * @param array $ids
      * @param array $total
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findByIdNotInOf($ids = array(), $total = array())
     {

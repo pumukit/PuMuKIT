@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Services\PermissionService;
 class PermissionServiceTest extends WebTestCase
 {
     private $permissionService;
+    private $dm;
 
     public function setUp()
     {

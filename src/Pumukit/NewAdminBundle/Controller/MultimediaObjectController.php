@@ -1107,11 +1107,16 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * User last relation.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function userLastRelationAction(Request $request)
     {
         $loggedInUser = $this->getUser();
         $userService = $this->get('pumukitschema.user');
+        $response = null;
         if (!$userService->hasPersonalScope($loggedInUser)) {
             return new JsonResponse(false, Response::HTTP_OK);
         }
@@ -1450,12 +1455,17 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param Request $request
+     * @param $criteria
+     *
+     * @return Pagerfanta
      */
     public function getResources(Request $request, $criteria)
     {
-        $sorting = $this->getSorting($request, $this->getResourceName($request));
+        $sorting = $this->getSorting($request, $this->getResourceName());
         $session = $this->get('session');
-        $session_namespace = 'admin/'.$this->getResourceName($request);
+        $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);
 

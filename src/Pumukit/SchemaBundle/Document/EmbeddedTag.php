@@ -65,19 +65,19 @@ class EmbeddedTag
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $created;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -160,7 +160,7 @@ class EmbeddedTag
     /**
      * Get i18n title.
      *
-     * @return array
+     * @return string
      */
     public function getI18nTitle()
     {
@@ -223,7 +223,7 @@ class EmbeddedTag
     /**
      * Get i18n description.
      *
-     * @return array
+     * @return string
      */
     public function getI18nDescription()
     {
@@ -241,7 +241,7 @@ class EmbeddedTag
     {
         $this->slug = $slug;
 
-        return $this;
+        return $this->slug;
     }
 
     /**
@@ -317,21 +317,21 @@ class EmbeddedTag
     /**
      * Set created.
      *
-     * @param \Date $created
+     * @param \DateTime $created
      *
-     * @return Tag
+     * @return \DateTime
      */
     public function setCreated($created)
     {
         $this->created = $created;
 
-        return $this;
+        return $this->created;
     }
 
     /**
      * Get created.
      *
-     * @return Date
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -341,15 +341,15 @@ class EmbeddedTag
     /**
      * Set updated.
      *
-     * @param \Date $updated
+     * @param \DateTime $updated
      *
-     * @return Tag
+     * @return \DateTime
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
 
-        return $this;
+        return $this->updated;
     }
 
     /**

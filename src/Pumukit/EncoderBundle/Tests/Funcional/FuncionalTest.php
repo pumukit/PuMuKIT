@@ -18,6 +18,9 @@ class FuncionalTest extends WebTestCase
     private $inspectionService;
     private $jobService;
     private $tokenStorage;
+    private $trackService;
+    private $propService;
+    private $videoInputPath;
 
     public function setUp()
     {

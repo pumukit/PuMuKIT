@@ -21,7 +21,7 @@ class ViewsLog
     private $id;
 
     /**
-     * @var \Date
+     * @var \Datetime
      *
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
@@ -102,7 +102,7 @@ class ViewsLog
     /**
      * Get id.
      *
-     * @return id $id
+     * @return string $id
      */
     public function getId()
     {
@@ -112,7 +112,7 @@ class ViewsLog
     /**
      * Set date.
      *
-     * @param date $date
+     * @param \Datetime $date
      *
      * @return self
      */
@@ -126,7 +126,7 @@ class ViewsLog
     /**
      * Get date.
      *
-     * @return date $date
+     * @return \Datetime $date
      */
     public function getDate()
     {

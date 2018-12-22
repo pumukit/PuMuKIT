@@ -48,7 +48,7 @@ class Event
     private $place;
 
     /**
-     * @var datetime
+     * @var \Datetime
      *
      * @MongoDB\Field(type="date")
      */
@@ -83,7 +83,7 @@ class Event
     private $pic;
 
     /**
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -92,7 +92,7 @@ class Event
      */
     public function __construct()
     {
-        $this->date = new \Datetime('now');
+        $this->date = new \DateTime();
     }
 
     /**
@@ -218,7 +218,7 @@ class Event
     /**
      * Set date.
      *
-     * @param Date $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {
@@ -228,7 +228,7 @@ class Event
     /**
      * Get date.
      *
-     * @return Date
+     * @return \DateTime
      */
     public function getDate()
     {

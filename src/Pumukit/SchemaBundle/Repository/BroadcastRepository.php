@@ -17,7 +17,7 @@ class BroadcastRepository extends DocumentRepository
     /**
      * Find default selected broadcast.
      *
-     * @return Broadcast
+     * @return object
      */
     public function findDefaultSel()
     {
@@ -30,7 +30,7 @@ class BroadcastRepository extends DocumentRepository
     /**
      * Find public broadcast.
      *
-     * @return Broadcast
+     * @return object
      */
     public function findPublicBroadcast()
     {
@@ -43,9 +43,9 @@ class BroadcastRepository extends DocumentRepository
     /**
      * Find distinct ids by broadcast type id.
      *
-     * @param string $broadcastTypeId
+     * @param $broadcastTypeId
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findDistinctIdsByBroadcastTypeId($broadcastTypeId)
     {

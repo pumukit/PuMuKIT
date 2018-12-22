@@ -20,6 +20,9 @@ class JobServiceTest extends WebTestCase
     private $logger;
     private $trackService;
     private $factory;
+    private $repoMmobj;
+    private $tokenStorage;
+    private $propService;
 
     public function setUp()
     {

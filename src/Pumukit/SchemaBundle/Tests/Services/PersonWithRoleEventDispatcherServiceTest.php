@@ -17,6 +17,7 @@ class PersonWithRoleEventDispatcherServiceTest extends WebTestCase
     const EMPTY_CODE = 'EMTPY CODE';
 
     private $personWithRoleDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

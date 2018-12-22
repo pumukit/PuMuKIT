@@ -19,6 +19,7 @@ class TrackServiceTest extends WebTestCase
     private $logger;
     private $tokenStorage;
     private $trackDispatcher;
+    private $tmpDir;
 
     public function setUp()
     {

@@ -13,6 +13,7 @@ class TrackUrlServiceTest extends WebTestCase
     private $client;
     private $dm;
     private $trackurlService;
+    private $mmobjRepo;
 
     public function setUp()
     {

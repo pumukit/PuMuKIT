@@ -14,6 +14,7 @@ class PersonServiceTest extends WebTestCase
     private $repoMmobj;
     private $personService;
     private $factoryService;
+    private $roleRepo;
 
     public function setUp()
     {

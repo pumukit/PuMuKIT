@@ -15,6 +15,7 @@ class LinkEventDispatcherServiceTest extends WebTestCase
     const EMPTY_URL = 'EMTPY URL';
 
     private $linkDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

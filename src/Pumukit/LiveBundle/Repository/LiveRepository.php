@@ -17,7 +17,7 @@ class LiveRepository extends DocumentRepository
      *
      * @param string $locale
      *
-     * @return QueryBuilder
+     * @return \Doctrine\MongoDB\Query\Builder
      */
     public function createAbcSortQueryBuilder($locale = 'en')
     {

@@ -229,6 +229,8 @@ class PlaylistMultimediaObjectController extends Controller
         $id = $request->query->get('mmid', '');
         $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
         $user = $this->getUser();
+        $canBePlayed = null;
+        $canUserPlay = null;
         if ($mmobj) {
             $canBePlayed = $broadcastService->canUserPlayMultimediaObject($mmobj, $user);
             $canUserPlay = $mmobjService->canBeDisplayed($mmobj, 'PUCHWEBTV');

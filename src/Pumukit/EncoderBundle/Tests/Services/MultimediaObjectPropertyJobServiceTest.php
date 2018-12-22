@@ -9,6 +9,7 @@ use Pumukit\EncoderBundle\Document\Job;
 class MultimediaObjectPropertyJobServiceTest extends WebTestCase
 {
     private $dm;
+    private $service;
 
     public function setUp()
     {

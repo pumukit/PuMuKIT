@@ -13,6 +13,7 @@ class PicService
     private $defaultAudioHDPic;
     private $defaultAudioSDPic;
     private $webDir;
+    private $defaultPlaylistPic;
 
     /**
      * @var RequestContext
@@ -214,6 +215,7 @@ class PicService
     public function getFirstPathPic($object, $hd = true)
     {
         $pics = $object->getPics();
+        $picPath = null;
         if (0 === count($pics)) {
             return $this->getDefaultPathPicForObject($object, $hd);
         } else {

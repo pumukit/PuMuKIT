@@ -205,6 +205,7 @@ EOT
     protected function createFromFile($file_route, $root, OutputInterface $output, $repoName, $verbose = false)
     {
         /* NECCESSARY CHECKS*/
+        $csvTagHeaders = false;
         if (!file_exists($file_route)) {
             $output->writeln('<error>'.$repoName.': Error stating '.$file_route.": File doesn't exist</error>");
 
@@ -313,7 +314,6 @@ EOT
                 echo 'Row '.$row."\n";
             }
 
-            $previous_content = $currentRow;
             ++$row;
         }
         fclose($file);

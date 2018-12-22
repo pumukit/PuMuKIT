@@ -82,17 +82,17 @@ class JobNotificationService
         if ($this->enable) {
             $job = $event->getJob();
             if (!$job) {
-                return;
+                return false;
             }
 
             $track = $event->getTrack();
             if (!$error && ($track->isMaster() && !$track->containsTag('display'))) {
-                return;
+                return false;
             }
 
             $multimediaObject = $event->getMultimediaObject();
             if (!($emailsTo = $this->getEmails($job, $multimediaObject))) {
-                return;
+                return false;
             }
 
             $subject = $this->getSubjectEmail($job, $error);
@@ -100,9 +100,10 @@ class JobNotificationService
             $parameters = $this->getParametersEmail($job, $multimediaObject, $subjectInParameters);
 
             if (!$emailsTo) {
-                return;
+                return false;
             }
             if (is_array($emailsTo)) {
+                $output = false;
                 foreach ($emailsTo as $email) {
                     $output = $this->senderService->sendNotification($email, $subject, $this->template, $parameters, $error, true);
                 }
@@ -112,6 +113,8 @@ class JobNotificationService
 
             return $output;
         }
+
+        return false;
     }
 
     /**

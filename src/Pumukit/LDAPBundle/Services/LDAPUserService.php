@@ -23,6 +23,9 @@ class LDAPUserService
     protected $ldapService;
     protected $permissionProfile;
     protected $logger;
+    protected $personService;
+    protected $permissionProfileService;
+    protected $groupService;
 
     /**
      * LDAPUserService constructor.

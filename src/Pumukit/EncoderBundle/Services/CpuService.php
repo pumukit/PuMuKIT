@@ -10,6 +10,8 @@ class CpuService
 {
     private $dm;
     private $cpus;
+    private $jobRepo;
+    private $cpuRepo;
 
     const TYPE_LINUX = 'linux';
     const TYPE_WINDOWS = 'windows';

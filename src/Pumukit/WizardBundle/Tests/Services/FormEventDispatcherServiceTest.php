@@ -15,6 +15,8 @@ class FormEventDispatcherServiceTest extends WebTestCase
     const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $formDispatcher;
+    private $dm;
+    private $dispatcher;
 
     public function setUp()
     {

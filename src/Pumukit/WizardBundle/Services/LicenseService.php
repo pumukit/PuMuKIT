@@ -12,12 +12,14 @@ class LicenseService
     private $translator;
 
     /**
-     * Constructor.
+     * LicenseService constructor.
      *
-     * @param bool                $showLicense
-     * @param string              $licenseDir
+     * @param $showLicense
+     * @param $licenseDir
      * @param array               $locales
      * @param TranslatorInterface $translator
+     *
+     * @throws \Exception
      */
     public function __construct($showLicense, $licenseDir, array $locales, TranslatorInterface $translator)
     {
@@ -64,9 +66,11 @@ class LicenseService
     /**
      * Get license content file.
      *
-     * @param string $locale
+     * @param null $locale
      *
-     * @return string $licenseContent
+     * @return bool|string
+     *
+     * @throws \Exception
      */
     public function getLicenseContent($locale = null)
     {
@@ -97,7 +101,9 @@ class LicenseService
      * Checks if there is any valid file in license directory.
      * Valid file names are {locale}.txt
      *
-     * @return bool|Exception true if there is any valid file, throws Exception otherwise
+     * @return bool
+     *
+     * @throws \Exception
      */
     private function checkLicenseFiles()
     {

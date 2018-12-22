@@ -64,7 +64,7 @@ class EmbeddedRole
     private $people;
 
     /**
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 

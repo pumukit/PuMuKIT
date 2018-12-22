@@ -100,9 +100,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct.
      *
-     * @param ArrayCollection $embeddedTags
+     * @param $embeddedTags
      *
-     * @return EmbbededTag|null
+     * @return mixed
      */
     public function getPrecinct($embeddedTags)
     {
@@ -120,9 +120,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct of Series.
      *
-     * @param ArrayCollection $multimediaObjects
+     * @param $multimediaObjects
      *
-     * @return EmbbededTag|null
+     * @return bool|mixed
      */
     public function getPrecinctOfSeries($multimediaObjects)
     {
@@ -154,9 +154,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct of Series.
      *
-     * @param MultimediaObject $multimediaObject
+     * @param $multimediaObject
      *
-     * @return EmbbededTag|null
+     * @return mixed
      */
     public function getPrecinctOfMultimediaObject($multimediaObject)
     {
@@ -168,11 +168,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct full title.
      *
-     * @param EmbbededTag $precinctEmbeddedTag
+     * @param $precinctEmbeddedTag
      *
      * @return string
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getPrecinctFulltitle($precinctEmbeddedTag)
     {
@@ -269,7 +267,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
@@ -283,7 +281,7 @@ class PumukitExtension extends \Twig_Extension
      * @param bool             $isHTML5          default=false
      * @param bool             $isDownloadable   default=false
      *
-     * @return ArrayCollection
+     * @return mixed|string
      */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {
@@ -325,7 +323,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $event
      *
-     * @return string|date
+     * @return string
      *
      * @throws \Exception
      */

@@ -31,7 +31,7 @@ class AdminController extends ResourceController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -70,7 +70,7 @@ class AdminController extends ResourceController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function updateAction(Request $request)
     {
@@ -260,9 +260,9 @@ class AdminController extends ResourceController implements NewAdminController
     /**
      * Overwrite to get form with translations.
      *
-     * @param object|null $resource
+     * @param null $resource
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\Form
      */
     public function getForm($resource = null)
     {
@@ -281,7 +281,7 @@ class AdminController extends ResourceController implements NewAdminController
      * Get all groups for logged in user
      * according to user scope.
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function getAllGroups()
     {

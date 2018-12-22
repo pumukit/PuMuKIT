@@ -44,6 +44,8 @@ class LiveTwigExtension extends \Twig_Extension
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      *
      * @param Live $live
+     *
+     * @return string
      */
     public function genHlsUrl(Live $live)
     {
@@ -53,9 +55,10 @@ class LiveTwigExtension extends \Twig_Extension
     /**
      * Get future and not finished event.
      *
-     * @param int $limit
+     * @param null      $limit
+     * @param Live|null $live
      *
-     * @return Event $event
+     * @return mixed
      */
     public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
     {

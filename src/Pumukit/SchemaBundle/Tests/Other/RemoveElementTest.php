@@ -7,7 +7,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class RemoveElementTest extends WebTestCase
 {
@@ -19,6 +18,10 @@ class RemoveElementTest extends WebTestCase
     private $userService;
     private $ebService;
     private $groupService;
+    private $repo;
+    private $mmsPicService;
+    private $tagService;
+    private $userRepo;
 
     public function setUp()
     {

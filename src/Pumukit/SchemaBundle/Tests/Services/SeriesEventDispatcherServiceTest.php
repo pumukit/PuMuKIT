@@ -15,6 +15,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
     private $dm;
     private $seriesDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

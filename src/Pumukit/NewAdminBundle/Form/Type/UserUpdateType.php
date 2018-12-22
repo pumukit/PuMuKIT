@@ -37,9 +37,8 @@ class UserUpdateType extends AbstractType
                       'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
             ->add('plain_password', 'password',
                   array(
-                      'attr' => array('aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
+                      'attr' => array('autocomplete' => 'off', 'aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
                       'disabled' => !$user->isLocal(),
-                      'attr' => array('autocomplete' => 'off'),
                       'required' => false,
                       'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
             /* TODO check password

@@ -55,7 +55,7 @@ class Message
     /**
      * Get id.
      *
-     * @return id
+     * @return int
      */
     public function getId()
     {

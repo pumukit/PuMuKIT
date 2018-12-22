@@ -19,7 +19,7 @@ class Comments
     private $id;
 
     /**
-     * @var \Date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */

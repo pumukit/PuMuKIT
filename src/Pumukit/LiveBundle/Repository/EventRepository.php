@@ -97,13 +97,13 @@ class EventRepository extends DocumentRepository
     }
 
     /**
-     * Find future and not finished.
+     * @param null      $limit
+     * @param null      $date
+     * @param Live|null $live  Find only events of a live channel
      *
-     * @param int  $limit
-     * @param Date $date
-     * @param Live $live  Find only events of a live channel
+     * @return mixed
      *
-     * @return Cursor
+     * @throws \Exception
      */
     public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
     {
@@ -162,10 +162,10 @@ class EventRepository extends DocumentRepository
     /**
      * Find one by hours event.
      *
-     * @param int  $hours
-     * @param Date $date
+     * @param null $hours
+     * @param null $date
      *
-     * @return Cursor
+     * @throws \Exception
      */
     public function findOneByHoursEvent($hours = null, $date = null)
     {

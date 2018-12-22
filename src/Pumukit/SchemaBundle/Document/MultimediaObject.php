@@ -149,14 +149,14 @@ class MultimediaObject
     private $status = self::STATUS_NEW;
 
     /**
-     * @var date
+     * @var \DateTime
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
     private $record_date;
 
     /**
-     * @var date
+     * @var \DateTime
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
@@ -239,7 +239,7 @@ class MultimediaObject
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -451,7 +451,7 @@ class MultimediaObject
     /**
      * Set record_date.
      *
-     * @param DateTime $recordDate
+     * @param \DateTime $recordDate
      */
     public function setRecordDate($recordDate)
     {
@@ -461,7 +461,7 @@ class MultimediaObject
     /**
      * Get record_date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getRecordDate()
     {
@@ -471,7 +471,7 @@ class MultimediaObject
     /**
      * Set public_date.
      *
-     * @param DateTime $publicDate
+     * @param \DateTime $publicDate
      */
     public function setPublicDate($publicDate)
     {
@@ -481,7 +481,7 @@ class MultimediaObject
     /**
      * Get public_date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getPublicDate()
     {
@@ -1681,7 +1681,7 @@ class MultimediaObject
      * Contains EmbeddedPerson without mattering the role
      * Use containsPersonWithRole instead.
      *
-     * @param Person|EmbbededPerson $person
+     * @param Person|EmbeddedPerson $person
      *
      * @return bool TRUE if this multimedia_object contains the specified person, FALSE otherwise
      */

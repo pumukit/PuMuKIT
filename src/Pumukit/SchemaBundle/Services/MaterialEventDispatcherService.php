@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\MaterialEvent;

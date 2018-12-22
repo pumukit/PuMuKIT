@@ -252,7 +252,7 @@ class TagService
      */
     public function saveTag(Tag $tag)
     {
-        $tag->setUpdated(new \Datetime('now'));
+        $tag->setUpdated(new \DateTime());
 
         $this->dm->persist($tag);
         $this->dm->flush();

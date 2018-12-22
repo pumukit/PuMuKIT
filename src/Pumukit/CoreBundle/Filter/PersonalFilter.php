@@ -45,4 +45,30 @@ class PersonalFilter extends WebTVFilter
 
         return $criteria;
     }
+
+    /**
+     * Get series mongo query
+     * Match the Series
+     * with given ids.
+     *
+     * Query in MongoDB:
+     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
+     *
+     * @param $personId
+     * @param string $roleCode
+     * @param array  $groups
+     *
+     * @return array
+     */
+    private function getSeriesMongoQuery($personId, $roleCode, $groups)
+    {
+        $seriesIds = array();
+        if ((null !== $personId) && (null !== $roleCode)) {
+            $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
+            $seriesIds['$in'] = $referencedSeries->toArray();
+        }
+
+        return $seriesIds;
+    }
 }
