@@ -51,7 +51,7 @@ class EmbeddedEvent
     private $place;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      * @MongoDB\Field(type="date")
      */
     private $date;
@@ -290,7 +290,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @return \Datetime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -298,7 +298,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param \Datetime $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {

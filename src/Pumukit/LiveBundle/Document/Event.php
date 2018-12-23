@@ -48,7 +48,7 @@ class Event
     private $place;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */

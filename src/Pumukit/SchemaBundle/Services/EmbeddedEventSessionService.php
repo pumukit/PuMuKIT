@@ -652,7 +652,7 @@ class EmbeddedEventSessionService
      * @param EmbeddedEvent $event
      * @param bool          $start
      *
-     * @return \Datetime
+     * @return \DateTime
      */
     public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
     {

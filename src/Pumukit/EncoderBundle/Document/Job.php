@@ -477,7 +477,7 @@ class Job
     /**
      * Set timeini.
      *
-     * @param \Datetime $timeini
+     * @param \DateTime $timeini
      */
     public function setTimeini($timeini)
     {
@@ -503,7 +503,7 @@ class Job
     /**
      * Set timestart.
      *
-     * @param \Datetime $timestart
+     * @param \DateTime $timestart
      */
     public function setTimestart($timestart)
     {
@@ -513,7 +513,7 @@ class Job
     /**
      * Get timestart.
      *
-     * @return \Datetime|string
+     * @return \DateTime|string
      */
     public function getTimestart($format = null)
     {
@@ -527,7 +527,7 @@ class Job
     /**
      * Set timeend.
      *
-     * @param \Datetime $timeend
+     * @param \DateTime $timeend
      */
     public function setTimeend($timeend)
     {
@@ -537,7 +537,7 @@ class Job
     /**
      * Get timeend.
      *
-     * @return \Datetime|string
+     * @return \DateTime|string
      */
     public function getTimeend($format = null)
     {

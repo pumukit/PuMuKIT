@@ -2,7 +2,7 @@
 
 namespace Pumukit\CoreBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 
 class PersonalFilter extends WebTVFilter
 {

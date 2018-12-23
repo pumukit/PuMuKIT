@@ -26,14 +26,14 @@ class Template
     private $hide = false;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $createdAt;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -111,7 +111,7 @@ class Template
     /**
      * Set createdAt.
      *
-     * @param \Datetime $createdAt
+     * @param \DateTime $createdAt
      *
      * @return self
      */
@@ -125,7 +125,7 @@ class Template
     /**
      * Get createdAt.
      *
-     * @return \Datetime $createdAt
+     * @return \DateTime $createdAt
      */
     public function getCreatedAt()
     {
@@ -135,7 +135,7 @@ class Template
     /**
      * Set updatedAt.
      *
-     * @param \Datetime $updatedAt
+     * @param \DateTime $updatedAt
      *
      * @return self
      */
@@ -149,7 +149,7 @@ class Template
     /**
      * Get updatedAt.
      *
-     * @return \Datetime $updatedAt
+     * @return \DateTime $updatedAt
      */
     public function getUpdatedAt()
     {

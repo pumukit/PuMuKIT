@@ -110,9 +110,9 @@ class EventRepository extends DocumentRepository
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
         if (!$date) {
-            $currentDatetime = new \DateTime('now');
-            $startDay = new \DateTime('now');
-            $finishDay = new \DateTime('now');
+            $currentDatetime = new \DateTime();
+            $startDay = new \DateTime();
+            $finishDay = new \DateTime();
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
@@ -170,10 +170,10 @@ class EventRepository extends DocumentRepository
     public function findOneByHoursEvent($hours = null, $date = null)
     {
         if (!$date) {
-            $currentDatetime = new \DateTime('now');
-            $hoursDatetime = new \DateTime('now');
-            $startDay = new \DateTime('now');
-            $finishDay = new \DateTime('now');
+            $currentDatetime = new \DateTime();
+            $hoursDatetime = new \DateTime();
+            $startDay = new \DateTime();
+            $finishDay = new \DateTime();
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $hoursDatetime = new \DateTime($date->format('Y-m-d H:s:i'));

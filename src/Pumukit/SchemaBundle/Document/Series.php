@@ -259,6 +259,12 @@ class Series
      *
      * @return int
      */
+
+    /**
+     * @param $type
+     *
+     * @return int
+     */
     public function setType($type)
     {
         return $this->type = $type;
@@ -298,6 +304,8 @@ class Series
 
     /**
      * Set sorting type.
+     *
+     * @param $sorting
      *
      * @return int
      */
@@ -597,7 +605,7 @@ class Series
     /**
      * Set description.
      *
-     * @param text        $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)

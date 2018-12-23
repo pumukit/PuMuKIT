@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pumukit\CoreBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 
 class AdminFilter extends BsonFilter
