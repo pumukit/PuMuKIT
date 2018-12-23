@@ -178,7 +178,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int   $limit
      * @param int   $page
      *
-     * @return \Doctrine\ODM\MongoDB\Query\Builder|QueryBuilder
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
@@ -541,7 +541,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag   $tag
      * @param array $sort
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithTag(Tag $tag, $sort = array())
     {
@@ -558,7 +558,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Series $series
      * @param array  $sort
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function createBuilderWithSeries(Series $series, $sort = array())
     {
@@ -576,7 +576,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array  $status
      * @param array  $sort
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithSeriesAndStatus(Series $series, $status = array(), $sort = array())
     {
@@ -593,7 +593,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Tag   $tag
      * @param array $sort
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGeneralTag(Tag $tag, $sort = array())
     {
@@ -939,7 +939,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Series $series
      * @param array  $sort
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function getQueryBuilderOrderedBy(Series $series, $sort = array())
     {
@@ -1210,7 +1210,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Group $group
      * @param array $sort
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGroup(Group $group, $sort = array())
     {
@@ -1265,7 +1265,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param Group $group
      * @param array $sort
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = array())
     {
@@ -1378,7 +1378,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
     {
@@ -1432,7 +1432,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
@@ -1542,6 +1542,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function getGroupsIdsArray($groups)
     {
         // TODO #10479: Find better way to get array with only IDs of groups
+        $groupsIds = array();
         if ($groups) {
             if ('array' !== gettype($groups)) {
                 $groups = $groups->toArray();
@@ -1568,8 +1569,6 @@ class MultimediaObjectRepository extends DocumentRepository
                     $groupsIds = $groups;
                 }
             }
-        } else {
-            $groupsIds = array();
         }
 
         return $groupsIds;

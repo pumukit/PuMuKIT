@@ -111,7 +111,7 @@ class Series
     private $hide = true;
 
     /**
-     * @var datetime
+     * @var \DateTime
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
      */
@@ -130,7 +130,7 @@ class Series
     private $subtitle = array('en' => '');
 
     /**
-     * @var text
+     * @var string
      * @MongoDB\Field(type="raw")
      */
     private $description = array('en' => '');
@@ -142,13 +142,13 @@ class Series
     private $comments;
 
     /**
-     * @var text
+     * @var string
      * @MongoDB\Field(type="raw")
      */
     private $header = array('en' => '');
 
     /**
-     * @var text
+     * @var string
      * @MongoDB\Field(type="raw")
      */
     private $footer = array('en' => '');
@@ -187,7 +187,7 @@ class Series
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -215,7 +215,7 @@ class Series
     /**
      * Get id.
      *
-     * @return id
+     * @return string
      */
     public function getId()
     {
@@ -349,57 +349,49 @@ class Series
     /**
      * Contains multimedia_object.
      *
-     * @param MultimediaObject $multimedia_object
-     *
-     * @return bool
+     * @throws \Exception
      */
-    public function containsMultimediaObject(MultimediaObject $multimedia_object)
+    public function containsMultimediaObject()
     {
-        //TODO:
         throw new \Exception('PMK2.5 PHP7 use service');
-
-        return $this->multimedia_objects->contains($multimedia_object);
     }
 
     /**
      * Add multimedia object.
      *
-     * @param MultimediaObject $multimedia_object
+     * @throws \Exception
      */
-    public function addMultimediaObject(MultimediaObject $multimedia_object)
+    public function addMultimediaObject()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-
-        return $this->multimedia_objects->add($multimedia_object);
     }
 
     /**
      * Remove multimedia object.
      *
-     * @param MultimediaObject $multimedia_object
+     * @throws \Exception
      */
-    public function removeMultimediaObject(MultimediaObject $multimedia_object)
+    public function removeMultimediaObject()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        $this->multimedia_objects->removeElement($multimedia_object);
     }
 
     /**
      * Get multimedia_objects.
      *
-     * @return ArrayCollection
+     * @return mixed
+     *
+     * @throws \Exception
      */
     public function getMultimediaObjects()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-
-        return $this->multimedia_objects;
     }
 
     /**
      * Set playlist.
      *
-     * @return Playlist
+     * @param Playlist $playlist
      */
     public function setPlaylist(Playlist $playlist)
     {
@@ -479,7 +471,7 @@ class Series
     /**
      * Set public_date.
      *
-     * @param datetime $public_date
+     * @param \DateTime $public_date
      */
     public function setPublicDate($public_date)
     {
@@ -489,7 +481,7 @@ class Series
     /**
      * Get public_date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getPublicDate()
     {
@@ -621,7 +613,7 @@ class Series
      *
      * @param string|null $locale
      *
-     * @return text
+     * @return string
      */
     public function getDescription($locale = null)
     {
@@ -678,7 +670,7 @@ class Series
     /**
      * Set header.
      *
-     * @param text        $header
+     * @param string      $header
      * @param string|null $locale
      */
     public function setHeader($header, $locale = null)
@@ -694,7 +686,7 @@ class Series
      *
      * @param string|null $locale
      *
-     * @return text
+     * @return string
      */
     public function getHeader($locale = null)
     {
@@ -721,7 +713,7 @@ class Series
     /**
      * Get i18n header.
      *
-     * @return array
+     * @return string
      */
     public function getI18nHeader()
     {
@@ -731,7 +723,7 @@ class Series
     /**
      * Set footer.
      *
-     * @param text        $footer
+     * @param string      $footer
      * @param string|null $locale
      */
     public function setFooter($footer, $locale = null)
@@ -747,7 +739,7 @@ class Series
      *
      * @param string|null $locale
      *
-     * @return text
+     * @return string
      */
     public function getFooter($locale = null)
     {
@@ -774,7 +766,7 @@ class Series
     /**
      * Get i18n footer.
      *
-     * @return array
+     * @return string
      */
     public function getI18nFooter()
     {
@@ -867,7 +859,7 @@ class Series
     /**
      * Get i18n line2.
      *
-     * @return array
+     * @return string
      */
     public function getI18nLine2()
     {
@@ -897,171 +889,81 @@ class Series
     /**
      * Contains multimediaobject with tags.
      *
-     * @param Tag $tag
-     *
-     * @return bool
+     * @throws \Exception
      */
-    public function containsMultimediaObjectWithTag(Tag $tag)
+    public function containsMultimediaObjectWithTag()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsTag($tag)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
      * Get multimediaobjects with a tag.
      *
-     * @param Tag $tag
-     *
-     * @return ArrayCollection
+     * @throws \Exception
      */
-    public function getMultimediaObjectsWithTag(Tag $tag)
+    public function getMultimediaObjectsWithTag()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        $r = array();
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsTag($tag)) {
-                $r[] = $mmo;
-            }
-        }
-
-        return $r;
     }
 
     /**
      * Get one multimedia object with tag.
      *
-     * @param Tag $tag
-     *
-     * @return MultimediaObject|null
+     * @throws \Exception
      */
-    public function getMultimediaObjectWithTag(Tag $tag)
+    public function getMultimediaObjectWithTag()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsTag($tag)) {
-                return $mmo;
-            }
-        }
-
-        return;
     }
 
     /**
      * Get multimediaobjects with all tags.
      *
-     * @param array $tags
-     *
-     * @return ArrayCollection
+     * @throws \Exception
      */
-    public function getMultimediaObjectsWithAllTags(array $tags)
+    public function getMultimediaObjectsWithAllTags()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        $r = array();
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsAllTags($tags)) {
-                $r[] = $mmo;
-            }
-        }
-
-        return $r;
     }
 
     /**
      * Get multimediaobject with all tags.
      *
-     * @param array $tags
-     *
-     * @return multimedia_object|null
+     * @throws \Exception
      */
-    public function getMultimediaObjectWithAllTags(array $tags)
+    public function getMultimediaObjectWithAllTags()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsAllTags($tags)) {
-                return $mmo;
-            }
-        }
-
-        return;
     }
 
     /**
      * Get multimediaobjects with any tag.
      *
-     * @param array $tags
-     *
-     * @return ArrayCollection
+     * @throws \Exception
      */
-    public function getMultimediaObjectsWithAnyTag(array $tags)
+    public function getMultimediaObjectsWithAnyTag()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        $r = array();
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsAnyTag($tags)) {
-                $r[] = $mmo;
-            }
-        }
-
-        return $r;
     }
 
     /**
      * Get multimediaobject with any tag.
      *
-     * @param array $tags
-     *
-     * @return MultimediaObject|null
+     * @throws \Exception
      */
-    public function getMultimediaObjectWithAnyTag(array $tags)
+    public function getMultimediaObjectWithAnyTag()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($mmo->containsAnyTag($tags)) {
-                return $mmo;
-            }
-        }
-
-        return;
     }
 
     /**
      * Get filtered multimedia objects with tags.
      *
-     * @param array $any_tags
-     * @param array $all_tags
-     * @param array $not_any_tags
-     * @param array $not_all_tags
-     *
-     * @return ArrayCollection
+     * @throws \Exception
      */
-    public function getFilteredMultimediaObjectsWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array())
+    public function getFilteredMultimediaObjectsWithTags()
     {
         throw new \Exception('PMK2.5 PHP7 use service');
-        $r = array();
-        foreach ($this->multimedia_objects as $mmo) {
-            if ($any_tags && !$mmo->containsAnyTag($any_tags)) {
-                continue;
-            }
-            if ($all_tags && !$mmo->containsAllTags($all_tags)) {
-                continue;
-            }
-            if ($not_any_tags && $mmo->containsAnyTag($not_any_tags)) {
-                continue;
-            }
-            if ($not_all_tags && $mmo->containsAllTags($not_all_tags)) {
-                continue;
-            }
-
-            $r[] = $mmo;
-        }
-
-        return $r;
     }
 
     /**

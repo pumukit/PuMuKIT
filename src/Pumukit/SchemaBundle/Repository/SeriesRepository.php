@@ -40,10 +40,10 @@ class SeriesRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find series by tag id.
      *
-     * @param Tag|EmbeddedTag $tag
-     * @param array           $sort
+     * @param $tag
+     * @param array $sort
      *
-     * @return QueryBuilder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithTag($tag, $sort = array())
     {
@@ -273,7 +273,7 @@ class SeriesRepository extends DocumentRepository
      * @param int   $limit
      * @param int   $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
@@ -386,7 +386,7 @@ class SeriesRepository extends DocumentRepository
      * @param $seriesType
      * @param array $sort
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = array())
     {
@@ -420,7 +420,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
     {
@@ -477,7 +477,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
@@ -536,7 +536,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder|\Doctrine\MongoDB\Query\Builder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
     {

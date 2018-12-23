@@ -355,7 +355,7 @@ class EmbeddedTag
     /**
      * Get updated.
      *
-     * @return Date
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -365,7 +365,7 @@ class EmbeddedTag
     /**
      * Set translatable locale.
      *
-     * @param locale $locale
+     * @param string $locale
      */
     public function setLocale($locale)
     {
