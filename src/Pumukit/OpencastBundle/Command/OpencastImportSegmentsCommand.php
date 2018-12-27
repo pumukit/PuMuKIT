@@ -9,6 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\OpencastBundle\Services\ClientService;
 
+/**
+ * Class OpencastImportSegmentsCommand.
+ */
 class OpencastImportSegmentsCommand extends ContainerAwareCommand
 {
     private $output;
@@ -165,7 +168,7 @@ EOT
     }
 
     /**
-     * @param $multimediaObjects
+     * @param array $multimediaObjects
      */
     private function importSegments($multimediaObjects)
     {
@@ -204,7 +207,7 @@ EOT
     }
 
     /**
-     * @param $multimediaObjects
+     * @param array $multimediaObjects
      */
     private function showMultimediaObjects($multimediaObjects)
     {
@@ -233,6 +236,11 @@ EOT
         }
     }
 
+    /**
+     * @param array $segment
+     *
+     * @return EmbeddedSegment
+     */
     private function createNewSegment($segment)
     {
         $embeddedSegment = new EmbeddedSegment();
@@ -243,7 +251,12 @@ EOT
         $embeddedSegment->setRelevance($segment['relevance']);
         $embeddedSegment->setHit(boolval($segment['hit']));
         $embeddedSegment->setText($segment['text']);
-        $embeddedSegment->setPreview($segment['previews']['preview']['$']);
+
+        $image = '';
+        if (isset($segment['previews']['preview']) && isset($segment['previews']['preview']['$'])) {
+            $image = $segment['previews']['preview']['$'];
+        }
+        $embeddedSegment->setPreview($image);
 
         $this->dm->persist($embeddedSegment);
 
