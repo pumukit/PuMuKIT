@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for mm in series.getMultimediaObjects() if mm.islive == false %}
+                            {% for mm in multimediaObjects if mm.islive == false %}
                             <tr {{ (mm.ispublished) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
                                 <td>
                                     <div class="checkbox">
