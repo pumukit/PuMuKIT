@@ -15,7 +15,7 @@ class GroupTest extends TestCase
         $name = 'Group A';
         $comments = 'Group created to test setter and getter';
         $origin = Group::ORIGIN_LOCAL;
-        $updatedAt = new \Datetime('now');
+        $updatedAt = new \DateTime();
 
         $group->setKey($key);
         $group->setName($name);

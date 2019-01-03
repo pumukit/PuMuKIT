@@ -44,7 +44,7 @@ class IntroService
      * @param mixed $introPropoerty multimedia object property null|false|'url'
      * @param mixed $introParameter request parameter null|string('false'|'true')
      *
-     * @return string|null
+     * @return bool|null
      */
     public function getIntroForMultimediaObject($introProperty = null, $introParameter = null)
     {

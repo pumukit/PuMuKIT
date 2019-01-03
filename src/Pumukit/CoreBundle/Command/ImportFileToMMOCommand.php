@@ -11,6 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 class ImportFileToMMOCommand extends ContainerAwareCommand
 {
     private $dm = null;
+    private $mmobjRepo;
+    private $jobService;
+    private $profileService;
+    private $inspectionService;
+    private $defaultLanguage;
 
     protected function configure()
     {

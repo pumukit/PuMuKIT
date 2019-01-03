@@ -13,6 +13,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
     const EMPTY_TITLE = 'EMTPY TITLE';
 
     private $multimediaObjectDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

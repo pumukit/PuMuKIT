@@ -468,7 +468,7 @@ class MultimediaObjectTest extends TestCase
         $updated = new \DateTime('now');
         $display = true;
 
-        $tag = new Tag($title);
+        $tag = new Tag();
 
         $tag->setLocale($locale);
         $tag->setTitle($title);

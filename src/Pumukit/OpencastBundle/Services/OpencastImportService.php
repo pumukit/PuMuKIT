@@ -77,6 +77,7 @@ class OpencastImportService
         $series = $this->seriesImportService->importSeries($mediaPackage, $loggedInUser);
 
         $onemultimediaobjects = null;
+        $track = null;
         $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mediaPackageId = $this->getMediaPackageField($mediaPackage, 'id');
         if ($mediaPackageId) {

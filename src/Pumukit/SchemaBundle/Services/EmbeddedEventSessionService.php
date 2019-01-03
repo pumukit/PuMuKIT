@@ -201,7 +201,6 @@ class EmbeddedEventSessionService
         $pipeline = $this->initPipeline();
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$exists' => true),
                 'sessionEnds' => array('$gte' => $now),
                 'sessions.start' => array('$lte' => $now),
             ),
@@ -246,7 +245,6 @@ class EmbeddedEventSessionService
         $pipeline = $this->initPipeline();
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$exists' => true),
                 'sessions.start' => array('$gte' => new \MongoDate($todayEnds)),
             ),
         );
@@ -317,7 +315,6 @@ class EmbeddedEventSessionService
 
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$exists' => true),
                 'sessions.start' => array('$lt' => new \MongoDate()),
                 'sessionEnds' => array('$gt' => new \MongoDate()),
             ),
@@ -655,7 +652,7 @@ class EmbeddedEventSessionService
      * @param EmbeddedEvent $event
      * @param bool          $start
      *
-     * @return \Datetime
+     * @return \DateTime
      */
     public function getFirstSessionDate(EmbeddedEvent $event, $start = true)
     {
@@ -743,8 +740,8 @@ class EmbeddedEventSessionService
     /**
      * Find future events.
      *
-     * @param null $multimediaObjectId
-     * @param int  $limit
+     * @param string|null $multimediaObjectId
+     * @param int         $limit
      *
      * @return array
      */
@@ -783,7 +780,7 @@ class EmbeddedEventSessionService
     /**
      * Count future events.
      *
-     * @param $multimediaObjectId
+     * @param string|null $multimediaObjectId
      *
      * @return array
      */
@@ -960,7 +957,6 @@ class EmbeddedEventSessionService
         $pipeline[] = array('$unwind' => '$sessions');
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$exists' => true),
                 'sessions.start' => array('$gt' => new \MongoDate()),
             ),
         );
@@ -1089,8 +1085,8 @@ class EmbeddedEventSessionService
     /**
      * Find next live events.
      *
-     * @param null $multimediaObjectId
-     * @param int  $limit
+     * @param string|null $multimediaObjectId
+     * @param int         $limit
      *
      * @return array
      */
@@ -1166,9 +1162,7 @@ class EmbeddedEventSessionService
         $today = new \MongoDate($todayDate->setTime(0, 0)->format('U'));
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$exists' => true),
                 'sessions.start' => array('$gte' => $today),
-                'sessions.ends' => array('$exists' => true),
                 'sessions.ends' => array('$gte' => $now),
             ),
         );

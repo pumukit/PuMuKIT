@@ -28,6 +28,7 @@ class PicServiceTest extends WebTestCase
     private $listener;
     private $trackDispatcher;
     private $trackService;
+    private $rootDir;
 
     public function setUp()
     {

@@ -25,7 +25,7 @@ class APIController extends Controller implements NewAdminController
 
         $totalSeries = $seriesRepo->countPublic();
         $totalMmobjs = $mmRepo->count();
-        $totalHours = bcdiv($mmRepo->countDuration(), 3600, 2);
+        $totalHours = round($mmRepo->countDuration() / 3600, 2);
         $totalLiveChannels = $liveRepo->createQueryBuilder()
                                       ->count()
                                       ->getQuery()

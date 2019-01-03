@@ -18,6 +18,7 @@ class PicExtractorService
     private $targetPath;
     private $targetUrl;
     private $command;
+    private $mmsPicService;
 
     public function __construct(DocumentManager $documentManager, MultimediaObjectPicService $mmsPicService, $width, $height, $targetPath, $targetUrl, $command = null)
     {

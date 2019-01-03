@@ -50,7 +50,6 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm = null;
         $this->repo = null;
         $this->tagRepo = null;
-        $this->broadcastRepo = null;
         $this->factory = null;
         $this->mmsService = null;
         $this->tagService = null;
@@ -69,7 +68,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
-        $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
+        $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         $this->assertFalse($this->mmsService->isPublished($mm, $webTVCode));
 
@@ -98,7 +97,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
-        $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
+        $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         $this->assertFalse($this->mmsService->isHidden($mm, $webTVCode));
 
@@ -162,7 +161,7 @@ class MultimediaObjectServiceTest extends WebTestCase
         $webTVCode = 'PUCHWEBTV';
 
         $webTVTag = $this->tagRepo->findOneByCod($webTVCode);
-        $addedTags = $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
+        $this->tagService->addTagToMultimediaObject($mm, $webTVTag->getId());
 
         $mm->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $this->dm->persist($mm);

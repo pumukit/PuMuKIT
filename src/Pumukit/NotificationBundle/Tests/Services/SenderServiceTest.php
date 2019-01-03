@@ -8,7 +8,6 @@ use Pumukit\NotificationBundle\Services\SenderService;
 class SenderServiceTest extends WebTestCase
 {
     private $dm;
-    private $repo;
     private $senderService;
     private $mailer;
     private $templating;
@@ -20,6 +19,10 @@ class SenderServiceTest extends WebTestCase
     private $notificateErrorsToAdmin;
     private $platformName;
     private $environment;
+    private $enableMultiLang;
+    private $subjectSuccessTrans;
+    private $locales;
+    private $subjectFailsTrans;
 
     public function setUp()
     {

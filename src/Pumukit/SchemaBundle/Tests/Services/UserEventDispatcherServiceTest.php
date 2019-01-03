@@ -15,6 +15,7 @@ class UserEventDispatcherServiceTest extends WebTestCase
 
     private $dm;
     private $userDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

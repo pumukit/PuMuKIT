@@ -140,8 +140,8 @@ class EventsController extends Controller implements NewAdminController
     /**
      * List events.
      *
-     * @param Request $request
-     * @param null    $type
+     * @param Request     $request
+     * @param string|null $type
      *
      * @return array
      *

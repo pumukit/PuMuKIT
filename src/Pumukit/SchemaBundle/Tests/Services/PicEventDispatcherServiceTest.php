@@ -15,6 +15,7 @@ class PicEventDispatcherServiceTest extends WebTestCase
     const EMPTY_URL = 'EMTPY URL';
 
     private $picDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

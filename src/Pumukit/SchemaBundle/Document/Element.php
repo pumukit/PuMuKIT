@@ -79,7 +79,7 @@ class Element
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -319,7 +319,7 @@ class Element
     /**
      * Set description.
      *
-     * @param text        $description
+     * @param string      $description
      * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
@@ -335,7 +335,7 @@ class Element
      *
      * @param string|null $locale
      *
-     * @return text
+     * @return string
      */
     public function getDescription($locale = null)
     {

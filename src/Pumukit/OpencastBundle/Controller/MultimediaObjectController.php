@@ -58,14 +58,6 @@ class MultimediaObjectController extends Controller
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
-            } else {
-                $errors = $this->get('validator')->validate($track);
-                $textStatus = '';
-                foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
-                }
-
-                return new Response($textStatus, 409);
             }
         }
 

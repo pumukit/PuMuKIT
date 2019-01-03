@@ -522,7 +522,7 @@ class FactoryService
      * Clone a multimedia object.
      *
      * @param MultimediaObject $src
-     * @param null             $series
+     * @param Series|null      $series
      *
      * @return MultimediaObject
      *

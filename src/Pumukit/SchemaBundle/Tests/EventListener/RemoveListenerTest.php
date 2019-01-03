@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Services\ProfileService;
 
 class RemoveListenerTest extends WebTestCase
 {
@@ -15,10 +16,11 @@ class RemoveListenerTest extends WebTestCase
     private $repoMmobj;
     private $repoSeries;
     private $repoUser;
-    private $jobService;
     private $factoryService;
     private $resourcesDir;
     private $embeddedBroadcastService;
+    private $logger;
+    private $tokenStorage;
 
     public function setUp()
     {
@@ -302,5 +304,61 @@ class RemoveListenerTest extends WebTestCase
         $this->dm->flush();
 
         return $user;
+    }
+
+    private function getDemoProfiles()
+    {
+        $profiles = array(
+            'MASTER_COPY' => array(
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'framerate' => '0',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'cp "{{input}}" "{{output}}"',
+                'streamserver' => array(
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '127.0.0.1',
+                    'name' => 'Localmaster',
+                    'description' => 'Local masters server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',
+                ),
+                'app' => 'cp',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ),
+            'MASTER_VIDEO_H264' => array(
+                'display' => false,
+                'wizard' => true,
+                'master' => true,
+                'format' => 'mp4',
+                'codec' => 'h264',
+                'mime_type' => 'video/x-mp4',
+                'extension' => 'mp4',
+                'resolution_hor' => 0,
+                'resolution_ver' => 0,
+                'bitrate' => '1 Mbps',
+                'framerate' => '25/1',
+                'channels' => 1,
+                'audio' => false,
+                'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
+                'streamserver' => array(
+                    'type' => ProfileService::STREAMSERVER_STORE,
+                    'host' => '192.168.5.125',
+                    'name' => 'Download',
+                    'description' => 'Download server',
+                    'dir_out' => __DIR__.'/../Resources/dir_out',
+                    'url_out' => 'http://localhost:8000/downloads/',
+                ),
+                'app' => 'ffmpeg',
+                'rel_duration_size' => 1,
+                'rel_duration_trans' => 1,
+            ),
+        );
+
+        return $profiles;
     }
 }

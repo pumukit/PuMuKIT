@@ -25,7 +25,7 @@ class SeriesPlaylistService
      * @param array $playlistMmobjIds List of MongoIds to find
      * @param array $criteria         (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
      *
-     * @return QueryBuilder
+     * @return \Doctrine\MongoDB\Query\Builder
      */
     protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = array())
     {
@@ -43,7 +43,7 @@ class SeriesPlaylistService
      * @param Series $series   The series to get mmobjs from
      * @param array  $criteria (optional) The criteria to filter the mmobj with. In case personalized requirements are needed
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     protected function createSortedQuerySeriesMmobjs($series, $criteria = array())
     {

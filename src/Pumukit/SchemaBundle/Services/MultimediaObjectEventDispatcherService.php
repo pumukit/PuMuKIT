@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Event\MultimediaObjectCloneEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;

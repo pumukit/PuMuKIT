@@ -2,6 +2,7 @@
 
 namespace Pumukit\Legacy\WebTVBundle\Twig;
 
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -72,9 +73,9 @@ class PumukitExtension extends \Twig_Extension
     }
 
     /**
-     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
-     * @param bool                    $absolute return absolute path
-     * @param bool                    $hd       return HD image
+     * @param mixed $object   Object to get the url (using $object->getPics())
+     * @param bool  $absolute return absolute path
+     * @param bool  $hd       return HD image
      *
      * @return string
      */
@@ -96,9 +97,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct.
      *
-     * @param ArrayCollection $embeddedTags
+     * @param $embeddedTags
      *
-     * @return EmbbededTag|null
+     * @return null|EmbeddedTag
      */
     public function getPrecinct($embeddedTags)
     {
@@ -116,9 +117,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct of Series.
      *
-     * @param ArrayCollection $multimediaObjects
+     * @param $multimediaObjects
      *
-     * @return EmbbededTag|null
+     * @return bool|null|EmbeddedTag
      */
     public function getPrecinctOfSeries($multimediaObjects)
     {
@@ -150,7 +151,7 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct fulltitle.
      *
-     * @param EmbbededTag $precinctEmbeddedTag
+     * @param EmbeddedTag $precinctEmbeddedTag
      *
      * @return string
      */
@@ -249,7 +250,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param MultimediaObject $multimediaObject
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getCaptions(MultimediaObject $multimediaObject)
     {
@@ -263,7 +264,7 @@ class PumukitExtension extends \Twig_Extension
      * @param bool             $isHTML5          default=false
      * @param bool             $isDownloadable   default=false
      *
-     * @return ArrayCollection
+     * @return mixed|string
      */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {

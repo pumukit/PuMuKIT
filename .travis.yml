@@ -39,6 +39,7 @@ script:
     - php app/console lint:twig app
     - ./bin/travis_checks/check_var_dumps
     - php bin/php-cs-fixer.phar fix src --rules=@Symfony --dry-run -v
+    - php bin/phpstan.phar analyse -l 1 src
     - php bin/phpunit -c app
     - php app/console doctrine:mongodb:schema:create
     - php app/console pumukit:init:repo all --force

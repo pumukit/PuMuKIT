@@ -15,6 +15,8 @@ class MaterialEventDispatcherServiceTest extends WebTestCase
     const EMPTY_URL = 'EMTPY URL';
 
     private $materialDispatcher;
+    private $dispatcher;
+    private $linkDispatcher;
 
     public function setUp()
     {

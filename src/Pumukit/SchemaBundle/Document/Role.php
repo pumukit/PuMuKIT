@@ -79,7 +79,7 @@ class Role
     private $text = array('en' => '');
 
     /**
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 

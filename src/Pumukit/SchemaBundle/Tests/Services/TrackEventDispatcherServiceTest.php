@@ -15,6 +15,7 @@ class TrackEventDispatcherServiceTest extends WebTestCase
     const EMPTY_URL = 'EMTPY URL';
 
     private $trackDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

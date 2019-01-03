@@ -29,6 +29,7 @@ class SenderService
     private $template = self::TEMPLATE_ERROR;
     private $dm;
     private $personRepo;
+    private $enable;
 
     public function __construct(
         $mailer,
@@ -180,7 +181,7 @@ class SenderService
     public function sendNotification($emailTo, $subject, $template, array $parameters = array(), $error = true, $transConfigSubject = false)
     {
         $filterEmail = $this->filterEmail($emailTo);
-
+        $sent = false;
         if ($this->enable && ($filterEmail['verified'] || $filterEmail['error'])) {
             if ($filterEmail['verified']) {
                 $sent = $this->sendEmailTemplate(
@@ -196,7 +197,7 @@ class SenderService
             if ($filterEmail['error']) {
                 $parameters['body'] = $filterEmail['error'];
 
-                $this->sendEmailTemplate(
+                $sent = $this->sendEmailTemplate(
                     $this->senderEmail,
                     $this->subject,
                     $this->template,
@@ -205,11 +206,9 @@ class SenderService
                     $transConfigSubject
                 );
             }
-
-            return $sent;
         }
 
-        return false;
+        return $sent;
     }
 
     /**
@@ -292,14 +291,14 @@ class SenderService
      * Get message to send.
      *
      * @param $message
-     * @param $emailTo
+     * @param $email
      * @param $subject
      * @param $template
      * @param $parameters
      * @param $error
      * @param $transConfigSubject
      *
-     * @return Swif_Message
+     * @return mixed
      */
     public function getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject)
     {

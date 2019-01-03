@@ -118,7 +118,7 @@ class WidgetController extends Controller implements WebTVController
         $counts = array(
             'series' => $seriesRepo->countPublic(),
             'mms' => $mmRepo->count(),
-            'hours' => bcdiv($mmRepo->countDuration(), 3600, 2),
+            'hours' => round($mmRepo->countDuration() / 3600, 2),
         );
 
         return array('counts' => $counts);

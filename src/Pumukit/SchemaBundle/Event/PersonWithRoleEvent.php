@@ -2,6 +2,10 @@
 
 namespace Pumukit\SchemaBundle\Event;
 
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

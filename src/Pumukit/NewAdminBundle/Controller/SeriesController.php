@@ -494,9 +494,9 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria.
      *
-     * @param Request $request
-     * @param         $criteria
-     * @param null    $selectedSeriesId
+     * @param Request       $request
+     * @param array         $criteria
+     * @param \MongoId|null $selectedSeriesId
      *
      * @return array|mixed|Pagerfanta
      */

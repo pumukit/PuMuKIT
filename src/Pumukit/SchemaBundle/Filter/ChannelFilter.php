@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 
 class ChannelFilter extends BsonFilter

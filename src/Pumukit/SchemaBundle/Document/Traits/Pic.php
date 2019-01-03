@@ -138,7 +138,7 @@ trait Pic
     /**
      * Get first pic, null if none.
      *
-     * @return Pic
+     * @return DocumentPic
      */
     public function getPic()
     {
@@ -150,7 +150,7 @@ trait Pic
      *
      * @param $picId
      *
-     * @return Pic|null
+     * @return DocumentPic|null
      */
     public function getPicById($picId)
     {
@@ -209,7 +209,7 @@ trait Pic
      *
      * @param string $tag
      *
-     * @return Pic|null
+     * @return DocumentPic|null
      */
     public function getPicWithTag($tag)
     {
@@ -247,7 +247,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return Pic|null
+     * @return DocumentPic|null
      */
     public function getPicWithAllTags(array $tags)
     {
@@ -285,7 +285,7 @@ trait Pic
      *
      * @param array $tags
      *
-     * @return Pic|null
+     * @return DocumentPic|null
      */
     public function getPicWithAnyTag(array $tags)
     {

@@ -18,7 +18,7 @@ class GroupRepository extends DocumentRepository
      *
      * @param array $ids
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findByIdNotIn($ids = array())
     {
@@ -37,7 +37,7 @@ class GroupRepository extends DocumentRepository
      * @param array $ids
      * @param array $total
      *
-     * @return Cursor
+     * @return mixed
      */
     public function findByIdNotInOf($ids = array(), $total = array())
     {

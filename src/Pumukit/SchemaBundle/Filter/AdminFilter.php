@@ -2,7 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Filter;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetaData;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 
 class AdminFilter extends BsonFilter
@@ -48,9 +48,9 @@ class AdminFilter extends BsonFilter
      * Query in MongoDB:
      * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
      *
-     * @param MongoId $personId
-     * @param string  $roleCode
-     * @param array   $groups
+     * @param string $personId
+     * @param string $roleCode
+     * @param array  $groups
      *
      * @return array
      */
