@@ -108,7 +108,7 @@ class AdminController extends ResourceController implements NewAdminController
 
         $new_resource = $resource->cloneResource();
 
-        $this->create($new_resource);
+        $this->update($new_resource);
 
         $this->addFlash('success', 'copy');
 
@@ -167,8 +167,12 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function delete($resource)
     {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->get('session')->remove('admin/'.$this->getResourceName().'/id');
-        $this->removeAndFlush($resource);
+
+        $factory = $this->get('pumukitschema.factory');
+        $factory->deleteResource($resource);
+        $dm->flush();
     }
 
     public function batchDeleteAction(Request $request)
