@@ -17,9 +17,11 @@ use Pumukit\WorkflowBundle\EventListener\JobGeneratorListener;
 class JobGeneratorListenerTest extends WebTestCase
 {
     private $dm;
-    private $repo;
     private $logger;
-    private $profileService;
+    private $listener;
+    private $trackDispatcher;
+    private $trackService;
+    private $jobGeneratorListener;
 
     public function setUp()
     {

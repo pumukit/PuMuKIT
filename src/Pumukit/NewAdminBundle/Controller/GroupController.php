@@ -60,7 +60,7 @@ class GroupController extends AdminController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -101,7 +101,7 @@ class GroupController extends AdminController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function updateAction(Request $request)
     {
@@ -253,7 +253,7 @@ class GroupController extends AdminController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return array
      */
     public function infoAction(Request $request)
     {
@@ -294,9 +294,12 @@ class GroupController extends AdminController implements NewAdminController
      *
      * @Template("PumukitNewAdminBundle:Group:dataresources.html.twig")
      *
+     * @param Group   $group
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return array
+     *
+     * @throws \Exception
      */
     public function dataResourcesAction(Group $group, Request $request)
     {

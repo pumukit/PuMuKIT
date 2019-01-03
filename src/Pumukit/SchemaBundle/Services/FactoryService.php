@@ -480,11 +480,12 @@ class FactoryService
         $this->dm->flush();
 
         $multimediaObjectPrototype = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
-        $newMultimediaObject = $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
+        $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
 
-        foreach ($this->seriesRepo->getMultimediaObjects($series) as $multimediaObject) {
+        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('series' => $series->getId()));
+        foreach ($multimediaObjects as $multimediaObject) {
             if (!$multimediaObject->isLive()) {
-                $newMultimediaObject = $this->cloneMultimediaObject($multimediaObject, $newSeries);
+                $this->cloneMultimediaObject($multimediaObject, $newSeries);
             }
         }
 
@@ -521,7 +522,7 @@ class FactoryService
      * Clone a multimedia object.
      *
      * @param MultimediaObject $src
-     * @param null             $series
+     * @param Series|null      $series
      *
      * @return MultimediaObject
      *

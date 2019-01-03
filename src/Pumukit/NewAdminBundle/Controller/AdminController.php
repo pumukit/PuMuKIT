@@ -31,7 +31,7 @@ class AdminController extends ResourceController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -70,7 +70,7 @@ class AdminController extends ResourceController implements NewAdminController
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function updateAction(Request $request)
     {
@@ -108,7 +108,7 @@ class AdminController extends ResourceController implements NewAdminController
 
         $new_resource = $resource->cloneResource();
 
-        $this->create($new_resource);
+        $this->update($new_resource);
 
         $this->addFlash('success', 'copy');
 
@@ -167,8 +167,12 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function delete($resource)
     {
+        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $this->get('session')->remove('admin/'.$this->getResourceName().'/id');
-        $this->removeAndFlush($resource);
+
+        $factory = $this->get('pumukitschema.factory');
+        $factory->deleteResource($resource);
+        $dm->flush();
     }
 
     public function batchDeleteAction(Request $request)
@@ -260,8 +264,8 @@ class AdminController extends ResourceController implements NewAdminController
     /**
      * Overwrite to get form with translations.
      *
-     * @param null   $resource
-     * @param string $locale
+     * @param string|null  $resource
+     * @param string       $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
@@ -281,7 +285,7 @@ class AdminController extends ResourceController implements NewAdminController
      * Get all groups for logged in user
      * according to user scope.
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function getAllGroups()
     {

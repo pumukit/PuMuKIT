@@ -140,7 +140,7 @@ trait Link
      *
      * @param $linkId
      *
-     * @return Link|null
+     * @return DocumentLink|null
      */
     public function getLinkById($linkId)
     {
@@ -178,7 +178,7 @@ trait Link
      *
      * @param string $tag
      *
-     * @return Link|null
+     * @return DocumentLink|null
      */
     public function getLinkWithTag($tag)
     {
@@ -216,7 +216,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return Link|null
+     * @return DocumentLink|null
      */
     public function getLinkWithAllTags(array $tags)
     {
@@ -254,7 +254,7 @@ trait Link
      *
      * @param array $tags
      *
-     * @return Link|null
+     * @return DocumentLink|null
      */
     public function getLinkWithAnyTag(array $tags)
     {

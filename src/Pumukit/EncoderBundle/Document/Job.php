@@ -115,21 +115,21 @@ class Job
     private $description = array('en' => '');
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $timeini;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $timestart;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -214,7 +214,7 @@ class Job
     private $initVars = array();
 
     /**
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -371,7 +371,8 @@ class Job
     /**
      * Set name.
      *
-     * @param string $name
+     * @param $name
+     * @param string|null $locale
      */
     public function setName($name, $locale = null)
     {
@@ -384,6 +385,8 @@ class Job
     /**
      * Get name.
      *
+     * @param string|null $locale
+     *
      * @return string
      */
     public function getName($locale = null)
@@ -392,7 +395,7 @@ class Job
             $locale = $this->locale;
         }
         if (!isset($this->name[$locale])) {
-            return;
+            return '';
         }
 
         return $this->name[$locale];
@@ -411,7 +414,7 @@ class Job
     /**
      * Get I18n name.
      *
-     * @return array
+     * @return string
      */
     public function getI18nName()
     {
@@ -421,7 +424,8 @@ class Job
     /**
      * Set description.
      *
-     * @param string $description
+     * @param $description
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -434,6 +438,8 @@ class Job
     /**
      * Get description.
      *
+     * @param string|null $locale
+     *
      * @return string
      */
     public function getDescription($locale = null)
@@ -442,7 +448,7 @@ class Job
             $locale = $this->locale;
         }
         if (!isset($this->description[$locale])) {
-            return;
+            return '';
         }
 
         return $this->description[$locale];
@@ -461,7 +467,7 @@ class Job
     /**
      * Get I18n description.
      *
-     * @return array
+     * @return string
      */
     public function getI18nDescription()
     {
@@ -471,7 +477,7 @@ class Job
     /**
      * Set timeini.
      *
-     * @param datetime $timeini
+     * @param \DateTime $timeini
      */
     public function setTimeini($timeini)
     {
@@ -481,7 +487,9 @@ class Job
     /**
      * Get timeini.
      *
-     * @return datetime
+     * @param string|null $format
+     *
+     * @return \DateTime|string
      */
     public function getTimeini($format = null)
     {
@@ -495,7 +503,7 @@ class Job
     /**
      * Set timestart.
      *
-     * @param datetime $timestart
+     * @param \DateTime $timestart
      */
     public function setTimestart($timestart)
     {
@@ -505,7 +513,7 @@ class Job
     /**
      * Get timestart.
      *
-     * @return datetime
+     * @return \DateTime|string
      */
     public function getTimestart($format = null)
     {
@@ -519,7 +527,7 @@ class Job
     /**
      * Set timeend.
      *
-     * @param datetime $timeend
+     * @param \DateTime $timeend
      */
     public function setTimeend($timeend)
     {
@@ -529,7 +537,7 @@ class Job
     /**
      * Get timeend.
      *
-     * @return datetime
+     * @return \DateTime|string
      */
     public function getTimeend($format = null)
     {
@@ -763,7 +771,7 @@ class Job
     /**
      * Get initVars.
      *
-     * @return string
+     * @return array
      */
     public function getInitVars()
     {

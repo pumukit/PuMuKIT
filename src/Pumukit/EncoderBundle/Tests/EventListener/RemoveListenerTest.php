@@ -15,6 +15,8 @@ class RemoveListenerTest extends WebTestCase
     private $trackService;
     private $factoryService;
     private $resourcesDir;
+    private $logger;
+    private $tokenStorage;
 
     public function setUp()
     {

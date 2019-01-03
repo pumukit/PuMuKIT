@@ -97,22 +97,22 @@ class EventRepository extends DocumentRepository
     }
 
     /**
-     * Find future and not finished.
+     * @param int|null       $limit
+     * @param \DateTime|null $date
+     * @param Live|null      $live  Find only events of a live channel
      *
-     * @param int  $limit
-     * @param Date $date
-     * @param Live $live  Find only events of a live channel
+     * @return mixed
      *
-     * @return Cursor
+     * @throws \Exception
      */
     public function findFutureAndNotFinished($limit = null, $date = null, Live $live = null)
     {
         // First: look if there is a current live event broadcasting
         // for setting datetime minus duration
         if (!$date) {
-            $currentDatetime = new \DateTime('now');
-            $startDay = new \DateTime('now');
-            $finishDay = new \DateTime('now');
+            $currentDatetime = new \DateTime();
+            $startDay = new \DateTime();
+            $finishDay = new \DateTime();
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
@@ -162,25 +162,27 @@ class EventRepository extends DocumentRepository
     /**
      * Find one by hours event.
      *
-     * @param int  $hours
-     * @param Date $date
+     * @param string|null    $hours
+     * @param \DateTime|null $date
      *
-     * @return Cursor
+     * @throws \Exception
      */
     public function findOneByHoursEvent($hours = null, $date = null)
     {
         if (!$date) {
-            $currentDatetime = new \DateTime('now');
-            $hoursDatetime = new \DateTime('now');
-            $startDay = new \DateTime('now');
-            $finishDay = new \DateTime('now');
+            $currentDatetime = new \DateTime();
+            $hoursDatetime = new \DateTime();
+            $startDay = new \DateTime();
+            $finishDay = new \DateTime();
         } else {
             $currentDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $hoursDatetime = new \DateTime($date->format('Y-m-d H:s:i'));
             $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
             $finishDay = new \DateTime($date->format('Y-m-d H:s:i'));
         }
-        $hoursDatetime->add(new \DateInterval('PT'.$hours.'H'));
+        if ($hours) {
+            $hoursDatetime->add(new \DateInterval('PT'.$hours.'H'));
+        }
         $startDay->setTime(0, 0, 0);
         $finishDay->setTime(23, 59, 59);
 

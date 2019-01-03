@@ -16,10 +16,11 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 {
     const LDAP_ID_KEY = 'uid';
 
-    protected $LDAPService;
-    protected $LDAPUserService;
-    protected $HttpUtils;
     protected $session;
+    protected $container;
+    protected $ldapService;
+    protected $ldapUserService;
+    protected $httpUtils;
 
     public function __construct(ContainerInterface $container, LDAPService $LDAPService, LDAPUserService $LDAPUserService, HttpUtils $HttpUtils, Session $session)
     {

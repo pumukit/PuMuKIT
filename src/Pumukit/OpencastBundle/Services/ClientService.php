@@ -455,9 +455,11 @@ class ClientService
      * the Opencast series does not exist, it creates a new Opencast series and updates
      * the Opencast id on the PuMuKIT series.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function updateOpencastSeries($series)
     {
@@ -498,9 +500,11 @@ class ClientService
      * Creates an Opencast series and associates it to the PuMuKIT series.
      * The Opencast series metadata is taken from the PuMuKIT series.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function createOpencastSeries($series)
     {
@@ -538,9 +542,11 @@ class ClientService
      *
      * Deletes the Opencast series metadata associated to the PuMuKIT series.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function deleteOpencastSeries($series)
     {
@@ -571,6 +577,8 @@ class ClientService
      * @param bool         $useAdminUrl
      *
      * @return array
+     *
+     * @throws \Exception
      */
     private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false)
     {

@@ -74,6 +74,8 @@ class SeriesSearchService
     private function processDates($value)
     {
         $criteria = array();
+        $date_from = null;
+        $date_to = null;
 
         if ('' !== $value['from']) {
             $date_from = new \DateTime($value['from']);

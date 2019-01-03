@@ -86,7 +86,7 @@ class ResumptionToken
     /**
      * Get the token of the ResumptionToken.
      *
-     * @return token string
+     * @return string
      */
     public function encode()
     {

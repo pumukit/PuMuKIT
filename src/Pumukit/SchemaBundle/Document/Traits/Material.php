@@ -140,7 +140,7 @@ trait Material
      *
      * @param $materialId
      *
-     * @return Material|null
+     * @return DocumentMaterial|null
      */
     public function getMaterialById($materialId)
     {
@@ -178,7 +178,7 @@ trait Material
      *
      * @param string $tag
      *
-     * @return Material|null
+     * @return DocumentMaterial|null
      */
     public function getMaterialWithTag($tag)
     {
@@ -216,7 +216,7 @@ trait Material
      *
      * @param array $tags
      *
-     * @return Material|null
+     * @return DocumentMaterial|null
      */
     public function getMaterialWithAllTags(array $tags)
     {
@@ -254,7 +254,7 @@ trait Material
      *
      * @param array $tags
      *
-     * @return Material|null
+     * @return DocumentMaterial|null
      */
     public function getMaterialWithAnyTag(array $tags)
     {

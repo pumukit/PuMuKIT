@@ -37,24 +37,24 @@ class OpencastImportSegmentsCommand extends ContainerAwareCommand
             ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'ID of multimedia object to import')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<'EOT'
-            
+
             Important:
-            
+
             Before executing the command add Opencast URL MAPPING configuration with OC data you will access.
-            
+
             ---------------
-            
+
             Command to import segments from Opencast to PuMuKIT defining Opencast configuration
-            
+
             <info> ** Example ( check and list ):</info>
-            
+
             <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
             <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
-            
+
             This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
-            
+
             <info> ** Example ( <error>execute</error> ):</info>
-            
+
             <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
             <comment>php app/console pumukit:opencast:import:segments --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
 
@@ -252,10 +252,7 @@ EOT
         $embeddedSegment->setHit(boolval($segment['hit']));
         $embeddedSegment->setText($segment['text']);
 
-        $image = '';
-        if (isset($segment['previews']['preview']) && isset($segment['previews']['preview']['$'])) {
-            $image = $segment['previews']['preview']['$'];
-        }
+        $image = $segment['previews']['preview']['$'] ?? '';
         $embeddedSegment->setPreview($image);
 
         $this->dm->persist($embeddedSegment);

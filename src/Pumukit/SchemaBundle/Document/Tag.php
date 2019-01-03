@@ -91,19 +91,19 @@ class Tag
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $created;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -390,21 +390,17 @@ class Tag
     /**
      * Set created.
      *
-     * @param \Date $created
-     *
-     * @return Tag
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
         $this->created = $created;
-
-        return $this;
     }
 
     /**
      * Get created.
      *
-     * @return Date
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -414,21 +410,17 @@ class Tag
     /**
      * Set updated.
      *
-     * @param \Date $updated
-     *
-     * @return Tag
+     * @param \DateTime $updated
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
-
-        return $this;
     }
 
     /**
      * Get updated.
      *
-     * @return Date
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -438,7 +430,7 @@ class Tag
     /**
      * Set translatable locale.
      *
-     * @param locale $locale
+     * @param string $locale
      */
     public function setLocale($locale)
     {

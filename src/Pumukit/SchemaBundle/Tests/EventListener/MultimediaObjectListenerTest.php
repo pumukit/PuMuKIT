@@ -18,6 +18,12 @@ class MultimediaObjectListenerTest extends WebTestCase
     private $listener;
     private $trackDispatcher;
     private $trackService;
+    private $factoryService;
+    private $context;
+    private $rootDir;
+    private $webDir;
+    private $localhost;
+    private $picService;
 
     public function setUp()
     {

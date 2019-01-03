@@ -16,7 +16,7 @@ trait Properties
     /**
      * Get properties, null if none.
      *
-     * @return array
+     * @return string
      */
     public function getProperties()
     {
@@ -54,7 +54,7 @@ trait Properties
      *
      * @param string $key
      *
-     * @return DateTime|null|false
+     * @return \DateTime|null|false
      */
     public function getPropertyAsDateTime($key)
     {
@@ -79,8 +79,8 @@ trait Properties
     /**
      * Set property.
      *
-     * @param string   $key
-     * @param DateTime $value
+     * @param string    $key
+     * @param \DateTime $value
      */
     public function setPropertyAsDateTime($key, \DateTime $value)
     {

@@ -18,6 +18,9 @@ class PicExtractorServiceTest extends WebTestCase
     private $resourcesDir;
     private $targetPath;
     private $targetUrl;
+    private $picEventDispatcher;
+    private $inspectionService;
+    private $mmsPicService;
 
     public function setUp()
     {
@@ -101,15 +104,17 @@ class PicExtractorServiceTest extends WebTestCase
     private function deleteCreatedFiles()
     {
         $multimediaObjects = $this->mmobjRepo->findAll();
+        $selectedMultimediaObject = null;
         foreach ($multimediaObjects as $multimediaObject) {
             if (!$multimediaObject->isPrototype()) {
+                $selectedMultimediaObject = $multimediaObject;
                 break;
             }
         }
         $dirSeries = $this->resourcesDir.'/series/';
-        $dirSeriesId = $dirSeries.$multimediaObject->getSeries()->getId().'/';
+        $dirSeriesId = $dirSeries.$selectedMultimediaObject->getSeries()->getId().'/';
         $dirVideo = $dirSeriesId.'video/';
-        $dirMmId = $dirVideo.$multimediaObject->getId().'/';
+        $dirMmId = $dirVideo.$selectedMultimediaObject->getId().'/';
         $files = glob($dirMmId.'*', GLOB_MARK);
         foreach ($files as $file) {
             if (is_writable($file)) {

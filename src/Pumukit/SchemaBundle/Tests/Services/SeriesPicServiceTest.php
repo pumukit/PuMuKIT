@@ -16,6 +16,7 @@ class SeriesPicServiceTest extends WebTestCase
     private $mmsPicService;
     private $originalPicPath;
     private $uploadsPath;
+    private $seriesDispatcher;
 
     public function setUp()
     {

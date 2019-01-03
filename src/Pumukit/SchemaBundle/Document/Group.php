@@ -54,26 +54,18 @@ class Group implements GroupInterface
     protected $origin = self::ORIGIN_LOCAL;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $createdAt;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $updatedAt;
-
-    /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property.
-     *
-     * @var locale
-     */
-    private $locale = 'en';
 
     /**
      * Constructor.
@@ -83,8 +75,8 @@ class Group implements GroupInterface
     public function __construct($key = null)
     {
         $this->key = $key;
-        $this->createdAt = new \Datetime('now');
-        $this->updatedAt = new \Datetime('now');
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**

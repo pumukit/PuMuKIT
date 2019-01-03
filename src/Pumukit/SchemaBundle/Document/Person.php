@@ -87,7 +87,7 @@ class Person
     /**
      * Locale.
      *
-     * @var locale
+     * @var string
      */
     protected $locale = 'en';
 

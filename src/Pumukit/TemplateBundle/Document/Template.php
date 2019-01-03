@@ -26,14 +26,14 @@ class Template
     private $hide = false;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $createdAt;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -58,20 +58,20 @@ class Template
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime('now');
-        $this->updatedAt = new \Datetime('now');
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
      * Get id.
      *
-     * @return id $id
+     * @return string $id
      */
     public function getId()
     {
@@ -111,7 +111,7 @@ class Template
     /**
      * Set createdAt.
      *
-     * @param date $createdAt
+     * @param \DateTime $createdAt
      *
      * @return self
      */
@@ -125,7 +125,7 @@ class Template
     /**
      * Get createdAt.
      *
-     * @return date $createdAt
+     * @return \DateTime $createdAt
      */
     public function getCreatedAt()
     {
@@ -135,7 +135,7 @@ class Template
     /**
      * Set updatedAt.
      *
-     * @param date $updatedAt
+     * @param \DateTime $updatedAt
      *
      * @return self
      */
@@ -149,7 +149,7 @@ class Template
     /**
      * Get updatedAt.
      *
-     * @return date $updatedAt
+     * @return \DateTime $updatedAt
      */
     public function getUpdatedAt()
     {
@@ -226,7 +226,7 @@ class Template
     /**
      * Get i18n text.
      *
-     * @return array
+     * @return string
      */
     public function getI18nText()
     {

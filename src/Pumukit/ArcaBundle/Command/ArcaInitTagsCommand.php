@@ -8,6 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\Tag;
 
+/**
+ * Class ArcaInitTagsCommand.
+ */
 class ArcaInitTagsCommand extends ContainerAwareCommand
 {
     private $dm = null;
@@ -28,11 +31,25 @@ EOT
           );
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null
+     *
+     * @throws \Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-
         if ($input->getOption('force')) {
             $arcaPublicationChannelTag = $this->createTagWithCode('PUCHARCA', 'ARCA', 'PUBCHANNELS', false);
             $this->dm->persist($arcaPublicationChannelTag);
@@ -50,11 +67,22 @@ EOT
         return 0;
     }
 
+    /**
+     * @param string $code
+     * @param string $title
+     * @param string $tagParentCode
+     * @param bool   $metatag
+     *
+     * @return Tag
+     *
+     * @throws \Exception
+     */
     private function createTagWithCode($code, $title, $tagParentCode = null, $metatag = false)
     {
-        if ($tag = $this->tagRepo->findOneByCod($code)) {
+        if ($tag = $this->findTag($code)) {
             throw new \Exception('Nothing done - Tag retrieved from DB id: '.$tag->getId().' cod: '.$tag->getCod());
         }
+
         $tag = new Tag();
         $tag->setCod($code);
         $tag->setMetatag($metatag);
@@ -63,15 +91,26 @@ EOT
         $tag->setTitle($title, 'gl');
         $tag->setTitle($title, 'en');
         if ($tagParentCode) {
-            if ($parent = $this->tagRepo->findOneByCod($tagParentCode)) {
+            if ($parent = $this->findTag($tagParentCode)) {
                 $tag->setParent($parent);
             } else {
                 throw new \Exception('Nothing done - There is no tag in the database with code '.$tagParentCode.' to be the parent tag');
             }
         }
+
         $this->dm->persist($tag);
         $this->dm->flush();
 
         return $tag;
+    }
+
+    /**
+     * @param string $cod
+     *
+     * @return mixed
+     */
+    private function findTag($cod)
+    {
+        return $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneByCod($cod);
     }
 }

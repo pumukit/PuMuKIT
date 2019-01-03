@@ -14,6 +14,9 @@ use Pumukit\InstallBundleBundle\Manipulator\RoutingManipulator;
 
 class PumukitInstallBundleCommand extends ContainerAwareCommand
 {
+    private $uninstall;
+    private $reflected;
+
     protected function configure()
     {
         $this

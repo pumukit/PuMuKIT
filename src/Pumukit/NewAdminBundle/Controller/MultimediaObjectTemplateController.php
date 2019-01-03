@@ -5,7 +5,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 
 /**
@@ -15,6 +14,12 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
 {
     /**
      * Display the form for editing or update the resource.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception
      */
     public function updatemetaAction(Request $request)
     {
@@ -39,29 +44,28 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
         $this->get('session')->set('admin/series/id', $series->getId());
 
         $parentTags = $factoryService->getParentTags();
-        $mmtemplate = $factoryService->getMultimediaObjectPrototype($series);
+        $mmTemplate = $factoryService->getMultimediaObjectPrototype($series);
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmtemplate);
+        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmTemplate);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
             $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $this->update($mmtemplate);
+            $this->update($mmTemplate);
 
             return new JsonResponse(array('mmtemplate' => 'updatemeta'));
         }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
             array(
-                'mm' => $resource,
+                'mm' => $mmTemplate,
                 'form_meta' => $formMeta->createView(),
                 'series' => $series,
                 'roles' => $roles,
-                'personal_scope_role' => $personalScopeRole,
                 'personal_scope_role_code' => $personalScopeRoleCode,
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,

@@ -97,7 +97,7 @@ class SeriesService
      * @param array  $sort
      * @param int    $limit
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getSeriesOfUser(User $user, $onlyAdminSeries = false, $roleOwnerCode = '', $sort = array(), $limit = 0)
     {

@@ -103,9 +103,9 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get profile.
      *
-     * @param Collection $tags
+     * @param $tags
      *
-     * @return string
+     * @return bool|string
      */
     public function getProfile($tags)
     {
@@ -125,7 +125,7 @@ class PumukitAdminExtension extends \Twig_Extension
      *
      * @param string $name route name
      *
-     * @return boolena
+     * @return bool
      */
     public function existsRoute($name)
     {
@@ -312,7 +312,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get track profile width resolution.
      *
-     * @param Collection $tags
+     * @param $tags
      *
      * @return string
      */
@@ -330,7 +330,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get track profile height resolution.
      *
-     * @param Collection $tags
+     * @param  $tags
      *
      * @return string
      */
@@ -349,7 +349,7 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce icon of Series
      * and MultimediaObjects inside of it.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return string $icon
      */
@@ -368,7 +368,7 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce text of Series
      * and MultimediaObjects inside of it.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return string $text
      */
@@ -387,7 +387,7 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce icon of Multimedia Objects in Series
      * and MultimediaObjects inside of it.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return string $icon
      */
@@ -408,7 +408,7 @@ class PumukitAdminExtension extends \Twig_Extension
      * Get announce text of Multimedia Objects in Series
      * and MultimediaObjects inside of it.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return string $text
      */
@@ -438,7 +438,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get profile.
      *
-     * @param Collection $tags
+     * @param $tags
      *
      * @return string
      */
@@ -470,7 +470,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Count Multimedia Objects.
      *
-     * @param Series $series
+     * @param $series
      *
      * @return int
      */
@@ -584,7 +584,7 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Returns a boolean is user is owner.
      *
-     * @param User             $user
+     * @param                  $user
      * @param MultimediaObject $mmobj
      *
      * @return bool

@@ -9,6 +9,7 @@ class TagTest extends WebTestCase
 {
     private $dm;
     private $tagRepo;
+    private $tagService;
 
     public function setUp()
     {
@@ -49,7 +50,7 @@ class TagTest extends WebTestCase
         $youtubeProperty = 'w7dD-JJJytM&list=PLmXxqSJJq-yUfrjvKe5c5LX_1x7nGVF6c';
         $properties = array('youtube' => $youtubeProperty);
 
-        $tag = new Tag($title);
+        $tag = new Tag();
 
         $tag->setTitle($title);
         $tag->setDescription($description);
@@ -61,7 +62,7 @@ class TagTest extends WebTestCase
         $tag->setDisplay($display);
         $tag->setProperties($properties);
 
-        $tag_parent = new Tag('parent');
+        $tag_parent = new Tag();
         $tag->setParent($tag_parent);
 
         $this->assertEquals($title, $tag->getTitle());
@@ -126,11 +127,11 @@ class TagTest extends WebTestCase
 
     public function testChildren()
     {
-        $tag_parent = new Tag('tag_parent');
-        $tag_child = new Tag('tag_child');
+        $tag_parent = new Tag();
+        $tag_child = new Tag();
         $tag_parent->setCod('Parent');
         $tag_child->setCod('ParentChild');
-        $tag_grandchild = new Tag('tag_grandchild');
+        $tag_grandchild = new Tag();
         $tag_grandchild->setCod('GrandChild');
         $this->dm->persist($tag_parent);
         $this->dm->persist($tag_child);

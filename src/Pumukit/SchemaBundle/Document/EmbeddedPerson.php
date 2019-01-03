@@ -83,7 +83,7 @@ class EmbeddedPerson
     /**
      * Locale.
      *
-     * @var locale
+     * @var string
      */
     protected $locale = 'en';
 

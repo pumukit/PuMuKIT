@@ -80,7 +80,7 @@ class Broadcast
     private $description = array('en' => '');
 
     /**
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 

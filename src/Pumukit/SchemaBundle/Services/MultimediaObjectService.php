@@ -13,6 +13,7 @@ class MultimediaObjectService
     private $dm;
     private $repo;
     private $dispatcher;
+    private $seriesRepo;
 
     public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {

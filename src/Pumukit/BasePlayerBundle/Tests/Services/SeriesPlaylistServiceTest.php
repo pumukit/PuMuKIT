@@ -14,6 +14,8 @@ class SeriesPlaylistServiceTest extends WebTestCase
     private $seriesRepo;
     private $seriesPlaylistService;
     private $testMmobjs;
+    private $testPlaylistMmobjs;
+    private $testSeries;
 
     public function setUp()
     {

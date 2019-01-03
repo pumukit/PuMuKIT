@@ -64,7 +64,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      *
      * @param Request $request
      *
-     * @return JsonResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
@@ -153,7 +153,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function updateAction(Request $request)
     {
@@ -265,6 +265,10 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
     /**
      * Gets the criteria values.
+     *
+     * @param $criteria
+     *
+     * @return array
      */
     public function getCriteria($criteria)
     {
@@ -276,6 +280,9 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $criteria = $this->get('session')->get('admin/event/criteria', array());
 
         $new_criteria = array();
+
+        $date_from = null;
+        $date_to = null;
 
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)

@@ -14,6 +14,7 @@ class SeriesServiceTest extends WebTestCase
     private $dm;
     private $repo;
     private $seriesService;
+    private $seriesDispatcher;
 
     public function setUp()
     {

@@ -19,14 +19,14 @@ class EmbeddedEventSession
     private $id;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
     private $start;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -63,7 +63,7 @@ class EmbeddedEventSession
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getStart()
     {
@@ -71,7 +71,7 @@ class EmbeddedEventSession
     }
 
     /**
-     * @param date $start
+     * @param \DateTime $start
      */
     public function setStart($start)
     {
@@ -79,7 +79,7 @@ class EmbeddedEventSession
     }
 
     /**
-     * @return date
+     * @return \DateTime
      */
     public function getEnds()
     {
@@ -87,7 +87,7 @@ class EmbeddedEventSession
     }
 
     /**
-     * @param date $ends
+     * @param \DateTime $ends
      */
     public function setEnds($ends)
     {

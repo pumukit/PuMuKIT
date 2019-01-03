@@ -51,7 +51,7 @@ class EmbeddedEvent
     private $place;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      * @MongoDB\Field(type="date")
      */
     private $date;
@@ -118,7 +118,7 @@ class EmbeddedEvent
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property.
      *
-     * @var locale
+     * @var string
      */
     private $locale = 'en';
 
@@ -192,7 +192,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return string
      */
@@ -290,7 +290,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @return \Datetime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -298,7 +298,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param \Datetime $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {

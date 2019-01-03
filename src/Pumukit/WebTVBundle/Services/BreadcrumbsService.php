@@ -16,6 +16,7 @@ class BreadcrumbsService
     private $homeTitle;
     private $breadcrumbs;
     private $translator;
+    private $parentWeb;
 
     public function __construct(Router $router, Session $session, $translator, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $homeTitle = 'home', $parentWeb = null)
     {

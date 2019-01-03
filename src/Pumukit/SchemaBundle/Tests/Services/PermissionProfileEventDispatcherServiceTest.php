@@ -15,6 +15,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
 
     private $dm;
     private $permissionProfileDispatcher;
+    private $dispatcher;
 
     public function setUp()
     {

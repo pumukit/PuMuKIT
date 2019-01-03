@@ -19,7 +19,7 @@ class Annotation
     private $id;
 
     /**
-     * @var object_id
+     * @var string
      *
      * @MongoDB\Field(type="object_id")
      */
@@ -27,7 +27,7 @@ class Annotation
     private $multimediaObject;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      */
@@ -92,7 +92,7 @@ class Annotation
     /**
      * Get id.
      *
-     * @return id $id
+     * @return string $id
      */
     public function getId()
     {
@@ -102,7 +102,7 @@ class Annotation
     /**
      * Set multimediaObject.
      *
-     * @param object_id $multimediaObject
+     * @param string $multimediaObject
      *
      * @return self
      */
@@ -116,7 +116,7 @@ class Annotation
     /**
      * Get multimediaObject.
      *
-     * @return object_id $multimediaObject
+     * @return string $multimediaObject
      */
     public function getMultimediaObject()
     {
@@ -126,7 +126,7 @@ class Annotation
     /**
      * Set created.
      *
-     * @param date $created
+     * @param \DateTime $created
      *
      * @return self
      */
@@ -140,7 +140,7 @@ class Annotation
     /**
      * Get created.
      *
-     * @return date $created
+     * @return \DateTime $created
      */
     public function getCreated()
     {
@@ -169,30 +169,6 @@ class Annotation
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set mediapackage.
-     *
-     * @param string $mediapackage
-     *
-     * @return self
-     */
-    public function setMediapackage($mediapackage)
-    {
-        $this->mediapackage = $mediapackage;
-
-        return $this;
-    }
-
-    /**
-     * Get mediapackage.
-     *
-     * @return string $mediapackage
-     */
-    public function getMediapackage()
-    {
-        return $this->mediapackage;
     }
 
     /**

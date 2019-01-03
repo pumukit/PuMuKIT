@@ -380,6 +380,9 @@ class SeriesController extends AdminController implements NewAdminController
             'hidden' => MultimediaObject::STATUS_HIDE,
         );
 
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('series' => $series->getId()));
+
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
         foreach ($pubChannels as $key => $pubTag) {
@@ -392,6 +395,7 @@ class SeriesController extends AdminController implements NewAdminController
             'series' => $series,
             'mm_status' => $mmStatus,
             'pub_channels' => $pubChannels,
+            'multimediaObjects' => $multimediaObjects,
         );
     }
 
@@ -490,9 +494,9 @@ class SeriesController extends AdminController implements NewAdminController
     /**
      * Gets the list of resources according to a criteria.
      *
-     * @param Request $request
-     * @param         $criteria
-     * @param null    $selectedSeriesId
+     * @param Request       $request
+     * @param array         $criteria
+     * @param \MongoId|null $selectedSeriesId
      *
      * @return array|mixed|Pagerfanta
      */

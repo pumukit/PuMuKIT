@@ -21,7 +21,7 @@ class ViewsAggregation
     private $id;
 
     /**
-     * @var \Date
+     * @var \DateTime
      *
      * @MongoDB\Field(type="date")
      * @MongoDB\Index
@@ -63,7 +63,7 @@ class ViewsAggregation
     /**
      * Get id.
      *
-     * @return id $id
+     * @return string $id
      */
     public function getId()
     {
@@ -73,7 +73,7 @@ class ViewsAggregation
     /**
      * Set date.
      *
-     * @param date $date
+     * @param \DateTime $date
      *
      * @return self
      */
@@ -87,7 +87,7 @@ class ViewsAggregation
     /**
      * Get date.
      *
-     * @return date $date
+     * @return \DateTime $date
      */
     public function getDate()
     {

@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * SeriesRepository.
@@ -22,7 +26,7 @@ class SeriesRepository extends DocumentRepository
      * @param int             $limit
      * @param int             $page
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
@@ -36,10 +40,10 @@ class SeriesRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find series by tag id.
      *
-     * @param Tag|EmbeddedTag $tag
-     * @param array           $sort
+     * @param $tag
+     * @param array $sort
      *
-     * @return QueryBuilder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithTag($tag, $sort = array())
     {
@@ -57,7 +61,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param Tag|EmbeddedTag $tag
      *
-     * @return Series
+     * @return array|null|object
      */
     public function findOneWithTag($tag)
     {
@@ -148,7 +152,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param Tag|EmbeddedTag $tag
      *
-     * @return Series
+     * @return array|null|object
      */
     public function findOneWithoutTag($tag)
     {
@@ -163,7 +167,7 @@ class SeriesRepository extends DocumentRepository
      * @param array tags
      * @param array $sort
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
@@ -181,7 +185,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param string $picId
      *
-     * @return Series
+     * @return array|null|object
      */
     public function findByPicId($picId)
     {
@@ -193,7 +197,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param string $personId
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findSeriesByPersonId($personId)
     {
@@ -208,10 +212,13 @@ class SeriesRepository extends DocumentRepository
      * Create builder to Find series
      * by person id and role cod.
      *
-     * @param string $personId
-     * @param string $roleCod
+     * @param $personId
+     * @param $roleCod
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return \Doctrine\MongoDB\Query\Builder
      */
     public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
@@ -224,10 +231,13 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by person id and role cod.
      *
-     * @param string $personId
-     * @param string $roleCod
+     * @param $personId
+     * @param $roleCod
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
@@ -239,11 +249,11 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by person id and role cod or groups.
      *
-     * @param string          $personId
-     * @param string          $roleCod
-     * @param ArrayCollection $groups
+     * @param $personId
+     * @param $roleCod
+     * @param $groups
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
     {
@@ -256,14 +266,14 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by person id and role cod or groups sorted Query Builder.
      *
-     * @param string          $personId
-     * @param string          $roleCod
-     * @param ArrayCollection $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
+     * @param $personId
+     * @param $roleCod
+     * @param $groups
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
@@ -280,14 +290,14 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by person id and role cod or groups sorted Query.
      *
-     * @param string          $personId
-     * @param string          $roleCod
-     * @param ArrayCollection $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
+     * @param $personId
+     * @param $roleCod
+     * @param $groups
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return \Doctrine\MongoDB\Query\Query
      */
     public function findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
@@ -299,14 +309,14 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by person id and role cod or groups sorted.
      *
-     * @param string          $personId
-     * @param string          $roleCod
-     * @param ArrayCollection $groups
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
+     * @param $personId
+     * @param $roleCod
+     * @param $groups
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
@@ -320,7 +330,9 @@ class SeriesRepository extends DocumentRepository
      *
      * @param SeriesType $series_type
      *
-     * @return ArrayCollection
+     * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findBySeriesType(SeriesType $series_type)
     {
@@ -330,7 +342,7 @@ class SeriesRepository extends DocumentRepository
     /**
      * Count number of series in the repo.
      *
-     * @return int
+     * @return mixed
      */
     public function count()
     {
@@ -340,7 +352,7 @@ class SeriesRepository extends DocumentRepository
     /**
      * Count number of series in the repo.
      *
-     * @return int
+     * @return mixed
      */
     public function countPublic()
     {
@@ -350,13 +362,13 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series with tag and series type.
      *
-     * @param Tag|EmbeddedTag $tag
-     * @param SeriesType      $seriesType
-     * @param array           $sort
-     * @param int             $limit
-     * @param int             $page
+     * @param $tag
+     * @param $seriesType
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findWithTagAndSeriesType($tag, $seriesType, $sort = array(), $limit = 0, $page = 0)
     {
@@ -370,11 +382,11 @@ class SeriesRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find series with tag and series type.
      *
-     * @param Tag|EmbeddedTag $tag
-     * @param SeriesType      $seriesType
-     * @param array           $sort
+     * @param $tag
+     * @param $seriesType
+     * @param array $sort
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = array())
     {
@@ -390,10 +402,10 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series with the same propertyName.
      *
-     * @param string $propertyName
-     * @param string $propertyValue
+     * @param $propertyName
+     * @param $propertyValue
      *
-     * @return QueryBuilder
+     * @return array|null|object
      */
     public function findOneBySeriesProperty($propertyName, $propertyValue)
     {
@@ -408,7 +420,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return ArrayCollection
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
     {
@@ -430,7 +442,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return ArrayCollection
+     * @return \Doctrine\MongoDB\Query\Query
      */
     public function findByEmbeddedBroadcastTypeQuery($type = '', $sort = array(), $limit = 0, $page = 0)
     {
@@ -447,7 +459,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return ArrayCollection
+     * @return mixed
      */
     public function findByEmbeddedBroadcastType($type = '', $sort = array(), $limit = 0, $page = 0)
     {
@@ -465,7 +477,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return int
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
@@ -488,7 +500,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return int
+     * @return \Doctrine\MongoDB\Query\Query
      */
     public function findByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
@@ -506,7 +518,7 @@ class SeriesRepository extends DocumentRepository
      * @param int    $limit
      * @param int    $page
      *
-     * @return int
+     * @return mixed
      */
     public function findByEmbeddedBroadcastTypeAndGroups($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
@@ -518,13 +530,13 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find by title with locale query builder.
      *
-     * @param string $search
+     * @param string $title
      * @param string $locale
      * @param array  $sort
      * @param int    $limit
      * @param int    $page
      *
-     * @return QueryBuilder
+     * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
     public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
     {
@@ -538,13 +550,13 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find by title with locale query.
      *
-     * @param string $search
+     * @param string $title
      * @param string $locale
      * @param array  $sort
      * @param int    $limit
      * @param int    $page
      *
-     * @return Query
+     * @return \Doctrine\MongoDB\Query\Query
      */
     public function findByTitleWithLocaleQuery($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
     {
@@ -556,13 +568,13 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find by title with locale.
      *
-     * @param string $search
+     * @param string $title
      * @param string $locale
      * @param array  $sort
      * @param int    $limit
      * @param int    $page
      *
-     * @return Query
+     * @return mixed
      */
     public function findByTitleWithLocale($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
     {
@@ -574,11 +586,11 @@ class SeriesRepository extends DocumentRepository
     /**
      * Add limit (and page) to Query Builder.
      *
-     * @param QueryBuilder $qb
-     * @param int          $limit
-     * @param int          $page
+     * @param $qb
+     * @param int $limit
+     * @param int $page
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     private function addLimitToQueryBuilder($qb, $limit = 0, $page = 0)
     {
@@ -592,10 +604,10 @@ class SeriesRepository extends DocumentRepository
     /**
      * Add sort to Query Builder.
      *
-     * @param QueryBuilder $qb
-     * @param array        $sort
+     * @param $qb
+     * @param array $sort
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     private function addSortToQueryBuilder($qb, $sort = array())
     {
@@ -609,12 +621,12 @@ class SeriesRepository extends DocumentRepository
     /**
      * Add sort and limit (and page) to Query Builder.
      *
-     * @param QueryBuilder $qb
-     * @param array        $sort
-     * @param int          $limit
-     * @param int          $page
+     * @param $qb
+     * @param array $sort
+     * @param int   $limit
+     * @param int   $page
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
     {
@@ -629,6 +641,8 @@ class SeriesRepository extends DocumentRepository
      * @param bool $onlyAdminSeries
      *
      * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function findUserSeries($user, $onlyAdminSeries = false)
     {
@@ -678,9 +692,11 @@ class SeriesRepository extends DocumentRepository
     /**
      * Count number of multimedia objects by series.
      *
-     * @return array() A key/value hash where the key is the series id (string) and the value is the count
-     *
      * @deprecated Use MultimediaObjectRepository::countMmobjsBySeries
+     *
+     * @param array $seriesList A key/value hash where the key is the series id (string) and the value is the count
+     *
+     * @return mixed
      */
     public function countMmobjsBySeries($seriesList = array())
     {
@@ -689,6 +705,11 @@ class SeriesRepository extends DocumentRepository
             ->countMmobjsBySeries($seriesList);
     }
 
+    /**
+     * @param Series $series
+     *
+     * @return mixed
+     */
     public function getMultimediaObjects(Series $series)
     {
         return $this->getDocumentManager()
@@ -696,6 +717,11 @@ class SeriesRepository extends DocumentRepository
             ->findWithoutPrototype($series);
     }
 
+    /**
+     * @param Series $series
+     *
+     * @return mixed
+     */
     public function countMultimediaObjects(Series $series)
     {
         return $this->getDocumentManager()

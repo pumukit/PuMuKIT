@@ -2,9 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\PersonWithRoleEvent;
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\EmbeddedRole;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PersonWithRoleEventDispatcherService
@@ -32,7 +37,7 @@ class PersonWithRoleEventDispatcherService
      * the multimedia object and the personwithrole
      *
      * @param MultimediaObject      $multimediaObject
-     * @param Person|EmbeddedPerson $person
+     * @param Person|embeddedPerson $person
      * @param Role|EmbeddedRole     $role
      */
     public function dispatchCreate(MultimediaObject $multimediaObject, $person, $role)

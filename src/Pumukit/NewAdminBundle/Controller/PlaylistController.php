@@ -107,9 +107,10 @@ class PlaylistController extends CollectionController
     }
 
     /**
+     * @param Series  $playlist
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function deleteAction(Series $playlist, Request $request)
     {
