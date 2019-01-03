@@ -97,9 +97,9 @@ class EventRepository extends DocumentRepository
     }
 
     /**
-     * @param null      $limit
-     * @param null      $date
-     * @param Live|null $live  Find only events of a live channel
+     * @param int|null       $limit
+     * @param \DateTime|null $date
+     * @param Live|null      $live  Find only events of a live channel
      *
      * @return mixed
      *
@@ -162,8 +162,8 @@ class EventRepository extends DocumentRepository
     /**
      * Find one by hours event.
      *
-     * @param null $hours
-     * @param null $date
+     * @param string|null    $hours
+     * @param \DateTime|null $date
      *
      * @throws \Exception
      */
@@ -180,7 +180,9 @@ class EventRepository extends DocumentRepository
             $startDay = new \DateTime($date->format('Y-m-d H:s:i'));
             $finishDay = new \DateTime($date->format('Y-m-d H:s:i'));
         }
-        $hoursDatetime->add(new \DateInterval('PT'.$hours.'H'));
+        if ($hours) {
+            $hoursDatetime->add(new \DateInterval('PT'.$hours.'H'));
+        }
         $startDay->setTime(0, 0, 0);
         $finishDay->setTime(23, 59, 59);
 

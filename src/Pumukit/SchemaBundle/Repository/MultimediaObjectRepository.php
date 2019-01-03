@@ -1658,8 +1658,8 @@ class MultimediaObjectRepository extends DocumentRepository
      * @deprecated
      * Use findCurrentSessions of EmbeddedEventSessionService
      *
-     * @param null $multimediaObjectId
-     * @param int  $limit
+     * @param string|\MongoId|null $multimediaObjectId
+     * @param int                  $limit
      *
      * @return array
      *

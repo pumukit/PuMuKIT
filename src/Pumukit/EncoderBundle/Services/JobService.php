@@ -65,10 +65,10 @@ class JobService
      *
      * @param MultimediaObject $multimediaObject
      * @param UploadedFile     $trackFile
-     * @param                  $profile
-     * @param                  $priority
-     * @param                  $language
-     * @param                  $description
+     * @param array            $profile
+     * @param int              $priority
+     * @param string           $language
+     * @param array            $description
      * @param array            $initVars
      * @param int              $duration
      * @param int              $flags
@@ -125,11 +125,11 @@ class JobService
     /**
      * Add job checking if not exists.
      *
-     * @param                  $pathFile
-     * @param                  $profile
-     * @param                  $priority
+     * @param string           $pathFile
+     * @param string           $profile
+     * @param int              $priority
      * @param MultimediaObject $multimediaObject
-     * @param null             $language
+     * @param string|null      $language
      * @param array            $description
      * @param array            $initVars
      *
@@ -735,10 +735,10 @@ class JobService
     }
 
     /**
-     * @param                  $pathFile
-     * @param                  $profileName
+     * @param string           $pathFile
+     * @param string           $profileName
      * @param MultimediaObject $multimediaObject
-     * @param null             $language
+     * @param string|null      $language
      * @param array            $description
      *
      * @return Track
@@ -763,9 +763,9 @@ class JobService
 
     /**
      * @param MultimediaObject $multimediaObject
-     * @param                  $pathEnd
-     * @param                  $profileName
-     * @param null             $language
+     * @param string           $pathEnd
+     * @param string           $profileName
+     * @param string|null      $language
      * @param array            $description
      *
      * @return Track
@@ -931,7 +931,7 @@ class JobService
     /**
      * Emit an event to notify finished job.
      *
-     * @param            $success
+     * @param bool       $success
      * @param Job        $job
      * @param Track|null $track
      *

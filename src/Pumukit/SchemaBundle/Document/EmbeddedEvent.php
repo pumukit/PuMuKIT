@@ -192,7 +192,7 @@ class EmbeddedEvent
     }
 
     /**
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return string
      */

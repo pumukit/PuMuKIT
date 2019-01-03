@@ -103,7 +103,7 @@ class ResourceController extends Controller
         $dm->flush();
     }
 
-    function createNew()
+    public function createNew()
     {
         //trace of remove "sylius/resource-bundle" version 0.12.
         throw new \LogicException('createNew method should be overide in the final Controller.');

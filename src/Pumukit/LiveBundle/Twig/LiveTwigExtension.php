@@ -55,7 +55,7 @@ class LiveTwigExtension extends \Twig_Extension
     /**
      * Get future and not finished event.
      *
-     * @param null      $limit
+     * @param int|null  $limit
      * @param Live|null $live
      *
      * @return mixed

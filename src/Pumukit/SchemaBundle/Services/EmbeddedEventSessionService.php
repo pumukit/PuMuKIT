@@ -740,8 +740,8 @@ class EmbeddedEventSessionService
     /**
      * Find future events.
      *
-     * @param null $multimediaObjectId
-     * @param int  $limit
+     * @param string|null $multimediaObjectId
+     * @param int         $limit
      *
      * @return array
      */
@@ -780,7 +780,7 @@ class EmbeddedEventSessionService
     /**
      * Count future events.
      *
-     * @param $multimediaObjectId
+     * @param string|null $multimediaObjectId
      *
      * @return array
      */
@@ -1085,8 +1085,8 @@ class EmbeddedEventSessionService
     /**
      * Find next live events.
      *
-     * @param null $multimediaObjectId
-     * @param int  $limit
+     * @param string|null $multimediaObjectId
+     * @param int         $limit
      *
      * @return array
      */

@@ -66,7 +66,7 @@ class LicenseService
     /**
      * Get license content file.
      *
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return bool|string
      *

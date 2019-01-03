@@ -33,13 +33,13 @@ class PicService
     }
 
     /**
-     * @param null $id
-     * @param null $size
-     * @param null $path
-     * @param null $extension
-     * @param null $tags
-     * @param null $exists
-     * @param null $type
+     * @param string|null $id
+     * @param string|null $size
+     * @param string|null $path
+     * @param string|null $extension
+     * @param string|null $tags
+     * @param string|null $exists
+     * @param string|null $type
      *
      * @return \Doctrine\MongoDB\Iterator|mixed|null
      *
@@ -125,8 +125,8 @@ class PicService
     }
 
     /**
-     * @param null $data
-     * @param      $exists
+     * @param string $data
+     * @param string $exists
      *
      * @return array $data
      */
@@ -152,8 +152,8 @@ class PicService
     }
 
     /**
-     * @param null $data
-     * @param      $size
+     * @param $data
+     * @param $size
      *
      * @return array $data
      */

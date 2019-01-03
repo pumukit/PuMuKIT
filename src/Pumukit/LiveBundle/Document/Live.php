@@ -419,8 +419,8 @@ class Live
     /**
      * Set description.
      *
-     * @param string $description
-     * @param null   $locale
+     * @param string      $description
+     * @param string|null $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -433,7 +433,7 @@ class Live
     /**
      * Get description.
      *
-     * @param null $locale
+     * @param string|null $locale
      *
      * @return string
      */

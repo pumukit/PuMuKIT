@@ -123,8 +123,8 @@ class LDAPUserService
     }
 
     /**
-     * @param      $key
-     * @param null $type
+     * @param string $key
+     * @param string $type
      *
      * @return Group
      *
@@ -149,8 +149,8 @@ class LDAPUserService
     }
 
     /**
-     * @param      $key
-     * @param null $type
+     * @param string $key
+     * @param string $type
      *
      * @return null|string|string[]
      */
@@ -160,8 +160,8 @@ class LDAPUserService
     }
 
     /**
-     * @param      $key
-     * @param null $type
+     * @param string $key
+     * @param string $type
      *
      * @return mixed
      */

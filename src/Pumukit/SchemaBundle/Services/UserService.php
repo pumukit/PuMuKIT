@@ -598,11 +598,11 @@ class UserService
     /**
      * Is User last relation.
      *
-     * @param User  $loggedInUser
-     * @param null  $mmId
-     * @param null  $personId
-     * @param array $owners
-     * @param array $addGroups
+     * @param User        $loggedInUser
+     * @param string|null $mmId
+     * @param string|null $personId
+     * @param array       $owners
+     * @param array       $addGroups
      *
      * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
      *
@@ -687,10 +687,10 @@ class UserService
     /**
      * User has group in common with given groups array.
      *
-     * @param User  $loggedInUser
-     * @param null  $mmId
-     * @param null  $personId
-     * @param array $groups
+     * @param User        $loggedInUser
+     * @param string|null $mmId
+     * @param string|null $personId
+     * @param array       $groups
      *
      * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
      *
