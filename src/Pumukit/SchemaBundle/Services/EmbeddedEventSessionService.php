@@ -292,6 +292,8 @@ class EmbeddedEventSessionService
         return $this->collection->aggregate($pipeline)->toArray();
     }
 
+    public static $currentSessions = null;
+
     /**
      * Get current sessions with or without criteria.
      *
@@ -303,6 +305,10 @@ class EmbeddedEventSessionService
      */
     public function findCurrentSessions($criteria = array(), $limit = 0, $all = false)
     {
+        if (self::$currentSessions) {
+            return self::$currentSessions;
+        }
+
         $pipeline = $this->initPipeline($all);
 
         if ($criteria && !empty($criteria)) {
@@ -347,7 +353,9 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        return $this->collection->aggregate($pipeline)->toArray();
+        self::$currentSessions = $this->collection->aggregate($pipeline)->toArray();
+
+        return self::$currentSessions;
     }
 
     /**
