@@ -914,7 +914,7 @@ class EventsController extends Controller implements NewAdminController
         $user = $this->getUser();
         $pipeline = array();
         $pipeline[] = array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i')));
-        $pipeline[] = array('$match' => array('type' => Series::TYPE_SERIES ));
+        $pipeline[] = array('$match' => array('type' => Series::TYPE_SERIES));
 
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             $pipeline[] = array('$match' => array('properties.owners' => $user->getId()));
