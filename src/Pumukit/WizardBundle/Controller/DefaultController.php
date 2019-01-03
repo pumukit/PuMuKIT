@@ -42,8 +42,8 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pumukitwizard_default_series', array('pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries)));
         }
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
 
         return array(
             'license_text' => $licenseContent,
@@ -87,8 +87,8 @@ class DefaultController extends Controller
                 return strcmp($a['_id']['title'][$request->getLocale()], $b['_id']['title'][$request->getLocale()]);
             });
         }
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
 
         return array(
             'form_data' => $formData,
@@ -148,8 +148,8 @@ class DefaultController extends Controller
         if (!$licenseEnabledAndAccepted) {
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('show_series' => $showSeries, 'pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries)));
         }
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
 
         return array(
             'series_id' => $id,
@@ -225,10 +225,10 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pumukitwizard_default_license', array('pumukitwizard_form_data' => $formData, 'same_series' => $sameSeries)));
         }
 
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
         $availableTags = array();
         if ($showTags) {
-            $tagCode = $this->container->getParameter('pumukit_wizard.tag_parent_code', '');
+            $tagCode = $this->container->getParameter('pumukit_wizard.tag_parent_code');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
             $tagParent = $tagRepo->findOneBy(array('cod' => $tagCode));
@@ -236,12 +236,12 @@ class DefaultController extends Controller
                 $availableTags = $tagParent->getChildren();
             }
         }
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
         $objectDefaultLicense = null;
         $objectAvailableLicenses = null;
         if ($showObjectLicense) {
-            $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license', null);
-            $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses', null);
+            $objectDefaultLicense = $this->container->getParameter('pumukitschema.default_license');
+            $objectAvailableLicenses = $this->container->getParameter('pumukit_new_admin.licenses');
         }
         $mandatoryTitle = $this->getParameter('pumukit_wizard.mandatory_title') ? 1 : 0;
 
@@ -290,8 +290,8 @@ class DefaultController extends Controller
 
         $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
 
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
 
         $status = array();
         $statusSelected = false;
@@ -351,8 +351,8 @@ class DefaultController extends Controller
         }
         $jobService = $this->get('pumukitencoder.job');
         $inspectionService = $this->get('pumukit.inspection');
-        $showTags = $this->container->getParameter('pumukit_wizard.show_tags', false);
-        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license', false);
+        $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
+        $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
 
         $series = null;
         $seriesId = null;
