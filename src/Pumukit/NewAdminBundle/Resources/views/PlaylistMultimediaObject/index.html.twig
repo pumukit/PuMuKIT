@@ -59,7 +59,7 @@
                     <div id="edit_playlistmm">
                         {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
                             <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
-                                {% render(url('pumukitnewadmin_playlistmms_info', {'id': app.session.get('admin/playlistmms/id')})) %}
+                                {{ render(url('pumukitnewadmin_playlistmms_info', {'id': app.session.get('admin/playlistmms/id')})) }}
                             </div>
                         {% else %}
                             <legend>{% trans %}Info{% endtrans %}</legend>

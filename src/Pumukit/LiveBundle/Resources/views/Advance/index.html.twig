@@ -31,10 +31,10 @@
 
     <div class="col-xs-12 col-sm-4 col-md-4">
         <br />
-        {% render(controller('PumukitWebTVBundle:Event:twitter', {'id': multimediaObject.id})) %}
-        {% render(controller('PumukitWebTVBundle:Event:liveList')) %}
+        {{ render(controller('PumukitWebTVBundle:Event:twitter', {'id': multimediaObject.id})) }}
+        {{ render(controller('PumukitWebTVBundle:Event:liveList')) }}
         <br />
-        {% render(controller('PumukitWebTVBundle:Event:nextSessionList', {'id': multimediaObject.id})) %}
+        {{ render(controller('PumukitWebTVBundle:Event:nextSessionList', {'id': multimediaObject.id})) }}
         <br />
     </div>
 
