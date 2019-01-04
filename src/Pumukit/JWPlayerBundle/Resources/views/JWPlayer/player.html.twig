@@ -8,7 +8,7 @@
           tracks: [
           {% for caption in captions %}
             {
-            file: "{{ asset(caption.url, absolute=true) }}",
+            file: "{{ absolute_url(caption.url) }}",
             label: "{{ caption.language|language_name }}",
             kind: "captions"
             },
@@ -21,19 +21,19 @@
      jwplayer("player1").setup({
          {% if intro %}
          playlist: [{
-             file: "{{ asset(intro, absolute=true) }}",
+             file: "{{ absolute_url(intro) }}",
              {% if 'true' != autostart %}
                  image: "{{ multimediaObject|first_url_pic(true) }}",
              {% endif %}
          },{
-             file: "{{ asset(track_url(track), absolute=true) }}",
+             file: "{{ absolute_url(track_url(track)) }}",
              {{ captions_block }}
              {% if ('true' != autostart) or track.isOnlyAudio() %}
                  image: "{{ multimediaObject|first_url_pic(true) }}",
              {% endif %}
          }],
          {% else %}
-             file: "{{ asset(track_url(track), absolute=true) }}",
+             file: "{{ absolute_url(track_url(track)) }}",
              {{ captions_block }}
              {% if (('true' != autostart) or track.isOnlyAudio()) %}
                  image: "{{ multimediaObject|first_url_pic(true) }}",

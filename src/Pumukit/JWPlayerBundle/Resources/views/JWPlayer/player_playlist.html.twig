@@ -8,13 +8,13 @@
          playlist: [{
              {% for mmobj in playlist_mmobjs %}
              {% set track = mmobj|first_public_track %}
-             file: "{{ asset(track_url(track), absolute=true) }}",
+             file: "{{ absolute_url(track_url(track)) }}",
              {% set captions = captions(mmobj) %}
              {% if captions is not empty %}
              tracks: [
                  {% for caption in captions %}
                  {
-                     file: "{{ asset(caption.url, absolute=true) }}",
+                     file: "{{ absolute_url(caption.url) }}",
                      label: "{{ caption.language|language_name }}",
                      kind: "captions"
                  },
