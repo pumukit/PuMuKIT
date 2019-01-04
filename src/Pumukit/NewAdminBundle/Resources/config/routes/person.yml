@@ -1,5 +1,5 @@
 pumukitnewadmin_person_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Person:index
@@ -7,7 +7,7 @@ pumukitnewadmin_person_index:
             filterable: true
 
 pumukitnewadmin_person_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:create
@@ -15,13 +15,13 @@ pumukitnewadmin_person_create:
             redirect: pumukitnewadmin_person_index
 
 pumukitnewadmin_person_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:update
 
 pumukitnewadmin_person_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Person:batchDelete
@@ -29,7 +29,7 @@ pumukitnewadmin_person_batch_delete:
             redirect: pumukitnewadmin_person_list
 
 pumukitnewadmin_person_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Person:delete
@@ -37,7 +37,7 @@ pumukitnewadmin_person_delete:
             redirect: pumukitnewadmin_person_index
 
 pumukitnewadmin_person_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:copy
@@ -45,13 +45,13 @@ pumukitnewadmin_person_copy:
             redirect: pumukitnewadmin_person_index
 
 pumukitnewadmin_person_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Person:show
 
 pumukitnewadmin_person_up:
-    pattern: /{id}/{roleId}/{mmId}/up
+    path: /{id}/{roleId}/{mmId}/up
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:up
@@ -59,7 +59,7 @@ pumukitnewadmin_person_up:
             redirect: pumukitnewadmin_person_index
 
 pumukitnewadmin_person_down:
-    pattern: /{id}/{roleId}/{mmId}/down
+    path: /{id}/{roleId}/{mmId}/down
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:down
@@ -67,13 +67,13 @@ pumukitnewadmin_person_down:
             redirect: pumukitnewadmin_person_index
 
 pumukitnewadmin_person_list_autocomplete:
-    pattern: /{mmId}/{roleId}/listautocomplete
+    path: /{mmId}/{roleId}/listautocomplete
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Person:listAutocomplete
 
 pumukitnewadmin_person_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:list
@@ -81,31 +81,31 @@ pumukitnewadmin_person_list:
             filterable: true
 
 pumukitnewadmin_person_create_relation:
-    pattern: /{mmId}/{roleId}/createrelation
+    path: /{mmId}/{roleId}/createrelation
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:createRelation
 
 pumukitnewadmin_person_update_relation:
-    pattern: /{id}/{roleId}/{mmId}/updaterelation
+    path: /{id}/{roleId}/{mmId}/updaterelation
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:updateRelation
 
 pumukitnewadmin_person_delete_relation:
-    pattern: /{id}/{roleId}/{mmId}/delete_relation
+    path: /{id}/{roleId}/{mmId}/delete_relation
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Person:deleteRelation
 
 pumukitnewadmin_person_link:
-    pattern: /{mmId}/{roleId}/{id}/link
+    path: /{mmId}/{roleId}/{id}/link
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:link
 
 pumukitnewadmin_person_auto_complete:
-    pattern: /autocomplete/{mmId}/{roleId}
+    path: /autocomplete/{mmId}/{roleId}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Person:autoComplete

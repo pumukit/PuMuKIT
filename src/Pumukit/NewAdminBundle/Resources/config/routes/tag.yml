@@ -1,41 +1,41 @@
 pumukitnewadmin_tag_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:index
 
 pumukitnewadmin_tag_children:
-    pattern: /{id}/children
+    path: /{id}/children
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:children
 
 pumukitnewadmin_tag_create:
-    pattern: /create/parent/{parent}
+    path: /create/parent/{parent}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:create
 
 pumukitnewadmin_tag_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:update
 
 pumukitnewadmin_tag_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:delete
 
 pumukitnewadmin_tag_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:list
 
 pumukitnewadmin_tag_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Tag:batchDelete

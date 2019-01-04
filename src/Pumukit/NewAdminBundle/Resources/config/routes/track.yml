@@ -1,107 +1,107 @@
 pumukitnewadmin_track_create:
-    pattern: /create/{id}
+    path: /create/{id}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:create
 
 pumukitnewadmin_track_update:
-    pattern: /{id}/update/{mmId}
+    path: /{id}/update/{mmId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:update
 
 pumukitnewadmin_track_upload:
-    pattern: /{id}/upload
+    path: /{id}/upload
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:upload
 
 pumukitnewadmin_track_delete:
-    pattern: /{id}/delete/{mmId}
+    path: /{id}/delete/{mmId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Track:delete
 
 pumukitnewadmin_track_up:
-    pattern: /{id}/up/{mmId}
+    path: /{id}/up/{mmId}
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:up
 
 pumukitnewadmin_track_down:
-    pattern: /{id}/down/{mmId}
+    path: /{id}/down/{mmId}
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:down
 
 pumukitnewadmin_track_list:
-    pattern: /{id}/list
+    path: /{id}/list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:list
 
 pumukitnewadmin_track_info:
-    pattern: /{id}/info/{mmId}
+    path: /{id}/info/{mmId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:info
 
 pumukitnewadmin_track_retry_job:
-    pattern: /{mmId}/retry/{jobId}
+    path: /{mmId}/retry/{jobId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:retryJob
 
 pumukitnewadmin_track_retry_track:
-    pattern: /{mmId}/retry/{id}
+    path: /{mmId}/retry/{id}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:retryTrack
 
 pumukitnewadmin_track_delete_job:
-    pattern: /{mmId}/deletejob
+    path: /{mmId}/deletejob
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Track:deleteJob
 
 pumukitnewadmin_track_update_job:
-    pattern: /{mmId}/updatejob
+    path: /{mmId}/updatejob
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:updateJobPriority
 
 pumukitnewadmin_track_info_job:
-    pattern: /job/{mmId}/info/{jobId}
+    path: /job/{mmId}/info/{jobId}
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Track:infoJob
 
 pumukitnewadmin_track_autocomplete:
-    pattern: /{id}/autocomplete/{mmId}
+    path: /{id}/autocomplete/{mmId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:autocomplete
 
 pumukitnewadmin_track_pic:
-    pattern: /{mmId}/{id}/pic
+    path: /{mmId}/{id}/pic
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:pic
 
 pumukitnewadmin_track_download:
-    pattern: /{mmId}/{id}/download
+    path: /{mmId}/{id}/download
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:download
 
 pumukitnewadmin_track_retranscode:
-    pattern: /{mmId}/{id}/{profile}/retranscode
+    path: /{mmId}/{id}/{profile}/retranscode
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Track:retranscode
 
 pumukitnewadmin_track_play:
-    pattern: /{id}/play/{mmId}
+    path: /{id}/play/{mmId}
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Track:play

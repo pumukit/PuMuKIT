@@ -1,5 +1,5 @@
 pumukitnewadmin_permissionprofile_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:index
@@ -7,7 +7,7 @@ pumukitnewadmin_permissionprofile_index:
             filterable: true
 
 pumukitnewadmin_permissionprofile_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:create
@@ -15,7 +15,7 @@ pumukitnewadmin_permissionprofile_create:
             redirect: pumukitnewadmin_permissionprofile_index
 
 pumukitnewadmin_permissionprofile_update:
-    pattern: /{id}/edit
+    path: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:update
@@ -23,7 +23,7 @@ pumukitnewadmin_permissionprofile_update:
             redirect: pumukitnewadmin_permissionprofile_index
 
 pumukitnewadmin_permissionprofile_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:batchDelete
@@ -31,7 +31,7 @@ pumukitnewadmin_permissionprofile_batch_delete:
             redirect: pumukitnewadmin_permissionprofile_index
 
 pumukitnewadmin_permissionprofile_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:delete
@@ -39,13 +39,13 @@ pumukitnewadmin_permissionprofile_delete:
             redirect: pumukitnewadmin_permissionprofile_index
 
 pumukitnewadmin_permissionprofile_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:list
 
 pumukitnewadmin_permissionprofile_batch_update:
-    pattern: /batchupdate
+    path: /batchupdate
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:batchUpdate
@@ -53,7 +53,7 @@ pumukitnewadmin_permissionprofile_batch_update:
             redirect: pumukitnewadmin_permissionprofile_index
 
 pumukitnewadmin_permissionprofile_export:
-    pattern: /export
+    path: /export
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PermissionProfile:exportPermissionProfiles

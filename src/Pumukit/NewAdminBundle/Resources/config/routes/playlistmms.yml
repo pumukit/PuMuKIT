@@ -1,5 +1,5 @@
 pumukitnewadmin_playlistmms_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:index
@@ -8,7 +8,7 @@ pumukitnewadmin_playlistmms_index:
             filterable: true
 
 pumukitnewadmin_playlistmms_create:
-    pattern: /{id}/create
+    path: /{id}/create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:create
@@ -16,21 +16,21 @@ pumukitnewadmin_playlistmms_create:
             redirect: pumukitnewadmin_playlistmms_index
 
 pumukitnewadmin_playlistmms_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:show
         filter: false
 
 pumukitnewadmin_playlistmms_info:
-    pattern: /{id}/info
+    path: /{id}/info
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:info
         filter: false
 
 pumukitnewadmin_playlistmms_up:
-    pattern: /{id}/up
+    path: /{id}/up
     methods: [GET, PUT, POST]
     defaults:
         filter: false
@@ -39,7 +39,7 @@ pumukitnewadmin_playlistmms_up:
             redirect: pumukitnewadmin_playlistmms_index
 
 pumukitnewadmin_playlistmms_down:
-    pattern: /{id}/down
+    path: /{id}/down
     methods: [GET, PUT, POST]
     defaults:
         filter: false
@@ -48,7 +48,7 @@ pumukitnewadmin_playlistmms_down:
             redirect: pumukitnewadmin_playlistmms_index
 
 pumukitnewadmin_playlistmms_top:
-    pattern: /{id}/top
+    path: /{id}/top
     methods: [GET, PUT, POST]
     defaults:
         filter: false
@@ -57,7 +57,7 @@ pumukitnewadmin_playlistmms_top:
             redirect: pumukitnewadmin_playlistmms_index
 
 pumukitnewadmin_playlistmms_bottom:
-    pattern: /{id}/bottom
+    path: /{id}/bottom
     methods: [GET, PUT, POST]
     defaults:
         filter: false
@@ -66,80 +66,80 @@ pumukitnewadmin_playlistmms_bottom:
             redirect: pumukitnewadmin_playlistmms_index
 
 pumukitnewadmin_playlistmms_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:list
         filter: false
 
 pumukitnewadmin_playlistmms_cut:
-    pattern: /cut
+    path: /cut
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:cut
 
 pumukitnewadmin_playlistmms_paste:
-    pattern: /paste
+    path: /paste
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:paste
 
 pumukitnewadmin_playlistmms_reorder:
-    pattern: /reorder
+    path: /reorder
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:reorder
 
 pumukitnewadmin_playlistmms_modal:
-    pattern: /{id}/modal
+    path: /{id}/modal
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:modal
 
 pumukitnewadmin_playlistmms_modal_mymmobjs:
-    pattern: /{id}/modal_mymmobjs
+    path: /{id}/modal_mymmobjs
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:modalMyMmobjs
 
 pumukitnewadmin_playlistmms_modal_search:
-    pattern: /modal_search
+    path: /modal_search
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:searchModal
 
 pumukitnewadmin_playlistmms_modal_url:
-    pattern: /modal_url
+    path: /modal_url
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:urlModal
 
 pumukitnewadmin_playlistmms_batch_add:
-    pattern: /{id}/add
+    path: /{id}/add
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:addBatch
 
 pumukitnewadmin_playlistmms_batch_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [GET, POST, DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:deleteBatch
 
 pumukitnewadmin_playlistmms_modal_add:
-    pattern: /modal
+    path: /modal
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:addModal
 
 pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
-    pattern: /
+    path: /
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:addBatchToSeveralPlaylist
 
 pumukitnewadmin_playlistmms_info:
-    pattern: /{id}/links
+    path: /{id}/links
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:info

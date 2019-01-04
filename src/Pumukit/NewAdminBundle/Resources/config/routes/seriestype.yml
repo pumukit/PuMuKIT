@@ -1,5 +1,5 @@
 pumukitnewadmin_seriestype_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:index
@@ -7,7 +7,7 @@ pumukitnewadmin_seriestype_index:
             filterable: true
 
 pumukitnewadmin_seriestype_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:create
@@ -15,7 +15,7 @@ pumukitnewadmin_seriestype_create:
             redirect: pumukitnewadmin_seriestype_index
 
 pumukitnewadmin_seriestype_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:update
@@ -23,7 +23,7 @@ pumukitnewadmin_seriestype_update:
             redirect: pumukitnewadmin_seriestype_index
 
 pumukitnewadmin_seriestype_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:batchDelete
@@ -31,7 +31,7 @@ pumukitnewadmin_seriestype_batch_delete:
             redirect: pumukitnewadmin_seriestype_index
 
 pumukitnewadmin_seriestype_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:delete
@@ -39,7 +39,7 @@ pumukitnewadmin_seriestype_delete:
             redirect: pumukitnewadmin_seriestype_index
 
 pumukitnewadmin_seriestype_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:copy
@@ -47,13 +47,13 @@ pumukitnewadmin_seriestype_copy:
             redirect: pumukitnewadmin_seriestype_index
 
 pumukitnewadmin_seriestype_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:show
 
 pumukitnewadmin_seriestype_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:SeriesType:list

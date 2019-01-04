@@ -1,5 +1,5 @@
 pumukitwizard_js:
-    pattern: /admin/wizard/pumukit2_wizard.js
+    path: /admin/wizard/pumukit2_wizard.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template

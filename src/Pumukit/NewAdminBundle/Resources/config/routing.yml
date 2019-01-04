@@ -9,7 +9,7 @@ pumukit_new_admin:
     prefix:   /admin
 
 pumukitnewadmin_js:
-    pattern: /admin/pumukit2.js
+    path: /admin/pumukit2.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -19,7 +19,7 @@ pumukitnewadmin_js:
         _format: js
 
 pumukitnewadmin_locale_js:
-    pattern: /admin/pumukit2.{_locale}.js
+    path: /admin/pumukit2.{_locale}.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -29,7 +29,7 @@ pumukitnewadmin_locale_js:
         _format: js
 
 pumukitnewadmin_css:
-    pattern: /admin/pumukit2.css
+    path: /admin/pumukit2.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -40,7 +40,7 @@ pumukitnewadmin_css:
 
 
 pumukit_jquery_ui_autocomplete_css:
-    pattern: /admin/jquery_ui_autocomplete.css
+    path: /admin/jquery_ui_autocomplete.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -82,7 +82,7 @@ pumukitnewadmin_mms:
     prefix: /admin/mms
 
 pumukitnewadmin_mms_shortener:
-    pattern: /admin/mm/{id}/
+    path: /admin/mm/{id}/
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:shortenerAction

@@ -1,5 +1,5 @@
 pumukit_security_cas_login:
-    pattern: /cas/login
+    path: /cas/login
 
 pumukit_security_cas_logout:
-    pattern: /cas/logout
+    path: /cas/logout

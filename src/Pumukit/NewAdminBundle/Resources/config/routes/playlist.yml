@@ -1,5 +1,5 @@
 pumukitnewadmin_playlist_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
 
@@ -8,13 +8,13 @@ pumukitnewadmin_playlist_index:
             filterable: true
 
 pumukitnewadmin_playlist_search:
-    pattern: /search
+    path: /search
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:search
 
 pumukitnewadmin_playlist_create:
-    pattern: /create
+    path: /create
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:create
@@ -22,13 +22,13 @@ pumukitnewadmin_playlist_create:
             redirect: pumukitnewadmin_playlist_index
 
 pumukitnewadmin_playlist_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, POST, DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:update
 
 pumukitnewadmin_playlist_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:batchDelete
@@ -36,7 +36,7 @@ pumukitnewadmin_playlist_batch_delete:
             redirect: pumukitnewadmin_playlist_list
 
 pumukitnewadmin_playlist_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:delete
@@ -44,13 +44,13 @@ pumukitnewadmin_playlist_delete:
             redirect: pumukitnewadmin_playlist_index
 
 pumukitnewadmin_playlist_generate_magic_url:
-    pattern: /{id}/generatemagic
+    path: /{id}/generatemagic
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:generateMagicUrl
 
 pumukitnewadmin_playlist_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:copy
@@ -58,19 +58,19 @@ pumukitnewadmin_playlist_copy:
             redirect: pumukitnewadmin_playlist_index
 
 pumukitnewadmin_playlist_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:list
 
 pumukitnewadmin_playlist_invert_announce:
-    pattern: /invertannounce
+    path: /invertannounce
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:invertAnnounce
 
 pumukitnewadmin_playlist_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Playlist:show

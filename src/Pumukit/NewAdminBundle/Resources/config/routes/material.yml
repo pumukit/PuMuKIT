@@ -1,41 +1,41 @@
 pumukitnewadmin_material_create:
-    pattern: /create/{id}
+    path: /create/{id}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:create
 
 pumukitnewadmin_material_update:
-    pattern: /{id}/update/{mmId}
+    path: /{id}/update/{mmId}
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:update
 
 pumukitnewadmin_material_upload:
-    pattern: /{id}/upload
+    path: /{id}/upload
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:upload
 
 pumukitnewadmin_material_delete:
-    pattern: /{id}/delete/{mmId}
+    path: /{id}/delete/{mmId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Material:delete
 
 pumukitnewadmin_material_up:
-    pattern: /{id}/up/{mmId}
+    path: /{id}/up/{mmId}
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:up
 
 pumukitnewadmin_material_down:
-    pattern: /{id}/down/{mmId}
+    path: /{id}/down/{mmId}
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:down
 
 pumukitnewadmin_material_list:
-    pattern: /{id}/list
+    path: /{id}/list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Material:list
