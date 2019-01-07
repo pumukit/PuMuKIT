@@ -2,7 +2,7 @@
 
 namespace Pumukit\OpencastBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 

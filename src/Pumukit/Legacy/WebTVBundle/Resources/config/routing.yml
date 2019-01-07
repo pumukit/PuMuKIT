@@ -9,7 +9,7 @@ pumukit_web_tv:
     prefix:   /
 
 pumukit_webtv_default_css:
-    pattern: /webtv/css/webtv.css
+    path: /webtv/css/webtv.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -17,4 +17,4 @@ pumukit_webtv_default_css:
         _format: css
 
 homepage:
-    pattern: /
+    path: /

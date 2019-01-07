@@ -386,9 +386,13 @@ class UNESCOController extends Controller implements NewAdminController
         //$multimediaObject = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $multimediaObject);
-        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $multimediaObject, $options);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, array('translator' => $translator, 'locale' => $locale));
+        $options = array(
+            'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
+            'translator' => $translator,
+            'locale' => $locale,
+        );
+        $formPub = $this->createForm(MultimediaObjectPubType::class, $multimediaObject, $options);
 
         $session = $this->get('session');
         $session->set('admin/unesco/id', $multimediaObject->getId());
@@ -475,8 +479,6 @@ class UNESCOController extends Controller implements NewAdminController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-
-        //$form = $this->createForm(new UNESCOBasicType($translator, $locale));
 
         $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
 

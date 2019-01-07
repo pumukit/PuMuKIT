@@ -48,13 +48,13 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmTemplate);
+        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmTemplate, array('translator' => $translator, 'locale' => $locale));
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-            $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $formMeta->handleRequest($request)->isValid()) {
             $this->update($mmTemplate);
 
             return new JsonResponse(array('mmtemplate' => 'updatemeta'));

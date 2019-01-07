@@ -2,7 +2,7 @@
 
 namespace Pumukit\LDAPBundle\Services;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class LDAPService
 {

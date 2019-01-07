@@ -109,7 +109,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     public function deleteAction(Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -128,7 +128,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function upAction(Request $request)
     {
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:MultimediaObject');
@@ -151,7 +151,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
      */
     public function downAction(Request $request)
     {
-        $picId = $this->getRequest()->get('id');
+        $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
               ->getRepository('PumukitSchemaBundle:MultimediaObject');

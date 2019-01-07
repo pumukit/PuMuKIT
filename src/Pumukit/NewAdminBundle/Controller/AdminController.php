@@ -39,7 +39,7 @@ class AdminController extends ResourceController implements NewAdminController
         $resourceName = $this->getResourceName();
 
         $resource = $this->createNew();
-        $form = $this->getForm($resource);
+        $form = $this->getForm($resource, $request->getLocale());
 
         if ($form->handleRequest($request)->isValid()) {
             try {
@@ -79,9 +79,9 @@ class AdminController extends ResourceController implements NewAdminController
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
-        $form = $this->getForm($resource);
+        $form = $this->getForm($resource, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
             try {
                 $dm->persist($resource);
                 $dm->flush();
@@ -177,7 +177,7 @@ class AdminController extends ResourceController implements NewAdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -263,16 +263,20 @@ class AdminController extends ResourceController implements NewAdminController
 
     /**
      * Overwrite to get form with translations.
+     *
+     * @param string|null $resource
+     * @param string      $locale
+     *
+     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
-    public function getForm($resource = null)
+    public function getForm($resource = null, $locale = 'en')
     {
         $resourceName = $this->getResourceName();
         $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
 
         $translator = $this->get('translator');
-        $locale = $this->getRequest()->getLocale();
 
-        $form = $this->createForm(new $formType($translator, $locale), $resource);
+        $form = $this->createForm($formType, $resource, array('translator' => $translator, 'locale' => $locale));
 
         return $form;
     }

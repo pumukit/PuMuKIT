@@ -50,7 +50,8 @@ class MultimediaObjectController extends Controller
         $form = $this->createForm(new MultimediaObjectType($translator, $locale), $multimediaObject);
 
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $multimediaObject = $this->get('pumukitschema.multimedia_object')->updateMultimediaObject($multimediaObject);
                 } catch (\Exception $e) {

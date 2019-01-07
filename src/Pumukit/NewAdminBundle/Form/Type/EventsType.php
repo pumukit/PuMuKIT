@@ -6,25 +6,22 @@ use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventsType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
             ->add('i18n_name', TextI18nType::class,
                   array(
@@ -50,7 +47,7 @@ class EventsType extends AbstractType
                   array(
                       'required' => false,
                       'label' => $this->translator->trans('Announce', array(), null, $this->locale), ))
-            ->add('create_serial', 'hidden',
+            ->add('create_serial', HiddenType::class,
                   array(
                       'required' => false,
                       'label' => $this->translator->trans('Create series', array(), null, $this->locale), ))
@@ -66,21 +63,24 @@ class EventsType extends AbstractType
                   array(
                       'required' => false,
                       'label' => $this->translator->trans('Not yet held event message', array(), null, $this->locale), 'attr' => array('class' => 'form-control', 'style' => 'resize:vertical;'), ))
-            ->add('enable_chat', 'checkbox',
+            ->add('enable_chat', CheckboxType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Enable Chat', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Enable Chat', array(), null, $this->locale), ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\EmbeddedEvent',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_live_event';
     }

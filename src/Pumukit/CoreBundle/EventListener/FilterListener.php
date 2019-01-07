@@ -4,7 +4,7 @@ namespace Pumukit\CoreBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -21,7 +21,7 @@ class FilterListener
     private $securityContext;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, PersonService $personService, SecurityContext $securityContext, $addUserAsPerson = true)
+    public function __construct(DocumentManager $documentManager, PersonService $personService, TokenStorage $securityContext, $addUserAsPerson = true)
     {
         $this->dm = $documentManager;
         $this->personService = $personService;

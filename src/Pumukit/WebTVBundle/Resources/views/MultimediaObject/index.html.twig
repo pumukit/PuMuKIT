@@ -35,14 +35,14 @@
             {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
         {% endif %}
 
-        {% render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) %}
+        {{ render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) }}
     </div>
     <div class="col-lg-4 col-md-5">
         <span class="hidden-sm hidden-xs"><br/></span>
         {% if not multimediaObject.getSeries().isHide() %}
-            {% render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined ? magic_url : false})) %}
+            {{ render(controller('PumukitWebTVBundle:MultimediaObject:series', {'multimediaObject': multimediaObject, 'magicUrl': magic_url is defined ? magic_url : false})) }}
         {% endif %}
-        {% render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) %}
+        {{ render(controller('PumukitWebTVBundle:MultimediaObject:related', {'multimediaObject': multimediaObject})) }}
     </div>
     {% if cinema_mode is defined and cinema_mode %}
         <script type="application/javascript">$("#paellaiframe").detach().prependTo(".main-content");</script>

@@ -177,9 +177,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $resource = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, array('translator' => $translator, 'locale' => $locale));
+        $options = array(
+            'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
+            'translator' => $translator,
+            'locale' => $locale,
+        );
+        $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
@@ -298,9 +302,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $this->get('session')->set('admin/mms/id', $resource->getId());
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, array('translator' => $translator, 'locale' => $locale));
+        $options = array(
+            'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
+            'translator' => $translator,
+            'locale' => $locale,
+        );
+        $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -308,16 +316,18 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
-        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-            $formMeta->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            $this->update($resource);
+        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
+            $formMeta->handleRequest($request);
+            if ($formMeta->isSubmitted() && $formMeta->isValid()) {
+                $this->update($resource);
 
-            $this->dispatchUpdate($resource);
-            $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
+                $this->dispatchUpdate($resource);
+                $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource->getSeries());
 
-            $referer = $request->headers->get('referer');
+                $referer = $request->headers->get('referer');
 
-            return $this->renderList($resource, $referer);
+                return $this->renderList($resource, $referer);
+            }
         }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
@@ -360,9 +370,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(new MultimediaObjectMetaType($translator, $locale), $resource);
-        $options = array('not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS));
-        $formPub = $this->createForm(new MultimediaObjectPubType($translator, $locale), $resource, $options);
+        $formMeta = $this->createForm(MultimediaObjectMetaType::class, $resource, array('translator' => $translator, 'locale' => $locale));
+        $options = array(
+            'not_granted_change_status' => !$this->isGranted(Permission::CHANGE_MMOBJECT_STATUS),
+            'translator' => $translator,
+            'locale' => $locale,
+        );
+        $formPub = $this->createForm(MultimediaObjectPubType::class, $resource, $options);
 
         $pubChannelsTags = $factoryService->getTagsByCod('PUBCHANNELS', true);
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
@@ -370,33 +384,36 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
 
         $method = $request->getMethod();
-        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-            $formPub->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            if (!$notChangePubChannel) {
-                $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
-            }
+        if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
+            $formPub->handleRequest($request);
 
-            $event = new PublicationSubmitEvent($resource, $request);
-            $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
+            if ($formPub->isSubmitted() && $formPub->isValid()) {
+                if (!$notChangePubChannel) {
+                    $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
+                }
 
-            $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
+                $event = new PublicationSubmitEvent($resource, $request);
+                $this->get('event_dispatcher')->dispatch(BackofficeEvents::PUBLICATION_SUBMIT, $event);
 
-            $this->update($resource);
+                $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
 
-            $this->dispatchUpdate($resource);
-            $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+                $this->update($resource);
 
-            $mms = $this->getListMultimediaObjects($series);
-            if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
-                return $this->render(
-                    'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
-                    array(
-                        'series' => $series,
-                        'mms' => $mms,
-                    )
-                );
-            } else {
-                return $this->redirectToRoute('pumukitnewadmin_mms_listall', array(), 301);
+                $this->dispatchUpdate($resource);
+                $this->get('pumukitschema.sorted_multimedia_object')->reorder($series);
+
+                $mms = $this->getListMultimediaObjects($series);
+                if (false === strpos($request->server->get('HTTP_REFERER'), 'mmslist')) {
+                    return $this->render(
+                        'PumukitNewAdminBundle:MultimediaObject:list.html.twig',
+                        array(
+                            'series' => $series,
+                            'mms' => $mms,
+                        )
+                    );
+                } else {
+                    return $this->redirectToRoute('pumukitnewadmin_mms_listall', array(), 301);
+                }
             }
         }
 
@@ -416,20 +433,20 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $allGroups = $this->getAllGroups();
 
         return $this->render('PumukitNewAdminBundle:MultimediaObject:edit.html.twig',
-                             array(
-                                 'mm' => $resource,
-                                 'form_meta' => $formMeta->createView(),
-                                 'form_pub' => $formPub->createView(),
-                                 'series' => $series,
-                                 'roles' => $roles,
-                                 'personal_scope_role' => $personalScopeRole,
-                                 'personal_scope_role_code' => $personalScopeRoleCode,
-                                 'pub_channels' => $pubChannelsTags,
-                                 'pub_decisions' => $pubDecisionsTags,
-                                 'parent_tags' => $parentTags,
-                                 'not_change_pub_channel' => $notChangePubChannel,
-                                 'groups' => $allGroups,
-                             )
+            array(
+                'mm' => $resource,
+                'form_meta' => $formMeta->createView(),
+                'form_pub' => $formPub->createView(),
+                'series' => $series,
+                'roles' => $roles,
+                'personal_scope_role' => $personalScopeRole,
+                'personal_scope_role_code' => $personalScopeRoleCode,
+                'pub_channels' => $pubChannelsTags,
+                'pub_decisions' => $pubDecisionsTags,
+                'parent_tags' => $parentTags,
+                'not_change_pub_channel' => $notChangePubChannel,
+                'groups' => $allGroups,
+            )
         );
     }
 
@@ -684,7 +701,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -741,7 +758,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function invertAnnounceAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -799,7 +816,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      */
     public function cutAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }

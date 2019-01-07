@@ -1,5 +1,5 @@
 pumukitnewadmin_live_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Live:index
@@ -7,7 +7,7 @@ pumukitnewadmin_live_index:
             filterable: true
 
 pumukitnewadmin_live_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Live:create
@@ -15,7 +15,7 @@ pumukitnewadmin_live_create:
             redirect: pumukitnewadmin_live_index
 
 pumukitnewadmin_live_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Live:update
@@ -23,7 +23,7 @@ pumukitnewadmin_live_update:
             redirect: pumukitnewadmin_live_index
 
 pumukitnewadmin_live_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Live:batchDelete
@@ -31,7 +31,7 @@ pumukitnewadmin_live_batch_delete:
             redirect: pumukitnewadmin_live_index
 
 pumukitnewadmin_live_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Live:delete
@@ -39,7 +39,7 @@ pumukitnewadmin_live_delete:
             redirect: pumukitnewadmin_live_index
 
 pumukitnewadmin_live_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Live:copy
@@ -47,13 +47,13 @@ pumukitnewadmin_live_copy:
             redirect: pumukitnewadmin_live_index
 
 pumukitnewadmin_live_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Live:show
 
 pumukitnewadmin_live_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Live:list

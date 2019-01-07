@@ -2,7 +2,7 @@
 
 namespace Pumukit\OpencastBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Pumukit\OpencastBundle\Services\ClientService;
 use Pumukit\SchemaBundle\Event\UserEvent;
 
@@ -28,7 +28,7 @@ class UserListener
                 if (!$output) {
                     throw new \Exception('Error on creating an User on the Opencast Server');
                 }
-                $this->logger->addDebug('Created User "'.$user->getUsername().'" on the Opencast Server');
+                $this->logger->debug('Created User "'.$user->getUsername().'" on the Opencast Server');
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage(), $e->getTrace());
             }
@@ -44,7 +44,7 @@ class UserListener
                 if (!$output) {
                     throw new \Exception('Error on updating an User on the Opencast Server');
                 }
-                $this->logger->addDebug('Updated User "'.$user->getUsername().'" on the Opencast Server');
+                $this->logger->debug('Updated User "'.$user->getUsername().'" on the Opencast Server');
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage(), $e->getTrace());
             }
@@ -60,7 +60,7 @@ class UserListener
                 if (!$output) {
                     throw new \Exception('Error on deleting an User on the Opencast Server');
                 }
-                $this->logger->addDebug('Deleted User "'.$user->getUsername().'" on the Opencast Server');
+                $this->logger->debug('Deleted User "'.$user->getUsername().'" on the Opencast Server');
             } catch (\Exception $e) {
                 $this->logger->error($e->getMessage(), $e->getTrace());
             }

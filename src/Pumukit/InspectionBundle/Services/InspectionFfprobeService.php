@@ -4,7 +4,7 @@ namespace Pumukit\InspectionBundle\Services;
 
 use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Component\Process\Process;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class InspectionFfprobeService implements InspectionServiceInterface
 {

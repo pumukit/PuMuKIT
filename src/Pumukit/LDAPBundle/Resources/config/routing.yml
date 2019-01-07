@@ -4,7 +4,7 @@ pumukit_ldap_bundle:
     prefix:   /admin/ldap
 
 pumukit_ldap_js:
-    pattern: /ldap/ldap.js
+    path: /ldap/ldap.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template

@@ -81,11 +81,11 @@ class PlaylistController extends CollectionController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new PlaylistType($translator, $locale), $series);
+        $form = $this->createForm(PlaylistType::class, $series, array('translator' => $translator, 'locale' => $locale));
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-            $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $form->handleRequest($request)->isValid()) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $dm->persist($series);
             $dm->flush();
@@ -148,7 +148,7 @@ class PlaylistController extends CollectionController
      */
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
         }

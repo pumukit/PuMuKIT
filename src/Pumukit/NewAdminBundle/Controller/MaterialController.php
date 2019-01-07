@@ -25,7 +25,7 @@ class MaterialController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(new MaterialType($translator, $locale), $material);
+        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
 
         return array(
             'material' => $material,
@@ -42,9 +42,10 @@ class MaterialController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(new MaterialType($translator, $locale), $material);
+        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.material')->updateMaterialInMultimediaObject($multimediaObject, $material);
             } catch (\Exception $e) {
@@ -100,7 +101,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
     }
@@ -110,7 +111,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -122,7 +123,7 @@ class MaterialController extends Controller implements NewAdminController
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.material')->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'down');
 

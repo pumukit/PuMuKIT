@@ -7,11 +7,11 @@ pumukit_jw_player:
     prefix:   /
 
 pumukit_base_player:
-    resource: @PumukitBasePlayerBundle/Resources/config/routing.yml
+    resource: "@PumukitBasePlayerBundle/Resources/config/routing.yml"
     prefix:   /
 
 pumukit_core:
-    resource: @PumukitCoreBundle/Resources/config/routing.yml
+    resource: "@PumukitCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
 pumukit_stats:
@@ -38,11 +38,11 @@ pumukit_live:
     prefix:   /
 
 pumukit_web_tv_file:
-    resource: @PumukitWebTVBundle/Resources/config/routing.yml
+    resource: "@PumukitWebTVBundle/Resources/config/routing.yml"
     prefix:   /
 
 pumukitnewadmin:
-    resource: @PumukitNewAdminBundle/Resources/config/routing.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user_security:

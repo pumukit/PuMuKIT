@@ -33,7 +33,7 @@ class TrackController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $track = new Track();
-        $form = $this->createForm(new TrackType($translator, $locale), $track);
+        $form = $this->createForm(TrackType::class, $track, array('translator' => $translator, 'locale' => $locale));
 
         $masterProfiles = $this->get('pumukitencoder.profile')->getMasterProfiles(true);
 
@@ -91,11 +91,12 @@ class TrackController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(new TrackUpdateType($translator, $locale), $track);
+        $form = $this->createForm(TrackUpdateType::class, $track, array('translator' => $translator, 'locale' => $locale));
 
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.track')->updateTrackInMultimediaObject($multimediaObject, $track);
             } catch (\Exception $e) {

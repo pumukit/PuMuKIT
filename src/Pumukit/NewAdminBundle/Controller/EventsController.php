@@ -520,7 +520,7 @@ class EventsController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new EventsType($translator, $locale), $multimediaObject->getEmbeddedEvent());
+        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), array('translator' => $translator, 'locale' => $locale));
 
         $people = array();
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
@@ -638,7 +638,7 @@ class EventsController extends Controller implements NewAdminController
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
 
-        $form = $this->createForm(new SeriesType($translator, $locale, $disablePudenew), $series);
+        $form = $this->createForm(SeriesType::class, $series, array('translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew));
 
         $exclude_fields = array();
         $show_later_fields = array(
@@ -682,7 +682,7 @@ class EventsController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new EmbeddedEventSessionType($translator, $locale));
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -831,7 +831,7 @@ class EventsController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new EmbeddedEventSessionType($translator, $locale));
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, array('translator' => $translator, 'locale' => $locale));
 
         $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
             new \MongoId($multimediaObject)

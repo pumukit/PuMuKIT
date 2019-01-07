@@ -25,9 +25,10 @@ class LinkController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(new LinkType($translator, $locale), $link);
+        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.link')->addLinkToMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
@@ -57,10 +58,11 @@ class LinkController extends Controller implements NewAdminController
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $link = $multimediaObject->getLinkById($this->getRequest()->get('id'));
-        $form = $this->createForm(new LinkType($translator, $locale), $link);
+        $link = $multimediaObject->getLinkById($request->get('id'));
+        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $multimediaObject = $this->get('pumukitschema.link')->updateLinkInMultimediaObject($multimediaObject, $link);
             } catch (\Exception $e) {
@@ -88,7 +90,7 @@ class LinkController extends Controller implements NewAdminController
      */
     public function deleteAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->removeLinkFromMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.link')->removeLinkFromMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -104,7 +106,7 @@ class LinkController extends Controller implements NewAdminController
      */
     public function upAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->upLinkInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.link')->upLinkInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -120,7 +122,7 @@ class LinkController extends Controller implements NewAdminController
      */
     public function downAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->get('pumukitschema.link')->downLinkInMultimediaObject($multimediaObject, $this->getRequest()->get('id'));
+        $multimediaObject = $this->get('pumukitschema.link')->downLinkInMultimediaObject($multimediaObject, $request->get('id'));
 
         $this->addFlash('success', 'delete');
 

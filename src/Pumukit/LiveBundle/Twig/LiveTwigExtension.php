@@ -21,11 +21,6 @@ class LiveTwigExtension extends \Twig_Extension
         $this->eventsService = $eventsService;
     }
 
-    public function getName()
-    {
-        return 'pumukit_live_twig_extension';
-    }
-
     public function getFunctions()
     {
         return array(

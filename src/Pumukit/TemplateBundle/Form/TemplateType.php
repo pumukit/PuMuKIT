@@ -41,7 +41,7 @@ class TemplateType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukittemplate_template';
     }

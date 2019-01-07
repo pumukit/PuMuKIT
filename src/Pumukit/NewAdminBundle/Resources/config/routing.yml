@@ -9,7 +9,7 @@ pumukit_new_admin:
     prefix:   /admin
 
 pumukitnewadmin_js:
-    pattern: /admin/pumukit2.js
+    path: /admin/pumukit2.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -19,7 +19,7 @@ pumukitnewadmin_js:
         _format: js
 
 pumukitnewadmin_locale_js:
-    pattern: /admin/pumukit2.{_locale}.js
+    path: /admin/pumukit2.{_locale}.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -29,7 +29,7 @@ pumukitnewadmin_locale_js:
         _format: js
 
 pumukitnewadmin_css:
-    pattern: /admin/pumukit2.css
+    path: /admin/pumukit2.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -40,7 +40,7 @@ pumukitnewadmin_css:
 
 
 pumukit_jquery_ui_autocomplete_css:
-    pattern: /admin/jquery_ui_autocomplete.css
+    path: /admin/jquery_ui_autocomplete.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -50,95 +50,95 @@ pumukit_jquery_ui_autocomplete_css:
         _format: css
 
 pumukitnewadmin_user:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/user.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/user.yml"
     prefix: /admin/user
 
 pumukitnewadmin_person:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/person.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/person.yml"
     prefix: /admin/person
 
 pumukitnewadmin_role:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/role.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/role.yml"
     prefix: /admin/role
 
 pumukitnewadmin_series:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/series.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/series.yml"
     prefix: /admin/series
 
 pumukitnewadmin_playlist:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/playlist.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/playlist.yml"
     prefix: /admin/playlist
 
 pumukitnewadmin_collection:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/collection.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/collection.yml"
     prefix: /admin/collection
 
 pumukitnewadmin_mmtemplate:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/mmtemplate.yml"
     prefix: /admin/mmtemplate
 
 pumukitnewadmin_mms:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/mms.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/mms.yml"
     prefix: /admin/mms
 
 pumukitnewadmin_mms_shortener:
-    pattern: /admin/mm/{id}/
+    path: /admin/mm/{id}/
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:shortenerAction
 
 pumukitnewadmin_playlistmms:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml"
     prefix: /admin/playlist/mms
 
 pumukitnewadmin_playlistpic:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/playlistpic.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/playlistpic.yml"
     prefix: /admin/playlistpic
 
 pumukitnewadmin_seriespic:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/seriespic.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/seriespic.yml"
     prefix: /admin/seriespic
 
 pumukitnewadmin_mmspic:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/mmspic.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/mmspic.yml"
     prefix: /admin/mmspic
 
 pumukitnewadmin_seriestype:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/seriestype.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/seriestype.yml"
     prefix: /admin/seriestype
 
 pumukitnewadmin_tag:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/tag.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/tag.yml"
     prefix: /admin/tag
 
 pumukitnewadmin_link:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/link.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/link.yml"
     prefix: /admin/link
 
 pumukitnewadmin_material:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/material.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/material.yml"
     prefix: /admin/material
 
 pumukitnewadmin_track:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/track.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/track.yml"
     prefix: /admin/track
 
 pumukitnewadmin_live:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/live.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/live.yml"
     prefix: /admin/live
 
 pumukitnewadmin_event:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/legacyevent.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/legacyevent.yml"
     prefix: /admin/event
 
 pumukitnewadmin_eventpic:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/legacyeventpic.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/legacyeventpic.yml"
     prefix: /admin/eventpic
 
 pumukitnewadmin_permission_profile:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/permissionprofile.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/permissionprofile.yml"
     prefix: /admin/permissionprofile
 
 pumukitnewadmin_group:
-    resource: @PumukitNewAdminBundle/Resources/config/routes/group.yml
+    resource: "@PumukitNewAdminBundle/Resources/config/routes/group.yml"
     prefix: /admin/group

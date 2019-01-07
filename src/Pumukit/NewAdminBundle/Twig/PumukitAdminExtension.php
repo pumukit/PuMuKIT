@@ -43,14 +43,6 @@ class PumukitAdminExtension extends \Twig_Extension
     }
 
     /**
-     * Get name.
-     */
-    public function getName()
-    {
-        return 'pumukitadmin_extension';
-    }
-
-    /**
      * Get filters.
      */
     public function getFilters()

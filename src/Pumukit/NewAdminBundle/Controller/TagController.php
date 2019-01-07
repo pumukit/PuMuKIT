@@ -73,9 +73,10 @@ class TagController extends Controller implements NewAdminController
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new TagType($translator, $locale), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $this->get('pumukitschema.tag')->updateTag($tag);
             } catch (\Exception $e) {
@@ -102,9 +103,10 @@ class TagController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new TagType($translator, $locale), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
 
-        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->bind($request)->isValid()) {
+        $form->handleRequest($request);
+        if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
             try {
                 $dm->persist($tag);
                 $dm->flush();
@@ -148,7 +150,7 @@ class TagController extends Controller implements NewAdminController
         $dm = $this->get('doctrine_mongodb')->getManager();
         $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
 
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);

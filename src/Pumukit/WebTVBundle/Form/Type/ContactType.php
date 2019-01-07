@@ -40,7 +40,7 @@ class ContactType extends AbstractType
             ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukit_multimedia_object_contact';
     }

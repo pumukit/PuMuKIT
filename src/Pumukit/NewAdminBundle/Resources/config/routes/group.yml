@@ -1,5 +1,5 @@
 pumukitnewadmin_group_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Group:index
@@ -7,7 +7,7 @@ pumukitnewadmin_group_index:
             filterable: true
 
 pumukitnewadmin_group_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Group:create
@@ -15,7 +15,7 @@ pumukitnewadmin_group_create:
             redirect: pumukitnewadmin_group_index
 
 pumukitnewadmin_group_update:
-    pattern: /{id}/edit
+    path: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Group:update
@@ -23,7 +23,7 @@ pumukitnewadmin_group_update:
             redirect: pumukitnewadmin_group_index
 
 pumukitnewadmin_group_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:batchDelete
@@ -31,7 +31,7 @@ pumukitnewadmin_group_batch_delete:
             redirect: pumukitnewadmin_group_index
 
 pumukitnewadmin_group_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:delete
@@ -39,7 +39,7 @@ pumukitnewadmin_group_delete:
             redirect: pumukitnewadmin_group_index
 
 pumukitnewadmin_group_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Group:list
@@ -47,55 +47,55 @@ pumukitnewadmin_group_list:
             filterable: true
 
 pumukitnewadmin_group_info:
-    pattern: /{id}/info
+    path: /{id}/info
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Group:info
 
 pumukitnewadmin_group_data_resources:
-    pattern: /{id}/dataresources
+    path: /{id}/dataresources
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Group:dataResources
 
 pumukitnewadmin_group_delete_user:
-    pattern: /{id}/deleteuser/{userId}
+    path: /{id}/deleteuser/{userId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteUser
 
 pumukitnewadmin_group_delete_multimediaobject:
-    pattern: /{id}/deletemultimediaobject/{mmId}
+    path: /{id}/deletemultimediaobject/{mmId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteMultimediaObject
 
 pumukitnewadmin_group_delete_embeddedbroadcast:
-    pattern: /{id}/deleteembeddedbroadcast/{mmId}
+    path: /{id}/deleteembeddedbroadcast/{mmId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteEmbeddedBroadcast
 
 pumukitnewadmin_group_can_be_deleted:
-    pattern: /{id}/canbedeleted
+    path: /{id}/canbedeleted
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Group:canBeDeleted
 
 pumukitnewadmin_group_delete_all_users:
-    pattern: /{id}/deleteallusers
+    path: /{id}/deleteallusers
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteAllUsers
 
 pumukitnewadmin_group_delete_all_multimediaobjects:
-    pattern: /{id}/deleteallmultimediaobjects
+    path: /{id}/deleteallmultimediaobjects
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteAllMultimediaObjects
 
 pumukitnewadmin_group_delete_all_embeddedbroadcasts:
-    pattern: /{id}/deleteallembeddedbroadcasts
+    path: /{id}/deleteallembeddedbroadcasts
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Group:deleteAllEmbeddedBroadcasts

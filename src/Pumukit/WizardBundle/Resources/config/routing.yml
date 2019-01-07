@@ -1,5 +1,5 @@
 pumukitwizard_js:
-    pattern: /admin/wizard/pumukit2_wizard.js
+    path: /admin/wizard/pumukit2_wizard.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -9,9 +9,9 @@ pumukitwizard_js:
         _format: js
 
 pumukitwizard_default:
-    resource: @PumukitWizardBundle/Resources/config/routes/default.yml
+    resource: "@PumukitWizardBundle/Resources/config/routes/default.yml"
     prefix: /admin/wizard
 
 pumukitwizard_simple:
-    resource: @PumukitWizardBundle/Resources/config/routes/simple.yml
+    resource: "@PumukitWizardBundle/Resources/config/routes/simple.yml"
     prefix: /admin/simplewizard

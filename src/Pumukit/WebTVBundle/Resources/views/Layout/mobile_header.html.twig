@@ -9,7 +9,7 @@
                     {% include 'PumukitWebTVBundle:Index:loginbox.html.twig' %}
                 </span>
                 <span class="hidden-xs">
-                    {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+                    {{ render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) }}
                 </span>
 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
@@ -30,7 +30,7 @@
     </div>
     <div class="row">
         <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
-            {% render(controller('PumukitWebTVBundle:Widget:menu')) %}
+            {{ render(controller('PumukitWebTVBundle:Widget:menu')) }}
         </div><!--END navbar-collapse-->
     </div>
 </nav>

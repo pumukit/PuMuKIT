@@ -56,7 +56,7 @@ class UserController extends AdminController implements NewAdminController
         $userService = $this->get('pumukitschema.user');
 
         $user = $userService->instantiate();
-        $form = $this->getForm($user);
+        $form = $this->getForm($user, $request->getLocale());
 
         if ($form->handleRequest($request)->isValid()) {
             try {
@@ -96,27 +96,30 @@ class UserController extends AdminController implements NewAdminController
         $user = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new UserUpdateType($translator, $locale), $user);
+        $form = $this->createForm(UserUpdateType::class, $user, array('translator' => $translator, 'locale' => $locale));
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            try {
-                if (!$user->isLocal()) {
-                    $user = $this->get('pumukitschema.user')->update($user, true, false);
-                } else {
-                    $response = $this->isAllowedToBeUpdated($user);
-                    if ($response instanceof Response) {
-                        return $response;
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH'))) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    if (!$user->isLocal()) {
+                        $user = $this->get('pumukitschema.user')->update($user, true, false);
+                    } else {
+                        $response = $this->isAllowedToBeUpdated($user);
+                        if ($response instanceof Response) {
+                            return $response;
+                        }
+                        // false to not flush
+                        $userManager->updateUser($user, false);
+                        // To update aditional fields added
+                        $user = $this->get('pumukitschema.user')->update($user);
                     }
-                    // false to not flush
-                    $userManager->updateUser($user, false);
-                    // To update aditional fields added
-                    $user = $this->get('pumukitschema.user')->update($user);
+                } catch (\Exception $e) {
+                    throw $e;
                 }
-            } catch (\Exception $e) {
-                throw $e;
-            }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_user_list'));
+            }
         }
 
         return $this->render(

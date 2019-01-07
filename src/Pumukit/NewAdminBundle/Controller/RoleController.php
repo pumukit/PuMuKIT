@@ -30,10 +30,11 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new RoleType($translator, $locale), $role);
+        $form = $this->createForm(RoleType::class, $role, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $personService->updateRole($role);
                 } catch (\Exception $e) {
@@ -109,7 +110,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);

@@ -3,25 +3,22 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
             ->add(
                 'metatag',
@@ -125,7 +122,7 @@ class TagType extends AbstractType
                             $formOptions
                         );
                     } catch (\InvalidArgumentException $e) {
-                        $event->getForm()->add($auxField[0], 'text', $formOptions);
+                        $event->getForm()->add($auxField[0], TextType::class, $formOptions);
                     }
                 }
             }
@@ -146,16 +143,19 @@ class TagType extends AbstractType
         );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
                 'data_class' => 'Pumukit\SchemaBundle\Document\Tag',
             )
         );
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_tag';
     }

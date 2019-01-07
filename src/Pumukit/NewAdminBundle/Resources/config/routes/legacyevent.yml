@@ -1,5 +1,5 @@
 pumukitnewadmin_event_index:
-    pattern: /
+    path: /
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:index
@@ -7,7 +7,7 @@ pumukitnewadmin_event_index:
             filterable: true
 
 pumukitnewadmin_event_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:create
@@ -15,7 +15,7 @@ pumukitnewadmin_event_create:
             redirect: pumukitnewadmin_event_index
 
 pumukitnewadmin_event_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:update
@@ -23,7 +23,7 @@ pumukitnewadmin_event_update:
             redirect: pumukitnewadmin_event_index
 
 pumukitnewadmin_event_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:batchDelete
@@ -31,7 +31,7 @@ pumukitnewadmin_event_batch_delete:
             redirect: pumukitnewadmin_event_index
 
 pumukitnewadmin_event_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:delete
@@ -39,13 +39,13 @@ pumukitnewadmin_event_delete:
             redirect: pumukitnewadmin_event_index
 
 pumukitnewadmin_event_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:show
 
 pumukitnewadmin_event_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:list
@@ -53,7 +53,7 @@ pumukitnewadmin_event_list:
             filterable: true
 
 pumukitnewadmin_event_updatesession:
-    pattern: /updatesession
+    path: /updatesession
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:LegacyEvent:updateSession

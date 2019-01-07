@@ -55,10 +55,11 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $person = new Person();
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $person = $personService->savePerson($person);
                 } catch (\Exception $e) {
@@ -96,10 +97,11 @@ class PersonController extends AdminController implements NewAdminController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $person = $personService->updatePerson($person);
                 } catch (\Exception $e) {
@@ -227,12 +229,13 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $personService = $this->get('pumukitschema.person');
             $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
                 } catch (\Exception $e) {
@@ -298,10 +301,11 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
-            if ($form->bind($request)->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 try {
                     $person = $personService->updatePerson($person);
                 } catch (\Exception $e) {
@@ -576,7 +580,7 @@ class PersonController extends AdminController implements NewAdminController
      */
     public function batchDeleteAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);

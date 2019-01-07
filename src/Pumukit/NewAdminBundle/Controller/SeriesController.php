@@ -149,11 +149,11 @@ class SeriesController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
-        $form = $this->createForm(new SeriesType($translator, $locale, $disablePudenew), $resource);
+        $form = $this->createForm(SeriesType::class, $resource, array('translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew));
 
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
-            $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            $form->handleRequest($request)->isValid()) {
             $this->update($resource);
             $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($resource);
 
@@ -191,7 +191,7 @@ class SeriesController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $formMeta = $this->createForm(new MultimediaObjectTemplateMetaType($translator, $locale), $mmtemplate);
+        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmtemplate, array('translator' => $translator, 'locale' => $locale));
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
@@ -289,7 +289,7 @@ class SeriesController extends AdminController implements NewAdminController
     {
         $factoryService = $this->get('pumukitschema.factory');
 
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);
@@ -340,7 +340,7 @@ class SeriesController extends AdminController implements NewAdminController
      */
     public function invertAnnounceAction(Request $request)
     {
-        $ids = $this->getRequest()->get('ids');
+        $ids = $request->get('ids');
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true);

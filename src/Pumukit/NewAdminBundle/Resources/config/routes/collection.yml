@@ -1,5 +1,5 @@
 # pumukitnewadmin_collection_show:
-#     pattern: /{id}/show
+#     path: /{id}/show
 #     methods: [GET]
 #     defaults:
 #         _controller: PumukitNewAdminBundle:Collection:showAction

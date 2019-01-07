@@ -3,62 +3,63 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
 use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
-use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class LiveType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
-            ->add('i18n_name', 'texti18n',
+            ->add('i18n_name', TextI18nType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_description', 'textareai18n',
+            ->add('i18n_description', TextareaI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('url', 'url',
+            ->add('url', UrlType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
                       'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
-            ->add('source_name', 'text',
+            ->add('source_name', TextType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('STREAM', array(), null, $this->locale)),
                       'label' => $this->translator->trans('STREAM', array(), null, $this->locale), ))
-            ->add('passwd', 'text',
+            ->add('passwd', TextType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
-            ->add('broadcasting', 'choice',
+            ->add('broadcasting', ChoiceType::class,
                   array(
-                      'choices' => array('0' => 'On hold', '1' => 'Live Broadcasting'),
+                      'choices' => array('On hold' => '0', 'Live Broadcasting' => '1'),
                       'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
-            ->add('live_type', 'choice',
+            ->add('live_type', ChoiceType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Technology', array(), null, $this->locale)),
                       'choices' => array(
-                          Live::LIVE_TYPE_WOWZA => 'WOWZA',
-                          Live::LIVE_TYPE_AMS => 'Adobe Media Server',
-                          Live::LIVE_TYPE_FMS => 'FMS (deprecated use WOWZA or AMS)',
-                          Live::LIVE_TYPE_WMS => 'WMS (deprecated)',
+                          'WOWZA' => Live::LIVE_TYPE_WOWZA,
+                          'Adobe Media Server' => Live::LIVE_TYPE_AMS,
+                          'FMS (deprecated use WOWZA or AMS)' => Live::LIVE_TYPE_FMS,
+                          'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
                       ),
                       'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
         /*
@@ -70,21 +71,24 @@ class LiveType extends AbstractType
           array(
           'label' => $this->translator->trans('Qualities', array(), null, $this->locale),
           'required' => false))
-          ->add('ip_source', 'text',
+          ->add('ip_source', TextType::class,
           array(
           'required' => false,
           'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
         */
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\LiveBundle\Document\Live',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'pumukitnewadmin_live';
     }
