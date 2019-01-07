@@ -2,7 +2,7 @@
 
 namespace Pumukit\OpencastBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Pumukit\OpencastBundle\Services\SeriesSyncService;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
 
