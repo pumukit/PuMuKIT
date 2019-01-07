@@ -3,8 +3,10 @@
     <form id="filter_series" class="form">
         <fieldset>
             <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
+
             <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
+
+                <div class="panel panel-default" style="margin-bottom:10px">
                     <div class="panel-heading" role="tab" id="headingSearch">
                         <h2 class="panel-title">
                             <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
@@ -15,12 +17,6 @@
                     </div>
                     <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
                         <div class="panel-body">
-                            {# <div class="form-group">
-                              <label for="filters_id" class="control-label">{% trans %}Id{% endtrans %}:</label>
-                              <div>
-                                <input type="text" class="form-control" name="criteria[_id]" id="filters_id" value="{{ criteria['_id']|default("") }}">
-                              </div>
-                            </div> #}
                             <div class="form-group">
                                 <label for="filters_search" class="control-label">
                                     {% trans %}Search{% endtrans %}:
@@ -30,21 +26,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="filters_search_subtitle" class="control-label">
-                                    {% trans %}Search in subtitle{% endtrans %}:
-                                </label>
-                                <div>
-                                    <input type="text" class="form-control" name="criteria[subtitle]" id="filters_search_subtitle" value="{{ criteria['subtitle']|default("") }}">
-                                </div>
-                            </div>
-
-                            {# <div class="form-group">
-                              <label for="filters_person" class="control-label">{% trans %}Person{% endtrans %}:</label>
-                              <div>
-                                <input type="text" class="form-control" name="criteria[person]" id="filters_person" value="{{ criteria['person']|default("") }}">
-                              </div>
-                            </div> #}
                             <div class="form-group">
                                 <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
                                 <div class="row">
@@ -61,18 +42,40 @@
                     </div>
                 </div>
 
-                {% if disable_pudenew != true %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOthers">
-                            <h2 class="panel-title">
-                                <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
-                                    <i class="mdi-navigation-menu pull-right show"></i>
-                                    {% trans %}Others{% endtrans %}
-                                </a>
-                            </h2>
-                        </div>
-                        <div id="collapseOthers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOthers">
-                            <div class="panel-body container-fluid">
+                {% set collapseIn = "" %}
+                {% if criteria['announce'] is defined or criteria['title'] is defined or criteria['subtitle'] is defined %}
+                    {% set collapseIn = "in" %}
+                {% endif %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOthers">
+                        <h2 class="panel-title">
+                            <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
+                                <i class="mdi-navigation-menu pull-right show"></i>
+                                {% trans %}Others{% endtrans %}
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseOthers" class="panel-collapse collapse {{ collapseIn }}" role="tabpanel" aria-labelledby="headingOthers">
+                        <div class="panel-body container-fluid">
+                            <div class="form-group">
+                                <label for="filters_search_title" class="control-label">
+                                    {% trans %}Title{% endtrans %}:
+                                </label>
+                                <div>
+                                    <input type="text" class="form-control" name="criteria[title]" id="filters_search_title" value="{{ criteria['title']|default("") }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="filters_search_subtitle" class="control-label">
+                                    {% trans %}Subtitle{% endtrans %}:
+                                </label>
+                                <div>
+                                    <input type="text" class="form-control" name="criteria[subtitle]" id="filters_search_subtitle" value="{{ criteria['subtitle']|default("") }}">
+                                </div>
+                            </div>
+
+                            {% if not disable_pudenew %}
                                 <div class="form-group">
                                     <label for="filters_announce" class="control-label">
                                         {% trans %}Announced{% endtrans %}:
@@ -89,10 +92,11 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
+
                         </div>
                     </div>
-                {% endif %}
+                </div>
             </div>
             <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
             <ul class="list-unstyled">
