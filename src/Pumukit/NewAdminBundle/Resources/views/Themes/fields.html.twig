@@ -304,7 +304,6 @@
 {% block widgeti18n_attributes -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
     id="{{ id }}_{{ locale }}" name="{{ full_name }}[{{ locale }}]"
-    {%- if read_only %} readonly="readonly"{% endif -%}
     {%- if disabled %} disabled="disabled"{% endif -%}
     {%- if required %} required="required"{% endif -%}
     {%- for attrname, attrvalue in attr -%}
