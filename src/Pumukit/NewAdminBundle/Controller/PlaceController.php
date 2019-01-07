@@ -121,7 +121,7 @@ class PlaceController extends Controller implements NewAdminController
         $tag->setCod($suggested_code);
         $tag->setParent($parent);
 
-        $form = $this->createForm(new TagType($translator, $request->getLocale()), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $request->getLocale()));
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -178,7 +178,7 @@ class PlaceController extends Controller implements NewAdminController
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new TagType($translator, $locale), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

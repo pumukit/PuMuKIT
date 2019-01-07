@@ -73,7 +73,7 @@ class TagController extends Controller implements NewAdminController
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new TagType($translator, $locale), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
@@ -103,7 +103,7 @@ class TagController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new TagType($translator, $locale), $tag);
+        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {

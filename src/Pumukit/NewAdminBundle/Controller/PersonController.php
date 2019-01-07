@@ -55,7 +55,7 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $person = new Person();
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -97,7 +97,7 @@ class PersonController extends AdminController implements NewAdminController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -229,7 +229,7 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $personService = $this->get('pumukitschema.person');
@@ -301,7 +301,7 @@ class PersonController extends AdminController implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new PersonType($translator, $locale), $person);
+        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);

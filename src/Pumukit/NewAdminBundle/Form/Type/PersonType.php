@@ -3,60 +3,61 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class PersonType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
-            ->add('i18n_honorific', 'texti18n',
+            ->add('i18n_honorific', TextI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Honorific', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Honorific', array(), null, $this->locale), ))
-            ->add('name', 'text',
+            ->add('name', TextType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_post', 'texti18n',
+            ->add('i18n_post', TextI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Post', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Post', array(), null, $this->locale), ))
-            ->add('i18n_firm', 'texti18n',
+            ->add('i18n_firm', TextI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Firm', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Firm', array(), null, $this->locale), ))
-            ->add('i18n_bio', 'textareai18n',
+            ->add('i18n_bio', TextareaI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Bio', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Bio', array(), null, $this->locale), ))
-            ->add('email', 'email',
+            ->add('email', EmailType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
-            ->add('web', 'url',
+            ->add('web', UrlType::class,
                   array(
                       'required' => false,
                       'pattern' => '^https?:\/\/.*',
                       'attr' => array('aria-label' => $this->translator->trans('Web', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Web', array(), null, $this->locale), ))
-            ->add('phone', 'text',
+            ->add('phone', TextType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Phone', array(), null, $this->locale)),
@@ -68,6 +69,9 @@ class PersonType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Person',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()

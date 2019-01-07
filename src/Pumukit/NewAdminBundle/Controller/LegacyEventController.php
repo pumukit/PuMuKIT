@@ -164,15 +164,18 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
-            try {
-                $dm->persist($resource);
-                $dm->flush();
-            } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
-            }
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH'))) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    $dm->persist($resource);
+                    $dm->flush();
+                } catch (\Exception $e) {
+                    return new JsonResponse(array('status' => $e->getMessage()), 409);
+                }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            }
         }
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:update.html.twig',

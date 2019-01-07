@@ -120,7 +120,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $permissionProfile = $this->findOr404($request);
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
             try {
                 $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
@@ -148,7 +148,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $translator = $this->get('translator');
 
-        $form = $this->createForm(new PermissionProfileType($translator, $locale), $permissionProfile);
+        $form = $this->createForm(PermissionProfileType::class, $permissionProfile, array('translator' => $translator, 'locale' => $locale));
 
         return $form;
     }

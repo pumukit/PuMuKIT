@@ -81,7 +81,7 @@ class AdminController extends ResourceController implements NewAdminController
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
             try {
                 $dm->persist($resource);
                 $dm->flush();
@@ -276,7 +276,7 @@ class AdminController extends ResourceController implements NewAdminController
 
         $translator = $this->get('translator');
 
-        $form = $this->createForm(new $formType($translator, $locale), $resource);
+        $form = $this->createForm($formType, $resource, array('translator' => $translator, 'locale' => $locale));
 
         return $form;
     }

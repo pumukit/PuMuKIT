@@ -25,7 +25,7 @@ class LinkController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(new LinkType($translator, $locale), $link);
+        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
@@ -59,7 +59,7 @@ class LinkController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
-        $form = $this->createForm(new LinkType($translator, $locale), $link);
+        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
