@@ -55,6 +55,15 @@ class Series
     protected $id;
 
     /**
+     * Numerical identifier.
+     *
+     * @var int
+     * @MongoDB\Field(type="int")
+     * @MongoDB\UniqueIndex(safe=1)
+     */
+    private $numerical_id;
+
+    /**
      * @var string
      * @MongoDB\Field(type="string")
      * @MongoDB\Index
@@ -233,6 +242,26 @@ class Series
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get numerical id.
+     *
+     * @return int
+     */
+    public function getNumericalID()
+    {
+        return $this->numerical_id;
+    }
+
+    /**
+     * Set numerical id.
+     *
+     * @return int
+     */
+    public function setNumericalID($numericalID)
+    {
+        return $this->numerical_id = $numericalID;
     }
 
     /**
