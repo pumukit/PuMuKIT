@@ -12,6 +12,8 @@
         <!--
             <server name="KERNEL_DIR" value="/path/to/your/app/" />
         -->
+        <!-- uncomment to list deprecations -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     </php>
 
     <testsuites>
@@ -20,12 +22,6 @@
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
-
-    <!--
-    <php>
-        <server name="KERNEL_DIR" value="/path/to/your/app/" />
-    </php>
-    -->
 
     <filter>
         <whitelist>
