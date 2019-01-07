@@ -138,7 +138,7 @@ pumukitnewadmin_playlistmms_batch_add_to_several_playlist:
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistMultimediaObject:addBatchToSeveralPlaylist
 
-pumukitnewadmin_playlistmms_info:
+pumukitnewadmin_playlistmms_links:
     path: /{id}/links
     methods: [GET]
     defaults:
