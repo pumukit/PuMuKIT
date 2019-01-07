@@ -17,7 +17,7 @@
           </span>
                 </div>
                 <div class="row">
-                    {% render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) %}
+                    {{ render( controller( 'PumukitWebTVBundle:Widget:languageselect') ) }}
                     <div class="col-sm-6 pull-right">
                         {% include 'PumukitWebTVBundle:Layout:search_box.html.twig' with {'id': 'base'} %}
                     </div>

@@ -3,29 +3,28 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 
 class MaterialType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
-            ->add('i18n_name', 'texti18n',
+            ->add('i18n_name', TextI18nType::class,
                   array('required' => true,
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('hide', 'checkbox',
+            ->add('hide', CheckboxType::class,
                   array('required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
@@ -34,9 +33,9 @@ class MaterialType extends AbstractType
                       'required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Language', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Language', array(), null, $this->locale), ))
-            ->add('mime_type', 'choice', array(
+            ->add('mime_type', ChoiceType::class, array(
                 'attr' => array('aria-label' => $this->translator->trans('Type', array(), null, $this->locale)),
-                'choices' => array(
+                'choices' => array_flip(array(
                     'xxx' => 'xxx - ',
                     'zip' => 'zip - Compress file',
                     'tgz' => 'tgz - Compress file',
@@ -52,7 +51,7 @@ class MaterialType extends AbstractType
                     'srt' => 'srt - Text-captions srt',
                     'vtt' => 'vtt - Video Text Tracks',
                     'dfxp' => 'dfxp - Distribution Format Exchange Profile',
-                ),
+                )),
                 'label' => $this->translator->trans('Type'), ))
             ;
     }
@@ -62,6 +61,9 @@ class MaterialType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Material',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()

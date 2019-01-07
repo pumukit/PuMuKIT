@@ -25,7 +25,7 @@ class MaterialController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(new MaterialType($translator, $locale), $material);
+        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
 
         return array(
             'material' => $material,
@@ -42,7 +42,7 @@ class MaterialController extends Controller implements NewAdminController
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(new MaterialType($translator, $locale), $material);
+        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {

@@ -14,10 +14,12 @@ class Html5dateType extends AbstractType
         ));
     }
 
+    /*
     public function getParent()
     {
         return 'form';
     }
+    */
 
     public function getBlockPrefix()
     {

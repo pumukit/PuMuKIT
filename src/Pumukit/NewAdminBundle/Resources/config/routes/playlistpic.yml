@@ -1,5 +1,5 @@
 pumukitnewadmin_playlistpic_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:index
@@ -7,7 +7,7 @@ pumukitnewadmin_playlistpic_index:
             filterable: true
 
 pumukitnewadmin_playlistpic_create:
-    pattern: /create/{id}
+    path: /create/{id}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:create
@@ -15,13 +15,13 @@ pumukitnewadmin_playlistpic_create:
             redirect: pumukitnewadmin_playlist_index
 
 pumukitnewadmin_playlistpic_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:update
 
 pumukitnewadmin_playlistpic_batch_delete:
-    pattern: /batch_delete
+    path: /batch_delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:batchDelete
@@ -29,54 +29,54 @@ pumukitnewadmin_playlistpic_batch_delete:
             redirect: pumukitnewadmin_playlist_index
 
 pumukitnewadmin_playlistpic_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:delete
 
 
 pumukitnewadmin_playlistpic_up:
-    pattern: /{id}/up
+    path: /{id}/up
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:up
 
 
 pumukitnewadmin_playlistpic_down:
-    pattern: /{id}/down
+    path: /{id}/down
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:down
 
 
 pumukitnewadmin_playlistpic_list:
-    pattern: /{id}/list
+    path: /{id}/list
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:list
 
 
 pumukitnewadmin_playlistpic_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:show
 
 
 pumukitnewadmin_playlistpic_upload:
-    pattern: /{id}/upload
+    path: /{id}/upload
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:upload
 
 pumukitnewadmin_playlistpic_picstoaddlist:
-    pattern: /{id}/picstoaddlist
+    path: /{id}/picstoaddlist
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:picstoaddlist
 
 pumukitnewadmin_playlistpic_banner:
-    pattern: /{id}/banner
+    path: /{id}/banner
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:PlaylistPic:banner

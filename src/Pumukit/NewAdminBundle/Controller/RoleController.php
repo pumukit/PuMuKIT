@@ -30,11 +30,11 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(new RoleType($translator, $locale), $role);
+        $form = $this->createForm(RoleType::class, $role, array('translator' => $translator, 'locale' => $locale));
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $personService->updateRole($role);
                 } catch (\Exception $e) {

@@ -112,7 +112,7 @@ class GroupController extends AdminController implements NewAdminController
 
         $form = $this->getForm($group, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
             try {
                 $group = $this->get('pumukitschema.group')->update($group);
             } catch (\Exception $e) {

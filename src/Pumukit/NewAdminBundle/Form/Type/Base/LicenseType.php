@@ -3,6 +3,8 @@
 namespace Pumukit\NewAdminBundle\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LicenseType extends AbstractType
@@ -42,10 +44,10 @@ class LicenseType extends AbstractType
     public function getParent()
     {
         if (0 == count($this->licenses)) {
-            return 'text';
+            return TextType::class;
         }
 
-        return 'choice';
+        return ChoiceType::class;
     }
 
     /**

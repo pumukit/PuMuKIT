@@ -2,10 +2,10 @@
 
 {% block body %}
     <h1 id="index_h1">Principal</h1>
-    {% render(controller('PumukitWebTVBundle:Index:info')) %}
-    {% render(controller('PumukitWebTVBundle:Index:categories')) %}
+    {{ render(controller('PumukitWebTVBundle:Index:info')) }}
+    {{ render(controller('PumukitWebTVBundle:Index:categories')) }}
     <div style="overflow: hidden; padding: 10px;">
-    	{% render(controller('PumukitWebTVBundle:Index:mostviewedlastmonth')) %}
-    	{% render(controller('PumukitWebTVBundle:Index:recentlyadded')) %} 
+    	{{ render(controller('PumukitWebTVBundle:Index:mostviewedlastmonth')) }}
+    	{{ render(controller('PumukitWebTVBundle:Index:recentlyadded')) }} 
     </div>
 {% endblock %}

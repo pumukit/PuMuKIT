@@ -1,23 +1,23 @@
 pumukitwizard_simple_index:
-    pattern: /index/{id}
+    path: /index/{id}
     methods: [GET]
     defaults:
         _controller: PumukitWizardBundle:Simple:index
 
 pumukitwizard_simple_upload:
-    pattern: /upload/{id}
+    path: /upload/{id}
     methods: [POST]
     defaults:
         _controller: PumukitWizardBundle:Simple:upload
 
 pumukitwizard_simple_embedindex:
-    pattern: /embedindex
+    path: /embedindex
     methods: [GET]
     defaults:
         _controller: PumukitWizardBundle:Simple:embedindex
 
 pumukitwizard_simple_embedupload:
-    pattern: /embedupload
+    path: /embedupload
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Simple:embedupload

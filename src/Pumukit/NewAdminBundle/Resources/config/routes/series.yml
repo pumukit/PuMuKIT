@@ -1,5 +1,5 @@
 pumukitnewadmin_series_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:index
@@ -7,13 +7,13 @@ pumukitnewadmin_series_index:
             filterable: true
 
 pumukitnewadmin_series_search:
-    pattern: /search
+    path: /search
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:search
 
 pumukitnewadmin_series_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:create
@@ -21,25 +21,25 @@ pumukitnewadmin_series_create:
             redirect: pumukitnewadmin_series_index
 
 pumukitnewadmin_series_clone:
-    pattern: /clone/{id}
+    path: /clone/{id}
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:clone
 
 pumukitnewadmin_series_links:
-    pattern: /{id}/links
+    path: /{id}/links
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:links
 
 pumukitnewadmin_series_update:
-    pattern: /{id}/update
+    path: /{id}/update
     methods: [GET, POST, DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Series:update
 
 pumukitnewadmin_series_batch_delete:
-    pattern: /batchdelete
+    path: /batchdelete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Series:batchDelete
@@ -47,7 +47,7 @@ pumukitnewadmin_series_batch_delete:
             redirect: pumukitnewadmin_series_list
 
 pumukitnewadmin_series_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Series:delete
@@ -55,13 +55,13 @@ pumukitnewadmin_series_delete:
             redirect: pumukitnewadmin_series_index
 
 pumukitnewadmin_series_generate_magic_url:
-    pattern: /{id}/generatemagic
+    path: /{id}/generatemagic
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:generateMagicUrl
 
 pumukitnewadmin_series_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:copy
@@ -69,43 +69,43 @@ pumukitnewadmin_series_copy:
             redirect: pumukitnewadmin_series_index
 
 pumukitnewadmin_series_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:show
 
 pumukitnewadmin_series_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:list
 
 pumukitnewadmin_series_invert_announce:
-    pattern: /invertannounce
+    path: /invertannounce
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:invertAnnounce
 
 pumukitnewadmin_series_changepub:
-    pattern: /changepub
+    path: /changepub
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:changePub
 
 pumukitnewadmin_series_updatepub:
-    pattern: /updatepub
+    path: /updatepub
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:updatePub
 
 pumukitnewadmin_series_updatebroadcast:
-    pattern: /{id}/updatebroadcast
+    path: /{id}/updatebroadcast
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Series:updateBroadcast
 
 pumukitnewadmin_series_listproperties:
-    pattern: /{id}/listproperties
+    path: /{id}/listproperties
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Series:listProperties

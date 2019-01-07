@@ -1,59 +1,59 @@
 pumukitwizard_default_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitWizardBundle:Default:series
 
 pumukitwizard_default_license:
-    pattern: /license
+    path: /license
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:license
 
 pumukitwizard_default_series:
-    pattern: /series
+    path: /series
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:series
 
 pumukitwizard_default_type:
-    pattern: /type/{id}
+    path: /type/{id}
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:type
 
 pumukitwizard_default_option:
-    pattern: /option
+    path: /option
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:option
 
 pumukitwizard_default_multimediaobject:
-    pattern: /multimediaobject
+    path: /multimediaobject
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:multimediaobject
 
 pumukitwizard_default_track:
-    pattern: /track
+    path: /track
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:track
 
 pumukitwizard_default_upload:
-    pattern: /upload
+    path: /upload
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:upload
 
 pumukitwizard_default_end:
-    pattern: /end
+    path: /end
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:end
 
 pumukitwizard_default_error:
-    pattern: /error
+    path: /error
     methods: [GET, POST]
     defaults:
         _controller: PumukitWizardBundle:Default:error

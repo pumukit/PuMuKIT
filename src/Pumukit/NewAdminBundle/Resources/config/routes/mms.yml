@@ -1,5 +1,5 @@
 pumukitnewadmin_mms_index:
-    pattern: /series
+    path: /series
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:index
@@ -7,7 +7,7 @@ pumukitnewadmin_mms_index:
             filterable: true
 
 pumukitnewadmin_mms_create:
-    pattern: /{id}/create
+    path: /{id}/create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:create
@@ -15,37 +15,37 @@ pumukitnewadmin_mms_create:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_edit:
-    pattern: /{id}/edit
+    path: /{id}/edit
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:edit
 
 pumukitnewadmin_mms_links:
-    pattern: /{id}/links
+    path: /{id}/links
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:links
 
 pumukitnewadmin_mms_update_meta:
-    pattern: /{id}/update/meta
+    path: /{id}/update/meta
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updatemeta
 
 pumukitnewadmin_mms_update_pub:
-    pattern: /{id}/update/pub
+    path: /{id}/update/pub
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updatepub
 
 pumukitnewadmin_mms_update_social:
-    pattern: /{id}/update/social
+    path: /{id}/update/social
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updatesocial
 
 pumukitnewadmin_mms_batch_delete:
-    pattern: /batch_delete
+    path: /batch_delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:batchDelete
@@ -53,25 +53,25 @@ pumukitnewadmin_mms_batch_delete:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_delete:
-    pattern: /{id}/delete
+    path: /{id}/delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:delete
 
 pumukitnewadmin_mms_generate_magic_url:
-    pattern: /{id}/generatemagic
+    path: /{id}/generatemagic
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:generateMagicUrl
 
 pumukitnewadmin_mms_clone:
-    pattern: /{id}/clone
+    path: /{id}/clone
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:clone
 
 pumukitnewadmin_mms_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:copy
@@ -79,13 +79,13 @@ pumukitnewadmin_mms_copy:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_show:
-    pattern: /{id}/show
+    path: /{id}/show
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:show
 
 pumukitnewadmin_mms_up:
-    pattern: /{id}/up
+    path: /{id}/up
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:up
@@ -93,7 +93,7 @@ pumukitnewadmin_mms_up:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_down:
-    pattern: /{id}/down
+    path: /{id}/down
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:down
@@ -101,7 +101,7 @@ pumukitnewadmin_mms_down:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_top:
-    pattern: /{id}/top
+    path: /{id}/top
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:top
@@ -109,7 +109,7 @@ pumukitnewadmin_mms_top:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_bottom:
-    pattern: /{id}/bottom
+    path: /{id}/bottom
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:bottom
@@ -117,7 +117,7 @@ pumukitnewadmin_mms_bottom:
             redirect: pumukitnewadmin_mms_index
 
 pumukitnewadmin_mms_addtag:
-    pattern: /{id}/addtag/
+    path: /{id}/addtag/
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:addTag
@@ -125,146 +125,146 @@ pumukitnewadmin_mms_addtag:
             redirect: pumukitnewadmin_mms_edit
 
 pumukitnewadmin_mms_deletetag:
-    pattern: /{id}/deletetag/{tagId}
+    path: /{id}/deletetag/{tagId}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:deleteTag
 
 pumukitnewadmin_mms_getchildrentag:
-    pattern: /{id}/getchildrentag/
+    path: /{id}/getchildrentag/
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:getChildrenTag
 
 pumukitnewadmin_mms_searchtag:
-    pattern: /search/{search_text}
+    path: /search/{search_text}
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:searchTag
         search_text:
 
 pumukitnewadmin_mms_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:list
 
 pumukitnewadmin_mms_status:
-    pattern: /{id}/status
+    path: /{id}/status
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:status
 
 pumukitnewadmin_mms_invert_announce:
-    pattern: /invertannounce
+    path: /invertannounce
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:invertAnnounce
 
 pumukitnewadmin_mms_cut:
-    pattern: /cut
+    path: /cut
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:cut
 
 pumukitnewadmin_mms_paste:
-    pattern: /paste
+    path: /paste
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:paste
 
 pumukitnewadmin_mms_reorder:
-    pattern: /reorder
+    path: /reorder
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:reorder
 
 pumukitnewadmin_mms_reloadtags:
-    pattern: /reloadtags
+    path: /reloadtags
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:reloadTags
 
 pumukitnewadmin_mms_sync_tags:
-    pattern: /synctags
+    path: /synctags
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:syncTags
 
 pumukitnewadmin_mms_editgroups:
-    pattern: /editgroups
+    path: /editgroups
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:editGroups
 
 pumukitnewadmin_mms_updategroups:
-    pattern: /updategroups
+    path: /updategroups
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updateGroups
 
 pumukitnewadmin_mms_getgroups:
-    pattern: /getgroups
+    path: /getgroups
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:getGroups
 
 pumukitnewadmin_mms_broadcast_info:
-    pattern: /{id}/broadcastinfo
+    path: /{id}/broadcastinfo
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:getBroadcastInfo
 
 pumukitnewadmin_mms_updatebroadcast:
-    pattern: /{id}/updatebroadcast
+    path: /{id}/updatebroadcast
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updateBroadcast
 
 pumukitnewadmin_mms_sync_metadata:
-    pattern: /{id}/sync/metadata
+    path: /{id}/sync/metadata
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:modalSyncMedatada
 
 pumukitnewadmin_mms_update_sync_metadata:
-    pattern: /{id}/update/sync/metadata
+    path: /{id}/update/sync/metadata
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updateMultimediaObjectSync
 
 pumukitnewadmin_mms_user_last_relation:
-    pattern: /user/lastrelation
+    path: /user/lastrelation
     methods: [POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:userLastRelation
 
 pumukitnewadmin_mms_listproperties:
-    pattern: /{id}/listproperties
+    path: /{id}/listproperties
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:listProperties
 
 pumukitnewadmin_mms_listexternalproperties:
-    pattern: /{id}/listexternalplayer
+    path: /{id}/listexternalplayer
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:listExternalPlayer
 
 pumukitnewadmin_mms_delete_listexternalproperties:
-    pattern: /{id}/deleteexternalvideo
+    path: /{id}/deleteexternalvideo
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:deleteExternalProperty
 
 pumukitnewadmin_mms_modal_preview:
-    pattern: /{id}/modalpreview
+    path: /{id}/modalpreview
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:modalPreview
 
 pumukitnewadmin_mms_indexall:
-    pattern: /mmslist
+    path: /mmslist
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:indexAll
@@ -272,13 +272,13 @@ pumukitnewadmin_mms_indexall:
             filterable: true
 
 pumukitnewadmin_mms_listall:
-    pattern: /listAll
+    path: /listAll
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:listAll
 
 pumukitnewadmin_mms_updateProperty:
-    pattern: /{id}/updateProperty
+    path: /{id}/updateProperty
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:MultimediaObject:updateProperty

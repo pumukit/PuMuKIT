@@ -5,23 +5,20 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 
 class TrackType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
-            ->add('i18n_description', 'texti18n',
+            ->add('i18n_description', TextI18nType::class,
                   array(
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
@@ -38,6 +35,9 @@ class TrackType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Track',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()

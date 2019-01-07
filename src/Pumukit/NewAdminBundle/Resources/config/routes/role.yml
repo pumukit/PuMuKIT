@@ -1,5 +1,5 @@
 pumukitnewadmin_role_index:
-    pattern: /
+    path: /
     methods: [GET]
     defaults:
         _controller: PumukitNewAdminBundle:Role:index
@@ -9,7 +9,7 @@ pumukitnewadmin_role_index:
                 rank: desc
 
 pumukitnewadmin_role_create:
-    pattern: /create
+    path: /create
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:create
@@ -17,7 +17,7 @@ pumukitnewadmin_role_create:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_update:
-    pattern: /{id}/edit
+    path: /{id}/edit
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:update
@@ -25,7 +25,7 @@ pumukitnewadmin_role_update:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_batch_delete:
-    pattern: /delete
+    path: /delete
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Role:batchDelete
@@ -33,7 +33,7 @@ pumukitnewadmin_role_batch_delete:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_delete:
-    pattern: /{id}
+    path: /{id}
     methods: [DELETE]
     defaults:
         _controller: PumukitNewAdminBundle:Role:delete
@@ -41,7 +41,7 @@ pumukitnewadmin_role_delete:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_copy:
-    pattern: /{id}/copy
+    path: /{id}/copy
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:copy
@@ -49,7 +49,7 @@ pumukitnewadmin_role_copy:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_up:
-    pattern: /{id}/up
+    path: /{id}/up
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:up
@@ -57,7 +57,7 @@ pumukitnewadmin_role_up:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_down:
-    pattern: /{id}/down
+    path: /{id}/down
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:down
@@ -65,7 +65,7 @@ pumukitnewadmin_role_down:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_top:
-    pattern: /{id}/top
+    path: /{id}/top
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:top
@@ -73,7 +73,7 @@ pumukitnewadmin_role_top:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_bottom:
-    pattern: /{id}/bottom
+    path: /{id}/bottom
     methods: [GET, PUT, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:bottom
@@ -81,13 +81,13 @@ pumukitnewadmin_role_bottom:
             redirect: pumukitnewadmin_role_index
 
 pumukitnewadmin_role_list:
-    pattern: /list
+    path: /list
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:list
 
 pumukitnewadmin_role_export:
-    pattern: /export
+    path: /export
     methods: [GET, POST]
     defaults:
         _controller: PumukitNewAdminBundle:Role:exportRoles

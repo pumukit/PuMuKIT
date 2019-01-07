@@ -3,33 +3,32 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 
 class LinkType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
-            ->add('i18n_name', 'texti18n',
+            ->add('i18n_name', TextI18nType::class,
                   array('required' => true,
                         'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('url', 'url', array('required' => true,
-                                      'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale),
-                                                      'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
-                                                      'onchange' => "setCustomValidity('')", ),
-                                      'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
+            ->add('url', UrlType::class,
+                  array('required' => true,
+                        'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale),
+                                        'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
+                                        'onchange' => "setCustomValidity('')", ),
+                        'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
             ;
     }
 
@@ -38,6 +37,9 @@ class LinkType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Pumukit\SchemaBundle\Document\Link',
         ));
+
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()

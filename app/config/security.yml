@@ -20,7 +20,7 @@ security:
             context: pumukit
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
 
