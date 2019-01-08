@@ -37,7 +37,7 @@ class SeriesSyncService
     public function updateSeries($series)
     {
         try {
-            $output = $this->clientService->updateOpencastSeries($series);
+            $this->clientService->updateOpencastSeries($series);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
             if (404 !== $e->getCode()) {
@@ -50,7 +50,7 @@ class SeriesSyncService
     public function deleteSeries($series)
     {
         try {
-            $output = $this->clientService->deleteOpencastSeries($series);
+            $this->clientService->deleteOpencastSeries($series);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
 

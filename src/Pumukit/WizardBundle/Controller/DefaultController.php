@@ -472,7 +472,7 @@ class DefaultController extends Controller
 
                     if ($multimediaObject && $pubchannel) {
                         foreach ($pubchannel as $tagCode => $valueOn) {
-                            $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
+                            $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
                         }
                     }
 

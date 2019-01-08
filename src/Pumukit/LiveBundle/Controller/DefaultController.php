@@ -79,7 +79,6 @@ class DefaultController extends Controller
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
         $criteria = array(

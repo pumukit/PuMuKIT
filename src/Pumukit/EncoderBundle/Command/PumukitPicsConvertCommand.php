@@ -6,12 +6,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 class PumukitPicsConvertCommand extends ContainerAwareCommand
 {
-    private $dm;
     private $output;
     private $input;
     private $size = 100;
@@ -19,8 +16,6 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
     private $extension;
     private $tags;
     private $exists;
-    private $fileSystem;
-    private $finder;
     private $type;
     private $picService;
     private $id;
@@ -99,7 +94,6 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->picService = $this->getContainer()->get('pumukitencoder.pic');
         $this->output = $output;
         $this->input = $input;
@@ -118,9 +112,6 @@ EOT
         $this->convert_max_width = $this->input->getOption('convert_max_width');
         $this->convert_max_height = $this->input->getOption('convert_max_height');
         $this->no_replace = $this->input->getOption('no_replace');
-
-        $this->fileSystem = new Filesystem();
-        $this->finder = new Finder();
     }
 
     /**

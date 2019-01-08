@@ -17,7 +17,6 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
     const PATH_VIDEO = 'http://static.campusdomar.es/pumukit_videos.zip';
 
     private $dm;
-    private $repo;
     private $roleRepo;
     private $pmk2AllLocales;
     private $seriesRepo;
@@ -49,7 +48,6 @@ EOT
     {
         $newFile = $this->getContainer()->getParameter('kernel.cache_dir').'/tmp_file.zip';
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
         $this->roleRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
         $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit2.locales');

@@ -283,7 +283,7 @@ class EmbeddedBroadcastService
             return $this->isPasswordCorrect($multimediaObject, $password);
         }
 
-        return $this->renderErrorNotAuthenticated($user);
+        return $this->renderErrorNotAuthenticated();
     }
 
     /**
@@ -326,7 +326,7 @@ class EmbeddedBroadcastService
             return true;
         }
 
-        return $this->renderErrorNotAuthenticated($user);
+        return $this->renderErrorNotAuthenticated();
     }
 
     private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null)
@@ -342,7 +342,7 @@ class EmbeddedBroadcastService
             }
         }
 
-        return $this->renderErrorNotAuthenticated($user);
+        return $this->renderErrorNotAuthenticated();
     }
 
     private function isPasswordCorrect(MultimediaObject $multimediaObject, $password = null)
@@ -360,7 +360,7 @@ class EmbeddedBroadcastService
         return $this->renderErrorPassword($invalidPassword);
     }
 
-    private function renderErrorNotAuthenticated(User $user = null)
+    private function renderErrorNotAuthenticated()
     {
         $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
 

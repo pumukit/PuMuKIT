@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitListPicsCommand extends ContainerAwareCommand
 {
-    private $dm;
     private $output;
     private $input;
     private $size = 100;
@@ -68,7 +67,6 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->picService = $this->getContainer()->get('pumukitencoder.pic');
         $this->output = $output;
         $this->input = $input;

@@ -204,7 +204,6 @@ class GroupController extends AdminController implements NewAdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
-        $repository = $this->getRepository();
         $session = $this->get('session');
         $sessionNamespace = 'admin/group';
 

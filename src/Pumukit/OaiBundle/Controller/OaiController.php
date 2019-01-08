@@ -303,35 +303,35 @@ class OaiController extends Controller
         switch ($this->container->getParameter('pumukitoai.dc_identifier_url_mapping')) {
             case 'all':
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), true);
-                $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
-                $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
                     $url = $this->generateTrackFileUrl($track);
-                    $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                    $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
                 break;
             case 'portal_and_track':
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
-                $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
                     $url = $this->generateTrackFileUrl($track);
-                    $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                    $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
                 break;
             case 'track':
                 foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
                     $url = $this->generateTrackFileUrl($track);
-                    $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                    $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
                 break;
             case 'iframe':
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), true);
-                $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 break;
             default: //portal
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
-                $XMLiden = $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+                $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 break;
         }
 

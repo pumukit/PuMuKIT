@@ -84,27 +84,6 @@ class PicExtractorListener
         return false;
     }
 
-    private function addDefaultAudioPic(MultimediaObject $multimediaObject, Track $track)
-    {
-        $picFile = $this->createPicFile();
-        if (null === $picFile) {
-            return false;
-        }
-        $multimediaObject = $this->mmsPicService->addPicFile($multimediaObject, $picFile);
-        if (null !== $multimediaObject) {
-            if ($multimediaObject instanceof MultimediaObject) {
-                $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
-                                    .'Extracted pic from track '.
-                                    $track->getId().' into MultimediaObject "'
-                                    .$multimediaObject->getId().'"');
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
     private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track)
     {
         $outputMessage = $this->picExtractorService->extractPic($multimediaObject, $track, $this->autoExtractPicPercentage);
@@ -119,14 +98,4 @@ class PicExtractorListener
         return true;
     }
 
-    private function createPicFile()
-    {
-        if (copy($this->defaultAudioPic, $this->audioPicCopy)) {
-            $picFile = new UploadedFile($this->audioPicCopy, $this->defaultAudioPicOriginalName, null, null, null, true);
-
-            return $picFile;
-        }
-
-        return null;
-    }
 }

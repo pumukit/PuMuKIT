@@ -32,14 +32,7 @@ class ResourceController extends Controller
 
     public function redirectToIndex()
     {
-        $resourceName = $this->getResourceName();
-
         return $this->redirect($this->generateUrl($this->getRedirectRoute()));
-    }
-
-    private function getRedirectParameters($name)
-    {
-        return array();
     }
 
     public function getRepository()

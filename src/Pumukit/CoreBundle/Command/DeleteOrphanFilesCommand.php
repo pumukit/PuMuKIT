@@ -15,7 +15,6 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
     private $output;
     private $input;
     private $finder;
-    private $fileSystem;
     private $path;
     private $delete;
     private $logger;
@@ -64,7 +63,6 @@ EOT
         $this->path = $this->input->getOption('path');
         $this->delete = $this->input->getOption('delete');
         $this->finder = new Finder();
-        $this->fileSystem = new Filesystem();
     }
 
     /**

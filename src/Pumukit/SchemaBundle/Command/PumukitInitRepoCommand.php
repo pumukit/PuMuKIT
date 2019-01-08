@@ -16,7 +16,6 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
 {
     private $dm = null;
     private $tagsRepo = null;
-    private $rolesRepo = null;
     private $pmk2_allLocales;
 
     private $tagsPath = '../Resources/data/tags/';
@@ -49,7 +48,6 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
-        $this->rolesRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
         $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
 
         $repoName = $input->getArgument('repo');
@@ -247,8 +245,6 @@ EOT
             $output->writeln('<info>Found file: '.realpath($file_route).'</info>');
         }
 
-        $idCodMapping = array();
-
         $row = 1;
         $importedTags = array();
         while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
@@ -293,12 +289,10 @@ EOT
                         break;
                     case 'role':
                         $role = $this->createRoleFromCsvArray($currentRow);
-                        $idCodMapping[$currentRow[0]] = $role;
                         $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
                         break;
                     case 'permissionprofile':
                         $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
-                        $idCodMapping[$currentRow[0]] = $permissionProfile;
                         $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
                         break;
                     }
