@@ -25,6 +25,7 @@ abstract class AbstractI18nType extends AbstractType
     {
         $resolver->setDefaults(array(
             'compound' => false,
+            'multiple' => false,
         ));
     }
 
