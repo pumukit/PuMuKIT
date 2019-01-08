@@ -356,7 +356,7 @@ class DefaultController extends Controller
             return false;
         }
 
-        $response = $this->_recaptcha_http_post(array(
+        $response = $this->recaptchaHttpPost(array(
             'secret' => $privatekey,
             'remoteip' => $remoteip,
             'response' => $response,
@@ -374,7 +374,7 @@ class DefaultController extends Controller
      *
      * @return array response
      */
-    private function _recaptcha_http_post($data)
+    private function recaptchaHttpPost($data)
     {
         $verify = curl_init();
         curl_setopt($verify, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
