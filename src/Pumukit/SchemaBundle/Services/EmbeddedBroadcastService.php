@@ -7,9 +7,9 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Response;
 
 class EmbeddedBroadcastService
@@ -26,7 +26,7 @@ class EmbeddedBroadcastService
     /**
      * Constructor.
      */
-    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, Router $router, $disabledBroadcast)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router, $disabledBroadcast)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');

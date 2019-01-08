@@ -2,6 +2,7 @@
 
 namespace Pumukit\LDAPBundle\EventListener;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,7 +10,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Pumukit\LDAPBundle\Services\LDAPService;
 use Pumukit\LDAPBundle\Services\LDAPUserService;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
@@ -22,7 +22,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
     protected $ldapUserService;
     protected $httpUtils;
 
-    public function __construct(ContainerInterface $container, LDAPService $LDAPService, LDAPUserService $LDAPUserService, HttpUtils $HttpUtils, Session $session)
+    public function __construct(ContainerInterface $container, LDAPService $LDAPService, LDAPUserService $LDAPUserService, HttpUtils $HttpUtils, SessionInterface $session)
     {
         $this->container = $container;
         $this->ldapService = $LDAPService;
