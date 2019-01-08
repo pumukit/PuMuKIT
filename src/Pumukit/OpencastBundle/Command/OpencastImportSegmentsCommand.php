@@ -243,7 +243,12 @@ EOT
         $embeddedSegment->setRelevance($segment['relevance']);
         $embeddedSegment->setHit(boolval($segment['hit']));
         $embeddedSegment->setText($segment['text']);
-        $embeddedSegment->setPreview($segment['previews']['preview']['$']);
+
+        $image = '';
+        if (isset($segment['previews']['preview']['$'])) {
+            $image = $segment['previews']['preview']['$'];
+        }
+        $embeddedSegment->setPreview($image);
 
         $this->dm->persist($embeddedSegment);
 
