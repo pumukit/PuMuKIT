@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class MaterialType extends AbstractType
 {
@@ -28,7 +29,7 @@ class MaterialType extends AbstractType
                   array('required' => false,
                         'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
                         'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
-            ->add('language', 'customlanguage',
+            ->add('language', CustomLanguageType::class,
                   array(
                       'required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Language', array(), null, $this->locale)),

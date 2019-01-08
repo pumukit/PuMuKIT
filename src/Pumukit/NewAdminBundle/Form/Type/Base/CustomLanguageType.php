@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CustomLanguageType extends AbstractType
 {
@@ -31,7 +32,7 @@ class CustomLanguageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => self::getLanguageNames($this->customLanguages, $this->translator),
+            'choices' => array_flip(self::getLanguageNames($this->customLanguages, $this->translator)),
         ));
     }
 
@@ -60,7 +61,7 @@ class CustomLanguageType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
     /**

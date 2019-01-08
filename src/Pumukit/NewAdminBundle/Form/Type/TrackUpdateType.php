@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackresolutionType;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class TrackUpdateType extends AbstractType
 {
@@ -37,7 +38,7 @@ class TrackUpdateType extends AbstractType
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Allow download', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Allow download', array(), null, $this->locale), ))
-            ->add('language', 'customlanguage',
+            ->add('language', CustomLanguageType::class,
                   array(
                       'required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),

@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class TrackType extends AbstractType
 {
@@ -23,7 +24,7 @@ class TrackType extends AbstractType
                       'required' => false,
                       'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('language', 'customlanguage',
+            ->add('language', CustomLanguageType::class,
                   array(
                       'required' => true,
                       'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
