@@ -87,7 +87,7 @@ class LicenseService
             throw new \Exception($this->translator->trans('Not valid locale "'.$locale.'". There is no license file in the directory "'.$this->licenseDir.'" in the format "{locale}.txt".'));
         }
         try {
-            $licenseContent = @file_get_contents($licenseFile);
+            $licenseContent = file_get_contents($licenseFile);
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
