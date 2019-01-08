@@ -12,7 +12,9 @@ db.Series.createIndex( { "numerical_id": 1 }, {name: "numericalID"})
 db.MultimediaObject.createIndex( { "numerical_id": 1 }, {name: "numericalID"})
 ``` 
 
-#### Step 2: Set PuMuKIT 1 ID on numerical ID
+### Step 2: Select your option
+
+#### Case 1: You have PuMuKIT 1 ID
 
 ```bash
 db.Series.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(s) {
@@ -24,19 +26,24 @@ db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id':
 });
 ```
 
-#### Step 3: Set PuMuKIT 1 ID on numerical ID
+#### Case 2: Initialize numerical ID without PuMuKIT 1 ID
 
 ```bash
-db.Series.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(s) {
-    db.Series.update({'_id': s._id}, {$set: {'numerical_id': NumberLong(s.properties.pumukit1id)}});
+var nextNumericalID = 1;
+db.MultimediaObject.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
+      mm['numerical_id'] = NumberLong(nextNumericalID);
+      db.MultimediaObject.save(mm);
+      nextNumericalID = nextNumericalID + 1;
 });
-
-db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(m) {
-    db.MultimediaObject.update({'_id': m._id}, {$set: {'numerical_id': NumberLong(m.properties.pumukit1id)}});
+var nextNumericalID = 1;
+db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
+      ss['numerical_id'] = NumberLong(nextNumericalID);
+      db.Series.save(ss);
+      nextNumericalID = nextNumericalID + 1;
 });
 ```
 
-#### Step 4: Generate numerical ID from videos and series without PuMuKIT 1 ID
+#### Step 3: Generate numerical ID from videos and series without PuMuKIT 1 ID
 
 ```bash
 db.MultimediaObject.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
@@ -58,6 +65,8 @@ db.Series.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numeric
     });
 });
 ```
+
+[OPTIONAL]
 
 If there are some errors you can clean all numerical ID using the following commands and then you can reexecute above commands.
 
