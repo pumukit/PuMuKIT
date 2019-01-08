@@ -135,7 +135,7 @@ class PicService
         $filterResult = array();
 
         foreach ($data['pics'] as $pic) {
-            if ('true' === $exists or '1' === $exists) {
+            if ('true' === $exists || '1' === $exists) {
                 if ($this->fileSystem->exists($pic['path'])) {
                     $filterResult[] = $pic;
                 }
@@ -230,7 +230,7 @@ class PicService
      */
     public function convertImage($data, array $params, $no_replace = false)
     {
-        if (!isset($data['pics']) or empty($data['pics'])) {
+        if (!isset($data['pics']) || empty($data['pics'])) {
             throw new \Exception('No pics found');
         }
 
@@ -388,9 +388,9 @@ class PicService
         }
 
         $exceededRatio = 0;
-        if ($height <= $width and $originalWidth > $width) {
+        if ($height <= $width && $originalWidth > $width) {
             $exceededRatio = $originalWidth / $width;
-        } elseif ($height > $width and $originalHeight > $height) {
+        } elseif ($height > $width && $originalHeight > $height) {
             $exceededRatio = $originalHeight / $height;
         }
 

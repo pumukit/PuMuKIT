@@ -192,7 +192,7 @@ class DefaultController extends Controller
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
-        if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
+        if (0 === count($nowSessions) && 0 === count($nextSessions) && $iframe) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
             $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
