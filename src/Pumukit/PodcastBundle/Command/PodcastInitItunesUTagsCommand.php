@@ -61,7 +61,7 @@ EOT
             return -1;
         }
         $root = $this->tagRepo->findOneByCod('ROOT');
-        if (null == $root) {
+        if (null === $root) {
             $output->writeln("<error>Tags: There's no ROOT tag. Please exec pumukit:init:repo tag</error>");
 
             return -1;
