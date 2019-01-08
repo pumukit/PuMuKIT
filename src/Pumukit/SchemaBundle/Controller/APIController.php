@@ -21,7 +21,7 @@ class APIController extends Controller implements NewAdminController
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
         $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
         $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $totalSeries = $seriesRepo->countPublic();
         $totalMmobjs = $mmRepo->count();
@@ -49,7 +49,7 @@ class APIController extends Controller implements NewAdminController
     public function multimediaObjectsAction(Request $request)
     {
         $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');
         $page = $request->get('page');
@@ -114,7 +114,7 @@ class APIController extends Controller implements NewAdminController
     public function seriesAction(Request $request)
     {
         $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $limit = $request->get('limit');
         $page = $request->get('page');
         $skip = $request->get('skip');
@@ -174,7 +174,7 @@ class APIController extends Controller implements NewAdminController
     public function liveAction(Request $request)
     {
         $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');
         if (!$limit || $limit > 100) {
@@ -225,7 +225,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function localesAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $locales = $this->container->getParameter('pumukit2.locales');
         $data = $serializer->serialize($locales, $request->getRequestFormat());

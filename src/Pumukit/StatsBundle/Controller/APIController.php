@@ -18,7 +18,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function mmobjMostViewedAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
@@ -52,7 +52,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function seriesMostViewedAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
@@ -86,7 +86,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
@@ -133,7 +133,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsMmobjAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
         $mmobjId = $request->get('mmobj');
@@ -173,7 +173,7 @@ class APIController extends Controller implements NewAdminController
      */
     public function viewsSeriesAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
         $seriesId = $request->get('series');

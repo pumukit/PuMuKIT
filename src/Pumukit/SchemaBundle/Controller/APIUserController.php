@@ -20,7 +20,7 @@ class APIUserController extends Controller
         $repo = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:User');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $users = $repo->findAll();
         $data = $serializer->serialize($users, $request->getRequestFormat());

@@ -20,7 +20,7 @@ class TestBackofficeController extends Controller implements AdminController
           ->get('doctrine_mongodb.odm.document_manager')
           ->getRepository('PumukitSchemaBundle:MultimediaObject');
         $data = $mmobjRepo->createQueryBuilder()->distinct('_id')->getQuery()->execute();
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
         return new Response($response);

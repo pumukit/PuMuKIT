@@ -18,7 +18,7 @@ class APIRecordedController extends Controller
      */
     public function mmobjRecordedAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $recordsService = $this->get('pumukitschema.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
@@ -50,7 +50,7 @@ class APIRecordedController extends Controller
      */
     public function seriesRecordedAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $recordsService = $this->get('pumukitschema.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
@@ -81,7 +81,7 @@ class APIRecordedController extends Controller
      */
     public function hoursRecordedAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $recordsService = $this->get('pumukitschema.stats');
 
         list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);

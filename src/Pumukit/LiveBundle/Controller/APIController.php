@@ -18,7 +18,7 @@ class APIController extends Controller
     public function eventsAction(Request $request)
     {
         $eventRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Event');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');
         if (!$limit || $limit > 100) {
@@ -60,7 +60,7 @@ class APIController extends Controller
     public function livessAction(Request $request)
     {
         $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');
         if (!$limit || $limit > 100) {

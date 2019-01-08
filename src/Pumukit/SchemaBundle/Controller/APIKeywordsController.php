@@ -43,7 +43,7 @@ class APIKeywordsController extends Controller
         $coll = $this
           ->get('doctrine_mongodb.odm.document_manager')
           ->getDocumentCollection($collName);
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $pipeline = array(
             array('$project' => array('k' => '$keywords.'.$lang, '_id' => false)),

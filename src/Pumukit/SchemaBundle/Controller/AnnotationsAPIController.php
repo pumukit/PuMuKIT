@@ -26,7 +26,7 @@ class AnnotationsAPIController extends Controller
     {
         //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $episode = $request->get('episode');
         $type = $request->get('type');
@@ -88,7 +88,7 @@ class AnnotationsAPIController extends Controller
      */
     public function getByIdAction(Annotation $annotation, Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $data = array(
             'annotation' => array(
                 'annotationId' => $annotation->getId(),
@@ -118,7 +118,7 @@ class AnnotationsAPIController extends Controller
     {
         //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         //$annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
         $episode = $request->get('episode');
@@ -177,7 +177,7 @@ class AnnotationsAPIController extends Controller
     {
         //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $value = $request->get('value');
         $annotation->setValue($value);
@@ -212,7 +212,7 @@ class AnnotationsAPIController extends Controller
      */
     public function deleteAction(Annotation $annotation, Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
 
         $this->get('doctrine_mongodb.odm.document_manager')->remove($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
