@@ -269,6 +269,8 @@ class UNESCOController extends Controller implements NewAdminController
                     }
                 } elseif (('mm.numerical_id' === $key) && !empty($value)) {
                     $newCriteria['numerical_id'] = intval($value);
+                } elseif ((false !== strpos($key, 'properties')) && !(empty($value))) {
+                    $newCriteria[$key] = $value;
                 } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
                         $newCriteria['type'] = intval($value);
