@@ -554,6 +554,8 @@ class UNESCOController extends Controller implements NewAdminController
      * @param $multimediaObjectId
      *
      * @return JsonResponse
+     *
+     * @throws \Exception
      * @Route("/delete/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_delete_tag")
      */
     public function deleteTagDnDAction($tagCod, $multimediaObjectId)
