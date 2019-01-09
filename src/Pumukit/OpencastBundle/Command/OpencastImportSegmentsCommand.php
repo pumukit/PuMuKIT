@@ -155,6 +155,10 @@ EOT
             'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
         );
 
+        if ($this->force) {
+            $criteria['embeddedSegments'] = array('$exists' => false);
+        }
+
         if ($this->id) {
             $criteria['_id'] = new \MongoId($this->id);
         }
