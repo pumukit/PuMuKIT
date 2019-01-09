@@ -258,6 +258,19 @@ class UNESCOController extends Controller implements NewAdminController
                 } elseif (('seriesID' === $key) && !empty($value)) {
                     $newCriteria['series'] = new \MongoId($value);
                     $formBasic = true;
+                } elseif (('series.numerical_id' === $key) && !empty($value)) {
+                    $dm = $this->get('doctrine_mongodb')->getManager();
+                    $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('numerical_id' => intval($value)));
+                    if ($series) {
+                        $newCriteria['series'] = new \MongoId($series->getId());
+                    } else {
+                        // NOTE: Return 0 results.
+                        $newCriteria['series'] = new \MongoId();
+                    }
+                } elseif (('mm.numerical_id' === $key) && !empty($value)) {
+                    $newCriteria['numerical_id'] = intval($value);
+                } elseif ((false !== strpos($key, 'properties')) && !(empty($value))) {
+                    $newCriteria[$key] = $value;
                 } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
                         $newCriteria['type'] = intval($value);
@@ -541,6 +554,8 @@ class UNESCOController extends Controller implements NewAdminController
      * @param $multimediaObjectId
      *
      * @return JsonResponse
+     *
+     * @throws \Exception
      * @Route("/delete/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_delete_tag")
      */
     public function deleteTagDnDAction($tagCod, $multimediaObjectId)
