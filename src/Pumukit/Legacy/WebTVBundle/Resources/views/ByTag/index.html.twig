@@ -1,9 +1,0 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
-
-{% block body %}
-	<h1 id="index_h1">
-      {{ title|trans }}: {{tag.getTitle()}}
-    </h1>
-	{% include 'PumukitWebTVBundle:ByTag:list.html.twig' %}
-	{% include 'PumukitWebTVBundle:ByTag:pager.html.twig' %}
-{% endblock %}
