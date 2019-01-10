@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-//Used on countMmobjsInTags TODO Move to service
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class CategoriesController extends Controller implements WebTVController
@@ -38,7 +37,6 @@ class CategoriesController extends Controller implements WebTVController
                          ->getTree($groundsRoot);
 
         //Create array structure
-        //TODO Move this logic to a service.
         $tagsArray = array();
         foreach ($tagsTree as $tag) {
             $path = sprintf('%s__object', $tag->getPath());
@@ -63,7 +61,6 @@ class CategoriesController extends Controller implements WebTVController
 
         //Count number multimediaObjects
         $provider = $request->get('provider');
-        //TODO Move this logic into a service.
         $counterMmobjs = $this->countMmobjInTags($provider);
         $linkService = $this->get('pumukit_web_tv.link_service');
         foreach ($tagsArray as $id => $parent) {
@@ -129,7 +126,6 @@ class CategoriesController extends Controller implements WebTVController
         return array('allGrounds' => $allGrounds, 'title' => $groundsRoot->getTitle(), 'list_general_tags' => $listGeneralParam);
     }
 
-    //TODO Move this function into a service.
     private function countMmobjInTags($provider = null)
     {
         $parentCod = $this->container->getParameter('categories_tag_cod');
@@ -161,7 +157,6 @@ class CategoriesController extends Controller implements WebTVController
         return $mmobjCount;
     }
 
-    //TODO Move this function into a service.
     private function countGeneralMmobjsInTag($tag, $provider = null)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');

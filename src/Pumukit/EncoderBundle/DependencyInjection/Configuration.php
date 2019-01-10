@@ -146,7 +146,6 @@ class Configuration implements ConfigurationInterface
                             ->info('Encoder host description')->end()
                             ->arrayNode('profiles')
                                 ->info('Array of profiles. If set, only the profiles listed will be transcoded here')
-                                //TODO: Use this from Symfony 3.3 onwards ->beforeNormalization()->castToArray()
                                 ->beforeNormalization()
                                     ->ifString()
                                     ->then(function ($v) {

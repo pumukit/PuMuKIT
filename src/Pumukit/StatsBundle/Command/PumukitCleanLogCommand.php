@@ -40,7 +40,6 @@ EOT
             $this->from = new \DateTimeImmutable($from);
         }
 
-        //TODO add to pumukit yml.
         $this->execRemoveQuery('TTK Zabbix Agent');
 
         foreach ($detector->getMetadatas() as $metadata) {

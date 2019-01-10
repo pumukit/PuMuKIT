@@ -177,7 +177,6 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $isEventPoster = $request->get('is_event_poster', false);
         $picService = $this->get('pumukitschema.mmspic');
 
-        // TODO search in picservice according to page (in criteria)
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/mmspic/page', $request->get('page', 1));
         }

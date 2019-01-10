@@ -134,7 +134,6 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->persist($series_type2);
         $this->dm->flush();
 
-        // TODO this souldn't be in a test. This should be executed when creating the SeriesType
         //Workaround to fix reference method initialization.
         $this->dm->clear(get_class($series_type1));
         $series_type1 = $this->dm->find('PumukitSchemaBundle:SeriesType', $series_type1->getId());

@@ -13,7 +13,6 @@ class LocaleController extends Controller implements WebTVController
      */
     public function changeAction($locale, Request $request)
     {
-        //TODO validate if is a valid locale using conf file.
         $this->get('session')->set('_locale', $locale);
         $this->get('router.request_context')->setParameter('_locale', $locale);
         $request->setLocale($locale);

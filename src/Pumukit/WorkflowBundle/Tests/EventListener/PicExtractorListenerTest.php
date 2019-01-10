@@ -100,7 +100,6 @@ class PicExtractorListenerTest extends WebTestCase
 
     public function testAddDefaultAudioPic()
     {
-        // TODO: Remove this line when adding final default audio image
         $this->markTestSkipped('S');
 
         $series = $this->factoryService->createSeries();
@@ -172,7 +171,6 @@ class PicExtractorListenerTest extends WebTestCase
 
     public function testPicExtractorAudioError()
     {
-        // TODO: Remove this line when adding final default audio image
         $this->markTestSkipped('S');
 
         $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')

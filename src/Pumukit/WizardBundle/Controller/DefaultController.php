@@ -394,7 +394,6 @@ class DefaultController extends Controller
             /*     $showSeries = true; */
             /* } */
 
-            // TODO Fragment this. Develop better way.
             $option = $this->getKeyData('option', $typeData);
             try {
                 if ('single' === $option) {
@@ -509,7 +508,6 @@ class DefaultController extends Controller
                             try {
                                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
                             } catch (\Exception $e) {
-                                // TODO: filter invalid files another way
                                 if (!strpos($e->getMessage(), 'Unknown error')) {
                                     $this->removeInvalidMultimediaObject($multimediaObject, $series);
                                     throw $e;
@@ -526,7 +524,6 @@ class DefaultController extends Controller
                 }
                 $dm->flush();
             } catch (\Exception $e) {
-                // TODO filter unknown errors
                 $message = preg_replace("/\r|\n/", '', $e->getMessage());
 
                 return array(
@@ -540,7 +537,6 @@ class DefaultController extends Controller
                 );
             }
         } else {
-            // TODO THROW EXCEPTION OR RENDER SPECIFIC TEMPLATE WITH MESSAGE
             return array(
                 'uploaded' => 'failed',
                 'message' => 'No data received',

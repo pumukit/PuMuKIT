@@ -60,7 +60,6 @@ class ProfileService
     public function getProfilesByTags($tags)
     {
         $tags = is_array($tags) ? $tags : array($tags);
-        //TODO Add tag
         return array_filter($this->profiles, function ($profile) use ($tags) {
             return 0 == count(array_diff($tags, array_filter(preg_split('/[,\s]+/', $profile['tags']))));
         });

@@ -517,7 +517,6 @@ class PumukitAdminExtension extends \Twig_Extension
         return $description;
     }
 
-    //TODO: Pass to a SERVICE
     private function countMmobjsByStatus($series)
     {
         if (isset($this->countMmobjsByStatus[$series->getId()])) {
@@ -554,7 +553,6 @@ class PumukitAdminExtension extends \Twig_Extension
         return $this->countMmobjsByStatus[$series->getId()] = $result;
     }
 
-    //TODO: Pass to a SERVICE
     private function countMmobjsWithTag($series, $tagCod)
     {
         if (isset($this->countMmobjsWithTag[$series->getId()][$tagCod])) {

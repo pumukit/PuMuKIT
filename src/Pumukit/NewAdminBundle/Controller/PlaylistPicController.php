@@ -169,7 +169,6 @@ class PlaylistPicController extends Controller implements NewAdminController
     {
         $picService = $this->get('pumukitschema.seriespic');
 
-        // TODO search in picservice according to page (in criteria)
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
         }

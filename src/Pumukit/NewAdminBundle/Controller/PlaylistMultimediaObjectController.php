@@ -121,7 +121,6 @@ class PlaylistMultimediaObjectController extends Controller
         );
     }
 
-    //TODO: This? Or getResources(like in PlaylistController?)
     protected function getPlaylistMmobjs(Series $series, $request)
     {
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
@@ -471,8 +470,12 @@ class PlaylistMultimediaObjectController extends Controller
         return new JsonResponse(array());
     }
 
+
     /**
-     * TODO.
+     * @param Request $request
+     * @param string  $idsKey
+     *
+     * @return mixed
      */
     private function getIds(Request $request, $idsKey = 'ids')
     {

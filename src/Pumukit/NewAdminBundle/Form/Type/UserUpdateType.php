@@ -42,16 +42,6 @@ class UserUpdateType extends AbstractType
                       'disabled' => !$user->isLocal(),
                       'required' => false,
                       'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
-            /* TODO check password
-               ->add('plain_password', 'repeated', array(
-               'type' => 'password',
-               'options' => array('attr' => array('oninvalid' => "setCustomValidity('password-field')")),
-               'required' => false,
-               'invalid_message' => 'The password fields must match.',
-               'first_options'  => array('label' => 'Password'),
-               'second_options' => array('label' => 'Repita Password'),
-               'attr' => array('style' => 'width: 420px')))
-            */
             ->add('email', EmailType::class,
                   array(
                       'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),

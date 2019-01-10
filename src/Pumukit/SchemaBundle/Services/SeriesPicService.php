@@ -70,7 +70,7 @@ class SeriesPicService
             $pic->addTag('banner');
             $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
         }
-        // TODO: add pic the latest if it is banner
+
         $series->addPic($pic);
         $this->dm->persist($series);
         $this->dm->flush();
@@ -102,7 +102,7 @@ class SeriesPicService
             $pic->addTag('banner');
             $series = $this->addBanner($series, $pic->getUrl(), $bannerTargetUrl);
         }
-        // TODO: add pic the latest if it is banner
+
         $series->addPic($pic);
         $this->dm->persist($series);
         $this->dm->flush();

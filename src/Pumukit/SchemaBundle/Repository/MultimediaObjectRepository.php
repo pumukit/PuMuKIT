@@ -794,7 +794,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find distinct url pics in series.
-     * TODO Limit and sort.
      *
      * @param Series $series
      *
@@ -807,7 +806,6 @@ class MultimediaObjectRepository extends DocumentRepository
 
     /**
      * Find distinct url pics.
-     * TODO Limit and sort.
      *
      * @return mixed
      */
@@ -849,8 +847,7 @@ class MultimediaObjectRepository extends DocumentRepository
     }
 
     /**
-     * Find by series, tag code and status.
-     * TODO not needed (Using findBySeries and filter).
+     * Find by series, tag code and status. Not needed (Using findBySeries and filter).
      *
      * @param Series $series
      * @param $tagCod
@@ -1541,7 +1538,6 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function getGroupsIdsArray($groups)
     {
-        // TODO #10479: Find better way to get array with only IDs of groups
         $groupsIds = array();
         if ($groups) {
             if ('array' !== gettype($groups)) {

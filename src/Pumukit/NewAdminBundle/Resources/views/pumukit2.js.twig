@@ -368,7 +368,7 @@ window.submit_delete_link = function(id, mmId)
 window.update_mmspic = function(mm_id, resource_type) {
     var resource_type = typeof resource_type !== 'undefined' ? resource_type : 'mms';
     var element = document.querySelector('img.pic-' + mm_id + '.first');
-    var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'}; //TODO get default images from service.
+    var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'};
     var default_pic = default_pics[resource_type] || default_pics['mms'];
     var src = element ? element.src : default_pic;
     $('img.pic-' + mm_id + '.preview').each(function(e, i){e.src = src});
@@ -625,7 +625,6 @@ window.filter_click_letter = function(letter)
   $('#list_people').load('{{ path('pumukitnewadmin_person_list')|raw }}', $('#filter_people').serialize());
 }
 
-// TODO complete todos
 window.change_select = function(element, selector, pluralName, seriesId)
 {
     var i = selector.val();
@@ -1221,18 +1220,6 @@ function comprobar_date(date, re){
 }
 
 procesaOk = function(){
-  /* TODO get user culture expression for timedate instead of fixed static expression
-  // get_js_regexp_timedate($sf_user->getCulture())
-  if(comprobar_form_pub( $("temporizada1_temporizada").checked, $("timestart1").value, $("timeend1").value,
-                         $("temporizada2_temporizada").checked, $("timestart2").value, $("timeend2").value,
-                         /^(\d+)\/(\d+)\/(\d+) (\d+):(\d+)(:(\d+))?$/
-                         )) {
-    borraFechasSiInactivas();
-    $('#remember_save_mm_pub').hide();
-    return true;
-  } else {
-    return false;
-  }*/
   $('#remember_save_mm_pub').hide();
   return true;
 }
@@ -1242,12 +1229,6 @@ procesaReset = function(){
   $('#error_end1').hide();
   $('#error_start2').hide();
   $('#error_end2').hide();
-  /* {# TODO CHECK BROADCAST EMPTY
-  if ( {{ mm.getBroadcast().id }} != 1 ) {
-     $('broadcast_password').show();
-  } else {
-     $('broadcast_password').hide();
-  } #} */
 }
 
 /**
@@ -2312,7 +2293,6 @@ $(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
                         }
             },
             error: function(jqXHR, textStatus, errorThrown){
-                        // TODO: talk to Rubén
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
                         no_success(errorThrown+': '+textStatus+', '+message);
@@ -2342,7 +2322,6 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', funct
                         }
             },
             error: function(jqXHR, textStatus, errorThrown){
-                        // TODO: talk to Rubén
                         var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
                         var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
                         no_success(errorThrown+': '+textStatus+', '+message);

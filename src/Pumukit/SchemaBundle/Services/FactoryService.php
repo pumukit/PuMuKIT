@@ -381,7 +381,6 @@ class FactoryService
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
         if (null !== $series = $multimediaObject->getSeries()) {
-            //TODO: Kept this until I'm sure there are no event listeners depending on mmobj changes to do operations on te series
             $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');

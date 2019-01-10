@@ -10,8 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
  *
- *
- * TODO: JobService as a Job Factory. Delete 'sets' of inmutable data, use a constructor and create `start`, `finish` and `error` function.
  */
 class Job
 {
@@ -51,7 +49,6 @@ class Job
 
     /**
      * //@var int $language_id
-     * // TODO check this or next
      * // language code instead of integer
      * //@MongoDB\Field(type="int").
      */

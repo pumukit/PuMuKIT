@@ -36,7 +36,6 @@ class CustomLanguageType extends AbstractType
         ));
     }
 
-    // TODO FIX THIS
     public static function getLanguageNames($customLanguages, $translator)
     {
         $languageNames = Intl::getLanguageBundle()->getLanguageNames();

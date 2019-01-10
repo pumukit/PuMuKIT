@@ -36,7 +36,6 @@
       <i class="mdi-navigation-refresh" id="list_profiles_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
       <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ mm.id }}">
         <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
-        {# TODO: Add more sbs profiles #}
         {% if generate_sbs %}
         <li>
           <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukit_opencast_mm_generatesbs', {'id': mm.id}) }}'); return false;">

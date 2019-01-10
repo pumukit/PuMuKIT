@@ -71,7 +71,6 @@
                         {% trans %}Select any series.{% endtrans %}
                     {% endif %}
                 </div>
-                {# TODO define $broadcasts and $seriestypes #}
                 {% include 'PumukitNewAdminBundle:Series:acordeon.html.twig' with {'name': 'series', 'broadcasts': 'broadcasts', 'seriestypes': 'seriestypes'} %}
             </div>
         {% else %}

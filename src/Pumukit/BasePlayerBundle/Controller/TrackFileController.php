@@ -48,7 +48,6 @@ class TrackFileController extends Controller
         }
 
         if ($secret = $this->container->getParameter('pumukitplayer.secure_secret')) {
-            //TODO use service
             $timestamp = time() + $this->container->getParameter('pumukitplayer.secure_duration');
             $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
 

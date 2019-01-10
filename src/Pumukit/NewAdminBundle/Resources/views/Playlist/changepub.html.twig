@@ -19,7 +19,6 @@
                   <tr>
                     <th></th>
                     <th>{% trans %}Title{% endtrans %}</th>
-                    {# TODO  sf_user.getAttribute(user_type_id, 1) is 0 #}
                     {% if true %}
                       <th>{% trans %}Status{% endtrans %}</th>
                     {% endif %}
@@ -38,7 +37,6 @@
                       </div>
                     </td>
                     <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
-                    {# TODO sf_user getAttribute('user_type_id', 1) is 0 #}
                     {% if true %}
                       <td>
                         <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
@@ -81,7 +79,6 @@
                         </div>
                       </td>
                       <td>{{ mm.getTitle() }}</td>
-                      {# TODO sf_usergetAttribute('user_type_id', 1) is 0 #}
                       {% if true %}
                         <td>
                           <select name="data[{{ mm.id }}][status]" id="status_change_pub_{{ mm.id }}" class="status_change_pub form-control">

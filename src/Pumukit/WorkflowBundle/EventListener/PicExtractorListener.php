@@ -41,7 +41,7 @@ class PicExtractorListener
 
     public function onJobSuccess(JobEvent $event)
     {
-        $profileName = $event->getJob()->getProfile(); //TODO: This function should be called "getProfileName".
+        $profileName = $event->getJob()->getProfile();
         $profile = $this->profileService->getProfile($profileName);
         $generatePic = $profile['generate_pic'];
 
@@ -64,7 +64,6 @@ class PicExtractorListener
         if ($multimediaObject->getPics()->isEmpty() && $this->autoExtractPic) {
             try {
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
-                    // TODO: Change return values when adding final default audio image
                     //return $this->addDefaultAudioPic($multimediaObject, $track);
                     return false;
                 } else {
