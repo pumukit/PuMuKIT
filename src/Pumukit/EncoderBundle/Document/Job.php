@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Pumukit\EncoderBundle\Document\Job.
  *
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
- *
  */
 class Job
 {

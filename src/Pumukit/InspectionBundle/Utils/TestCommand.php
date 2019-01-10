@@ -9,7 +9,7 @@ class TestCommand
         if (!function_exists('exec')) {
             return false;
         }
-        
+
         $testCommand = 'which ';
         $os = strtolower(PHP_OS);
         if (0 === strpos($os, 'win')) {

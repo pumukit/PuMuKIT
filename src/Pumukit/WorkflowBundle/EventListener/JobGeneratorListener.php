@@ -78,6 +78,7 @@ class JobGeneratorListener
      * @param                  $pubChannelCod
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)

@@ -470,7 +470,6 @@ class PlaylistMultimediaObjectController extends Controller
         return new JsonResponse(array());
     }
 
-
     /**
      * @param Request $request
      * @param string  $idsKey
