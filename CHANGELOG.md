@@ -5,6 +5,21 @@ To get the diff for a specific change, go to https://github.com/campusdomar/PuMu
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
 
+## [2.5.0](https://github.com/campusdomar/PuMuKIT2/compare/2.5.0...2.4.0) (2019-01-10)
+- Added a button to synchronize metadata from one to the rest of the MMO of a Series.
+- Enabled Series synchonization between PuMuKIT and Opencast. Now they can be selected on Galicaster Units.
+- Created a shortcut from the MMO player page to edit it.
+- Automatic importation from Opencast to PuMuKIT.
+- Original files names stored in PuMuKIT.
+- Copy of keywords enabled.
+- Added search by groups at UNESCO catalogue.
+- HTML tags compatibility for live events messages.
+- Play VOD playlist at an ended live event iframe.
+- Added new Series comment input.
+- Added simplified ID catalogation to Series and MMO.
+- Delete of Opencast tracks on cloned MMO allowed.
+- Bugfixing and performance improvements.
+
 ## [2.4.0](https://github.com/campusdomar/PuMuKIT2/compare/2.3.3...2.4.0) (2018-02-06)
 - Support for multimedia objects with an external player.
 - Fix WCAG2AA accessibility (a11y) errors.
