@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\EncoderBundle\Document\Job;
 
 class PumukitEncoderExecuteCommand extends ContainerAwareCommand
 {
@@ -19,8 +18,6 @@ class PumukitEncoderExecuteCommand extends ContainerAwareCommand
             ->addArgument('id', InputArgument::REQUIRED, 'Job identifier to execute')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to re-execute jobs')
             ->setHelp(<<<'EOT'
-TODO
-
 The --force parameter ...
 
 EOT
@@ -40,14 +37,6 @@ EOT
             throw new \RuntimeException("Not job found with id $id.");
         }
 
-        //TODO STATUS is executing when this command is executed. Must be waiting.
-        /*
-        if ((!$input->getOption('force')) && (JOB::STATUS_WAITING != $job->getStatus())) {
-            throw new \RuntimeException("The job is not in the waiting state");
-        }
-        */
-
-        //TODO Add log.
         $jobService->execute($job);
     }
 }

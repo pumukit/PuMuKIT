@@ -303,8 +303,6 @@ class AdminController extends ResourceController implements NewAdminController
 
     /**
      * @throws \Exception
-     *
-     * TODO: Move to RoleController
      */
     public function exportRolesAction()
     {
@@ -355,8 +353,6 @@ class AdminController extends ResourceController implements NewAdminController
 
     /**
      * @throws \Exception
-     *
-     * TODO: Move to PermissionProfileController
      */
     public function exportPermissionProfilesAction()
     {

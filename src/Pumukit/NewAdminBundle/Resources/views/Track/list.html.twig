@@ -213,7 +213,7 @@
 </tbody></table>
 
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-{% if false %} {# TODO ($sf_request->getParameter('preview')) #} {# define update_preview #}
+{% if false %}
 <script type="text/javascript">
   update_preview('{{ mm.id }}');
 </script>

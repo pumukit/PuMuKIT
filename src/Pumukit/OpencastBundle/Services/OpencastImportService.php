@@ -159,7 +159,6 @@ class OpencastImportService
             try {
                 $archiveMediaPackage = $this->opencastClient->getMediapackageFromArchive($opencastId);
             } catch (\Exception $e) {
-                // TODO - Trace error
                 return $opencastUrls;
             }
             $media = $this->getMediaPackageField($archiveMediaPackage, 'media');

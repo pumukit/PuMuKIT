@@ -45,7 +45,6 @@
           <fieldset>
             <div class="form-group">
               <label class="control-label" for="title">{% trans  %}Title{% endtrans %}</label>
-              {# TODO two culture #}
               {% for locale in locales %}
                 <div class="input-group">
                   <input type="text" name="playlist_title[{{ locale }}]" class="new_playlist_form_title form-control" placeholder="title {{locale}}"/>
@@ -96,7 +95,6 @@
      });
      $('#new_playlist_btn').on('click', function(e){
          e.preventDefault();
-         //TODO Only if input has value. (form is valid)
          new_playlist_form.submit()
      });
 
@@ -117,7 +115,6 @@
              var $this = $(this);
              data.series_ids.push($this.attr("id"));
          });
-         //TODO Only if a checkbox is check
          $.post('{{ path('pumukitnewadmin_playlistmms_batch_add_to_several_playlist') }}', data)
           .done(function(e){
               $('#myModal').modal('hide');

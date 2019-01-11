@@ -17,7 +17,6 @@ class OpencastImportSegmentsCommand extends ContainerAwareCommand
     private $output;
     private $input;
     private $dm;
-    private $opencastImportService;
     private $logger;
     private $user;
     private $password;
@@ -72,7 +71,6 @@ EOT
         $this->input = $input;
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
 
-        $this->opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
         $this->logger = $this->getContainer()->get('logger');
 
         $this->user = trim($this->input->getOption('user'));

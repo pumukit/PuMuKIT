@@ -17,7 +17,6 @@ class FactoryService
     const DEFAULT_MULTIMEDIAOBJECT_TITLE = 'New';
 
     private $dm;
-    private $seriesRepo;
     private $tagService;
     private $personService;
     private $userService;
@@ -34,7 +33,6 @@ class FactoryService
     public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
         $this->tagService = $tagService;
         $this->personService = $personService;
         $this->userService = $userService;
@@ -383,7 +381,6 @@ class FactoryService
     public function deleteMultimediaObject(MultimediaObject $multimediaObject)
     {
         if (null !== $series = $multimediaObject->getSeries()) {
-            //TODO: Kept this until I'm sure there are no event listeners depending on mmobj changes to do operations on te series
             $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');

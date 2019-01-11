@@ -28,7 +28,6 @@ class LocalExecutor
             throw new ExecutorException($process->getErrorOutput());
         }
 
-        //TODO mix strerr and strout.
         return sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput());
     }
 }

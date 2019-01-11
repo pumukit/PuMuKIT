@@ -706,15 +706,11 @@ class SeriesRepositoryTest extends WebTestCase
         $mm21 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
 
-        // TODO: Clear doctrine mongo cache
-
         $this->assertEquals(3, count($this->repo->getMultimediaObjects($series1)));
         $this->assertEquals(2, count($this->repo->getMultimediaObjects($series2)));
 
         $this->dm->remove($mm11);
         $this->dm->flush();
-
-        // TODO: Clear doctrine mongo cache
 
         $this->assertEquals(2, count($this->repo->getMultimediaObjects($series1)));
         $this->assertEquals(2, count($this->repo->getMultimediaObjects($series2)));

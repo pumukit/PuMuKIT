@@ -214,7 +214,6 @@ class JobService
         $job->setPriority($priority);
         $job->setInitVars($initVars);
         if (null !== $language) {
-            //TODO languageId is only language "es", "en", "gl"
             $job->setLanguageId($language);
         }
         if (!empty($description)) {
@@ -455,7 +454,6 @@ class JobService
           }
         */
 
-        //TODO
         //$console = $this->getContainer()->getParameter('kernel.root_dir').'/console';
         $console = __DIR__.'/../../../../app/console';
 
@@ -555,7 +553,6 @@ class JobService
             if ($e instanceof ExecutorException && 'prod' == $this->environment) {
                 $cpuName = $job->getCpu();
                 $this->cpuService->activateMaintenance($cpuName);
-                //TODO: Refactor in a service and send email to sysadmin.
             }
         }
 
@@ -641,7 +638,6 @@ class JobService
 
         $cpu = $this->cpuService->getCpuByName($job->getCpu());
         if (CpuService::TYPE_WINDOWS === $cpu['type']) {
-            //TODO - PATH UNIX TRANSCODER and PATH WIN TRANSCODER
         }
 
         return $commandLine;

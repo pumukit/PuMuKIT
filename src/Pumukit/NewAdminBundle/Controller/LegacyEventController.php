@@ -137,8 +137,6 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function showAction(Request $request)
     {
-        $resourceName = $this->getResourceName();
-
         $data = $this->findOr404($request);
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:show.html.twig',

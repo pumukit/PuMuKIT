@@ -77,7 +77,6 @@ class JobGeneratorListenerTest extends WebTestCase
 
     public function testGetTargets()
     {
-        //TODO workaround to solve problems with @dataProvider
         $data = array(
             array('', array('standard' => array(), 'force' => array())),
             array('TAG', array('standard' => array('TAG'), 'force' => array())),

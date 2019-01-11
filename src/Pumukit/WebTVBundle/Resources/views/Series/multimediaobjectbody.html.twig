@@ -50,7 +50,7 @@
                 <!-- TRACKS -->
                 {% set tracks = mm.getFilteredTracksWithTags(['display'], [], [], []) %}
                 {% for track in tracks if not track.getHide() %}
-                    <div>{# TODO class="file audio|video" and move out gif images to serial.css file, put it in twig #}
+                    <div>
                         <span class="glyphicon glyphicon-{{ mm.isOnlyAudio() ?'headphones':'facetime-video' }}" aria-hidden="true"></span>
                         {% if magic_url is defined %}
                             {% set url_track = url('pumukit_webtv_multimediaobject_magicindex', {secret: mm.secret, 'track_id': track.id}) %}

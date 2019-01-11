@@ -130,7 +130,6 @@
             var url = "{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
             url = url.replace('__ids__', JSON.stringify(ids));
             $('#list_playlistmms').load(url, function () {
-                //TODO: reload show and info.
             });
         }
 

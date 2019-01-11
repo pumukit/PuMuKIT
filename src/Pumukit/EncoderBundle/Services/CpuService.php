@@ -82,7 +82,6 @@ class CpuService
      */
     public function isActive($cpu, $cmd = '')
     {
-        // TODO
         return true;
     }
 

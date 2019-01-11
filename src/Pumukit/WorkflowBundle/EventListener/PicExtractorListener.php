@@ -4,7 +4,6 @@ namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -42,7 +41,7 @@ class PicExtractorListener
 
     public function onJobSuccess(JobEvent $event)
     {
-        $profileName = $event->getJob()->getProfile(); //TODO: This function should be called "getProfileName".
+        $profileName = $event->getJob()->getProfile();
         $profile = $this->profileService->getProfile($profileName);
         $generatePic = $profile['generate_pic'];
 
@@ -65,7 +64,6 @@ class PicExtractorListener
         if ($multimediaObject->getPics()->isEmpty() && $this->autoExtractPic) {
             try {
                 if ($multimediaObject->isOnlyAudio() || $track->isOnlyAudio()) {
-                    // TODO: Change return values when adding final default audio image
                     //return $this->addDefaultAudioPic($multimediaObject, $track);
                     return false;
                 } else {
@@ -84,27 +82,6 @@ class PicExtractorListener
         return false;
     }
 
-    private function addDefaultAudioPic(MultimediaObject $multimediaObject, Track $track)
-    {
-        $picFile = $this->createPicFile();
-        if (null === $picFile) {
-            return false;
-        }
-        $multimediaObject = $this->mmsPicService->addPicFile($multimediaObject, $picFile);
-        if (null !== $multimediaObject) {
-            if ($multimediaObject instanceof MultimediaObject) {
-                $this->logger->info(__CLASS__.'['.__FUNCTION__.'] '
-                                    .'Extracted pic from track '.
-                                    $track->getId().' into MultimediaObject "'
-                                    .$multimediaObject->getId().'"');
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
     private function generatePicFromVideo(MultimediaObject $multimediaObject, Track $track)
     {
         $outputMessage = $this->picExtractorService->extractPic($multimediaObject, $track, $this->autoExtractPicPercentage);
@@ -117,16 +94,5 @@ class PicExtractorListener
                             .$multimediaObject->getId().'"');
 
         return true;
-    }
-
-    private function createPicFile()
-    {
-        if (copy($this->defaultAudioPic, $this->audioPicCopy)) {
-            $picFile = new UploadedFile($this->audioPicCopy, $this->defaultAudioPicOriginalName, null, null, null, true);
-
-            return $picFile;
-        }
-
-        return null;
     }
 }

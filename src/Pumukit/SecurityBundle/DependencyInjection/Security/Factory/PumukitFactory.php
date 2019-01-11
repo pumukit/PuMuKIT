@@ -4,7 +4,7 @@ namespace Pumukit\SecurityBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 
 class PumukitFactory extends AbstractFactory
@@ -60,7 +60,7 @@ class PumukitFactory extends AbstractFactory
         $provider = 'pumukit.security.authentication.provider.'.$id;
 
         $container
-            ->setDefinition($provider, new DefinitionDecorator('pumukit.security.authentication.provider'))
+            ->setDefinition($provider, new ChildDefinition('pumukit.security.authentication.provider'))
             ->replaceArgument(0, new Reference($userProviderId))
             ->replaceArgument(1, $id)
             ;
@@ -72,7 +72,7 @@ class PumukitFactory extends AbstractFactory
     {
         $entryPointId = 'security.authentication.form_entry_point.'.$id;
         $container
-            ->setDefinition($entryPointId, new DefinitionDecorator('security.authentication.form_entry_point'))
+            ->setDefinition($entryPointId, new ChildDefinition('security.authentication.form_entry_point'))
             ->addArgument(new Reference('security.http_utils'))
             ->addArgument($config['check_path'])
             ->addArgument($config['use_forward'])

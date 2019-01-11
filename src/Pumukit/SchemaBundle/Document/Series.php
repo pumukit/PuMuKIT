@@ -37,7 +37,6 @@ class Series
         self::SORT_REC_DES => array('record_date' => 'des'),
         self::SORT_REC_ASC => array('record_date' => 'asc'),
         self::SORT_ALPHAB => array('title.es' => 'asc'),
-        //TODO culture
     );
 
     public static $sortText = array(

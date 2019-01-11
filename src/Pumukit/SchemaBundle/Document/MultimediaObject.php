@@ -1548,7 +1548,6 @@ class MultimediaObject
         $r = array();
 
         foreach ($this->tracks as $track) {
-            // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
             if ($track->getHide() && $all) {
                 continue;
             }
@@ -1585,7 +1584,6 @@ class MultimediaObject
     public function getFilteredTrackWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array(), $all = true)
     {
         foreach ($this->tracks as $track) {
-            // TODO Move 'hide' field to tag 'hidden' in track (see hidden vs display tag)
             if ($track->getHide() && $all) {
                 continue;
             }

@@ -34,7 +34,6 @@ class BatchPicExtractorListener
 
     private function generatePic(MultimediaObject $multimediaObject, Track $track)
     {
-        //TODO check if repeat
         if ($this->enable) {
             if (!$multimediaObject->isOnlyAudio() && !$track->isOnlyAudio()) {
                 return $this->generatePicFromVideo($multimediaObject, $track);

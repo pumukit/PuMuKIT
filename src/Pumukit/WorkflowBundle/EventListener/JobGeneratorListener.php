@@ -74,7 +74,12 @@ class JobGeneratorListener
     }
 
     /**
-     * TODO add doc.
+     * @param MultimediaObject $multimediaObject
+     * @param                  $pubChannelCod
+     *
+     * @return array
+     *
+     * @throws \Exception
      */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {

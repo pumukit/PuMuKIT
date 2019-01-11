@@ -368,7 +368,6 @@ class PersonController extends AdminController implements NewAdminController
         $personalScopeRoleCode = $personService->getPersonalScopeRoleCode();
         try {
             $multimediaObject = $personService->createRelationPerson($person, $role, $multimediaObject);
-            // TODO Snackbars and toasts
             //$message = sprintf($this->getContext()->getI18N()->__("Persona asociada correctamente a la plantilla con el rol \"%s\"."), $this->role->getName());
             //$msg_alert = array('info', $message);
         } catch (\Exception $e) {

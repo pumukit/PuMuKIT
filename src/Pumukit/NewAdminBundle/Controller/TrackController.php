@@ -217,7 +217,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction.
+     * See: Pumukit\EncoderBundle\Controller\InfoController::retryJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
@@ -231,7 +231,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
+     * See: Pumukit\EncoderBundle\Controller\InfoController::infoJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("job", class="PumukitEncoderBundle:Job", options={"id" = "jobId"})
@@ -245,7 +245,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction.
+     * See: Pumukit\EncoderBundle\Controller\InfoController::deleteJobAction.
      *
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      */
@@ -259,7 +259,7 @@ class TrackController extends Controller implements NewAdminController
     }
 
     /**
-     * TODO See: Pumukit\EncoderBundle\Controller\InfoController::updateJobPriorityAction.
+     * See: Pumukit\EncoderBundle\Controller\InfoController::updateJobPriorityAction.
      */
     public function updateJobPriorityAction(Request $request)
     {

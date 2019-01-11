@@ -8,12 +8,6 @@
     </h4>
     {% if mm is defined and mm%}
     <div class="well">
-      {# TODO CLASS IMAGE
-      <div>
-        <span></span>
-        <img src="{{ mm|first_url_pic }}"/>
-        </div>
-      #}
       <div>
         <span>{% trans %}SERIES{% endtrans %}: &nbsp;</span>
         <span>{{ series.getTitle() }}</span>
@@ -72,9 +66,6 @@
         </ul>
       </div>
     </div>
-    {# TODO
-    <?php include_partial('uploads/ayuda', array('que' => 'cuatro')) ?>
-    #}
   </div>
 </div>
 {% endblock wizard_body %}

@@ -6,7 +6,6 @@ class RemoteHTTPExecutor
 {
     public function execute($command, array $cpu)
     {
-        //TODO TEST
         if (!function_exists('curl_init')) {
             throw new ExecutorException('Curl is required to execute remote commands.');
         }

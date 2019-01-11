@@ -21,9 +21,6 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
                 new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states'),
             ))
             ->setHelp(<<<'EOT'
-TODO
-
-
 EOT
           );
     }

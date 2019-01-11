@@ -13,13 +13,11 @@ class PlaylistType extends AbstractType
 {
     private $translator;
     private $locale;
-    private $disablePudenew;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];
-        $this->disablePudenew = $options['disable_PUDENEW'];
 
         $builder
             ->add('i18n_title', TextI18nType::class,

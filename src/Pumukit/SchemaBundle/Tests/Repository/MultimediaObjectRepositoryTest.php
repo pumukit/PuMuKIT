@@ -1381,7 +1381,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($mm23, $this->repo->findOneWithoutTag($tag2));
 
         // FIND WITH ALL TAGS
-        // TODO
 
         // FIND WITHOUT ALL TAGS
         $arrayTags = array($tag2, $tag3);
@@ -1578,7 +1577,6 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, count($this->repo->findDistinctUrlPics()));
 
-        // TODO Check sort by public date #6104
         $mm11->setPublicDate(new \DateTime('2015-01-03 15:05:16'));
         $mm12->setPublicDate(new \DateTime('2015-01-03 15:05:20'));
         $mm21->setPublicDate(new \DateTime('2015-01-03 15:05:25'));

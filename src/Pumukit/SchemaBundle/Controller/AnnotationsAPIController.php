@@ -24,7 +24,6 @@ class AnnotationsAPIController extends Controller
      */
     public function getAction(Request $request)
     {
-        //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('jms_serializer');
 
@@ -36,7 +35,6 @@ class AnnotationsAPIController extends Controller
         $offset = $request->get('offset') ?: 0;
         $total = 10;
 
-        //TODO: Do the annotation getting using a service function.
         //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
         $resAnnotations = array();
         $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
@@ -116,7 +114,6 @@ class AnnotationsAPIController extends Controller
      */
     public function createNewAction(Request $request)
     {
-        //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('jms_serializer');
 
@@ -138,7 +135,7 @@ class AnnotationsAPIController extends Controller
         $annotation->setLength(0); //This field is not very useful.
         $annotation->setCreated(new \DateTime());
         $userId = $this->getUser() ? $this->getUser()->getId() : 'anonymous';
-        $annotation->setUserId($userId); //TODO: How do we get the user_id?
+        $annotation->setUserId($userId);
         $session = new Session(); //Using symfony sessions instead of php session_id()
         $session = $session->getId();
         $annotation->setSession($session);
@@ -175,7 +172,6 @@ class AnnotationsAPIController extends Controller
      */
     public function editAction(Annotation $annotation, Request $request)
     {
-        //TODO: Do the annotation getting using a service function.
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('jms_serializer');
 

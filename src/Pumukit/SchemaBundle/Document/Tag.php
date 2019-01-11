@@ -68,8 +68,6 @@ class Tag
      * @MongoDB\UniqueIndex(order="asc")
      * @Assert\Regex("/^\w*$/")
      * @Gedmo\TreePathSource
-     *
-     * TODO Unique Index #6098
      */
     private $cod = '';
 

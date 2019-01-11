@@ -17,17 +17,4 @@
     <a href="#" id="pumukitnewadmin_series_public_date_sort_not_selected">{% trans %}Date{% endtrans %}</a>
   </th>
 {% endif %}
-
-{# TODO fix this sorting
-{% if 'multimedia_objects' == app.session.get('admin/series/sort') %}
-  <th id="th-mm" width="1%">
-    <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_selected">{% trans %}Mm.Obj.{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
-  </th>  
-{% else %}
-  <th id="th-mm" width="1%">
-    <a href="#" id="pumukitnewadmin_series_multimedia_objects_sort_not_selected">{% trans %}Mm.Obj.{% endtrans %}</a>
-  </th>
-{% endif %}
-#}
-{# TODO delete this line when fixing the previous sorting #}
 <th id="th-mm" width="1%">{% trans %}Mm.Obj.{% endtrans %}</th>

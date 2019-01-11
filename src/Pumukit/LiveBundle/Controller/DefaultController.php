@@ -79,7 +79,6 @@ class DefaultController extends Controller
      */
     public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
         $criteria = array(
@@ -192,7 +191,7 @@ class DefaultController extends Controller
             $secondsToEvent = $firstNextSession - ($now->getTimeStamp() * 1000);
         }
 
-        if (0 === count($nowSessions) and 0 === count($nextSessions) && $iframe) {
+        if (0 === count($nowSessions) && 0 === count($nextSessions) && $iframe) {
             $qb = $this->getMultimediaObjects($multimediaObject->getSeries()->getId());
             $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
             $multimediaObjectPlaylist = $qb->getQuery()->execute()->getSingleResult();
@@ -357,7 +356,7 @@ class DefaultController extends Controller
             return false;
         }
 
-        $response = $this->_recaptcha_http_post(array(
+        $response = $this->recaptchaHttpPost(array(
             'secret' => $privatekey,
             'remoteip' => $remoteip,
             'response' => $response,
@@ -375,7 +374,7 @@ class DefaultController extends Controller
      *
      * @return array response
      */
-    private function _recaptcha_http_post($data)
+    private function recaptchaHttpPost($data)
     {
         $verify = curl_init();
         curl_setopt($verify, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');

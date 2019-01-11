@@ -90,7 +90,6 @@ class SimpleController extends Controller
                 array(), $duration, JobService::ADD_JOB_NOT_CHECKS
             );
         } catch (\Exception $e) {
-            //TODO Hanle error.
             throw $e;
         }
 

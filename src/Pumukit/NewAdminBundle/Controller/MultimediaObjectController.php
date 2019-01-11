@@ -744,7 +744,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function cloneAction(Request $request)
     {
         $resource = $this->findOr404($request);
-        $resourceId = $resource->getId();
         $seriesId = $resource->getSeries()->getId();
 
         $this->get('pumukitschema.factory')->cloneMultimediaObject($resource);
@@ -1348,7 +1347,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $person = $personRepo->find($owner);
             if ($person) {
                 if ($loggedInUser === $person->getUser()) {
-                    $userInOnwers = true;
+                    $userInOwners = true;
                     break;
                 }
             }
