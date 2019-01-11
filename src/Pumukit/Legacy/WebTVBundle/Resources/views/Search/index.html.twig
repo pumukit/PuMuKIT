@@ -1,7 +1,0 @@
-{% extends 'PumukitWebTVBundle::layout.html.twig' %}
-
-{% block body %}
-	<h1 id="index_h1">{% if type == "series"%}{% trans %}Series search{% endtrans %}{% else %}{% trans %}Multimedia object search{% endtrans %}{% endif %}</h1>
-	{% include 'PumukitWebTVBundle:Search:list.html.twig' %}
-	{% include 'PumukitWebTVBundle:Search:pager.html.twig' %}
-{% endblock %}
