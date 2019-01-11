@@ -146,12 +146,7 @@ class Configuration implements ConfigurationInterface
                             ->info('Encoder host description')->end()
                             ->arrayNode('profiles')
                                 ->info('Array of profiles. If set, only the profiles listed will be transcoded here')
-                                ->beforeNormalization()
-                                    ->ifString()
-                                    ->then(function ($v) {
-                                        return array($v);
-                                    })
-                                ->end()
+                                ->beforeNormalization()->castToArray()
                                 ->prototype('scalar')
                             ->end()
                         ->end()
