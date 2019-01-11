@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 class PodcastInitTagsCommand extends ContainerAwareCommand
 {
     private $dm = null;
+    private $tagRepo;
 
     protected function configure()
     {
