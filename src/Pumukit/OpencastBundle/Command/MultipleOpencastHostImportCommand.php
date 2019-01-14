@@ -48,15 +48,25 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             
             <info> ** Example ( check and list ):</info>
             
+            * Tracks without master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
+            
+            * Tracks master
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581"</comment>
             
             This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
+            * Import tracks no master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
+            
+            * Import tracks master
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --force</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
             );
