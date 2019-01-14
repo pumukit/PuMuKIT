@@ -96,8 +96,6 @@ EOT
             )
         );
         $this->generateNumericalID($series, $lastNumericalIDSeries);
-
-        die;
     }
 
     private function checkStatus()
