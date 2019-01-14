@@ -156,6 +156,8 @@ EOT
      * @param ClientService $clientService
      *
      * @return bool
+     *
+     * @throws \Exception
      */
     private function checkOpencastStatus(ClientService $clientService)
     {
@@ -243,15 +245,16 @@ EOT
      * @param ClientService         $clientService
      * @param OpencastImportService $opencastImportService
      * @param MultimediaObject      $multimediaObject
+     * @param                       $master
      *
      * @throws \Exception
      */
     private function importTrackOnMultimediaObject(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $master)
     {
         if ($master) {
-            $mediaPackage = $clientService->getMediapackageFromArchive($multimediaObject->getProperty('opencast'));
+            $mediaPackage = $clientService->getMediaPackageFromArchive($multimediaObject->getProperty('opencast'));
         } else {
-            $mediaPackage = $clientService->getMediapackage($multimediaObject->getProperty('opencast'));
+            $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
         }
 
         $media = $this->getMediaPackageField($mediaPackage, 'media');
@@ -290,6 +293,8 @@ EOT
      * @param ClientService   $clientService
      * @param                 $multimediaObjects
      * @param                 $master
+     *
+     * @throws \Exception
      */
     private function showMultimediaObjects(OutputInterface $output, ClientService $clientService, $multimediaObjects, $master)
     {
@@ -308,10 +313,10 @@ EOT
 
         foreach ($multimediaObjects as $multimediaObject) {
             if ($master) {
-                $mediaPackage = $clientService->getMediapackageFromArchive($multimediaObject->getProperty('opencast'));
+                $mediaPackage = $clientService->getMediaPackageFromArchive($multimediaObject->getProperty('opencast'));
                 $this->showMessage($output, $multimediaObject, $mediaPackage);
             } else {
-                $mediaPackage = $clientService->getMediapackage($multimediaObject->getProperty('opencast'));
+                $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
                 $this->showMessage($output, $multimediaObject, $mediaPackage);
             }
         }

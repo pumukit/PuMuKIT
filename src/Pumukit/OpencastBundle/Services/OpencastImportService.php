@@ -156,7 +156,7 @@ class OpencastImportService
         $opencastUrls = array();
         if (null !== $opencastId) {
             try {
-                $archiveMediaPackage = $this->opencastClient->getMediapackageFromArchive($opencastId);
+                $archiveMediaPackage = $this->opencastClient->getMediaPackageFromArchive($opencastId);
             } catch (\Exception $e) {
                 // TODO - Trace error
                 return $opencastUrls;
