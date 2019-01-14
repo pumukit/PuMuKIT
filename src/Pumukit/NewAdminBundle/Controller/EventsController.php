@@ -461,7 +461,7 @@ class EventsController extends Controller implements NewAdminController
         $factoryService = $this->container->get('pumukitschema.factory');
         $translator = $this->container->get('translator');
 
-        if (0 !== count($mmObjsNotOwner)) {
+        if (0 !== count($mmObjsNotOwner) && $user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
             throw new \Exception($translator->trans('Error: Series have another owners on others events'));
         } else {
             $series = $multimediaObject->getSeries();

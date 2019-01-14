@@ -8,7 +8,11 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * Class SecurityController.
+ */
 class SecurityController extends Controller
 {
     /**
@@ -23,6 +27,7 @@ class SecurityController extends Controller
     public function canEditAction(Request $request, $id)
     {
         //Performance: No queries for anonymous users
+        $request->attributes->set('noindex', true);
         if (!$this->isGranted(PermissionProfile::SCOPE_PERSONAL) && !$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return array('access' => false, 'multimediaObject' => null);
         }
@@ -35,6 +40,9 @@ class SecurityController extends Controller
         }
 
         $canEdit = $this->isGranted('edit', $multimediaObject);
+        if (!$canEdit) {
+            throw new AccessDeniedException('Not enought permissions to edit');
+        }
 
         return array('access' => $canEdit, 'multimediaObject' => $multimediaObject);
     }

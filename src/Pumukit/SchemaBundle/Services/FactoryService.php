@@ -120,6 +120,8 @@ class FactoryService
         $this->dm->persist($series);
         $this->dm->flush();
 
+        $this->generateNumericalIDSeries($series);
+
         return $series;
     }
 
@@ -228,6 +230,7 @@ class FactoryService
         $this->dm->persist($series);
         if ($flush) {
             $this->dm->flush();
+            $this->generateNumericalIDMultimediaObject($mm);
         }
 
         return $mm;
@@ -672,5 +675,53 @@ class FactoryService
         }
 
         return $multimediaObject;
+    }
+
+    private function generateNumericalIDMultimediaObject($mm)
+    {
+        $SEMKey = 55555;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
+        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
+            ->field('numerical_id')->exists(true)
+            ->sort(array('numerical_id' => -1))
+            ->getQuery()
+            ->getSingleResult();
+
+        $lastNumericalID = 0;
+        if ($multimediaObject) {
+            $lastNumericalID = $multimediaObject->getNumericalID();
+        }
+
+        $newNumericalID = $lastNumericalID + 1;
+
+        $mm->setNumericalID($newNumericalID);
+        $this->dm->flush();
+        sem_release($seg);
+    }
+
+    private function generateNumericalIDSeries($oneSeries)
+    {
+        $SEMKey = 66666;
+        $seg = sem_get($SEMKey, 1, 0666, -1);
+        sem_acquire($seg);
+
+        $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
+            ->field('numerical_id')->exists(true)
+            ->sort(array('numerical_id' => -1))
+            ->getQuery()
+            ->getSingleResult();
+
+        $lastNumericalID = 0;
+        if ($series) {
+            $lastNumericalID = $series->getNumericalID();
+        }
+
+        $newNumericalID = $lastNumericalID + 1;
+
+        $oneSeries->setNumericalID($newNumericalID);
+        $this->dm->flush();
+        sem_release($seg);
     }
 }
