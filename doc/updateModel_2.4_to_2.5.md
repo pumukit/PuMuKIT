@@ -5,12 +5,12 @@ New feature are available on PuMuKIT 2.5.x. All videos and series will have nume
 
 To generate all numerical ID on database you will execute the following scripts on MongoDB:
 
-#### Step 1: Create index
+### Step 1: Create index
 
 ```bash
 db.Series.createIndex( { "numerical_id": 1 }, {name: "numericalID"})
 db.MultimediaObject.createIndex( { "numerical_id": 1 }, {name: "numericalID"})
-``` 
+```
 
 ### Step 2: Select your option
 
@@ -43,7 +43,7 @@ db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'propertie
 });
 ```
 
-#### Step 3: Generate numerical ID from videos and series without PuMuKIT 1 ID
+### Step 3: Generate numerical ID from videos and series without PuMuKIT 1 ID
 
 ```bash
 db.MultimediaObject.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
