@@ -13,7 +13,11 @@ To get the diff between two versions, go to https://github.com/campusdomar/PuMuK
 - Original files names stored in PuMuKIT.
 - Copy of keywords enabled.
 - Added search by groups at UNESCO catalogue.
+- Live events poster edition is allowed.
+- New chat tool within live events.
+- Live events messages customization added.
 - HTML tags compatibility for live events messages.
+- Added a button on live events to copy the event's title and description to its Series.
 - Play VOD playlist at an ended live event iframe.
 - Added new Series comment input.
 - Added simplified ID catalogation to Series and MMO.
