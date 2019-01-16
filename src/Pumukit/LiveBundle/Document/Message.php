@@ -3,7 +3,6 @@
 namespace Pumukit\LiveBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\LiveBundle\Repository\MessageRepository")
@@ -32,6 +31,13 @@ class Message
     private $multimediaObject;
 
     /**
+     * @var string channel
+     *
+     * @MongoDB\String
+     */
+    private $channel;
+
+    /**
      * @var string message
      *
      * @MongoDB\Field(type="string")
@@ -55,7 +61,7 @@ class Message
     /**
      * Get id.
      *
-     * @return id
+     * @return string
      */
     public function getId()
     {
@@ -116,6 +122,22 @@ class Message
     public function setMultimediaObject($multimediaObject)
     {
         $this->multimediaObject = $multimediaObject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChannel()
+    {
+        return $this->channel;
+    }
+
+    /**
+     * @param string $channel
+     */
+    public function setChannel($channel)
+    {
+        $this->channel = $channel;
     }
 
     /**

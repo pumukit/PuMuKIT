@@ -6,21 +6,32 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Pumukit\LiveBundle\Document\Live;
-use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
-use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * Class LiveType.
+ */
 class LiveType extends AbstractType
 {
     private $translator;
     private $locale;
 
+    /**
+     * LiveType constructor.
+     *
+     * @param TranslatorInterface $translator
+     * @param string              $locale
+     */
     public function __construct(TranslatorInterface $translator, $locale = 'en')
     {
         $this->translator = $translator;
         $this->locale = $locale;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -60,23 +71,17 @@ class LiveType extends AbstractType
                           Live::LIVE_TYPE_FMS => 'FMS (deprecated use WOWZA or AMS)',
                           Live::LIVE_TYPE_WMS => 'WMS (deprecated)',
                       ),
-                      'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
-        /*
-          ->add('resolution', new LiveresolutionType(),
-          array(
-          'label' => $this->translator->trans('Resolution', array(), null, $this->locale),
-          'required' => false))
-          ->add('qualities', new LivequalitiesType(),
-          array(
-          'label' => $this->translator->trans('Qualities', array(), null, $this->locale),
-          'required' => false))
-          ->add('ip_source', 'text',
-          array(
-          'required' => false,
-          'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
-        */
+                      'label' => $this->translator->trans('Technology', array(), null, $this->locale), ))
+            ->add('chat', 'checkbox',
+                array(
+                    'required' => false,
+                    'attr' => array('aria-label' => $this->translator->trans('Enable chat', array(), null, $this->locale)),
+                    'label' => $this->translator->trans('Enable chat', array(), null, $this->locale), ));
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -84,6 +89,9 @@ class LiveType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'pumukitnewadmin_live';

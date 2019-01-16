@@ -84,6 +84,12 @@ class Live
      * @var bool
      * @MongoDB\Field(type="boolean")
      */
+    private $chat = false;
+
+    /**
+     * @var bool
+     * @MongoDB\Field(type="boolean")
+     */
     private $broadcasting = false;
 
     /**
@@ -321,6 +327,22 @@ class Live
     public function getIndexPlay()
     {
         return $this->index_play;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isChat()
+    {
+        return $this->chat;
+    }
+
+    /**
+     * @param bool $chat
+     */
+    public function setChat($chat)
+    {
+        $this->chat = $chat;
     }
 
     /**
