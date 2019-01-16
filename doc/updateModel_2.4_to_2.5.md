@@ -14,7 +14,11 @@ db.MultimediaObject.createIndex( { "numerical_id": 1 }, {name: "numericalID"})
 
 ### Step 2: Select your option
 
-#### Case 1: You have PuMuKIT 1 ID
+Depends of you case you must execute different commands. Select your case and execute the case command lines. 
+
+#### Case 1: Upgrading from PuMuKIT 1
+
+##### Step 1: Set PuMuKIT 1 ID on numerical ID
 
 ```bash
 db.Series.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(s) {
@@ -26,24 +30,7 @@ db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id':
 });
 ```
 
-#### Case 2: Initialize numerical ID without PuMuKIT 1 ID
-
-```bash
-var nextNumericalID = 1;
-db.MultimediaObject.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
-      mm['numerical_id'] = NumberLong(nextNumericalID);
-      db.MultimediaObject.save(mm);
-      nextNumericalID = nextNumericalID + 1;
-});
-var nextNumericalID = 1;
-db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
-      ss['numerical_id'] = NumberLong(nextNumericalID);
-      db.Series.save(ss);
-      nextNumericalID = nextNumericalID + 1;
-});
-```
-
-### Step 3: Generate numerical ID from videos and series without PuMuKIT 1 ID
+##### Step 2: Generate numerical ID from videos and series without PuMuKIT 1 ID
 
 ```bash
 db.MultimediaObject.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
@@ -66,9 +53,26 @@ db.Series.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numeric
 });
 ```
 
+#### Case 2: New instance of PuMuKIT
+
+```bash
+var nextNumericalID = 1;
+db.MultimediaObject.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
+      mm['numerical_id'] = NumberLong(nextNumericalID);
+      db.MultimediaObject.save(mm);
+      nextNumericalID = nextNumericalID + 1;
+});
+var nextNumericalID = 1;
+db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
+      ss['numerical_id'] = NumberLong(nextNumericalID);
+      db.Series.save(ss);
+      nextNumericalID = nextNumericalID + 1;
+});
+```
+
 [OPTIONAL]
 
-If there are some errors you can clean all numerical ID using the following commands and then you can reexecute above commands.
+If there are some errors you can clean all numerical ID using the following commands and then you can re-execute above commands.
 
 ```bash
 db.MultimediaObject.update({'numerical_id': {$exists:1}}, {'$unset': {'numerical_id': ''}}, {multi:true});
