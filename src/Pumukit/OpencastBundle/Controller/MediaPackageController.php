@@ -51,8 +51,12 @@ class MediaPackageController extends Controller
         }
 
         $currentPageOpencastIds = array();
+
+        $opencastService = $this->get('pumukit_opencast.job');
+        $pics = array();
         foreach ($mediaPackages as $mediaPackage) {
             $currentPageOpencastIds[] = $mediaPackage['id'];
+            $pics[$mediaPackage['id']] = $opencastService->getMediaPackageThumbnail($mediaPackage);
         }
 
         $adapter = new FixedAdapter($total, $mediaPackages);
@@ -67,7 +71,7 @@ class MediaPackageController extends Controller
           ->getQuery()
           ->execute();
 
-        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl());
+        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl(), 'pics' => $pics);
     }
 
     /**

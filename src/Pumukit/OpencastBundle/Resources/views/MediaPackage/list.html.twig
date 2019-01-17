@@ -63,7 +63,7 @@
 
           </td>
           <td headers="th-img">
-            <img alt="Mediapackage img" class="mini" src="{{ mediaPackage.attachments.attachment.0.url|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
+            <img alt="Mediapackage img" class="mini" src="{{ pics[mediaPackage.id]|default(asset('/bundles/pumukitnewadmin/images/none.jpg')) }}" height="23" width="30">
           </td>
           <td headers="th-id">
             {{ mediaPackage.id }}
