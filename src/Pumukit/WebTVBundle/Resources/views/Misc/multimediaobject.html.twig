@@ -19,7 +19,7 @@
                             <abbr title="{{ object.subtitle }}">{{ object.subtitle }}</abbr>
                         {% else %}
                             {% if not object.getSeries().isHide() %}
-                                <abbr title="{{ object.series.title }}">{{ object.series.title }}</abbr>
+                                <abbr title="{{ object.getSeriesTitle()|default('') }}">{{ object.getSeriesTitle()|default('') }}</abbr>
                             {% endif %}
                         {% endif %}
                     </div>
