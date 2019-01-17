@@ -169,4 +169,39 @@ class OpencastService
 
         return true;
     }
+
+    /**
+     * @param $mediaPackage
+     *
+     * @return string|null
+     */
+    public function getMediaPackageThumbnail($mediaPackage)
+    {
+        if (!isset($mediaPackage['attachments']['attachment'])) {
+            return null;
+        }
+
+        $attachments = $mediaPackage['attachments']['attachment'];
+        if (isset($attachment['id'])) {
+            $attachments = array($attachments);
+        }
+
+        foreach ($attachments as $attachment) {
+            if (!isset($attachment['type'])) {
+                continue;
+            }
+
+            if (!in_array($attachment['type'], array('presenter/search+preview', 'presentation/search+preview'))) {
+                continue;
+            }
+
+            if (!isset($attachment['url'])) {
+                continue;
+            }
+
+            return $attachment['url'];
+        }
+
+        return null;
+    }
 }
