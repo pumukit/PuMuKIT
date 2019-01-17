@@ -182,7 +182,7 @@ class OpencastService
         }
 
         $attachments = $mediaPackage['attachments']['attachment'];
-        if (isset($attachment['id'])) {
+        if (isset($attachments['id'])) {
             $attachments = array($attachments);
         }
 
