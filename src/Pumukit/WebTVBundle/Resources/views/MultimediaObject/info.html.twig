@@ -58,14 +58,14 @@
                 <div>
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
-                        {{ multimediaObject.getSeries().getTitle() }}
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
                     </a>
                 </div>
             {% else %}
                 <div>
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
-                        {{ multimediaObject.getSeries().getTitle() }}
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
                     </a>
                 </div>
             {% endif %}

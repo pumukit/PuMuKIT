@@ -13,12 +13,21 @@ use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
 use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * Class LiveType.
+ */
 class LiveType extends AbstractType
 {
     private $translator;
     private $locale;
 
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->translator = $options['translator'];
@@ -61,6 +70,15 @@ class LiveType extends AbstractType
                           'FMS (deprecated use WOWZA or AMS)' => Live::LIVE_TYPE_FMS,
                           'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
                       ),
+                      'label' => $this->translator->trans('Technology', array(), null, $this->locale), ))
+            ->add('chat', 'checkbox',
+                array(
+                    'required' => false,
+                    'attr' => array('aria-label' => $this->translator->trans('Enable chat', array(), null, $this->locale)),
+                    'label' => $this->translator->trans('Enable chat', array(), null, $this->locale),
+                ));
+
+<<<<<<< HEAD
                       'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
         /*
           ->add('resolution', new LiveresolutionType(),
@@ -77,6 +95,7 @@ class LiveType extends AbstractType
           'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
         */
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

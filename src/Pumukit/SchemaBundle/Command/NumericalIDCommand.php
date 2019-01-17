@@ -15,7 +15,6 @@ class NumericalIDCommand extends ContainerAwareCommand
     private $step;
     private $force;
     private $output;
-    private $limit;
 
     protected function configure()
     {
@@ -38,7 +37,6 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->step = $input->getOption('step');
         $this->force = (true === $input->getOption('force'));
-        $this->limit = 100;
 
         $this->output = $output;
     }
@@ -96,8 +94,6 @@ EOT
             )
         );
         $this->generateNumericalID($series, $lastNumericalIDSeries);
-
-        die;
     }
 
     private function checkStatus()
@@ -106,7 +102,7 @@ EOT
             'numerical_id' => array('$exists' => false),
         );
 
-        $multimediaObjects = $this->getMultimediaObjects($criteria, true, $this->limit);
+        $multimediaObjects = $this->getMultimediaObjects($criteria, true);
         $series = $this->getSeries($criteria, true);
 
         if ($multimediaObjects || $series) {

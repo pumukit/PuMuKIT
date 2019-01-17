@@ -876,7 +876,11 @@ class MultimediaObject
         $this->series = $series;
         // NOTE: This field is for MongoDB Search Index purposes.
         //       Do not use this field and do not create setter and/or getter.
-        $this->seriesTitle = $series->getI18nTitle();
+        if (!$series->isHide()) {
+            $this->seriesTitle = $series->getI18nTitle();
+        } else {
+            $this->seriesTitle = array();
+        }
     }
 
     /**
