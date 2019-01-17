@@ -77,23 +77,6 @@ class LiveType extends AbstractType
                     'attr' => array('aria-label' => $this->translator->trans('Enable chat', array(), null, $this->locale)),
                     'label' => $this->translator->trans('Enable chat', array(), null, $this->locale),
                 ));
-
-<<<<<<< HEAD
-                      'label' => $this->translator->trans('Technology', array(), null, $this->locale), ));
-        /*
-          ->add('resolution', new LiveresolutionType(),
-          array(
-          'label' => $this->translator->trans('Resolution', array(), null, $this->locale),
-          'required' => false))
-          ->add('qualities', new LivequalitiesType(),
-          array(
-          'label' => $this->translator->trans('Qualities', array(), null, $this->locale),
-          'required' => false))
-          ->add('ip_source', TextType::class,
-          array(
-          'required' => false,
-          'label' => $this->translator->trans('IP source', array(), null, $this->locale)));
-        */
     }
 
 
