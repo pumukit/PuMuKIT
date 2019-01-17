@@ -33,7 +33,7 @@ class Message
     /**
      * @var string channel
      *
-     * @MongoDB\String
+     * @MongoDB\Field(type="string")
      */
     private $channel;
 

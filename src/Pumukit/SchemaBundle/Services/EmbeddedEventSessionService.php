@@ -1208,6 +1208,8 @@ class EmbeddedEventSessionService
         return $orderSession;
     }
 
+    private static $isLiveBroadcasting;
+
     /**
      * Is live broadcasting.
      *
@@ -1217,8 +1219,14 @@ class EmbeddedEventSessionService
      */
     public function isLiveBroadcasting()
     {
+        if (isset(self::$isLiveBroadcasting)) {
+            return self::$isLiveBroadcasting;
+        }
+
         $events = $this->findCurrentSessions();
 
-        return count($events) > 0;
+        self::$isLiveBroadcasting = count($events) > 0;
+
+        return self::$isLiveBroadcasting;
     }
 }
