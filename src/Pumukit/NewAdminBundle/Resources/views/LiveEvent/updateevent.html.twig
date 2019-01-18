@@ -141,7 +141,7 @@
               <label for="poster_text_color">{% trans %}Poster text color{% endtrans %} <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click on the color bar to change color. A pop-up window will be shown.{% endtrans %}"></i>
 </label>
               <div class="form-control-wrapper">
-                <input id="poster_text_color" type="color" name="pumukitnewadmin_live_event[poster_text_color]" class="form-control" value="{{ poster_text_color(multimediaObject.getEmbeddedEvent()) }}">
+                <input id="poster_text_color" type="color" name="pumukitnewadmin_live_event[poster_text_color]" class="form-control" value="{{ poster_text_color(multimediaObject) }}">
                 <span class="material-input"></span>
               </div>
             </div>
