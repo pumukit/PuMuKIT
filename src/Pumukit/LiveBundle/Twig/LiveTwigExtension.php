@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Services\LiveService;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class LiveTwigExtension extends \Twig_Extension
@@ -44,6 +45,8 @@ class LiveTwigExtension extends \Twig_Extension
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      *
      * @param Live $live
+     *
+     * @return string
      */
     public function genHlsUrl(Live $live)
     {
@@ -67,25 +70,25 @@ class LiveTwigExtension extends \Twig_Extension
     /**
      * Get event poster.
      *
-     * @param EmbeddedEvent $event
+     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getEventPoster(EmbeddedEvent $event)
+    public function getEventPoster(MultimediaObject $multimediaObject)
     {
-        return $this->eventsService->getEventPoster($event);
+        return $this->eventsService->getEventPoster($multimediaObject);
     }
 
     /**
      * Get poster text color.
      *
-     * @param EmbeddedEvent $event
+     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getPosterTextColor(EmbeddedEvent $event)
+    public function getPosterTextColor(MultimediaObject $multimediaObject)
     {
-        return $this->eventsService->getPosterTextColor($event);
+        return $this->eventsService->getPosterTextColor($multimediaObject);
     }
 
     /**

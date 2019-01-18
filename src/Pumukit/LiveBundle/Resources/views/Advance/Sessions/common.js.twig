@@ -1,6 +1,9 @@
-var image = "<img src=\"{{ asset(poster(event)) }}\"";
+{% set poster_color = poster_text_color(multimediaObject) %}
+{% set poster_image_url = poster(multimediaObject) %}
+
+var image = "<img src=\"{{  multimediaObject.getPicWithTag('poster')|default(default_poster_event(multimediaObject))  }}\"";
 var width = 'width="100%">';
-var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_text_color(event) }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
+var style = '<p class="warning" style="position: absolute; top: 40%; color: {{ poster_color }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">';
 
 var image = image + width;
 var text = '{{ event.getNotYetHeldMessage()|default('The event has not been held yet'|trans)|raw }}';

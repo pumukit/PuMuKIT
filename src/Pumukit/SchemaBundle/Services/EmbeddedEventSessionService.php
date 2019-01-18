@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class EmbeddedEventSessionService
 {
@@ -358,6 +359,8 @@ class EmbeddedEventSessionService
         return self::$currentSessions;
     }
 
+    public static $findNextSessions;
+
     /**
      * Get next sessions with or without criteria.
      *
@@ -369,6 +372,10 @@ class EmbeddedEventSessionService
      */
     public function findNextSessions($criteria = array(), $limit = 0, $all = false)
     {
+        if (isset(self::$findNextSessions)) {
+            return self::$findNextSessions;
+        }
+
         $pipeline = $this->initPipeline($all);
 
         if ($criteria && !empty($criteria)) {
@@ -424,7 +431,9 @@ class EmbeddedEventSessionService
             $result[$key]['data'] = array_values($orderSession);
         }
 
-        return $result;
+        self::$findNextSessions = $result;
+
+        return self::$findNextSessions;
     }
 
     /**
@@ -516,23 +525,21 @@ class EmbeddedEventSessionService
      *
      * @return string
      */
-    public function getEventPoster(EmbeddedEvent $event)
+    public function getEventPoster(MultimediaObject $multimediaObject)
     {
-        $pics = $this->getMultimediaObjectPics($event->getId());
-
-        return $this->getPoster($pics);
+        return $this->getPoster($multimediaObject);
     }
 
     /**
      * Get event poster by event id.
      *
-     * @param string $eventId
+     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getEventPosterByEventId($eventId)
+    public function getEventPosterByEventId(MultimediaObject $multimediaObject)
     {
-        $pics = $this->getMultimediaObjectPics($eventId);
+        $pics = $this->getMultimediaObjectPics($multimediaObject);
 
         return $this->getPoster($pics);
     }
@@ -592,18 +599,20 @@ class EmbeddedEventSessionService
     /**
      * Get poster text color.
      *
-     * @param EmbeddedEvent $event
+     * @Deprectad NOTE: Use multimediaObject.getProperty('postertextcolor') to get text color and getDefaultPosterTextColor
+     *
+     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getPosterTextColor(EmbeddedEvent $event)
+    public function getPosterTextColor(MultimediaObject $multimediaObject)
     {
-        $properties = $this->getMultimediaObjectProperties($event->getId());
-        if (isset($properties['postertextcolor'])) {
-            return $properties['postertextcolor'];
+        $posterTextColor = $multimediaObject->getProperty('postertextcolor');
+        if (!$posterTextColor) {
+            return self::DEFAULT_COLOR;
         }
 
-        return self::DEFAULT_COLOR;
+        return $posterTextColor;
     }
 
     /**
@@ -1031,21 +1040,18 @@ class EmbeddedEventSessionService
     /**
      * Get poster.
      *
-     * @param array
+     * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    private function getPoster($pics)
+    private function getPoster(MultimediaObject $multimediaObject)
     {
-        foreach ($pics as $pic) {
-            if (isset($pic['tags'])) {
-                if (in_array('poster', $pic['tags']) && isset($pic['url'])) {
-                    return $pic['url'];
-                }
-            }
+        $poster = $multimediaObject->getPicWithTag('poster');
+        if (!$poster) {
+            return $this->defaultPoster;
         }
 
-        return $this->defaultPoster;
+        return $poster->getUrl();
     }
 
     /**
