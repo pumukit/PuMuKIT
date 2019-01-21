@@ -521,27 +521,43 @@ class EmbeddedEventSessionService
     /**
      * Get event poster.
      *
+     * @Deprecated: Use getEventPicPoster
+     *
      * @param EmbeddedEvent $event
      *
      * @return string
      */
-    public function getEventPoster(MultimediaObject $multimediaObject)
+    public function getEventPoster(EmbeddedEvent $event)
     {
-        return $this->getPoster($multimediaObject);
+        $pics = $this->getMultimediaObjectPics($event->getId());
+
+        return $this->getPoster($pics);
     }
 
     /**
-     * Get event poster by event id.
+     * Get event poster.
      *
      * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getEventPosterByEventId(MultimediaObject $multimediaObject)
+    public function getEventPicPoster(MultimediaObject $multimediaObject)
     {
-        $pics = $this->getMultimediaObjectPics($multimediaObject);
+        return $this->getPicPoster($multimediaObject);
+    }
 
-        return $this->getPoster($pics);
+    /**
+     * Get event poster by event id.
+     *
+     * @param string $eventId
+     *
+     * @return string
+     */
+    public function getEventPosterByEventId($eventId)
+    {
+        $pics = $this->getMultimediaObjectPics($eventId);
+
+        return $this->getPicPoster($pics);
     }
 
     /**
@@ -605,7 +621,7 @@ class EmbeddedEventSessionService
      *
      * @return string
      */
-    public function getPosterTextColor(MultimediaObject $multimediaObject)
+    public function getPicPosterTextColor(MultimediaObject $multimediaObject)
     {
         $posterTextColor = $multimediaObject->getProperty('postertextcolor');
         if (!$posterTextColor) {
@@ -613,6 +629,25 @@ class EmbeddedEventSessionService
         }
 
         return $posterTextColor;
+    }
+
+    /**
+     * Get poster text color.
+     *
+     * @Deprected Use getPicPosterTextColor
+     *
+     * @param EmbeddedEvent $event
+     *
+     * @return string
+     */
+    public function getPosterTextColor(EmbeddedEvent $event)
+    {
+        $properties = $this->getMultimediaObjectProperties($event->getId());
+        if (isset($properties['postertextcolor'])) {
+            return $properties['postertextcolor'];
+        }
+
+        return self::DEFAULT_COLOR;
     }
 
     /**
@@ -1040,11 +1075,33 @@ class EmbeddedEventSessionService
     /**
      * Get poster.
      *
+     * @Deprected: Use getPicPoster
+     *
+     * @param array
+     *
+     * @return string
+     */
+    private function getPoster($pics)
+    {
+        foreach ($pics as $pic) {
+            if (isset($pic['tags'])) {
+                if (in_array('poster', $pic['tags']) && isset($pic['url'])) {
+                    return $pic['url'];
+                }
+            }
+        }
+
+        return $this->defaultPoster;
+    }
+
+    /**
+     * Get poster.
+     *
      * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    private function getPoster(MultimediaObject $multimediaObject)
+    private function getPicPoster(MultimediaObject $multimediaObject)
     {
         $poster = $multimediaObject->getPicWithTag('poster');
         if (!$poster) {

@@ -32,6 +32,8 @@ class LiveTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('generate_hls_url', array($this, 'genHlsUrl')),
             new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
+            new \Twig_SimpleFunction('poster_pic', array($this, 'getPosterPic')),
+            new \Twig_SimpleFunction('poster_pic_text_color', array($this, 'getPosterPicTextColor')),
             new \Twig_SimpleFunction('poster', array($this, 'getEventPoster')),
             new \Twig_SimpleFunction('poster_text_color', array($this, 'getPosterTextColor')),
             new \Twig_SimpleFunction('event_first_thumbnail', array($this, 'getEventThumbnail')),
@@ -68,15 +70,39 @@ class LiveTwigExtension extends \Twig_Extension
     }
 
     /**
+     * @param EmbeddedEvent $event
+     *
+     * @Deprecated use getPosterPic
+     *
+     * @return string
+     */
+    public function getEventPoster(EmbeddedEvent $event)
+    {
+        return$this->eventsService->getEventPoster($event);
+    }
+
+    /**
      * Get event poster.
      *
      * @param MultimediaObject $multimediaObject
      *
      * @return string
      */
-    public function getEventPoster(MultimediaObject $multimediaObject)
+    public function getPosterPic(MultimediaObject $multimediaObject)
     {
-        return $this->eventsService->getEventPoster($multimediaObject);
+        return $this->eventsService->getEventPicPoster($multimediaObject);
+    }
+
+    /**
+     * @param EmbeddedEvent $event
+     *
+     * @Deprecated use getPosterPicTextColor
+     *
+     * @return string
+     */
+    public function getPosterTextColor(EmbeddedEvent $event)
+    {
+        return $this->eventsService->getPosterTextColor($event);
     }
 
     /**
@@ -86,9 +112,9 @@ class LiveTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getPosterTextColor(MultimediaObject $multimediaObject)
+    public function getPosterPicTextColor(MultimediaObject $multimediaObject)
     {
-        return $this->eventsService->getPosterTextColor($multimediaObject);
+        return $this->eventsService->getPicPosterTextColor($multimediaObject);
     }
 
     /**
