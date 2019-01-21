@@ -628,6 +628,7 @@ class FactoryService
 
         $this->dm->persist($new);
         $this->dm->flush();
+        $this->generateNumericalIDMultimediaObject($new);
 
         $this->mmsDispatcher->dispatchClone($src, $new);
 
