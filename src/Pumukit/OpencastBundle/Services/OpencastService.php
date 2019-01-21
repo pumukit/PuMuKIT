@@ -92,7 +92,7 @@ class OpencastService
      */
     public function getPath($url)
     {
-        if (-1 !== strpos('assets/assets', $url)) {
+        if (false !== strpos('assets/assets', $url)) {
             $data = explode('assets/assets/', $url);
             $variables = explode('/', $data[1]);
             $file = end($variables);

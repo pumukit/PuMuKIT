@@ -307,12 +307,11 @@ EOT
     {
         $media = $opencastImportService->getMediaPackageField($mediaPackage, 'media');
         $tracks = $opencastImportService->getMediaPackageField($media, 'track');
+        $tracksCount = 1;
         if (isset($tracks[0])) {
-            $tracks = count($tracks);
-        } else {
-            $tracks = 1;
+            $tracksCount = count($tracks);
         }
 
-        $output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencasturl').' - Tracks: '.$tracks);
+        $output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencasturl').' - Tracks: '.$tracksCount);
     }
 }

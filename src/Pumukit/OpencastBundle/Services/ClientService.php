@@ -259,7 +259,7 @@ class ClientService
         }
 
         if (0 == strpos('1.2', $version)) {
-            // NOTE: For BC
+            return $this->getMediaPackageFromArchive($id);
         }
 
         throw new \Exception('There is no case for this version of Opencast ('.$version.')');
