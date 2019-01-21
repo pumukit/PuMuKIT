@@ -240,7 +240,7 @@ EOT
                 $output->writeln(
                     array(
                         '',
-                        '<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported'
+                        '<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported',
                     )
                 );
             }
