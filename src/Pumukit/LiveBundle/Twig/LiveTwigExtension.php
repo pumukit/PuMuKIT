@@ -78,7 +78,7 @@ class LiveTwigExtension extends \Twig_Extension
      */
     public function getEventPoster(EmbeddedEvent $event)
     {
-        return$this->eventsService->getEventPoster($event);
+        return $this->eventsService->getEventPoster($event);
     }
 
     /**
