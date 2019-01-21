@@ -521,6 +521,8 @@ class FactoryService
 
         $this->dm->flush();
 
+        $this->generateNumericalIDSeries($newSeries);
+
         $this->seriesDispatcher->dispatchCreate($series);
     }
 
