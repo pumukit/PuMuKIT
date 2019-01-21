@@ -202,7 +202,7 @@ class OpencastImportService
         return null;
     }
 
-    public function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null)
+    public function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null, $trackTags = array('display'))
     {
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');
@@ -276,7 +276,9 @@ class OpencastImportService
         }
 
         $track->addTag('opencast');
-        $track->addTag('display');
+        foreach ($trackTags as $trackTag) {
+            $track->addTag($trackTag);
+        }
 
         $type = $this->getMediaPackageField($opencastTrack, 'type');
         if ($type) {
@@ -351,5 +353,19 @@ class OpencastImportService
         }
 
         return  \Locale::getDefault();
+    }
+
+    public function importTracksFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $trackTags)
+    {
+        $media = $this->getMediaPackageField($mediaPackage, 'media');
+        $tracks = $this->getMediaPackageField($media, 'track');
+        if (isset($tracks[0])) {
+            $limit = count($tracks);
+            for ($i = 0; $i < $limit; ++$i) {
+                $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, $trackTags);
+            }
+        } else {
+            $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, $trackTags);
+        }
     }
 }

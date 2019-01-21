@@ -92,6 +92,16 @@ class OpencastService
      */
     public function getPath($url)
     {
+        if (-1 !== strpos('assets/assets', $url)) {
+            $data = explode('assets/assets/', $url);
+            $variables = explode('/', $data[1]);
+            $file = end($variables);
+            $version = prev($variables);
+            $track = prev($variables);
+            $mediaPackageID = prev($variables);
+            $url = $data[0].'assets/assets/'.$mediaPackageID.'/'.$version.'/'.$track.'.'.pathinfo($file, PATHINFO_EXTENSION);
+        }
+
         foreach ($this->urlPathMapping as $m) {
             $path = str_replace($m['url'], $m['path'], $url);
             if (realpath($path)) {

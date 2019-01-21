@@ -123,14 +123,10 @@ EOT
                 if ($this->master) {
                     $this->importMasterTracks($output, $this->clientService, $this->opencastImportService, $multimediaObjects);
                 } else {
-                    $this->importOpencastTracks($output, $this->clientService, $this->opencastImportService, $multimediaObjects);
+                    $this->importBroadcastTracks($output, $this->clientService, $this->opencastImportService, $multimediaObjects);
                 }
             } else {
-                if ($this->master) {
-                    $this->showMultimediaObjects($output, $this->clientService, $multimediaObjects, true);
-                } else {
-                    $this->showMultimediaObjects($output, $this->clientService, $multimediaObjects, false);
-                }
+                $this->showMultimediaObjects($output, $this->opencastImportService, $this->clientService, $multimediaObjects, $this->master);
             }
         }
     }
@@ -200,7 +196,7 @@ EOT
      *
      * @throws \Exception
      */
-    private function importOpencastTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
+    private function importBroadcastTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
     {
         $output->writeln(
             array(
@@ -252,51 +248,30 @@ EOT
     private function importTrackOnMultimediaObject(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $master)
     {
         if ($master) {
-            $mediaPackage = $clientService->getMediaPackageFromArchive($multimediaObject->getProperty('opencast'));
+            $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
         } else {
             $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
         }
 
-        $media = $this->getMediaPackageField($mediaPackage, 'media');
-        $tracks = $this->getMediaPackageField($media, 'track');
-        if (isset($tracks[0])) {
-            $limit = count($tracks);
-            for ($i = 0; $i < $limit; ++$i) {
-                $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
-            }
-        } else {
-            $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
+        $trackTags = array('display');
+        if ($master) {
+            $trackTags = array('master');
         }
+        $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
 
-        $this->showMessage($output, $multimediaObject, $mediaPackage);
+        $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
     }
 
     /**
-     * @param array  $mediaFields
-     * @param string $field
-     *
-     * @return mixed|null
-     */
-    private function getMediaPackageField($mediaFields = array(), $field = '')
-    {
-        if ($mediaFields && $field) {
-            if (isset($mediaFields[$field])) {
-                return $mediaFields[$field];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @param ClientService   $clientService
-     * @param                 $multimediaObjects
-     * @param                 $master
+     * @param OutputInterface       $output
+     * @param OpencastImportService $opencastImportService
+     * @param ClientService         $clientService
+     * @param                       $multimediaObjects
+     * @param                       $master
      *
      * @throws \Exception
      */
-    private function showMultimediaObjects(OutputInterface $output, ClientService $clientService, $multimediaObjects, $master)
+    private function showMultimediaObjects(OutputInterface $output, OpencastImportService $opencastImportService, ClientService $clientService, $multimediaObjects, $master)
     {
         $message = '<info> **** Finding Multimedia Objects **** </info>';
         if ($master) {
@@ -313,24 +288,25 @@ EOT
 
         foreach ($multimediaObjects as $multimediaObject) {
             if ($master) {
-                $mediaPackage = $clientService->getMediaPackageFromArchive($multimediaObject->getProperty('opencast'));
-                $this->showMessage($output, $multimediaObject, $mediaPackage);
+                $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
+                $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
             } else {
                 $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
-                $this->showMessage($output, $multimediaObject, $mediaPackage);
+                $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
             }
         }
     }
 
     /**
-     * @param OutputInterface  $output
-     * @param MultimediaObject $multimediaObject
-     * @param                  $mediaPackage
+     * @param OutputInterface       $output
+     * @param OpencastImportService $opencastImportService
+     * @param MultimediaObject      $multimediaObject
+     * @param                       $mediaPackage
      */
-    private function showMessage(OutputInterface $output, MultimediaObject $multimediaObject, $mediaPackage)
+    private function showMessage(OutputInterface $output, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $mediaPackage)
     {
-        $media = $this->getMediaPackageField($mediaPackage, 'media');
-        $tracks = $this->getMediaPackageField($media, 'track');
+        $media = $opencastImportService->getMediaPackageField($mediaPackage, 'media');
+        $tracks = $opencastImportService->getMediaPackageField($media, 'track');
         if (isset($tracks[0])) {
             $tracks = count($tracks);
         } else {

@@ -236,6 +236,55 @@ class ClientService
     }
 
     /**
+     * @param $id
+     *
+     * @return mixed|null
+     *
+     * @throws \Exception
+     */
+    public function getMasterMediaPackage($id)
+    {
+        $version = $this->getOpencastVersion();
+
+        if ($version >= '3.0.0') {
+            return $this->getMediaPackageFromAssets($id);
+        }
+
+        if ($version >= '2.0.0') {
+            return $this->getMediaPackageFromArchive($id);
+        }
+
+        if ($version >= '1.4.0' && $version <= '1.6.0') {
+            return $this->getMediaPackageFromArchive($id);
+        }
+
+        if (0 == strpos('1.2', $version)) {
+            // NOTE: For BC
+        }
+
+        throw new \Exception('There is no case for this version of Opencast ('.$version.')');
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed|null
+     *
+     * @throws \Exception
+     */
+    public function getMediaPackageFromAssets($id)
+    {
+        $output = $this->request('/assets/episode/'.$id, array(), 'GET', true);
+        if (200 == $output['status']) {
+            $decode = $this->decodeXML($output);
+
+            return $decode;
+        }
+
+        return null;
+    }
+
+    /**
      * Get media package from archive with given id.
      *
      * @param $id
@@ -246,17 +295,6 @@ class ClientService
      */
     public function getMediaPackageFromArchive($id)
     {
-        $version = $this->getOpencastVersion();
-
-        if ($version >= '3.0.0') {
-            $output = $this->request('/assets/episode/'.$id, array(), 'GET', true);
-            if (200 == $output['status']) {
-                $decode = $this->decodeXML($output);
-
-                return $decode;
-            }
-        }
-
         // NOTE: BC for OC 1.4 to 1.6
         $output = $this->request('/episode/episode.json?id='.$id, array(), 'GET', true);
         if (200 !== $output['status']) {
@@ -806,11 +844,15 @@ class ClientService
     public function getOpencastVersion()
     {
         $output = $this->request('/info/components.json');
+        if (!$output) {
+            throw new \Exception("Can't access to /info/components.json");
+        }
+
         $decode = $this->decodeJson($output['var']);
         if (isset($decode['rest'][0]['version'])) {
             return $decode['rest'][0]['version'];
         }
 
-        return false;
+        throw new \Exception("Cant't recognize ['rest'][0]['version'] from /info/components.json");
     }
 }
