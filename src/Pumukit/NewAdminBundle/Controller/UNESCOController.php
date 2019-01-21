@@ -253,10 +253,10 @@ class UNESCOController extends Controller implements NewAdminController
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) && !empty($value)) {
-                    $newCriteria['_id'] = new \MongoId($value);
+                    $newCriteria['_id'] = $value;
                     $formBasic = true;
                 } elseif (('seriesID' === $key) && !empty($value)) {
-                    $newCriteria['series'] = new \MongoId($value);
+                    $newCriteria['series'] = $value;
                     $formBasic = true;
                 } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
