@@ -258,7 +258,7 @@ class ClientService
             return $this->getMediaPackageFromArchive($id);
         }
 
-        if (0 == strpos('1.2', $version)) {
+        if (0 == strpos($version, '1.2')) {
             return $this->getMediaPackageFromArchive($id);
         }
 

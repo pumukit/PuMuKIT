@@ -175,10 +175,6 @@ EOT
             'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
         );
 
-        if ($this->force) {
-            /* Get only mmobjs without tracks depends of master option */
-        }
-
         if ($this->id) {
             $criteria['_id'] = new \MongoId($this->id);
         }
@@ -232,7 +228,22 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->importTrackOnMultimediaObject($output, $clientService, $opencastImportService, $multimediaObject, true);
+            if ($multimediaObject->getTrackWithTag('master')) {
+                $this->importTrackOnMultimediaObject(
+                    $output,
+                    $clientService,
+                    $opencastImportService,
+                    $multimediaObject,
+                    true
+                );
+            } else {
+                $output->writeln(
+                    array(
+                        '',
+                        '<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported'
+                    )
+                );
+            }
         }
     }
 
