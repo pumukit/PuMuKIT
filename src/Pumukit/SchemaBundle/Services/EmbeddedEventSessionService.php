@@ -557,7 +557,7 @@ class EmbeddedEventSessionService
     {
         $pics = $this->getMultimediaObjectPics($eventId);
 
-        return $this->getPicPoster($pics);
+        return $this->getPoster($pics);
     }
 
     /**
