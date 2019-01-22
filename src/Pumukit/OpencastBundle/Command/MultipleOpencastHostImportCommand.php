@@ -204,7 +204,22 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->importTrackOnMultimediaObject($output, $clientService, $opencastImportService, $multimediaObject, false);
+            if (!$multimediaObject->getTrackWithTag('opencast')) {
+                $this->importTrackOnMultimediaObject(
+                    $output,
+                    $clientService,
+                    $opencastImportService,
+                    $multimediaObject,
+                    false
+                );
+            } else {
+                $output->writeln(
+                    array(
+                        '',
+                        '<info> Multimedia Object - '.$multimediaObject->getId().' have opencast tracks from OC imported',
+                    )
+                );
+            }
         }
     }
 
@@ -228,7 +243,7 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            if ($multimediaObject->getTrackWithTag('master')) {
+            if (!$multimediaObject->getTrackWithTag('master')) {
                 $this->importTrackOnMultimediaObject(
                     $output,
                     $clientService,
@@ -260,14 +275,12 @@ EOT
     {
         if ($master) {
             $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
+            $trackTags = array('master');
         } else {
             $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
+            $trackTags = array('display');
         }
 
-        $trackTags = array('display');
-        if ($master) {
-            $trackTags = array('master');
-        }
         $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
 
         $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
