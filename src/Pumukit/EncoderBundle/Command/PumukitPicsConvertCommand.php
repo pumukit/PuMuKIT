@@ -75,11 +75,11 @@ php app/console pumukit:pics:convert --path="/mnt/storage/" --size=10000
 Create image options:
 
 --convert
---convert_ext="jpg"  ( Not work, ever convert to JPG ) 
---convert_size="10000" ( Not work ) 
+--convert_ext="jpg"  ( Doesnt work, ever convert to JPG ) 
+--convert_size="10000" ( Doesnt work ) 
 --convert_quality=100
---convert_maxwidth=1920
---convert_maxheight=1080
+--convert_max_width=1920
+--convert_max_height=1080
 --no_replace 
 
 Examples: 
@@ -209,11 +209,15 @@ EOT
 
     /**
      * @param $data
+     *
+     * @return bool
      */
     private function showData($data)
     {
         if (empty($data['pics'])) {
             $this->output->writeln('No pics found');
+
+            return false;
         }
 
         foreach ($data['pics'] as $pic) {
