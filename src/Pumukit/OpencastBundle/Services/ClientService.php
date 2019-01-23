@@ -193,12 +193,12 @@ class ClientService
         $output = $this->request('/search/episode.json?id='.$id);
 
         if (200 !== $output['status']) {
-            return false;
+            return null;
         }
         $decode = $this->decodeJson($output['var']);
 
         if (0 == $decode['search-results']['total']) {
-            return false;
+            return null;
         }
         if ($decode['search-results']['limit'] > 1) {
             return $decode['search-results']['result'][0]['mediapackage'];
@@ -754,7 +754,7 @@ class ClientService
     {
         $decode = json_decode($jsonString, true);
         if (!($decode)) {
-            throw new \Exception('Opencast Matterhorn communication error');
+            throw new \Exception('Opencast communication error');
         }
 
         return $decode;
@@ -777,7 +777,7 @@ class ClientService
         }
 
         if (!$decode) {
-            throw new \Exception('Opencast Matterhorn communication error');
+            throw new \Exception('Opencast communication error');
         }
 
         return $decode;
