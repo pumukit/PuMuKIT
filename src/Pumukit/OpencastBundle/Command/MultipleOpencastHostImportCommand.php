@@ -2,24 +2,27 @@
 
 namespace Pumukit\OpencastBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\OpencastBundle\Services\ClientService;
+use Pumukit\OpencastBundle\Services\OpencastImportService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
+/**
+ * Class MultipleOpencastHostImportCommand.
+ */
 class MultipleOpencastHostImportCommand extends ContainerAwareCommand
 {
-    private $output;
-    private $input;
-    private $dm;
     private $opencastImportService;
-    private $logger;
     private $user;
     private $password;
     private $host;
     private $id;
     private $force;
+    private $master;
     private $clientService;
 
     protected function configure()
@@ -31,6 +34,7 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'Opencast password')
             ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Path to selected tracks from PMK using regex')
             ->addOption('id', null, InputOption::VALUE_OPTIONAL, 'ID of multimedia object to import')
+            ->addOption('master', null, InputOption::VALUE_NONE, 'Import master tracks')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
             ->setHelp(<<<'EOT'
             
@@ -44,15 +48,25 @@ class MultipleOpencastHostImportCommand extends ContainerAwareCommand
             
             <info> ** Example ( check and list ):</info>
             
+            * Tracks without master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es"</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581"</comment>
+            
+            * Tracks master
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581"</comment>
             
             This example will be check the connection with these Opencast and list all multimedia objects from PuMuKIT find by regex host.
             
             <info> ** Example ( <error>execute</error> ):</info>
             
+            * Import tracks no master
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --force</comment>
             <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --id="5bcd806ebf435c25008b4581" --force</comment>
+            
+            * Import tracks master
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --force</comment>
+            <comment>php app/console pumukit:opencast:import:multiple:host --user="myuser" --password="mypassword" --host="https://opencast-local.teltek.es" --master --id="5bcd806ebf435c25008b4581" --force</comment>
 
 EOT
             );
@@ -64,18 +78,14 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->output = $output;
-        $this->input = $input;
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-
         $this->opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
-        $this->logger = $this->getContainer()->get('logger');
 
-        $this->user = trim($this->input->getOption('user'));
-        $this->password = trim($this->input->getOption('password'));
-        $this->host = trim($this->input->getOption('host'));
-        $this->id = $this->input->getOption('id');
-        $this->force = (true === $this->input->getOption('force'));
+        $this->user = trim($input->getOption('user'));
+        $this->password = trim($input->getOption('password'));
+        $this->host = trim($input->getOption('host'));
+        $this->id = $input->getOption('id');
+        $this->force = (true === $input->getOption('force'));
+        $this->master = (true === $input->getOption('master'));
 
         $this->clientService = new ClientService(
             $this->host,
@@ -89,7 +99,7 @@ EOT
             false,
             true,
             null,
-            $this->logger,
+            $this->getContainer()->get('logger'),
             null
         );
     }
@@ -106,12 +116,17 @@ EOT
     {
         $this->checkInputs();
 
-        if ($this->checkOpencastStatus()) {
-            $multimediaObjects = $this->getMultimediaObjects();
+        if ($this->checkOpencastStatus($this->clientService)) {
+            $dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
+            $multimediaObjects = $this->getMultimediaObjects($dm);
             if ($this->force) {
-                $this->importOpencastTracks($multimediaObjects);
+                if ($this->master) {
+                    $this->importMasterTracks($output, $this->clientService, $this->opencastImportService, $multimediaObjects);
+                } else {
+                    $this->importBroadcastTracks($output, $this->clientService, $this->opencastImportService, $multimediaObjects);
+                }
             } else {
-                $this->showMultimediaObjects($multimediaObjects);
+                $this->showMultimediaObjects($output, $this->opencastImportService, $this->clientService, $multimediaObjects, $this->master);
             }
         }
     }
@@ -134,11 +149,15 @@ EOT
     }
 
     /**
+     * @param ClientService $clientService
+     *
      * @return bool
+     *
+     * @throws \Exception
      */
-    private function checkOpencastStatus()
+    private function checkOpencastStatus(ClientService $clientService)
     {
-        if ($this->clientService->getAdminUrl()) {
+        if ($clientService->getAdminUrl()) {
             return true;
         }
 
@@ -146,9 +165,11 @@ EOT
     }
 
     /**
-     * @return mixed
+     * @param DocumentManager $dm
+     *
+     * @return array|\Pumukit\SchemaBundle\Document\MultimediaObject[]
      */
-    private function getMultimediaObjects()
+    private function getMultimediaObjects(DocumentManager $dm)
     {
         $criteria = array(
             'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
@@ -158,17 +179,22 @@ EOT
             $criteria['_id'] = new \MongoId($this->id);
         }
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 
         return $multimediaObjects;
     }
 
     /**
-     * @param $multimediaObjects
+     * @param OutputInterface       $output
+     * @param ClientService         $clientService
+     * @param OpencastImportService $opencastImportService
+     * @param                       $multimediaObjects
+     *
+     * @throws \Exception
      */
-    private function importOpencastTracks($multimediaObjects)
+    private function importBroadcastTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
     {
-        $this->output->writeln(
+        $output->writeln(
             array(
                 '',
                 '<info> **** Adding tracks to multimedia object **** </info>',
@@ -178,53 +204,138 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $mediaPackage = $this->clientService->getMediapackage($multimediaObject->getProperty('opencast'));
-            $media = $this->getMediaPackageField($mediaPackage, 'media');
-            $tracks = $this->getMediaPackageField($media, 'track');
-            if (isset($tracks[0])) {
-                $limit = count($tracks);
-                for ($i = 0; $i < $limit; ++$i) {
-                    $this->opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
-                }
+            if (!$multimediaObject->getTrackWithTag('opencast')) {
+                $this->importTrackOnMultimediaObject(
+                    $output,
+                    $clientService,
+                    $opencastImportService,
+                    $multimediaObject,
+                    false
+                );
             } else {
-                $this->opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
+                $output->writeln(
+                    array(
+                        '',
+                        '<info> Multimedia Object - '.$multimediaObject->getId().' have opencast tracks from OC imported',
+                    )
+                );
             }
         }
     }
 
     /**
-     * @param array  $mediaFields
-     * @param string $field
+     * @param OutputInterface       $output
+     * @param ClientService         $clientService
+     * @param OpencastImportService $opencastImportService
+     * @param                       $multimediaObjects
      *
-     * @return mixed|null
+     * @throws \Exception
      */
-    private function getMediaPackageField($mediaFields = array(), $field = '')
+    private function importMasterTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
     {
-        if ($mediaFields && $field) {
-            if (isset($mediaFields[$field])) {
-                return $mediaFields[$field];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param $multimediaObjects
-     */
-    private function showMultimediaObjects($multimediaObjects)
-    {
-        $this->output->writeln(
+        $output->writeln(
             array(
                 '',
-                '<info> **** Finding Multimedia Objects **** </info>',
+                '<info> **** Import master tracks to multimedia object **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
             )
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            $this->output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencasturl'));
+            if (!$multimediaObject->getTrackWithTag('master')) {
+                $this->importTrackOnMultimediaObject(
+                    $output,
+                    $clientService,
+                    $opencastImportService,
+                    $multimediaObject,
+                    true
+                );
+            } else {
+                $output->writeln(
+                    array(
+                        '',
+                        '<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported',
+                    )
+                );
+            }
         }
+    }
+
+    /**
+     * @param OutputInterface       $output
+     * @param ClientService         $clientService
+     * @param OpencastImportService $opencastImportService
+     * @param MultimediaObject      $multimediaObject
+     * @param                       $master
+     *
+     * @throws \Exception
+     */
+    private function importTrackOnMultimediaObject(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $master)
+    {
+        if ($master) {
+            $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
+            $trackTags = array('master');
+        } else {
+            $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
+            $trackTags = array('display');
+        }
+
+        $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
+
+        $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
+    }
+
+    /**
+     * @param OutputInterface       $output
+     * @param OpencastImportService $opencastImportService
+     * @param ClientService         $clientService
+     * @param                       $multimediaObjects
+     * @param                       $master
+     *
+     * @throws \Exception
+     */
+    private function showMultimediaObjects(OutputInterface $output, OpencastImportService $opencastImportService, ClientService $clientService, $multimediaObjects, $master)
+    {
+        $message = '<info> **** Finding Multimedia Objects **** </info>';
+        if ($master) {
+            $message = '<info> **** Finding Multimedia Objects (master)**** </info>';
+        }
+        $output->writeln(
+            array(
+                '',
+                $message,
+                '',
+                '<comment> ----- Total: </comment>'.count($multimediaObjects),
+            )
+        );
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            if ($master) {
+                $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
+                $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
+            } else {
+                $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
+                $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
+            }
+        }
+    }
+
+    /**
+     * @param OutputInterface       $output
+     * @param OpencastImportService $opencastImportService
+     * @param MultimediaObject      $multimediaObject
+     * @param                       $mediaPackage
+     */
+    private function showMessage(OutputInterface $output, OpencastImportService $opencastImportService, MultimediaObject $multimediaObject, $mediaPackage)
+    {
+        $media = $opencastImportService->getMediaPackageField($mediaPackage, 'media');
+        $tracks = $opencastImportService->getMediaPackageField($media, 'track');
+        $tracksCount = 1;
+        if (isset($tracks[0])) {
+            $tracksCount = count($tracks);
+        }
+
+        $output->writeln(' Multimedia Object: '.$multimediaObject->getId().' - URL: '.$multimediaObject->getProperty('opencasturl').' - Tracks: '.$tracksCount);
     }
 }
