@@ -92,15 +92,7 @@ class OpencastService
      */
     public function getPath($url)
     {
-        if (false !== stripos($url, 'assets/assets')) {
-            $data = explode('assets/assets/', $url);
-            $variables = explode('/', $data[1]);
-            $file = end($variables);
-            $version = prev($variables);
-            $track = prev($variables);
-            $mediaPackageID = prev($variables);
-            $url = $data[0].'assets/assets/'.$mediaPackageID.'/'.$version.'/'.$track.'.'.pathinfo($file, PATHINFO_EXTENSION);
-        }
+        $url = $this->refactorUrl($url);
 
         foreach ($this->urlPathMapping as $m) {
             $path = str_replace($m['url'], $m['path'], $url);
@@ -117,6 +109,45 @@ class OpencastService
         }
 
         return null;
+    }
+
+    /**
+     * @param $url
+     *
+     * @return string
+     */
+    private function refactorUrl($url)
+    {
+        // NOTE: Refactor for Opencast 3 or greather version
+        if (false !== stripos($url, 'assets/assets')) {
+            $data = explode('assets/assets/', $url);
+            $variables = explode('/', $data[1]);
+            $file = end($variables);
+            $version = prev($variables);
+            $track = prev($variables);
+            $mediaPackageID = prev($variables);
+            $url = $data[0].'assets/assets/'.$mediaPackageID.'/'.$version.'/'.$track.'.'.pathinfo($file, PATHINFO_EXTENSION);
+        }
+
+        // NOTE: Refactor for Opencast 1.4 or 1.6
+        if (false !== stripos($url, '/episode/archive/mediapackage/') || false !== stripos($url, '/episode/')) {
+            if (false !== stripos($url, '/episode/archive/mediapackage/')) {
+                $data = explode('/episode/archive/mediapackage/', $url);
+                $delimiterPath = '/episode/archive/mediapackage/';
+            } else {
+                $data = explode('/episode/', $url);
+                $delimiterPath = '/episode/';
+            }
+
+            $variables = explode('/', $data[1]);
+            $file = end($variables);
+            $version = prev($variables);
+            $element = prev($variables);
+            $mediaPackageID = prev($variables);
+            $url = $data[0].$delimiterPath.$mediaPackageID.'/'.$version.'/'.$element.'.'.pathinfo($file, PATHINFO_EXTENSION);
+        }
+
+        return $url;
     }
 
     /**
