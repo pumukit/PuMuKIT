@@ -213,7 +213,7 @@ class OpencastImportService
                 $opencastTrack = $tracks[$index];
             }
         } else {
-            throw new \Exception(sprintf("No media track info in MP '%s'", $multimediaObject->getProperty('opencast')));
+           throw new \Exception(sprintf("No media track info in MP '%s'", $multimediaObject->getProperty('opencast')));
         }
 
         $track = new Track();
@@ -362,7 +362,7 @@ class OpencastImportService
         if (isset($tracks[0])) {
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
-                if(false === stripos($tracks[0]['url'], "rtmp:")) {
+                if(false === stripos($tracks[$i]['url'], "rtmp:")) {
                     $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, $trackTags);
                 }
             }
