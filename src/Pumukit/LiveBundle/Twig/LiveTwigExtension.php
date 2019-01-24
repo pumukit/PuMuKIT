@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Services\LiveService;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class LiveTwigExtension extends \Twig_Extension
@@ -31,6 +32,8 @@ class LiveTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('generate_hls_url', array($this, 'genHlsUrl')),
             new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
+            new \Twig_SimpleFunction('poster_pic', array($this, 'getPosterPic')),
+            new \Twig_SimpleFunction('poster_pic_text_color', array($this, 'getPosterPicTextColor')),
             new \Twig_SimpleFunction('poster', array($this, 'getEventPoster')),
             new \Twig_SimpleFunction('poster_text_color', array($this, 'getPosterTextColor')),
             new \Twig_SimpleFunction('event_first_thumbnail', array($this, 'getEventThumbnail')),
@@ -44,6 +47,8 @@ class LiveTwigExtension extends \Twig_Extension
      *    {{ live.url|replace({'rtmp://':'http://', 'rtmpt://': 'http://'}) }}/{{ live.sourcename }}/playlist.m3u8
      *
      * @param Live $live
+     *
+     * @return string
      */
     public function genHlsUrl(Live $live)
     {
@@ -65,9 +70,9 @@ class LiveTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Get event poster.
-     *
      * @param EmbeddedEvent $event
+     *
+     * @Deprecated use getPosterPic
      *
      * @return string
      */
@@ -77,15 +82,39 @@ class LiveTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Get poster text color.
+     * Get event poster.
      *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
+     */
+    public function getPosterPic(MultimediaObject $multimediaObject)
+    {
+        return $this->eventsService->getEventPicPoster($multimediaObject);
+    }
+
+    /**
      * @param EmbeddedEvent $event
+     *
+     * @Deprecated use getPosterPicTextColor
      *
      * @return string
      */
     public function getPosterTextColor(EmbeddedEvent $event)
     {
         return $this->eventsService->getPosterTextColor($event);
+    }
+
+    /**
+     * Get poster text color.
+     *
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return string
+     */
+    public function getPosterPicTextColor(MultimediaObject $multimediaObject)
+    {
+        return $this->eventsService->getPicPosterTextColor($multimediaObject);
     }
 
     /**
