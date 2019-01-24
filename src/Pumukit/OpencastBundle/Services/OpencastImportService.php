@@ -362,10 +362,14 @@ class OpencastImportService
         if (isset($tracks[0])) {
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
-                $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, $trackTags);
+                if(false === stripos($tracks[0]['url'], "rtmp:")) {
+                    $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, $trackTags);
+                }
             }
         } else {
-            $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, $trackTags);
+            if(false === stripos($tracks['url'], "rtmp:")) {
+                $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, $trackTags);
+            }
         }
     }
 }
