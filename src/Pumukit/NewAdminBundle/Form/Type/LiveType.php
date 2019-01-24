@@ -9,11 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pumukit\LiveBundle\Document\Live;
-use Pumukit\NewAdminBundle\Form\Type\Other\LivequalitiesType;
-use Pumukit\NewAdminBundle\Form\Type\Other\LiveresolutionType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class LiveType.
@@ -22,7 +19,6 @@ class LiveType extends AbstractType
 {
     private $translator;
     private $locale;
-
 
     /**
      * @param FormBuilderInterface $builder
@@ -78,7 +74,6 @@ class LiveType extends AbstractType
                     'label' => $this->translator->trans('Enable chat', array(), null, $this->locale),
                 ));
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

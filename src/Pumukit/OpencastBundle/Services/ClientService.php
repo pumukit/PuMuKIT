@@ -2,7 +2,6 @@
 
 namespace Pumukit\OpencastBundle\Services;
 
-
 use Pumukit\SchemaBundle\Document\Series;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Role\Role;
