@@ -515,6 +515,8 @@ class FactoryService
 
         $this->dm->flush();
 
+        $this->generateNumericalIDSeries($newSeries);
+
         $this->seriesDispatcher->dispatchCreate($series);
     }
 
@@ -622,6 +624,7 @@ class FactoryService
 
         $this->dm->persist($new);
         $this->dm->flush();
+        $this->generateNumericalIDMultimediaObject($new);
 
         $this->mmsDispatcher->dispatchClone($src, $new);
 
