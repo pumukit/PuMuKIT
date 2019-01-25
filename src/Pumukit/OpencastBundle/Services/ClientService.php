@@ -274,11 +274,13 @@ class ClientService
      */
     public function getMediaPackageFromWorkflow($id)
     {
-        $output = $this->request('/workflow/instances.xml?state=SUCCEEDED&mp='.$id, array(), 'GET', true);
+        $output = $this->request('/workflow/instances.json?state=SUCCEEDED&mp='.$id, array(), 'GET', true);
         if (200 == $output['status']) {
-            $decode = $this->decodeXML($output);
+            $decode = $this->decodeJson($output['var']);
 
-            return $decode;
+            if (isset($decode['workflows']['workflow']['mediapackage'])) {
+                return $decode['workflows']['workflow']['mediapackage'];
+            }
         }
 
         return null;
