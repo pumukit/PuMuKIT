@@ -1,23 +1,29 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}create new live channel{% endtrans %}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}create new live channel{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form id="pumukitnewadmin_live_create_form"
-        action="{{ path('pumukitnewadmin_live_create') }}" method="POST">
-    <fieldset>
-      {% for child in form %}
-        {{ form_row(child) }}
-      {% endfor %}
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
-    </div>
-  </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
+        {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+        <form id="pumukitnewadmin_live_create_form"
+              action="{{ path('pumukitnewadmin_live_create') }}" method="POST">
+            <fieldset>
+                {% for key,child in form %}
+                    {% if advance_live_event == true and key != 'chat'%}
+                        {{ form_row(child) }}
+                    {% endif %}
+                    {% if advance_live_event == false %}
+                        {{ form_row(child) }}
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>
