@@ -272,9 +272,9 @@ class ClientService
      *
      * @throws \Exception
      */
-    public function getMediaPackageFromWorkflow($id) 
-    { 
-      $output = $this->request('/workflow/instances.xml?state=SUCCEEDED&mp='.$id, array(), 'GET', false, true);
+    public function getMediaPackageFromWorkflow($id)
+    {
+        $output = $this->request('/workflow/instances.xml?state=SUCCEEDED&mp='.$id, array(), 'GET', false, true);
         if (200 == $output['status']) {
             $decode = $this->decodeXML($output);
 
@@ -282,7 +282,6 @@ class ClientService
         }
 
         return null;
-
     }
 
     /**
@@ -294,7 +293,7 @@ class ClientService
      */
     public function getMediaPackageFromAssets($id)
     {
-      $output = $this->request('/assets/episode/'.$id, array(), 'GET', true);
+        $output = $this->request('/assets/episode/'.$id, array(), 'GET', true);
         if (200 == $output['status']) {
             $decode = $this->decodeXML($output);
 
@@ -687,12 +686,12 @@ class ClientService
     {
         if ($useAdminUrl) {
             $requestUrl = $this->getAdminUrl().$path;
-        } else if($replace) {
-	  $requestUrl = "http://admin12.matterhorn.campusdomar.es". $path;
-	  //	  $requestUrl = str_replace('admin.','admin12.',$path);
+        } elseif ($replace) {
+            $requestUrl = 'http://admin12.matterhorn.campusdomar.es'.$path;
+        //	  $requestUrl = str_replace('admin.','admin12.',$path);
         } else {
-	  $requestUrl = $this->url.$path;
-	}
+            $requestUrl = $this->url.$path;
+        }
 
         $fields = (is_array($params)) ? http_build_query($params) : $params;
 
