@@ -274,7 +274,7 @@ class ClientService
      */
     public function getMediaPackageFromWorkflow($id)
     {
-        $output = $this->request('/workflow/instances.xml?state=SUCCEEDED&mp='.$id, array(), 'GET', false, true);
+        $output = $this->request('/workflow/instances.xml?state=SUCCEEDED&mp='.$id, array(), 'GET', true);
         if (200 == $output['status']) {
             $decode = $this->decodeXML($output);
 
@@ -682,13 +682,10 @@ class ClientService
      *
      * @throws \Exception
      */
-    private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false, $replace = false)
+    private function request($path, $params = array(), $method = 'GET', $useAdminUrl = false)
     {
         if ($useAdminUrl) {
             $requestUrl = $this->getAdminUrl().$path;
-        } elseif ($replace) {
-            $requestUrl = 'http://admin12.matterhorn.campusdomar.es'.$path;
-        //	  $requestUrl = str_replace('admin.','admin12.',$path);
         } else {
             $requestUrl = $this->url.$path;
         }

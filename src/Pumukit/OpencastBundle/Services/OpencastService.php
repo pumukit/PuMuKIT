@@ -146,10 +146,6 @@ class OpencastService
             $mediaPackageID = prev($variables);
             $url = $data[0].$delimiterPath.$mediaPackageID.'/'.$version.'/'.$element.'.'.pathinfo($file, PATHINFO_EXTENSION);
         }
-        // NOTE: Refactor URL for Opencast 1.2
-        if (false !== stripos($url, 'files/mediapackage/')) {
-            $url = str_replace('admin.matterhorn', 'admin12.matterhorn', $url);
-        }
 
         return $url;
     }
