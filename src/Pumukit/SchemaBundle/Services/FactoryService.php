@@ -173,6 +173,7 @@ class FactoryService
             $mm->setTitle($title, $locale);
         }
 
+        $this->generateNumericalIDMultimediaObject($mm);
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         return $mm;
