@@ -259,10 +259,31 @@ class ClientService
         }
 
         if (0 == strpos($version, '1.2')) {
-            return $this->getMediaPackageFromArchive($id);
+            return $this->getMediaPackageFromWorkflow($id);
         }
 
         throw new \Exception('There is no case for this version of Opencast ('.$version.')');
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed|null
+     *
+     * @throws \Exception
+     */
+    public function getMediaPackageFromWorkflow($id)
+    {
+        $output = $this->request('/workflow/instances.json?state=SUCCEEDED&mp='.$id, array(), 'GET', true);
+        if (200 == $output['status']) {
+            $decode = $this->decodeJson($output['var']);
+
+            if (isset($decode['workflows']['workflow']['mediapackage'])) {
+                return $decode['workflows']['workflow']['mediapackage'];
+            }
+        }
+
+        return null;
     }
 
     /**
