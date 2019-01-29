@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 /**
  * @Route("/unesco")
@@ -323,9 +324,9 @@ class UNESCOController extends Controller implements NewAdminController
                         $newCriteria['record_date_finish'] = $value;
                     }
                 } elseif ('originalName' === $key && !empty($value)) {
-                    $newCriteria['tracks.originalName'] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
+                    $newCriteria['tracks.originalName'] = SearchUtils::generateRegexExpression($value);
                 } elseif (!empty($value)) {
-                    $newCriteria[$key.'.'.$request->getLocale()] = new \MongoRegex('/.*'.preg_quote($value).'.*/i');
+                    $newCriteria[$key.'.'.$request->getLocale()] = SearchUtils::generateRegexExpression($value);
                 }
             }
         }
