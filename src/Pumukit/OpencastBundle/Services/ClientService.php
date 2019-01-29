@@ -63,7 +63,7 @@ class ClientService
     /**
      * Get Url
      * from Opencast server
-     * (Engage node in cluster).
+     * (Engage node in cluser).
      *
      * @return string $url
      */
@@ -269,17 +269,41 @@ class ClientService
             throw new \Exception('No media packages given.');
         }
 
-        $request = '/episode/apply/'.$workflowName;
+        $request = '/admin-ng/tasks/new';
 
-        $mediaPackageIdsParameter = '';
-        foreach ($mediaPackagesIds as $index => $id) {
-            $mediaPackageIdsParameter = $mediaPackageIdsParameter.$id;
-            if ($index < (count($mediaPackagesIds) - 1)) {
-                $mediaPackageIdsParameter = $mediaPackageIdsParameter.',+';
+        $parameters = array(
+            'metadata' => json_encode(
+                array(
+                    'workflow' => $workflowName,
+                    'configuration' => array(
+                        'retractFromEngage' => 'true',
+                        'retractFromAws' => 'false',
+                        'retractFromApi' => 'true',
+                        'retractPreview' => 'true',
+                        'retractFromOaiPmh' => 'true',
+                        'retractFromYouTube' => 'false'
+                    ),
+                    'eventIds' => $mediaPackagesIds,
+                )
+            ),
+        );
+
+        # SUPPORT FOR OPENCAST < 2.x
+        if ($this->getOpencastVersion() < '2.0.0'){
+            $request = '/episode/apply/'.$workflowName;
+
+            $mediaPackageIdsParameter = '';
+            foreach ($mediaPackagesIds as $index => $id) {
+                $mediaPackageIdsParameter = $mediaPackageIdsParameter.$id;
+                if ($index < (count($mediaPackagesIds) - 1)) {
+                    $mediaPackageIdsParameter = $mediaPackageIdsParameter.',+';
+                }
             }
+            $parameters = array(
+                'mediaPackageIds' => $mediaPackageIdsParameter,
+                'engage' => 'Matterhorn+Engage+Player',
+            );
         }
-        $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
-                            'engage' => 'Matterhorn+Engage+Player', );
 
         $output = $this->request($request, $parameters, 'POST', true);
 
@@ -597,5 +621,23 @@ class ClientService
         }
 
         return null;
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function getOpencastVersion()
+    {
+        $output = $this->request('/info/components.json');
+        if (!$output) {
+            throw new \Exception("Can't access to /info/components.json");
+        }
+        $decode = $this->decodeJson($output['var']);
+        if (isset($decode['rest'][0]['version'])) {
+            return $decode['rest'][0]['version'];
+        }
+        throw new \Exception("Cant't recognize ['rest'][0]['version'] from /info/components.json");
     }
 }
