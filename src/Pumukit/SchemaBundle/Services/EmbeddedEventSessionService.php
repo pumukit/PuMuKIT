@@ -293,8 +293,6 @@ class EmbeddedEventSessionService
         return $this->collection->aggregate($pipeline)->toArray();
     }
 
-    public static $currentSessions = null;
-
     /**
      * Get current sessions with or without criteria.
      *
@@ -306,8 +304,12 @@ class EmbeddedEventSessionService
      */
     public function findCurrentSessions($criteria = array(), $limit = 0, $all = false)
     {
-        if (self::$currentSessions) {
-            return self::$currentSessions;
+        static $currentSessions = array();
+
+        $encryptCriteria = md5(json_encode($criteria).strval($limit).strval($all));
+
+        if (isset($currentSessions[$encryptCriteria])) {
+            return $currentSessions[$encryptCriteria];
         }
 
         $pipeline = $this->initPipeline($all);
@@ -354,12 +356,10 @@ class EmbeddedEventSessionService
             $pipeline[] = array('$limit' => $limit);
         }
 
-        self::$currentSessions = $this->collection->aggregate($pipeline)->toArray();
+        $currentSessions[$encryptCriteria] = $this->collection->aggregate($pipeline)->toArray();
 
-        return self::$currentSessions;
+        return $currentSessions[$encryptCriteria];
     }
-
-    public static $findNextSessions;
 
     /**
      * Get next sessions with or without criteria.
@@ -372,8 +372,12 @@ class EmbeddedEventSessionService
      */
     public function findNextSessions($criteria = array(), $limit = 0, $all = false)
     {
-        if (isset(self::$findNextSessions)) {
-            return self::$findNextSessions;
+        static $findNextSessions;
+
+        $encryptCriteria = md5(json_encode($criteria).strval($limit).strval($all));
+
+        if (isset($findNextSessions[$encryptCriteria])) {
+            return $findNextSessions[$encryptCriteria];
         }
 
         $pipeline = $this->initPipeline($all);
@@ -431,9 +435,9 @@ class EmbeddedEventSessionService
             $result[$key]['data'] = array_values($orderSession);
         }
 
-        self::$findNextSessions = $result;
+        $findNextSessions[$encryptCriteria] = $result;
 
-        return self::$findNextSessions;
+        return $findNextSessions[$encryptCriteria];
     }
 
     /**
@@ -1279,8 +1283,6 @@ class EmbeddedEventSessionService
         return $orderSession;
     }
 
-    private static $isLiveBroadcasting;
-
     /**
      * Is live broadcasting.
      *
@@ -1290,14 +1292,16 @@ class EmbeddedEventSessionService
      */
     public function isLiveBroadcasting()
     {
-        if (isset(self::$isLiveBroadcasting)) {
-            return self::$isLiveBroadcasting;
+        static $isLiveBroadcasting = null;
+
+        if (null !== $isLiveBroadcasting) {
+            return $isLiveBroadcasting;
         }
 
         $events = $this->findCurrentSessions();
 
-        self::$isLiveBroadcasting = count($events) > 0;
+        $isLiveBroadcasting = count($events) > 0;
 
-        return self::$isLiveBroadcasting;
+        return $isLiveBroadcasting;
     }
 }
