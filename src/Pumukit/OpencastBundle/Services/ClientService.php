@@ -281,15 +281,15 @@ class ClientService
                         'retractFromApi' => 'true',
                         'retractPreview' => 'true',
                         'retractFromOaiPmh' => 'true',
-                        'retractFromYouTube' => 'false'
+                        'retractFromYouTube' => 'false',
                     ),
                     'eventIds' => $mediaPackagesIds,
                 )
             ),
         );
 
-        # SUPPORT FOR OPENCAST < 2.x
-        if ($this->getOpencastVersion() < '2.0.0'){
+        // SUPPORT FOR OPENCAST < 2.x
+        if ($this->getOpencastVersion() < '2.0.0') {
             $request = '/episode/apply/'.$workflowName;
 
             $mediaPackageIdsParameter = '';
