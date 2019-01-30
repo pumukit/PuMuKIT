@@ -281,7 +281,11 @@ EOT
             $trackTags = array('display');
         }
 
-        $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
+        try {
+            $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
+        } catch (\Exception $exception) {
+            $output->writeln('<error>Error - MMobj: '.$multimediaObject->getId().' and mediaPackage: '.$multimediaObject->getProperty('opencast').' with this error: '.$exception->getMessage().'</error>');
+        }
 
         $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
     }
