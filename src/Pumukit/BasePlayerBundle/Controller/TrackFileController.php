@@ -27,12 +27,13 @@ class TrackFileController extends Controller
      * @param Request $request
      *
      * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
      * @throws \Exception
      */
     public function indexAction($id, Request $request)
     {
-        if(!preg_match('/^[a-f\d]{24}$/i',$id)) {
-            return new Response("",Response::HTTP_NOT_FOUND);
+        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
+            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         list($mmobj, $track) = $this->getMmobjAndTrack($id);
