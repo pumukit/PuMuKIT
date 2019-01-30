@@ -110,6 +110,7 @@ class SeriesSearchService
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);

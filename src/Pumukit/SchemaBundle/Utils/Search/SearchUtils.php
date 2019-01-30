@@ -38,6 +38,7 @@ class SearchUtils
     private static $delimiter = ' ';
     private static $glue = '|';
     private static $maxTokens = 0;
+    private static $filterSizeStopWords = 2;
 
     /**
      * @param $string
@@ -51,9 +52,9 @@ class SearchUtils
         $regex = array();
         foreach ($elements as $key => $element) {
             if (0 === self::$maxTokens || (++$key) <= self::$maxTokens) {
-                $replacedElement = self::replaceCharacters($element);
+                $replacedElement = self::filterStopWords($element);
                 if ($replacedElement) {
-                    $regex[] = $replacedElement;
+                    $regex[] = self::scapeTildes($replacedElement);
                 }
             }
         }
@@ -68,13 +69,23 @@ class SearchUtils
      *
      * @return mixed|null
      */
-    private static function replaceCharacters($element)
+    private static function filterStopWords($element)
     {
-        if (strlen($element) > 2) {
-            return str_ireplace(self::$mapping, self::$specialCharacter, $element);
+        if (strlen($element) > self::$filterSizeStopWords) {
+            return $element;
         }
 
         return null;
+    }
+
+    /**
+     * @param $element
+     *
+     * @return mixed
+     */
+    public static function scapeTildes($element)
+    {
+        return str_ireplace(self::$mapping, self::$specialCharacter, $element);
     }
 
     /**
