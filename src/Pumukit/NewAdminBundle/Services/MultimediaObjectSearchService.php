@@ -195,6 +195,7 @@ class MultimediaObjectSearchService
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
