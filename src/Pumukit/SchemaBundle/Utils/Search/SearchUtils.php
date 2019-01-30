@@ -7,12 +7,7 @@ namespace Pumukit\SchemaBundle\Utils\Search;
  */
 class SearchUtils
 {
-    private static $mapping = array(
-        'a',
-        'e',
-        'i',
-        'o',
-        'u',
+    private static $cleanTildes = array(
         'á',
         'é',
         'í',
@@ -21,17 +16,28 @@ class SearchUtils
         'ü',
     );
 
+    private static $cleanTildesReplace = array(
+        'a',
+        'e',
+        'i',
+        'o',
+        'u',
+        'u',
+    );
+
+    private static $mapping = array(
+        'a',
+        'e',
+        'i',
+        'o',
+        'u',
+    );
+
     private static $specialCharacter = array(
         '[aá]',
         '[eé]',
         '[ií]',
         '[oó]',
-        '[uúü]',
-        '[aá]',
-        '[eé]',
-        '[ií]',
-        '[oó]',
-        '[uúü]',
         '[uúü]',
     );
 
@@ -49,17 +55,14 @@ class SearchUtils
     {
         $elements = str_getcsv(preg_quote($string), self::$delimiter);
 
-        $regex = array();
-        foreach ($elements as $key => $element) {
-            if (0 === self::$maxTokens || (++$key) <= self::$maxTokens) {
-                $replacedElement = self::filterStopWords($element);
-                if ($replacedElement) {
-                    $regex[] = self::scapeTildes($replacedElement);
-                }
-            }
+        if (self::$maxTokens > 0) {
+            $elements = array_slice($elements, 0, self::$maxTokens);
         }
 
-        $regexString = self::completeRegexExpression($regex);
+        $elements = array_filter($elements, 'self::filterStopWords');
+        $elements = array_map('self::scapeTildes', $elements);
+
+        $regexString = self::completeRegexExpression($elements);
 
         return new \MongoRegex($regexString);
     }
@@ -67,15 +70,15 @@ class SearchUtils
     /**
      * @param $element
      *
-     * @return mixed|null
+     * @return bool
      */
-    private static function filterStopWords($element)
+    public static function filterStopWords($element)
     {
         if (strlen($element) > self::$filterSizeStopWords) {
-            return $element;
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -85,6 +88,8 @@ class SearchUtils
      */
     public static function scapeTildes($element)
     {
+        $element = str_ireplace(self::$cleanTildes, self::$cleanTildesReplace, $element);
+
         return str_ireplace(self::$mapping, self::$specialCharacter, $element);
     }
 
