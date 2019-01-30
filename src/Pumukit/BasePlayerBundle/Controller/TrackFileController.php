@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
@@ -19,18 +20,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class TrackFileController extends Controller
 {
     /**
-     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index", requirements={"id"="/^[0-9a-z]{24}$/"})
-     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext", requirements={"id"="/^[0-9a-z]{24}$/"})
+     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
+     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
      *
-     * @param $id
+     * @param         $id
      * @param Request $request
      *
-     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
+     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
      */
     public function indexAction($id, Request $request)
     {
+        if(!preg_match('/^[a-f\d]{24}$/i',$id)) {
+            return new Response("",Response::HTTP_NOT_FOUND);
+        }
+
         list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
         if ($this->shouldIncreaseViews($track, $request)) {
