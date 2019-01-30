@@ -13,6 +13,12 @@ class SearchUtils
         'i',
         'o',
         'u',
+        'á',
+        'é',
+        'í',
+        'ó',
+        'ú',
+        'ü',
     );
 
     private static $specialCharacter = array(
@@ -20,7 +26,13 @@ class SearchUtils
         '[eé]',
         '[ií]',
         '[oó]',
-        '[uú]',
+        '[uúü]',
+        '[aá]',
+        '[eé]',
+        '[ií]',
+        '[oó]',
+        '[uúü]',
+        '[uúü]',
     );
 
     private static $delimiter = ' ';
@@ -34,7 +46,7 @@ class SearchUtils
      */
     public static function generateRegexExpression($string)
     {
-        $elements = str_getcsv($string, self::$delimiter);
+        $elements = str_getcsv(preg_quote($string), self::$delimiter);
 
         $regex = array();
         foreach ($elements as $key => $element) {
