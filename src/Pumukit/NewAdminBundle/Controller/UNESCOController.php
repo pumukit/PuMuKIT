@@ -110,9 +110,11 @@ class UNESCOController extends Controller implements NewAdminController
 
         $usedTags = array();
         foreach ($configuredTag->getChildren() as $child) {
-            foreach ($child->getChildren() as $elem) {
-                if ($elem->getDisplay()) {
-                    $usedTags[$child->getTitle()][] = $elem;
+            if($child->getDisplay()) {
+                foreach ($child->getChildren() as $elem) {
+                    if ($elem->getDisplay()) {
+                        $usedTags[$child->getTitle()][] = $elem;
+                    }
                 }
             }
         }
