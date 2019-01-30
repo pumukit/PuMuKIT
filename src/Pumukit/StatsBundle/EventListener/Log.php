@@ -29,7 +29,7 @@ class Log
         $log = new ViewsLog(
             $req->getUri(),
             $req->getClientIp(),
-            $req->headers->get('user-agent'),
+            utf8_encode($req->headers->get('user-agent')),
             $req->headers->get('referer'),
             $event->getMultimediaObject()->getId(),
             $event->getMultimediaObject()->getSeries()->getId(),

@@ -13,11 +13,14 @@ use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+/**
+ * Class TrackFileController.
+ */
 class TrackFileController extends Controller
 {
     /**
-     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
-     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
+     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index", requirements={"id"="/^[0-9a-z]{24}$/"})
+     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext", requirements={"id"="/^[0-9a-z]{24}$/"})
      *
      * @param $id
      * @param Request $request
@@ -63,7 +66,7 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
+     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index", requirements={"id"="/^[0-9a-z]{24}$/"})
      *
      * @param Request $request
      * @param $id
