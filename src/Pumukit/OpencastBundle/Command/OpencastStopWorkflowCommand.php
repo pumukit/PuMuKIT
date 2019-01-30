@@ -27,7 +27,43 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $logger = $this->getContainer()->get('logger');
+
         $opencastWorkflowService = $this->getContainer()->get('pumukit_opencast.workflow');
+        $opencastClientService = $this->getContainer()->get('pumukit_opencast.client');
+        if ($opencastClientService->getOpencastVersion() >= '2.0.0') {
+            //$output->writeln('<info>Error on stopping workflows</info>');
+            if ($mediaPackageId = $input->getOption('mediaPackageId')) {
+                $opencastClientService->removeEvent($mediaPackageId);
+                $output->writeln('<info>Removed event with id'.$mediaPackageId.'</info>');
+
+                return 1;
+            }
+            $statistics = $opencastClientService->getWorkflowStatistics();
+            $total = 0;
+            if (isset($statistics['statistics']['total'])) {
+                $total = $statistics['statistics']['total'];
+            }
+
+            if (0 == $total) {
+                return null;
+            }
+            $workflowName = 'retract';
+            $decode = $opencastClientService->getCountedWorkflowInstances('', $total, $workflowName);
+            if (!isset($decode['workflows']['workflow'])) {
+                //Data error
+                return 0;
+            }
+            foreach ($decode['workflows']['workflow'] as $workflow) {
+                if (!isset($workflow['mediapackage']['id'])) {
+                    //Error?
+                    continue;
+                }
+                $opencastClientService->removeEvent($workflow['mediapackage']['id']);
+            }
+
+            return 1;
+        }
+
         $deleteArchiveMediaPackage = $this->getContainer()->getParameter('pumukit_opencast.delete_archive_mediapackage');
 
         if ($deleteArchiveMediaPackage) {

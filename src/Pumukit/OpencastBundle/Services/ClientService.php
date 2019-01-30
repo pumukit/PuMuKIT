@@ -623,6 +623,16 @@ class ClientService
         return null;
     }
 
+    public function removeEvent($id)
+    {
+        $output = $this->request('/admin-ng/event/'.$id, array(), 'DELETE', true);
+        if (!$output) {
+            throw new \Exception("Can't access to admin-ng/event");
+        }
+
+        return null;
+    }
+
     /**
      * @return mixed
      *
