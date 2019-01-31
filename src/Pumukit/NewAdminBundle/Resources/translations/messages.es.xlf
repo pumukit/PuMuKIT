@@ -3708,6 +3708,10 @@
         <source>Option not allowed</source>
         <target>Opción no permitida</target>
       </trans-unit>
+      <trans-unit id="46a5f332254711e9ab14d663bd873d93" resname="Return">
+        <source>Return</source>
+        <target>Volver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

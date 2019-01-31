@@ -3653,6 +3653,10 @@
         <source>Upload date</source>
         <target>Upload date</target>
       </trans-unit>
+      <trans-unit id="46a5f332254711e9ab14d663bd873d93" resname="Return">
+        <source>Return</source>
+        <target>Return</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
