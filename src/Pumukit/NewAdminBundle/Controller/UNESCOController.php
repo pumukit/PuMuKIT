@@ -22,6 +22,8 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 /**
  * @Route("/catalog")
+ * @Route("/unesco")
+ *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
 class UNESCOController extends Controller implements NewAdminController
