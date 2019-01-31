@@ -75,7 +75,7 @@ class LiveType extends AbstractType
             ->add('chat', 'checkbox',
                 array(
                     'required' => false,
-                    'attr' => array('aria-label' => $this->translator->trans('Enable chat on channel', array(), null, $this->locale)),
+                    'attr' => array('aria-label' => $this->translator->trans('Enable chat on this channel\'s page', array(), null, $this->locale)),
                     'label' => $this->translator->trans('Enable chat on this channel\'s page', array(), null, $this->locale), ));
     }
 
