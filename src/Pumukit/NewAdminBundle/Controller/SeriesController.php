@@ -455,9 +455,6 @@ class SeriesController extends AdminController implements NewAdminController
             foreach ($allSeries as $series) {
                 $emptySeries[] = $series['_id'];
             }
-        }
-
-        if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
             $criteria['playlist.multimedia_objects'] = array('$size' => 0);
             $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
             $this->get('session')->set('admin/series/criteria', $criteria);
