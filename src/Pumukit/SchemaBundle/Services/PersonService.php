@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 class PersonService
 {
@@ -237,10 +238,8 @@ class PersonService
     public function autoCompletePeopleByName($name, array $exclude = array(), $checkAccents = false)
     {
         if ($checkAccents) {
-            //Wating for Mongo 3.4 and https://docs.mongodb.com/manual/reference/collation/
-            $from = array('a', 'e', 'i', 'o', 'u');
-            $to = array('[aá]', '[eé]', '[ií]', '[oó]', '[uú]');
-            $name = str_replace($from, $to, $name);
+            //Wating for Mongo 4 and https://docs.mongodb.com/manual/reference/collation/
+            $name = SearchUtils::scapeTildes($name);
         }
 
         $qb = $this->repoPerson->createQueryBuilder()

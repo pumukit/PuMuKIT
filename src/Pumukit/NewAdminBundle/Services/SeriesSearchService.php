@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 class SeriesSearchService
 {
@@ -59,9 +60,9 @@ class SeriesSearchService
             } elseif (('_id' === $property) && ('' !== $value)) {
                 $new_criteria['_id'] = $value;
             } elseif (('title' === $property) && ('' !== $value)) {
-                $new_criteria['title.'.$locale] = new \MongoRegex("/$value/i");
+                $new_criteria['title.'.$locale] = SearchUtils::generateRegexExpression($value);
             } elseif (('subtitle' === $property) && ('' !== $value)) {
-                $new_criteria['subtitle.'.$locale] = new \MongoRegex("/$value/i");
+                $new_criteria['subtitle.'.$locale] = SearchUtils::generateRegexExpression($value);
             } elseif ('playlist.multimedia_objects' === $property && ('' !== $value)) {
                 $new_criteria['playlist.multimedia_objects'] = array('$size' => 0);
             }
@@ -111,6 +112,7 @@ class SeriesSearchService
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);

@@ -259,10 +259,31 @@ class ClientService
         }
 
         if (0 == strpos($version, '1.2')) {
-            return $this->getMediaPackageFromArchive($id);
+            return $this->getMediaPackageFromWorkflow($id);
         }
 
         throw new \Exception('There is no case for this version of Opencast ('.$version.')');
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed|null
+     *
+     * @throws \Exception
+     */
+    public function getMediaPackageFromWorkflow($id)
+    {
+        $output = $this->request('/workflow/instances.json?state=SUCCEEDED&mp='.$id, array(), 'GET', true);
+        if (200 == $output['status']) {
+            $decode = $this->decodeJson($output['var']);
+
+            if (isset($decode['workflows']['workflow']['mediapackage'])) {
+                return $decode['workflows']['workflow']['mediapackage'];
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -340,17 +361,41 @@ class ClientService
             throw new \Exception('No media packages given.');
         }
 
-        $request = '/episode/apply/'.$workflowName;
+        $request = '/admin-ng/tasks/new';
 
-        $mediaPackageIdsParameter = '';
-        foreach ($mediaPackagesIds as $index => $id) {
-            $mediaPackageIdsParameter = $mediaPackageIdsParameter.$id;
-            if ($index < (count($mediaPackagesIds) - 1)) {
-                $mediaPackageIdsParameter = $mediaPackageIdsParameter.',+';
+        $parameters = array(
+            'metadata' => json_encode(
+                array(
+                    'workflow' => $workflowName,
+                    'configuration' => array(
+                        'retractFromEngage' => 'true',
+                        'retractFromAws' => 'false',
+                        'retractFromApi' => 'true',
+                        'retractPreview' => 'true',
+                        'retractFromOaiPmh' => 'true',
+                        'retractFromYouTube' => 'false',
+                    ),
+                    'eventIds' => $mediaPackagesIds,
+                )
+            ),
+        );
+
+        // SUPPORT FOR OPENCAST < 2.x
+        if ($this->getOpencastVersion() < '2.0.0') {
+            $request = '/episode/apply/'.$workflowName;
+
+            $mediaPackageIdsParameter = '';
+            foreach ($mediaPackagesIds as $index => $id) {
+                $mediaPackageIdsParameter = $mediaPackageIdsParameter.$id;
+                if ($index < (count($mediaPackagesIds) - 1)) {
+                    $mediaPackageIdsParameter = $mediaPackageIdsParameter.',+';
+                }
             }
+            $parameters = array(
+                'mediaPackageIds' => $mediaPackageIdsParameter,
+                'engage' => 'Matterhorn+Engage+Player',
+            );
         }
-        $parameters = array('mediaPackageIds' => $mediaPackageIdsParameter,
-                            'engage' => 'Matterhorn+Engage+Player', );
 
         $output = $this->request($request, $parameters, 'POST', true);
 
@@ -836,6 +881,16 @@ class ClientService
         return null;
     }
 
+    public function removeEvent($id)
+    {
+        $output = $this->request('/admin-ng/event/'.$id, array(), 'DELETE', true);
+        if (!$output) {
+            throw new \Exception("Can't access to admin-ng/event");
+        }
+
+        return null;
+    }
+
     /**
      * @return mixed
      *
@@ -847,7 +902,6 @@ class ClientService
         if (!$output) {
             throw new \Exception("Can't access to /info/components.json");
         }
-
         $decode = $this->decodeJson($output['var']);
         if (isset($decode['rest'][0]['version'])) {
             return $decode['rest'][0]['version'];

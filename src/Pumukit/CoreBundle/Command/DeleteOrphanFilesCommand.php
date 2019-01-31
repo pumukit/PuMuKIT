@@ -2,18 +2,21 @@
 
 namespace Pumukit\CoreBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Class DeleteOrphanFilesCommand.
+ */
 class DeleteOrphanFilesCommand extends ContainerAwareCommand
 {
     private $dm;
     private $output;
     private $input;
-    private $finder;
     private $path;
     private $delete;
     private $logger;
@@ -26,24 +29,24 @@ class DeleteOrphanFilesCommand extends ContainerAwareCommand
             ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Path to check', null)
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete files and folders')
             ->setHelp(<<<'EOT'
-            
+
             Pumukit delete orphan files on specific path. This command shows if the path's file exists on:
-            
+
             a) pics.path of multimedia object
             b) materials.path of multimedia object
             c) tracks.path of multimedia object
             d) pics.path of series
             e) materials.path of series
-            
+
             The command will try to delete the folder if its empty.
-                
+
                 Example to use:
-                
+
                 1. List orphan files
                     php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material"
                 2. Delete orphan files
-                    php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material" --delete         
-                  
+                    php app/console pumukit:files:delete:orphan --path="/var/www/html/pumukit2/web/uploads/material" --delete
+
 EOT
             );
     }
@@ -54,21 +57,19 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->logger = $this->getContainer()->get('logger');
         $this->output = $output;
         $this->input = $input;
 
         $this->path = $this->input->getOption('path');
-        $this->delete = $this->input->getOption('delete');
-        $this->finder = new Finder();
     }
 
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return bool|int|null
+     * @return int|void|null
      *
      * @throws \Exception
      */
@@ -78,78 +79,80 @@ EOT
             throw new \Exception('Path doesnt exists');
         }
 
-        $this->findFilesOfPath($this->path);
+        $this->findFilesOfPath($output, $this->dm, $this->path);
     }
 
     /**
-     * @param $path
-     *
-     * @throws \Exception
+     * @param OutputInterface $output
+     * @param DocumentManager $documentManager
+     * @param                 $path
      */
-    private function findFilesOfPath($path)
+    private function findFilesOfPath(OutputInterface $output, DocumentManager $documentManager, $path)
     {
-        $files = $this->finder->files()->in($path);
+        $finder = new Finder();
+        $files = $finder->files()->in($path);
 
+        $output->writeln('<comment>***** Files to delete: '.count($files).' *****</comment>');
         foreach ($files as $file) {
             $filePath = $file->getRelativePathName();
             $absoluteFilePath = $file->getPathName();
 
-            $existsInMongoDB = $this->findInMongoDB($filePath);
+            $existsInMongoDB = $this->findInMongoDB($documentManager, $filePath);
             if (!$existsInMongoDB) {
-                $this->output->writeln('No file found in MongoDB '.$filePath);
-                $this->logger->info('No file found in MongoDB '.$filePath);
+                $output->writeln('No file found in MongoDB - <info>'.$this->path.'/'.$filePath.'</info>');
 
                 if ($this->delete) {
-                    $this->output->writeln('Trying to delete file....');
+                    $output->writeln('Trying to delete file....');
                     unlink($absoluteFilePath);
-                    $this->output->writeln('File deleted '.$filePath);
-                    $this->isEmptyDirectory($absoluteFilePath);
+                    $output->writeln('File deleted '.$filePath);
+                    $this->isEmptyDirectory($output, $absoluteFilePath);
                 }
             }
         }
     }
 
     /**
-     * @param $filePath
+     * @param DocumentManager $documentManager
+     * @param                 $filePath
      *
      * @return bool
      */
-    private function findInMongoDB($filePath)
+    private function findInMongoDB(DocumentManager $documentManager, $filePath)
     {
-        $mmobjPic = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjPic = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
             'pics.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
-        $mmobjMaterial = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjMaterial = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
             'materials.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
 
-        $mmobjTracks = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjTracks = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
             'tracks.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
 
-        $seriesPic = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
+        $seriesPic = $documentManager->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
             'pic.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
-        $seriesMaterial = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
+        $seriesMaterial = $documentManager->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
             'materials.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
 
-        if (0 === count($mmobjPic) && 0 === count($mmobjMaterial) && 0 === count($mmobjTracks) && 0 === count($seriesPic) && 0 === count($seriesMaterial)) {
+        if (!$mmobjPic && !$mmobjMaterial && !$mmobjTracks && !$seriesPic && !$seriesMaterial) {
             return false;
         }
 
@@ -157,16 +160,20 @@ EOT
     }
 
     /**
-     * @param $directoryPath
+     * @param OutputInterface $output
+     * @param                 $directoryPath
      */
-    private function isEmptyDirectory($directoryPath)
+    private function isEmptyDirectory(OutputInterface $output, $directoryPath)
     {
-        $dirName = pathinfo($directoryPath);
+        $dirName = pathinfo($directoryPath, PATHINFO_DIRNAME);
         try {
-            rmdir($dirName['dirname']);
-            $this->logger->info('Deleted empty directory '.$directoryPath);
+            if (realpath($dirName)) {
+                if (rmdir(realpath($dirName))) {
+                    $output->writeln('Deleted empty directory '.$directoryPath);
+                }
+            }
         } catch (\Exception $exception) {
-            $this->logger->info('Cannot delete directory because is not empty '.$directoryPath);
+            $output->writeln('Cannot delete directory because is not empty '.$directoryPath);
         }
     }
 }

@@ -42,10 +42,11 @@ class LiveController extends AdminController implements NewAdminController
         }
 
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
-                             array(
-                                 'live' => $resource,
-                                 'form' => $form->createView(),
-                             ));
+            array(
+                'advance_live_event' => $this->container->getParameter('pumukit_new_admin.advance_live_event'),
+                'live' => $resource,
+                'form' => $form->createView(),
+            ));
     }
 
     /**

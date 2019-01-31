@@ -2,6 +2,8 @@
 
 namespace Pumukit\CoreBundle\Command;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Input\InputOption;
 use UnexpectedValueException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,15 +13,22 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\ProcessBuilder;
 
+/**
+ * Class PumukitRefactorFileSystemCommand.
+ */
 class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
 {
     private $dm;
     private $output;
     private $input;
-    private $fileSystem;
+    private $finder;
     private $pics;
     private $materials;
     private $logger;
+    private $force;
+    private $id;
+    private $regex = '/^[0-9a-z]{24}$/';
+    private $allowedTypes = array('pics', 'materials');
 
     protected function configure()
     {
@@ -28,19 +37,39 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
             ->setDescription('Pumukit refactor wrongs path for images and materials')
             ->addOption('pics', null, InputOption::VALUE_NONE, 'Refactor pics')
             ->addOption('materials', null, InputOption::VALUE_NONE, 'Refactor materials')
+            ->addOption('id', null, InputOption::VALUE_NONE, 'Filter by id')
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Use this to execute command')
             ->setHelp(
             <<<'EOT'
-                
-                Pumukit refactor wrongs path for images and materials
-                
-                Example to use:
-                
-                1. Refactor pics
+
+                Command to refactor path of pics and materials on pumukit. The command will change element path from old versions
+                to the new element path on pumukit new versions.
+
+                Old Path:
+                    element.path = "element/uid/file.ext"
+                New path:
+                    element.path = "element/uidseries/video/uidvideo/file.ext"
+
+                Show change on: https://github.com/campusdomar/PuMuKIT2/commit/bd63851ce2a9d44be90017a0db0d5e073b55dec5#diff-2cb454b02139985bdcb5f15387a4be64
+
+                Examples:
+
+                1. List the refactor pics
                     php app/console pumukit:files:refactor:path --pics
-                2. Refactor materials
+                2. List the refactor materials
                     php app/console pumukit:files:refactor:path --materials
+                3. List both
+                    php app/console pumukit:files:refactor:path --pics --materials
+
+                Example to execute:
+
+                1. Refactor pics
+                    php app/console pumukit:files:refactor:path --pics --force
+                2. Refactor materials
+                    php app/console pumukit:files:refactor:path --materials --force
                 3. Refactor both
-                    php app/console pumukit:files:refactor:path --pics --materials            
+                    php app/console pumukit:files:refactor:path --pics --materials --force
+
 EOT
         );
     }
@@ -51,14 +80,16 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+        $this->dm = $this->getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->logger = $this->getContainer()->get('logger');
         $this->output = $output;
         $this->input = $input;
 
         $this->pics = $this->input->getOption('pics');
         $this->materials = $this->input->getOption('materials');
-        $this->fileSystem = new Filesystem();
+        $this->id = $this->input->getOption('id');
+        $this->force = (true === $input->getOption('force'));
+        $this->finder = new Finder();
     }
 
     /**
@@ -71,31 +102,25 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->pics && !$this->materials) {
-            throw new \Exception('Please select one type');
-        }
+        $this->checkInputs();
 
-        try {
-            $this->repairMongoDBPicsAndMaterial();
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $this->repairMongoDBPicsAndMaterial($this->dm);
 
         if ($this->pics) {
-            $output->writeln('Trying to refactor pics paths ...');
-            try {
-                $this->refactorPicsPath();
-            } catch (\Exception $exception) {
-                throw new \Exception($exception->getMessage());
+            $message = '***** List pics paths to refactor *****';
+            if ($this->force) {
+                $message = '***** Refactor pics paths *****';
             }
 
-            $this->output->writeln('Refactor pics done');
+            $this->showMessage($output, $message);
+            $this->refactorPicsPath($output, $this->dm);
+            $this->showMessage($output, '----- Refactor pics done -----');
         }
 
         if ($this->materials) {
             $output->writeln('Trying to refactor materials paths ...');
             try {
-                $this->refactorMaterialsPath();
+                $this->refactorMaterialsPath($output, $this->dm);
             } catch (\Exception $exception) {
                 throw new \Exception($exception->getMessage());
             }
@@ -104,71 +129,138 @@ EOT
         }
     }
 
-    private function repairMongoDBPicsAndMaterial()
+    /**
+     * @throws \Exception
+     */
+    private function checkInputs()
     {
-        if ($this->pics) {
-            $this->repairMongoDBPics();
+        if (!$this->pics && !$this->materials) {
+            throw new \Exception('Please select one type ( pics or materials )');
         }
 
-        if ($this->materials) {
-            $this->repairMongoDBMaterials();
-        }
-    }
-
-    private function repairMongoDBPics()
-    {
-        $multimediaObjects = $this->findPicsWithoutPaths();
-
-        if (!$multimediaObjects) {
-            return true;
-        }
-
-        foreach ($multimediaObjects as $multimediaObject) {
-            $elements = $multimediaObject->getPics();
-            $this->fixPath($elements);
-        }
-    }
-
-    private function repairMongoDBMaterials()
-    {
-        $multimediaObjects = $this->findMaterialsWithoutPaths();
-
-        if (!$multimediaObjects) {
-            return true;
-        }
-
-        foreach ($multimediaObjects as $multimediaObject) {
-            $elements = $multimediaObject->getMaterials();
-            $this->fixPath($elements);
-        }
-    }
-
-    private function fixPath($elements)
-    {
-        $haveChanges = false;
-        foreach ($elements as $elem) {
-            $path = $elem->getPath();
-            if (!isset($path)) {
-                $checkFile = file_exists($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
-                if ($checkFile) {
-                    $this->output->writeln('Setting path for '.$elem->getUrl());
-                    $elem->setPath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
-                    $haveChanges = true;
-                }
-            }
-        }
-
-        if ($haveChanges) {
-            $this->dm->flush();
+        if ($this->id && !preg_match($this->regex, $this->id)) {
+            throw new \Exception('Param ID is not a valid objectID');
         }
     }
 
     /**
+     * Function to repair path on MongoDB.
+     *
+     * @param DocumentManager $documentManager
+     *
      * @throws \Exception
      */
-    private function refactorPicsPath()
+    private function repairMongoDBPicsAndMaterial(DocumentManager $documentManager)
     {
-        $multimediaObjects = $this->findWrongPathPics();
+        if ($this->pics) {
+            $this->repairMongoDB($documentManager, 'pics');
+        }
+
+        if ($this->materials) {
+            $this->repairMongoDB($documentManager, 'materials');
+        }
+    }
+
+    /**
+     * @param DocumentManager $documentManager
+     * @param                 $type
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    private function repairMongoDB(DocumentManager $documentManager, $type)
+    {
+        if ('pics' === $type) {
+            $multimediaObjects = $this->findPicsWithoutPaths($documentManager);
+        } else {
+            $multimediaObjects = $this->findMaterialsWithoutPaths($documentManager);
+        }
+
+        if (!$multimediaObjects) {
+            $this->showMessage($this->output, 'No multimedia objects found');
+
+            return true;
+        }
+
+        foreach ($multimediaObjects as $multimediaObject) {
+            $this->fixPathMultimediaObject($documentManager, $multimediaObject, $type);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param                 $message
+     */
+    private function showMessage(OutputInterface $output, $message)
+    {
+        $output->writeln($message);
+    }
+
+    /**
+     * @param DocumentManager  $documentManager
+     * @param MultimediaObject $multimediaObject
+     * @param                  $type
+     *
+     * @throws \Exception
+     */
+    private function fixPathMultimediaObject(DocumentManager $documentManager, MultimediaObject $multimediaObject, $type)
+    {
+        if (!in_array($type, $this->allowedTypes)) {
+            throw new \Exception('Types cant be distinct of '.implode(' or ', $this->allowedTypes));
+        }
+
+        if ('pics' === $type) {
+            $elements = $multimediaObject->getPics();
+        } else {
+            $elements = $multimediaObject->getMaterials();
+        }
+
+        $this->fixPath($documentManager, $elements, $type);
+    }
+
+    /**
+     * @param DocumentManager $documentManager
+     * @param                 $elements
+     * @param                 $type
+     */
+    private function fixPath(DocumentManager $documentManager, $elements, $type)
+    {
+        $haveChanges = false;
+        foreach ($elements as $elem) {
+            $path = $elem->getPath();
+            if (!isset($path) && false !== stripos($elem->getUrl(), '/uploads/pic/')) {
+                $path = realpath($this->getContainer()->getParameter('kernel.root_dir').'/../web'.$elem->getUrl());
+                $checkFile = $this->checkFileExists($path);
+                if ($checkFile && $this->force) {
+                    $message = 'Adding path '.$path.' form pic with ID - '.$elem->getId();
+                    $elem->setPath($path);
+                    $haveChanges = true;
+                } elseif (!$checkFile) {
+                    $message = "$type (".$elem->getId().') - URL <comment>('.$elem->getUrl().'</comment>) doesnt exists on filesystem.';
+                } else {
+                    $message = "<info>$type (".$elem->getId().') - URL ('.$elem->getUrl().') </info>';
+                }
+                $this->showMessage($this->output, $message);
+            }
+        }
+
+        if ($haveChanges && $this->force) {
+            $documentManager->flush();
+        }
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param DocumentManager $documentManager
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    private function refactorPicsPath(OutputInterface $output, DocumentManager $documentManager)
+    {
+        $multimediaObjects = $this->findWrongPathPics($documentManager);
 
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
@@ -183,7 +275,8 @@ EOT
                     $seriesID = $multimediaObject['series'][0]->{'$id'};
 
                     if (!$seriesID) {
-                        throw new \Exception("There aren't series ID for multimediaObject ".$multimediaObjectId);
+                        $this->showMessage($output, "<error>There aren't series ID for multimediaObject ".$multimediaObjectId.'</error>');
+                        continue;
                     }
 
                     $replaceString = '/pic/series/'.$seriesID.'/video/';
@@ -196,17 +289,15 @@ EOT
                         try {
                             $this->moveElement($pic['path'], $newPath);
                         } catch (\Exception $exception) {
-                            $this->logger->error('pic not exists '.$pic['path']);
+                            $this->showMessage($output, '<warning> Pic ('.$pic['id'].') not exists '.$pic['path']);
                             continue;
                         }
                     }
 
                     try {
-                        $this->updateMultimediaObjectPic($multimediaObjectId, $pic['path'], $newPath, $newUrl);
+                        $this->updateMultimediaObjectPic($documentManager, $multimediaObjectId, $pic['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
-                        $this->logger->error(
-                            'Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']
-                        );
+                        $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']);
                         continue;
                     }
 
@@ -215,17 +306,20 @@ EOT
             }
 
             if ($haveChanges && isset($oldDirname)) {
-                $this->deleteDirectory($haveChanges, $oldDirname);
+                $this->deleteDirectory($output, $haveChanges, $oldDirname);
             }
         }
     }
 
     /**
-     * @throws \Exception
+     * @param OutputInterface $output
+     * @param DocumentManager $documentManager
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    private function refactorMaterialsPath()
+    private function refactorMaterialsPath(OutputInterface $output, DocumentManager $documentManager)
     {
-        $multimediaObjects = $this->findWrongPathMaterials();
+        $multimediaObjects = $this->findWrongPathMaterials($documentManager);
 
         foreach ($multimediaObjects as $multimediaObject) {
             $haveChanges = false;
@@ -240,7 +334,8 @@ EOT
                     $seriesID = $multimediaObject['series'][0]->{'$id'};
 
                     if (!$seriesID) {
-                        throw new \Exception("There aren't series ID for multimediaObject ".$multimediaObjectId);
+                        $this->showMessage($output, "<error>There aren't series ID for multimediaObject ".$multimediaObjectId.'</error>');
+                        continue;
                     }
 
                     $replaceString = '/material/series/'.$seriesID.'/video/';
@@ -253,17 +348,15 @@ EOT
                         try {
                             $this->moveElement($material['path'], $newPath);
                         } catch (\Exception $exception) {
-                            $this->logger->error('material not exists '.$material['path']);
+                            $this->showMessage($output, '<warning> Material ('.$material['id'].') not exists '.$material['path']);
                             continue;
                         }
                     }
 
                     try {
-                        $this->updateMultimediaObjectMaterial($multimediaObjectId, $material['path'], $newPath, $newUrl);
+                        $this->updateMultimediaObjectMaterial($documentManager, $multimediaObjectId, $material['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
-                        $this->logger->error(
-                            'Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']
-                        );
+                        $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']);
                         continue;
                     }
 
@@ -272,20 +365,23 @@ EOT
             }
 
             if ($haveChanges && isset($oldDirname)) {
-                $this->deleteDirectory($haveChanges, $oldDirname);
+                $this->deleteDirectory($output, $haveChanges, $oldDirname);
             }
         }
     }
 
     /**
-     * @return mixed
+     * Returns multimedia objects with pics without paths.
+     *
+     * @param DocumentManager $documentManager
+     *
+     * @return array|MultimediaObject[]|\Pumukit\SchemaBundle\Document\Role[]
      */
-    private function findPicsWithoutPaths()
+    private function findPicsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+        $multimediaObjects = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
             array(
-                'pics' => array('$exists' => true),
-                'pics.url' => array('$exists' => true),
+                'pics.url' => new \MongoRegex('/uploads/pic/'),
                 'pics.path' => array('$exists' => false),
             )
         );
@@ -294,14 +390,17 @@ EOT
     }
 
     /**
-     * @return mixed
+     * Returns multimedia objects with materials without paths.
+     *
+     * @param DocumentManager $documentManager
+     *
+     * @return array|MultimediaObject[]|\Pumukit\SchemaBundle\Document\Role[]
      */
-    private function findMaterialsWithoutPaths()
+    private function findMaterialsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+        $multimediaObjects = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
             array(
-                'materials' => array('$exists' => true),
-                'materials.url' => array('$exists' => true),
+                'materials.url' => new \MongoRegex('/uploads/material/'),
                 'materials.path' => array('$exists' => false),
             )
         );
@@ -310,17 +409,20 @@ EOT
     }
 
     /**
-     * @return mixed
+     * @param DocumentManager $documentManager
+     *
+     * @return \Doctrine\MongoDB\Iterator
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    private function findWrongPathPics()
+    private function findWrongPathPics(DocumentManager $documentManager)
     {
-        $collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $documentManager->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
         $pipeline = array(
             array(
                 '$match' => array(
-                    'pics' => array('$exists' => true),
-                    'pics.path' => array('$regex' => 'uploads/pic/', '$options' => 'i'),
+                    'pics.path' => array('$regex' => '/uploads/pic/', '$options' => 'i'),
                 ),
             ),
         );
@@ -341,17 +443,21 @@ EOT
     }
 
     /**
-     * @return mixed
+     * @param DocumentManager $documentManager
+     *
+     * @return \Doctrine\MongoDB\Iterator
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    private function findWrongPathMaterials()
+    private function findWrongPathMaterials(DocumentManager $documentManager)
     {
-        $collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $documentManager->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
         $pipeline = array(
             array(
                 '$match' => array(
                     'materials' => array('$exists' => true),
-                    'materials.path' => array('$regex' => 'uploads/pic/', '$options' => 'i'),
+                    'materials.path' => array('$regex' => 'uploads/material/', '$options' => 'i'),
                 ),
             ),
         );
@@ -378,7 +484,8 @@ EOT
      */
     private function checkFileExists($path)
     {
-        if ($this->fileSystem->exists($path)) {
+        $fileSystem = new Filesystem();
+        if ($fileSystem->exists($path)) {
             return true;
         }
 
@@ -389,21 +496,17 @@ EOT
      * @param $oldPath
      * @param $newPath
      *
-     * @return bool
-     *
      * @throws \Exception
      */
     private function moveElement($oldPath, $newPath)
     {
         $dirName = dirname($newPath);
 
-        if (!file_exists($dirName)) {
+        if (!$this->checkFileExists($dirName)) {
             if (mkdir($dirName, 0755, true)) {
                 $this->createProcessToMove($oldPath, $newPath);
-
-                return true;
             } else {
-                throw new \Exception('Error trying to create folders of '.$dirName);
+                throw new \Exception('Error trying to create folders - '.$dirName);
             }
         }
 
@@ -440,22 +543,23 @@ EOT
             }
 
             return $aResult;
-        } catch (ProcessFailedException $e) {
-            echo $e->getMessage();
+        } catch (ProcessFailedException $exception) {
+            echo $exception->getMessage();
         }
+
+        return null;
     }
 
     /**
-     * @param $multimediaObjectId
-     * @param $oldPath
-     * @param $newPath
-     * @param $newUrl
-     *
-     * @return bool
+     * @param DocumentManager $documentManager
+     * @param                 $multimediaObjectId
+     * @param                 $oldPath
+     * @param                 $newPath
+     * @param                 $newUrl
      */
-    private function updateMultimediaObjectPic($multimediaObjectId, $oldPath, $newPath, $newUrl)
+    private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+        $multimediaObject = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
             array('_id' => new \MongoId($multimediaObjectId))
         );
 
@@ -466,22 +570,19 @@ EOT
             }
         }
 
-        $this->dm->flush();
-
-        return true;
+        $documentManager->flush();
     }
 
     /**
-     * @param $multimediaObjectId
-     * @param $oldPath
-     * @param $newPath
-     * @param $newUrl
-     *
-     * @return bool
+     * @param DocumentManager $documentManager
+     * @param                 $multimediaObjectId
+     * @param                 $oldPath
+     * @param                 $newPath
+     * @param                 $newUrl
      */
-    private function updateMultimediaObjectMaterial($multimediaObjectId, $oldPath, $newPath, $newUrl)
+    private function updateMultimediaObjectMaterial(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+        $multimediaObject = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
             array('_id' => new \MongoId($multimediaObjectId))
         );
 
@@ -492,17 +593,27 @@ EOT
             }
         }
 
-        $this->dm->flush();
-
-        return true;
+        $documentManager->flush();
     }
 
-    private function deleteDirectory($haveChanges, $oldDirName)
+    /**
+     * @param OutputInterface $output
+     * @param                 $haveChanges
+     * @param                 $oldDirName
+     *
+     * @return bool
+     */
+    private function deleteDirectory(OutputInterface $output, $haveChanges, $oldDirName)
     {
         if ($haveChanges && isset($oldDirName)) {
-            if (!rmdir(dirname($oldDirName))) {
-                $this->logger->error('Cannot delete directory '.$oldDirName.' because is not empty');
+            if ($this->checkFileExists(dirname($oldDirName))) {
+                rmdir(dirname($oldDirName));
+
+                return true;
             }
+            $this->showMessage($output, 'File or directory ( '.$oldDirName.' ) doesnt exists');
         }
+
+        return false;
     }
 }

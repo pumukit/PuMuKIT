@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 class MultimediaObjectSearchService
 {
@@ -160,6 +161,7 @@ class MultimediaObjectSearchService
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
             $base[] = array(('title.'.$locale) => $mRegex);
             $base[] = array('people.people.name' => $mRegex);
@@ -183,6 +185,7 @@ class MultimediaObjectSearchService
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));

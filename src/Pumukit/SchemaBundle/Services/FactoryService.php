@@ -173,6 +173,7 @@ class FactoryService
             $mm->setTitle($title, $locale);
         }
 
+        $this->generateNumericalIDMultimediaObject($mm);
         $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
 
         return $mm;
@@ -553,6 +554,7 @@ class FactoryService
         $new->setI18nKeyword($src->getI18nKeyword());
         $new->setCopyright($src->getCopyright());
         $new->setLicense($src->getLicense());
+        $new->setNumview(0);
         $new->setTextIndex($src->getTextIndex());
         $new->setSecondaryTextIndex($src->getSecondaryTextIndex());
         // NOTE: #7408 Specify which properties are clonable
@@ -584,6 +586,7 @@ class FactoryService
         }
         foreach ($src->getTracks() as $track) {
             $clonedTrack = clone $track;
+            $clonedTrack->setNumview(0);
             $this->dm->persist($clonedTrack);
             $new->addTrack($clonedTrack);
         }

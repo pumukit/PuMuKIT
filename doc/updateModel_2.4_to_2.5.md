@@ -33,19 +33,19 @@ db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id':
 ##### Step 2: Generate numerical ID from videos and series without PuMuKIT 1 ID
 
 ```bash
-db.MultimediaObject.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
+db.MultimediaObject.find({'numerical_id': {$exists:1}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
     var nextNumericalID = m['numerical_id'] + 1;
 
-    db.MultimediaObject.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
+    db.MultimediaObject.find({'numerical_id': {$exists :false}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
           mm['numerical_id'] = NumberLong(nextNumericalID);
           db.MultimediaObject.save(mm);
           nextNumericalID = nextNumericalID + 1;
     });
 });
-db.Series.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numerical_id': -1}).limit(1).forEach(function(s) {
+db.Series.find({'numerical_id': {$exists:1}}).sort({'numerical_id': -1}).limit(1).forEach(function(s) {
     var nextNumericalID = s['numerical_id'] + 1;
 
-    db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
+    db.Series.find({'numerical_id': {$exists :false}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
           ss['numerical_id'] = NumberLong(nextNumericalID);
           db.Series.save(ss);
           nextNumericalID = nextNumericalID + 1;
@@ -57,13 +57,13 @@ db.Series.find({'numerical_id': {$exists:1},'status': {$ne: -2}}).sort({'numeric
 
 ```bash
 var nextNumericalID = 1;
-db.MultimediaObject.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
+db.MultimediaObject.find({'numerical_id': {$exists :false}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
       mm['numerical_id'] = NumberLong(nextNumericalID);
       db.MultimediaObject.save(mm);
       nextNumericalID = nextNumericalID + 1;
 });
 var nextNumericalID = 1;
-db.Series.find({'numerical_id': {$exists :false},'status': {$ne: -2}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
+db.Series.find({'numerical_id': {$exists :false}, 'properties.pumukit1id': {$exists: false}}).forEach(function(ss) {
       ss['numerical_id'] = NumberLong(nextNumericalID);
       db.Series.save(ss);
       nextNumericalID = nextNumericalID + 1;
