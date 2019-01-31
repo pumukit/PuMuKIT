@@ -472,7 +472,7 @@ class SeriesController extends AdminController implements NewAdminController
 
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
+        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, false, $request->getLocale());
 
         return $new_criteria;
     }
