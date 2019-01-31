@@ -43,7 +43,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
         $user = $this->ldapUserService->createUser($info, $username);
 
         $token = new UsernamePasswordToken($user, null, 'user', $user->getRoles());
-        $this->container->get('security.context')->setToken($token);
+        $this->container->get('security.token_storage')->setToken($token);
 
         return $this->httpUtils->createRedirectResponse($request, $this->determineTargetUrl());
     }

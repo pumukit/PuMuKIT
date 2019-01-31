@@ -383,7 +383,7 @@ class PlaylistMultimediaObjectController extends Controller
     protected function enableFilter()
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
             return;
         }
