@@ -352,6 +352,7 @@ class EmbeddedEventSessionService
         }
 
         $currentSessions[$encryptCriteria] = $this->collection->aggregate($pipeline, array('cursor' => array()))->toArray();
+
         return $currentSessions[$encryptCriteria];
     }
 
