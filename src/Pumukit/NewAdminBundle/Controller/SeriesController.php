@@ -455,9 +455,6 @@ class SeriesController extends AdminController implements NewAdminController
             foreach ($allSeries as $series) {
                 $emptySeries[] = $series['_id'];
             }
-        }
-
-        if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
             $criteria['playlist.multimedia_objects'] = array('$size' => 0);
             $criteria = array_merge($criteria, array('_id' => array('$in' => array_values($emptySeries))));
             $this->get('session')->set('admin/series/criteria', $criteria);
@@ -472,7 +469,7 @@ class SeriesController extends AdminController implements NewAdminController
 
         $criteria = $this->get('session')->get('admin/series/criteria', array());
 
-        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
+        $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, false, $request->getLocale());
 
         return $new_criteria;
     }
@@ -485,6 +482,11 @@ class SeriesController extends AdminController implements NewAdminController
     private function getSorting(Request $request)
     {
         $session = $this->get('session');
+
+        if (!$session->get('admin/series/sort') && $session->get('admin/series/criteria')) {
+            $session->get('admin/series/type', 'score');
+            $session->get('admin/series/sort', 'textScore');
+        }
 
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/series/type', current($sorting));

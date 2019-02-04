@@ -94,9 +94,9 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
-                <label for="originalName" class="col-md-3 control-label">{% trans %}Original name{% endtrans %}</label>
+                <label for="originalName" class="col-md-3 control-label">{% trans %}Track name{% endtrans %}</label>
                 <div class="col-md-9">
-                    <input id="originalName" class="form-control" name="criteria[originalName]" placeholder="{% trans %}Original name{% endtrans %}"
+                    <input id="originalName" class="form-control" name="criteria[originalName]" placeholder="{% trans %}Track name{% endtrans %}"
                             {% if app.request.session.get('UNESCO/form')['originalName'] is defined and app.request.session.get('UNESCO/form')['originalName'] is not empty %}
                                 value="{{ app.request.session.get('UNESCO/form')['originalName']}}"
                             {% endif %}
@@ -154,10 +154,10 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
-                <label for="pmkseriesid" class="col-md-3 control-label">{% trans %}PuMuKIT series ID{% endtrans %}</label>
+                <label for="pmkseriesid" class="col-md-3 control-label">{% trans %}Numerical series ID{% endtrans %}</label>
                 <div class="col-md-9">
                     <input id="pmkseriesid" type="text" class="form-control" name="criteria[series.numerical_id]"
-                           placeholder="{% trans %}PuMuKIT series ID{% endtrans %}"
+                           placeholder="{% trans %}Numerical series ID{% endtrans %}"
                             {% if app.request.session.get('UNESCO/form')['series.numerical_id'] is defined %}
                                 value="{{ criteria['series.numerical_id'] }}"
                             {% endif %}
@@ -167,10 +167,10 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
-                <label for="pmkvideoid" class="col-md-3 control-label">{% trans %}PuMuKIT video ID{% endtrans %}</label>
+                <label for="pmkvideoid" class="col-md-3 control-label">{% trans %}Numerical video ID{% endtrans %}</label>
                 <div class="col-md-9">
                     <input id="pmkvideoid" type="text" class="form-control" name="criteria[mm.numerical_id]"
-                           placeholder="{% trans %}PuMuKIT video ID{% endtrans %}"
+                           placeholder="{% trans %}Numerical video ID{% endtrans %}"
                             {% if app.request.session.get('UNESCO/form')['mm.numerical_id'] is defined %}
                                 value="{{ criteria['mm.numerical_id'] }}"
                             {% endif %}
