@@ -488,8 +488,8 @@ class SeriesController extends AdminController implements NewAdminController
             $session->set('admin/series/sort', key($sorting));
         }
 
-        $value = $session->get('admin/series/type', 'desc');
-        $key = $session->get('admin/series/sort', 'public_date');
+        $value = $session->get('admin/series/type', 'score');
+        $key = $session->get('admin/series/sort', 'textScore');
 
         if ('title' == $key) {
             $key .= '.'.$request->getLocale();
