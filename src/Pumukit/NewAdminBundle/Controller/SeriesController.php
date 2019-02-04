@@ -483,13 +483,18 @@ class SeriesController extends AdminController implements NewAdminController
     {
         $session = $this->get('session');
 
+        if (!$session->get('admin/series/sort') && $session->get('admin/series/criteria')) {
+            $session->get('admin/series/type', 'score');
+            $session->get('admin/series/sort', 'textScore');
+        }
+
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/series/type', current($sorting));
             $session->set('admin/series/sort', key($sorting));
         }
 
-        $value = $session->get('admin/series/type', 'score');
-        $key = $session->get('admin/series/sort', 'textScore');
+        $value = $session->get('admin/series/type', 'desc');
+        $key = $session->get('admin/series/sort', 'public_date');
 
         if ('title' == $key) {
             $key .= '.'.$request->getLocale();
