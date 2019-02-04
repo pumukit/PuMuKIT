@@ -81,6 +81,7 @@
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
+                    $('#myModal').modal('hide');
                     var resource_name = '{{ resource_name }}';
                     var event_poster = "{{ event_poster }}";
                     if ('event' == resource_name) {
