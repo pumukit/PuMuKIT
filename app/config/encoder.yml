@@ -1,7 +1,7 @@
 pumukit_encoder:
     thumbnail:
-        width: 304
-        height: 242
+        width: 768
+        height: 432
     cpus:
         local:
             host: 127.0.0.1
