@@ -463,6 +463,7 @@ class SeriesController extends AdminController implements NewAdminController
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/series/criteria');
             $this->get('session')->remove('admin/series/empty_series');
+            $this->get('session')->remove('admin/series/sort');
         } elseif ($criteria) {
             $this->get('session')->set('admin/series/criteria', $criteria);
         }
@@ -484,8 +485,8 @@ class SeriesController extends AdminController implements NewAdminController
         $session = $this->get('session');
 
         if (!$session->get('admin/series/sort') && $session->get('admin/series/criteria')) {
-            $session->get('admin/series/type', 'score');
-            $session->get('admin/series/sort', 'textScore');
+            $session->set('admin/series/type', 'score');
+            $session->set('admin/series/sort', 'textScore');
         }
 
         if ($sorting = $request->get('sorting')) {
