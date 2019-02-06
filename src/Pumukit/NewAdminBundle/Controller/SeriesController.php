@@ -535,6 +535,10 @@ class SeriesController extends AdminController implements NewAdminController
                 $resources = $this
                     ->resourceResolver
                     ->getResource($repository, 'createPaginator', array($criteria, $sorting));
+
+                if (array_key_exists('textScore', $sorting)) {
+                    $resources->getAdapter()->getQueryBuilder()->sortMeta('score', 'textScore');
+                }
             }
 
             if ($request->get('page', null)) {
