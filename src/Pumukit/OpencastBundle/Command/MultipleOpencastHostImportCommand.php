@@ -204,7 +204,7 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            if (!$multimediaObject->getTrackWithTag('opencast')) {
+            if (!$multimediaObject->getTrackWithTag('presentation/delivery') && !$multimediaObject->getTrackWithTag('presenter/delivery')) {
                 $this->importTrackOnMultimediaObject(
                     $output,
                     $clientService,
