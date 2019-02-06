@@ -93,11 +93,7 @@
         "use strict";
 
         event.preventDefault();
-        {% if 'unesco' in app.request.headers.get('referer') %}
-            var url_list = "{{ path('pumukitnewadmin_unesco_list') }}";
-        {% else %}
-            var url_list = "{{ path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId() }) }}";
-        {% endif %}
+        var url_list = "{{ path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId() }) }}";
 
         $('#myModal').modal('hide');
         $.ajax({
