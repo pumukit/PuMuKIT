@@ -48,11 +48,57 @@ class LiveController extends AdminController implements NewAdminController
         }
 
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
-                             array(
-                                   'advance_live_event' => $this->container->getParameter('pumukit_new_admin.advance_live_event'),
-                                   'live' => $resource,
-                                   'form' => $form->createView(),
-                                   ));
+                array(
+                    'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                    'live' => $resource,
+                    'form' => $form->createView(),
+                ));
+    }
+
+    /**
+     * Update Action
+     * Overwrite to return list and not index
+     * and show toast message.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function updateAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $config = $this->getConfiguration();
+        $resourceName = $config->getResourceName();
+
+        $resource = $this->findOr404($request);
+        $form = $this->getForm($resource);
+
+        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->submit($request, !$request->isMethod('PATCH'))->isValid()) {
+            try {
+                $dm->persist($resource);
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
+            }
+
+            if ($this->config->isApiRequest()) {
+                return $this->handleView($this->view($resource, 204));
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        if ($this->config->isApiRequest()) {
+            return $this->handleView($this->view($form));
+        }
+
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+            array(
+                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                $resourceName => $resource,
+                'form' => $form->createView(),
+            ));
     }
 
     /**
