@@ -1,42 +1,50 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}modify live channel{% endtrans %}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}modify live channel{% endtrans %}</h4>
 </div>
 <div class="modal-body">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
-  {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
-  <form onsubmit="$('#myModal').modal('hide');
-                  $.ajax({
-                          url: '{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}',
-                          method: 'POST',
-                          data: $(this).serialize(),
-                          success: function(response, textStatus, jqXHR){
-                                               if (jqXHR.responseText.indexOf('modal-header') != -1){
-                                                     var message = '{% trans %}There was an error in updating the Live channel.{% endtrans %}';
-                                                     no_success(message);
-                                               }else{
-                                                     $('#list_lives').html(response);
-                                                     var message = '{% trans %}Live channel successfully updated.{% endtrans %}';
-                                                     success(message);
-                                               }
-                          },
-                          error: function(jqXHR, textStatus, errorThrown){
-                                               no_success(errorThrown+': '+textStatus);
-                          }
-                  });
-                  return false;"
-     action="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" method="POST">
-    <fieldset>
-      {% for child in form %}
-        {{ form_row(child) }}
-      {% endfor %}
-    </fieldset>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-      <button type="submit" class="btn btn-primary btn-raised">{% trans %}Save changes{% endtrans %}</button>
-    </div>
-  </form>
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_CHANNELS')) %}
+        {% form_theme form 'PumukitNewAdminBundle:Themes:fields.html.twig' %}
+        <form onsubmit="$('#myModal').modal('hide');
+                $.ajax({
+                    url: '{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response, textStatus, jqXHR){
+                        if (jqXHR.responseText.indexOf('modal-header') != -1){
+                            var message = '{% trans %}There was an error in updating the Live channel.{% endtrans %}';
+                            no_success(message);
+                        }else{
+                            $('#list_lives').html(response);
+                            var message = '{% trans %}Live channel successfully updated.{% endtrans %}';
+                            success(message);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        no_success(errorThrown+': '+textStatus);
+                    }
+                });
+                return false;"
+              action="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" method="POST">
+            <fieldset>
+                {% for key, child in form %}
+                    {% if key == 'chat' and not enableChat %}
+                        <div style="display:none">
+                            {{ form_row(child) }}
+                        </div>
+                    {% else %}
+                        {{ form_row(child) }}
+                    {% endif %}
+
+                {% endfor %}
+            </fieldset>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary btn-raised">{% trans %}Save changes{% endtrans %}</button>
+            </div>
+        </form>
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>

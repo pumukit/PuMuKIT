@@ -10,7 +10,13 @@
               action="{{ path('pumukitnewadmin_live_create') }}" method="POST">
             <fieldset>
                 {% for key,child in form %}
-                    {{ form_row(child) }}
+                    {% if key == 'chat' and not enableChat %}
+                        <div style="display:none">
+                            {{ form_row(child) }}
+                        </div>
+                    {% else %}
+                        {{ form_row(child) }}
+                    {% endif %}
                 {% endfor %}
             </fieldset>
             <div class="modal-footer">
