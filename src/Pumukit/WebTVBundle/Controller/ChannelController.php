@@ -20,7 +20,7 @@ class ChannelController extends Controller implements WebTVController
     );
 
     private $tags = array(
-        1 => array('PUDEUNI'), //"University",
+        1 => array('PUCHWEBTV'), //"University",
         2 => array('100'), //"Business",
         3 => array('101', '108', '109'), //"Natural Sciences",
         5 => array('102', '104', '106', '107', '114', '115'), //"Humanities",

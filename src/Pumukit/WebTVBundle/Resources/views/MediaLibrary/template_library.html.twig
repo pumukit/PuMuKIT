@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="library">
+        {% set lastTitle = '--' %}
+        {% for key, series in objects %}
+            <div class="data_key">
+                <h2>{{ key }}</h2>
+            </div>
+            <div class="row">
+                {% for serie in series %}
+                    {% set object = serie %}
+                    {% set num_mmobjs = aggregated_num_mmobjs[serie.id] | default(0) %}
+                    {% if catalogue_thumbnails | default(false) %}
+                        {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+                        {% if add_clear_fix_md(loop.index, objectByCol) %}
+                            <div class="clearfix visible-md visible-lg"></div>
+                        {% endif %}
+                        {% if add_clear_fix_sm(loop.index, objectByCol) %}
+                            <div class="clearfix visible-sm"></div>
+                        {% endif %}
+                    {% else %}
+                        {% include 'PumukitWebTVBundle:Misc:series_text.html.twig' with {'cols': number_cols, 'num_mmobjs': num_mmobjs } %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="row text-center">
+                <h2>{% trans %}Not series found{% endtrans %}.</h2>
+            </div>
+        {% endfor %}
+    </div>
+</div>

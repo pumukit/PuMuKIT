@@ -55,9 +55,7 @@
                 {% else %}
                     {% set typeofprecinct = 'series' %}
                 {% endif %}
-                <div class="col-xs-12">
-                    <a name="{{ mm.id }}"></a>
-                    {% include 'PumukitWebTVBundle:Series:group_by.html.twig' with {
+                    {% include 'PumukitWebTVBundle:Series:template_group.html.twig' with {
                         'current_date': current_date,
                         'last_date' : last_date,
                         'subserie_title': subserie_title,
@@ -68,10 +66,9 @@
                         'mm' : mm,
                         'type_precinct' : typeofprecinct
                     } %}
-                    {% include 'PumukitWebTVBundle:Series:multimediaobjectbody.html.twig' with {'mm': mm } %}
+                    {% include 'PumukitWebTVBundle:Resources:template_series_video.html.twig' with {'object': mm } %}
                     {% set last_date = current_date %}
                     {% set last_subseriestitle =  subserie_title %}
-                </div>
             {% endfor %}
         </div>
     </div>
