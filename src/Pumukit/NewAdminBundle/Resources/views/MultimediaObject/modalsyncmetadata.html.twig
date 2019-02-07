@@ -93,7 +93,6 @@
         "use strict";
 
         event.preventDefault();
-
         var url_list = "{{ path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId() }) }}";
 
         $('#myModal').modal('hide');
@@ -102,10 +101,6 @@
             method: 'POST',
             data: $('#sync_metadata_mmo').serialize(),
             success: function (response, textStatus, jqXHR) {
-                {% if app.request.get('_route') == 'pumukitnewadmin_unesco_index' %}
-                    url_list = "{{ path('pumukitnewadmin_unesco_list') }}";
-                {% endif %}
-
                 var message = '{% trans %}There was an error sync up metadata.{% endtrans %}';
                 if (jqXHR.responseText.indexOf('modal-header') !== -1) {
                     no_success(message);
