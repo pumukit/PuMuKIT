@@ -1,0 +1,63 @@
+<div class="col-md-9">
+    <div class="well">
+
+        <div class="box-tools pull-right">
+            <div class="btn-group">
+                <label onclick="window.location.search += '&group_by=day'"
+                       class="btn btn-default {{ app.request.get('group_by') == 'day' ? 'btn-success'}}">{% trans %}Day{% endtrans %}</label>
+                <label onclick="window.location.search += '&group_by=month'"
+                       class="btn btn-default {{ app.request.get('group_by') == 'month' ? 'btn-success' }}">{% trans %}Month{% endtrans %}</label>
+                <label onclick="window.location.search += '&group_by=year'"
+                       class="btn btn-default {{ app.request.get('group_by', 'year') == 'year' ? 'btn-success' }}">{% trans %}Year{% endtrans %}</label>
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+            <th>{% trans %}Date{% endtrans %}</th>
+            <th>{% trans %}Num{% endtrans %}</th>
+            <th>{% trans %}Total Time{% endtrans %}</th>
+            <th>{% trans %}Total Size{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for stat in stats %}
+            <tr>
+            <td>{{ stat._id }}</td>
+            <td>{{ stat.num }}</td>
+            <td>{{ (stat.duration/3600)|number_format(2) }} h</td>
+            <td>{{ (stat.size/1048576)|number_format(2) }} MB</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="well">
+        <h5>{% trans %}Total{% endtrans %}:</h5>
+        <div class="box-body">
+            <dl class="dl-horizontal">
+                <dt>{% trans %}Num series{% endtrans %}:</dt>
+                <dd>{{ num_series }}</dd>
+                <dt>{% trans %}Num objects{% endtrans %}:</dt>
+                <dd>{{ num_mm }}</dd>
+                <dt>{% trans %}Total hours{% endtrans %}:</dt>
+                <dd>{{ (duration/3600)|number_format(2) }} h</dd>
+                <dt>{% trans %}Total size{% endtrans %}:</dt>
+                <dd>{{ (size/(1024**4))|number_format(2) }} TB</dd>
+
+            </dl>
+        </div>
+        <h5>{% trans %}Storage{% endtrans %}:</h5>
+        {% for s in storage %}
+        {{ loop.index }}:
+        <ul>
+            <li>{{ s.dir }}</li>
+            <li>{{(s.free/(1024**4))|number_format(2)}} TB / {{(s.total/(1024**4))|number_format(2)}} TB</li>
+            <li>{{((s.free/s.total)*100)|number_format(2)}}%</li>
+        </ul>
+        {% endfor %}
+    </div>
+</div>

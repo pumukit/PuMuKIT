@@ -85,7 +85,9 @@
         }
     </script>
     <br/>
-    <br/>
 
 
+    {% if stats %}
+        {% include "PumukitNewAdminBundle:Dashboard:stats.html.twig" %}
+    {% endif %}
 {% endblock %}

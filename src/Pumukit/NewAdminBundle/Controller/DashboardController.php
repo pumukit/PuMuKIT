@@ -21,6 +21,30 @@ class DashboardController extends Controller implements NewAdminController
      */
     public function indexAction(Request $request)
     {
+        $data = array('stats' => false);
+        if ($request->get('show_stats')) {
+            $dm = $this->get('doctrine_mongodb');
+
+            $recordsService = $this->get('pumukitschema.stats');
+
+            $groupBy = $request->get('group_by', 'year');
+
+            $stats = $recordsService->getGlobalStats($groupBy);
+
+            $data['stats'] = $stats;
+
+            $storage = $this->get('pumukitencoder.profile')->getDirOutInfo();
+            $data['storage'] = $storage;
+
+            $seriesRepo = $dm->getRepository('PumukitSchemaBundle:series');
+
+            $data['num_series'] = $seriesRepo->count();
+            $data['num_mm'] = array_sum(array_map(function ($e) {return $e['num']; }, $stats));
+            $data['duration'] = array_sum(array_map(function ($e) {return $e['duration']; }, $stats));
+            $data['size'] = array_sum(array_map(function ($e) {return $e['size']; }, $stats));
+        }
+
+        return $data;
     }
 
     /**
