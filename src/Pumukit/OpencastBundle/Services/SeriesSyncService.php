@@ -40,7 +40,7 @@ class SeriesSyncService
             $output = $this->clientService->updateOpencastSeries($series);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
-            if ($e->getCode() !== 404) {
+            if (404 !== $e->getCode()) {
                 return;
             }
             $this->createSeries($series);

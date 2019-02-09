@@ -39,9 +39,15 @@ class DashboardController extends Controller implements NewAdminController
             $seriesRepo = $dm->getRepository('PumukitSchemaBundle:series');
 
             $data['num_series'] = $seriesRepo->count();
-            $data['num_mm'] = array_sum(array_map(function ($e) {return $e['num']; }, $stats));
-            $data['duration'] = array_sum(array_map(function ($e) {return $e['duration']; }, $stats));
-            $data['size'] = array_sum(array_map(function ($e) {return $e['size']; }, $stats));
+            $data['num_mm'] = array_sum(array_map(function ($e) {
+                return $e['num'];
+            }, $stats));
+            $data['duration'] = array_sum(array_map(function ($e) {
+                return $e['duration'];
+            }, $stats));
+            $data['size'] = array_sum(array_map(function ($e) {
+                return $e['size'];
+            }, $stats));
         }
 
         return $data;
