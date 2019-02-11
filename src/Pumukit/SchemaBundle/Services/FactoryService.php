@@ -695,10 +695,9 @@ class FactoryService
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
 
-        $enableFilter = false;
-        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
-            $enableFilter = true;
-            $this->dm->getFilterCollection()->disable('backoffice');
+        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
@@ -717,8 +716,8 @@ class FactoryService
         $mm->setNumericalID($newNumericalID);
         $this->dm->flush();
 
-        if ($enableFilter) {
-            $this->dm->getFilterCollection()->enable('backoffice');
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->enable($enableFilter);
         }
 
         sem_release($seg);
@@ -730,10 +729,9 @@ class FactoryService
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
 
-        $enableFilter = false;
-        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
-            $enableFilter = true;
-            $this->dm->getFilterCollection()->disable('backoffice');
+        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
         $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
@@ -752,8 +750,8 @@ class FactoryService
         $oneSeries->setNumericalID($newNumericalID);
         $this->dm->flush();
 
-        if ($enableFilter) {
-            $this->dm->getFilterCollection()->enable('backoffice');
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->enable($enableFilter);
         }
 
         sem_release($seg);
