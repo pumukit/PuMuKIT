@@ -695,6 +695,12 @@ class FactoryService
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
 
+        $enableFilter = false;
+        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
+            $enableFilter = true;
+            $this->dm->getFilterCollection()->disable('backoffice');
+        }
+
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(array('numerical_id' => -1))
@@ -710,6 +716,11 @@ class FactoryService
 
         $mm->setNumericalID($newNumericalID);
         $this->dm->flush();
+
+        if ($enableFilter) {
+            $this->dm->getFilterCollection()->enable('backoffice');
+        }
+
         sem_release($seg);
     }
 
@@ -718,6 +729,12 @@ class FactoryService
         $SEMKey = 66666;
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
+
+        $enableFilter = false;
+        if ($this->dm->getFilterCollection()->isEnabled('backoffice')) {
+            $enableFilter = true;
+            $this->dm->getFilterCollection()->disable('backoffice');
+        }
 
         $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
             ->field('numerical_id')->exists(true)
@@ -734,6 +751,11 @@ class FactoryService
 
         $oneSeries->setNumericalID($newNumericalID);
         $this->dm->flush();
+
+        if ($enableFilter) {
+            $this->dm->getFilterCollection()->enable('backoffice');
+        }
+
         sem_release($seg);
     }
 }
