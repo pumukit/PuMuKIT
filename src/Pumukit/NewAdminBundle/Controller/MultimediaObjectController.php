@@ -214,6 +214,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $allGroups = $this->getAllGroups();
 
+        $showSimplePubTab = $this->container->getParameter('pumukit_new_admin.show_naked_pub_tab');;
+
         return array(
                      'mm' => $resource,
                      'form_meta' => $formMeta->createView(),
@@ -232,6 +234,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
                      'opencast_exists' => $opencastExists,
                      'not_change_pub_channel' => $notChangePubChannel,
                      'groups' => $allGroups,
+                     'show_simple_pub_tab' => $showSimplePubTab,
                      );
     }
 

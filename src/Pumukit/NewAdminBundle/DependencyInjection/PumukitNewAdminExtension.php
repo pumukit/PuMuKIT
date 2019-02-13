@@ -31,6 +31,7 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.advance_live_event_create_default_pic', $config['advance_live_event_create_default_pic']);
         $container->setParameter('pumukit_new_admin.advance_live_event_autocomplete_series', $config['advance_live_event_autocomplete_series']);
         $container->setParameter('pumukit_new_admin.advance_live_event_create_serie_pic', $config['advance_live_event_create_serie_pic']);
+        $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('liveevent_contact_and_share', $config['liveevent_contact_and_share']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
