@@ -214,7 +214,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $allGroups = $this->getAllGroups();
 
-        $showSimplePubTab = $this->container->getParameter('pumukit_new_admin.show_naked_pub_tab');;
+        $showSimplePubTab = $this->container->getParameter('pumukit_new_admin.show_naked_pub_tab');
 
         return array(
                      'mm' => $resource,
