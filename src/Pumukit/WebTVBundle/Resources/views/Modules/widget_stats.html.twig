@@ -15,7 +15,7 @@
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4">
                 <div class="stats-circle stats-circle-3 text-center center-block">
-                    <span>{{ counts.hours }}</span>
+                    <span>{{ (counts.hours/3600)|number_format(2,'.',',') }}</span>
                     <div class="stats-label">{% trans %}Hours{% endtrans %}</div>
                 </div>
             </div>

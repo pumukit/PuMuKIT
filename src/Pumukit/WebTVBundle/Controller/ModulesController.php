@@ -105,7 +105,7 @@ class ModulesController extends Controller implements WebTVController
         $counts = array(
             'series' => $seriesRepo->countPublic(),
             'mms' => $mmRepo->count(),
-            'hours' => bcdiv($mmRepo->countDuration(), 3600, 2),
+            'hours' => $mmRepo->countDuration(),
         );
 
         return array('counts' => $counts);
