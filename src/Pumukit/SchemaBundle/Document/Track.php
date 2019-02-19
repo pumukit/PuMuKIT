@@ -506,7 +506,7 @@ class Track extends Element
         return $this->containsTag('master');
     }
 
-    /**s
+    /**
      * Return the profiles used to generate the track.
      *
      * @return string|null
