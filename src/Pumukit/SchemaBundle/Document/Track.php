@@ -521,4 +521,14 @@ class Track extends Element
 
         return null;
     }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 }

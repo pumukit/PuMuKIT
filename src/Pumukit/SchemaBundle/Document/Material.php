@@ -95,4 +95,14 @@ class Material extends Element
     {
         return $this->language;
     }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 }

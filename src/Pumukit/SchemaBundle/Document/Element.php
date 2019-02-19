@@ -393,4 +393,14 @@ class Element
     {
         $this->id = null;
     }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 }
