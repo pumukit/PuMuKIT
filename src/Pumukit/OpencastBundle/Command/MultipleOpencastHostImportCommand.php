@@ -204,7 +204,7 @@ EOT
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
-            if (!$multimediaObject->getTrackWithTag('opencast')) {
+            if (!$multimediaObject->getTrackWithTag('presentation/delivery') && !$multimediaObject->getTrackWithTag('presenter/delivery')) {
                 $this->importTrackOnMultimediaObject(
                     $output,
                     $clientService,
@@ -213,12 +213,7 @@ EOT
                     false
                 );
             } else {
-                $output->writeln(
-                    array(
-                        '',
-                        '<info> Multimedia Object - '.$multimediaObject->getId().' have opencast tracks from OC imported',
-                    )
-                );
+                $output->writeln('<info> Multimedia Object - '.$multimediaObject->getId().' have opencast tracks from OC imported');
             }
         }
     }
@@ -252,12 +247,7 @@ EOT
                     true
                 );
             } else {
-                $output->writeln(
-                    array(
-                        '',
-                        '<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported',
-                    )
-                );
+                $output->writeln('<info> Multimedia Object - '.$multimediaObject->getId().' have master tracks from OC imported');
             }
         }
     }
@@ -283,11 +273,10 @@ EOT
 
         try {
             $opencastImportService->importTracksFromMediaPackage($mediaPackage, $multimediaObject, $trackTags);
+            $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
         } catch (\Exception $exception) {
             $output->writeln('<error>Error - MMobj: '.$multimediaObject->getId().' and mediaPackage: '.$multimediaObject->getProperty('opencast').' with this error: '.$exception->getMessage().'</error>');
         }
-
-        $this->showMessage($output, $opencastImportService, $multimediaObject, $mediaPackage);
     }
 
     /**

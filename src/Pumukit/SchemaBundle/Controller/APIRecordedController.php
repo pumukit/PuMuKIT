@@ -144,4 +144,28 @@ class APIRecordedController extends Controller
 
         return array($criteria, $sort, $fromDate, $toDate, $limit, $page);
     }
+
+    /**
+     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
+     *
+     * TODO: add criteria??? (see processRequestData)
+     */
+    public function globalStatsAction(Request $request)
+    {
+        $serializer = $this->get('serializer');
+        $recordsService = $this->get('pumukitschema.stats');
+
+        $groupBy = $request->get('group_by') ?: 'month';
+
+        $stats = $recordsService->getGlobalStats($groupBy);
+
+        $stats = array(
+            'group_by' => $groupBy,
+            'stats' => $stats,
+        );
+
+        $data = $serializer->serialize($stats, $request->getRequestFormat());
+
+        return new Response($data);
+    }
 }

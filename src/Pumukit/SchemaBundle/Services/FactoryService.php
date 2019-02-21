@@ -689,6 +689,11 @@ class FactoryService
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
 
+        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->disable($enableFilter);
+        }
+
         $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(array('numerical_id' => -1))
@@ -704,6 +709,11 @@ class FactoryService
 
         $mm->setNumericalID($newNumericalID);
         $this->dm->flush();
+
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->enable($enableFilter);
+        }
+
         sem_release($seg);
     }
 
@@ -712,6 +722,11 @@ class FactoryService
         $SEMKey = 66666;
         $seg = sem_get($SEMKey, 1, 0666, -1);
         sem_acquire($seg);
+
+        $enableFilters = array_keys($this->dm->getFilterCollection()->getEnabledFilters());
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->disable($enableFilter);
+        }
 
         $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
             ->field('numerical_id')->exists(true)
@@ -728,6 +743,11 @@ class FactoryService
 
         $oneSeries->setNumericalID($newNumericalID);
         $this->dm->flush();
+
+        foreach ($enableFilters as $enableFilter) {
+            $this->dm->getFilterCollection()->enable($enableFilter);
+        }
+
         sem_release($seg);
     }
 }

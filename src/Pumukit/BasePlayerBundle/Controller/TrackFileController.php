@@ -70,7 +70,7 @@ class TrackFileController extends Controller
     }
 
     /**
-     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index", requirements={"id"="/^[0-9a-z]{24}$/"})
+     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      *
      * @param Request $request
      * @param $id
@@ -81,6 +81,10 @@ class TrackFileController extends Controller
      */
     public function trackPlayedAction(Request $request, $id)
     {
+        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
+            return new JsonResponse(array('status' => 'error'));
+        }
+
         list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
         if ('on_play' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {

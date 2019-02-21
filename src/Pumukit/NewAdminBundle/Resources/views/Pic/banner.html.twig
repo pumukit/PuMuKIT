@@ -1,93 +1,97 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title" id="myModalLabel">{% trans %}add new banner{% endtrans %}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{% trans %}add new banner{% endtrans %}</h4>
 </div>
 
 <div class="modal-body">
 
-  <div class="form-group">
-    <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
-    <div class="radio">
-      <label><input type="radio" name="banner_type" id="radio_banner_url" value="banner_url" onclick="$('#div_banner_file').hide();$('#div_banner_url').show();"/> {% trans %}Banner from URL{% endtrans %}</label>
+    <div class="form-group">
+        <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
+        <div class="radio">
+            <label><input type="radio" name="banner_type" id="radio_banner_url" value="banner_url" onclick="$('#div_banner_file').hide();$('#div_banner_url').show();"/> {% trans %}Banner from URL{% endtrans %}
+            </label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="banner_type" id="radio_banner_file" value="banner_file" checked="checked" onclick="$('#div_banner_url').hide();$('#div_banner_file').show();"/> {% trans %}Banner from local hard drive{% endtrans %}
+            </label>
+        </div>
     </div>
-    <div class="radio">
-      <label><input type="radio" name="banner_type" id="radio_banner_file" value="banner_file" checked="checked" onclick="$('#div_banner_url').hide();$('#div_banner_file').show();"/> {% trans %}Banner from local hard drive{% endtrans %}</label>
-    </div>
-  </div>
 
-  <div id="div_banner_url" style="display:none;">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-    <form onsubmit="$.ajax({
-                            url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'banner': true}) }}',
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function(response){
-                                                        var resource_name = '{{ resource_name }}';
-                                                        $('#edit_series').html(response);
-                                                        success('{% trans %}New Pic added.{% endtrans %}');
-                                                        }
-                          });
+    <div id="div_banner_url" style="display:none;">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+            <form onsubmit="$.ajax({
+                    url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'banner': true}) }}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response){
+                    $('#myModal').modal('hide');
+                    var resource_name = '{{ resource_name }}';
+                    $('#edit_series').html(response);
+                    success('{% trans %}New Pic added.{% endtrans %}');
+                    }
+                    });
                     return false;"
-          action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'banner': true}) }}" method="post">
-      <input type="hidden" name="type" id="type" value="url">
-      <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
+                  action="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'banner': true}) }}" method="post">
+                <input type="hidden" name="type" id="type" value="url">
+                <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
 
-      <fieldset>
-        <legend hidden>{% trans %}Banner URL{% endtrans %}</legend>
-        <div class="form-group">
-          <label for="url">{% trans %}Banner URL{% endtrans %}:</label>
-          <div class="">
-            <input type="text" name="url" id="url" value="" size="65" class="form-control">
-            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="url_bannerTargetUrl">{% trans %}Write the target URL{% endtrans %}:</label>
-          <div class="">
-            <input type="text" name="url_bannerTargetUrl" id="url_bannerTargetUrl" value="" size="65" class="form-control">
-            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
-          </div>
-        </div>
-      </fieldset>
+                <fieldset>
+                    <legend hidden>{% trans %}Banner URL{% endtrans %}</legend>
+                    <div class="form-group">
+                        <label for="url">{% trans %}Banner URL{% endtrans %}:</label>
+                        <div class="">
+                            <input type="text" name="url" id="url" value="" size="65" class="form-control">
+                            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="url_bannerTargetUrl">{% trans %}Write the target URL{% endtrans %}:</label>
+                        <div class="">
+                            <input type="text" name="url_bannerTargetUrl" id="url_bannerTargetUrl" value="" size="65" class="form-control">
+                            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+                        </div>
+                    </div>
+                </fieldset>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised" onclick="if (test_form_url($('#url').val())) { return test_form_url($('#url_bannerTargetUrl').val());} else {return false;}">{% trans %}Add{% endtrans %}</button>
-      </div>
-    </form>
-    {% endif %}
-  </div>
-  <div style="clear:both"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                    <button type="submit" class="btn btn-pumukit btn-raised" onclick="if (test_form_url($('#url').val())) { return test_form_url($('#url_bannerTargetUrl').val());} else {return false;}">{% trans %}Add{% endtrans %}</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    <div style="clear:both"></div>
 
-  <div id="div_banner_file">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-    <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'banner': true}) }}">
-      <input type="hidden" name="type" id="type" value="url">
-      <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
-      <fieldset>
-        <legend hidden>{% trans %}Add a file{% endtrans %}</legend>
-        <div class="form-group">
-          <label for="file">{% trans %}Add a file{% endtrans %}:</label>
-          <div class="">
-            <input type="file" name="file" id="file" value="" size="66" class="file">
-          </div>
-        </div>
-        <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
-        <div class="form-group">
-          <label for="file_bannerTargetUrl">{% trans %}Write the target URL{% endtrans %}:</label>
-          <div class="">
-            <input type="text" name="file_bannerTargetUrl" id="file_bannerTargetUrl" value="" size="65" class="form-control">
-            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans%}</span>
-          </div>
-        </div>
-      </fieldset>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;} else {return test_form_url($('#file_bannerTargetUrl').val());}">{% trans %}Add{% endtrans %}</button>
-      </div>
-    </form>
-    {% endif %}
-  </div>
+    <div id="div_banner_file">
+        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+            <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'banner': true}) }}">
+                <input type="hidden" name="type" id="type" value="url">
+                <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
+                <fieldset>
+                    <legend hidden>{% trans %}Add a file{% endtrans %}</legend>
+                    <div class="form-group">
+                        <label for="file">{% trans %}Add a file{% endtrans %}:</label>
+                        <div class="">
+                            <input type="file" name="file" id="file" value="" size="66" class="file">
+                        </div>
+                    </div>
+                    <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
+                    <div class="form-group">
+                        <label for="file_bannerTargetUrl">{% trans %}Write the target URL{% endtrans %}:</label>
+                        <div class="">
+                            <input type="text" name="file_bannerTargetUrl" id="file_bannerTargetUrl" value="" size="65" class="form-control">
+                            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                    <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;} else {return test_form_url($('#file_bannerTargetUrl').val());}">{% trans %}Add{% endtrans %}</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
 
-  <div style="clear:both"></div>
+    <div style="clear:both"></div>
 </div>

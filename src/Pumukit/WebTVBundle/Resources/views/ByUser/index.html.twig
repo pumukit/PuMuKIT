@@ -19,7 +19,7 @@
             {% if scroll_list %}
                 <div class="announces" id="announces"></div>
                 <div id="announces_loading" style="display:none">
-                    <img class="center-block" src="{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}"/>
+                    <img class="center-block" alt="loading" src="{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}"/>
                 </div>
                 <script type="text/javascript">
                     var url_latestuploads_pager = "{{ path('pumukit_webtv_byuser_objects_pager', {'username': user.username, 'type': type}) }}";

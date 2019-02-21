@@ -38,15 +38,24 @@ class SeriesSearchService
                     $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale)->toArray();
                     $ids[] = $value;
 
+                    if (preg_match('/^[0-9a-z]{24}$/', $value)) {
+                        $ids[] = $value;
+                    }
+
                     $new_criteria['$or'] = $this->getSearchCriteria(
                         $value,
                         array(array('_id' => array('$in' => $ids))),
                         $locale
                     );
                 } else {
+                    $base = array();
+                    if (preg_match('/^[0-9a-z]{24}$/', $value)) {
+                        $base[] = array('_id' => $value);
+                    }
                     $new_criteria['$or'] = $this->getSearchCriteria(
                         $value,
-                        array(array('_id' => $value))
+                        $base,
+                        $locale
                     );
                 }
             } elseif (('date' == $property) && ('' !== $value)) {

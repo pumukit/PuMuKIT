@@ -10,10 +10,11 @@
               action="{{ path('pumukitnewadmin_live_create') }}" method="POST">
             <fieldset>
                 {% for key,child in form %}
-                    {% if advance_live_event == true and key != 'chat'%}
-                        {{ form_row(child) }}
-                    {% endif %}
-                    {% if advance_live_event == false %}
+                    {% if key == 'chat' and not enableChat %}
+                        <div style="display:none">
+                            {{ form_row(child) }}
+                        </div>
+                    {% else %}
                         {{ form_row(child) }}
                     {% endif %}
                 {% endfor %}

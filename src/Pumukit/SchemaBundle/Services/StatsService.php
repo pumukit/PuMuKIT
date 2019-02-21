@@ -15,6 +15,44 @@ class StatsService
         $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
     }
 
+    public function getGlobalStats($groupBy = 'month', $sort = -1)
+    {
+        $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $dmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+
+        $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$record_date');
+
+        $pipeline = array();
+        $criteria = array('islive' => false, 'status' => array('$ne' => -2));
+        $pipeline[] = array('$match' => $criteria);
+
+        $this->dm->getFilterCollection()->enable('backoffice');
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($dmRepo->getClassMetadata());
+        if ($criteria) {
+            $pipeline[] = array('$match' => $criteria);
+        }
+        $pipeline[] = array(
+            '$project' => array(
+                'date' => $mongoProjectDate,
+                'duration' => '$duration',
+                'size' => array('$sum' => '$tracks.size'),
+            ),
+        );
+        $pipeline[] = array(
+            '$group' => array(
+                '_id' => '$date',
+                'num' => array('$sum' => 1),
+                'duration' => array('$sum' => '$duration'),
+                'size' => array('$sum' => '$size'),
+            ),
+        );
+        $pipeline[] = array('$sort' => array('_id' => $sort));
+
+        $aggregation = $dmColl->aggregate($pipeline);
+
+        return $aggregation->toArray();
+    }
+
     public function getMmobjRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
     {
         $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
@@ -53,23 +91,23 @@ class StatsService
     {
         $mongoProjectDate = array();
         switch ($groupBy) {
-            case 'hour':
-                $mongoProjectDate[] = 'H';
-                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
-                $mongoProjectDate[] = 'T';
-                // no break
-            case 'day':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
-                $mongoProjectDate[] = '-';
-                // no break
-            default: //If it doesn't exists, it's 'month'
-            case 'month':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
-                $mongoProjectDate[] = '-';
-                // no break
-            case 'year':
-                $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
-                break;
+        case 'hour':
+            $mongoProjectDate[] = 'H';
+            $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
+            $mongoProjectDate[] = 'T';
+            // no break
+        case 'day':
+            $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
+            $mongoProjectDate[] = '-';
+            // no break
+        default: //If it doesn't exists, it's 'month'
+        case 'month':
+            $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
+            $mongoProjectDate[] = '-';
+            // no break
+        case 'year':
+            $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
+            break;
         }
 
         return array('$concat' => array_reverse($mongoProjectDate));

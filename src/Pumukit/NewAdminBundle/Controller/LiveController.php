@@ -20,10 +20,6 @@ class LiveController extends AdminController implements NewAdminController
      * Create Action
      * Overwrite to return json response
      * and update page.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -43,7 +39,40 @@ class LiveController extends AdminController implements NewAdminController
 
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
             array(
-                'advance_live_event' => $this->container->getParameter('pumukit_new_admin.advance_live_event'),
+                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
+                'live' => $resource,
+                'form' => $form->createView(),
+            ));
+    }
+
+    /**
+     * Update Action
+     * Overwrite to return list and not index
+     * and show toast message.
+     */
+    public function updateAction(Request $request)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $resourceName = $this->getResourceName();
+
+        $resource = $this->findOr404($request);
+        $form = $this->getForm($resource);
+
+        if ($form->handleRequest($request)->isValid()) {
+            try {
+                $dm->persist($resource);
+                $dm->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => $e->getMessage()), 409);
+            }
+
+            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        }
+
+        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+            array(
+                'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
             ));
