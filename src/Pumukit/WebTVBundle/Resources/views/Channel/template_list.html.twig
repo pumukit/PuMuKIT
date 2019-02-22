@@ -1,15 +1,1 @@
-<div class="col-xs-12">
-    {% for object in objects %}
-        {% if object.isCollection() %}
-            {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
-        {% else %}
-            {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
-        {% endif %}
-        {% if add_clear_fix_md(loop.index, objectByCol) %}
-            <div class="clearfix visible-md visible-lg"></div>
-        {% endif %}
-        {% if add_clear_fix_sm(loop.index, objectByCol) %}
-            <div class="clearfix visible-sm"></div>
-        {% endif %}
-    {% endfor %}
-</div>
+{% include 'PumukitWebTVBundle:Resources:template_video.html.twig' with {'template_list_class': 'col-xs-12', 'template_list_grouped': false} %}

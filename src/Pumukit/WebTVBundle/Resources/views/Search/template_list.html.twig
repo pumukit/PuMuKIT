@@ -15,27 +15,4 @@
     {% trans %}Total search results: {% endtrans %} {{ total_objects }}
 </p>
 
-{% for object in objects %}
-    {% if object.isCollection() %}
-        {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
-        {% set lastDate = object.getPublicDate()|date("d/m/Y") %}
-    {% else %}
-        {% include "PumukitWebTVBundle:Resources:template_video.html.twig" %}
-        {% set lastDate = object.getRecordDate()|date("d/m/Y") %}
-    {% endif %}
-    {% if add_clear_fix_md(loop.index, objectByCol) %}
-        <div class="clearfix visible-md visible-lg"></div>
-    {% endif %}
-    {% if add_clear_fix_sm(loop.index, objectByCol) %}
-        <div class="clearfix visible-sm"></div>
-    {% endif %}
-{% else %}
-    <div class="row text-center">
-        {% if type == "series" %}
-            {% trans %}Not series found{% endtrans %}
-        {% else %}
-            {% trans %}Not multimedia objects found{% endtrans %}
-        {% endif %}
-        .
-    </div>
-{% endfor %}
+{% include 'PumukitWebTVBundle:Resources:template_video.html.twig' with {'template_list_class': 'custom-list-by-search'} %}
