@@ -1977,7 +1977,7 @@ A.style.top="0px";
 A.style.left="0px";
 A.style.visibility="hidden";
 A.src=SimileAjax.History.historyFile+"?0";
-document.body.appendChild(A);
+//document.body.appendChild(A);
 SimileAjax.DOM.registerEvent(A,"load",SimileAjax.History._handleIFrameOnLoad);
 SimileAjax.History._iframe=A;
 }SimileAjax.History._initialized=true;
