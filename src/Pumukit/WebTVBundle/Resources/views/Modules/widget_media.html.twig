@@ -1,0 +1,35 @@
+{% set textShowMore = "Show more"|trans %}
+
+{% if objects %}
+    <div class="{{ class }}">
+        <h1>{{ title }}</h1>
+        <div class="row">
+            {% for object in objects %}
+                {% if object.isCollection() %}
+                    {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+                {% else %}
+                    {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+                {% endif %}
+
+                {% if add_clear_fix_md(loop.index, objectByCol) %}
+                    <div class="clearfix visible-md visible-lg"></div>
+                {% endif %}
+                {% if add_clear_fix_sm(loop.index, objectByCol) %}
+                    <div class="clearfix visible-sm"></div>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if show_more|default(false) %}
+                {% include 'PumukitWebTVBundle:Misc:show_more.html.twig' %}
+            {% endif %}
+            {% if show_link|default(false) %}
+                <div class="col-xs-12 text-right">
+                    <a href="{{ path(show_link) }}" class="show_more_link" title="{{ textShowMore }}">
+                        <p>{{ textShowMore }}...</p>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,58 @@
+{% set videoPath = path('pumukit_live_event_id', {'id': event['multimediaObjectId'] }) %}
+
+{% if event['event'].name is iterable %}
+    {% set videoTitle = event['event'].name[app.request.getLocale()] | default('No title'|trans) %}
+{% else %}
+    {% set videoTitle = event['event'].getName(app.request.getLocale()) %}
+{% endif %}
+
+{% if event['event'].name is iterable %}
+    {% set videoDescription = event['event'].description[app.request.getLocale()] %}
+{% else %}
+    {% set videoDescription = event['event'].getDescription(app.request.getLocale()) %}
+{% endif %}
+
+{% if event['session'].getStart() is defined %}
+    {% set eventStarts = event['session'].getStart() | localizeddate('medium','short', app.request.getLocale()) %}
+{% else %}
+    {% set eventStarts = event['session']['start'] |convertMongoDate| localizeddate('medium','short', app.request.getLocale()) %}
+{% endif %}
+
+{% set seriesTitle = object.getSeriesTitle()|default('') %}
+
+<div class="{{ col_calculator(objectByCol) }} image_representation">
+    <div class="thumbnail">
+        <a href="{{ videoPath }}" title="{{ videoTitle }}">
+            <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive-item text-center">
+                    {% if event['pics'] is defined and (event['pics']|length > 0) %}
+                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
+                    {% else %}
+                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ defaultPic }}" />
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+        {% if show_info|default(true) %}
+            <div class="caption">
+                <p class="title_image_representation">
+                    <a href="{{ videoPath }}" title="{{ videoTitle }}">
+                        {{ videoTitle }}
+                    </a>
+                </p>
+
+                {% if show_description|default(false) %}
+                    <p class="second_line_image_representation">{{ videoDescription }}</p>
+                {% endif %}
+
+                {% if show_info|default(false) %}
+                    <div class="date_and_visits pull-right">
+                        {% trans %}Starts {% endtrans %}: {{ eventStarts }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    </a>
+</div>

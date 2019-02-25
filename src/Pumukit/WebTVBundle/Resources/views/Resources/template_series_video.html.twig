@@ -1,0 +1,26 @@
+{% if magic_url is defined %}
+    {% set videoUrl = url('pumukit_webtv_multimediaobject_magicindex', {secret: object.secret}) %}
+{% else %}
+    {% set videoUrl = url('pumukit_webtv_multimediaobject_index', {'id': object.id}) %}
+{% endif %}
+
+<div class="video_block">
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 image_representation">
+            <div class="thumbnail">
+                <a href="{{ videoUrl }}" title="{{ videoUrl }}">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive-item text-center">
+                            <img alt="image" src="{{ object|first_url_pic(true) }}" class="img-responsive img_adapter_4_3" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-9">
+            {% include "PumukitWebTVBundle:Resources:template_video_info.html.twig" with {'show_video_elements' : true } %}
+        </div>
+    </div>
+</div>
+
+<hr />

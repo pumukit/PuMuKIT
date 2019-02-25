@@ -1,0 +1,17 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="title-for-crumbs">{{ title }}</h1>
+                </div>
+            </div>
+            {% include 'PumukitWebTVBundle:ByTag:template_list.html.twig' %}
+            <div class="row">
+                {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
