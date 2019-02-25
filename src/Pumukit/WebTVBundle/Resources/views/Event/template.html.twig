@@ -24,12 +24,7 @@
                                     <h3 class="uned_announces_title">{% trans %}Now events{% endtrans %}</h3>
                                     {% for eventNow in eventsNow %}
                                         {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': numberCols, 'event': eventNow['data'], 'defaultPic' : defaultPic, active: true} %}
-                                        {% if add_clear_fix_md(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-md visible-lg"></div>
-                                        {% endif %}
-                                        {% if add_clear_fix_sm(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-sm"></div>
-                                        {% endif %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -50,12 +45,7 @@
                                     <h3 class="uned_announces_title">{% trans %}Today events{% endtrans %}</h3>
                                     {% for eventToday in eventsToday %}
                                         {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': numberCols, 'event': eventToday['data'], 'defaultPic' : defaultPic, active: false} %}
-                                        {% if add_clear_fix_md(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-md visible-lg"></div>
-                                        {% endif %}
-                                        {% if add_clear_fix_sm(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-sm"></div>
-                                        {% endif %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -76,12 +66,7 @@
                                     <h3 class="uned_announces_title">{% trans %}Future events{% endtrans %}</h3>
                                     {% for eventFuture in eventsFuture %}
                                         {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': numberCols, 'event': eventFuture['data'], 'defaultPic' : defaultPic, active: false} %}
-                                        {% if add_clear_fix_md(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-md visible-lg"></div>
-                                        {% endif %}
-                                        {% if add_clear_fix_sm(loop.index, objectByCol) %}
-                                            <div class="clearfix visible-sm"></div>
-                                        {% endif %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
                                     {% endfor %}
                                 </div>
                             </div>

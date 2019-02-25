@@ -10,14 +10,7 @@
                 {% else %}
                     {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
                 {% endif %}
-
-                {% if add_clear_fix_md(loop.index, objectByCol) %}
-                    <div class="clearfix visible-md visible-lg"></div>
-                {% endif %}
-                {% if add_clear_fix_sm(loop.index, objectByCol) %}
-                    <div class="clearfix visible-sm"></div>
-                {% endif %}
-
+                {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
             {% endfor %}
 
             {% if show_more|default(false) %}
