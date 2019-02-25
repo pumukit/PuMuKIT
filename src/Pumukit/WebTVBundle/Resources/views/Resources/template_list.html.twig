@@ -1,0 +1,41 @@
+<div class="{{ template_list_class|default('custom-list-by') }}">
+    {% set nameDate = '00/0000' %}
+    {% for object in objects %}
+
+        {% if object.isCollection() %}
+            {% set newNameDate = object.getPublicDate().format('m/Y') %}
+        {% else %}
+            {% set newNameDate = object.getRecordDate().format('m/Y') %}
+        {% endif %}
+
+        {% if template_list_grouped|default(true) and nameDate != newNameDate %}
+            {% set nameDate = newNameDate %}
+            <div class="name row">
+                <div class="col-xs-12">
+                    <h2>{{ nameDate }}</h2>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if object.isCollection() %}
+            {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+        {% else %}
+            {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+        {% endif %}
+        {% if add_clear_fix_md(loop.index, objectByCol) %}
+            <div class="clearfix visible-md visible-lg"></div>
+        {% endif %}
+        {% if add_clear_fix_sm(loop.index, objectByCol) %}
+            <div class="clearfix visible-sm"></div>
+        {% endif %}
+    {% else %}
+        <div class="row text-center">
+            {% if type|default('multimediaObject') == "series" %}
+                {% trans %}Not series found{% endtrans %}
+            {% else %}
+                {% trans %}Not multimedia objects found{% endtrans %}
+            {% endif %}
+            .
+        </div>
+    {% endfor %}    
+</div>
