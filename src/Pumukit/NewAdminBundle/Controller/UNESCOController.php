@@ -520,7 +520,7 @@ class UNESCOController extends Controller implements NewAdminController
         $configuredTag = $this->getConfiguredTag();
 
         return array(
-            'configuredTag' => $configuredTag->getTitle(),
+            'configuredTag' => $configuredTag,
             'mm' => $multimediaObject,
             'active_editor' => $activeEditor,
         );
