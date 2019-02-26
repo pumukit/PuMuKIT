@@ -20,6 +20,19 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
+                <label for="series_title" class="col-md-3 control-label">{% trans %}Series Title{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="series_title" type="text" class="form-control" name="criteria[seriesTitle]" placeholder="{% trans %}Series Title{% endtrans %}"
+                           {% if app.request.session.get('UNESCO/form')['seriesTitle'] is defined %}
+                               value="{{ app.request.session.get('UNESCO/form')['seriesTitle']}}"
+                           {% endif %}
+                    />
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
                 <label for="Subtitle" class="col-md-3 control-label">{% trans %}Subtitle{% endtrans %}</label>
                 <div class="col-md-9">
                     <input id="subtitle" type="text" class="form-control" name="criteria[subtitle]" placeholder="{% trans %}Subtitle{% endtrans %}"
@@ -32,11 +45,60 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
+                <label for="description" class="col-md-3 control-label">{% trans %}Description{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="description" class="form-control" name="criteria[description]" placeholder="{% trans %}Description{% endtrans %}"
+                            {% if app.request.session.get('UNESCO/form')['description'] is defined and app.request.session.get('UNESCO/form')['description'] is not empty %}
+                                value="{{ app.request.session.get('UNESCO/form')['description']}}"
+                            {% endif %}
+                    />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="comments" class="col-md-3 control-label">{% trans %}Comments{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="comments" class="form-control" name="criteria[comments]" placeholder="{% trans %}Comments{% endtrans %}"
+                            {% if app.request.session.get('UNESCO/form')['comments'] is defined and app.request.session.get('UNESCO/form')['comments'] is not empty %}
+                                value="{{ app.request.session.get('UNESCO/form')['comments']}}"
+                            {% endif %}
+                    />
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
                 <label for="keyword" class="col-md-3 control-label">{% trans %}Keyword{% endtrans %}</label>
                 <div class="col-md-9">
                     <input id="keyword" type="text" class="form-control" name="criteria[keyword]" placeholder="{% trans %}Keyword{% endtrans %}"
                             {% if app.request.session.get('UNESCO/form')['keyword'] is defined %}
                                 value="{{ app.request.session.get('UNESCO/form')['keyword']}}"
+                            {% endif %}
+                    />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="copyright" class="col-md-3 control-label">{% trans %}Copyright{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="copyright" type="text" class="form-control" name="criteria[copyright]" placeholder="{% trans %}Copyright{% endtrans %}"
+                            {% if app.request.session.get('UNESCO/form')['copyright'] is defined %}
+                                value="{{ app.request.session.get('UNESCO/form')['copyright']}}"
+                            {% endif %}
+                    />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="license" class="col-md-3 control-label">{% trans %}License{% endtrans %}</label>
+                <div class="col-md-9">
+                    <input id="license" type="text" class="form-control" name="criteria[license]" placeholder="{% trans %}License{% endtrans %}"
+                            {% if app.request.session.get('UNESCO/form')['license'] is defined %}
+                                value="{{ app.request.session.get('UNESCO/form')['license']}}"
                             {% endif %}
                     />
                 </div>
@@ -77,18 +139,6 @@
                                 value="{{ app.request.session.get('UNESCO/form')['finishRecordDate']}}"
                             {% endif %}
                     />
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="form-group" style="margin-top:10px;">
-                <label for="Description" class="col-md-3 control-label">{% trans %}Description{% endtrans %}</label>
-                <div class="col-md-9">
-                    <textarea id="Description" class="form-control" name="criteria[description]" placeholder="{% trans %}Description{% endtrans %}"
-                            {% if app.request.session.get('UNESCO/form')['description'] is defined and app.request.session.get('UNESCO/form')['description'] is not empty %}
-                                placeholder="{{ app.request.session.get('UNESCO/form')['description']}}"
-                            {% endif %}
-                    ></textarea>
                 </div>
             </div>
 
