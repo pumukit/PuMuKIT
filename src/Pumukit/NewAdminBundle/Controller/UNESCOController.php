@@ -361,6 +361,8 @@ class UNESCOController extends Controller implements NewAdminController
                     }
                 } elseif ('originalName' === $key && !empty($value)) {
                     $newCriteria['tracks.originalName'] = SearchUtils::generateRegexExpression($value);
+                } elseif (in_array($key, array('comments', 'license', 'copyright')) && !empty($value)) {
+                    $newCriteria[$key] = SearchUtils::generateRegexExpression($value);
                 } elseif (!empty($value)) {
                     $newCriteria[$key.'.'.$request->getLocale()] = SearchUtils::generateRegexExpression($value);
                 }
