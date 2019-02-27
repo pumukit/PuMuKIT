@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="text-center" name="{{ date | date("m/Y") }}">
+    <div class="text-center" name="{{ date | date("m/yyyy") }}">
         <h2>{{ date | localizeddate('full', 'none' , app.request.locale, null,"MMMM  yyyy" ) }}</h2>
     </div>
     <div class="announces">
