@@ -84,5 +84,8 @@
         {% endblock %}
     </div>
 {% endblock %}
+{% if not app.request.xmlHttpRequest %}
+    {% include 'PumukitWebTVBundle:Layout:analytics.html.twig' %}
+{% endif %}
 </body>
 </html>
