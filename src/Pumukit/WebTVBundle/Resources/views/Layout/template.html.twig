@@ -35,7 +35,7 @@
     {% endblock %}
 </head>
 
-<body>
+<body class="{% block body_class %}{% endblock %}">
     {% block body_base %}
 
         {% include 'PumukitWebTVBundle:Layout:template_header.html.twig' %}
@@ -50,7 +50,9 @@
             {% block body_without_container %}
                 <div class="container main-content">
                     <div class="row">
-                        {% block body %}
+                        {% block body_without_bar %}
+                            {% block body %}
+                            {% endblock %}
                         {% endblock %}
                     </div>
                 </div>
