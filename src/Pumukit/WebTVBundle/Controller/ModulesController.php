@@ -61,7 +61,7 @@ class ModulesController extends Controller implements WebTVController
 
         return array(
             'objects' => $last,
-            'objectByCol' =>  $this->container->getParameter('recentlyadded.objects_by_col'),
+            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
             'title' => $title,
             'class' => 'recently',
             'show_info' => true,
@@ -158,7 +158,7 @@ class ModulesController extends Controller implements WebTVController
         $tags = $dm->createQueryBuilder('PumukitSchemaBundle:Tag')
             ->field('cod')->in($categories)
             ->field('display')->equals(true)
-            ->sort("title.".$request->getLocale(),1)
+            ->sort('title.'.$request->getLocale(), 1)
             ->getQuery()
             ->execute();
 
