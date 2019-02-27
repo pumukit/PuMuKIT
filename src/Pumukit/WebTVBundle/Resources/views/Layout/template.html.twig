@@ -48,17 +48,19 @@
         {% endif %}
 
         <div class="container-fluid">
-            <div class="container main-content">
-                <div class="row">
-                    {% block body_without_bar %}
-                        {% block body %}
+            {% block body_without_container %}
+                <div class="container main-content">
+                    <div class="row">
+                        {% block body_without_bar %}
+                            {% block body %}
+                            {% endblock %}
                         {% endblock %}
-                    {% endblock %}
+                    </div>
                 </div>
-            </div>
+            {% endblock %}
         </div>
 
-        <div class="container-fluid">
+        <div class="container-fluid custom-footer">
             <div class="row">
                 {% include 'PumukitWebTVBundle:Layout:template_footer_content.html.twig' %}
             </div>

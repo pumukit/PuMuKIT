@@ -4,7 +4,9 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ModulesController.
@@ -34,7 +36,7 @@ class ModulesController extends Controller implements WebTVController
 
         return array(
             'objects' => $objects,
-            'objectByCol' => 4,
+            'objectByCol' => $this->container->getParameter('mostviewed.objects_by_col'),
             'title' => $title,
             'class' => 'mostviewed',
             'show_info' => true,
@@ -59,7 +61,7 @@ class ModulesController extends Controller implements WebTVController
 
         return array(
             'objects' => $last,
-            'objectByCol' => 4,
+            'objectByCol' =>  $this->container->getParameter('recentlyadded.objects_by_col'),
             'title' => $title,
             'class' => 'recently',
             'show_info' => true,
@@ -84,7 +86,7 @@ class ModulesController extends Controller implements WebTVController
 
         return array(
             'objects' => $last,
-            'objectByCol' => 3,
+            'objectByCol' => $this->container->getParameter('hightlight.objects_by_col'),
             'class' => 'highlight',
             'title' => $title,
             'show_info' => false,
@@ -132,5 +134,40 @@ class ModulesController extends Controller implements WebTVController
         }
 
         return array('languages' => $array_locales);
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_categories.html.twig")
+     *
+     * @param Request $request
+     * @param         $title
+     * @param         $class
+     * @param         $categories
+     * @param int     $cols
+     *
+     * @return array
+     */
+    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6)
+    {
+        if (!$categories) {
+            throw new NotFoundHttpException('Categories not found');
+        }
+
+        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+
+        $tags = $dm->createQueryBuilder('PumukitSchemaBundle:Tag')
+            ->field('cod')->in($categories)
+            ->field('display')->equals(true)
+            ->sort("title.".$request->getLocale(),1)
+            ->getQuery()
+            ->execute();
+
+        return array(
+            'objectByCol' => $cols,
+            'objects' => $tags,
+            'objectsData' => $categories,
+            'title' => $title,
+            'class' => $class,
+        );
     }
 }
