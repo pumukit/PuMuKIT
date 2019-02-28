@@ -33,7 +33,7 @@
                         <p class="second_line_image_representation">{{ object.subtitle }}</p>
                     {% elseif seriesTitle %}
                         <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
-                            <p class="second_line_image_representation">{{ seriesTitle }}</p>
+                            <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
                         </a>
                     {% endif %}
 
