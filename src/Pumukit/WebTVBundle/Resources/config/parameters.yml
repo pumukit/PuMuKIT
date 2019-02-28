@@ -16,6 +16,9 @@ parameters:
   limit_objs_series:         10                           # Search Pager limit.  (Default 10)
   limit_objs_byuser:         10                           # ByUser Pager limit.   (Default 10)
   limit_objs_player_series:  10                           # Limit for mmobjs to appear on the mmobj player (Default 10)
+  hightlight.objects_by_col: 3
+  recentlyadded.objects_by_col: 4
+  mostviewed.objects_by_col: 4
   search.parent_tag.cod:     ITUNESU                      # Search controller option for the main tag search.
   search.parent_tag_2.cod:   null                         # Search controller option for the optional tag search.
   menu.announces_title:      'Latest Uploads'             # 'Announces' option title for the menu widget.

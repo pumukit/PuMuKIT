@@ -37,9 +37,8 @@
 
 <body class="{% block body_class %}{% endblock %}">
     {% block body_base %}
-        <div class="container-fluid">
-            {% include 'PumukitWebTVBundle:Layout:header.html.twig' %}
-        </div>
+
+        {% include 'PumukitWebTVBundle:Layout:template_header.html.twig' %}
 
         {% include 'PumukitWebTVBundle:Menu:template.html.twig' %}
 
@@ -47,32 +46,34 @@
             {% render(controller('PumukitWebTVBundle:Modules:breadcrumbs')) %}
         {% endif %}
 
-        <div class="container-fluid">
-            <div class="container main-content">
-                <div class="row">
-                    {% block body_without_bar %}
-                        {% block body %}
+        <div class="container-fluid content-pmk">
+            {% block body_without_container %}
+                <div class="container main-content">
+                    <div class="row">
+                        {% block body_without_bar %}
+                            {% block body %}
+                            {% endblock %}
                         {% endblock %}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row">
-                {% include 'PumukitWebTVBundle:Layout:template_footer_content.html.twig' %}
-            </div>
-            {% block powered_by %}
-                <div class="row powered_by">
-                    <div>
-                        <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
-                        <a href="http://pumukit.org" >
-                            Powered by <span style="font-style: italic">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
-                        </a>
                     </div>
                 </div>
             {% endblock %}
         </div>
+
+        {% include "PumukitWebTVBundle:Layout:template_footer.html.twig" %}
+
+        <div class="container-fluid powered_by">
+            <div class="row">
+            {% block powered_by %}
+                <div class="container pull-right">
+                    <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+                    <a href="http://pumukit.org" >
+                        Powered by <span style="font-style: italic">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
+                    </a>
+                </div>
+            {% endblock %}
+            </div>
+        </div>
+
     {% endblock %}
 </body>
 </html>
