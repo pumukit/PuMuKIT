@@ -142,12 +142,12 @@ class ModulesController extends Controller implements WebTVController
      * @param Request $request
      * @param         $title
      * @param         $class
-     * @param         $categories
+     * @param array   $categories
      * @param int     $cols
      *
      * @return array
      */
-    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6)
+    public function categoriesAction(Request $request, $title, $class, array $categories, $cols = 6)
     {
         if (!$categories) {
             throw new NotFoundHttpException('Categories not found');

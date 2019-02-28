@@ -61,6 +61,19 @@
 
         {% include "PumukitWebTVBundle:Layout:template_footer.html.twig" %}
 
+        <div class="container-fluid powered_by">
+            <div class="row">
+            {% block powered_by %}
+                <div class="container pull-right">
+                    <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
+                    <a href="http://pumukit.org" >
+                        Powered by <span style="font-style: italic">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>
+                    </a>
+                </div>
+            {% endblock %}
+            </div>
+        </div>
+
     {% endblock %}
 </body>
 </html>
