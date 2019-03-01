@@ -97,7 +97,14 @@ class OpencastImportService
                 $multimediaObject->setProperty('opencast', $properties);
                 $multimediaObject->setProperty('opencasturl', $this->opencastClient->getPlayerUrl().'?mode=embed&id='.$properties);
             }
-            $multimediaObject->setProperty('opencastinvert', boolval($invert));
+
+            if (boolval($invert)) {
+                $multimediaObject->setProperty('opencastinvert', true);
+                $multimediaObject->setProperty('paellalayout', 'professor_slide');
+            } else {
+                $multimediaObject->setProperty('opencastinvert', false);
+                $multimediaObject->setProperty('paellalayout', 'slide_professor');
+            }
 
             $recDate = $this->getMediaPackageField($mediaPackage, 'start');
             if ($recDate) {
