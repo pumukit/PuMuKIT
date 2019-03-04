@@ -31,7 +31,7 @@
 
         {% include 'PumukitWebTVBundle:MultimediaObject:template_player.html.twig' %}
 
-        {% render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) %}
+        {{ render(controller('PumukitWebTVBundle:MultimediaObject:multimediaInfo', {'multimediaObject': multimediaObject})) }}
 
     </div>
 
