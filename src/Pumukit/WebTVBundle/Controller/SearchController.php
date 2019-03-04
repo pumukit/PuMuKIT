@@ -250,7 +250,7 @@ class SearchController extends Controller implements WebTVController
 
     protected function dateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
     {
-        if ($yearFound != null) {
+        if ($yearFound !== null) {
             $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', $yearFound));
             $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', ($yearFound) + 1));
             $queryBuilder->field($dateField)->gte($start);
