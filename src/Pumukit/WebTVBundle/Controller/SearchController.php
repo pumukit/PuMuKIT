@@ -18,7 +18,7 @@ use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 class SearchController extends Controller implements WebTVController
 {
     /**
-     * @Route("/searchseries")
+     * @Route("/searchseries", name="pumukit_webtv_search_series")
      * @Template("PumukitWebTVBundle:Search:index.html.twig")
      */
     public function seriesAction(Request $request)
@@ -75,7 +75,7 @@ class SearchController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod": null, "useTagAsGeneral": false})
+     * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod": null, "useTagAsGeneral": false}, name="pumukit_webtv_search_multimediaobjects")
      * @ParamConverter("blockedTag", class="PumukitSchemaBundle:Tag", options={"mapping": {"tagCod": "cod"}})
      * @Template("PumukitWebTVBundle:Search:index.html.twig")
      */

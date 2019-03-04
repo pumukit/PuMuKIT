@@ -1,0 +1,14 @@
+<div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
+    <div class="thumbnail">
+        <a href="{{ path('pumukit_webtv_search_multimediaobjects', {'tagCod' : object.getCod() }) }}" title="{{ object.getTitle() }}">
+            <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive-item text-center">
+                    <img alt="image" src="{{ object.getProperty('category_pic')}}" class="img-responsive img_adapter_4_3" />
+                </div>
+            </div>
+            <span class="title_image_representation">
+                {{ object.getTitle()|default('No title'|trans) }}
+            </span>
+        </a>
+    </div>
+</div>

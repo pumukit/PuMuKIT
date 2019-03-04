@@ -1,10 +1,9 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
-{% block keywords %}{{ parent() }} - {{ series.keyword }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ series.getKeywords()|join(',') }}{% endblock %}
 
 {% block meta %}
-
     {{ parent() }}
     <meta property="og:url" content="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}" />
     <meta property="og:type" content="website" />
@@ -25,6 +24,7 @@
             {% include 'PumukitWebTVBundle:Series:header.html.twig' with { 'series_precinct' : precinct} %}
         </div>
     </div>
+
     {% if template != 'place_subserial' %}
         <div class="row">
             <div class="col-xs-12">
@@ -34,6 +34,7 @@
             </div>
         </div>
     {% endif %}
+
     <div class="row">
         <div class="col-xs-12">
             {% if template == 'place_subserial' %}
@@ -46,7 +47,7 @@
                 </div>
             {% endif %}
             {% for mm in multimediaObjects %}
-                {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM Y" ) %}
+                {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM yyyy" ) %}
                 {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
                 {% if template == "place_subserial" and not precinct %}
                     {% set precinct = precinct_of_mmo(mm) %}
@@ -74,12 +75,14 @@
             {% endfor %}
         </div>
     </div>
+
     {% if multimediaObjects.getMaxPerPage()|default(0) %}
         <div class="row">
             {% set objects = multimediaObjects %}
             {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
         </div>
     {% endif %}
+
     <div class="row">
         <div class="col-xs-12">
             {{ series.footer|raw }}

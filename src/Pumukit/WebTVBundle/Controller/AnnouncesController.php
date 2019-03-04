@@ -23,9 +23,13 @@ class AnnouncesController extends Controller implements WebTVController
         return array('template_title' => $templateTitle);
     }
 
+    protected function getLatestUploadsPagerTemplate()
+    {
+        return 'PumukitWebTVBundle:Announces:latestUploadsPager.html.twig';
+    }
+
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
-     * @Template()
      */
     public function latestUploadsPagerAction(Request $request)
     {
@@ -44,7 +48,7 @@ class AnnouncesController extends Controller implements WebTVController
         $dateHeader = '---';
 
         if (!empty($last)) {
-            $response = new Response($this->renderView('PumukitWebTVBundle:Announces:latestUploadsPager.html.twig', array('last' => $last, 'date' => $date, 'number_cols' => $numberCols)), 200);
+            $response = new Response($this->renderView($this->getLatestUploadsPagerTemplate(), array('last' => $last, 'date' => $date, 'number_cols' => $numberCols)), 200);
             $dateHeader = $date->format('m/Y');
             $response->headers->set('X-Date-Month', $date->format('m'));
             $response->headers->set('X-Date-Year', $date->format('Y'));

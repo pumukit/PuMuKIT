@@ -281,6 +281,10 @@ class ClientService
             if (isset($decode['workflows']['workflow']['mediapackage'])) {
                 return $decode['workflows']['workflow']['mediapackage'];
             }
+
+            if (isset($decode['workflows']['workflow'][0]['mediapackage'])) {
+                return $decode['workflows']['workflow'][0]['mediapackage'];
+            }
         }
 
         return null;

@@ -359,6 +359,8 @@ class UNESCOController extends Controller implements NewAdminController
                     }
                 } elseif ('originalName' === $key && !empty($value)) {
                     $newCriteria['tracks.originalName'] = SearchUtils::generateRegexExpression($value);
+                } elseif (in_array($key, array('comments', 'license', 'copyright')) && !empty($value)) {
+                    $newCriteria[$key] = SearchUtils::generateRegexExpression($value);
                 } elseif (!empty($value)) {
                     $newCriteria[$key.'.'.$request->getLocale()] = SearchUtils::generateRegexExpression($value);
                 }
@@ -517,7 +519,7 @@ class UNESCOController extends Controller implements NewAdminController
         $configuredTag = $this->getConfiguredTag();
 
         return array(
-            'configuredTag' => $configuredTag->getTitle(),
+            'configuredTag' => $configuredTag,
             'mm' => $multimediaObject,
             'active_editor' => $activeEditor,
         );
@@ -747,12 +749,14 @@ class UNESCOController extends Controller implements NewAdminController
     }
 
     /**
-     * @param $criteria
-     * @param $tag
+     * @param      $criteria
+     * @param null $tag
      *
      * @return mixed
+     *
+     * @throws \Exception
      */
-    private function searchMultimediaObjects($criteria, $tag)
+    private function searchMultimediaObjects($criteria, $tag = null)
     {
         $configuredTag = $this->getConfiguredTag();
         $dm = $this->container->get('doctrine_mongodb')->getManager();
@@ -761,17 +765,18 @@ class UNESCOController extends Controller implements NewAdminController
 
         $tagCondition = $tag;
         if (isset($tag) && !in_array($tag, array('1', '2'))) {
-            $tagCondition = (strtoupper(substr($tag, 0, 1)));
+            $tagCondition = 'tag';
         }
 
         switch ($tagCondition) {
             case '1':
+                // NOTE: Videos without configured tag
                 $selectedTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $configuredTag->getCod()));
                 $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
                     ->field('tags._id')
                     ->notEqual(new \MongoId($selectedTag->getId()));
                 break;
-            case $tagCondition && !in_array($tagCondition, array('1', '2')):
+            case 'tag':
                 $selectedTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tag));
                 $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
                     ->field('tags._id')
@@ -779,6 +784,7 @@ class UNESCOController extends Controller implements NewAdminController
                 break;
             case '2':
             default:
+                // NOTE: All videos
                 $query = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
                 break;
         }

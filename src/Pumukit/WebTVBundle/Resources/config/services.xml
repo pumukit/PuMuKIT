@@ -42,5 +42,11 @@
         <service id="twig.extension.mongo_date" class="Pumukit\WebTVBundle\Twig\MongoDateExtension">
             <tag name="twig.extension"/>
         </service>
+
+        <service id="pumukit_web_tv.bootstrap_extension" class="Pumukit\WebTVBundle\Twig\BootstrapExtension">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="router.request_context" on-invalid="ignore" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

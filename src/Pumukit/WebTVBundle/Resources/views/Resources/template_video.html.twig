@@ -1,0 +1,67 @@
+{% if object.isPublished %}
+    {% set videoPath = path('pumukit_webtv_multimediaobject_index', {'id': object.id}) %}
+{% else %}
+    {% set videoPath = path('pumukit_webtv_multimediaobject_magicindex', {'id': object.secret}) %}
+{% endif %}
+{% set videoTitle = object.title | default('No title'|trans) %}
+{% set seriesTitle = object.getSeriesTitle()|default('') %}
+
+<div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
+        <div class="thumbnail">
+            <a href="{{ videoPath }}" title="{{ videoTitle }}">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item text-center">
+                        <img alt="image" src="{{ object|first_url_pic(true) }}" class="img-responsive img_adapter_4_3" />
+                        {% if show_inside_video_duration|default(true) %}
+                            <span class="inside-video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+
+            {% if show_info|default(true) %}
+                <div class="caption">
+                    <p class="title_image_representation">
+                        <a href="{{ videoPath }}" title="{{ videoTitle }}">
+                            {{ videoTitle }}
+                        </a>
+                    </p>
+
+                    {% if object.line2 is not empty %}
+                        <p class="second_line_image_representation">{{ object.line2 }}</p>
+                    {% elseif object.subtitle is not empty %}
+                        <p class="second_line_image_representation">{{ object.subtitle }}</p>
+                    {% elseif seriesTitle %}
+                        <a href="{{ path('pumukit_webtv_series_index', {'id': object.getSeries().getId() }) }}" title="{{ seriesTitle }}">
+                            <p class="second_line_image_representation" title="{{ "i18n.one.Series"|trans ~ " " ~ seriesTitle }}">{{ seriesTitle }}</p>
+                        </a>
+                    {% endif %}
+
+                    {% if show_info|default(false) %}
+                        <div class="date_and_visits">
+                            {% if with_publicdate is defined and with_publicdate %}
+                                <div class="pull-left">
+                                    {{ object.publicDate|date("d/m/Y") }}
+                                </div>
+                            {% else %}
+                                {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' %}
+                                    <div class="language pull-left">
+                                        {% trans %}Language{% endtrans %}:
+                                        {{ object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) | language_name }}
+                                    </div>
+                                {% endif %}
+                                <div class="pull-right">
+                                    {% trans %}Viewed{% endtrans %}:
+                                    {{ object.getNumview() }}
+                                    {% transchoice object.getNumview() %}
+                                        {0}times|{1}time|]1,Inf]times
+                                    {% endtranschoice %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </a>
+</div>
