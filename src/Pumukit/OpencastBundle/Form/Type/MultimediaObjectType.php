@@ -23,13 +23,15 @@ class MultimediaObjectType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $invertText = $this->translator->trans('Invert', array(), null, $this->locale).' (CAMERA-SCREEN)';
+
         $builder
             ->add('opencastinvert', 'checkbox',
                   array(
                         'required' => false,
                         'mapped' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Invert', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Invert', array(), null, $this->locale), ))
+                        'attr' => array('aria-label' => $invertText),
+                        'label' => $invertText, ))
             ->add('opencastlanguage', 'customlanguage',
                   array(
                         'required' => true,
