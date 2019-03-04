@@ -71,7 +71,7 @@
         <div class="row footer_row">
             {% include 'PumukitWebTVBundle:Layout:footer.html.twig' %}
         </div>
-        {% block powered_by %}
+           {# Removing the original copyright line from footer breaks the AGPL license #}
             <div class="powered_by row">
                 <div>
                     <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" style="width: 10px;">
@@ -81,7 +81,6 @@
                     </a>
                 </div>
             </div>
-        {% endblock %}
     </div>
 {% endblock %}
 {% if not app.request.xmlHttpRequest %}
