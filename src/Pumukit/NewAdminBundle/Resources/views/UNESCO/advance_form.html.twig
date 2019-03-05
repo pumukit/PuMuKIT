@@ -8,6 +8,27 @@
 
             <div class="clearfix"></div>
             <div class="form-group" style="margin-top:10px;">
+                <label for="id" class="col-md-3 control-label">Video ID</label>
+                <div class="col-md-9">
+                    <input id="id" type="text" class="form-control" name="criteria[id]"
+                           placeholder="{% trans %}Video ID{% endtrans %}"
+                           {% if criteria %}value="{{ criteria['id'] }}"{% endif %}
+                    />
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="seriesID" class="col-md-3 control-label">Series ID</label>
+                <div class="col-md-9">
+                    <input id="seriesID" type="text" class="form-control" name="criteria[seriesID]"
+                           placeholder="{% trans %}Series ID{% endtrans %}"
+                           {% if criteria %}value="{{ criteria['seriesID'] }}"{% endif %}
+                    />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
                 <label for="title" class="col-md-3 control-label">{% trans %}Title{% endtrans %}</label>
                 <div class="col-md-9">
                     <input id="title" type="text" class="form-control" name="criteria[title]" placeholder="{% trans %}Title{% endtrans %}"
@@ -231,6 +252,65 @@
         </div>
 
         <div class="col-md-6">
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="type" class="col-md-3 control-label">{% trans %}Type{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="type" name="criteria[type]" class="form-control">
+                        <option value="all">{% trans %}All{% endtrans %}</option>
+                        {% for key, value in type %}
+                            <option value="{{ key }}" {% if criteria and  key == criteria['type'] %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="duration" class="col-md-3 control-label">{% trans %}Duration{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="duration" name="criteria[duration]" class="form-control">
+                        <option value="">{% trans%}All{% endtrans %}</option>
+                        <option value="-5" {% if criteria and "-5" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
+                        <option value="-10" {% if criteria and "-10" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
+                        <option value="-30" {% if criteria and "-30" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
+                        <option value="-60" {% if criteria and "-60" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
+                        <option value="+60" {% if criteria and "+60" == criteria['duration'] %}selected{% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="form-group" style="margin-top:10px;">
+                <label for="year" class="col-md-3 control-label">{% trans %}Year{% endtrans %}</label>
+                <div class="col-md-9">
+                    <select id="year" name="criteria[year]" class="form-control">
+                        <option value="">{% trans%}Any{% endtrans %}</option>
+                        {% for year in years %}
+                            <option value="{{year}}" {% if criteria and year == criteria['year'] %}selected{% endif %}>{{year}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            {% if genre is defined and genre is not empty %}
+                <div class="clearfix"></div>
+                    <div class="form-group" style="margin-top:10px;">
+                        <label for="genre" class="col-md-3 control-label">{% trans %}Genre{% endtrans %}</label>
+                        <div class="col-md-9">
+                            <select id="genre" name="criteria[genre]" class="form-control">
+                                <option value="all">{% trans %}All{% endtrans %}</option>
+                                {% for key, value in genre %}
+                                    <option value="{{ key }}" {% if criteria and key == criteria['genre'] %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+
             {% for role in roles %}
                 <div class="clearfix"></div>
                 <div class="form-group" style="margin-top:10px;">

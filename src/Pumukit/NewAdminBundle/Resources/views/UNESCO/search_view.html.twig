@@ -14,17 +14,9 @@
             </div>
             <div class="col-xs-12">
                 <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') is same as(false) %}in{% endif %}" id="collapseAdvanceForm">
+                    {{ render(controller('PumukitNewAdminBundle:UNESCO:customFields')) }}
                     {% include 'PumukitNewAdminBundle:UNESCO:advance_form.html.twig' %}
                 </div>
-            </div>
-
-            <div class="col-xs-12">
-                <img id="unesco_form_loader"
-                     alt="{% trans %}Spinner{% endtrans %}"
-                     src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
-                     style="width:36px; opacity:0; float:right; margin-right: 62px; margin-top: -10px;"/>
-
-                <a class="unescoResetForm" href="#">{% trans %}Reset{% endtrans %}</a>
             </div>
         </form>
     </div>
