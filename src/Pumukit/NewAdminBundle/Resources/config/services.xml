@@ -67,6 +67,12 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
         </service>
 
+        <service id="pumukitnewadmin.tag_catalogue" class="Pumukit\NewAdminBundle\Services\TagCatalogueService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="translator"/>
+            <argument>%pumukit_new_admin.base_catalogue_tag%</argument>
+        </service>
+
         <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.person"/>
@@ -86,6 +92,13 @@
             <argument type="service" id="pumukitnewadmin.mmobjmenu"/>
             <argument type="service" id="pumukitnewadmin.seriesmenu"/>
             <tag name="twig.extension"/>
+        </service>
+
+        <service id="pumukitnewadmin.catalogue_extension" class="Pumukit\NewAdminBundle\Twig\CatalogueExtension">
+            <tag name="twig.extension" />
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="pumukitnewadmin.tag_catalogue"/>
         </service>
 
     </services>

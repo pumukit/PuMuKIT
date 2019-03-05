@@ -18,7 +18,6 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 
 /**
  * @Route("/unesco")
@@ -27,7 +26,6 @@ use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
  */
 class UNESCOController extends Controller implements NewAdminController
 {
-    private $baseTagCod = 'UNESCO';
     public static $baseTags = array(
         'Health Sciences' => array(
             'U310000',
@@ -66,9 +64,8 @@ class UNESCOController extends Controller implements NewAdminController
     );
 
     /**
-     * @return array
      * @Route("/", name="pumukitnewadmin_unesco_index")
-     * @Template()
+     * @Template("PumukitNewAdminBundle:UNESCO:index.html.twig")
      *
      * @param Request $request
      *
@@ -83,22 +80,20 @@ class UNESCOController extends Controller implements NewAdminController
         $session = $this->get('session');
         $page = (int) $request->query->get('page', 1);
         if ($page < 1) {
-            $page = 0;
+            $page = 1;
         }
         $paginate = $request->query->get('paginate');
-        if (isset($page)) {
-            $session->set('admin/unesco/page', $page);
-        }
+        $session->set('admin/unesco/page', $page);
         if (isset($paginate)) {
             $session->set('admin/unesco/paginate', $paginate);
         }
 
-        return array('configuredTag' => $configuredTag->getTitle());
+        return array('configuredTag' => $configuredTag);
     }
 
     /**
      * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
-     * @Template()
+     * @Template("PumukitNewAdminBundle:UNESCO:menuTags.html.twig")
      *
      * @return array
      *
@@ -164,9 +159,10 @@ class UNESCOController extends Controller implements NewAdminController
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
      * @Template("PumukitNewAdminBundle:UNESCO:list.html.twig")
      *
-     * @param string $tag
+     * @param null $tag
      *
      * @return array
+     * @throws \Exception
      */
     public function listAction($tag = null)
     {
@@ -183,8 +179,7 @@ class UNESCOController extends Controller implements NewAdminController
             $multimediaObjects = $this->searchMultimediaObjects($session->get('UNESCO/criteria'), $tag);
         } else {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder(
-            );
+            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
         }
 
         if ($session->has('admin/unesco/element_sort')) {
@@ -252,22 +247,14 @@ class UNESCOController extends Controller implements NewAdminController
      */
     public function resetSessionAction($all = true)
     {
+        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
         $session = $this->get('session');
-        if ($all) {
-            $session->remove('UNESCO/criteria');
-            $session->remove('UNESCO/form');
-            $session->remove('UNESCO/formbasic');
-            $session->set('admin/unesco/text', false);
-        }
 
-        $session->remove('admin/unesco/tag');
-        $session->remove('admin/unesco/page');
-        $session->remove('admin/unesco/paginate');
-        $session->remove('admin/unesco/id');
-        $session->remove('admin/unesco/type');
-        $session->remove('admin/unesco/element_sort');
+        $tagCatalogueService->resetSessionCriteria($session, $all);
 
-        return new JsonResponse(array('success'));
+        return new JsonResponse(
+            array('success')
+        );
     }
 
     /**
@@ -279,128 +266,10 @@ class UNESCOController extends Controller implements NewAdminController
      */
     public function addCriteriaSessionAction(Request $request)
     {
+        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
         $session = $this->get('session');
-        $criteria = $request->request->get('criteria');
 
-        $formBasic = false;
-        $newCriteria = array();
-        $tag = array();
-
-        $session->set('admin/unesco/text', false);
-        if ($criteria) {
-            foreach ($criteria as $key => $value) {
-                if (('id' === $key) && !empty($value)) {
-                    $newCriteria['_id'] = $value;
-                    $formBasic = true;
-                } elseif (('seriesID' === $key) && !empty($value)) {
-                    $newCriteria['series'] = $value;
-                    $formBasic = true;
-                } elseif (('series.numerical_id' === $key) && !empty($value)) {
-                    $dm = $this->get('doctrine_mongodb')->getManager();
-                    $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('numerical_id' => intval($value)));
-                    if ($series) {
-                        $newCriteria['series'] = new \MongoId($series->getId());
-                    } else {
-                        // NOTE: Return 0 results.
-                        $newCriteria['series'] = new \MongoId();
-                    }
-                } elseif (('mm.numerical_id' === $key) && !empty($value)) {
-                    $newCriteria['numerical_id'] = intval($value);
-                } elseif ((false !== strpos($key, 'properties')) && !(empty($value))) {
-                    $newCriteria[$key] = $value;
-                } elseif ('type' === $key && !empty($value)) {
-                    if ('all' !== $value) {
-                        $newCriteria['type'] = intval($value);
-                        $formBasic = true;
-                    }
-                } elseif ('duration' === $key && !empty($value)) {
-                    $newCriteria['tracks.duration'] = $value;
-                    $formBasic = true;
-                } elseif ('year' === $key && !empty($value)) {
-                    $newCriteria['year'] = $value;
-                    $formBasic = true;
-                } elseif ('text' === $key && !empty($value)) {
-                    $newCriteria['$text'] = $value;
-                    $session->set('admin/unesco/text', true);
-                    $formBasic = true;
-                } elseif ('broadcast' === $key && !empty($value)) {
-                    if ('all' !== $value) {
-                        $newCriteria['embeddedBroadcast.type'] = $value;
-                    }
-                } elseif ('statusPub' === $key) {
-                    if ('-1' !== $value) {
-                        $newCriteria['status'] = intval($value);
-                    }
-                } elseif ('announce' === $key && !empty($value)) {
-                    $tag[] = 'PUDENEW';
-                } elseif ('puderadio' === $key && !empty($value)) {
-                    $tag[] = 'PUDERADIO';
-                } elseif ('pudetv' === $key && !empty($value)) {
-                    $tag[] = 'PUDETV';
-                } elseif ('genre' === $key && !empty($value)) {
-                    $tag[] = $value;
-                } elseif ('roles' === $key) {
-                    foreach ($value as $key2 => $field) {
-                        if (!empty($field)) {
-                            $newCriteria['roles'][$key2] = new \MongoRegex('/.*'.preg_quote($field).'.*/i');
-                        }
-                    }
-                } elseif ('group' === $key) {
-                    if ('all' !== $value) {
-                        $newCriteria['groups'] = new \MongoId($value);
-                    }
-                } elseif (in_array($key, array('initPublicDate', 'finishPublicDate', 'initRecordDate', 'finishRecordDate'))) {
-                    if ('initPublicDate' === $key && !empty($value)) {
-                        $newCriteria['public_date_init'] = $value;
-                    } elseif ('finishPublicDate' === $key && !empty($value)) {
-                        $newCriteria['public_date_finish'] = $value;
-                    } elseif ('initRecordDate' === $key && !empty($value)) {
-                        $newCriteria['record_date_init'] = $value;
-                    } elseif ('finishRecordDate' === $key && !empty($value)) {
-                        $newCriteria['record_date_finish'] = $value;
-                    }
-                } elseif ('originalName' === $key && !empty($value)) {
-                    $newCriteria['tracks.originalName'] = SearchUtils::generateRegexExpression($value);
-                } elseif (in_array($key, array('comments', 'license', 'copyright')) && !empty($value)) {
-                    $newCriteria[$key] = SearchUtils::generateRegexExpression($value);
-                } elseif (!empty($value)) {
-                    $newCriteria[$key.'.'.$request->getLocale()] = SearchUtils::generateRegexExpression($value);
-                }
-            }
-        }
-
-        if (!empty($tag)) {
-            if ('all' === $tag[0]) {
-                array_shift($tag);
-            }
-            if (!empty($tag)) {
-                $newCriteria['tags.cod'] = array('$all' => $tag);
-            }
-        }
-
-        if ($request->request->has('sort_type')) {
-            $sort_type = $request->request->get('sort_type');
-            if ('title' === $request->request->get('sort_type')) {
-                $sort_type = 'title.'.$request->getLocale();
-            }
-            if ($session->get('admin/unesco/text', false)) {
-                $sort_utype = 'score';
-            } else {
-                $sort_utype = $request->request->get('sort');
-            }
-            $session->set('admin/unesco/element_sort', $sort_type);
-            $session->set('admin/unesco/type', $sort_utype);
-
-            return new JsonResponse(array('success'));
-        }
-
-        if ($session->get('admin/unesco/text', false)) {
-            $session->set('admin/unesco/type', 'score');
-        }
-
-        $session->set('UNESCO/form', $criteria);
-        $session->set('UNESCO/criteria', $newCriteria);
-        $session->set('UNESCO/formbasic', $formBasic);
+        $tagCatalogueService->addSessionCriteria($request, $session);
 
         return new JsonResponse(array('success'));
     }
@@ -495,7 +364,7 @@ class UNESCOController extends Controller implements NewAdminController
     /**
      * @return array
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
-     * @Template()
+     * @Template("PumukitNewAdminBundle:UNESCO:show.html.twig")
      *
      * @param null|string $id
      *
@@ -750,6 +619,54 @@ class UNESCOController extends Controller implements NewAdminController
     }
 
     /**
+     * @Template("PumukitNewAdminBundle:UNESCO:custom_fields.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function customFieldsAction(Request $request)
+    {
+        $session = $this->get('session');
+        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+
+        if (!$session->has('admin/unesco/selected_fields')) {
+            $defaultSelectedFields = $tagCatalogueService->getDefaultListFields();
+            $session->set('admin/unesco/selected_fields', $defaultSelectedFields);
+        }
+
+        return array(
+            'selectedFields' => $session->get('admin/unesco/selected_fields'),
+        );
+    }
+
+    /**
+     * @Route("/custom/fields/add", name="pumukitnewadmin_catalogue_custom_fields")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function setCustomFields(Request $request)
+    {
+        $customFields = array_filter($request->request->all(), function ($value) {
+            return -1 != $value;
+        });
+
+        if (!$customFields) {
+            return new JsonResponse(array('success'));
+        }
+
+        if ($request->getSession()->has('admin/unesco/selected_fields')) {
+            $selectedFields = $request->getSession()->get('admin/unesco/selected_fields');
+            $selectedFields = array_merge($selectedFields, $customFields);
+            $request->getSession()->set('admin/unesco/selected_fields', $selectedFields);
+        }
+
+        return new JsonResponse(array('success'));
+    }
+
+    /**
      * @param      $criteria
      * @param null $tag
      *
@@ -821,8 +738,15 @@ class UNESCOController extends Controller implements NewAdminController
             } elseif ('record_date_finish' === $key && !empty($field)) {
                 $record_date_finish = $field;
             } elseif ('$text' === $key && !empty($field)) {
-                $this->get('pumukitnewadmin.multimedia_object_search')
-                    ->completeSearchQueryBuilder($field, $query, $request->getLocale());
+                if (preg_match('/^[0-9a-z]{24}$/', $field)) {
+                    $query->field('_id')->equals($field);
+                } else {
+                    $this->get('pumukitnewadmin.multimedia_object_search')->completeSearchQueryBuilder(
+                        $field,
+                        $query,
+                        $request->getLocale()
+                    );
+                }
             } elseif ('type' === $key && !empty($field)) {
                 if ('all' !== $field) {
                     $query->field('type')->equals($field);
@@ -964,17 +888,8 @@ class UNESCOController extends Controller implements NewAdminController
      */
     private function getConfiguredTag()
     {
-        $tagCod = $this->container->getParameter('pumukit_new_admin.base_catalogue_tag');
-        if (null === $tagCod) {
-            $tagCod = $this->baseTagCod;
-        }
-
-        $dm = $this->container->get('doctrine_mongodb')->getManager();
-
-        $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tagCod));
-        if (!$tag) {
-            throw new \Exception('Catalogue - Tag code configured not found '.$tagCod);
-        }
+        $tagCatalogueService = $this->get('pumukitnewadmin.tag_catalogue');
+        $tag = $tagCatalogueService->getConfiguredTag();
 
         return $tag;
     }

@@ -1,3 +1,14 @@
+{% set sort = false %}
+{% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
+    {% set sort = true %}
+{% endif %}
+
+{% set icon = app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' %}
+
+{% set selected_fields = app.request.getSession().get('admin/unesco/selected_fields') %}
+{% set custom_fields = app.request.getSession().get('admin/unesco/custom_fields') %}
+
+
 <tr>
     <th width="1%" id="th-checkbox">
         <div class="checkbox pumukit-mms-checkbox">
@@ -7,63 +18,16 @@
         </div>
     </th>
     <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
-    <th id="th-video" width="1%">{% trans %}Audio/Video{% endtrans %}</th>
-    <th id="th-img" width="1%">{% trans %}Img{% endtrans %}</th>
-
-    <th id="th-series" width="15%">
-        <a href="#" class="sort_unesco" data-id="seriesTitle">
-            {% trans %}Series{% endtrans %}&nbsp;
-            {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                {% if 'seriesTitle' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
+    {% for key, field in selected_fields %}
+        <th id="th-{{ loop.index }}">
+            <a href="#" class="sort_unesco" data-id="{{ field }}">
+                {{ custom_fields[field] }}
+                {% if sort and field == app.session.get('admin/unesco/element_sort') %}
+                    {{ icon|raw }}
                 {% endif %}
-            {% endif %}
-        </a>
-    </th>
-
-    <th id="th-title">
-        <a href="#" class="sort_unesco" data-id="title">
-            {% trans %}Title{% endtrans %}&nbsp;
-            {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                {% set type = app.session.get('admin/unesco/element_sort')|split('.') %}
-                {% if 'title' == type[0] %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
-                {% endif %}
-            {% endif %}
-        </a>
-    </th>
-    <th id="th-duration" width="10%">
-        <a href="#" class="sort_unesco" data-id="tracks.duration">
-            {% trans %}Duration{% endtrans %}
-            {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                {% if 'tracks.duration' ==  app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
-                {% endif %}
-            {% endif %}
-        </a>
-    </th>
-
-    <th id="th-rec-date" width="10%">
-        <a href="#" class="sort_unesco" data-id="record_date">
-            {% trans %}RecDate{% endtrans %}&nbsp;
-            {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                {% if 'record_date' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
-                {% endif %}
-            {% endif %}
-        </a>
-    </th>
-
-    <th id="th-pub-date" width="10%">
-        <a href="#" class="sort_unesco" data-id="public_date">
-            {% trans %}PubDate{% endtrans %}&nbsp;
-            {% if app.session.get('admin/unesco/element_sort') is not null and app.session.get('admin/unesco/element_sort') is not empty %}
-                {% if 'public_date' == app.session.get('admin/unesco/element_sort') %}
-                    {{ app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' }}
-                {% endif %}
-            {% endif %}
-        </a>
-    </th>
+            </a>
+        </th>
+    {% endfor %}
 
     <input type="hidden" name="unesco_short_type" id="pumukitnewadmin_unesco_sort_change_type" value="{{ app.session.get('admin/unesco/type')=='desc'?'asc': app.session.get('admin/unesco/type')=='asc'?'score' : 'desc' }}"/>
 
