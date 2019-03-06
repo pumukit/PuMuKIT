@@ -3716,6 +3716,34 @@
         <source>Video ID</source>
         <target>ID del vídeo</target>
       </trans-unit>
+      <trans-unit id="f045cb7a3ff411e9b210d663bd873d93" resname="Without criteria">
+        <source>Without criteria</source>
+        <target>Sin criterio</target>
+      </trans-unit>
+      <trans-unit id="f045ce7c3ff411e9b210d663bd873d93" resname="Multiple criteria">
+        <source>Multiple criteria</source>
+        <target>Criterio múltiple</target>
+      </trans-unit>
+      <trans-unit id="f045cfda3ff411e9b210d663bd873d93" resname="Track name">
+        <source>Track name</source>
+        <target>Nombre del track</target>
+      </trans-unit>
+      <trans-unit id="f045d11a3ff411e9b210d663bd873d93" resname="Numerical video ID">
+        <source>Numerical video ID</source>
+        <target>ID numérico vídeo</target>
+      </trans-unit>
+      <trans-unit id="f045d2643ff411e9b210d663bd873d93" resname="Numerical series ID">
+        <source>Numerical series ID</source>
+        <target>ID numérico serie</target>
+      </trans-unit>
+      <trans-unit id="f045d3c23ff411e9b210d663bd873d93" resname="Criteria">
+        <source>Criteria</source>
+        <target>Criterio</target>
+      </trans-unit>
+      <trans-unit id="74e853843ff511e9b210d663bd873d93" resname="Without filter">
+        <source>Without filter</source>
+        <target>Sin filtro</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

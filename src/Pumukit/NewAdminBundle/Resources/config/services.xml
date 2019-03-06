@@ -70,6 +70,7 @@
         <service id="pumukitnewadmin.tag_catalogue" class="Pumukit\NewAdminBundle\Services\TagCatalogueService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="translator"/>
+            <argument type="service" id="router"/>
             <argument>%pumukit_new_admin.base_catalogue_tag%</argument>
         </service>
 
