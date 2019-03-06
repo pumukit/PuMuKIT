@@ -295,7 +295,7 @@ class TagCatalogueService
                 break;
             case 'series.id':
                 $text = $object->getSeries()->getId();
-                $route = $this->router->generate('pumukitnewadmin_series_index', array('id' => $text));
+                $route = $this->router->generate('pumukitnewadmin_mms_index', array('id' => $text));
                 $text = "<a href='".$route."'>".(string) $text.'</a>';
                 break;
             case 'title':
@@ -303,7 +303,7 @@ class TagCatalogueService
                 break;
             case 'seriesTitle':
                 $text = $object->getSeriesTitle();
-                $route = $this->router->generate('pumukitnewadmin_series_index', array('id' => $object->getSeries()->getId()));
+                $route = $this->router->generate('pumukitnewadmin_mms_index', array('id' => $object->getSeries()->getId()));
                 $text = "<a href='".$route."'>".$text.'</a>';
                 break;
             case 'subtitle':
@@ -407,7 +407,6 @@ class TagCatalogueService
 
         $mappingFields = array(
             '_id' => 'id',
-            'series' => 'series.id',
             'tracks.originalName' => 'tracks.name',
             'tracks.duration' => 'duration',
             'embeddedBroadcasType' => 'embeddedBroadcast',
@@ -420,6 +419,14 @@ class TagCatalogueService
             $roles = $criteria['roles'];
             $kRoles = array_keys($roles);
             $key = 'role.'.$kRoles[0];
+        } elseif ('series' === $key) {
+            $criteria = $session->get('UNESCO/criteria');
+            $series = $criteria['series'];
+            if (is_int($series)) {
+                $key = 'series.numerical_id';
+            } else {
+                $key = 'series.id';
+            }
         }
 
         $text = $this->textRenderField($object, $key);
