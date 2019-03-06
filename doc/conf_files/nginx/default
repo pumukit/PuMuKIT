@@ -5,7 +5,7 @@ server {
     client_body_buffer_size 128k;
 
     server_name localhost;
-    root /var/www/pumukit2/web;
+    root /var/www/pumukit/web;
 
     location ^~ /uploads {
              access_log off;
@@ -21,7 +21,7 @@ server {
     # This rule should only be placed on your development environment
     # In production, don't include this and don't deploy app_dev.php or config.php
     location ~ ^/(app_dev|config)\.php(/|$) {
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param   SCRIPT_FILENAME       $document_root$fastcgi_script_name;
@@ -56,6 +56,6 @@ server {
             add_header Cache-Control "public, max-age=86400";
     }
 
-    error_log /var/log/nginx/pumukit2_error.log;
-    access_log /var/log/nginx/pumukit2_access.log;
+    error_log /var/log/nginx/pumukit_error.log;
+    access_log /var/log/nginx/pumukit_access.log;
 }
