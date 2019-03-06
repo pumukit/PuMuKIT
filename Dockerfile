@@ -12,8 +12,8 @@ RUN apk  add --no-cache \
 	     		libgcc \
 			libstdc++ \
 			ca-certificates \
-			libcrypto1.0 \
-			libssl1.0 \
+			libcrypto1.1 \
+			libssl1.1 \
 			libgomp \
 			expat \
 ;
