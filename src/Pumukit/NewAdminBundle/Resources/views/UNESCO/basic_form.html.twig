@@ -15,11 +15,14 @@
 </div>
 
 <div class="col-xs-12 col-md-5 text-right" style="padding-top:10px;">
-    <button class="btn btn-default btn-raised unescoResetForm" href="#" title="{% trans %}Reset{% endtrans %}">
-        {% trans %}Reset{% endtrans %}
-    </button>
-    <button class="btn btn-default btn-raised" data-toggle="collapse" href="#collapseAdvanceForm" aria-expanded="false">
+    {# NOTE: Keep this button order to send form with intro key and without JS #}
+    <input id="submitBasicForm" class="btn btn-pumukit btn-raised pull-right" type="submit" value="{% trans %}Send{%
+        endtrans %}" />
+    <button class="btn btn-default btn-raised pull-right" data-toggle="collapse" href="#collapseAdvanceForm"
+            aria-expanded="false">
         {% trans %}Advanced{% endtrans %}
     </button>
-    <input id="submitBasicForm" class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Send{% endtrans %}" />
+    <button class="btn btn-default btn-raised unescoResetForm pull-left" title="{% trans %}Reset{% endtrans %}">
+        {% trans %}Reset{% endtrans %}
+    </button>
 </div>
