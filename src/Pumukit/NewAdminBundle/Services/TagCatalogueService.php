@@ -36,6 +36,8 @@ class TagCatalogueService
 
     private $allDefaultFields;
 
+    private $locales;
+
     /**
      * TagCatalogueService constructor.
      *
@@ -43,13 +45,15 @@ class TagCatalogueService
      * @param TranslatorInterface $translator
      * @param RouterInterface     $router
      * @param                     $configuredTag
+     * @param                     $locales
      */
-    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag)
+    public function __construct(DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, $configuredTag, $locales)
     {
         $this->dm = $documentManager;
         $this->translator = $translator;
         $this->router = $router;
         $this->configuredTag = $configuredTag;
+        $this->locales = $locales;
 
         $this->allDefaultFields = $this->getAllCustomListFields();
     }
@@ -267,7 +271,7 @@ class TagCatalogueService
                 return $this->textRenderField($object, $field);
                 break;
             case 'criteria':
-                return $this->criteriaRenderField($session);
+                return $this->criteriaRenderField($object, $session);
             case 'role':
                 return $this->roleRenderField($object, $field);
             default:
@@ -363,11 +367,12 @@ class TagCatalogueService
     }
 
     /**
+     * @param MultimediaObject $object
      * @param SessionInterface $session
      *
      * @return string
      */
-    private function criteriaRenderField(SessionInterface $session)
+    private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
     {
         if (!$session->has('UNESCO/criteria')) {
             return $this->translator->trans('Without criteria');
@@ -380,7 +385,46 @@ class TagCatalogueService
         $criteria = $session->get('UNESCO/criteria');
         $key = array_keys($criteria);
 
-        return $key[0];
+        $text = $this->getTextFromCriteria($object, $session, $key[0]);
+
+        return $text;
+    }
+
+    /**
+     * @param MultimediaObject $object
+     * @param SessionInterface $session
+     * @param                  $key
+     *
+     * @return string
+     */
+    private function getTextFromCriteria(MultimediaObject $object, SessionInterface $session, $key)
+    {
+        foreach ($this->locales as $locale) {
+            if (false !== stripos($key, '.'.$locale)) {
+                $key = str_replace('.'.$locale, '', $key);
+            }
+        }
+
+        $mappingFields = array(
+            '_id' => 'id',
+            'series' => 'series.id',
+            'tracks.originalName' => 'tracks.name',
+            'tracks.duration' => 'duration',
+            'embeddedBroadcasType' => 'embeddedBroadcast',
+        );
+
+        if (array_key_exists($key, $mappingFields)) {
+            $key = $mappingFields[$key];
+        } elseif ('roles' === $key) {
+            $criteria = $session->get('UNESCO/criteria');
+            $roles = $criteria['roles'];
+            $kRoles = array_keys($roles);
+            $key = 'role.'.$kRoles[0];
+        }
+
+        $text = $this->textRenderField($object, $key);
+
+        return $text;
     }
 
     /**
@@ -392,7 +436,7 @@ class TagCatalogueService
     private function roleRenderField(MultimediaObject $object, $field)
     {
         $role = explode('.', $field);
-        $roleCod = $role[1];
+        $roleCod = isset($role[1]) ?: $role;
 
         $people = $object->getPeopleByRoleCod($roleCod);
 

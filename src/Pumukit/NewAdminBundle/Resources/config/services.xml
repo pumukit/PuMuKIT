@@ -72,6 +72,7 @@
             <argument type="service" id="translator"/>
             <argument type="service" id="router"/>
             <argument>%pumukit_new_admin.base_catalogue_tag%</argument>
+            <argument>%pumukit2.locales%</argument>
         </service>
 
         <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">
