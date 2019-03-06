@@ -6,8 +6,7 @@
 {% set icon = app.session.get('admin/unesco/type')=='asc'?'&#x25B4;':app.session.get('admin/unesco/type')=='desc'?'&#x25BE;':'' %}
 
 {% set selected_fields = app.request.getSession().get('admin/unesco/selected_fields') %}
-{% set custom_fields = app.request.getSession().get('admin/unesco/custom_fields') %}
-
+{% set custom_fields = all_custom_fields() %}
 
 <tr>
     <th width="1%" id="th-checkbox">
@@ -20,8 +19,8 @@
     <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
     {% for key, field in selected_fields %}
         <th id="th-{{ loop.index }}">
-            <a href="#" class="sort_unesco" data-id="{{ field }}">
-                {{ custom_fields[field] }}
+            <a href="#" class="sort_unesco" data-id="{{ key }}">
+                {{ custom_fields[field]['label'] }}
                 {% if sort and field == app.session.get('admin/unesco/element_sort') %}
                     {{ icon|raw }}
                 {% endif %}
