@@ -116,8 +116,6 @@ class TagCatalogueService
         $tag = [];
 
         $criteria = $request->request->get('criteria');
-
-        $session->set('admin/unesco/text', false);
         if ($criteria) {
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) && !empty($value)) {
