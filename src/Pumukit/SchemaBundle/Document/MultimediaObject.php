@@ -36,11 +36,25 @@ class MultimediaObject
     const STATUS_NEW = -1;
     const STATUS_PROTOTYPE = -2;
 
+    public static $statusTexts = array(
+        self::STATUS_PUBLISHED => 'Published',
+        self::STATUS_BLOCKED => 'Blocked',
+        self::STATUS_HIDDEN => 'Hidden',
+        self::STATUS_NEW => 'New',
+        self::STATUS_PROTOTYPE => 'Prototype',
+    );
+
     const TYPE_UNKNOWN = 0;
     const TYPE_VIDEO = 1;
     const TYPE_AUDIO = 2;
     const TYPE_EXTERNAL = 3;
 
+    public static $typeTexts = array(
+        self::TYPE_UNKNOWN => '',
+        self::TYPE_VIDEO => 'Video',
+        self::TYPE_AUDIO => 'Audio',
+        self::TYPE_EXTERNAL => 'External',
+    );
     /**
      * @var int
      * @MongoDB\Id
@@ -418,6 +432,16 @@ class MultimediaObject
     }
 
     /**
+     * @param $type
+     *
+     * @return string
+     */
+    public function getStringType($type)
+    {
+        return self::$typeTexts[$type];
+    }
+
+    /**
      * Set status.
      *
      * @param int $status
@@ -435,6 +459,16 @@ class MultimediaObject
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @param $status
+     *
+     * @return string
+     */
+    public function getStringStatus($status)
+    {
+        return self::$statusTexts[$status];
     }
 
     /**
@@ -490,7 +524,7 @@ class MultimediaObject
     /**
      * Get record_date.
      *
-     * @return datetime
+     * @return DateTime
      */
     public function getRecordDate()
     {
@@ -510,7 +544,7 @@ class MultimediaObject
     /**
      * Get public_date.
      *
-     * @return datetime
+     * @return DateTime
      */
     public function getPublicDate()
     {

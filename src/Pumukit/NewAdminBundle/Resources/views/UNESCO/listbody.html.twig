@@ -1,0 +1,40 @@
+{% set custom_fields = app.request.getSession().get('admin/unesco/selected_fields') %}
+{% set click_edit = "click_fila_edit_urls('mms', this, '" ~ path('pumukitnewadmin_unesco_show', {'id': mm.id})
+  ~ "', '" ~ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) ~ "')" %}
+{% set double_click_item = "dblclick_preview_mm('"~ mm.id ~"')" %}
+
+<tr id="tr_{{ mm.id }}" style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
+
+    <td headers="th-checkbox">
+        <div class="checkbox pumukit-mms-checkbox">
+            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragenter="$('.draggableTag').css('background-color','#beebff');" ondragend="dragEndCheckbox(this,event)">
+                <input data-id="{{ mm.id }}" id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
+            </label>
+        </div>
+    </td>
+    <td headers="th-icons">
+        <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}">
+            {# See Track/list for AJAX update #}
+            {% include 'PumukitNewAdminBundle:MultimediaObject:status.html.twig' with {'mm': mm} %}
+        </span>
+    </td>
+
+    {% if not is_naked() %}
+        <td headers="th-icons">
+            {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+        </td>
+    {% endif %}
+    <td headers="th-icons">
+        {% include 'PumukitNewAdminBundle:UNESCO:updatemenu.html.twig' with {'mm': mm} %}
+    </td>
+
+    {% for key, field in custom_fields %}
+        <td headers="th-{{ loop.index }}" onclick="{{ click_edit }}" ondblclick="{{ double_click_item }}">
+            {% if 'pics' in field %}
+                {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
+            {% else %}
+                {{ render_object_field(mm,app.request.getSession(),field)|raw }}
+            {% endif %}
+        </td>
+    {% endfor %}
+</tr>

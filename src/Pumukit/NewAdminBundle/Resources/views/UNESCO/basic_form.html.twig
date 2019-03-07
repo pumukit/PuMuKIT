@@ -1,95 +1,25 @@
-<div class="col-md-9">
+{% if criteria %}
+    {% set criteria_text = criteria['text'] %}
+{% endif %}
 
-    <div class="row">
-        <div class="col-xs-12 col-md-4">
-            <label for="id" class="col-md-3 pmk-label-input control-label">Video ID</label>
-            <div class="col-md-9">
-                <input id="id" type="text" class="form-control" name="criteria[id]"
-                       placeholder="{% trans %}Video ID{% endtrans %}"
-                       {% if criteria %}value="{{ criteria['id'] }}"{% endif %}
-                />
-            </div>
-        </div>
+{% set search_label = "Search"|trans %}
+{% set search_placeholder = "Search by title, subtitle or description"|trans %}
 
-        <div class="col-xs-12 col-md-4">
-            <label for="seriesID" class="col-md-3 pmk-label-input control-label">Series ID</label>
-            <div class="col-md-9">
-                <input id="seriesID" type="text" class="form-control" name="criteria[seriesID]"
-                       placeholder="{% trans %}Series ID{% endtrans %}"
-                       {% if criteria %}value="{{ criteria['seriesID'] }}"{% endif %}
-                />
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-md-4">
-            <label for="text" class="col-md-3 pmk-label-input control-label">{% trans %}Search{% endtrans %}</label>
-            <div class="col-md-9">
-                <input id="text" type="text" class="form-control" name="criteria[text]"
-                       placeholder="{% trans %}Search by title, subtitle or description{% endtrans %}"
-                       {% if criteria %}value="{{ criteria['text'] }}"{% endif %}
-                />
-            </div>
-        </div>
-    </div>
-
-    <div class="row" style="margin-top:7px;">
-        <div class="col-xs-12 col-md-4">
-            <label for="type" class="col-md-3 pmk-label-input control-label">{% trans %}Type{% endtrans %}</label>
-            <div class="col-md-9">
-                <select id="type" name="criteria[type]" class="form-control">
-                    <option value="all">{% trans %}All{% endtrans %}</option>
-                    {% for key, value in type %}
-                        <option value="{{ key }}" {% if criteria and  key == criteria['type'] %}selected{% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-md-4">
-            <label for="duration" class="col-md-3 pmk-label-input control-label">{% trans %}Duration{% endtrans %}</label>
-            <div class="col-md-9">
-                <select id="duration" name="criteria[duration]" class="form-control">
-                    <option value="">{% trans%}All{% endtrans %}</option>
-                    <option value="-5" {% if criteria and "-5" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 5 minutes{% endtrans %}</option>
-                    <option value="-10" {% if criteria and "-10" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 10 minutes{% endtrans %}</option>
-                    <option value="-30" {% if criteria and "-30" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 30 minutes{% endtrans %}</option>
-                    <option value="-60" {% if criteria and "-60" == criteria['duration'] %}selected{% endif %}>{% trans %}Up to 60 minutes{% endtrans %}</option>
-                    <option value="+60" {% if criteria and "+60" == criteria['duration'] %}selected{% endif %}>{% trans %}More than 60 minutes{% endtrans %}</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-md-4">
-            <label for="year" class="col-md-3 pmk-label-input control-label">{% trans %}Year{% endtrans %}</label>
-            <div class="col-md-9">
-                <select id="year" name="criteria[year]" class="form-control">
-                    <option value="">{% trans%}Any{% endtrans %}</option>
-                    {% for year in years %}
-                        <option value="{{year}}" {% if criteria and year == criteria['year'] %}selected{% endif %}>{{year}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    </div>
-
-    {% if genre is defined and genre is not empty %}
-        <div class="row">
-            <div class="col-xs-12 col-md-4">
-                <label for="genre" class="col-md-3 pmk-label-input control-label">{% trans %}Genre{% endtrans %}</label>
-                <div class="col-md-9">
-                    <select id="genre" name="criteria[genre]" class="form-control">
-                        <option value="all">{% trans %}All{% endtrans %}</option>
-                        {% for key, value in genre %}
-                            <option value="{{ key }}" {% if criteria and key == criteria['genre'] %}selected{% endif %}>{{ value }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+<div class="col-xs-12 col-md-7">
+    <label for="text" class="control-label">{{ search_label }}</label>
+    <input id="text" type="text" class="form-control" name="criteria[text]" placeholder="{{ search_placeholder }}" value="{{ criteria_text|default('') }}" />
+    <img id="unesco_form_loader" class="text-right" alt="{% trans %}Spinner{% endtrans %}" src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}" style="width: 36px; right: -30px; top: 20px; opacity: 0; float: right; position: absolute;"/>
 </div>
 
-<div class="col-xs-12 col-md-3">
-    <input id="submitBasicForm" class="btn btn-pumukit btn-raised" type="submit" value="{% trans %}Send{% endtrans %}" />
-    <button class="btn btn-default btn-raised pull-left" data-toggle="collapse" href="#collapseAdvanceForm" aria-expanded="false" aria-controls="collapseExample">{% trans %}Advanced{% endtrans %}</button>
+<div class="col-xs-12 col-md-5 text-right" style="padding-top:10px;">
+    {# NOTE: Keep this button order to send form with intro key and without JS #}
+    <input id="submitBasicForm" class="btn btn-pumukit btn-raised pull-right" type="submit" value="{% trans %}Send{%
+        endtrans %}" />
+    <button class="btn btn-default btn-raised pull-right" data-toggle="collapse" href="#collapseAdvanceForm"
+            aria-expanded="false">
+        {% trans %}Advanced{% endtrans %}
+    </button>
+    <button class="btn btn-default btn-raised unescoResetForm pull-left" title="{% trans %}Reset{% endtrans %}">
+        {% trans %}Reset{% endtrans %}
+    </button>
 </div>
