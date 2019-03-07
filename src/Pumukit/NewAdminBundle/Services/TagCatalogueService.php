@@ -3,8 +3,8 @@
 namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 use Symfony\Component\HttpFoundation\Request;
@@ -369,7 +369,7 @@ class TagCatalogueService
                 $text = $this->translator->trans($object->getEmbeddedBroadcast()->getName());
                 break;
             case 'status':
-                $text = $object->getStatus();
+                $text = $this->translator->trans($object->getStringStatus($object->getStatus()));
                 break;
             case 'groups':
                 $text = implode(',', $object->getGroups()->toArray());
@@ -389,7 +389,7 @@ class TagCatalogueService
      */
     private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
     {
-        if (!$session->has('UNESCO/criteria')) {
+        if (!$session->has('UNESCO/criteria') || 0 === count($session->get('UNESCO/criteria'))) {
             return $this->translator->trans('Without criteria');
         }
 
@@ -400,7 +400,10 @@ class TagCatalogueService
         $criteria = $session->get('UNESCO/criteria');
         $key = array_keys($criteria);
 
-        $text = $this->getTextFromCriteria($object, $session, $key[0]);
+        $text = '';
+        if (isset($key[0])) {
+            $text = $this->getTextFromCriteria($object, $session, $key[0]);
+        }
 
         return $text;
     }
@@ -458,13 +461,13 @@ class TagCatalogueService
     private function roleRenderField(MultimediaObject $object, $field)
     {
         $role = explode('.', $field);
-        $roleCod = isset($role[1]) ?: $role;
+        $roleCod = isset($role[1]) ? $role[1] : $role;
 
-        $people = $object->getPeopleByRoleCod($roleCod);
+        $people = $object->getPeopleByRoleCod($roleCod, true);
 
         $text = '';
         foreach ($people as $person) {
-            if ($person instanceof Person) {
+            if ($person instanceof EmbeddedPerson) {
                 $text .= $person->getName()."\n";
             }
         }
@@ -487,26 +490,6 @@ class TagCatalogueService
         }
 
         return '';
-    }
-
-    /**
-     * @param $type
-     *
-     * @return string
-     */
-    private function getStringType($type)
-    {
-        if (MultimediaObject::TYPE_VIDEO === $type) {
-            $text = 'Video';
-        } elseif (MultimediaObject::TYPE_AUDIO === $type) {
-            $text = 'Audio';
-        } elseif (MultimediaObject::TYPE_EXTERNAL === $type) {
-            $text = 'External';
-        } else {
-            $text = '';
-        }
-
-        return $text;
     }
 
     /**
