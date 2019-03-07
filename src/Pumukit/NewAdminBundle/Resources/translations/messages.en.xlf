@@ -3689,6 +3689,14 @@
         <source>Without filter</source>
         <target>Without filter</target>
       </trans-unit>
+      <trans-unit id="6f368b0440ae11e9b210d663bd873d93" resname="Configure your fields list">
+        <source>Configure your fields list</source>
+        <target>Configure your fields list</target>
+      </trans-unit>
+      <trans-unit id="6f368d8e40ae11e9b210d663bd873d93" resname="Custom field">
+        <source>Custom field</source>
+        <target>Custom field</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
