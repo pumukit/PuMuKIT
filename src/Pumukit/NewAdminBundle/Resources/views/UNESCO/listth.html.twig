@@ -22,7 +22,7 @@
             {% if custom_fields[field]['render_params']['sort'] %}
                 <a href="#" class="sort_unesco" data-id="{{ field }}">
                     {{ custom_fields[field]['label'] }}
-                    {% if sort and field == app.session.get('admin/unesco/element_sort') %}
+                    {% if sort and field in app.session.get('admin/unesco/element_sort') %}
                         {{ icon|raw }}
                     {% endif %}
                 </a>
