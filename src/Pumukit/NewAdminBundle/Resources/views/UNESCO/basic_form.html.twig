@@ -8,10 +8,7 @@
 <div class="col-xs-12 col-md-7">
     <label for="text" class="control-label">{{ search_label }}</label>
     <input id="text" type="text" class="form-control" name="criteria[text]" placeholder="{{ search_placeholder }}" value="{{ criteria_text|default('') }}" />
-    <img id="unesco_form_loader" class="text-right"
-         alt="{% trans %}Spinner{% endtrans %}"
-         src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
-         style="width: 36px; right: -30px; top: 20px; opacity: 0; float: right; position: absolute;"/>
+    <img id="unesco_form_loader" class="text-right" alt="{% trans %}Spinner{% endtrans %}" src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}" style="width: 36px; right: -30px; top: 20px; opacity: 0; float: right; position: absolute;"/>
 </div>
 
 <div class="col-xs-12 col-md-5 text-right" style="padding-top:10px;">

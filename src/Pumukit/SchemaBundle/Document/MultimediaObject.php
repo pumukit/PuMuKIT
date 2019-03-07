@@ -418,6 +418,25 @@ class MultimediaObject
     }
 
     /**
+     * @param $type
+     *
+     * @return string
+     */
+    public function getStringType($type)
+    {
+        $text = '';
+        if (self::TYPE_VIDEO === $type) {
+            $text = 'Video';
+        } elseif (self::TYPE_AUDIO === $type) {
+            $text = 'Audio';
+        } elseif (self::TYPE_EXTERNAL === $type) {
+            $text = 'External';
+        }
+
+        return $text;
+    }
+
+    /**
      * Set status.
      *
      * @param int $status
@@ -435,6 +454,26 @@ class MultimediaObject
     public function getStatus()
     {
         return $this->status;
+    }
+    /**
+     * @param $status
+     *
+     * @return string
+     */
+    public function getStringStatus($status)
+    {
+        $text = '';
+        if (self::STATUS_PUBLISHED === $status) {
+            $text = 'Published';
+        } elseif (self::STATUS_BLOCKED === $status) {
+            $text = 'Blocked';
+        } elseif (self::STATUS_HIDDEN === $status) {
+            $text = 'Hidden';
+        } elseif (self::STATUS_PROTOTYPE === $status) {
+            $text = 'Prototype';
+        }
+
+        return $text;
     }
 
     /**
@@ -490,7 +529,7 @@ class MultimediaObject
     /**
      * Get record_date.
      *
-     * @return datetime
+     * @return DateTime
      */
     public function getRecordDate()
     {
@@ -510,7 +549,7 @@ class MultimediaObject
     /**
      * Get public_date.
      *
-     * @return datetime
+     * @return DateTime
      */
     public function getPublicDate()
     {
