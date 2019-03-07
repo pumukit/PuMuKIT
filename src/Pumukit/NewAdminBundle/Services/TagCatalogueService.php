@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,10 +122,8 @@ class TagCatalogueService
             foreach ($criteria as $key => $value) {
                 if (('id' === $key) && !empty($value)) {
                     $newCriteria['_id'] = $value;
-                    $formBasic = true;
                 } elseif (('seriesID' === $key) && !empty($value)) {
                     $newCriteria['series'] = $value;
-                    $formBasic = true;
                 } elseif (('series.numerical_id' === $key) && !empty($value)) {
                     $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(['numerical_id' => intval($value)]);
                     if ($series) {
@@ -140,14 +139,11 @@ class TagCatalogueService
                 } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
                         $newCriteria['type'] = intval($value);
-                        $formBasic = true;
                     }
                 } elseif ('duration' === $key && !empty($value)) {
                     $newCriteria['tracks.duration'] = $value;
-                    $formBasic = true;
                 } elseif ('year' === $key && !empty($value)) {
                     $newCriteria['year'] = $value;
-                    $formBasic = true;
                 } elseif ('text' === $key && !empty($value)) {
                     $newCriteria['$text'] = $value;
                     $session->set('admin/unesco/text', true);
@@ -208,17 +204,7 @@ class TagCatalogueService
         }
 
         if ($request->request->has('sort_type')) {
-            $sort_type = $request->request->get('sort_type');
-            if ('title' === $request->request->get('sort_type')) {
-                $sort_type = 'title.'.$request->getLocale();
-            }
-            if ($session->get('admin/unesco/text', false)) {
-                $sort_utype = 'score';
-            } else {
-                $sort_utype = $request->request->get('sort');
-            }
-            $session->set('admin/unesco/element_sort', $sort_type);
-            $session->set('admin/unesco/type', $sort_utype);
+            $this->checkAndSortCriteria($request, $session);
 
             return;
         }
@@ -232,6 +218,35 @@ class TagCatalogueService
         $session->set('UNESCO/formbasic', $formBasic);
 
         return;
+    }
+
+    /**
+     * @param Request          $request
+     * @param SessionInterface $session
+     */
+    private function checkAndSortCriteria(Request $request, SessionInterface $session)
+    {
+        $mappingSort = array(
+            'year' => 'record_date',
+            'tracks.name' => 'tracks.originalName',
+            'embeddedBroadcast' => 'embeddedBroadcast.name',
+        );
+        $sort_type = $request->request->get('sort_type');
+        if (in_array($sort_type, array('title', 'subtitle', 'seriesTitle', 'description', 'keywords'))) {
+            $sort_type = implode('.', array($sort_type, $request->getLocale()));
+        } elseif (array_key_exists($sort_type, $mappingSort)) {
+            $sort_type = $mappingSort[$sort_type];
+        }
+
+        $session->set('admin/unesco/element_sort', $sort_type);
+
+        if ($session->get('admin/unesco/text', false) && !$request->request->get('sort')) {
+            $sort_utype = 'score';
+        } else {
+            $sort_utype = $request->request->get('sort');
+        }
+
+        $session->set('admin/unesco/type', $sort_utype);
     }
 
     /**
@@ -341,7 +356,7 @@ class TagCatalogueService
                 break;
             case 'type':
                 $type = $object->getType();
-                $text = $this->translator->trans($this->getStringType($type));
+                $text = $this->translator->trans($object->getStringType($type));
                 break;
             case 'duration':
                 $text = $object->getDurationString();
@@ -449,7 +464,9 @@ class TagCatalogueService
 
         $text = '';
         foreach ($people as $person) {
-            $text .= $person->getName()."\n";
+            if ($person instanceof Person) {
+                $text .= $person->getName()."\n";
+            }
         }
 
         return $text;
@@ -501,117 +518,163 @@ class TagCatalogueService
             'id' => [
                 'label' => $this->translator->trans('Video ID'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'series.id' => [
                 'label' => $this->translator->trans('Series ID'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'title' => [
                 'label' => $this->translator->trans('Title'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'seriesTitle' => [
                 'label' => $this->translator->trans('Series title'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'subtitle' => [
                 'label' => $this->translator->trans('Subtitle'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'description' => [
                 'label' => $this->translator->trans('Description'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'comments' => [
                 'label' => $this->translator->trans('Comments'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'keywords' => [
                 'label' => $this->translator->trans('Keywords'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => false,
+                ),
             ],
             'copyright' => [
                 'label' => $this->translator->trans('Copyright'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'license' => [
                 'label' => $this->translator->trans('License'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'public_date' => [
                 'label' => $this->translator->trans('Publication date'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'record_date' => [
-                'label' => $this->translator->trans('Record date'),
+                'label' => $this->translator->trans('Record Date'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'tracks.name' => [
                 'label' => $this->translator->trans('Track name'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'numerical_id' => [
                 'label' => $this->translator->trans('Numerical video ID'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'series.numerical_id' => [
                 'label' => $this->translator->trans('Numerical series ID'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'type' => [
                 'label' => $this->translator->trans('Type'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'duration' => [
                 'label' => $this->translator->trans('Duration'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'year' => [
                 'label' => $this->translator->trans('Year'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'embeddedBroadcast' => [
                 'label' => $this->translator->trans('Broadcast'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'status' => [
                 'label' => $this->translator->trans('Status'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => true,
+                ),
             ],
             'groups' => [
                 'label' => $this->translator->trans('Groups'),
                 'render' => 'text',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => false,
+                ),
             ],
             'pics' => [
                 'label' => $this->translator->trans('Images'),
                 'render' => 'img',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => false,
+                ),
             ],
             'criteria' => [
                 'label' => $this->translator->trans('Criteria'),
                 'render' => 'criteria',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => false,
+                ),
             ],
         ];
 
@@ -620,7 +683,9 @@ class TagCatalogueService
             $allFields['role.'.$role->getCod()] = [
                 'label' => $role->getName(),
                 'render' => 'role',
-                'render_params' => [],
+                'render_params' => array(
+                    'sort' => false,
+                ),
             ];
         }
 

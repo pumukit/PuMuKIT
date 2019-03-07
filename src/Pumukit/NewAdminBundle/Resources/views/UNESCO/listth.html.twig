@@ -19,12 +19,16 @@
     <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
     {% for key, field in selected_fields %}
         <th id="th-{{ loop.index }}">
-            <a href="#" class="sort_unesco" data-id="{{ key }}">
-                {{ custom_fields[field]['label'] }}
-                {% if sort and field == app.session.get('admin/unesco/element_sort') %}
-                    {{ icon|raw }}
-                {% endif %}
-            </a>
+            {% if custom_fields[field]['render_params']['sort'] %}
+                <a href="#" class="sort_unesco" data-id="{{ field }}">
+                    {{ custom_fields[field]['label'] }}
+                    {% if sort and field == app.session.get('admin/unesco/element_sort') %}
+                        {{ icon|raw }}
+                    {% endif %}
+                </a>
+            {% else %}
+                {{  custom_fields[field]['label'] }}
+            {% endif %}
         </th>
     {% endfor %}
 

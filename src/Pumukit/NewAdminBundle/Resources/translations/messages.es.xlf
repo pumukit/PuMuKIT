@@ -3726,7 +3726,7 @@
       </trans-unit>
       <trans-unit id="f045cfda3ff411e9b210d663bd873d93" resname="Track name">
         <source>Track name</source>
-        <target>Nombre del track</target>
+        <target>Fichero</target>
       </trans-unit>
       <trans-unit id="f045d11a3ff411e9b210d663bd873d93" resname="Numerical video ID">
         <source>Numerical video ID</source>
@@ -3743,6 +3743,14 @@
       <trans-unit id="74e853843ff511e9b210d663bd873d93" resname="Without filter">
         <source>Without filter</source>
         <target>Sin filtro</target>
+      </trans-unit>
+      <trans-unit id="6f368b0440ae11e9b210d663bd873d93" resname="Configure your fields list">
+        <source>Configure your fields list</source>
+        <target>Configurar los campos del listado</target>
+      </trans-unit>
+      <trans-unit id="6f368d8e40ae11e9b210d663bd873d93" resname="Custom field">
+        <source>Custom field</source>
+        <target>Campo listado</target>
       </trans-unit>
     </body>
   </file>
