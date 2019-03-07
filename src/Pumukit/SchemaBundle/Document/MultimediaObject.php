@@ -36,11 +36,25 @@ class MultimediaObject
     const STATUS_NEW = -1;
     const STATUS_PROTOTYPE = -2;
 
+    public static $statusTexts = array(
+        self::STATUS_PUBLISHED => 'Published',
+        self::STATUS_BLOCKED => 'Blocked',
+        self::STATUS_HIDDEN => 'Hidden',
+        self::STATUS_NEW => 'New',
+        self::STATUS_PROTOTYPE => 'Prototype',
+    );
+
     const TYPE_UNKNOWN = 0;
     const TYPE_VIDEO = 1;
     const TYPE_AUDIO = 2;
     const TYPE_EXTERNAL = 3;
 
+    public static $typeTexts = array(
+        self::TYPE_UNKNOWN => '',
+        self::TYPE_VIDEO => 'Video',
+        self::TYPE_AUDIO => 'Audio',
+        self::TYPE_EXTERNAL => 'External',
+    );
     /**
      * @var int
      * @MongoDB\Id
@@ -424,16 +438,7 @@ class MultimediaObject
      */
     public function getStringType($type)
     {
-        $text = '';
-        if (self::TYPE_VIDEO === $type) {
-            $text = 'Video';
-        } elseif (self::TYPE_AUDIO === $type) {
-            $text = 'Audio';
-        } elseif (self::TYPE_EXTERNAL === $type) {
-            $text = 'External';
-        }
-
-        return $text;
+        return self::$typeTexts[$type];
     }
 
     /**
@@ -455,6 +460,7 @@ class MultimediaObject
     {
         return $this->status;
     }
+
     /**
      * @param $status
      *
@@ -462,18 +468,7 @@ class MultimediaObject
      */
     public function getStringStatus($status)
     {
-        $text = '';
-        if (self::STATUS_PUBLISHED === $status) {
-            $text = 'Published';
-        } elseif (self::STATUS_BLOCKED === $status) {
-            $text = 'Blocked';
-        } elseif (self::STATUS_HIDDEN === $status) {
-            $text = 'Hidden';
-        } elseif (self::STATUS_PROTOTYPE === $status) {
-            $text = 'Prototype';
-        }
-
-        return $text;
+        return self::$statusTexts[$status];
     }
 
     /**
