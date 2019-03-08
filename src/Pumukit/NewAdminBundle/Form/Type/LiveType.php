@@ -3,6 +3,7 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -67,7 +68,7 @@ class LiveType extends AbstractType
                           'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
                       ),
                       'label' => $this->translator->trans('Technology', array(), null, $this->locale), ))
-            ->add('chat', 'checkbox',
+            ->add('chat', CheckboxType::class,
                 array(
                     'required' => false,
                     'attr' => array('aria-label' => $this->translator->trans('Enable chat on this channel\'s page', array(), null, $this->locale)),

@@ -3,12 +3,14 @@
 namespace Pumukit\OpencastBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Pumukit\NewAdminBundle\Form\Type\Other\TrackdurationType;
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class MultimediaObjectType extends AbstractType
 {
@@ -26,13 +28,13 @@ class MultimediaObjectType extends AbstractType
         $invertText = $this->translator->trans('Invert', array(), null, $this->locale).' (CAMERA-SCREEN)';
 
         $builder
-            ->add('opencastinvert', 'checkbox',
+            ->add('opencastinvert', CheckboxType::class,
                   array(
                         'required' => false,
                         'mapped' => false,
                         'attr' => array('aria-label' => $invertText),
                         'label' => $invertText, ))
-            ->add('opencastlanguage', 'customlanguage',
+            ->add('opencastlanguage', CustomLanguageType::class,
                   array(
                         'required' => true,
                         'mapped' => false,

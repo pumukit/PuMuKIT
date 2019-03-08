@@ -54,7 +54,6 @@ class PersonType extends AbstractType
             ->add('web', UrlType::class,
                   array(
                       'required' => false,
-                      'pattern' => '^https?:\/\/.*',
                       'attr' => array('aria-label' => $this->translator->trans('Web', array(), null, $this->locale)),
                       'label' => $this->translator->trans('Web', array(), null, $this->locale), ))
             ->add('phone', TextType::class,

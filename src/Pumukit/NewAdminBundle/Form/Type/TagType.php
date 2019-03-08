@@ -3,11 +3,14 @@
 namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class TagType extends AbstractType
 {
@@ -22,39 +25,29 @@ class TagType extends AbstractType
         $builder
             ->add(
                 'metatag',
-                'checkbox',
+                CheckboxType::class,
                 array(
                     'required' => false,
                     'label_attr' => array('title' => $this->translator->trans('Not valid to tagged objets')),
                     'attr' => array(
-                        'aria-label' => $this->translator->trans(
-                            'Metatag',
-                            array(),
-                            null,
-                            $this->locale
-                        ),
+                        'aria-label' => $this->translator->trans('Metatag', array(), null, $this->locale),
                     ),
                 )
             )
             ->add(
                 'display',
-                'checkbox',
+                CheckboxType::class,
                 array(
                     'required' => false,
                     'label_attr' => array('title' => $this->translator->trans('Show tag on WebTV portal and edit categories on multimedia objects')),
                     'attr' => array(
-                        'aria-label' => $this->translator->trans(
-                            'Display',
-                            array(),
-                            null,
-                            $this->locale
-                        ),
+                        'aria-label' => $this->translator->trans('Display', array(), null, $this->locale),
                     ),
                 )
             )
             ->add(
                 'cod',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'aria-label' => $this->translator->trans('Cod', array(), null, $this->locale),
@@ -67,22 +60,17 @@ class TagType extends AbstractType
             )
             ->add(
                 'i18n_title',
-                'texti18n',
+                TextI18nType::class,
                 array(
                     'attr' => array(
-                        'aria-label' => $this->translator->trans(
-                            'Title',
-                            array(),
-                            null,
-                            $this->locale
-                        ),
+                        'aria-label' => $this->translator->trans('Title', array(), null, $this->locale),
                     ),
                     'label' => $this->translator->trans('Name', array(), null, $this->locale),
                 )
             )
             ->add(
                 'i18n_description',
-                'textareai18n',
+                TextareaI18nType::class,
                 array(
                     'required' => false,
                     'attr' => array(
@@ -105,22 +93,14 @@ class TagType extends AbstractType
                         'mapped' => false,
                         'required' => false,
                         'attr' => array(
-                            'aria-label' => $this->translator->trans(
-                                $auxField[0],
-                                array(),
-                                null,
-                                $this->locale
-                            ),
+                            'aria-label' => $this->translator->trans($auxField[0], array(), null, $this->locale),
                         ),
                         'data' => $tag->getProperty($auxField[0]),
                     );
 
                     try {
-                        $event->getForm()->add(
-                            $auxField[0],
-                            isset($auxField[1]) ? $auxField[1] : 'text',
-                            $formOptions
-                        );
+                        $type = $auxField[1] ?? TextType::class;
+                        $event->getForm()->add($auxField[0], $type, $formOptions);
                     } catch (\InvalidArgumentException $e) {
                         $event->getForm()->add($auxField[0], TextType::class, $formOptions);
                     }
