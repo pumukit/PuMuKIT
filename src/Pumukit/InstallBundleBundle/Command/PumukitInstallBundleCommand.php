@@ -19,6 +19,8 @@ class PumukitInstallBundleCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:install:bundle')
             ->addArgument('bundle', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'List of bundles classes with namespace')
+            ->addOption('prefix', null, InputOption::VALUE_REQUIRED, 'Optionally specify a \'prefix\' for the routing config(default: \'/\')', '/')
+            ->addOption('type', null, InputOption::VALUE_REQUIRED, 'Optionally specify a \'type\' for the routing config (default: \'\')', '')
             ->addOption('append-to-end', null, InputOption::VALUE_NONE, 'Set this parameter to append the routing bundle configuration to the end of routing file')
             ->addOption('uninstall', null, InputOption::VALUE_NONE)
             ->setDescription('Update Kernel (app/AppKernel.php) and routing (app/config/routing.yml) to enable the bundle.')
@@ -52,14 +54,15 @@ EOT
             }
         }
 
+        $prefix = $input->getOption('prefix');
+        $type = $input->getOption('type');
         $appendToEnd = $input->getOption('append-to-end');
-
         $this->uninstall = $input->getOption('uninstall');
 
         foreach ($input->getArgument('bundle') as $bundleName) {
             $bundle = $this->prepareBundleName($bundleName);
             $this->updateKernel($input, $output, $kernel, $bundle);
-            $this->updateRouting($input, $output, $bundle, 'yml', $appendToEnd);
+            $this->updateRouting($input, $output, $bundle, 'yml', $prefix, $type, $appendToEnd);
         }
     }
 
@@ -99,7 +102,7 @@ EOT
         }
     }
 
-    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format = 'yml', $appendToEnd = false)
+    protected function updateRouting(InputInterface $input, OutputInterface $output, $bundle, $format = 'yml', $prefix = '/', $type = '', $appendToEnd = false)
     {
         $refClass = new \ReflectionClass($bundle);
         $bundleRoutingFile = sprintf('%s/Resources/config/routing.%s', dirname($refClass->getFileName()), $format);
@@ -108,9 +111,9 @@ EOT
             $bundleName = substr($bundle, 1 + strrpos($bundle, '\\'));
             try {
                 if (!$this->uninstall) {
-                    $ret = $routing->addResource($bundleName, $format, '/', 'routing', $appendToEnd);
+                    $ret = $routing->addResource($bundleName, $format, $prefix, $type, 'routing', $appendToEnd);
                 } else {
-                    $ret = $this->removeResource($bundleName, $format, '/', 'routing');
+                    $ret = $this->removeResource($bundleName, $format, $prefix, 'routing');
                 }
 
                 if (!$ret) {
