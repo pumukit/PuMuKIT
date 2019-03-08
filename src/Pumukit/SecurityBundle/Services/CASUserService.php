@@ -13,16 +13,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class CASUserService
 {
-    const CAS_ID_KEY = 'UID';
-
-    const CAS_CN_KEY = 'CN';
-    const CAS_MAIL_KEY = 'MAIL';
-    const CAS_GIVENNAME_KEY = 'GIVENNAME';
-    const CAS_SURNAME_KEY = 'SURNAME';
-    const CAS_GROUP_KEY = 'GROUP';
-
-    const ORIGIN = 'cas';
-
     protected $userService;
     protected $personService;
     protected $casService;
@@ -30,7 +20,15 @@ class CASUserService
     protected $groupService;
     protected $dm;
 
-    public function __construct(UserService $userService, PersonService $personService, CASService $casService, PermissionProfileService $permissionProfileService, GroupService $groupService, DocumentManager $documentManager)
+    private $casIdKey;
+    private $casCnKey;
+    private $casMailKey;
+    private $casGivenNameKey;
+    private $casSurnameKey;
+    private $casGroupKey;
+    private $casOriginKey;
+
+    public function __construct(UserService $userService, PersonService $personService, CASService $casService, PermissionProfileService $permissionProfileService, GroupService $groupService, DocumentManager $documentManager, $casIdKey, $casCnKey, $casMailKey, $casGivenNameKey, $casSurnameKey, $casGroupKey, $casOriginKey)
     {
         $this->userService = $userService;
         $this->personService = $personService;
@@ -38,6 +36,14 @@ class CASUserService
         $this->permissionProfileService = $permissionProfileService;
         $this->groupService = $groupService;
         $this->dm = $documentManager;
+
+        $this->casIdKey = $casIdKey;
+        $this->casCnKey = $casCnKey;
+        $this->casMailKey = $casMailKey;
+        $this->casGivenNameKey = $casGivenNameKey;
+        $this->casSurnameKey = $casSurnameKey;
+        $this->casGroupKey = $casGroupKey;
+        $this->casOriginKey = $casOriginKey;
     }
 
     /**
@@ -68,7 +74,7 @@ class CASUserService
         $defaultPermissionProfile = $this->getPermissionProfile();
         $user->setPermissionProfile($defaultPermissionProfile);
 
-        $user->setOrigin(self::ORIGIN);
+        $user->setOrigin($this->casOriginKey);
         $user->setEnabled(true);
 
         $this->userService->create($user);
@@ -87,7 +93,7 @@ class CASUserService
      */
     public function updateUser(User $user)
     {
-        if (self::ORIGIN === $user->getOrigin()) {
+        if ($this->casOriginKey === $user->getOrigin()) {
             $attributes = $this->getCASAttributes();
 
             $casFullName = $this->getCASFullName($attributes);
@@ -95,8 +101,8 @@ class CASUserService
 
             $this->setCASGroup($attributes, $user);
 
-            if ((isset($attributes[self::CAS_MAIL_KEY])) && ($attributes[self::CAS_MAIL_KEY] !== $user->getEmail())) {
-                $user->setEmail($attributes[self::CAS_MAIL_KEY]);
+            if ((isset($attributes[$this->casMailKey])) && ($attributes[$this->casMailKey] !== $user->getEmail())) {
+                $user->setEmail($attributes[$this->casMailKey]);
             }
 
             $this->dm->persist($user);
@@ -124,7 +130,7 @@ class CASUserService
      */
     protected function getCASUsername($userName, $attributes)
     {
-        return (isset($attributes[self::CAS_ID_KEY])) ? $attributes[self::CAS_ID_KEY] : $userName;
+        return (isset($attributes[$this->casIdKey])) ? $attributes[$this->casIdKey] : $userName;
     }
 
     /**
@@ -134,7 +140,7 @@ class CASUserService
      */
     protected function getCASEmail($attributes)
     {
-        $mail = (isset($attributes[self::CAS_MAIL_KEY])) ? $attributes[self::CAS_MAIL_KEY] : null;
+        $mail = (isset($attributes[$this->casMailKey])) ? $attributes[$this->casMailKey] : null;
         if (!$mail) {
             throw new AuthenticationException("Mail can't be null");
         }
@@ -149,8 +155,8 @@ class CASUserService
      */
     protected function getCASFullName($attributes)
     {
-        $givenName = (isset($attributes[self::CAS_GIVENNAME_KEY])) ? $attributes[self::CAS_GIVENNAME_KEY] : '';
-        $surName = (isset($attributes[self::CAS_SURNAME_KEY])) ? $attributes[self::CAS_SURNAME_KEY] : '';
+        $givenName = (isset($attributes[$this->casGivenNameKey])) ? $attributes[$this->casGivenNameKey] : '';
+        $surName = (isset($attributes[$this->casSurnameKey])) ? $attributes[$this->casSurnameKey] : '';
 
         return $givenName.' '.$surName;
     }
@@ -178,10 +184,10 @@ class CASUserService
      */
     protected function setCASGroup($attributes, $user)
     {
-        if (isset($attributes[self::CAS_GROUP_KEY])) {
-            $groupCAS = $this->getGroup($attributes[self::CAS_GROUP_KEY]);
+        if (isset($attributes[$this->casGroupKey])) {
+            $groupCAS = $this->getGroup($attributes[$this->casGroupKey]);
             foreach ($user->getGroups() as $group) {
-                if (self::ORIGIN === $group->getOrigin()) {
+                if ($this->casOriginKey === $group->getOrigin()) {
                     $this->userService->deleteGroup($group, $user, true, false);
                 }
             }
@@ -208,7 +214,7 @@ class CASUserService
         $group = new Group();
         $group->setKey($cleanKey);
         $group->setName($key);
-        $group->setOrigin(self::ORIGIN);
+        $group->setOrigin($this->casOriginKey);
         $this->groupService->create($group);
 
         return $group;

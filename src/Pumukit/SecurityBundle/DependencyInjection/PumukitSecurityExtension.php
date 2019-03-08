@@ -28,6 +28,14 @@ class PumukitSecurityExtension extends Extension
         $container->setParameter('pumukit_security.cas_allowed_ip_clients', $config['cas_allowed_ip_clients']);
         $container->setParameter('pumukit_security.create_users', $config['create_users']);
 
+        $container->setParameter('pumukit_security.cas_id_key', $config['CAS_ID_KEY']);
+        $container->setParameter('pumukit_security.cas_cn_key', $config['CAS_CN_KEY']);
+        $container->setParameter('pumukit_security.cas_mail_key', $config['CAS_MAIL_KEY']);
+        $container->setParameter('pumukit_security.cas_givenname_key', $config['CAS_GIVENNAME_KEY']);
+        $container->setParameter('pumukit_security.cas_surname_key', $config['CAS_SURNAME_KEY']);
+        $container->setParameter('pumukit_security.cas_group_key', $config['CAS_GROUP_KEY']);
+        $container->setParameter('pumukit_security.cas_origin_key', $config['ORIGIN']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
