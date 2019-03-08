@@ -220,7 +220,7 @@ class PersonService
             $this->dm->flush();
         }
 
-        if($dispatch) {
+        if ($dispatch) {
             $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
         }
 
