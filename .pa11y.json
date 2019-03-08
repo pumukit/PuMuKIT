@@ -1,6 +1,7 @@
 {
     "allowedStandards": "WCAG2AA",
     "level": "error",
+    "hideElements": ".sf-toolbar"
     "chromeLaunchConfig": {
         "args": [
             "--no-sandbox",
