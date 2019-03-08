@@ -85,7 +85,7 @@ pumukitnewadmin_mms_shortener:
     path: /admin/mm/{id}/
     methods: [GET]
     defaults:
-        _controller: PumukitNewAdminBundle:MultimediaObject:shortenerAction
+        _controller: PumukitNewAdminBundle:MultimediaObject:shortener
 
 pumukitnewadmin_playlistmms:
     resource: "@PumukitNewAdminBundle/Resources/config/routes/playlistmms.yml"
