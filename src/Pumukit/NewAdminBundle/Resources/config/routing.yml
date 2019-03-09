@@ -146,3 +146,8 @@ pumukitnewadmin_permission_profile:
 pumukitnewadmin_group:
     resource: @PumukitNewAdminBundle/Resources/config/routes/group.yml
     prefix: /admin/group
+
+pumukitnewadmin_metadata_translate:
+    path: /admin/metadata/translate
+    defaults:
+        _controller: pumukitnewadmin.translatecontroller:indexAction

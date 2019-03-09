@@ -16,16 +16,19 @@
     <services>
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
             <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="texti18n" />
         </service>
 
         <service id="form.type.texti18nadvance" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType">
             <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="texti18nadvance" />
         </service>
 
         <service id="form.type.textareai18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType">
             <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="textareai18n"/>
         </service>
 
@@ -88,5 +91,6 @@
             <tag name="twig.extension"/>
         </service>
 
+        <service id="pumukitnewadmin.translatecontroller" class="Pumukit\NewAdminBundle\Controller\TranslateController"/>
     </services>
 </container>
