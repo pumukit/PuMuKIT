@@ -312,7 +312,7 @@ class TrackController extends Controller implements NewAdminController
         $response = new BinaryFileResponse($track->getPath());
         $response->trustXSendfileTypeHeader();
         $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_INLINE,
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             basename($track->getPath()),
             iconv('UTF-8', 'ASCII//TRANSLIT', basename($track->getPath()))
         );

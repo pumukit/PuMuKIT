@@ -47,7 +47,7 @@ class TrackFileController extends Controller
             if ($request->query->getBoolean('forcedl')) {
                 $response = new BinaryFileResponse($track->getPath());
                 $response->trustXSendfileTypeHeader();
-                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
+                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
                 return $response;
             } else {
