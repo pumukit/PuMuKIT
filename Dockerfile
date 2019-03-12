@@ -1,6 +1,7 @@
 ARG PHP_VERSION=7.2
+ARG ALPINE_VERSION=3.8
 
-FROM php:${PHP_VERSION}-fpm-alpine
+FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 MAINTAINER Pablo Nieto, pnieto@teltek.es
 
 ARG APCU_VERSION=5.1.12
@@ -12,8 +13,8 @@ RUN apk  add --no-cache \
 	     		libgcc \
 			libstdc++ \
 			ca-certificates \
-			libcrypto1.1 \
-			libssl1.1 \
+			libcrypto1.0 \
+			libssl1.0 \
 			libgomp \
 			expat \
 ;
