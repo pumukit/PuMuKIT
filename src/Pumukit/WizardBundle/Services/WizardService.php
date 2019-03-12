@@ -3,7 +3,6 @@
 namespace Pumukit\WizardBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use http\Exception\UnexpectedValueException;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -11,7 +10,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -52,6 +51,11 @@ class WizardService
     private $authorizationChecker;
 
     /**
+     * @var TagService
+     */
+    private $tagService;
+
+    /**
      * @var User
      */
     private $user;
@@ -63,15 +67,16 @@ class WizardService
     /**
      * WizardService constructor.
      *
-     * @param DocumentManager            $documentManager
-     * @param FactoryService             $factoryService
-     * @param InspectionServiceInterface $inspectionService
-     * @param FormEventDispatcherService $formEventDispatcher
-     * @param JobService                 $jobService
-     * @param AuthorizationChecker       $authorizationChecker
-     * @param                            $basePath
-     * @param                            $locales
-     * @param null                       $inboxDepth
+     * @param DocumentManager               $documentManager
+     * @param FactoryService                $factoryService
+     * @param InspectionServiceInterface    $inspectionService
+     * @param FormEventDispatcherService    $formEventDispatcher
+     * @param JobService                    $jobService
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TagService                    $tagService
+     * @param                               $basePath
+     * @param                               $locales
+     * @param null                          $inboxDepth
      */
     public function __construct(
         DocumentManager $documentManager,
@@ -80,6 +85,7 @@ class WizardService
         FormEventDispatcherService $formEventDispatcher,
         JobService $jobService,
         AuthorizationCheckerInterface $authorizationChecker,
+        TagService $tagService,
         $basePath,
         $locales,
         $inboxDepth = null
@@ -91,6 +97,7 @@ class WizardService
         $this->inboxDepth = $inboxDepth;
         $this->jobService = $jobService;
         $this->authorizationChecker = $authorizationChecker;
+        $this->tagService = $tagService;
         $this->locales = $locales;
         $this->basePath = $basePath;
     }
@@ -99,14 +106,13 @@ class WizardService
      * @param User  $user
      * @param       $files
      * @param       $seriesData
-     * @param       $formData
      * @param array $options
      *
      * @return mixed|null|object|Series
      *
      * @throws \Exception
      */
-    public function uploadMultipleFiles($user, $files, $seriesData, $formData, $options = [])
+    public function uploadMultipleFiles($user, $files, $seriesData, $options = [])
     {
         $series = $this->getSeries($seriesData);
 
@@ -274,24 +280,23 @@ class WizardService
     /**
      * @param MultimediaObject $multimediaObject
      * @param                  $tagCode
+     * @param User             $user
      *
      * @return array
+     *
+     * @throws \Exception
      */
-    public function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode)
+    public function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode, User $user)
     {
         $addedTags = [];
 
-        if ($this->authorizationChecker->isGranted(Permission::getRoleTagDisableForPubChannel($tagCode))) {
+        if ($user->hasRole(Permission::getRoleTagDisableForPubChannel($tagCode))) {
             return $addedTags;
         }
 
-        $tagService = $this->get('pumukitschema.tag');
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
-
-        $tag = $tagRepo->findOneByCod($tagCode);
+        $tag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tagCode));
         if ($tag) {
-            $addedTags = $tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
+            $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         }
 
         return $addedTags;
@@ -330,27 +335,24 @@ class WizardService
     public function createProcess($aCommandArguments = [])
     {
         $builder = new ProcessBuilder();
-        $builder->setPrefix('php app/console pumukit:wizard:import');
-        $builder->setArguments($aCommandArguments);
+        $console = $this->basePath.'app/console';
 
-        $builder->setTimeout(3600);
-        $builder->setWorkingDirectory($this->basePath);
+        $builder->add('php')->add($console);
+
+        if (false) {
+            $builder->add('--verbose');
+        }
+
+        $builder->add('pumukit:wizard:import');
+        foreach ($aCommandArguments as $argument) {
+            $builder->add($argument);
+        }
+
         $process = $builder->getProcess();
 
-        try {
-            $process->mustRun();
-            if (!$process->isSuccessful()) {
-                throw new ProcessFailedException($process);
-            }
-            $aResult = json_decode($process->getOutput(), true);
-            if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new UnexpectedValueException(json_last_error_msg());
-            }
+        $command = $process->getCommandLine();
 
-            return $aResult;
-        } catch (ProcessFailedException $e) {
-            echo $e->getMessage();
-        }
+        shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
     }
 
     /**
@@ -376,13 +378,11 @@ class WizardService
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--series', $series);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--status', $status);
 
-        $pubChannels = $this->convertPubChannels($pubChannel);
-        $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--channels', $pubChannels);
+        $tags = $this->convertPubChannels($pubChannel);
+        $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--channels', $tags);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--profile', $profile);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--priority', $priority);
         $aCommandArguments = $this->createCommandArguments($aCommandArguments, '--language', $language);
-
-        //$aCommandArguments = $this->createCommandArguments($aCommandArguments, '--description', $description);
 
         return $this->createProcess($aCommandArguments);
     }
@@ -395,8 +395,8 @@ class WizardService
     public function convertPubChannels($pubChannels)
     {
         $keys = [];
-        foreach ($pubChannels as $pubChannel) {
-            $keys[] = $pubChannel->getCod();
+        foreach ($pubChannels as $key => $pubChannel) {
+            $keys[] = $key;
         }
 
         return implode(',', $keys);

@@ -494,7 +494,6 @@ class DefaultController extends Controller
                         $this->getUser()->getId(),
                         $request->get('file'),
                         $seriesData,
-                        $formData,
                         array(
                             'status' => $status,
                             'pubChannel' => $pubchannel,

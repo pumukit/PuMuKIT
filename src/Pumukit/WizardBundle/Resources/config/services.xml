@@ -19,6 +19,7 @@
             <argument type="service" id="pumukit_wizard.form_dispatcher" />
             <argument type="service" id="pumukitencoder.job" />
             <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="pumukitschema.tag" />
             <argument>%kernel.root_dir%/../</argument>
             <argument>%pumukit2.locales%</argument>
             <argument>%pumukit2.inbox_depth%</argument>

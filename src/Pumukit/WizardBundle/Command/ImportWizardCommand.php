@@ -53,14 +53,12 @@ class ImportWizardCommand extends ContainerAwareCommand
     private $profile;
     private $priority;
     private $language;
-    private $description;
 
     protected function configure()
     {
         $this
             ->setName('pumukit:wizard:import')
             ->setDescription('This command import generate job to import files from wizard')
-            //->addOption('object', InputArgument::REQUIRED, 'object')
             ->addArgument('user', InputArgument::REQUIRED, 'user')
             ->addArgument('path', InputArgument::REQUIRED, 'path')
             ->addArgument('inbox-depth', InputArgument::REQUIRED, 'inbox-depth')
@@ -69,17 +67,15 @@ class ImportWizardCommand extends ContainerAwareCommand
             ->addArgument('channels', null, InputArgument::REQUIRED, 'channels')
             ->addArgument('profile', null, InputArgument::REQUIRED, 'profile')
             ->addArgument('priority', null, InputArgument::REQUIRED, 'priority')
-            ->addArgument('language', null, InputArgument::REQUIRED, 'language', null)
-            //->addArgument('description', InputOption::VALUE_REQUIRED, 'description')
+            ->addArgument('language', null, InputArgument::REQUIRED, 'language')
             ->setHelp(
                 <<<'EOT'
 This command import generate job to import files from wizard
 
-Example complete:
-<info>php app/console import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
-
-Basic example:
-<info>php app/console import:multimedia:file 58a31ce08381165d008b456a /var/www/html/pumukit2/web/storage/tmp/test.mp4</info>
+Example:
+<info>
+php app/console pumukit:wizard:import %user% %path% %inbox-depth% %series% %status %channels% %profile% %priority% %language%
+</info>
 
 EOT
             );
@@ -112,7 +108,6 @@ EOT
         $this->profile = $input->getArgument('profile');
         $this->priority = $input->getArgument('priority');
         $this->language = $input->getArgument('language');
-        //$this->description = $input->getArgument('description');
     }
 
     /**
@@ -152,6 +147,7 @@ EOT
         if (!realpath($this->path)) {
             throw new \Exception(__FUNCTION__.' - Invalid path '.$this->path);
         }
+
         $finder->files()->in($this->path);
 
         foreach ($finder as $file) {
@@ -185,7 +181,7 @@ EOT
                 }
                 $pubChannels = explode(',', $this->channels);
                 foreach ($pubChannels as $code) {
-                    $this->wizardService->addTagToMultimediaObjectByCode($multimediaObject, $code);
+                    $this->wizardService->addTagToMultimediaObjectByCode($multimediaObject, $code, $this->user);
                 }
 
                 if ($multimediaObject && isset($this->status)) {
