@@ -3,7 +3,7 @@
   ~ "', '" ~ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) ~ "')" %}
 {% set double_click_item = "dblclick_preview_mm('"~ mm.id ~"')" %}
 
-<tr id="tr_{{ mm.id }}" style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
+<tr id="tr_{{ mm.id }}" style="cursor: pointer; word-break:break-word" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
 
     <td headers="th-checkbox">
         <div class="checkbox pumukit-mms-checkbox">
