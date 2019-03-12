@@ -11,10 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 abstract class AbstractI18nType extends AbstractType
 {
     private $locales;
+    private $translators;
 
-    public function __construct(array $locales = array())
+    public function __construct(array $locales = array(), array $translators = array())
     {
         $this->locales = $locales;
+        $this->translators = $translators;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,5 +33,6 @@ abstract class AbstractI18nType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['locales'] = $this->locales;
+        $view->vars['translators'] = $this->translators;
     }
 }
