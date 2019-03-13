@@ -19,12 +19,6 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12 text-right">
-        {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
-    </div>
-</div>
-
 {% include "PumukitFutureWebTVBundle:Misc:chapter_marks.html.twig" %}
 
 <div class="row">
@@ -36,6 +30,12 @@
         <p class="description">
             {{ multimediaObject.getDescription()|nl2br }}
         </p>
+
+        <div class="text-left">
+            {% if multimediaObject.getLicense() is not empty %}
+                {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
+            {% endif %}
+        </div>
 
         {% if not multimediaObject.getSeries().isHide() %}
             {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
