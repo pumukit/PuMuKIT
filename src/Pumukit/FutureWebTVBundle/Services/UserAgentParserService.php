@@ -21,7 +21,7 @@ class UserAgentParserService
         $isOldBrowser = false;
         $webExplorer = $this->getWebExplorer($userAgent);
         $version = $this->getVersion($userAgent, $webExplorer);
-        if (('IE' == $webExplorer) || ('MSIE' == $webExplorer) || 'Firefox' == $webExplorer || 'Opera' == $webExplorer || ('Safari' == $webExplorer  && $version < 4)) {
+        if (('IE' == $webExplorer) || ('MSIE' == $webExplorer) || 'Firefox' == $webExplorer || 'Opera' == $webExplorer || ('Safari' == $webExplorer && $version < 4)) {
             $isOldBrowser = true;
         }
 
