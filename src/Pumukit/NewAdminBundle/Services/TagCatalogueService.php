@@ -228,7 +228,9 @@ class TagCatalogueService
             'year' => 'record_date',
             'tracks.name' => 'tracks.originalName',
             'embeddedBroadcast' => 'embeddedBroadcast.name',
+            'series.id' => 'series',
         );
+
         $sort_type = $request->request->get('sort_type');
         if (in_array($sort_type, array('title', 'subtitle', 'seriesTitle', 'description', 'keywords'))) {
             $sort_type = implode('.', array($sort_type, $request->getLocale()));
@@ -598,7 +600,7 @@ class TagCatalogueService
                 'label' => $this->translator->trans('Numerical series ID'),
                 'render' => 'text',
                 'render_params' => array(
-                    'sort' => true,
+                    'sort' => false,
                 ),
             ],
             'type' => [
