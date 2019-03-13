@@ -7,7 +7,7 @@
 {% endif %}
 
 {% set event = future_and_not_finished_event(1, live)|first %}
-<div class="panel panel-primary text-center">
+<div class="panel panel-default panel-pmk text-center">
     <div class="panel-heading">
         {% if event %}
             {% if ((event.date|date('U')) < ('now'|date('U'))) %}
