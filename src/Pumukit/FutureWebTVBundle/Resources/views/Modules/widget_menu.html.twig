@@ -1,0 +1,24 @@
+<div class="panel panel-default panel-pmk legacy-menu-pmk">
+    <div class="panel-heading">
+        <div class="panel-title">
+            {{ "Menu"|trans }}
+        </div>
+    </div>
+    <div class="list-group">
+        <a href="{{ path('pumukit_webtv_index_index') }}" class="list-group-item {{ menu_selected=="pumukit_webtv_index_index"?'selected':'' }}">
+            {{ home_title |trans }}
+        </a>
+        <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="list-group-item  {{ menu_selected == 'pumukit_webtv_announces_latestuploads'? 'selected' : '' }}">
+            {{ announces_title |trans }}
+        </a>
+        <a href="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="list-group-item {{ menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':'' }}">
+            {{ search_title |trans }}
+        </a>
+        <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="list-group-item {{ menu_selected=="pumukit_webtv_medialibrary_index"?'selected':'' }}">
+            {{ catalogue_title |trans }}
+        </a>
+        {#<a href="{{ path('pumukit_webtv_categories_index') }}" class="list-group-item {{ menu_selected=="pumukit_webtv_categories_index"?'selected':'' }}">
+            {{ categories_title |trans }}
+        </a>#}
+    </div>
+</div>

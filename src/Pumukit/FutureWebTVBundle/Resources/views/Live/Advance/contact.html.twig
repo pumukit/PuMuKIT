@@ -1,0 +1,52 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8">
+
+        <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail" style="margin-bottom:20px;">
+            {% trans %}Questions{% endtrans %}
+        </a>
+
+        <div class="collapse" id="collapseEmail" style="padding:20px;">
+
+            <div id="captcha_message" style="visible:none;padding:10px;"></div>
+
+            {{ form_start(contact, {'attr': {'id': 'contact_us'},'action': path('pumukit_webtv_contact_event', {'id': multimediaObject.getId()}), 'method': 'POST'}) }}
+                {{ form_row(contact.name) }}
+                {{ form_row(contact.email) }}
+                {{ form_row(contact.content) }}
+                <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}"></div>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">
+                    {% trans %}Send{% endtrans %}
+                </button>
+            {{ form_end(contact) }}
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#contact_us').on('submit', function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ path('pumukit_webtv_contact_event', {'id': multimediaObject.getId()}) }}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function (data) {
+                $('#collapseEmail').load();
+                if (data['success']) {
+                    $('#captcha_message').html(data['message']);
+                    $('#captcha_message').attr('class', 'bg-success');
+                    $("#captcha_message").show().delay(5000).fadeOut();
+                    $('#contact_us')[0].reset();
+                    grecaptcha.reset();
+                } else {
+                    $('#captcha_message').html(data['message']);
+                    $('#captcha_message').attr('class', 'bg-warning');
+                    $("#captcha_message").show().delay(5000).fadeOut();
+                }
+            }
+        });
+        return false;
+    });
+</script>

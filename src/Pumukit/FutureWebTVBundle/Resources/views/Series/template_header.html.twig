@@ -1,0 +1,11 @@
+<h1>
+    {{ series.title|default("No title"|trans) }}
+</h1>
+
+<div class="series_subtitle">
+    {% if series.getSubtitle() is not empty %}
+        <p>
+            {{ series.getSubtitle() }}
+        </p>
+    {% endif %}
+</div>

@@ -1,0 +1,112 @@
+<div class="row">
+    {% include 'PumukitFutureWebTVBundle:MultimediaObject:template_tags.html.twig' %}
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="date">
+            {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate().format("d/m/Y") }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="num_views">
+            {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
+            {% if multimediaObject.getNumview() > 1 %}
+                {% trans %} times {% endtrans %}
+            {% else %}
+                {% trans %} time {% endtrans %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include "PumukitFutureWebTVBundle:Misc:chapter_marks.html.twig" %}
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if multimediaObject.getSubtitle() %}
+            <h4> {{ multimediaObject.getSubtitle() }} </h4>
+        {% endif %}
+
+        <p class="description">
+            {{ multimediaObject.getDescription()|nl2br }}
+        </p>
+
+        {% if not multimediaObject.getSeries().isHide() %}
+            {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
+                <div>
+                    {% trans %}i18n.one.Series{% endtrans %}:
+                    <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
+                    </a>
+                </div>
+            {% else %}
+                <div>
+                    {% trans %}i18n.one.Series{% endtrans %}:
+                    <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% include "PumukitFutureWebTVBundle:Misc:people.html.twig" with {'object': multimediaObject} %}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-6">
+
+        <div class="panel panel-default panel-pmk">
+            <div class="panel-heading">
+                {% trans %} Attachments {% endtrans %}
+            </div>
+            <div class="panel-body">
+                {% set none_attach = true %}
+
+                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="material">
+                        <span class="glyphicon glyphicon-facetime-video"></span>
+                        <a download href="{{ track_url(track) }}?forcedl=1">
+                            {% if track.isOnlyAudio() %}
+                                {% trans %}Download this audio{% endtrans %}
+                            {% else %}
+                                {% trans %}Download this video{% endtrans %}
+                            {% endif %}
+                            <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
+                    {% set none_attach = false %}
+                    <div class="material">
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                        <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                    </div>
+                {% endfor %}
+
+                {% for link in multimediaObject.getLinks() if showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="link">
+                        <a target="_blank" href="{{ link.getUrl() }}">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            {{ link.getName() }}
+                        </a>
+                    </div>
+                {% endfor %}
+                {% if none_attach %}
+                    <strong>{% trans %} There are no attachments {% endtrans %}</strong>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        {% include 'PumukitFutureWebTVBundle:MultimediaObject:template_share.html.twig' %}
+    </div>
+</div>
+<br>

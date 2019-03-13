@@ -1,0 +1,12 @@
+{% if events[0]['data'] %}
+    <div class="panel panel-default panel-pmk">
+        <div class="panel-heading">
+            {% trans %}Next session{% endtrans %}
+        </div>
+        <div class="panel-body">
+            {% for event in events[0]['data'] %}
+                {% include 'PumukitFutureWebTVBundle:Resources:template_event_vertical.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

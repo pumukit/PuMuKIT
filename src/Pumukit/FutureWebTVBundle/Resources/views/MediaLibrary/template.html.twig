@@ -1,0 +1,12 @@
+{% extends 'PumukitFutureWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+    <div class="col-xs-12">
+        <div class="row">
+            <h1>{% trans %}Full Catalogue{% endtrans %}</h1>
+        </div>
+
+        {% include "PumukitFutureWebTVBundle:MediaLibrary:template_sort.html.twig" %}
+        {% include "PumukitFutureWebTVBundle:MediaLibrary:template_library.html.twig" %}
+    </div>
+{% endblock %}
