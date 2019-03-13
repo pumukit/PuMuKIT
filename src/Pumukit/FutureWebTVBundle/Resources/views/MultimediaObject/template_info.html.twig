@@ -3,23 +3,25 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="date">
-            {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate().format("d/m/Y") }}
-        </div>
+    <div class="col-xs-12 text-right">
+        {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()|localizeddate('medium','none',app.request.getLocale()) }}
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="num_views">
-            {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
-            {% if multimediaObject.getNumview() > 1 %}
-                {% trans %} times {% endtrans %}
-            {% else %}
-                {% trans %} time {% endtrans %}
-            {% endif %}
-        </div>
+    <div class="col-xs-12 text-right">
+        {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
+        {% if multimediaObject.getNumview() > 1 %}
+            {% trans %} times {% endtrans %}
+        {% else %}
+            {% trans %} time {% endtrans %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+        {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
     </div>
 </div>
 
