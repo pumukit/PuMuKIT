@@ -51,18 +51,18 @@ class ModulesController extends Controller implements WebTVControllerInterface
      * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
      *
      * @param string $design
+     * @param bool   $showPudeNew
      *
      * @return array
      */
-    public function recentlyAddedAction($design = 'horizontal')
+    public function recentlyAddedAction($design = 'horizontal', $showPudeNew = false)
     {
         $translator = $this->get('translator');
         $title = $translator->trans('Recently added');
 
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
-        $showPudenew = false;
 
-        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
+        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudeNew);
 
         return [
             'design' => $design,
@@ -78,17 +78,18 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
      *
+     * @param bool $showPudeNew
+     *
      * @return array
      */
-    public function highlightAction()
+    public function highlightAction($showPudeNew = true)
     {
         $translator = $this->get('translator');
         $title = $translator->trans('Hightlight');
 
         $limit = $this->container->getParameter('limit_objs_hightlight');
-        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
 
-        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
+        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudeNew);
 
         return [
             'objects' => $last,
