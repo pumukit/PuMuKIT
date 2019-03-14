@@ -30,9 +30,6 @@
     {% block javascripts %}
         <script src="{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/pumukitwebtv/js/bootstrap.min.js') }}" type="text/javascript"></script>
-        {% if app.request.get('_route') == 'pumukit_live_event_id' %}
-            <script src="{{ asset('bundles/pumukitwebtv/js/jquery.countdown.js') }}" type="text/javascript"></script>
-        {% endif %}
     {% endblock %}
 
     {% block favicon %}

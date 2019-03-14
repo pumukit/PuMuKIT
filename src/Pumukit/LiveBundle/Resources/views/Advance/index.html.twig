@@ -4,6 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/pumukitlive/js/jquery.countdown.js') }}" type="text/javascript"></script>
     {% include('PumukitLiveBundle:Default:js.html.twig') %}
 {% endblock %}
 
