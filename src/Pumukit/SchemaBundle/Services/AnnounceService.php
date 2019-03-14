@@ -23,7 +23,7 @@ class AnnounceService
         } else {
             //Get recently added mmobjs
             $sortKey = $useRecordDate ? 'record_date' : 'public_date';
-            $return = $this->mmobjRepo->findStandardBy(array('tags.cod' => array('$ne' => 'PUDENEW')), array($sortKey => -1), $limit, 0);
+            $return = $this->mmobjRepo->findStandardBy(array(), array($sortKey => -1), $limit, 0);
         }
 
         return $return;

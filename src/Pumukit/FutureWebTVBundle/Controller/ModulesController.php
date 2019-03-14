@@ -48,21 +48,62 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
+     * Returns all videos with PUDENEW tag.
+     *
+     * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function highlightAction()
+    {
+        if (!$this->container->getParameter('show_latest_with_pudenew')) {
+            throw new \Exception('Show latest with pudenew parameters must be true to use this module');
+        }
+
+        $translator = $this->get('translator');
+        $title = $translator->trans('Hightlight');
+
+        $limit = $this->container->getParameter('limit_objs_hightlight');
+
+        $last = $this->get('pumukitschema.announce')->getLast($limit, true);
+
+        return [
+            'objects' => $last,
+            'objectByCol' => $this->container->getParameter('hightlight.objects_by_col'),
+            'class' => 'highlight',
+            'title' => $title,
+            'show_info' => false,
+            'show_more' => false,
+        ];
+    }
+
+    /**
+     * Returns all videos without PUDENEW tag.
+     *
      * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
      *
      * @param string $design
-     * @param bool   $showPudeNew
      *
      * @return array
      */
-    public function recentlyAddedAction($design = 'horizontal', $showPudeNew = false)
+    public function recentlyAddedWithoutHighlightAction($design = 'horizontal')
     {
         $translator = $this->get('translator');
         $title = $translator->trans('Recently added');
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
 
-        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudeNew);
+        $last = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy(
+            ['tags.cod' => ['$ne' => 'PUDENEW'], ['announces' => false]],
+            [
+                'public_date' => -1,
+            ],
+            $limit,
+            0
+        );
 
         return [
             'design' => $design,
@@ -76,27 +117,38 @@ class ModulesController extends Controller implements WebTVControllerInterface
     }
 
     /**
+     * Returns all videos without PUDENEW tag.
+     *
      * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
      *
-     * @param bool $showPudeNew
+     * @param string $design
      *
      * @return array
      */
-    public function highlightAction($showPudeNew = true)
+    public function recentlyAddedAllAction($design = 'horizontal')
     {
         $translator = $this->get('translator');
-        $title = $translator->trans('Hightlight');
+        $title = $translator->trans('Recently added');
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
 
-        $limit = $this->container->getParameter('limit_objs_hightlight');
+        $limit = $this->container->getParameter('limit_objs_recentlyadded');
 
-        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudeNew);
+        $last = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy(
+            [],
+            [
+                'public_date' => -1,
+            ],
+            $limit,
+            0
+        );
 
         return [
+            'design' => $design,
             'objects' => $last,
-            'objectByCol' => $this->container->getParameter('hightlight.objects_by_col'),
-            'class' => 'highlight',
+            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
             'title' => $title,
-            'show_info' => false,
+            'class' => 'recently',
+            'show_info' => true,
             'show_more' => false,
         ];
     }
@@ -175,6 +227,39 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'objectsData' => $categories,
             'title' => $title,
             'class' => $class,
+        ];
+    }
+
+    /**
+     * This module was create to keep BC. Uses vertical design by default.
+     * Returns:
+     * - showPudenew = true => Only videos with PUDENEW tag and announce property true
+     * - showPudenew = false => Returns all videos.
+     *
+     * @Template("PumukitFutureWebTVBundle:Modules:widget_media.html.twig")
+     *
+     * @param string $design
+     *
+     * @return array
+     */
+    public function legacyRecentlyAdded($design = 'vertical')
+    {
+        $translator = $this->get('translator');
+        $title = $translator->trans('Recently added');
+
+        $limit = $this->container->getParameter('limit_objs_recentlyadded');
+
+        $showPudenew = $this->container->getParameter('show_latest_with_pudenew');
+        $last = $this->get('pumukitschema.announce')->getLast($limit, $showPudenew);
+
+        return [
+            'design' => $design,
+            'objects' => $last,
+            'objectByCol' => $this->container->getParameter('recentlyadded.objects_by_col'),
+            'title' => $title,
+            'class' => 'recently',
+            'show_info' => true,
+            'show_more' => false,
         ];
     }
 
