@@ -97,7 +97,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
 
         $last = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy(
-            ['tags.cod' => ['$ne' => 'PUDENEW'], ['announces' => false]],
+            ['tags.cod' => ['$ne' => 'PUDENEW']],
             [
                 'public_date' => -1,
             ],
