@@ -502,14 +502,16 @@ class TagCatalogueService
                 'label' => $this->translator->trans('Video ID'),
                 'render' => 'text',
                 'render_params' => array(
-                    'sort' => true,
+                    'sort' => false,
+                    'break-word' => true,
                 ),
             ],
             'series.id' => [
                 'label' => $this->translator->trans('Series ID'),
                 'render' => 'text',
                 'render_params' => array(
-                    'sort' => true,
+                    'sort' => false,
+                    'break-word' => true,
                 ),
             ],
             'title' => [
@@ -517,6 +519,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'seriesTitle' => [
@@ -524,6 +527,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'subtitle' => [
@@ -531,6 +535,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'description' => [
@@ -538,6 +543,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'comments' => [
@@ -545,6 +551,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'keywords' => [
@@ -552,6 +559,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => false,
+                    'break-word' => true,
                 ),
             ],
             'copyright' => [
@@ -559,6 +567,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'license' => [
@@ -566,6 +575,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'public_date' => [
@@ -573,6 +583,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'record_date' => [
@@ -580,6 +591,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'tracks.name' => [
@@ -587,6 +599,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => true,
                 ),
             ],
             'numerical_id' => [
@@ -594,6 +607,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'series.numerical_id' => [
@@ -601,6 +615,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => false,
+                    'break-word' => false,
                 ),
             ],
             'type' => [
@@ -608,6 +623,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'duration' => [
@@ -615,6 +631,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'year' => [
@@ -622,6 +639,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'embeddedBroadcast' => [
@@ -629,6 +647,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'status' => [
@@ -636,6 +655,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
+                    'break-word' => false,
                 ),
             ],
             'groups' => [
@@ -643,6 +663,7 @@ class TagCatalogueService
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => false,
+                    'break-word' => false,
                 ),
             ],
             'pics' => [
@@ -650,6 +671,7 @@ class TagCatalogueService
                 'render' => 'img',
                 'render_params' => array(
                     'sort' => false,
+                    'break-word' => false,
                 ),
             ],
             'criteria' => [
@@ -657,6 +679,7 @@ class TagCatalogueService
                 'render' => 'criteria',
                 'render_params' => array(
                     'sort' => false,
+                    'break-word' => false,
                 ),
             ],
         ];
