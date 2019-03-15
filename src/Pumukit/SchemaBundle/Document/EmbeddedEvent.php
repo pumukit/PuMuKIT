@@ -357,12 +357,9 @@ class EmbeddedEvent
     public function getEmbeddedEventSession()
     {
         $embeddedEventSession = $this->embeddedEventSession->toArray();
-        usort(
-            $embeddedEventSession,
-            function ($a, $b) {
-                return $a->getStart() > $b->getStart();
-            }
-        );
+        usort($embeddedEventSession, function ($a, $b) {
+            return $a->getStart() > $b->getStart();
+        });
 
         return $embeddedEventSession;
     }
