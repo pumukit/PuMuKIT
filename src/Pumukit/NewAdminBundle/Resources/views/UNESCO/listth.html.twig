@@ -16,14 +16,24 @@
             </label>
         </div>
     </th>
-    <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%"></th>
+    <th id="th-icons" colspan="{{ is_naked() ? 2 : 3 }}" width="5%" class="text-center" style="cursor:pointer;">
+        <i class="mdi-editor-mode-edit" title="{{ "Configure your fields list"|trans }}" role="button" data-toggle="collapse" href="#collapseCustomFields" aria-expanded="false" aria-controls="collapseCustomFields"></i>
+    </th>
+    {% if app.session.get('admin/unesco/element_sort') == 'series' %}
+         {{ app.session.set('admin/unesco/element_sort', 'series.id') }}
+    {% endif %}
     {% for key, field in selected_fields %}
         <th id="th-{{ loop.index }}">
             {% if custom_fields[field]['render_params']['sort'] %}
                 <a href="#" class="sort_unesco" data-id="{{ field }}">
-                    {{ custom_fields[field]['label'] }}
                     {% if sort and field in app.session.get('admin/unesco/element_sort') %}
-                        {{ icon|raw }}
+                        {% if field == 'title' and 'subtitle' in app.session.get('admin/unesco/element_sort') %}
+                            {{ custom_fields[field]['label'] }}
+                        {% else %}
+                            {{ custom_fields[field]['label'] }}&nbsp;{{ icon|raw }}
+                        {% endif %}
+                    {% else %}
+                        {{ custom_fields[field]['label'] }}&nbsp;
                     {% endif %}
                 </a>
             {% else %}
