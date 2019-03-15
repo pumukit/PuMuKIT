@@ -361,6 +361,9 @@ class TagCatalogueService
             case 'duration':
                 $text = $object->getDurationString();
                 break;
+            case 'numview':
+                $text = $object->getNumview();
+                break;
             case 'year':
                 $text = $object->getRecordDate();
                 $text = $text->format('Y');
@@ -628,6 +631,14 @@ class TagCatalogueService
             ],
             'duration' => [
                 'label' => $this->translator->trans('Duration'),
+                'render' => 'text',
+                'render_params' => array(
+                    'sort' => true,
+                    'break-word' => false,
+                ),
+            ],
+            'numview' => [
+                'label' => $this->translator->trans('Views'),
                 'render' => 'text',
                 'render_params' => array(
                     'sort' => true,
