@@ -1,0 +1,35 @@
+{% extends 'PumukitFutureWebTVBundle::layout.html.twig' %}
+{% block body_base %}
+    <h1 class="widget widget_unauthorized_error">
+        {% trans %}Private Video{% endtrans %}
+    </h1>
+    <div class="grid_10 mm_player">
+        <div class="date"></div>
+        <h2 class="widget_unauthorized_error_message">
+            {% trans %}This video is private with restricted access{% endtrans %}.
+        </h2>
+    </div>
+    <div class="grid_5">
+        <h3 class="widget_unauthorized_message">
+            {% trans %}Enter a valid password to watch it{% endtrans %}.
+        </h3>
+        <div class="text-center">
+            <form name="passwdForm" method="post">
+                <div class="col-md-12">
+                    <input id="broadcast_password" name="broadcast_password" type="password" aria-label="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256" style="margin-top: 2vh;margin-left:5px; margin-right: 5px; margin-bottom: 4vh; width: 190px;"/>
+                </div>
+                <div class="col-md-12 text-center">
+                    <span id="player_password_check_fail" style="{{ invalid_password ? '':'display: none;' }}">
+                        {% trans %}Password is not valid{% endtrans %}.
+                    </span>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-default btn-pmk btn-flat" style="margin-top:4vh;" title="{%
+                        trans %}Log In{% endtrans %}">
+                        {% trans %}Enter pass{% endtrans %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

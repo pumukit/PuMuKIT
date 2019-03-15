@@ -1,0 +1,22 @@
+pumukit_web_tv_parent:
+    resource: "../../src/Pumukit/FutureWebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_web_tv:
+    resource: "@PumukitFutureWebTVBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pumukit_webtv_default_css:
+    pattern: /webtv/css/webtv.css
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'PumukitFutureWebTVBundle::custom.css.twig'
+        maxAge:       86400
+        sharedAge:    86400
+        _format: css
+
+homepage:
+    pattern: /
