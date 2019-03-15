@@ -16,7 +16,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
 {
     /**
      * @Route("/categories/{sort}", defaults={"sort" = "date"}, requirements={"sort" = "alphabetically|date|tags"}, name="pumukit_webtv_categories_index")
-     * @Template("PumukitFutureWebTVBundle:Categories.template.html.twig")
+     * @Template("PumukitFutureWebTVBundle:Categories:template.html.twig")
      */
     public function indexAction($sort, Request $request)
     {
