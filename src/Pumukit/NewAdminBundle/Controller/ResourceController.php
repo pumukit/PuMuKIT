@@ -66,7 +66,7 @@ class ResourceController extends Controller
     {
         if ($request->get('slug')) {
             $default = array('slug' => $request->get('slug'));
-        } elseif ($request->get('id')) {
+        } elseif ($request->request->has('id')) {
             $default = array('id' => $request->get('id'));
         } else {
             $default = array();
@@ -75,8 +75,8 @@ class ResourceController extends Controller
         $criteria = array_merge($default, $criteria);
 
         $repo = $this->getRepository();
-        if (!$resource = $repo->findOneBy($criteria)
-        ) {
+
+        if (!$resource = $repo->findOneBy($criteria)) {
             throw new NotFoundHttpException(
                 sprintf(
                     'Requested %s does not exist with these criteria: %s.',
