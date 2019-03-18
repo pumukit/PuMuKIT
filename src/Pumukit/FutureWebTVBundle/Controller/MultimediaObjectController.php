@@ -135,7 +135,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     }
 
     /**
-     * @Template("PumukitFutureWebTVBundle:MultimediaObject:template_related.html.twig")
+     * @Template("PumukitFutureWebTVBundle:MultimediaObject:template_series.html.twig")
      */
     public function seriesAction(MultimediaObject $multimediaObject, Request $request)
     {
