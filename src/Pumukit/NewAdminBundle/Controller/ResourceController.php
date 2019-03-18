@@ -44,7 +44,7 @@ class ResourceController extends Controller
 
     public function getSorting(Request $request = null, $session_namespace = null)
     {
-        return array();
+        return [];
     }
 
     protected function createPager($criteria, $sorting)
@@ -62,14 +62,14 @@ class ResourceController extends Controller
         return $pagerfanta;
     }
 
-    public function findOr404(Request $request, array $criteria = array())
+    public function findOr404(Request $request, array $criteria = [])
     {
         if ($request->get('slug')) {
-            $default = array('slug' => $request->get('slug'));
+            $default = ['slug' => $request->get('slug')];
         } elseif ($request->request->has('id')) {
-            $default = array('id' => $request->get('id'));
+            $default = ['id' => $request->get('id')];
         } else {
-            $default = array();
+            $default = [];
         }
 
         $criteria = array_merge($default, $criteria);
