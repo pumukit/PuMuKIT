@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\FutureWebTVBundle\Tests\Services;
+namespace Pumukit\BasePlayerBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

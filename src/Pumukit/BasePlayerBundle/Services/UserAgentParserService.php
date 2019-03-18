@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\FutureWebTVBundle\Services;
+namespace Pumukit\BasePlayerBundle\Services;
 
 /**
  * Parses the user agent and retrieves readable information.
@@ -30,6 +30,7 @@ class UserAgentParserService
 
     /**
      * Returns a string with the browser name.
+     *
      * Only works for MSIE, Opera, Firefox, Safari and Chrome. Add more strings if needed.
      *
      * @param string
