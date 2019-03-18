@@ -36,16 +36,27 @@ window.submit_delete_live = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_live_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
-        $('#list_lives').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(response){
-            if(response) {
+
+        $.ajax({
+            url: url.replace('__id__', id),
+            method: 'DELETE',
+            success: function (response) {
+                if(-1 !== response.indexOf('error')) {
+                    var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
+                    no_success(message);
+                } else {
+                    var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
+                    success(message);
+                    $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
+                }
+            },
+            error: function() {
                 var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
                 no_success(message);
-                $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
-            } else {
-                success(message);
             }
         });
+
+        return false;
     }
 }
 
