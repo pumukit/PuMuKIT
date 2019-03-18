@@ -3697,6 +3697,10 @@
         <source>Custom field</source>
         <target>Custom field</target>
       </trans-unit>
+      <trans-unit id="d5c96c0c494a11e98646d663bd873d93" resname="Views">
+        <source>Views</source>
+        <target>Views</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
