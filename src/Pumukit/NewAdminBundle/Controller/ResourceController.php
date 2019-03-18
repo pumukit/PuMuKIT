@@ -64,12 +64,13 @@ class ResourceController extends Controller
 
     public function findOr404(Request $request, array $criteria = [])
     {
-        if ($request->get('slug')) {
+        $default = [];
+        if ($request->request->has('slug') || $request->attributes->has('slug') || $request->query->has('slug')) {
             $default = ['slug' => $request->get('slug')];
-        } elseif ($request->request->has('id')) {
-            $default = ['id' => $request->get('id')];
-        } else {
-            $default = [];
+        } elseif ($request->request->has('id') || $request->attributes->has('id') || $request->query->has('id')) {
+            if ('null' !== $request->get('id')) {
+                $default = ['id' => $request->get('id')];
+            }
         }
 
         $criteria = array_merge($default, $criteria);
