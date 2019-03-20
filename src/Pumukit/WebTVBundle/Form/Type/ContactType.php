@@ -7,21 +7,18 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactType extends AbstractType
 {
     private $translator;
     private $locale;
 
-    public function __construct(TranslatorInterface $translator, $locale = 'en')
-    {
-        $this->translator = $translator;
-        $this->locale = $locale;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->translator = $options['translator'];
+        $this->locale = $options['locale'];
+
         $builder
             ->add('name', TextType::class, array(
                 'label' => $this->translator->trans('Name', array(), null, $this->locale),
@@ -38,6 +35,12 @@ class ContactType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 'required' => true,
             ));
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired('translator');
+        $resolver->setRequired('locale');
     }
 
     public function getBlockPrefix()
