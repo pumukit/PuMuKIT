@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Finder\Finder;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -488,41 +487,22 @@ class DefaultController extends Controller
                     }
                 } elseif ('multiple' === $option) {
                     $this->denyAccessUnlessGranted(Permission::ACCESS_INBOX);
-                    $series = $this->getSeries($seriesData);
-                    $selectedPath = $request->get('file');
-                    $finder = new Finder();
-                    if (!$this->getParameter('pumukit2.inbox_depth')) {
-                        $finder->depth('== 0');
-                    }
-                    $finder->files()->in($selectedPath);
-                    foreach ($finder as $f) {
-                        $filePath = $f->getRealpath();
-                        try {
-                            $duration = $inspectionService->getDuration($filePath);
-                        } catch (\Exception $e) {
-                            continue;
-                        }
-                        $titleData = $this->getDefaultFieldValuesInData(array(), 'i18n_title', $f->getRelativePathname(), true);
-                        $multimediaObject = $this->createMultimediaObject($titleData, $series);
-                        if ($multimediaObject) {
-                            $formDispatcher->dispatchSubmit($this->getUser(), $multimediaObject, $formData);
-                            try {
-                                $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
-                            } catch (\Exception $e) {
-                                // TODO: filter invalid files another way
-                                if (!strpos($e->getMessage(), 'Unknown error')) {
-                                    $this->removeInvalidMultimediaObject($multimediaObject, $series);
-                                    throw $e;
-                                }
-                            }
-                            foreach ($pubchannel as $tagCode => $valueOn) {
-                                $addedTags = $this->addTagToMultimediaObjectByCode($multimediaObject, $tagCode);
-                            }
-                            if ($multimediaObject && isset($status)) {
-                                $multimediaObject->setStatus(intval($status));
-                            }
-                        }
-                    }
+
+                    $wizardService = $this->get('pumukit_wizard.wizard');
+
+                    $series = $wizardService->uploadMultipleFiles(
+                        $this->getUser()->getId(),
+                        $request->get('file'),
+                        $seriesData,
+                        array(
+                            'status' => $status,
+                            'pubChannel' => $pubchannel,
+                            'profile' => $profile,
+                            'priority' => $priority,
+                            'language' => $language,
+                            'description' => $description,
+                        )
+                    );
                 }
                 $dm->flush();
             } catch (\Exception $e) {

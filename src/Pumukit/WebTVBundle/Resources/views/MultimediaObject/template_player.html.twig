@@ -1,5 +1,0 @@
-{% if multimediaObject.getProperty('externalplayer') %}
-    <iframe src="{{ multimediaObject.getProperty('externalplayer') }}" width="100%" height="500px" frameborder="0"></iframe>
-{% else %}
-    {% include 'PumukitWebTVBundle:MultimediaObject:player.html.twig' with {'responsive': true} %}
-{% endif %}

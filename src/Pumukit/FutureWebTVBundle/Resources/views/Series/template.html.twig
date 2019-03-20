@@ -1,0 +1,88 @@
+{% extends 'PumukitFutureWebTVBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ series.title }}{% endblock %}
+{% block keywords %}{{ parent() }} - {{ series.getKeywords()|join(',') }}{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta property="og:url" content="{{ url('pumukit_webtv_series_index', {'id': series.id}) }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ series.title }}" />
+    <meta property="og:description" content="{{ series.description }}" />
+    <meta property="og:image" content="{{ series|first_url_pic(true) }}" />
+{% endblock %}
+
+{% block body %}
+    {% set last_date = '' %}
+    {% set last_subseriestitle = '' %}
+    {% set template = series.getProperty('template')|default('date') %}
+
+    {% include 'PumukitFutureWebTVBundle:Misc:magic_url_disclaimer.html.twig' %}
+    {% set precinct = precinct_of_series(multimediaObjects) %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% include 'PumukitFutureWebTVBundle:Series:template_header.html.twig' with { 'series_precinct' : precinct} %}
+        </div>
+    </div>
+
+    {% if template != 'place_subserial' %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="serial_header">
+                    {{ series.header|raw }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            {% if template == 'place_subserial' %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="serial_header">
+                            {{ series.header|raw }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% for mm in multimediaObjects %}
+                {% set current_date = mm.getRecordDate() | localizeddate('full', 'none' , app.request.locale, null,"dd MMMM yyyy" ) %}
+                {% set subserie_title = mm.getProperty('subseriestitle')[app.request.getLocale()]|default('') %}
+                {% if template == "place_subserial" and not precinct %}
+                    {% set precinct = precinct_of_mmo(mm) %}
+                    {% set typeofprecinct = 'mm' %}
+                {% else %}
+                    {% set typeofprecinct = 'series' %}
+                {% endif %}
+                    {% include 'PumukitFutureWebTVBundle:Series:template_group.html.twig' with {
+                        'current_date': current_date,
+                        'last_date' : last_date,
+                        'subserie_title': subserie_title,
+                        'last_subseriestitle' : last_subseriestitle,
+                        'template': template ,
+                        'subseries': false,
+                        'series_precinct': precinct,
+                        'mm' : mm,
+                        'type_precinct' : typeofprecinct
+                    } %}
+                    {% include 'PumukitFutureWebTVBundle:Resources:template_series_video.html.twig' with {'object': mm } %}
+                    {% set last_date = current_date %}
+                    {% set last_subseriestitle =  subserie_title %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if multimediaObjects.getMaxPerPage()|default(0) %}
+        <div class="row">
+            {% set objects = multimediaObjects %}
+            {% include 'PumukitFutureWebTVBundle:Misc:pager.html.twig' %}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            {{ series.footer|raw }}
+        </div>
+    </div>
+{% endblock %}

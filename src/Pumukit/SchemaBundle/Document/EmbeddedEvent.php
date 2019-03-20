@@ -96,17 +96,15 @@ class EmbeddedEvent
 
     /**
      * @var string
-     *
      * @MongoDB\Field(type="raw")
      */
-    private $alreadyHeldMessage = array('en' => '');
+    private $alreadyHeldMessage = ['en' => ''];
 
     /**
      * @var string
-     *
      * @MongoDB\Field(type="raw")
      */
-    private $notYetHeldMessage = array('en' => '');
+    private $notYetHeldMessage = ['en' => ''];
 
     /**
      * @var bool
@@ -126,8 +124,8 @@ class EmbeddedEvent
     {
         $this->duration = 0;
         $this->embeddedEventSession = new ArrayCollection();
-        $this->name = array('en' => '');
-        $this->description = array('en' => '');
+        $this->name = ['en' => ''];
+        $this->description = ['en' => ''];
     }
 
     /**
@@ -583,5 +581,13 @@ class EmbeddedEvent
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

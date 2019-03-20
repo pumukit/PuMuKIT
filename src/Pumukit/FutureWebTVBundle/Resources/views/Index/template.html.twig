@@ -1,0 +1,41 @@
+{% extends 'PumukitFutureWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+
+
+    {#
+        Legacy design: First activate *legacy*.css.twig on default.css.twig
+
+    <div class="col-md-3">
+        {{ render(controller('PumukitFutureWebTVBundle:Modules:legacyMenu')) }}
+    </div>
+    <div class="col-md-9">
+        {{ render(controller('PumukitFutureWebTVBundle:Modules:legacyCategories')) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ render(controller('PumukitFutureWebTVBundle:Modules:mostViewed', {'design': 'vertical'})) }}
+            </div>
+            <div class="col-md-6">
+                {{ render(controller('PumukitFutureWebTVBundle:Modules:recentlyadded', {'design': 'vertical'})) }}
+            </div>
+        </div>
+    </div>
+    #}
+
+    {{ render(controller('PumukitFutureWebTVBundle:Modules:highlight')) }}
+
+    {{ render(controller('PumukitFutureWebTVBundle:Modules:mostViewed')) }}
+
+    {{ render(controller('PumukitFutureWebTVBundle:Modules:recentlyadded')) }}
+
+    <div class="col-xs-12 text-right show_more_link">
+        <a href="{{ path('pumukit_webtv_medialibrary_index') }}" title="{{ "Full Catalogue"|trans }}">
+            {{ "Show more"|trans }}...
+        </a>
+    </div>
+
+    {% if menu_stats|default(false) %}
+        {{ render(controller('PumukitFutureWebTVBundle:Modules:stats')) }}
+    {% endif %}
+
+{% endblock %}
