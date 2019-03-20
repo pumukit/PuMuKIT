@@ -201,12 +201,12 @@ class ModulesController extends Controller implements WebTVControllerInterface
      * @param Request $request
      * @param         $title
      * @param         $class
-     * @param array   $categories
+     * @param         $categories
      * @param int     $cols
      *
      * @return array
      */
-    public function categoriesAction(Request $request, $title, $class, array $categories, $cols = 6)
+    public function categoriesAction(Request $request, $title, $class, $categories, $cols = 6)
     {
         if (!$categories) {
             throw new NotFoundHttpException('Categories not found');
@@ -214,12 +214,24 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
-        $tags = $dm->createQueryBuilder('PumukitSchemaBundle:Tag')
-            ->field('cod')->in($categories)
-            ->field('display')->equals(true)
-            ->sort('title.'.$request->getLocale(), 1)
-            ->getQuery()
-            ->execute();
+        if (is_array($categories)) {
+            $tags = $dm->createQueryBuilder('PumukitSchemaBundle:Tag')
+                ->field('cod')->in($categories)
+                ->field('display')->equals(true)
+                ->sort('title.'.$request->getLocale(), 1)
+                ->getQuery()
+                ->execute();
+        } else {
+            $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array(
+                'cod' => $categories,
+            ));
+
+            if (!$tag) {
+                throw new NotFoundHttpException('Category not found');
+            }
+
+            $tags = $tag->getChildren();
+        }
 
         return [
             'objectByCol' => $cols,

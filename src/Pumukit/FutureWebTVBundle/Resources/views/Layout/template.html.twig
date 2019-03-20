@@ -40,7 +40,9 @@
 
         {% include 'PumukitFutureWebTVBundle:Layout:template_header.html.twig' %}
 
-        {% include 'PumukitFutureWebTVBundle:Menu:template.html.twig' %}
+        <div class="template-menu-pmk">
+            {% include 'PumukitFutureWebTVBundle:Menu:template.html.twig' %}
+        </div>
 
         {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
             {% render(controller('PumukitFutureWebTVBundle:Modules:breadcrumbs')) %}

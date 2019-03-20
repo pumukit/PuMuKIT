@@ -16,17 +16,18 @@
                 {{ render(controller('PumukitFutureWebTVBundle:Modules:mostViewed', {'design': 'vertical'})) }}
             </div>
             <div class="col-md-6">
-                {{ render(controller('PumukitFutureWebTVBundle:Modules:recentlyadded', {'design': 'vertical'})) }}
+                {{ render(controller('PumukitFutureWebTVBundle:Modules:legacyRecentlyAdded', {'design': 'vertical'})) }}
             </div>
         </div>
     </div>
     #}
 
-    {{ render(controller('PumukitFutureWebTVBundle:Modules:highlight')) }}
+    {% set categories = 'DIRECTRIZ' %}
+    {{ render(controller('PumukitFutureWebTVBundle:Modules:categories', {'title': 'Categories','class':'directriz-class','categories': categories})) }}
 
     {{ render(controller('PumukitFutureWebTVBundle:Modules:mostViewed')) }}
 
-    {{ render(controller('PumukitFutureWebTVBundle:Modules:recentlyadded')) }}
+    {{ render(controller('PumukitFutureWebTVBundle:Modules:recentlyaddedAll')) }}
 
     <div class="col-xs-12 text-right show_more_link">
         <a href="{{ path('pumukit_webtv_medialibrary_index') }}" title="{{ "Full Catalogue"|trans }}">
