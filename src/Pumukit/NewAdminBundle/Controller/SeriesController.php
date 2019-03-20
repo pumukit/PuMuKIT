@@ -541,7 +541,7 @@ class SeriesController extends AdminController implements NewAdminController
         }
 
         if ($selectedSeriesId) {
-            $adapter = $resources->getAdapter();
+            $adapter = clone $resources->getAdapter();
             $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
             $position = 1;
             $findSerie = false;
