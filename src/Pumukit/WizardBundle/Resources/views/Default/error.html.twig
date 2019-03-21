@@ -2,7 +2,7 @@
 {{ render(controller('PumukitWizardBundle:Default:steps', {'step': 5, 'option': option, 'show_series': show_series, 'same_series': same_series})) }}
 <div class="well">
 
-<h1 class="cS_h1_error">{{ message }}</h1>
+<h1 class="cS_h1_error">{{ message|raw }}</h1>
 
 {% trans %}Actions{% endtrans %}:
 <ul style="margin-left: 50px; margin-bottom: 10px">
