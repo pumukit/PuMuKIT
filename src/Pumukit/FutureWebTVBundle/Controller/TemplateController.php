@@ -3,13 +3,16 @@
 namespace Pumukit\FutureWebTVBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TemplateController.
  */
-class TemplateController extends ContainerAwareInterface implements WebTVControllerInterface
+class TemplateController implements WebTVControllerInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @param              $template
      * @param null         $title
