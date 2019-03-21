@@ -158,7 +158,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => 'PUCHWEBTV', 'tags.cod' => $parentCod];
+        $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => array('$all' => ['PUCHWEBTV', $parentCod])];
         $criteria['$or'] = [
             ['tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]], 'properties.opencast' => ['$exists' => false]],
             ['properties.opencast' => ['$exists' => true]],
