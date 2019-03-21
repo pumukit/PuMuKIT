@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class TemplateController.
  */
-class TemplateController implements WebTVControllerInterface
+class TemplateController implements WebTVControllerInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
