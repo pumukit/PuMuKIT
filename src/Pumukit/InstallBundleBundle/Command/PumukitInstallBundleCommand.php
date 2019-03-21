@@ -221,7 +221,7 @@ EOT
         foreach ($src as $key => $line) {
             if (false !== strpos($line, $code)) {
                 $numSpaces = preg_match('/^( *)'.$code.'/', $line, $results);
-                $numSpaces = count($results[1]);
+                $numSpaces = count((array)$results[1]);
                 unset($src[$key]);
                 continue;
             }
