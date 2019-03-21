@@ -147,7 +147,7 @@ class DefaultController extends Controller
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(new ContactType($translator, $locale));
+        $form = $this->createForm(ContactType::class, null, array('translator' => $translator, 'locale' => $locale));
 
         $activeContact = false;
         $captchaPublicKey = '';
