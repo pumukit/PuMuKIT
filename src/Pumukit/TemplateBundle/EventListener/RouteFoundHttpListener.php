@@ -41,6 +41,7 @@ class RouteFoundHttpListener
             $t = $this->repository->findOneBy(array('name' => $name, 'hide' => false));
             if ($t) {
                 $response = $this->forward('PumukitTemplateBundle:List:index', array('name' => $name));
+                $response->headers->set('X-Status-Code', 200);
                 $event->setResponse($response);
             }
         }

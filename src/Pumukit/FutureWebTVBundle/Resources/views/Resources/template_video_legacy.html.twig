@@ -1,0 +1,33 @@
+<div class="col-xs-12">
+    <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': object.id}) }}">
+        <div class="pumukit_mmobj">
+            <div class="legacy_thumbnail">
+                <span class="video-duration">{{ mmobj_duration(object) | duration_string }}</span>
+                <img alt="serial_pic" class="serial thumbnailimg" src="{{ object|first_url_pic(true)
+                }}"/>
+                <div class="thumbnailholder"></div>
+            </div>
+            <div class="info-wrapper">
+                <div class="info">
+                    <div class="title" title="{{object.title}} {{ object.description ? '\n\n' : '' }} {{ object.description }}">
+                        <span class="mmobj_thumbnail_title">{{ object.title | default('No title'|trans) }}</span>
+                    </div>
+                    <div class="subtitle">
+                        {% if object.subtitle is not empty %}
+                            <abbr title="{{ object.subtitle }}">{{ object.subtitle }}</abbr>
+                        {% else %}
+                            <abbr title="{{ object.getSeriesTitle()|default('') }}">{{ object.getSeriesTitle()|default('') }}</abbr>
+                        {% endif %}
+                    </div>
+                    <div class="date mmobj">
+                        {% if with_publicdate is defined and with_publicdate %}
+                            {{ object.publicDate|date("d/m/Y") }}
+                        {% else %}
+                            {{ object.recordDate|date("d/m/Y") }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

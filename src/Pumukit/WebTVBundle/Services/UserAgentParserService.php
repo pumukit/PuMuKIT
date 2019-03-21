@@ -5,6 +5,8 @@ namespace Pumukit\WebTVBundle\Services;
 /**
  * Parses the user agent and retrieves readable information.
  * DISCLAIMER: DO NOT USE THE USER AGENT STRING. (Use javascript and feature detection, please).
+ *
+ * @Deprecated use BasePlayerBundle\Services\UserAgentParserService
  */
 class UserAgentParserService
 {

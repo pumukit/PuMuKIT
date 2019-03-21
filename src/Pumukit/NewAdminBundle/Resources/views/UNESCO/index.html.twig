@@ -3,7 +3,7 @@
 {% block body %}
     <h3 class="cab_body_div">
         <ul class="breadcrumb" style="margin-bottom: 5px;">
-            <li class="active">{{ configuredTag }} {% trans %}catalogue{% endtrans %}</li>
+            <li class="active">{{ configuredTag.getTitle() }} {% trans %}catalogue{% endtrans %}</li>
         </ul>
     </h3>
     

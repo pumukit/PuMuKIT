@@ -1,0 +1,59 @@
+{% set selectedFields = app.request.getSession().get('admin/unesco/selected_fields') %}
+{% set allFields = all_custom_fields() %}
+
+<br />
+<div class="well">
+    <div class="row">
+        <h4 class="text-center"><strong>{% trans %}Configure your fields list{% endtrans %}</strong></h4>
+        <hr />
+        <div class="col-xs-12">
+            <form id="choose_fields" method="POST">
+                {% for i in 1..7 %}
+                    <div class="col-md-2" style="width:14.28% !important;">
+                        <div class="form-group">
+                            <label for="custom_field_{{ i }}">{{ "Custom field"|trans }} {{ i }}:</label>
+                            <select id="custom_field_{{ i }}" name="custom_field_{{ i }}" class="form-control">
+                                <option value="-1">{{ "Default"|trans }}</option>
+                                {% for key, field in allFields %}
+                                    <option value="{{ key }}" {% if key == selectedFields['custom_field_'~i]%}selected{% endif %}>
+                                        {{ field['label'] }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                {% endfor %}
+                <button class="btn btn-pumukit btn-raised choose_fields_send pull-right">
+                    {% trans %}Change{% endtrans %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    "use strict";
+    $('.choose_fields_send').on('click', function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ path('pumukitnewadmin_catalogue_custom_fields') }}",
+            type: 'POST',
+            data: {
+                'custom_field_1' : $('#custom_field_1').val(),
+                'custom_field_2' : $('#custom_field_2').val(),
+                'custom_field_3' : $('#custom_field_3').val(),
+                'custom_field_4' : $('#custom_field_4').val(),
+                'custom_field_5' : $('#custom_field_5').val(),
+                'custom_field_6' : $('#custom_field_6').val(),
+                'custom_field_7' : $('#custom_field_7').val(),
+            },
+            success: function(response){
+                //
+                //location.reload();
+                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
+                let message = "Change fields successfully";
+                success(message);
+            }
+        });
+    });
+</script>

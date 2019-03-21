@@ -1,0 +1,24 @@
+{% set textShowMore = "Show more"|trans %}
+
+<div class="{{ col_calculator(objectByCol) }} image_representation">
+    <div class="thumbnail">
+        <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" title="{{ textShowMore }}">
+            <div class="series_image_group">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item text-center">
+                        <img src="{{ asset('bundles/pumukitfuturewebtv/images/show_more.jpg') }}" alt="{{ textShowMore }}" class="img-responsive img_adapter_4_3" />
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="hover_series">
+                        <i class="fas fa-video"></i>
+                        <span class="series_count_mmobj">&nbsp;</span>
+                        <span class="series_count_text">
+                             {{ textShowMore }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

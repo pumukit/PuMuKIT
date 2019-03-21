@@ -204,7 +204,7 @@ class PersonService
      *
      * @return MultimediaObject
      */
-    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true)
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, $flush = true, $dispatch = true)
     {
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
@@ -219,7 +219,9 @@ class PersonService
             $this->dm->flush();
         }
 
-        $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
+        if ($dispatch) {
+            $this->dispatcher->dispatchCreate($multimediaObject, $person, $role);
+        }
 
         return $multimediaObject;
     }

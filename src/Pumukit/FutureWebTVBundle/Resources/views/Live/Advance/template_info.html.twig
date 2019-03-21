@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-xs-8">
+        <div class="mmobj-title">
+            {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale())|default("No title"|trans) }}
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="date">
+            {% if live_event_session(multimediaObject) != '' %}
+                {% set session = live_event_session(multimediaObject) %}
+                <span>
+                    {{ session.start|localizeddate('short','none',app.request.getLocale()) }}
+                    {% trans %}From{% endtrans %}
+                    {{ session.start|localizeddate('none','short',app.request.getLocale()) }}
+                    {% trans %}To{% endtrans %}
+                    {{ (session.start|date_modify("+" ~ session.duration ~ " seconds"))|localizeddate('none','short',app.request.getLocale()) }}
+                </span>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <p class="description">
+            {{ multimediaObject.getEmbeddedEvent().getDescription(app.request.getLocale())|nl2br }}
+        </p>
+    </div>
+</div>
+
+{{ render(controller('PumukitLiveBundle:Chat:show', {'id': multimediaObject.getId() })) }}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default panel-pmk">
+            <div class="panel-heading">
+                {% trans %} Attachments {% endtrans %}
+            </div>
+            <div class="panel-body">
+                {% include "PumukitFutureWebTVBundle:Misc:materials.html.twig" with {'object': multimediaObject } %}
+                {% include "PumukitFutureWebTVBundle:Misc:links.html.twig" with {'object': multimediaObject } %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        {% include 'PumukitFutureWebTVBundle:Live:Advance/share.html.twig' %}
+    </div>
+</div>
+
+{% if activeContact|default(false) %}
+    {% if multimediaObject.getEmbeddedSocial() is defined and multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not null and multimediaObject.getEmbeddedSocial().getEmail() != '' %}
+        {% include 'PumukitFutureWebTVBundle:Live:Advance/contact.html.twig' %}
+    {% endif %}
+{% endif %}
+

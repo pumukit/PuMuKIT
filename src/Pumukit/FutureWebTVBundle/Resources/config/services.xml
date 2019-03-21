@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="pumukit_web_tv.link_service" class="Pumukit\FutureWebTVBundle\Services\LinkService">
+            <argument type="service" id="router" />
+            <argument >%pumukit_web_tv.linktagtosearch%</argument>
+        </service>
+
+        <service id="pumukit_web_tv.filter" class="Pumukit\FutureWebTVBundle\EventListener\FilterListener">
+          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+          <tag name="kernel.event_listener" event="kernel.controller"/>
+        </service>
+
+        <service id="pumukit_web_tv.twig_extension" class="Pumukit\FutureWebTVBundle\Twig\PumukitExtension">
+          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+          <argument type="service" id="router.request_context" on-invalid="ignore" />
+          <argument>%pumukit_web_tv.default_pic%</argument>
+          <argument type="service" id="pumukitschema.caption" />
+          <argument type="service" id="pumukitschema.pic" />
+          <argument type="service" id="pumukit_web_tv.link_service" />
+          <argument type="service" id="pumukitschema.mmsduration" />
+          <tag name="twig.extension" />
+        </service>
+
+        <service id="pumukit_web_tv.breadcrumbs" class="Pumukit\FutureWebTVBundle\Services\BreadcrumbsService">
+          <argument type="service" id="router" />
+          <argument type="service" id="session" />
+          <argument type="service" id="translator" />
+          <argument>%pumukit_web_tv.breadcrumbs_all_title%</argument>
+          <argument>%pumukit_web_tv.breadcrumbs_all_route%</argument>
+          <argument>%breadcrumbs_home_title%</argument>
+          <argument>%pumukit_web_tv.breadcrumbs_parentweb%</argument>
+        </service>
+
+        <service id="twig.extension.mongo_date" class="Pumukit\FutureWebTVBundle\Twig\MongoDateExtension">
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="pumukit_web_tv.bootstrap_extension" class="Pumukit\FutureWebTVBundle\Twig\BootstrapExtension">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="router.request_context" on-invalid="ignore" />
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="pumukit_web_tv.menu_service" class="Pumukit\FutureWebTVBundle\Services\MenuService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.eventsession" />
+            <argument>%pumukit_new_admin.advance_live_event%</argument>
+        </service>
+    </services>
+</container>

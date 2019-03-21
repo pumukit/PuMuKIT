@@ -1,138 +1,82 @@
 <div class="table-responsive well" style="overflow:visible;">
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-        <table class="table table-striped table-hover">
-            <thead>
-                {% include "PumukitNewAdminBundle:UNESCO:listth.html.twig" %}
-            </thead>
+    <div class="collapse" id="collapseCustomFields">
+        {{ render(controller('PumukitNewAdminBundle:UNESCO:customFields')) }}
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+            {% include "PumukitNewAdminBundle:UNESCO:listth.html.twig" %}
+        </thead>
 
-            <tbody>
-            {% for mm in mms %}
-
-                <tr id="tr_{{ mm.id }}" style="cursor: pointer" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
-                    <td headers="th-checkbox">
-                        <div class="checkbox pumukit-mms-checkbox">
-                            <label data-id="{{ mm.id }}" draggable="true" ondragstart="getAllDnDChecked(this, event)" ondragenter="$('.draggableTag').css('background-color','#beebff');" ondragend="dragEndCheckbox(this,event)">
-                                <input data-id="{{ mm.id }}" id="{{ mm.id }}" class="mm_checkbox" type="checkbox">
-                            </label>
-                        </div>
-                    </td>
-                    <td headers="th-icons">
-                        <span id="table_mms_status_wrapper_{{ mm.id }}" data-id="{{ mm.id }}"> {# See Track/list for AJAX update #}
-                            {% include 'PumukitNewAdminBundle:MultimediaObject:status.html.twig' with {'mm': mm} %}
-                        </span>
-                    </td>
-                    {% if not is_naked() %}
-                        <td headers="th-icons">
-                            {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
-                        </td>
-                    {% endif %}
-                    <td headers="th-icons">
-                        {% include 'PumukitNewAdminBundle:UNESCO:updatemenu.html.twig' with {'mm': mm} %}
-                    </td>
-
-                    <td headers="th-video" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        <span>{{ mm.isOnlyAudio() ? 'Audio':'Video' }}</span>
-                    </td>
-
-                    <td headers="th-img" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {% include "PumukitNewAdminBundle:Misc:img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
-                    </td>
-
-                    <td headers="th-series"><a href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.id }) }}">{{ mm.series }}</a></td>
-
-                    <td headers="th-title" onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')" class="mms-list-row-td-break-word">
-                        {{ mm.getTitle() }}
-                    </td>
-                    <td headers="th-duration" class="text-nowrap"
-                        onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getRealDuration()| duration_string }}
-                        {% if mm.getProperty('soft-editing-duration') %}
-                            <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
-                        {% endif %}
-                    </td>
-                    <td headers="th-rec-date" class="text-nowrap"
-                        onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getRecordDate()|date('d-m-Y') }}
-                    </td>
-                    <td headers="th-pub-date" class="text-nowrap"
-                        onclick="click_fila_edit_urls('mms', this, '{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}', '{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}')"
-                        ondblclick="dblclick_preview_mm('{{ mm.id }}')">
-                        {{ mm.getPublicDate()|date('d-m-Y') }}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="13" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">
-                        {% trans %}There are no multimedia objects with those values.{% endtrans %}
-                    </td>
-                </tr>
-            {% endfor %}
-
-            {% if 0 == mms|length %}
-                {% set range = 1..9 %}
-            {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage) %}
-                {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
-            {% else %}
-                {% set range = [] %}
-            {% endif %}
-
-            {% for i in range %}
-                <tr>
-                    <td colspan="10">&nbsp;</td>
-                    {% if not is_naked() %}
-                        <td>&nbsp;</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
+        <tbody>
+        {% for mm in mms %}
+            {% include "PumukitNewAdminBundle:UNESCO:listbody.html.twig" %}
+        {% else %}
             <tr>
-                <td colspan="13" class="foot-td">
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <div class="pagerfanta">
-                                {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
-                                    "routeName": "pumukitnewadmin_unesco_index"}) }}
-                                {% if not is_naked() %}
-                                <input title="{% trans %}Go to page{% endtrans %}" type="number"
-                                       style="width: 25px;text-align:center;cursor:pointer;"
-                                       value="{{ mms.getCurrentPage() }}"
-                                       onchange="window.location.search = '?page=' + this.value; return false;" />
-
-
-                                    <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_unesco_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
-                                        <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
-                                        <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
-                                        <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
-                                    </select>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
-                                <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
-                                <option disabled="">---</option>
-                                <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
-
-                                {% if not is_naked() %}
-                                    <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
-                                {% endif %}
-                            </select>
-                        </div>
-                    </div>
+                <td colspan="13" headers="th-checkbox th-icons th-icons th-icons th-video th-img th-series th-title th-duration th-rec-date th-pub-date">
+                    {% trans %}There are no multimedia objects with those values.{% endtrans %}
                 </td>
             </tr>
-            </tfoot>
-        </table>
-    {% endif %}
+        {% endfor %}
+
+        {% if 0 == mms|length %}
+            {% set range = 1..9 %}
+        {% elseif (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1))) < (mms.maxPerPage) %}
+            {% set range = (mms|length - (mms.getMaxPerPage() * (mms.getCurrentPage() - 1)))..(mms.maxPerPage-1) %}
+        {% else %}
+            {% set range = [] %}
+        {% endif %}
+
+        {% for i in range %}
+            <tr>
+                <td colspan="10">&nbsp;</td>
+                {% if not is_naked() %}
+                    <td>&nbsp;</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="13" class="foot-td">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="pagerfanta">
+                            {{ pagerfanta(mms, 'twitter_bootstrap3', {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;",
+                                "routeName": "pumukitnewadmin_unesco_index"}) }}
+                            {% if not is_naked() %}
+                            <input title="{% trans %}Go to page{% endtrans %}" type="number"
+                                   style="width: 25px;text-align:center;cursor:pointer;"
+                                   value="{{ mms.getCurrentPage() }}"
+                                   onchange="window.location.search = '?page=' + this.value; return false;" />
+
+
+                                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_unesco_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
+                                    <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
+                                    <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
+                                    <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
+                                </select>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                            <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
+                            <option disabled="">---</option>
+                            <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
+
+                            {% if not is_naked() %}
+                                <option {% if disable_pudenew %}disabled=""{% endif %} value="invert_announce_selected">{% trans %}Announce/Not announce selected{% endtrans %}</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
 </div>
 
 <script type="text/javascript">

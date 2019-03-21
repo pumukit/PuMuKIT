@@ -1,0 +1,5 @@
+{% if magic_url is defined and magic_url %}
+    <div class="alert alert-danger">
+        {% trans %}Warning: This URL is not for public use.{% endtrans %}
+    </div>
+{% endif %}
