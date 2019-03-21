@@ -57,7 +57,7 @@ class RoutingManipulator extends Manipulator
         }
         $code .= sprintf("    prefix:   %s\n", $prefix);
 
-        if ($type !== '') {
+        if ('' !== $type) {
             $code .= sprintf("    type:   %s\n", $type);
         }
 

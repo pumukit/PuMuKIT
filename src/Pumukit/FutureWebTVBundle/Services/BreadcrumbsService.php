@@ -19,6 +19,7 @@ class BreadcrumbsService
     private $homeTitle;
     private $breadcrumbs;
     private $translator;
+    private $parentWeb;
 
     /**
      * BreadcrumbsService constructor.
