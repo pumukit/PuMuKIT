@@ -113,7 +113,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
     //FIXME: Change name to datepicker
     pmk.datepicker_mv = {
         'model' : {
-            'startDate': moment(pmk.min_date),
+            'startDate': moment().subtract(30, 'days'),
             'endDate':   moment()
         },
         'locale': {
@@ -448,8 +448,8 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             if (!init){
                 var updated_params = {};
                 if (origin == 'datepicker' || origin == 'all'){
-                    updated_params.from_date = check_all_history() ? null:pmk.datepicker_mv.model_debug.from_date;
-                    updated_params.to_date = check_all_history() ? null:pmk.datepicker_mv.model_debug.to_date;
+                    updated_params.from_date = pmk.datepicker_mv.model_debug.from_date;
+                    updated_params.to_date = pmk.datepicker_mv.model_debug.to_date;
                     updated_params.page = 1;
                 }
 
@@ -512,6 +512,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             $http({
                 method: 'GET',
                 url: '/api/media/' + type + '.json',
+                headers: { 'X-Requested-With' :'XMLHttpRequest'},
                 params:{
                     'criteria[id]' : $routeParams.id,
                 }
@@ -576,6 +577,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
             $http({
                 method: 'GET',
                 url: '/api/media/'+ mv_data +'/most_viewed',
+                headers: { 'X-Requested-With' :'XMLHttpRequest'},
                 params: params,
             })
             .then(getMVSuccess)
@@ -657,6 +659,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                     $http({
                         method: 'GET',
                         url: '/api/media/mmobj.json',
+                        headers: { 'X-Requested-With' :'XMLHttpRequest'},
                         params: {
                             'criteria[series]': data.id,
                         },
@@ -728,6 +731,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 $http({
                     method: 'GET',
                     url: '/api/media/views/' + tl_data,
+                    headers: { 'X-Requested-With' :'XMLHttpRequest'},
                     params: params,
                 })
                 .then(addDataElem)
@@ -837,6 +841,7 @@ angular.module('app').controller("PMKController", function ($http, $q, $filter, 
                 $http({
                     method: 'GET',
                     url: '/api/media/views' + his_data,
+                    headers: { 'X-Requested-With' :'XMLHttpRequest'},
                     params: params,
                 })
                 .then(addDataElem_his)
