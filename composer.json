@@ -1,5 +1,5 @@
 {
-    "name": "teltek/pmk2-stats-ui-bundle",
+    "name": "teltek/pumukit-stats-ui-bundle",
     "description": "Stats UI for PuMuKIT",
     "type": "symfony-bundle",
     "keywords": [
@@ -11,10 +11,10 @@
         "teltek"
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.2",
         "pumukit/pumukit2": ">=2.2"
     },
-    "homepage": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle",
+    "homepage": "https://github.com/teltek/PumukitStatsUIBundle",
     "license": "proprietary",
     "authors": [
         {
