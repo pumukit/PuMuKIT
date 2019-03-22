@@ -490,7 +490,15 @@ class EmbeddedEventSessionService
 
         $pipeline[] = array(
             '$match' => array(
-                'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
+                '$or' => array(
+                    array(
+                        'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
+                    ),
+                    array(
+                        'sessions.start' => array('$lt' => new \MongoDate(strtotime(date('Y-m-d H:i:s')))),
+                        'sessions.ends' => array('$gt' => new \MongoDate(strtotime(date('Y-m-d H:i:s')))),
+                    ),
+                ),
             ),
         );
 
