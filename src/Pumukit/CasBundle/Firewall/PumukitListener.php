@@ -16,9 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Pumukit\CasBundle\Services\CASService;
 
 /**
- * Class PumukitListener
- *
- * @package Pumukit\CasBundle\Firewall
+ * Class PumukitListener.
  */
 class PumukitListener extends AbstractAuthenticationListener
 {
