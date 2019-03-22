@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="pumukit.casservice" class="Pumukit\SecurityBundle\Services\CASService">
+        <service id="pumukit.casservice" class="Pumukit\CasBundle\Services\CASService">
             <argument>%pumukit_security.cas_url%</argument>
             <argument>%pumukit_security.cas_port%</argument>
             <argument>%pumukit_security.cas_uri%</argument>
@@ -14,8 +14,7 @@
             <argument>%kernel.cache_dir%</argument>
         </service>
 
-        <service id="pumukit.security.authentication.provider"
-                 class="Pumukit\SecurityBundle\Authentication\Provider\PumukitProvider" public="false">
+        <service id="pumukit.security.authentication.provider" class="Pumukit\CasBundle\Authentication\Provider\PumukitProvider" public="false">
             <argument/>  <!-- UserProvider -->
             <argument/>  <!-- providerKey -->
             <argument type="service" id="security.user_checker"/>
@@ -25,18 +24,15 @@
             <!--<call method="setUserService"><argument type="service" id="pumukitschema.user" /></call>-->
         </service>
 
-        <service id="pumukit.security.authentication.listener"
-                 class="Pumukit\SecurityBundle\Firewall\PumukitListener"
-                 parent="security.authentication.listener.abstract"
-                 abstract="true"/>
+        <service id="pumukit.security.authentication.listener" class="Pumukit\CasBundle\Firewall\PumukitListener" parent="security.authentication.listener.abstract" abstract="true"/>
 
-        <service id="pumukit.security.handler.logout" class="Pumukit\SecurityBundle\Handler\LogoutSuccessHandler">
+        <service id="pumukit.security.handler.logout" class="Pumukit\CasBundle\Handler\LogoutSuccessHandler">
             <argument type="collection"/>
             <argument type="service" id="router"/>
             <argument type="service" id="pumukit.casservice"/>
         </service>
 
-        <service id="pumukit.casuserservice" class="Pumukit\SecurityBundle\Services\CASUserService">
+        <service id="pumukit.casuserservice" class="Pumukit\CasBundle\Services\CASUserService">
             <argument type="service" id="pumukitschema.user"/>
             <argument type="service" id="pumukitschema.person"/>
             <argument type="service" id="pumukit.casservice"/>

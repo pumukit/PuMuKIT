@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SecurityBundle\Firewall;
+namespace Pumukit\CasBundle\Firewall;
 
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
@@ -13,8 +13,13 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
-use Pumukit\SecurityBundle\Services\CASService;
+use Pumukit\CasBundle\Services\CASService;
 
+/**
+ * Class PumukitListener
+ *
+ * @package Pumukit\CasBundle\Firewall
+ */
 class PumukitListener extends AbstractAuthenticationListener
 {
     protected $casService;

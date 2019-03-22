@@ -1,8 +1,8 @@
 <?php
 
-namespace Pumukit\SecurityBundle\Authentication\Provider;
+namespace Pumukit\CasBundle\Authentication\Provider;
 
-use Pumukit\SecurityBundle\Services\CASUserService;
+use Pumukit\CasBundle\Services\CASUserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 
+/**
+ * Class PumukitProvider.
+ */
 class PumukitProvider implements AuthenticationProviderInterface
 {
     private $userProvider;
@@ -22,14 +25,8 @@ class PumukitProvider implements AuthenticationProviderInterface
     private $createUsers;
     private $CASUserService;
 
-    public function __construct(
-        UserProviderInterface $userProvider,
-        $providerKey,
-        UserCheckerInterface $userChecker,
-        ContainerInterface $container,
-        CASUserService $CASUserService,
-        $createUsers = true
-    ) {
+    public function __construct(UserProviderInterface $userProvider, $providerKey, UserCheckerInterface $userChecker, ContainerInterface $container, CASUserService $CASUserService, $createUsers = true)
+    {
         $this->userProvider = $userProvider;
         $this->providerKey = $providerKey;
         $this->userChecker = $userChecker;
@@ -42,15 +39,14 @@ class PumukitProvider implements AuthenticationProviderInterface
     /**
      * @param TokenInterface $token
      *
-     * @return PreAuthenticatedToken|TokenInterface|void
+     * @return mixed
      *
-     * @throws \AuthenticationException
      * @throws \Exception
      */
     public function authenticate(TokenInterface $token)
     {
         if (!$this->supports($token)) {
-            return;
+            return false;
         }
 
         if (!$user = $token->getUser()) {

@@ -1,12 +1,15 @@
 <?php
 
-namespace Pumukit\SecurityBundle\DependencyInjection\Security\Factory;
+namespace Pumukit\CasBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 
+/**
+ * Class PumukitFactory.
+ */
 class PumukitFactory extends AbstractFactory
 {
     public function __construct()
@@ -49,8 +52,7 @@ class PumukitFactory extends AbstractFactory
 
         $container
             ->getDefinition($listenerId)
-            ->addArgument(new Reference('pumukit.casservice'))
-            ;
+            ->addArgument(new Reference('pumukit.casservice'));
 
         return $listenerId;
     }

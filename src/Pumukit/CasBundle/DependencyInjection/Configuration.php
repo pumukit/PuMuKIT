@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SecurityBundle\DependencyInjection;
+namespace Pumukit\CasBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -20,18 +20,18 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pumukit_security');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
         $rootNode
             ->children()
-                ->scalarNode('cas_url')->isRequired()
+                ->scalarNode('cas_url')
+                    ->isRequired()
                     ->info('The hostname of the CAS server')
                 ->end()
-                ->scalarNode('cas_port')->isRequired()
+                ->scalarNode('cas_port')
+                    ->isRequired()
                     ->info('The port the CAS server is running on')
                 ->end()
-                ->scalarNode('cas_uri')->isRequired()
+                ->scalarNode('cas_uri')
+                    ->isRequired()
                     ->info('The URI the CAS server is responding on')
                 ->end()
                 ->arrayNode('cas_allowed_ip_clients')
@@ -64,8 +64,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('ORIGIN')
                     ->defaultValue('cas')
                 ->end()
-          ->end()
-          ;
+            ->end();
 
         return $treeBuilder;
     }

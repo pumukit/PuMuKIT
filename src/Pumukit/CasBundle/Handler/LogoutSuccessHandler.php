@@ -1,18 +1,28 @@
 <?php
 
-namespace Pumukit\SecurityBundle\Handler;
+namespace Pumukit\CasBundle\Handler;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-use Pumukit\SecurityBundle\Services\CASService;
+use Pumukit\CasBundle\Services\CASService;
 
+/**
+ * Class LogoutSuccessHandler.
+ */
 class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
     private $options;
     private $router;
     protected $casService;
 
+    /**
+     * LogoutSuccessHandler constructor.
+     *
+     * @param array                 $options
+     * @param UrlGeneratorInterface $router
+     * @param CASService            $casService
+     */
     public function __construct(array $options, UrlGeneratorInterface $router, CASService $casService)
     {
         $this->options = $options;
@@ -20,6 +30,11 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
         $this->casService = $casService;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|void
+     */
     public function onLogoutSuccess(Request $request)
     {
         $url = $this->router->generate('pumukit_webtv_index_index', array(), true);

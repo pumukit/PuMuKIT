@@ -1,5 +1,5 @@
-Security configuration
-======================
+CAS configuration
+=================
 
 To configure CAS update your `app/config/security.yml` file:
 
