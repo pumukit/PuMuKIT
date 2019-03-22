@@ -737,7 +737,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
-            if (!$this->isUserAllowedToDelete($resource)) {
+            if (!$resource || !$this->isUserAllowedToDelete($resource)) {
                 continue;
             }
             try {
@@ -796,6 +796,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
           ->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDENEW');
         foreach ($ids as $id) {
             $resource = $this->find($id);
+
+            if (!$resource) {
+                continue;
+            }
+
             if ($resource->containsTagWithCod('PUDENEW')) {
                 $addedTags = $tagService->removeTagFromMultimediaObject($resource, $tagNew->getId());
             } else {
@@ -874,6 +879,11 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
+
+            if (!$multimediaobject) {
+                continue;
+            }
+
             if ($id === $this->get('session')->get('admin/mms/id')) {
                 $this->get('session')->remove('admin/mms/id');
             }
