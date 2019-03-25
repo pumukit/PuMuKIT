@@ -1,0 +1,9 @@
+<div class="col-xs-12">
+    {% for object in objects %}
+        {% if object.isCollection() %}
+            {% include 'PumukitLegacyWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+        {% else %}
+            {% include 'PumukitLegacyWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+        {% endif %}
+    {% endfor %}
+</div>

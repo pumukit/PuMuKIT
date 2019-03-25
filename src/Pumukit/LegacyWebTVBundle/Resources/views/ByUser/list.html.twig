@@ -1,0 +1,26 @@
+<div>
+    {% set nameDate = '00/0000' %}
+    {% for object in objects %}
+        {# SERIES(Collections do not have 'record_date'. #}
+        {% if object.isCollection() %}
+            {% set newNameDate = object.getPublicDate().format('m/Y') %}
+        {% else %}
+            {% set newNameDate = object.getRecordDate().format('m/Y') %}
+        {% endif %}
+        {% if nameDate != newNameDate %}
+            {% set nameDate = newNameDate %}
+            <div class="name row">
+                <div class="col-xs-12">
+                    <h2>{{ nameDate }}</h2>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if object.isCollection() %}
+            {% include 'PumukitLegacyWebTVBundle:Misc:series.html.twig' with {'cols': number_cols } %}
+        {% else %}
+            {% include 'PumukitLegacyWebTVBundle:Misc:multimediaobject.html.twig' with {'cols': number_cols } %}
+        {% endif %}
+
+    {% endfor %}
+</div>

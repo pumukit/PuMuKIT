@@ -1,0 +1,53 @@
+{# THIS LAYOUT CAN BE OVERRIDEN. #}
+{# 1. Copy this file into your Bundle 'Resources' folder #}
+{# 2. Inside the body block, set variables as documented on Resources/doc/override.md #}
+{% extends 'PumukitLegacyWebTVBundle::default.css.twig' %}
+{% block body %}
+    {% set breadcrumbs_font_color = '#fff' %}
+
+    {{ parent() }}
+    .breadcrumbs_color {
+        border-bottom: 10px solid #D66400;
+    }
+    .breadcrumb > li:last-of-type {
+        margin-top: 5px;
+    }
+    @media (max-width: 767px) {
+        .main-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    }
+
+    .row.subseries_title_wrapper.place_subserial {
+        margin-top:30px;
+        margin-bottom:30px;
+    }
+
+    /* Stats */
+    .stats-circle {
+        width: 65px;
+        height: 65px;
+        border-radius: 65px;
+        padding: 20px 0px;
+        line-height: 12px;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+
+    .stats-circle .stats-label {
+        font-size: 75%;
+    }
+
+    .stats-circle-1 {
+        background-color: #349141;
+    }
+    .stats-circle-2 {
+        background-color: #E07E03;
+    }
+    .stats-circle-3 {
+        background-color: #225594;
+    }
+
+{% endblock %}

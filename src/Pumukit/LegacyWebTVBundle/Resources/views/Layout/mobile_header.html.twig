@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default col-lg-3">
+    <div class="navbar-header">
+        <div class="row mobile_header">
+            <span class="navbar-brand">
+                {% include 'PumukitLegacyWebTVBundle:Layout:logo.html.twig' %}
+            </span>
+            <span class="pull-right"> {# This gets all objects together, so when the bar is too small, it nicely goes to the second row alltogether#}
+                <span class="pull-right hidden-xs" style="margin:15px 2px">
+                    {% include 'PumukitLegacyWebTVBundle:Index:loginbox.html.twig' %}
+                </span>
+                <span class="hidden-xs">
+                    {{ render( controller( 'PumukitLegacyWebTVBundle:Widget:languageselect') ) }}
+                </span>
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-1">
+                    <span class="sr-only">TOGGLE NAVIGATION</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pumukit-navbar-collapse-2">
+                    <span class="sr-only">TOGGLE SEARCH</span>
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+        <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-2">
+            {% include 'PumukitLegacyWebTVBundle:Layout:search_box.html.twig' with {'id': 'mobile'} %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="collapse navbar-collapse" id="pumukit-navbar-collapse-1">
+            {{ render(controller('PumukitLegacyWebTVBundle:Widget:menu')) }}
+        </div><!--END navbar-collapse-->
+    </div>
+</nav>

@@ -1,0 +1,10 @@
+<div class="panel panel-default nomargin panel-related">
+    <div class="panel-heading">
+        {% trans %}Live events{% endtrans %}
+    </div>
+    <div class="panel-body">
+        {% if events|length > 0 %}
+            {% include 'PumukitLegacyWebTVBundle:Event:miniMultimediaObjects.html.twig' with {'events' : events, 'livelist': true } %}
+        {% endif %}
+    </div>
+</div>

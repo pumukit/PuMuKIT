@@ -1,0 +1,32 @@
+<div class="row header visible-lg">
+    {% block body_desktop %}
+        <div class="header-content">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% block logo_url %}
+                            {% include 'PumukitLegacyWebTVBundle:Layout:logo.html.twig' %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+          <span class="pull-right">
+            {% include 'PumukitLegacyWebTVBundle:Index:loginbox.html.twig' %}
+          </span>
+                </div>
+                <div class="row">
+                    {{ render( controller( 'PumukitLegacyWebTVBundle:Widget:languageselect') ) }}
+                    <div class="col-sm-6 pull-right">
+                        {% include 'PumukitLegacyWebTVBundle:Layout:search_box.html.twig' with {'id': 'base'} %}
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    {% endblock %}
+</div>
+<div class="row hidden-lg">
+    {% include 'PumukitLegacyWebTVBundle:Layout:mobile_header.html.twig' %}
+</div>
