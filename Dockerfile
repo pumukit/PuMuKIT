@@ -41,9 +41,18 @@ RUN set -eux; \
  		zlib-dev \
 		libxml2-dev \
 		libxslt-dev \
+		jpeg-dev \
+		freetype-dev \
  	; \
  	\
  	docker-php-ext-configure zip --with-libzip; \
+	freetype-config --cflags; \
+     	mkdir -p /opt/ffmpeg/include; \
+	ln -s /usr/include/freetype2 /opt/ffmpeg/include/freetype2; \
+	docker-php-ext-configure gd \
+	 	--with-freetype-dir=/usr/include/ \
+		--with-jpeg-dir=/usr/include/ \
+		-with-png-dir=/usr/include; \
  	docker-php-ext-install -j$(nproc) \
  		intl \
 		exif \
