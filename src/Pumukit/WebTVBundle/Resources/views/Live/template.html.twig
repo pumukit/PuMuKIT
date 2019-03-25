@@ -1,0 +1,83 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="col-xs-12">
+        <h1 class="event_title">{% trans %}Events{% endtrans %}</h1>
+
+        {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
+            <div class="row">
+                <div class="col-xs-12" style="margin-top:20px;">
+                    <p>
+                        {% trans %}
+                        There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.
+                        {% endtrans %}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+
+            {% if eventsNow|length > 0 %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul>
+                            <li class="categories_list">
+                                <div class="categories_list_block">
+                                    <h3>{% trans %}Now events{% endtrans %}</h3>
+                                    {% for eventNow in eventsNow %}
+                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventNow['data'], 'defaultPic' : defaultPic, active: true} %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                    {% endfor %}
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if eventsToday|length > 0 %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul>
+                            <li class="categories_list">
+                                <div class="categories_list_block">
+                                    <h3>{% trans %}Today events{% endtrans %}</h3>
+                                    {% for eventToday in eventsToday %}
+                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventToday['data'], 'defaultPic' : defaultPic, active: false} %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                    {% endfor %}
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if eventsFuture|length > 0 %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul>
+                            <li class="categories_list">
+                                <div class="categories_list_block">
+                                    <h3>{% trans %}Future events{% endtrans %}</h3>
+                                    {% for eventFuture in eventsFuture %}
+                                        {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'cols': objectByCol, 'event': eventFuture['data'], 'defaultPic' : defaultPic, active: false} %}
+                                        {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
+                                    {% endfor %}
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 text-center">
+                        {{ pagerfanta(eventsFuture, 'twitter_bootstrap3_translated') }}
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% endblock %}

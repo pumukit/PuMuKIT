@@ -1,0 +1,20 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+  {% include('PumukitLiveBundle:Default:js.html.twig') %}
+{% endblock%}
+
+{% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
+
+{% block body_base %}
+    {% include('PumukitWebTVBundle:Live:Basic/liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
+{% endblock %}

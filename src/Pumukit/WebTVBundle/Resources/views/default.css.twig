@@ -1,0 +1,162 @@
+{% block body %}
+    {% autoescape false %}
+
+    {% set primary_color = '#ed6d00' %}
+    {% set font_color = '#ffffff' %}
+
+    {% set default_contrast_background = default_contrast_background | default("#c05800") %}
+    {% set default_light_background = default_light_background | default("#767676") %}
+    {% set default_content_background = default_content_background | default("#fff") %}
+
+    {% set default_light_font = default_light_font | default("#fff") %}
+    {% set default_content_font = default_content_font | default("#111") %}
+
+    {% set page_background = page_background | default("#ffffff") %}
+
+    {% set content_background = content_background | default(default_content_background) %}
+    {% set menu_background = menu_background | default(default_light_background) %}
+    {% set menu_font_color = menu_font_color | default(default_light_font) %}
+    {% set menu_selected_background = menu_selected_background | default(default_light_font) %}
+    {% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
+
+    body {
+        background: {{ page_background }};
+    }
+
+    ul, ol {
+        list-style:none;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, h2, h3, h4 {
+        font-weight: bold;
+        color: {{ default_content_font }};
+    }
+
+    a, a:hover {
+        color: #000000;
+    }
+
+    .disabled {
+        color: #767676 !important;
+    }
+
+    .edit-pmk-icon {
+        font-size:17px;
+        color: {{ default_contrast_background }};
+    }
+
+    .date, .num_views {
+        text-align: right;
+    }
+
+    .main-content {
+        min-height: 625px;
+    }
+
+    .search-form {
+        padding: 10px;
+        background: #EDEDED;
+        color: #000000;
+    }
+
+    .search-form .input-group.date {
+        width: 100%;
+    }
+
+    .search-form a {
+        color: #2d699e;
+    }
+
+    .input-group-addon {
+        background: white;
+    }
+
+    .video-duration {
+        position: absolute;
+        top: 8%;
+        left: 8%;
+        color: white;
+        font-size: 0.8em;
+        background:rgba(0,0,0,0.65);
+        padding: 1px 3px;
+    }
+
+    .btn-pmk {
+        background-color: #ed6d00;
+        color: #ffffff;
+    }
+
+    .panel-pmk>.panel-heading {
+        background-color: #ed6d00;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .panel-series .panel-body, .panel-related .panel-body{
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+    }
+
+    .total-search {
+        margin-top:10px;
+        color:black;
+        font-weight:bold;
+        font-size:1.2em;
+    }
+
+    .list-group-item-pmk {
+        background: transparent;
+    }
+
+    .block-media-pmk {
+        padding-top:10px;
+    }
+
+    .show_more_link a, .show_more_link a:hover {
+        color: #000000;
+        font-size:14px;
+    }
+
+    .label-pmk a {
+        color: #ffffff;
+    }
+
+    .label-pmk a:hover {
+        color: #000000;
+    }
+
+    .label-pmk {
+        background-color: #ed6d00;
+        margin-left:3px;
+    }
+
+    {% include 'PumukitWebTVBundle:Css:template_video.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_series.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_stats.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_header.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_horizontal_menu.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_footer.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_breadcrumb.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_search_box.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_event.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_pagination.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_live.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_share.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_live_chat.css.twig' %}
+
+    {% include 'PumukitWebTVBundle:Css:template_error.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_a11y.css.twig' %}
+
+    /* Legacy Menu CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_menu.css.twig' %}#}
+    /* Legacy Categories CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_categories.css.twig' %}#}
+    /* Legacy Misc video CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_video.css.twig' %}#}
+
+
+    {% endautoescape %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+{% block body_base %}
+    <h1 class="widget widget_forbidden_error">
+        {% trans %}Private Video{% endtrans %}
+    </h1>
+    <div class="grid_10 mm_player">
+        <div class="date"></div>
+        <h2 class="widget_forbidden_error_message">
+            {% trans %}This video is private with restricted access{% endtrans %}.
+        </h2>
+    </div>
+    <div class="grid_5">
+        {% if show_forceauth %}
+            <h3 class="widget_forbidden_message">
+                {% trans %}Log in with a valid user is required to watch it{% endtrans %}.
+            </h3>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="text-center">
+                    <button id="pumukit_forbidden_login" type="submit" class="btn btn-default btn-pmk btn-flat" name="submit" title="{% trans %}Log In{% endtrans %}">
+                        {% trans %}Log In{% endtrans %}
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <script type="text/javascript">
+        $('#pumukit_forbidden_login').on('click', function (event) {
+            try {
+                if (window.parent.location.origin == location.origin) {
+                    window.parent.location.href = '{{ path('pumukit_auth') }}?referer=' + escape(window.parent.location.href);
+                    return;
+                }
+            } catch (e) {
+            }
+            location.href = '{{ path('pumukit_auth') }}?referer=' + escape(location.href);
+        });
+    </script>
+{% endblock %}

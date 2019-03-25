@@ -1,0 +1,17 @@
+{% set id = random() %}
+{% set live = event.live %}
+
+{% include "PumukitLiveBundle:Advance:player.html.twig" %}
+
+<script type="text/javascript">
+    {% include "PumukitWebTVBundle:Live:Advance/Sessions/common.js.twig" %}
+
+    if(nextSessionsCount === 0 && nowSessionsCount === 0) {
+        {% include "PumukitWebTVBundle:Live:Advance/Sessions/withoutSessions.js.twig" %}
+    } else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
+        {% include "PumukitWebTVBundle:Live:Advance/Sessions/futureSessions.js.twig" %}
+    } else if (nowSessionsCount > 0) {
+        {% include "PumukitWebTVBundle:Live:Advance/Sessions/nowSessions.js.twig" %}
+        {% include "PumukitLiveBundle:Advance:player.js.twig" %}
+    }
+</script>
