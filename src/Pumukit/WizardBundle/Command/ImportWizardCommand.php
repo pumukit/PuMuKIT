@@ -171,7 +171,10 @@ EOT
                         $this->profile,
                         $this->priority,
                         $this->language,
-                        []
+                        [],
+                        [],
+                        0,
+                        JobService::ADD_JOB_UNIQUE
                     );
                 } catch (\Exception $e) {
                     if (!strpos($e->getMessage(), 'Unknown error')) {
@@ -187,6 +190,7 @@ EOT
                 if ($multimediaObject && isset($this->status)) {
                     $multimediaObject->setStatus(intval($this->status));
                 }
+                $this->dm->flush();
             }
         }
     }

@@ -1,7 +1,6 @@
 {
-    "name": "pumukit/pumukit2",
-    "version": "2.5.x-dev",
-    "license": "GPL",
+    "name": "pumukit/pumukit",
+    "license": "AGPL-3.0-or-later",
     "type": "project",
     "description": "Media Portal",
     "autoload": {
@@ -81,7 +80,9 @@
                 "opencast_player": "PUMUKIT2_OPENCAST_PLAYER"
             }
         },
-        "branch-alias": null,
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        },
         "symfony": {
             "require": "3.4.*"
         }

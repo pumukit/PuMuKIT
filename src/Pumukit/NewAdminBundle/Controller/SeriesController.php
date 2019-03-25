@@ -298,7 +298,7 @@ class SeriesController extends AdminController implements NewAdminController
         $deleteSeriesCount = 0;
         foreach ($ids as $id) {
             $series = $this->find($id);
-            if (!$this->isUserAllowedToDelete($series)) {
+            if (!$series || !$this->isUserAllowedToDelete($series)) {
                 continue;
             }
             $seriesId = $series->getId();
@@ -349,6 +349,11 @@ class SeriesController extends AdminController implements NewAdminController
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
             $resource = $this->find($id);
+
+            if (!$resource) {
+                continue;
+            }
+
             if ($resource->getAnnounce()) {
                 $resource->setAnnounce(false);
             } else {
@@ -590,7 +595,7 @@ class SeriesController extends AdminController implements NewAdminController
                     foreach ($value['channels'] as $channelId => $mustContainsTag) {
                         $mustContainsTag = ('true' == $mustContainsTag);
                         $tag = $repoTags->find($channelId);
-                        if (!$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
+                        if ($tag && !$this->isGranted(Permission::getRoleTagDisableForPubChannel($tag->getCod()))) {
                             if ($mustContainsTag && (!($mm->containsTag($tag)))) {
                                 $tagService->addTag($mm, $tag, false);
                                 $executeFlush = true;
