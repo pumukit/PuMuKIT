@@ -222,8 +222,8 @@ class EmbeddedEventSessionService
      */
     public function findEventsToday()
     {
-        $todayStarts = strtotime(date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y'))));
-        $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y'));
+        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
         $pipeline = $this->initPipeline();
         $pipeline[] = array(
             '$match' => array('$and' => array(
@@ -242,7 +242,7 @@ class EmbeddedEventSessionService
      */
     public function findNextEvents()
     {
-        $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+        $todayEnds = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
         $pipeline = $this->initPipeline();
         $pipeline[] = array(
             '$match' => array(
@@ -445,8 +445,7 @@ class EmbeddedEventSessionService
      */
     public function findEventsMenu($criteria = array(), $limit = 0)
     {
-        $date = date('Y-m-d H:i:s', mktime(00, 00, 00, date('m'), date('d'), date('Y')));
-        $todayStarts = strtotime($date);
+        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y'));
 
         $pipeline = array();
 
@@ -483,9 +482,18 @@ class EmbeddedEventSessionService
             ),
         );
 
-        $pipeline[] = array(
+        $time = new \MongoDate(time());
+        $pipelinek[] = array(
             '$match' => array(
-                'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
+                '$or' => array(
+                    array(
+                        'sessions.start' => array('$gte' => new \MongoDate($todayStarts)),
+                    ),
+                    array(
+                        'sessions.start' => array('$lt' => $time),
+                        'sessions.ends' => array('$gt' => $time),
+                    ),
+                ),
             ),
         );
 
