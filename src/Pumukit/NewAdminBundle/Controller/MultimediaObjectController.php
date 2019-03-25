@@ -852,7 +852,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         foreach ($ids as $id) {
             $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
 
-            if (!$multimediaobject) {
+            if (!isset($multimediaobject)) {
                 continue;
             }
 
