@@ -1,13 +1,16 @@
 <?php
 
-namespace Pumukit\SecurityBundle;
+namespace Pumukit\CasBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Pumukit\SecurityBundle\DependencyInjection\Security\Factory\PumukitFactory;
+use Pumukit\CasBundle\DependencyInjection\Security\Factory\PumukitFactory;
 
-class PumukitSecurityBundle extends Bundle
+class PumukitCasBundle extends Bundle
 {
+    /**
+     * @param ContainerBuilder $container
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

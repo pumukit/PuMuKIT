@@ -1,7 +1,10 @@
 <?php
 
-namespace Pumukit\SecurityBundle\Services;
+namespace Pumukit\CasBundle\Services;
 
+/**
+ * Class CASService.
+ */
 class CASService
 {
     private $casUrl;
@@ -12,6 +15,16 @@ class CASService
     private $env;
     private $cacheDir;
 
+    /**
+     * CASService constructor.
+     *
+     * @param        $casUrl
+     * @param        $casPort
+     * @param        $casUri
+     * @param        $casAllowedIpClients
+     * @param string $env
+     * @param null   $cacheDir
+     */
     public function __construct($casUrl, $casPort, $casUri, $casAllowedIpClients, $env = 'prod', $cacheDir = null)
     {
         $this->casUrl = $casUrl;
@@ -37,6 +50,9 @@ class CASService
         }
     }
 
+    /**
+     * @return bool
+     */
     public function isAuthenticated()
     {
         if (!$this->initialize) {
@@ -46,6 +62,9 @@ class CASService
         return \phpCAS::isAuthenticated();
     }
 
+    /**
+     * @return string
+     */
     public function getUser()
     {
         if (!$this->initialize) {
@@ -55,6 +74,9 @@ class CASService
         return \phpCAS::getUser();
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         if (!$this->initialize) {
@@ -64,6 +86,9 @@ class CASService
         return \phpCAS::getAttributes();
     }
 
+    /**
+     * @param $url
+     */
     public function setFixedServiceURL($url)
     {
         if (!$this->initialize) {

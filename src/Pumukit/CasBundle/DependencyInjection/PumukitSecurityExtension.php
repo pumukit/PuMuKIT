@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SecurityBundle\DependencyInjection;
+namespace Pumukit\CasBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

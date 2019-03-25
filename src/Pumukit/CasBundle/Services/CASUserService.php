@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\SecurityBundle\Services;
+namespace Pumukit\CasBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\GroupService;
@@ -11,6 +11,9 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+/**
+ * Class CASUserService.
+ */
 class CASUserService
 {
     protected $userService;
@@ -28,6 +31,23 @@ class CASUserService
     private $casGroupKey;
     private $casOriginKey;
 
+    /**
+     * CASUserService constructor.
+     *
+     * @param UserService              $userService
+     * @param PersonService            $personService
+     * @param CASService               $casService
+     * @param PermissionProfileService $permissionProfileService
+     * @param GroupService             $groupService
+     * @param DocumentManager          $documentManager
+     * @param                          $casIdKey
+     * @param                          $casCnKey
+     * @param                          $casMailKey
+     * @param                          $casGivenNameKey
+     * @param                          $casSurnameKey
+     * @param                          $casGroupKey
+     * @param                          $casOriginKey
+     */
     public function __construct(UserService $userService, PersonService $personService, CASService $casService, PermissionProfileService $permissionProfileService, GroupService $groupService, DocumentManager $documentManager, $casIdKey, $casCnKey, $casMailKey, $casGivenNameKey, $casSurnameKey, $casGroupKey, $casOriginKey)
     {
         $this->userService = $userService;
@@ -51,7 +71,6 @@ class CASUserService
      *
      * @return User
      *
-     * @throws \AuthenticationException
      * @throws \Exception
      */
     public function createDefaultUser($userName)
@@ -182,7 +201,7 @@ class CASUserService
      *
      * @throws \Exception
      */
-    protected function setCASGroup($attributes, $user)
+    protected function setCASGroup($attributes, User $user)
     {
         if (isset($attributes[$this->casGroupKey])) {
             $groupCAS = $this->getGroup($attributes[$this->casGroupKey]);
@@ -206,7 +225,10 @@ class CASUserService
     {
         $cleanKey = preg_replace('/\W/', '', $key);
 
-        $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneByKey($cleanKey);
+        $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneBy(
+            ['key' => $cleanKey]
+        );
+
         if ($group) {
             return $group;
         }
