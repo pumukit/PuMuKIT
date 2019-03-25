@@ -60,7 +60,7 @@ $ touch src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig
 
 ```twig
 {# src/Pumukit/ExampleOrg/WebTVBundle/Resources/views/custom.css.twig #}
-{% extends 'PumukitWebTVBundle::default.css.twig' %}
+{% extends 'PumukitWebTVBundle' %}
 
 {% block body %}
 
@@ -213,7 +213,7 @@ Below is the full parameter rules and their explanation:
     - DIRECTRIZ
     - UNESCO
 
-  pumukit2.intro:            null                   # If set to an url, plays that url before every video.
+  pumukit.intro:            null                   # If set to an url, plays that url before every video.
 
   pumukit_web_tv.primary_color:   '#d66400'         # Primary color. Must be the same as in breadcrumbs_back_background in default.css.twig
   pumukit_web_tv.secondary_color: '#fff'            # Secondary color. Must be the same as in header_background in default.css.twig

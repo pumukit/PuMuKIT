@@ -1,0 +1,13 @@
+{% extends 'PumukitWebTVBundle::layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>{{ title }}</h1>
+        </div>
+
+        {% include 'PumukitWebTVBundle:ByTag:template_list.html.twig' %}
+
+        {% include 'PumukitWebTVBundle:Misc:pager.html.twig' %}
+    </div>
+{% endblock %}

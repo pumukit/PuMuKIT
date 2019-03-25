@@ -4,18 +4,34 @@ namespace Pumukit\WebTVBundle\Services;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Class LinkService.
+ */
 class LinkService
 {
     private $generator;
     private $linkTagToSearch;
 
+    /**
+     * LinkService constructor.
+     *
+     * @param UrlGeneratorInterface $generator
+     * @param                       $linkTagToSearch
+     */
     public function __construct(UrlGeneratorInterface $generator, $linkTagToSearch)
     {
         $this->generator = $generator;
         $this->linkTagToSearch = $linkTagToSearch;
     }
 
-    public function generatePathToTag($tagCod = null, $onlyGeneral = null, array $parameters = array())
+    /**
+     * @param null  $tagCod
+     * @param null  $onlyGeneral
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function generatePathToTag($tagCod = null, $onlyGeneral = null, array $parameters = [])
     {
         if ($tagCod) {
             $parameters['tagCod'] = $tagCod;

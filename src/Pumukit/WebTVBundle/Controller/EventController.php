@@ -9,18 +9,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
-class EventController extends Controller implements WebTVController
+/**
+ * Class EventController.
+ */
+class EventController extends Controller implements WebTVControllerInterface
 {
     /**
+     * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
+     * @Template("PumukitWebTVBundle:Live:template.html.twig")
+     *
      * @param Request $request
      *
-     * @return array
-     *
-     * @Route ("/events/", defaults={"filter": false}, name="pumukit_webtv_events")
-     * @Template()
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
+        $advanceEvents = $this->checkAdvanceEvents();
+        if (!$advanceEvents) {
+            return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
+        }
+
         $translator = $this->get('translator');
         $this->updateBreadcrumbs($translator->trans('Live events'), 'pumukit_webtv_events');
 
@@ -36,31 +44,34 @@ class EventController extends Controller implements WebTVController
 
         $page = $request->query->get('page', 1);
 
-        $eventsFuture->setMaxPerPage(10);
+        $maxPerPage = $this->container->getParameter('columns_objs_event') * 3;
+        $eventsFuture->setMaxPerPage($maxPerPage);
         $eventsFuture->setNormalizeOutOfRangePages(true);
         $eventsFuture->setCurrentPage(intval($page));
 
-        return array(
+        return [
             'eventsToday' => $eventsToday,
             'eventsNow' => $eventsNow,
             'eventsFuture' => $eventsFuture,
-            'numberCols' => 2,
             'defaultPic' => $defaultPic,
-        );
+            'objectByCol' => $this->container->getParameter('columns_objs_event'),
+            'show_info' => true,
+            'show_description' => false,
+        ];
     }
 
     /**
-     * @Template("PumukitWebTVBundle:Event:livelist.html.twig")
+     * @Template("PumukitWebTVBundle:Live:Advance/livelist.html.twig")
      */
     public function liveListAction()
     {
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $events = $this->get('pumukitschema.eventsession')->findEventsNow();
 
-        return array(
+        return [
             'events' => $events,
             'defaultPic' => $defaultPic,
-        );
+        ];
     }
 
     /**
@@ -68,23 +79,23 @@ class EventController extends Controller implements WebTVController
      *
      * @return array
      * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
-     * @Template("PumukitWebTVBundle:Event:nextsessionlist.html.twig")
+     * @Template("PumukitWebTVBundle:Live:Advance/nextsessionlist.html.twig")
      */
     public function nextSessionListAction($id)
     {
         $defaultPic = $this->container->getParameter('pumukit_new_admin.advance_live_event_create_default_pic');
         $embeddedEventSessionService = $this->get('pumukitschema.eventsession');
 
-        $criteria = array(
+        $criteria = [
             '_id' => new \MongoId($id),
-        );
+        ];
         $events = $embeddedEventSessionService->findNextSessions($criteria, 0, true);
 
-        return array(
+        return [
             'events' => $events,
             'sessionlist' => true,
             'defaultPic' => $defaultPic,
-        );
+        ];
     }
 
     /**
@@ -92,7 +103,7 @@ class EventController extends Controller implements WebTVController
      *
      * @return array
      * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
-     * @Template("PumukitWebTVBundle:Event:twitter.html.twig")
+     * @Template("PumukitWebTVBundle:Live:Advance/twitter.html.twig")
      */
     public function twitterAction($id)
     {
@@ -101,10 +112,10 @@ class EventController extends Controller implements WebTVController
         $multimediaObject = $repo->find($id);
         $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
 
-        return array(
+        return [
             'multimediaObject' => $multimediaObject,
             'enable_twitter' => $enableTwitter,
-        );
+        ];
     }
 
     /**
@@ -112,19 +123,28 @@ class EventController extends Controller implements WebTVController
      * @param       $routeName
      * @param array $routeParameters
      */
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
+    /**
+     * @param $eventsNow
+     * @param $eventsToday
+     *
+     * @return array
+     */
     private function getEventsTodayNextSession($eventsNow, $eventsToday)
     {
-        $now = array_map(function ($e) {
-            return $e['_id'];
-        }, $eventsNow);
+        $now = array_map(
+            function ($e) {
+                return $e['_id'];
+            },
+            $eventsNow
+        );
 
-        $result = array();
+        $result = [];
         foreach ($eventsToday as $event) {
             if (in_array($event['_id'], $now)) {
                 continue;
@@ -133,5 +153,13 @@ class EventController extends Controller implements WebTVController
         }
 
         return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function checkAdvanceEvents()
+    {
+        return $this->container->getParameter('pumukit_new_admin.advance_live_event');
     }
 }

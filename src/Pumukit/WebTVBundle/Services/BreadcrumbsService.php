@@ -2,11 +2,14 @@
 
 namespace Pumukit\WebTVBundle\Services;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class BreadcrumbsService.
+ */
 class BreadcrumbsService
 {
     private $session;
@@ -18,8 +21,26 @@ class BreadcrumbsService
     private $translator;
     private $parentWeb;
 
-    public function __construct(RouterInterface $router, SessionInterface $session, $translator, $allTitle = 'All', $allRoute = 'pumukit_webtv_medialibrary_index', $homeTitle = 'home', $parentWeb = null)
-    {
+    /**
+     * BreadcrumbsService constructor.
+     *
+     * @param Router  $router
+     * @param Session $session
+     * @param         $translator
+     * @param string  $allTitle
+     * @param string  $allRoute
+     * @param string  $homeTitle
+     * @param null    $parentWeb
+     */
+    public function __construct(
+        Router $router,
+        Session $session,
+        $translator,
+        $allTitle = 'All',
+        $allRoute = 'pumukit_webtv_medialibrary_index',
+        $homeTitle = 'home',
+        $parentWeb = null
+    ) {
         $this->session = $session;
         $this->router = $router;
         $this->allTitle = $allTitle;
@@ -39,28 +60,34 @@ class BreadcrumbsService
             $this->session->set('breadcrumbs/routeName', $this->allRoute);
         }
         if (!$this->session->has('breadcrumbs/routeParameters')) {
-            $this->session->set('breadcrumbs/routeParameters', array());
+            $this->session->set('breadcrumbs/routeParameters', []);
         }
-        $this->breadcrumbs = array();
+        $this->breadcrumbs = [];
         if (null !== $this->parentWeb) {
-            $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
+            $this->breadcrumbs = [['title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']]];
         }
-        $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
+        $this->breadcrumbs[] = ['title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index')];
     }
 
     public function reset()
     {
         $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
         $this->session->set('breadcrumbs/routeName', $this->allRoute);
-        $this->session->set('breadcrumbs/routeParameters', array());
-        $this->breadcrumbs = array();
+        $this->session->set('breadcrumbs/routeParameters', []);
+        $this->breadcrumbs = [];
         if (null !== $this->parentWeb) {
-            $this->breadcrumbs = array(array('title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']));
+            $this->breadcrumbs = [['title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']]];
         }
-        $this->breadcrumbs[] = array('title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index'));
+        $this->breadcrumbs[] = ['title' => $this->homeTitle, 'link' => $this->router->generate('pumukit_webtv_index_index')];
     }
 
-    public function addList($title, $routeName, array $routeParameters = array(), $forceTranslation = false)
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     * @param bool  $forceTranslation
+     */
+    public function addList($title, $routeName, array $routeParameters = [], $forceTranslation = false)
     {
         if ($forceTranslation) {
             $title = $this->translator->trans($title);
@@ -72,19 +99,27 @@ class BreadcrumbsService
         $this->add($title, $routeName, $routeParameters);
     }
 
+    /**
+     * @param Series $series
+     */
     public function addSeries(Series $series)
     {
         if (1 == count($this->breadcrumbs)) {
-            $this->add($this->session->get('breadcrumbs/title', $this->allTitle),
-                 $this->session->get('breadcrumbs/routeName', $this->allRoute),
-                 $this->session->get('breadcrumbs/routeParameters', array()));
+            $this->add(
+                $this->session->get('breadcrumbs/title', $this->allTitle),
+                $this->session->get('breadcrumbs/routeName', $this->allRoute),
+                $this->session->get('breadcrumbs/routeParameters', [])
+            );
         }
 
         if (!$series->isHide()) {
-            $this->add($series->getTitle(), 'pumukit_webtv_series_index', array('id' => $series->getId()));
+            $this->add($series->getTitle(), 'pumukit_webtv_series_index', ['id' => $series->getId()]);
         }
     }
 
+    /**
+     * @param MultimediaObject $multimediaObject
+     */
     public function addMultimediaObject(MultimediaObject $multimediaObject)
     {
         $this->addSeries($multimediaObject->getSeries());
@@ -92,28 +127,39 @@ class BreadcrumbsService
         $title = $multimediaObject->getTitle();
         if ($multimediaObject->isPublished()) {
             $routeName = 'pumukit_webtv_multimediaobject_index';
-            $routeParameters = array('id' => $multimediaObject->getId());
+            $routeParameters = ['id' => $multimediaObject->getId()];
         } else {
             $routeName = 'pumukit_webtv_multimediaobject_magicindex';
-            $routeParameters = array('secret' => $multimediaObject->getSecret());
+            $routeParameters = ['secret' => $multimediaObject->getSecret()];
         }
 
         $this->add($title, $routeName, $routeParameters);
     }
 
-    public function add($title, $routeName, array $routeParameters = array())
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     */
+    public function add($title, $routeName, array $routeParameters = [])
     {
-        $this->breadcrumbs[] = array(
+        $this->breadcrumbs[] = [
             'title' => $title,
             'link' => $this->router->generate($routeName, $routeParameters),
-        );
+        ];
     }
 
+    /**
+     * @return mixed
+     */
     public function getBreadcrumbs()
     {
         return $this->breadcrumbs;
     }
 
+    /**
+     * @param $title
+     */
     public function setTitle($title)
     {
         if ((null !== $this->parentWeb) && (isset($this->breadcrumbs[1]['title']))) {

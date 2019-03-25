@@ -1,0 +1,89 @@
+<div class="row widget slidebar">
+    <ul>
+        <!-- Principal -->
+        <li>
+            <a href="{{ path('pumukit_webtv_index_index') }}" class="element {{ menu_selected=="pumukit_webtv_index_index"?'selected':'' }}">
+                {{ home_title |trans }}
+            </a>
+        </li>
+
+        <!-- Announces -->
+        <li>
+            <a href="{{ path('pumukit_webtv_announces_latestuploads') }}" class="element {{ menu_selected == 'pumukit_webtv_announces_latestuploads'? 'selected' : '' }}">
+                {{ announces_title |trans }}
+            </a>
+        </li>
+
+        <!-- Search -->
+        <li>
+            <a href="{{ path('pumukit_webtv_search_multimediaobjects') }}" class="element {{ menu_selected=="pumukit_webtv_search_multimediaobjects"?'selected':'' }}">
+                {{ search_title |trans }}
+            </a>
+        </li>
+
+        <!-- Live Channels -->
+        {% if advance_live_channels['type'] %}
+            <!-- Feature with sessions -->
+            {% if advance_live_channels['events'] is not empty %}
+                {% for key, live in advance_live_channels['events'] %}
+                    <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                        <a href="{{ path('pumukit_live_event_id', {'id': key }) }}" class="element">
+                            {{ live['sessions'][0]['start']|convertMongoDate | localizeddate('none','short',app.request.getLocale()) }}
+                            {{ live['event']['name'][app.request.getLocale()] | default('No title'| trans) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <!-- Feature without sessions -->
+            {% for live in advance_live_channels['channels'] %}
+                <li>
+                    <a href="{{ path('pumukit_live_id', {'id': live.id}) }}" class="element">
+                        {{ live.name | default('No title'| trans) }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Mediateca -->
+        <li>
+            <a href="{{ path('pumukit_webtv_medialibrary_index') }}" class="element {{ menu_selected=="pumukit_webtv_medialibrary_index"?'selected':'' }}">
+                {{ mediateca_title |trans }}
+            </a>
+        </li>
+
+        <!-- Videos by category -->
+        <li>
+            <a href="{{ path('pumukit_webtv_categories_index') }}" class="element {{ menu_selected=="pumukit_webtv_categories_index"?'selected':'' }}">
+                {{ categories_title |trans }}
+            </a>
+        </li>
+
+    </ul>
+    <ul class="nav navbar-nav visible-xs">
+        {% if locales|length > 1 %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle pmk_menu_element" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.request.locale | language_name }}
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% for lang in locales %}
+                        <li>
+                            <a class="pmk_menu_element" href="{{ path('pumukit_locale', {'locale': lang } ) }}"> {{ lang | language_name }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+
+        <li>
+            {% include 'PumukitLegacyWebTVBundle:Index:loginbox.html.twig' %}
+        </li>
+    </ul>
+
+</div>
+
+{% if menu_stats %}
+    <div class="row widget slidebar stats">
+        {{ render(controller('PumukitLegacyWebTVBundle:Widget:stats')) }}
+    </div>
+{% endif %}

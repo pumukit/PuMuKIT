@@ -2,13 +2,13 @@
 
 namespace Pumukit\BasePlayerBundle\Controller;
 
+use Pumukit\WebTVBundle\Controller\WebTVControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\WebTVBundle\Controller\WebTVController;
 
-abstract class BasePlaylistController extends Controller implements WebTVController
+abstract class BasePlaylistController extends Controller implements WebTVControllerInterface
 {
     /**
      * @Route("/playlist/{id}", name="pumukit_playlistplayer_index", defaults={"no_channels": true} )

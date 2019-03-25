@@ -4,6 +4,9 @@ namespace Pumukit\WebTVBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class IndexControllerTest.
+ */
 class IndexControllerTest extends WebTestCase
 {
     public function testIndex()

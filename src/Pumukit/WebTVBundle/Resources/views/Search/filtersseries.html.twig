@@ -1,4 +1,4 @@
-<form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_series') }}" class="row">
+<form id="form_search" name="busqueda" method="get" action="{{ path('pumukit_webtv_search_series') }}">
     <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
     <div class="form-group col-md-4">
         <label for="search">{% trans %}Search{% endtrans %}:</label>
@@ -117,7 +117,8 @@
     </script>
 
 </form>
-<div>
+
+<div class="col-xs-12">
     <a href="{{ path('pumukit_webtv_search_multimediaobjects') }}">
         {% trans %}Search by multimedia objects{% endtrans %}
     </a>

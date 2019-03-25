@@ -12,12 +12,20 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\User;
 
-class ByUserController extends Controller implements WebTVController
+/**
+ * Class ByUserController.
+ */
+class ByUserController extends Controller implements WebTVControllerInterface
 {
     /**
      * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     * @Template("PumukitWebTVBundle:ByUser:index.html.twig")
+     * @Template("PumukitWebTVBundle:ByUser:template.html.twig")
+     *
+     * @param User    $user
+     * @param Request $request
+     *
+     * @return array
      */
     public function multimediaObjectsAction(User $user, Request $request)
     {
@@ -26,56 +34,77 @@ class ByUserController extends Controller implements WebTVController
 
         $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
 
-        $mmobjs = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, array('public_date' => -1));
-        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_multimediaobjects', array('username' => $user->getUsername()));
+        $mmobjs = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
+        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_multimediaobjects', ['username' => $user->getUsername()]);
         $title = $user->getFullname();
 
         $pagerfanta = $this->createPager($mmobjs, $request->query->get('page', 1), $limit);
 
-        $title = $this->get('translator')->trans('%title%', array('%title%' => $title));
+        $title = $this->get('translator')->trans('%title%', ['%title%' => $title]);
 
-        return array(
+        return [
             'title' => $title,
             'objects' => $pagerfanta,
             'user' => $user,
             'scroll_list' => $scroll_list,
-            'number_cols' => $numberCols,
             'type' => 'multimediaobject',
-        );
+            'objectByCol' => $numberCols,
+            'show_info' => true,
+            'show_description' => false,
+        ];
     }
 
     /**
      * @Route("/users/{username}/series",  name="pumukit_webtv_byuser_series", defaults={"username": null})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     * @Template("PumukitWebTVBundle:ByUser:index.html.twig")
+     * @Template("PumukitWebTVBundle:ByUser:template.html.twig")
+     *
+     * @param User    $user
+     * @param Request $request
+     *
+     * @return array
      */
     public function seriesAction(User $user, Request $request)
     {
         list($scroll_list, $numberCols, $limit, $roleCode) = $this->getParameters();
         $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
         $person = $user->getPerson();
-        $series = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, array('public_date' => -1));
+        $series = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
 
-        $pagerfanta = $this->createPager($series, $request->query->get('page', 1), $limit);
-        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', array('username' => $user->getUsername()));
+        $pagerfanta = $this->createPager($series, $request->query->get('page', 1));
+        $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_series', ['username' => $user->getUsername()]);
 
         $title = $user->getFullname();
-        $title = $this->get('translator')->trans('%title% (Series)', array('%title%' => $title));
+        $title = $this->get('translator')->trans('%title% (Series)', ['%title%' => $title]);
 
-        return array(
+        return [
             'title' => $title,
             'objects' => $pagerfanta,
             'user' => $user,
             'scroll_list' => $scroll_list,
-            'number_cols' => $numberCols,
             'type' => 'series',
-        );
+            'objectByCol' => $numberCols,
+            'show_info' => true,
+            'show_description' => false,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getByUserPagerTemplate()
+    {
+        return 'PumukitWebTVBundle:ByUser:template_pager.html.twig';
     }
 
     /**
      * @Route("/users/{username}/pager/{type}", name="pumukit_webtv_byuser_objects_pager", defaults={"username": null, "type": "multimediaobject"})
      * @ParamConverter("user", class="PumukitSchemaBundle:User", options={"mapping": {"username": "username"}})
-     * @Template()
+     *
+     * @param User    $user
+     * @param Request $request
+     *
+     * @return Response
      */
     public function userObjectsPagerAction(User $user, Request $request)
     {
@@ -91,10 +120,10 @@ class ByUserController extends Controller implements WebTVController
 
         if ('multimediaobject' === $type) {
             $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-            $qb = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, array('public_date' => -1));
+            $qb = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         } else {
             $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-            $qb = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, array('public_date' => -1));
+            $qb = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         }
 
         list($date, $last) = $this->getNextLatestUploads($date, $qb);
@@ -104,13 +133,18 @@ class ByUserController extends Controller implements WebTVController
             $dateHeader = $date->format('m/Y');
         }
 
-        $response = new Response($this->renderView('PumukitWebTVBundle:ByUser:list.html.twig', array(
-            'objects' => $last,
-            'date' => $date,
-            'number_cols' => $numberCols,
-            'limit' => $limit,
-            'scroll_list' => $scroll_list,
-        )), 200);
+        $response = new Response(
+            $this->renderView(
+                $this->getByUserPagerTemplate(),
+                [
+                    'objects' => $last,
+                    'date' => $date,
+                    'objectByCol' => $numberCols,
+                    'show_info' => true,
+                    'show_description' => false,
+                ]
+            ), 200
+        );
         $response->headers->set('X-Date', $dateHeader);
         $response->headers->set('X-Date-Month', $date->format('m'));
         $response->headers->set('X-Date-Year', $date->format('Y'));
@@ -123,20 +157,32 @@ class ByUserController extends Controller implements WebTVController
      */
     protected function getParameters()
     {
-        return array(
+        return [
             $this->container->getParameter('scroll_list_byuser'),
             $this->container->getParameter('columns_objs_byuser'),
             $this->container->getParameter('limit_objs_byuser'),
             $this->container->getParameter('pumukitschema.personal_scope_role_code'),
-        );
+        ];
     }
 
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     */
+    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->add($title, $routeName, $routeParameters);
     }
 
+    /**
+     * @param     $objects
+     * @param     $page
+     * @param int $limit
+     *
+     * @return Pagerfanta
+     */
     private function createPager($objects, $page, $limit = 10)
     {
         $adapter = new DoctrineODMMongoDBAdapter($objects);
@@ -147,16 +193,22 @@ class ByUserController extends Controller implements WebTVController
         return $pagerfanta;
     }
 
+    /**
+     * @param $dateStart
+     * @param $dateEnd
+     * @param $qb
+     *
+     * @return mixed
+     */
     protected function getLatestUploadsByDates($dateStart, $dateEnd, $qb)
     {
         $qb->field('public_date')->range($dateStart, $dateEnd);
 
-        return $qb->sort(array('public_date' => -1))->getQuery()->execute()->toArray();
+        return $qb->sort(['public_date' => -1])->getQuery()->execute()->toArray();
     }
 
     /**
      * Gets the next latest uploads month, starting with the month given and looking 24 months forward.
-     *
      * If it can't find any objects, returns an empty array.
      *
      * @return array
@@ -176,6 +228,6 @@ class ByUserController extends Controller implements WebTVController
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $qb);
         } while (empty($last) && $counter < 24);
 
-        return array($dateEnd, $last);
+        return [$dateEnd, $last];
     }
 }

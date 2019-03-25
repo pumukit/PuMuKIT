@@ -587,6 +587,18 @@
         <source>loading</source>
         <target xml:lang="gl" state="needs-translation">loading</target>
       </trans-unit>
+      <trans-unit id="696e30f840c911e9b210d663bd873d93" resname="Most viewed on the last month">
+        <source>Most viewed on the last month</source>
+        <target>Mais vistos no último mes</target>
+      </trans-unit>
+      <trans-unit id="c8e4312841b811e9b210d663bd873d93" resname="Hightlight">
+        <source>Hightlight</source>
+        <target>Destacados</target>
+      </trans-unit>
+      <trans-unit id="92dd140641df11e9b210d663bd873d93" resname="Show more">
+        <source>Show more</source>
+        <target>Ver máis</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

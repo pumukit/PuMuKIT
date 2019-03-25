@@ -1,0 +1,68 @@
+<!--STICKY HEADER-->
+<div class="row header sticky hidden-xs hidden-md hidden-sm" style="display: none">
+    <div class="header-content">
+        <div class="col-xs-6 col-xs-offset-1">
+            <span>
+                <h2 style="margin-top:10px;">{{ pumukit2_info['description'] | trans }}</h2>
+            </span>
+        </div>
+        <div class="col-xs-4">
+            <div style="float:right;" ;>
+                {% include 'PumukitLegacyWebTVBundle:Layout:search_box.html.twig' with {'id': 'sticky'} %}
+            </div>
+        </div>
+        <div class="col-xs-1">
+            {{ render( controller( 'PumukitLegacyWebTVBundle:Widget:languageselect') ) }}
+        </div>
+    </div>
+</div>
+<!--STICKY HEADER-->
+
+<script>
+    // Hide Header on on scroll down
+    var didScroll;
+    var lastScrollTop = 0;
+    var delta = 5;
+    $('.header.sticky').removeClass('hidden');
+    var navbarHeight = $('.header.sticky').outerHeight();
+    $(window).scroll(function (event) {
+        didScroll = true;
+    });
+
+    setInterval(function () {
+        if (didScroll) {
+            hasScrolled();
+            didScroll = false;
+        }
+        wawawa = $('.row.header').first();
+        caca = wawawa.offset().top + wawawa.outerHeight() - $(window).scrollTop();
+        if (caca > 0) {
+            $('.row.header.sticky').hide();
+        }
+        else {
+            $('.row.header.sticky').show();
+        }
+    }, 250);
+
+    function hasScrolled() {
+        var st = $(this).scrollTop();
+
+        // Make sure they scroll more than delta
+        if (Math.abs(lastScrollTop - st) <= delta)
+            return;
+
+        // If they scrolled down and are past the navbar, add class .nav-up.
+        // This is necessary so you never see what is "behind" the navbar.
+        if (st > lastScrollTop && st > navbarHeight) {
+            // Scroll Down
+            $('.header.sticky').removeClass('nav-down').addClass('nav-up');
+        } else {
+            // Scroll Up
+            if (st + $(window).height() < $(document).height()) {
+                $('.header.sticky').removeClass('nav-up').addClass('nav-down');
+            }
+        }
+
+        lastScrollTop = st;
+    }
+</script>

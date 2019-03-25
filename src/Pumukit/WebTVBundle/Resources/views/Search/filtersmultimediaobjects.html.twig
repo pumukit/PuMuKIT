@@ -1,4 +1,4 @@
-<form id="form_search" name="busqueda" method="get" class="row">
+<form id="form_search" name="busqueda" method="get">
     <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
     <div class="form-group col-md-{{ parent_tag_optional is null or blocked_tag ? 6 : 3 }}">
         <label for="search">{% trans %}Search{% endtrans %}:</label>
@@ -13,7 +13,7 @@
     </div>
     {% if parent_tag is not null and (blocked_tag is null or not blocked_tag.isDescendantOf(parent_tag)) %}
         <div class="form-group col-md-3 col-sm-4">
-            <label for="tags">{{ parent_tag.label }}:</label>
+            <label for="tags">{{ "Categories"|trans }}:</label>
             <select id="tags" name="tags[]" class="form-control" onchange="submitForm(this);">
                 <option value="" {% if tags_found == "" %} selected="selected" {% endif %}>{% trans %}All{% endtrans %}</option>
                 {% for tag in parent_tag.children if tag.title != "" %}
@@ -193,7 +193,7 @@
 
 </form>
 
-<div>
+<div class="col-xs-12">
     <a href="{{ path('pumukit_webtv_search_series') }}">
         {% trans %}Search by series{% endtrans %}
     </a>

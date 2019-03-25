@@ -4,18 +4,32 @@ namespace Pumukit\WebTVBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\WebTVBundle\Controller\WebTVController;
+use Pumukit\WebTVBundle\Controller\WebTVControllerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
+/**
+ * Class FilterListener.
+ */
 class FilterListener
 {
+    /**
+     * @var DocumentManager
+     */
     private $dm;
 
+    /**
+     * FilterListener constructor.
+     *
+     * @param DocumentManager $documentManager
+     */
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
     }
 
+    /**
+     * @param FilterControllerEvent $event
+     */
     public function onKernelController(FilterControllerEvent $event)
     {
         $req = $event->getRequest();
@@ -36,8 +50,8 @@ class FilterListener
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
         $deprecatedCheck = false && (false !== strpos($req->attributes->get('_controller'), 'WebTVBundle'));
 
-        if (($controller[0] instanceof WebTVController /*deprecated*/ || $deprecatedCheck)
-                && $isFilterActivated) {
+        if (($controller[0] instanceof WebTVControllerInterface /*deprecated*/ || $deprecatedCheck)
+            && $isFilterActivated) {
             if ($this->dm->getFilterCollection()->isEnabled('frontend')) {
                 return;
             }
@@ -45,9 +59,12 @@ class FilterListener
             $filter = $this->dm->getFilterCollection()->enable('frontend');
 
             if (isset($routeParams['show_hide']) && $routeParams['show_hide']) {
-                $filter->setParameter('status', array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE)));
+                $filter->setParameter('status', ['$in' => [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE]]);
             } elseif (isset($routeParams['show_block']) && $routeParams['show_block']) {
-                $filter->setParameter('status', array('$in' => array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE, MultimediaObject::STATUS_BLOCKED)));
+                $filter->setParameter(
+                    'status',
+                    ['$in' => [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE, MultimediaObject::STATUS_BLOCKED]]
+                );
             } else {
                 $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
             }

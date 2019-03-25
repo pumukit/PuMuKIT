@@ -8,28 +8,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AnnouncesController extends Controller implements WebTVController
+/**
+ * Class AnnouncesController.
+ */
+class AnnouncesController extends Controller implements WebTVControllerInterface
 {
     /**
      * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
-     * @Template()
+     * @Template("PumukitWebTVBundle:Announces:template.html.twig")
+     *
+     * @return array
      */
-    public function latestUploadsAction(Request $request)
+    public function latestUploadsAction()
     {
         $templateTitle = $this->container->getParameter('menu.announces_title');
         $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_announces_latestuploads');
 
-        return array('template_title' => $templateTitle);
+        return [
+            'template_title' => $templateTitle,
+            'objectByCol' => $this->container->getParameter('columns_objs_announces'),
+            'show_info' => false,
+            'show_more' => false,
+        ];
     }
 
+    /**
+     * @return string
+     */
     protected function getLatestUploadsPagerTemplate()
     {
-        return 'PumukitWebTVBundle:Announces:latestUploadsPager.html.twig';
+        return 'PumukitWebTVBundle:Announces:template_pager.html.twig';
     }
 
     /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function latestUploadsPagerAction(Request $request)
     {
@@ -48,7 +65,18 @@ class AnnouncesController extends Controller implements WebTVController
         $dateHeader = '---';
 
         if (!empty($last)) {
-            $response = new Response($this->renderView($this->getLatestUploadsPagerTemplate(), array('last' => $last, 'date' => $date, 'number_cols' => $numberCols)), 200);
+            $response = new Response(
+                $this->renderView(
+                    $this->getLatestUploadsPagerTemplate(),
+                    [
+                        'last' => $last,
+                        'date' => $date,
+                        'objectByCol' => $numberCols,
+                        'show_info' => false,
+                        'show_more' => false,
+                    ]
+                ), 200
+            );
             $dateHeader = $date->format('m/Y');
             $response->headers->set('X-Date-Month', $date->format('m'));
             $response->headers->set('X-Date-Year', $date->format('Y'));
@@ -61,13 +89,15 @@ class AnnouncesController extends Controller implements WebTVController
 
     /**
      * To extends this controller.
+     *
+     * @return array
      */
     protected function getParameters()
     {
-        return array(
+        return [
             $this->container->getParameter('columns_objs_announces'),
             $this->container->getParameter('show_latest_with_pudenew'),
             $this->container->getParameter('use_record_date_announces'),
-        );
+        ];
     }
 }

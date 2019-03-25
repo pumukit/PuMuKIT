@@ -1,0 +1,143 @@
+<!--INFO-->
+<!--Multimedia object tags-->
+<div class="row">
+    {% include 'PumukitLegacyWebTVBundle:MultimediaObject:tags.html.twig' %}
+</div>
+<!--VIEWED/DATE-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="date">
+            {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate().format("d/m/Y") }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="num_views">
+            {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
+            {% if multimediaObject.getNumview() > 1 %}
+                {% trans %} times {% endtrans %}
+            {% else %}
+                {% trans %} time {% endtrans %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--CHAPTER MARKS-->
+{% if editor_chapters is defined and editor_chapters %}
+    <strong>{% trans %}Marks:{% endtrans %}</strong>
+    <ol style="list-style-type:decimal;padding-left:40px;">
+        {% for chapter in editor_chapters %}
+            <li>{{ chapter.title }} :
+                <a style="cursor:pointer;color:blue"
+                   onMouseOver="this.style.textDecoration='underline'"
+                   onMouseOut="this.style.textDecoration='none'"
+                   onClick="paella_video = document.getElementById('paellaiframe').contentWindow.paella.player.videoContainer;
+                           paella_video.seekToTime({{ chapter.real_time }} - paella_video.trimStart())">
+                    {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds")|date('H:i:s') }}
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+<!--SUBTITLE/DESCRIPTION-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="mmobj-title">
+            {% if multimediaObject.getSubtitle() %}
+                <h4> {{ multimediaObject.getSubtitle() }} </h4>
+            {% endif %}
+        </div>
+        <p class="description">
+            {{ multimediaObject.getDescription()|nl2br }}
+        </p>
+
+        {% if not multimediaObject.getSeries().isHide() %}
+            {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
+                <div>
+                    {% trans %}i18n.one.Series{% endtrans %}:
+                    <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
+                    </a>
+                </div>
+            {% else %}
+                <div>
+                    {% trans %}i18n.one.Series{% endtrans %}:
+                    <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
+                        {{ multimediaObject.getSeriesTitle()|default('') }}
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+        <!-- PERSONS ACT -->
+        <div class="persons">
+            {% set roles = sort_roles(multimediaObject, true) %}
+            {% for role in roles %}
+                {% for person in role.people %}
+                    <div>
+                        <div class="person"><span class="glyphicon glyphicon-user"></span>
+                            {{ role.getText() }}
+                            {{ person.getHName() }}
+                        </div>
+                        {{ person.getInfo() }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-6">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {% trans %} Attachments {% endtrans %}
+            </div>
+            <div class="panel-body">
+                {% set none_attach = true %}
+
+                {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="material">
+                        <span class="glyphicon glyphicon-facetime-video"></span>
+                        <a download href="{{ track_url(track) }}?forcedl=1">
+                            {% if track.isOnlyAudio() %}
+                                {% trans %}Download this audio{% endtrans %}
+                            {% else %}
+                                {% trans %}Download this video{% endtrans %}
+                            {% endif %}
+                            <span class="pull-right">{{ (track.getSize() / 1048576)|number_format(2) }}MB</span>
+                        </a>
+                    </div>
+                {% endfor %}
+                <!--MATERIALS-->
+                {% for material in multimediaObject.getMaterials() if not material.getHide() and showDownloads  %}
+                    {% set none_attach = false %}
+                    <div class="material">
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                        <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                    </div>
+                {% endfor %}
+                <!--LINKS-->
+                {% for link in multimediaObject.getLinks() and showDownloads %}
+                    {% set none_attach = false %}
+                    <div class="link">
+                        <a target="_blank" href="{{ link.getUrl() }}">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            {{ link.getName() }}
+                        </a>
+                    </div>
+                {% endfor %}
+                {% if none_attach %}
+                    <strong>{% trans %} There are no attachments {% endtrans %}</strong>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        {% include 'PumukitLegacyWebTVBundle:MultimediaObject:share.html.twig' %}
+    </div>
+</div>
+<br>

@@ -4,7 +4,6 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,20 +15,20 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class SecurityController extends Controller
 {
     /**
-     * @param Request          $request
-     * @param MultimediaObject $multimediaObject
-     *
-     * @return array
-     *
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
      * @Template("PumukitWebTVBundle:Security:editButton.html.twig")
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return array
      */
     public function canEditAction(Request $request, $id)
     {
         //Performance: No queries for anonymous users
         $request->attributes->set('noindex', true);
         if (!$this->isGranted(PermissionProfile::SCOPE_PERSONAL) && !$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
-            return array('access' => false, 'multimediaObject' => null);
+            return ['access' => false, 'multimediaObject' => null];
         }
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
@@ -44,6 +43,6 @@ class SecurityController extends Controller
             throw new AccessDeniedException('Not enought permissions to edit');
         }
 
-        return array('access' => $canEdit, 'multimediaObject' => $multimediaObject);
+        return ['access' => $canEdit, 'multimediaObject' => $multimediaObject];
     }
 }

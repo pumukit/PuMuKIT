@@ -6,10 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class LocaleController extends Controller implements WebTVController
+/**
+ * Class LocaleController.
+ */
+class LocaleController extends Controller implements WebTVControllerInterface
 {
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
+     *
+     * @param         $locale
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function changeAction($locale, Request $request)
     {
@@ -37,7 +45,7 @@ class LocaleController extends Controller implements WebTVController
         }
 
         //array_filter ARRAY_FILTER_USE_BOTH only in 5.6
-        $params = array();
+        $params = [];
         foreach ($route as $k => $v) {
             if ('_' != $k[0]) {
                 $params[$k] = $v;

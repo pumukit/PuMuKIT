@@ -2,7 +2,9 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
+use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
 use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -11,11 +13,11 @@ use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
+/**
+ * Class PumukitExtension.
+ */
 class PumukitExtension extends \Twig_Extension
 {
-    /**
-     * @var string
-     */
     protected $defaultPic;
 
     /**
@@ -23,12 +25,39 @@ class PumukitExtension extends \Twig_Extension
      */
     protected $context;
 
+    /**
+     * @var DocumentManager
+     */
     private $dm;
+
+    /**
+     * @var CaptionService
+     */
     private $captionService;
+
+    /**
+     * @var PicService
+     */
     private $picService;
+
+    /**
+     * @var LinkService
+     */
     private $linkService;
+
     private $mmobjDurationService;
 
+    /**
+     * PumukitExtension constructor.
+     *
+     * @param DocumentManager $documentManager
+     * @param RequestContext  $context
+     * @param                 $defaultPic
+     * @param CaptionService  $captionService
+     * @param PicService      $picService
+     * @param LinkService     $linkService
+     * @param                 $mmobjDurationService
+     */
     public function __construct(DocumentManager $documentManager, RequestContext $context, $defaultPic, CaptionService $captionService, PicService $picService, LinkService $linkService, $mmobjDurationService)
     {
         $this->dm = $documentManager;
@@ -40,34 +69,37 @@ class PumukitExtension extends \Twig_Extension
         $this->mmobjDurationService = $mmobjDurationService;
     }
 
+    /**
+     * @return array
+     */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('first_url_pic', array($this, 'getFirstUrlPicFilter')),
-            new \Twig_SimpleFilter('precinct_fulltitle', array($this, 'getPrecinctFulltitle')),
-            new \Twig_SimpleFilter('duration_minutes_seconds', array($this, 'getDurationInMinutesSeconds')),
-            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
-        );
+        return [
+            new \Twig_SimpleFilter('first_url_pic', [$this, 'getFirstUrlPicFilter']),
+            new \Twig_SimpleFilter('precinct_fulltitle', [$this, 'getPrecinctFulltitle']),
+            new \Twig_SimpleFilter('duration_minutes_seconds', [$this, 'getDurationInMinutesSeconds']),
+            new \Twig_SimpleFilter('duration_string', [$this, 'getDurationString']),
+        ];
     }
 
     /**
-     * Get functions.
+     * @return array
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('public_broadcast', array($this, 'getPublicBroadcast')),
-            new \Twig_SimpleFunction('precinct', array($this, 'getPrecinct')),
-            new \Twig_SimpleFunction('precinct_of_series', array($this, 'getPrecinctOfSeries')),
-            new \Twig_SimpleFunction('captions', array($this, 'getCaptions')),
-            new \Twig_SimpleFunction('iframeurl', array($this, 'getIframeUrl')),
-            new \Twig_SimpleFunction('path_to_tag', array($this, 'getPathToTag')),
-            new \Twig_SimpleFunction('mmobj_duration', array($this, 'getMmobjDuration')),
-            new \Twig_SimpleFunction('next_event_session', array($this, 'getNextEventSession')),
-            new \Twig_SimpleFunction('live_event_session', array($this, 'getLiveEventSession')),
-            new \Twig_SimpleFunction('precinct_of_mmo', array($this, 'getPrecinctOfMultimediaObject')),
-            new \Twig_SimpleFunction('count_published_mmobjs', array($this, 'getMMobjsFromSerie')),
-        );
+        return [
+            new \Twig_SimpleFunction('public_broadcast', [$this, 'getPublicBroadcast']),
+            new \Twig_SimpleFunction('precinct', [$this, 'getPrecinct']),
+            new \Twig_SimpleFunction('precinct_of_series', [$this, 'getPrecinctOfSeries']),
+            new \Twig_SimpleFunction('captions', [$this, 'getCaptions']),
+            new \Twig_SimpleFunction('iframeurl', [$this, 'getIframeUrl']),
+            new \Twig_SimpleFunction('path_to_tag', [$this, 'getPathToTag']),
+            new \Twig_SimpleFunction('mmobj_duration', [$this, 'getMmobjDuration']),
+            new \Twig_SimpleFunction('next_event_session', [$this, 'getNextEventSession']),
+            new \Twig_SimpleFunction('live_event_session', [$this, 'getLiveEventSession']),
+            new \Twig_SimpleFunction('precinct_of_mmo', [$this, 'getPrecinctOfMultimediaObject']),
+            new \Twig_SimpleFunction('count_published_mmobjs', [$this, 'getMMobjsFromSerie']),
+        ];
     }
 
     /**
@@ -97,7 +129,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $embeddedTags
      *
-     * @return mixed
+     * @return EmbeddedTag|null
      */
     public function getPrecinct($embeddedTags)
     {
@@ -117,7 +149,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $multimediaObjects
      *
-     * @return bool|mixed
+     * @return EmbeddedTag|bool
      */
     public function getPrecinctOfSeries($multimediaObjects)
     {
@@ -149,9 +181,9 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct of Series.
      *
-     * @param $multimediaObject
+     * @param MultimediaObject $multimediaObject
      *
-     * @return mixed
+     * @return EmbeddedTag|null
      */
     public function getPrecinctOfMultimediaObject($multimediaObject)
     {
@@ -163,7 +195,7 @@ class PumukitExtension extends \Twig_Extension
     /**
      * Get precinct full title.
      *
-     * @param $precinctEmbeddedTag
+     * @param EmbeddedTag $precinctEmbeddedTag
      *
      * @return string
      */
@@ -173,7 +205,7 @@ class PumukitExtension extends \Twig_Extension
 
         if ($precinctEmbeddedTag) {
             $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-            $precinctTag = $tagRepo->findOneByCod($precinctEmbeddedTag->getCod());
+            $precinctTag = $tagRepo->findOneBy(['cod' => $precinctEmbeddedTag->getCod()]);
             if ($precinctTag) {
                 if ($precinctTag->getTitle()) {
                     $fulltitle = $precinctTag->getTitle();
@@ -276,7 +308,7 @@ class PumukitExtension extends \Twig_Extension
      * @param bool             $isHTML5          default=false
      * @param bool             $isDownloadable   default=false
      *
-     * @return mixed|string
+     * @return array
      */
     public function getIframeUrl($multimediaObject, $isHTML5 = false, $isDownloadable = false)
     {
@@ -308,7 +340,13 @@ class PumukitExtension extends \Twig_Extension
         return $url;
     }
 
-    public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null, $parameters = array(), $relative = false)
+    /**
+     * @param null $tagCod
+     * @param null $useBlockedTagAsGeneral
+     *
+     * @return string
+     */
+    public function getPathToTag($tagCod = null, $useBlockedTagAsGeneral = null)
     {
         return $this->linkService->generatePathToTag($tagCod, $useBlockedTagAsGeneral);
     }
@@ -318,7 +356,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @param $event
      *
-     * @return string
+     * @return string|\DateTime
      *
      * @throws \Exception
      */
@@ -351,7 +389,7 @@ class PumukitExtension extends \Twig_Extension
      *
      * @throws \Exception
      */
-    public function getLiveEventSession($multimediaObject)
+    public function getLiveEventSession(MultimediaObject $multimediaObject)
     {
         $now = new \DateTime();
 
@@ -378,14 +416,14 @@ class PumukitExtension extends \Twig_Extension
      *
      * @return int
      */
-    public function getMMobjsFromSerie($series)
+    public function getMMobjsFromSerie(Series $series)
     {
-        $criteria = array(
+        $criteria = [
             'series' => new \MongoId($series),
             'status' => MultimediaObject::STATUS_PUBLISHED,
             'tags.cod' => 'PUCHWEBTV',
             'islive' => false,
-        );
+        ];
 
         $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
 

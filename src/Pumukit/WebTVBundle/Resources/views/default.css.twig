@@ -1,945 +1,162 @@
 {% block body %}
-{% autoescape false %}
+    {% autoescape false %}
 
-{# SET VARIABLES #}
-{% set default_contrast_background = default_contrast_background | default("#c05800") %}
-{% set default_light_background = default_light_background | default("#767676") %}
-{% set default_content_background = default_content_background | default("#fff") %}
+    {% set primary_color = '#ed6d00' %}
+    {% set font_color = '#ffffff' %}
 
-{% set default_contrast_font = default_contrast_font | default("#858585") %}
-{% set default_light_font = default_light_font | default("#fff") %}
-{% set default_content_font = default_content_font | default("#111") %}
-{% set default_content_link_font = default_content_link_font | default("#222") %}
-{% set default_content_link_selected_font = default_content_link_selected_font | default("#444") %}
+    {% set default_contrast_background = default_contrast_background | default("#c05800") %}
+    {% set default_light_background = default_light_background | default("#767676") %}
+    {% set default_content_background = default_content_background | default("#fff") %}
 
-{% set breadcrumbs_separator = breadcrumbs_separator | default('»') %}
-{% set content_max_width = content_max_width | default("1200px") %}
-{% set menu_padding = menu_padding | default("10px 10px 10px 30px") %}
-{% set page_background = page_background | default("#ddd") %}
+    {% set default_light_font = default_light_font | default("#fff") %}
+    {% set default_content_font = default_content_font | default("#111") %}
 
-{# DEFAULT ASPECT RATIO: 16:9#}
-{% set thumbnail_width = thumbnail_width|default(160) %}
-{% set thumbnail_height = thumbnail_height|default(90) %}
-{% set thumbnail_border = thumbnail_border|default(2) %}
-{% set minithumbnail_width = minithumbnail_width|default(thumbnail_width*3/4) %}
-{% set minithumbnail_height = minithumbnail_height|default(thumbnail_height*3/4) %}
-{% set minithumbnail_border = minithumbnail_border|default(1) %}
+    {% set page_background = page_background | default("#ffffff") %}
 
-{# DEPENDABLE: If not set they will use other variables as default #}
-{% set breadcrumbs_background = breadcrumbs_background | default(default_contrast_background) %}
-{% set breadcrumbs_font_color = breadcrumbs_font_color | default(default_contrast_font) %}
-{% set breadcrumbs_back_background = breadcrumbs_back_background | default(breadcrumbs_background) %}
-{% set breadcrumbs_max_width = breadcrumbs_max_width | default(content_max_width) %}
-{% set content_background = content_background | default(default_content_background) %}
-{% set header_max_width = header_max_width | default(content_max_width) %}
-{% set header_background = header_background | default(default_content_background) %}
-{% set header_font = header_font | default('#000') %}
-{% set label_background = label_background | default('#767676') %}
-{% set label_font = label_font | default('#fff') %}
-{% set menu_background = menu_background | default(default_light_background) %}
-{% set menu_font_color = menu_font_color | default(default_light_font) %}
-{% set menu_selected_background = menu_selected_background | default(default_light_font) %}
-{% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
-{% set mmobj_font_color = mmobj_font_color | default(default_content_font) %}
-{% set mmobj_selected_font_color = mmobjs_selected_font_color | default(default_content_font) %}
-{% set mmobj_selected_background = mmobj_selected_background | default('#ededed') %}
-{% set mmobj_serie_background = mmobj_serie_background | default(mmobj_selected_background) %}
-{% set mmobj_serie_font = mmobj_serie_font | default(mmobj_selected_font_color) %}
-{% set navbar_background = navbar_background | default(menu_background) %}
-{% set navbar_font = navbar_background | default(default_light_font) %}
-{% set panel_default_background = panel_default_background | default(default_light_background) %}
-{% set panel_default_font = panel_default_font | default(default_light_font) %}
-{% set footer_max_width = footer_max_width | default(content_max_width) %}
-{% set panel_heading_background = panel_heading_background | default('#ededed') %}
-{% set panel_heading_font = panel_heading_font | default('#000') %}
+    {% set content_background = content_background | default(default_content_background) %}
+    {% set menu_background = menu_background | default(default_light_background) %}
+    {% set menu_font_color = menu_font_color | default(default_light_font) %}
+    {% set menu_selected_background = menu_selected_background | default(default_light_font) %}
+    {% set menu_selected_font_color = menu_selected_font_color | default(default_light_background) %}
 
-{% set big_breadcrumbs = big_breadcrumbs is defined ? big_breadcrumbs : true %}
-
-{# END SET VARIABLES#}
-body {
-    background: {{ page_background }};
-}
-
-ul, ol {
-    list-style:none;
-    margin: 0px;
-    padding: 0px;
-}
-h1 {
-    font-size: 40px;
-    font-weight: bold;
-    color: {{ default_content_font }};
-}
-h2 {
-    color: {{ default_content_font }};
-
-}
-h3 {
-    color: {{ default_content_font }};
-}
-h4 {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-footer {
-    background: black;
-    color: grey;
-}
-
-/*END BASE CSS*/
-.footer-content {
-    margin: 0 auto;
-    max-width: {{footer_max_width}};
-    padding: 20px;
-}
-.footer-social {
-    font-size: 40px;
-}
-.footer-social a {
-    color: white;
-}
-.footer-social a:hover, .footer-social a:focus {
-    text-decoration: none;
-}
-p.disabled {
-    color: #767676;
-}
-.edit-pmk-icon {
-    font-size:17px;
-    color: {{ default_contrast_background }};
-}
-/*BOOTSTRAP OVERRIDE*/
-.label {
-    margin: 0px;
-    padding: 0px;
-    background: none;
-    color: {{ label_font }};
-}
-.label a{
-    background: {{ label_background }};
-    color: {{ label_font }};
-    padding: 5px;
-    margin: 2px;
-    border-radius: 5px;
-    display: inline-block;
-}
-.label:hover a{
-    background: grey;
-    color: #ececec;
-}
-.breadcrumb {
-    color: {{ breadcrumbs_font_color }};
-    background: {{ breadcrumbs_background }};
-    vertical-align:middle;
-    line-height: 100%;
-}
-.breadcrumb a{
-    color: {{ breadcrumbs_font_color }};
-}
-.breadcrumb a:hover{
-    color: {{ breadcrumbs_font_color }};
-    text-decoration: none;
-}
-
-.breadcrumbs_wrapper {
-    margin: 0 auto;
-    max-width: {{ content_max_width }};
-}
-.breadcrumbs_color {
-    background: {{ breadcrumbs_back_background }};
-}
-{% if big_breadcrumbs %}
-.title-for-crumbs {
-    display: none;
-}
-@media (max-width: 1199px) {
-.title-for-crumbs {
-
-    display: none;
-}
-}
-.title-for-crumbs.always-hide {
-
-    display: none;
-}
-.breadcrumb > li:last-of-type {
-    display: block;
-    font-size: 3.8em;
-    content: "";
-    line-height: 100%;
-}
-.breadcrumb > li:last-of-type:after  {
-    content: "";
-}
-.breadcrumb > li:after {
-    content: "{{ breadcrumbs_separator }}";
-    padding: 0px 5px;
-
-}
-.breadcrumb > li + li:before {
-    content: "\00a0";
-    padding: 0px;
-
-}
-.breadcrumb li:first-child {
-    padding-bottom: 10px;
-}
-
-{% endif %}
-
-
-.navbar {
-    margin-bottom: 0px;
-}
-.navbar-brand {
-    padding: 5px 5px 5px 15px;
-}
-.navbar-default {
-    background-color: {{ navbar_background }};
-    border-color: {{ navbar_background }};
-    border: none;
-}
-
-.navbar-collapse {
-    box-shadow: none;
-    border: none;
-}
-.panel-default > .panel-heading {
-    background: {{ panel_heading_background }};
-    color: {{ panel_heading_font }};
-}
-
-/*END BOOTSTRAP OVERRIDE*/
-
-.col-no-padding {
-    overflow: auto;
-}
-.nomargin {
-    margin: 0;
-}
-.nopadding {
-    padding: 0;
-}
-.date, .num_views {
-    text-align: right;
-}
-.date.mmobj {
-    font-size: 1.2em;
-    position: absolute;
-    bottom: 10%;
-    left: {{thumbnail_width+20}}px;
-    position: absolute;
-    text-align: left;
-}
-.date.serial {
-    left: {{thumbnail_width+30}}px;
-    bottom: 9%;
-    position: absolute;
-    font-size: 1.2em;
-    text-align: inherit;
-}
-.header-content {
-    margin: 0 auto;
-    max-width: {{ header_max_width }};
-    color: {{ header_font }};
-    min-height: 80px;
-    padding: 15px 0px;
-}
-.header-content a, .mobile_header a{
-    color: {{ header_font }};
-}
-.header-content .btn, .mobile_header .btn{
-    color: {{ header_font }};
-    background: {{ header_background }};
-}
-.info.serial {
-    padding-left: 20px;
-}
-.info {
-    float: left;
-    padding-left: 10px;
-    width: 100%;
-    min-height: 60px;
-    overflow: hidden;
-    display: inline;
-    word-wrap: break-word;
-}
-.info .title{
-    font-weight: bold;
-    font-size: 1em;
-    max-height: 2.7em;
-    word-wrap: break-word;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-}
-.info .subtitle {
-    font-weight: 400;
-    margin: 5px 5px;
-    font-size: 0.9em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.info-wrapper {
-    overflow: hidden;
-}
-.language_select_wrapper {
-    float: right;
-    margin: 8px;
-}
-.language_select_wrapper .btn{
-    background: none;
-    border: none;
-}
-
-.main-content {
-    overflow: hidden;
-    background: {{ content_background }};
-    min-height: 600px;
-}
-.main-content-wrapper {
-    background: {{ content_background }};
-}
-.menu {
-    background: {{ menu_background }};
-    border: 0;
-}
-.mobile_header {
-    background: {{ header_background }};
-    color: {{ header_font }};
-}
-.mobile_header .navbar-toggle {
-    padding: 7px 10px;
-    height: 34px;
-}
-
-body.opencast-layout .main-content {
-    max-width: 100%;
-}
-body.opencast-layout .breadcrumb_wrapper {
-    max-width: 100%;
-}
-
-.mmobj_objects {
-    margin-left: 3%;
-}
-.mmobj_serie {
-    background: {{ mmobj_serie_background }};
-    padding: 3% 2%;
-}
-.mmobj_serie a {
-    color: #2d699e; /* fix a11y */
-}
-.mmobj_serie small {
-    color: #656565; /* fix a11y */
-}
-.number-videos.serial {
-    position: absolute;
-    bottom: 8%;
-    right: 8%;
-    color: white;
-    font-size: 0.9em;
-    background: rgba(0,0,0,0.65);
-    padding: 1px 5px 1px 5px;
-}
-.parent-centering {
-    text-align: center;
-    /* May want to do this if there is risk the container may be narrower than the element inside */
-    white-space: nowrap;
-}
-.parent-centering:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -0.25em; /* Adjusts for spacing */
-}
-.play_icon {
-    position: absolute;
-    margin: 10px;
-    left: 0%;
-    background: url("{{asset('bundles/pumukitwebtv/images/icons/play_icon.png')}}") no-repeat center;
-    background-size: contain;
-    width: 28px;
-    height: 28px;
-    overflow: auto;
-}
-.play_icon.small {
-    margin: 5px;
-    width: 20px;
-    height: 20px;
-}
-.pumukit_mmobjs{
-    margin: 0 0%;
-    overflow: hidden;
-    color: {{ mmobj_font_color }};
-}
-.pumukit_mmobj {
-    color: {{ mmobj_font_color }};
-    height: {{thumbnail_height + 20}}px;
-    overflow: hidden;
-    margin: 10px 0px;
-    padding: 5px;
-/*    border-radius: 10px;*/
-    position: relative;
-}
-.pumukit_mmobj a{
-    color: {{ mmobj_font_color }};
-}
-@media screen and (max-device-width: 320px) {
-    .pumukit_mmobj {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-}
-.pumukit_mmobj:hover, .pumukit_mmobj:focus {
-    background: {{ mmobj_selected_background }};
-    color: {{ mmobj_selected_font_color }};
-}
-.pumukit_album {
-    position: relative;
-    float: left;
-}
-.row.pumukit {
-    margin: 0 auto;
-}
-.search-box {
-    margin: 8px;
-}
-.search-box button {
-    padding: 1px 6px;
-}
-.search-box .input-group {
-    border-radius: 8px;
-    /*overflow: hidden;*/
-}
-.search-box .input-group input.form-control {
-    border-radius: 4px;
-}
-#search-box-base,
-#search-box-mobile
-#search-box-sticky {
-    border-radius: 4px;
-    border-right: 0;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: none;
-}
-#search-box-base:focus,
-#search-box-mobile:focus,
-#search-box-sticky:focus {
-    border-color: #ccc;
-}
-.search-form {
-    margin: 10px;
-    padding: 10px;
-    background: {{ mmobj_selected_background }};
-    color: {{ mmobj_selected_font_color }};
-}
-.search-form .input-group.date {
-    width: 100%;
-}
-.search-form a {
-    color: #2d699e; /* fix a11y */
-}
-.input-group-addon {
-    background: white;
-}
-/*Thumbnails*/
-.thumbnail {
-    width: {{thumbnail_width + thumbnail_border*2}}px;
-    height: {{thumbnail_height + thumbnail_border*2}}px;
-}
-.minimmobj {
-    overflow: hidden;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-.miniinfo-wrapper {
-    overflow: hidden;
-}
-.miniinfo {
-    width: 100%;
-    margin-left: 8px;
-}
-.miniinfo .title {
-    height: 1.2em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.miniinfo .subtitle {
-    height: 1.2em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-bottom: 5px;
-}
-.minithumbnail, .thumbnail {
-    float: left;
-    display: inline;
-    margin-bottom:0px;
-    text-align: center;
-    border: 0;
-    border-radius: 0px;
-    box-shadow: 1px 1px 2px #666;
-    background: #F3F3F3;
-    padding: {{thumbnail_border}}px;
-    z-index: 3;
-    position: relative;
-}
-.minithumbnail {
-    padding: {{minithumbnail_border}}px;
-    width: {{minithumbnail_width + minithumbnail_border*2}}px;
-    height: {{minithumbnail_height + minithumbnail_border*2}}px;
-}
-.thumbnailwrapper {
-    padding-left: 0px;
-    min-width: 132px;
-}
-.minithumbnail.bodyMm, .thumbnail.bodyMm {
-    margin-bottom: 5px;
-}
-.thumbnail img.thumbnailimg{
-    max-width: {{thumbnail_width}}px;
-    max-height: {{thumbnail_height}}px;
-}
-.minithumbnail img.thumbnailimg{
-    max-width: {{minithumbnail_width}}px;
-    max-height: {{minithumbnail_height}}px;
-}
-.minithumbnail img.thumbnailimg, .thumbnail img.thumbnailimg{
-    margin: 0 auto;
-    display: inline-block;
-    vertical-align: middle;
-}
-.thumbnailholder {
-    top: {{thumbnail_border}}px;
-    width: {{thumbnail_width}}px;
-    height: {{thumbnail_height}}px;
-}
-.active.thumbnail{
-    border: 4px rgb(192, 68, 68) solid;
-    padding: 0px;
-}
-.active .thumbnailholder {
-    top: 0px;
-    width: {{thumbnail_width - 4}}px;
-    height: {{thumbnail_height - 4}}px;
-}
-.minithumbnailholder {
-    top: {{minithumbnail_border}}px;
-    width: {{minithumbnail_width}}px;
-    height: {{minithumbnail_height}}px;
-}
-.minithumbnailholder, .thumbnailholder {
-    position: absolute;
-    background:#000;
-    z-index: -1;
-}
-.thumbnailo:nth-child(1) {
-    z-index: 3;
-    position: relative;
-}
-.thumbnailo:nth-child(2) {
-    z-index: 2;
-    transform: scale(0.97);
-    position: absolute;
-    left: 7px;
-    top: 3px;
-}
-.thumbnailo:nth-child(3) {
-    z-index: 1;
-    transform: scale(0.94);
-    position: absolute;
-    left: 14px;
-    top: 6px;
-}
-.video-duration {
-    position: absolute;
-    top: 8%;
-    left: 8%;
-    color: white;
-    font-size: 0.8em;
-    background:rgba(0,0,0,0.65);
-    padding: 1px 3px;
-}
-.wrapper-center {
-    width: 100%;
-    vertical-align: middle;
-    background: {{ menu_background }}; /* Trick to color the menu's length */
-    margin: 0 auto;
-    min-height: 600px;
-    max-width: {{ content_max_width }};
-}
-/*CIES*/
-.announces {
-    margin-top: 40px;
-}
-.breadcrumb {
-    margin: 0px;
-    border-radius: 0px;
-}
-
-.media {
-    padding: 2px 2px 15px 2px;
-}
-.media-heading.subtitle{
-    height: 1em;
-    font-size: 1em;
-    line-height: 1;
-    overflow: hidden;
-}
-
-.media-heading.title{
-    line-height: 1;
-    overflow: hidden;
-    height: 1em;
-    font-size: 1em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.media-body .date{
-    line-height: 1;
-    height: 1em;
-    font-size: 1em;
-}
-.header {
-    background: {{ header_background }};
-    color: {{ header_font }};
-}
-.header.sticky {
-    position: fixed;
-    top: 0;
-    transition: top 0.2s ease-in-out;
-    width: 100%;
-    z-index:6;
-    color: {{ header_font }};
-}
-.header.sticky.nav-up {
-    top: -60px;
-}
-.header.sticky.nav-up {
-    top: 0;
-}
-.img_category img{
-    width: 100%;
-}
-.img_category{
-    position: relative;
-    height: 100%;
-}
-.img_category.two {
-    height: 50%;
-}
-
-.index_widget {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-.index_widget .index_container .img_category.two{
-    position: relative;
-    display: block;
-    padding-top: 4.35%;
-}
-.index_widget .index_container a{
-    position: relative;
-    display: block;
-    overflow: auto;
-    text-decoration: none;
-}
-.most-viewed h2, .recently-added h2 {
-    font-weight: bold;
-    font-size: 2em;
-}
-a:hover .cover {
-    background: {{ default_light_font }};
-    color: {{ default_light_background }};
-
-}
-.cover {
-   background: {{ default_light_background }};
-   color: {{ default_light_font }};
-   font-weight: bold;
-   font-size: 120%;
-   width: 100%;
-   padding: 8px;
-}
-@media (max-width: 992px) {
-   .index_container .img_category.two {
-        padding-top: 12.87% !important;
-    }
-    .index_container .img_category {
-        padding-top: 5%;
-    }
-}
-@media (max-width: 1199px) {
-    .index_container .img_category,.index_container .img_category.two {
-        padding-top: 8.67% !important;
-    }
-}
-
-.panel-series .panel-body, .panel-related .panel-body{
-    overflow-x: hidden;
-    overflow-y: scroll;
-    max-height: 400px;
-}
-.powered_by {
-    background: black;
-    color: white;
-}
-.powered_by a{
-    color: white;
-    text-decoration: none;
-}
-.powered_by div {
-    max-width: {{content_max_width }};
-    text-align: right;
-    margin: 0 auto;
-    padding: 10px 10px 10px 10px;
-    font-size: 11px;
-    position: relative;
-}
-.pumukit_announce {
-    margin-top: 35px;
-    overflow: auto;
-}
-.widget.slidebar {
-    text-align: left;
-    padding-top: 20px;
-}
-.widget.slidebar #total{
-    text-align: center;
-}
-.widget.slidebar .element {
-    display: block;
-    font-size: 1.3em;
-    text-decoration: none;
-    padding: {{ menu_padding }};
-    color: {{ menu_font_color }};
-}
-
-.pmk_menu_element {
-    color: {{ menu_font_color }} !important;
-}
-
-.widget.slidebar .element:hover, .widget.slidebar .element.selected {
-    background: {{ menu_selected_background }};
-    color: {{ menu_selected_font_color }};
-    margin-left: -65px;
-    padding-left: 95px;
-    z-index:10;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.pmk_menu_element:hover {
-    background: {{ menu_selected_background }} !important;
-    color: {{ menu_selected_font_color }} !important;
-}
-
-
-@media (max-width: 1199px) {
-    .widget.slidebar, .widget.slidebar .dropdown-menu {
-        text-align: center;
-    }
-}
-{# ==== MAGIC CSS TO ELLIPSE TEXT ==== #}
-.ellipsedtext-parent {
-    overflow: hidden;
-    width: 100%;
-    height: 120%;
-}
-.ellipsedtext-leftmargin {
-    float: left;
-    width: 2%;
-    height: 100%;
-}
-.ellipsedtext-testwrapper {
-    float: right;
-    width: 98%;
-}
-.ellipsedtext-text {
-    width: 800%;
-}
-.ellipsedtext-textstopper {
-    width: 87.5%;
-    height: 1em;
-    float: right;
-}
-.ellipsedtext-endtext {
-    display:inline-block;
-    width: 87.5%;
-    height: 1em;
-}
-.ellipsedtext-overflowdetector {
-    float: right;
-    width: 2%;
-    height: 20%;
-    position:relative;
-}
-.ellipsedtext-ellipse {
-    position: absolute;
-    top: -1.5em;
-    left: 4387%;
-    z-index: 2;
-    padding: 0 20px 0 15px;
-    background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
-}
-
-.pumukit_mmobj:hover .ellipsedtext-ellipse {
-    background: rgba(255,255,255,0);
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(30%, {{ mmobj_selected_background }}), color-stop(100%, {{ mmobj_selected_background }}));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, {{ mmobj_selected_background }} 30%, {{ mmobj_selected_background }} 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{ mmobj_selected_background }}', endColorstr='{{ mmobj_selected_background }}', GradientType=1 );
-}
-{# ==== END MAGIC CSS TO ELLIPSE TEXT ==== #}
-
-
-{# A11Y (overwrite bootstrap) #}
-h1 small,h2 small,h3 small,h4 small,h5 small,h6 small,.h1 small,.h2 small,.h3 small,.h4 small,.h5 small,.h6 small,h1 .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small,.h1 .small,.h2 .small,.h3 .small,.h4 .small,.h5 .small,.h6 .small,
-.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus {
-    color: #767676;
-}
-
-.panel-heading.chat-panel-heading .panel-heading-table,
-.panel-heading.twitter-panel-heading .panel-heading-table {
-    display: table;
-    width: 100%;
-}
-.panel-heading.chat-panel-heading .panel-heading-table .panel-heading-table-row,
-.panel-heading.twitter-panel-heading .panel-heading-table .panel-heading-table-row {
-    display: table-row;
-}
-.panel-heading.chat-panel-heading .panel-heading-table .panel-heading-table-row .panel-heading-table-cell,
-.panel-heading.twitter-panel-heading .panel-heading-table .panel-heading-table-row .panel-heading-table-cell {
-    display: table-cell;
-    vertical-align: middle;
-}
-.panel-heading.chat-panel-heading .panel-heading-table .panel-heading-table-row .panel-heading-table-cell.panel-heading-image,
-.panel-heading.twitter-panel-heading .panel-heading-table .panel-heading-table-row .panel-heading-table-cell.panel-heading-image {
-    text-align: right;
-}
-
-.twitter-icon-heading,
-.chat-icon-heading {
-    height: 1em;
-    float: right;
-}
-
-.widget_forbidden_error {
-    text-align: center;
-    margin-top: 10vh;
-    font-size: 10vh;
-    margin-bottom:6vh;
-}
-
-.widget_forbidden_error_message {
-    text-align:center;
-    margin-top: 3vh;
-    font-size: 6vh;
-    margin-bottom:2vh;
-}
-
-.widget_forbidden_message, .widget_unauthorized_message {
-    text-align:center;
-    margin-top: 3vh;
-    font-size: 6vh;
-    margin-bottom:6vh;
-}
-
-.widget_unauthorized_error {
-    text-align: center;
-    margin-top: 10vh;
-    padding-top: 10vh;
-    font-size: 10vh;
-    margin-bottom:6vh;
-}
-
-.widget_unauthorized_error_message {
-    text-align:center;
-    margin-top: 3vh;
-    font-size: 6vh;
-    margin-bottom:2vh;
-}
-
-#player_password_check_fail {
-    color: red;
-    margin: 0 10px;
-}
-
-.widget_password {
-    text-align: center;
-    padding-top: 40px;
-}
-
-@media (min-width: 991.98px) {
-    .widget_forbidden_error {
-        text-align: center;
-        margin-top: 10vh;
-        font-size: 7vh;
-        margin-bottom:6vh;
+    body {
+        background: {{ page_background }};
     }
 
-    .widget_forbidden_error_message {
-        text-align:center;
-        margin-top: 3vh;
-        font-size: 3vh;
-        margin-bottom:2vh;
+    ul, ol {
+        list-style:none;
+        margin: 0;
+        padding: 0;
     }
 
-    .widget_forbidden_message, .widget_unauthorized_message {
-        text-align:center;
-        margin-top: 3vh;
-        font-size: 3vh;
-        margin-bottom:6vh;
+    h1, h2, h3, h4 {
+        font-weight: bold;
+        color: {{ default_content_font }};
     }
 
-    .widget_unauthorized_error {
-        text-align: center;
-        margin-top: 10vh;
-        padding-top: 10vh;
-        font-size: 7vh;
-        margin-bottom:6vh;
+    a, a:hover {
+        color: #000000;
     }
 
-    .widget_unauthorized_error_message {
-        text-align:center;
-        margin-top: 3vh;
-        font-size: 3vh;
-        margin-bottom:2vh;
+    .disabled {
+        color: #767676 !important;
     }
 
-    #player_password_check_fail {
-        color: red;
-        margin: 0 10px;
+    .edit-pmk-icon {
+        font-size:17px;
+        color: {{ default_contrast_background }};
     }
 
-    .widget_password {
-        text-align: center;
-        padding-top: 40px;
+    .date, .num_views {
+        text-align: right;
     }
 
-    abbr, abbr[title], abbr[data-original-title] {
-        text-decoration: none !important;
-        border-bottom:0 !important;
+    .main-content {
+        min-height: 625px;
     }
-}
 
-{% endautoescape %}
+    .search-form {
+        padding: 10px;
+        background: #EDEDED;
+        color: #000000;
+    }
+
+    .search-form .input-group.date {
+        width: 100%;
+    }
+
+    .search-form a {
+        color: #2d699e;
+    }
+
+    .input-group-addon {
+        background: white;
+    }
+
+    .video-duration {
+        position: absolute;
+        top: 8%;
+        left: 8%;
+        color: white;
+        font-size: 0.8em;
+        background:rgba(0,0,0,0.65);
+        padding: 1px 3px;
+    }
+
+    .btn-pmk {
+        background-color: #ed6d00;
+        color: #ffffff;
+    }
+
+    .panel-pmk>.panel-heading {
+        background-color: #ed6d00;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .panel-series .panel-body, .panel-related .panel-body{
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+    }
+
+    .total-search {
+        margin-top:10px;
+        color:black;
+        font-weight:bold;
+        font-size:1.2em;
+    }
+
+    .list-group-item-pmk {
+        background: transparent;
+    }
+
+    .block-media-pmk {
+        padding-top:10px;
+    }
+
+    .show_more_link a, .show_more_link a:hover {
+        color: #000000;
+        font-size:14px;
+    }
+
+    .label-pmk a {
+        color: #ffffff;
+    }
+
+    .label-pmk a:hover {
+        color: #000000;
+    }
+
+    .label-pmk {
+        background-color: #ed6d00;
+        margin-left:3px;
+    }
+
+    {% include 'PumukitWebTVBundle:Css:template_video.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_series.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_stats.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_header.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_horizontal_menu.css.twig'%}
+    {% include 'PumukitWebTVBundle:Css:template_footer.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_breadcrumb.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_search_box.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_event.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_pagination.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_live.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_share.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_live_chat.css.twig' %}
+
+    {% include 'PumukitWebTVBundle:Css:template_error.css.twig' %}
+    {% include 'PumukitWebTVBundle:Css:template_a11y.css.twig' %}
+
+    /* Legacy Menu CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_menu.css.twig' %}#}
+    /* Legacy Categories CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_categories.css.twig' %}#}
+    /* Legacy Misc video CSS */
+    {#{% include 'PumukitWebTVBundle:Css:template_legacy_video.css.twig' %}#}
+
+
+    {% endautoescape %}
 {% endblock %}
