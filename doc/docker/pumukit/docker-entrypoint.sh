@@ -15,9 +15,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 
     if [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-dist --no-progress --no-suggest --no-interaction
-    fi
-
-    if [ "$APP_ENV" != 'prod' ]; then
         bin/console doctrine:mongodb:schema:create
 	bin/console pumukit:init:repo all --force
     fi
