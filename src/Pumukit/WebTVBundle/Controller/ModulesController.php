@@ -187,7 +187,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
      */
     public function languageAction()
     {
-        $array_locales = $this->container->getParameter('pumukit.locales');
+        $array_locales = $this->container->getParameter('pumukit2.locales');
         if (count($array_locales) <= 1) {
             return new Response('');
         }
