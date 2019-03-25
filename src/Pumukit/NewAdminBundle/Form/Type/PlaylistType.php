@@ -44,7 +44,6 @@ class PlaylistType extends AbstractType
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
-        $resolver->setRequired('disable_PUDENEW');
     }
 
     public function getBlockPrefix()

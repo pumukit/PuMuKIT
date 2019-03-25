@@ -44,7 +44,7 @@ class ResourceController extends Controller
 
     public function getSorting(Request $request = null, $session_namespace = null)
     {
-        return array();
+        return [];
     }
 
     protected function createPager($criteria, $sorting)
@@ -62,21 +62,22 @@ class ResourceController extends Controller
         return $pagerfanta;
     }
 
-    public function findOr404(Request $request, array $criteria = array())
+    public function findOr404(Request $request, array $criteria = [])
     {
-        if ($request->get('slug')) {
-            $default = array('slug' => $request->get('slug'));
-        } elseif ($request->get('id')) {
-            $default = array('id' => $request->get('id'));
-        } else {
-            $default = array();
+        $default = [];
+        if ($request->request->has('slug') || $request->attributes->has('slug') || $request->query->has('slug')) {
+            $default = ['slug' => $request->get('slug')];
+        } elseif ($request->request->has('id') || $request->attributes->has('id') || $request->query->has('id')) {
+            if ('null' !== $request->get('id')) {
+                $default = ['id' => $request->get('id')];
+            }
         }
 
         $criteria = array_merge($default, $criteria);
 
         $repo = $this->getRepository();
-        if (!$resource = $repo->findOneBy($criteria)
-        ) {
+
+        if (!$resource = $repo->findOneBy($criteria)) {
             throw new NotFoundHttpException(
                 sprintf(
                     'Requested %s does not exist with these criteria: %s.',

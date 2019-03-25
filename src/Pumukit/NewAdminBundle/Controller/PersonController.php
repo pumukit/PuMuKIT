@@ -687,7 +687,7 @@ class PersonController extends AdminController implements NewAdminController
         }
 
         if ($selectedPersonId) {
-            $adapter = $resources->getAdapter();
+            $adapter = clone $resources->getAdapter();
             $returnedPerson = $adapter->getSlice(0, $adapter->getNbResults());
             $position = 1;
             foreach ($returnedPerson as $person) {

@@ -126,7 +126,7 @@ class LiveController extends AdminController implements NewAdminController
 
         $liveEvents = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($resourceId)));
         if ($liveEvents) {
-            return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+            return new JsonResponse(array('error'));
         }
 
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
@@ -136,7 +136,7 @@ class LiveController extends AdminController implements NewAdminController
         $dm->remove($resource);
         $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
+        return new JsonResponse(array('success'));
     }
 
     public function batchDeleteAction(Request $request)

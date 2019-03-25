@@ -529,6 +529,6 @@ class Track extends Element
      */
     public function __toString()
     {
-        return $this->getUrl();
+        return $this->getUrl() ? $this->getUrl() : $this->getPath();
     }
 }

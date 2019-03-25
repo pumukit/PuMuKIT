@@ -107,7 +107,7 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         //Detect if it's mobile: (Refactor this using javascript... )
         $userAgent = $request->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
-        $userAgentParserService = $this->get('pumukit_web_tv.useragent_parser');
+        $userAgentParserService = $this->get('pumukit_baseplayer.useragent_parser');
         $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
 

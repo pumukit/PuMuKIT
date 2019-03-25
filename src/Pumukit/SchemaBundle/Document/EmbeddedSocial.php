@@ -104,4 +104,12 @@ class EmbeddedSocial
     {
         $this->email = $email;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTwitterHashtag();
+    }
 }

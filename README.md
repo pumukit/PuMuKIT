@@ -1,20 +1,20 @@
-PuMuKIT-2 [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
+PuMuKIT [![Build Status](https://travis-ci.org/campusdomar/PuMuKIT2.svg?branch=2.4.x)](https://travis-ci.org/campusdomar/PuMuKIT2) [![](https://dockerbuildbadges.quelltext.eu/status.svg?organization=teltek&repository=pumukit)](https://hub.docker.com/r/teltek/pumukit/builds/)
 =======
 
 
-PuMuKIT-2 is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
-Well-designed and well-engineered PuMuKIT-2 is the ideal solution for any organization with large collections of video or audio.
+PuMuKIT is an Open Source Video Platform that provides unparalleled organization, flexibility, accessibility, and scalability.
+Well-designed and well-engineered PuMuKIT is the ideal solution for any organization with large collections of video or audio.
 
 Project Website
 ---------------
 http://pumukit.org
 
 
-PuMuKIT-2 Documentation Project
+PuMuKIT Documentation Project
 -------------------------------
-https://github.com/campusdomar/PuMuKIT2-doc
+https://github.com/campusdomar/PuMuKIT-doc
 
 
 Third Party Bundles
 -------------------
-[Third Party Bundles List](https://github.com/campusdomar/PuMuKIT2-doc/blob/master/ThirdPartyBundlesList.md)
+[Third Party Bundles List](https://github.com/campusdomar/PuMuKIT-doc/blob/master/ThirdPartyBundlesList.md)

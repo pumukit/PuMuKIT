@@ -35,7 +35,7 @@
         "jasig/phpcas": "1.3.*",
         "suncat/mobile-detect-bundle": "1.1.*",
         "vipx/bot-detect-bundle": "^4.0",
-        "teltek/pmk2-stats-ui-bundle": "1.0.*",
+        "teltek/pumukit-stats-ui-bundle": "2.0.*",
         "alcaeus/mongo-php-adapter": "@stable"
     },
     "require-dev": {

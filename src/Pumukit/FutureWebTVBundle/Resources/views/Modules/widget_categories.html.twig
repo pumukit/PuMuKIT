@@ -1,0 +1,11 @@
+{% if objects %}
+    <div class="{{ class }}">
+        <h1>{{ title|trans }}</h1>
+        <div class="row">
+            {% for object in objects %}
+                {% include 'PumukitFutureWebTVBundle:Resources:template_category.html.twig' %}
+                {% include "PumukitFutureWebTVBundle:Resources:template_clearfix.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

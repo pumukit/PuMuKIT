@@ -381,7 +381,7 @@ class SeriesController extends AdminController implements NewAdminController
         );
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('series' => $series->getId()));
+        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findWithoutPrototype($series);
 
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
@@ -541,7 +541,7 @@ class SeriesController extends AdminController implements NewAdminController
         }
 
         if ($selectedSeriesId) {
-            $adapter = $resources->getAdapter();
+            $adapter = clone $resources->getAdapter();
             $returnedSeries = $adapter->getSlice(0, $adapter->getNbResults());
             $position = 1;
             $findSerie = false;

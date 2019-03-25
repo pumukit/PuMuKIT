@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "950ca91f23f2f9305c2811e32dedc6b4",
+    "content-hash": "4f2c14df4b9515417daf27abdf4f20f0",
     "packages": [
         {
             "name": "alcaeus/mongo-php-adapter",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alcaeus/mongo-php-adapter.git",
-                "reference": "4f21e1fdc21eee0e35bdaf854ecc3c58179d1ef7"
+                "reference": "6111fb94e2e67b24b19681715f9caee4309e1eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alcaeus/mongo-php-adapter/zipball/4f21e1fdc21eee0e35bdaf854ecc3c58179d1ef7",
-                "reference": "4f21e1fdc21eee0e35bdaf854ecc3c58179d1ef7",
+                "url": "https://api.github.com/repos/alcaeus/mongo-php-adapter/zipball/6111fb94e2e67b24b19681715f9caee4309e1eb5",
+                "reference": "6111fb94e2e67b24b19681715f9caee4309e1eb5",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "database",
                 "mongodb"
             ],
-            "time": "2018-03-05T20:40:55+00:00"
+            "time": "2019-02-08T07:16:38+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -117,16 +117,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "8afa52cd417f4ec417b4bfe86b68106538a87660"
+                "reference": "558f321c52faeb4828c03e7dc0cfe39a09e09a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/8afa52cd417f4ec417b4bfe86b68106538a87660",
-                "reference": "8afa52cd417f4ec417b4bfe86b68106538a87660",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/558f321c52faeb4828c03e7dc0cfe39a09e09a2d",
+                "reference": "558f321c52faeb4828c03e7dc0cfe39a09e09a2d",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2018-10-18T06:09:13+00:00"
+            "time": "2019-01-28T09:30:10+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -790,16 +790,16 @@
         },
         {
             "name": "doctrine/mongodb-odm",
-            "version": "1.2.6",
+            "version": "1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb"
+                "reference": "4acb36955163b20e1ac3241c5fe354ea24337691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/496ab5368afea176a1e368769a8eb643656cb7fb",
-                "reference": "496ab5368afea176a1e368769a8eb643656cb7fb",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/4acb36955163b20e1ac3241c5fe354ea24337691",
+                "reference": "4acb36955163b20e1ac3241c5fe354ea24337691",
                 "shasum": ""
             },
             "require": {
@@ -870,7 +870,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2019-01-15T10:22:40+00:00"
+            "time": "2019-03-14T06:32:02+00:00"
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
@@ -2061,20 +2061,20 @@
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "v2.0.1",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "15770d9d7f6e8e07af568aed104a51f869591e73"
+                "reference": "8276a078563e719be16d12480dbd28e47ac094fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/15770d9d7f6e8e07af568aed104a51f869591e73",
-                "reference": "15770d9d7f6e8e07af568aed104a51f869591e73",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/8276a078563e719be16d12480dbd28e47ac094fa",
+                "reference": "8276a078563e719be16d12480dbd28e47ac094fa",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "php": "^7.0"
             },
             "require-dev": {
                 "doctrine/orm": "~2.3",
@@ -2083,7 +2083,7 @@
                 "jmikola/geojson": "~1.0",
                 "mandango/mandango": "~1.0@dev",
                 "mandango/mondator": "~1.0@dev",
-                "phpunit/phpunit": "^5.7|^6",
+                "phpunit/phpunit": "^6.5",
                 "propel/propel": "~2.0@dev",
                 "propel/propel1": "~1.6",
                 "ruflin/elastica": "~1.3",
@@ -2105,8 +2105,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Pagerfanta\\": "src/"
+                "psr-4": {
+                    "Pagerfanta\\": "src/Pagerfanta/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2119,14 +2119,14 @@
                     "email": "pablodip@gmail.com"
                 }
             ],
-            "description": "Pagination for PHP 5.3",
+            "description": "Pagination for PHP",
             "keywords": [
                 "page",
                 "pagination",
                 "paginator",
                 "paging"
             ],
-            "time": "2018-05-17T09:23:52+00:00"
+            "time": "2019-03-11T08:58:08+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3390,16 +3390,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.21",
+            "version": "v3.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "c7a57e0bcc3c57ae697f072b3e862487b6fd0030"
+                "reference": "336cf12e5e82d71874e8522e0879794340351b56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/c7a57e0bcc3c57ae697f072b3e862487b6fd0030",
-                "reference": "c7a57e0bcc3c57ae697f072b3e862487b6fd0030",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/336cf12e5e82d71874e8522e0879794340351b56",
+                "reference": "336cf12e5e82d71874e8522e0879794340351b56",
                 "shasum": ""
             },
             "require": {
@@ -3541,24 +3541,24 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-01-06T15:54:26+00:00"
+            "time": "2019-03-03T18:52:48+00:00"
         },
         {
-            "name": "teltek/pmk2-stats-ui-bundle",
-            "version": "1.0.7",
+            "name": "teltek/pumukit-stats-ui-bundle",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle.git",
-                "reference": "6e4c8f67a93d4ce28366d137b7b19f7ef99fd6ff"
+                "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
+                "reference": "3f476be044a55a29896ef4a825c6ff5a9f4e9f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PuMuKIT2-stats-ui-bundle/zipball/6e4c8f67a93d4ce28366d137b7b19f7ef99fd6ff",
-                "reference": "6e4c8f67a93d4ce28366d137b7b19f7ef99fd6ff",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/3f476be044a55a29896ef4a825c6ff5a9f4e9f5e",
+                "reference": "3f476be044a55a29896ef4a825c6ff5a9f4e9f5e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9",
+                "php": ">=7.2",
                 "pumukit/pumukit2": ">=2.2"
             },
             "type": "symfony-bundle",
@@ -3578,7 +3578,7 @@
                 }
             ],
             "description": "Stats UI for PuMuKIT",
-            "homepage": "https://github.com/teltek/PuMuKIT2-stats-ui-bundle",
+            "homepage": "https://github.com/teltek/PumukitStatsUIBundle",
             "keywords": [
                 "Symfony2",
                 "bundle",
@@ -3587,7 +3587,7 @@
                 "teltek",
                 "ui"
             ],
-            "time": "2018-07-05T08:49:12+00:00"
+            "time": "2019-03-21T17:01:50+00:00"
         },
         {
             "name": "twig/extensions",
@@ -3646,16 +3646,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.6.2",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
+                "reference": "52b9a5bd41c8c53a1d784f90ca25e33bf558a6b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
-                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/52b9a5bd41c8c53a1d784f90ca25e33bf558a6b3",
+                "reference": "52b9a5bd41c8c53a1d784f90ca25e33bf558a6b3",
                 "shasum": ""
             },
             "require": {
@@ -3671,7 +3671,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -3709,7 +3709,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T15:00:48+00:00"
+            "time": "2019-03-21T14:53:02+00:00"
         },
         {
             "name": "vipx/bot-detect",
@@ -3816,16 +3816,16 @@
         },
         {
             "name": "white-october/pagerfanta-bundle",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git",
-                "reference": "3a2f39fecde9b8aefe7c9cbd0baf06bc72ef3e5e"
+                "reference": "19bf14bf8c72e4205c9ca97028436701fe3991a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberPagerfantaBundle/zipball/3a2f39fecde9b8aefe7c9cbd0baf06bc72ef3e5e",
-                "reference": "3a2f39fecde9b8aefe7c9cbd0baf06bc72ef3e5e",
+                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberPagerfantaBundle/zipball/19bf14bf8c72e4205c9ca97028436701fe3991a6",
+                "reference": "19bf14bf8c72e4205c9ca97028436701fe3991a6",
                 "shasum": ""
             },
             "require": {
@@ -3870,7 +3870,7 @@
                 "page",
                 "paging"
             ],
-            "time": "2018-12-05T16:58:18+00:00"
+            "time": "2019-02-14T08:42:52+00:00"
         }
     ],
     "packages-dev": [
@@ -4395,16 +4395,16 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f"
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b8454ea6958c3dee38453d3bd571e023108c91f",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b389aebe1b8b0578430bda0c7c95a829608e059",
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059",
                 "shasum": ""
             },
             "require": {
@@ -4416,7 +4416,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -4440,7 +4440,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2018-02-01T13:07:23+00:00"
+            "time": "2019-02-20T10:12:59+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -4493,16 +4493,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.2",
+            "version": "7.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
+                "reference": "eb343b86753d26de07ecba7868fa983104361948"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
-                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/eb343b86753d26de07ecba7868fa983104361948",
+                "reference": "eb343b86753d26de07ecba7868fa983104361948",
                 "shasum": ""
             },
             "require": {
@@ -4520,7 +4520,7 @@
                 "phpunit/php-code-coverage": "^6.0.7",
                 "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-timer": "^2.0",
+                "phpunit/php-timer": "^2.1",
                 "sebastian/comparator": "^3.0",
                 "sebastian/diff": "^3.0",
                 "sebastian/environment": "^4.0",
@@ -4573,7 +4573,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-15T08:19:08+00:00"
+            "time": "2019-03-16T07:31:17+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4686,23 +4686,23 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "366541b989927187c4ca70490a35615d3fef2dce"
+                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/366541b989927187c4ca70490a35615d3fef2dce",
-                "reference": "366541b989927187c4ca70490a35615d3fef2dce",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
+                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0",
+                "phpunit/phpunit": "^7.5 || ^8.0",
                 "symfony/process": "^2 || ^3.3 || ^4"
             },
             "type": "library",
@@ -4738,32 +4738,35 @@
                 "unidiff",
                 "unified diff"
             ],
-            "time": "2018-06-10T07:54:39+00:00"
+            "time": "2019-02-04T06:01:07+00:00"
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6fda8ce1974b62b14935adc02a9ed38252eca656",
+                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "ext-posix": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "4.1-dev"
                 }
             },
             "autoload": {
@@ -4788,7 +4791,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-02-01T05:27:49+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -5194,16 +5197,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.21",
+            "version": "v3.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "5dab0d4b2ac99ab22b447b615fdfdc10ec4af3d5"
+                "reference": "b539f37134c10edbf85dc0567be4151c56870f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/5dab0d4b2ac99ab22b447b615fdfdc10ec4af3d5",
-                "reference": "5dab0d4b2ac99ab22b447b615fdfdc10ec4af3d5",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/b539f37134c10edbf85dc0567be4151c56870f5e",
+                "reference": "b539f37134c10edbf85dc0567be4151c56870f5e",
                 "shasum": ""
             },
             "require": {
@@ -5213,7 +5216,6 @@
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
             "suggest": {
-                "ext-zip": "Zip support is required when using bin/simple-phpunit",
                 "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
             },
             "bin": [
@@ -5256,7 +5258,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-01-01T13:45:19+00:00"
+            "time": "2019-02-16T18:50:26+00:00"
         },
         {
             "name": "theseer/tokenizer",

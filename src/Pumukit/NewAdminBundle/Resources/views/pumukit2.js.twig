@@ -36,16 +36,27 @@ window.submit_delete_live = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
         var url = "{{ path('pumukitnewadmin_live_delete', {'id': '__id__'})|raw }}";
-        var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
-        $('#list_lives').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(response){
-            if(response) {
+
+        $.ajax({
+            url: url.replace('__id__', id),
+            method: 'DELETE',
+            success: function (response) {
+                if(-1 !== response.indexOf('error')) {
+                    var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
+                    no_success(message);
+                } else {
+                    var message = '{% trans %}Live channel successfully deleted.{% endtrans %}';
+                    success(message);
+                    $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
+                }
+            },
+            error: function() {
                 var message = '{% trans %}Delete error. Live channel channel is associated to live event.{% endtrans %}';
                 no_success(message);
-                $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
-            } else {
-                success(message);
             }
         });
+
+        return false;
     }
 }
 
@@ -3355,3 +3366,22 @@ $(document).on('click', '#pumukitnewadmin_mmo_duration_sort_not_selected', funct
     $('#list_mms').load(route, {'_method':'POST'});
     return false;
 });
+
+
+window.pmk_translate = function(element) {
+    $e = $(element);
+    var target_lang = $e.data("locale")
+    var text = $e.parent().parent().find('input').val();
+    var route = "{{ path('pumukitnewadmin_metadata_translate')|raw }}";
+    $e.children().addClass('pmk-job-animate');
+    $.post(route, {"q": text, "target_lang": target_lang}, function(data, textStatus, jqXHR){
+        $e.children().removeClass('pmk-job-animate');
+        var translation = prompt("{% trans %}Please enter your translation:{% endtrans %}", data.text);
+        if (translation != null && translation != "") {
+            $e.parent().find('input').val(translation);
+        }
+    }).fail(function(e){
+        no_success('{% trans %}Error{% endtrans %}');
+        $e.children().removeClass('pmk-job-animate');
+    });
+}
