@@ -111,13 +111,7 @@ WORKDIR /srv/pumukit
 ARG APP_ENV=prod
 
 # copy only specifically what we need
-COPY --chown=www-data:www-data app app/
-COPY --chown=www-data:www-data bin bin/
-COPY --chown=www-data:www-data doc doc/
-COPY --chown=www-data:www-data web web/
-COPY --chown=www-data:www-data src src/
-COPY --chown=www-data:www-data composer.json ./
-COPY --chown=www-data:www-data composer.lock ./
+COPY --chown=www-data:www-data . ./
 COPY --chown=www-data:www-data doc/docker/pumukit/parameters.yml app/config/parameters.yml
 
 RUN set -eux; \
