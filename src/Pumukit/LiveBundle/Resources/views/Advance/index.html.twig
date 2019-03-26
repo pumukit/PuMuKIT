@@ -26,11 +26,11 @@
             {% include('PumukitLiveBundle:Advance:liveplayer.html.twig') with {stretching: 'exactfit', aspectratio: '16:9'} %}
         </div>
         <br />
-        {% include('PumukitWebTVBundle:Event:info.html.twig') %}
+        {% include('PumukitWebTVBundle:Live/Advance:template_info.html.twig') %}
     </div>
 
     <div class="col-xs-12 col-sm-4 col-md-4">
-        {% include('PumukitWebTVBundle:Event:event_info.html.twig') %}
+        {% include('PumukitWebTVBundle:Live/Advance:event_info.html.twig') %}
     </div>
 
 {% endblock %}
