@@ -28,7 +28,11 @@
     font-weight: 500;
     color: #000000;
     margin-top:10px;
+    -webkit-line-clamp: 3;
+    max-height: 4.5em;
+
 }
+
 .second_line_image_representation  {
     display: -webkit-box;
     text-align:left;
@@ -41,8 +45,14 @@
     line-height: 1.6rem;
     padding:2px;
     color: #0b0b0b;
+    -webkit-line-clamp: 3;
+    max-height: 4.5em;
 }
 
+.caption a .second_line_image_representation {
+    margin-top:5px;
+    margin-bottom:5px;
+}
 .icons_image_representation_center {
     position: absolute;
     top: 50%;
