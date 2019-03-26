@@ -1,6 +1,10 @@
-{% if add_clear_fix_md(loop.index, objectByCol) %}
+{% if clearFixIndex is not defined %}
+    {% set clearFixIndex = loop.index %}
+{% endif %}
+
+{% if add_clear_fix_md(clearFixIndex, objectByCol) %}
     <div class="clearfix visible-md visible-lg"></div>
 {% endif %}
-{% if add_clear_fix_sm(loop.index, objectByCol) %}
+{% if add_clear_fix_sm(clearFixIndex, objectByCol) %}
     <div class="clearfix visible-sm"></div>
 {% endif %}
