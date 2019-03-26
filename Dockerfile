@@ -1,7 +1,7 @@
 ARG PHP_VERSION=7.2
 ARG ALPINE_VERSION=3.8
 
-FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
+FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION} as base
 MAINTAINER Pablo Nieto, pnieto@teltek.es
 
 ARG APCU_VERSION=5.1.12
@@ -106,6 +106,8 @@ RUN set -eux; \
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /srv/pumukit
+
+FROM base as pumukit
 
 # default build for production
 ARG APP_ENV=prod
