@@ -396,15 +396,21 @@ class DefaultController extends Controller
             $option = $this->getKeyData('option', $typeData);
             try {
                 if ('single' === $option) {
+                    $filePath = null;
                     $filetype = $this->getKeyData('filetype', $trackData);
                     if ('file' === $filetype) {
-                        if (!$request->files->get('resource')->isValid()) {
-                            throw new \Exception($request->files->get('resource')->getErrorMessage());
+                        $resourceFile = $request->files->get('resource');
+                        if ($resourceFile) {
+                            if (!$resourceFile->isValid()) {
+                                throw new \Exception($request->files->get('resource')->getErrorMessage());
+                            }
+                            $filePath = $resourceFile->getPathname();
                         }
-                        $filePath = $request->files->get('resource')->getPathname();
                     } elseif ('inbox' === $filetype) {
                         $filePath = $request->get('file');
-                    } else {
+                    }
+
+                    if (!$filePath) {
                         throw new \Exception('Not uploaded file or inbox path');
                     }
 
