@@ -1,20 +1,22 @@
-{% if app.user and not is_granted('ROLE_SHOW_GLOBAL_MENU') %}
-    <span class="glyphicon glyphicon-user"></span> {{ app.user.fullname ?: app.user.username }}
-    {% if is_granted('ROLE_SCOPE_GLOBAL') %}
-        <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackoffice-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
-            <span class="glyphicon glyphicon-briefcase"></span>
-            {% trans %}Go to back-office{% endtrans %}
-        </a>
-    {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}
-        <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Manage my videos{% endtrans %}">
-            <span class="glyphicon glyphicon-briefcase"></span>
-            {% trans %}Manage my videos{% endtrans %}
+{% if app.user %}
+    {% if not is_granted('ROLE_SHOW_GLOBAL_MENU') %}
+        <span class="glyphicon glyphicon-user"></span> {{ app.user.fullname ?: app.user.username }}
+        {% if is_granted('ROLE_SCOPE_GLOBAL') %}
+            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackoffice-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
+                <span class="glyphicon glyphicon-briefcase"></span>
+                {% trans %}Go to back-office{% endtrans %}
+            </a>
+        {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}
+            <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackofficevideos-button btn btn-xs btn-default" title="{% trans %}Manage my videos{% endtrans %}">
+                <span class="glyphicon glyphicon-briefcase"></span>
+                {% trans %}Manage my videos{% endtrans %}
+            </a>
+        {% endif %}
+        <a href="{{ url('fos_user_security_logout') }}" type="button" class="logout-button btn btn-xs btn-danger" title="{% trans %}Log out{% endtrans %}">
+            <span class="glyphicon glyphicon-log-out"></span>
+            {% trans %}Log out{% endtrans %}
         </a>
     {% endif %}
-    <a href="{{ url('fos_user_security_logout') }}" type="button" class="logout-button btn btn-xs btn-danger" title="{% trans %}Log out{% endtrans %}">
-        <span class="glyphicon glyphicon-log-out"></span>
-        {% trans %}Log out{% endtrans %}
-    </a>
 {% else %}
     <a href="{{ url('pumukit_auth') }}" type="button" class="login-button btn btn-xs btn-default" title="{% trans %}Log in{% endtrans %}">
         <span class="glyphicon glyphicon-log-in"></span>
