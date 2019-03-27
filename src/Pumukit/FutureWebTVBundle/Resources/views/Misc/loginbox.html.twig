@@ -1,6 +1,5 @@
-{% if app.user %}
+{% if app.user and not is_granted('ROLE_SHOW_GLOBAL_MENU') %}
     <span class="glyphicon glyphicon-user"></span> {{ app.user.fullname ?: app.user.username }}
-    {# Go to back-office: TODO: Each user type will go to different places (Viewer doesn't go anywhere) #}
     {% if is_granted('ROLE_SCOPE_GLOBAL') %}
         <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="gotobackoffice-button btn btn-xs btn-default" title="{% trans %}Go to back-office{% endtrans %}">
             <span class="glyphicon glyphicon-briefcase"></span>
