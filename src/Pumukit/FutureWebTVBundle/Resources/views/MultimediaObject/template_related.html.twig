@@ -1,4 +1,4 @@
-{% if multimediaObjects|length > 0 %}
+{% if multimediaObjects %}
     <div class="panel panel-default panel-pmk panel-related">
         <div class="panel-heading">
             {% trans %}Videos you may also be interested in{% endtrans %}
@@ -6,6 +6,8 @@
         <div class="panel-body">
             {% for multimediaObject in multimediaObjects %}
                 {% include 'PumukitFutureWebTVBundle:Resources:template_video_vertical.html.twig' with {'object': multimediaObject} %}
+            {% else %}
+                {% trans %}There are no videos with these specifications{% endtrans %}
             {% endfor %}
         </div>
     </div>
