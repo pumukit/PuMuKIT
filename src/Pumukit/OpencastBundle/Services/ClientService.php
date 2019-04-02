@@ -366,26 +366,19 @@ class ClientService
         }
 
         $request = '/admin-ng/tasks/new';
-
-        $parameters = array(
-            'metadata' => json_encode(
-                array(
-                    'workflow' => $workflowName,
-                    'configuration' => array(
-                        'retractFromEngage' => 'true',
-                        'retractFromAws' => 'false',
-                        'retractFromApi' => 'true',
-                        'retractPreview' => 'true',
-                        'retractFromOaiPmh' => 'true',
-                        'retractFromYouTube' => 'false',
-                    ),
-                    'eventIds' => $mediaPackagesIds,
-                )
-            ),
+        $opencastVersion = $this->getOpencastVersion();
+        $configurationParameters = array(
+            'retractFromEngage' => 'true',
+            'retractFromAws' => 'false',
+            'retractFromApi' => 'true',
+            'retractPreview' => 'true',
+            'retractFromOaiPmh' => 'true',
+            'retractFromYouTube' => 'false',
         );
+        $parameters = array();
 
-        // SUPPORT FOR OPENCAST < 2.x
-        if ($this->getOpencastVersion() < '2.0.0') {
+        // SUPPORT FOR OPENCAST < 2.0
+        if ($opencastVersion < '2.0.0') {
             $request = '/episode/apply/'.$workflowName;
 
             $mediaPackageIdsParameter = '';
@@ -398,6 +391,31 @@ class ClientService
             $parameters = array(
                 'mediaPackageIds' => $mediaPackageIdsParameter,
                 'engage' => 'Matterhorn+Engage+Player',
+            );
+        // SUPPORT FOR OPENCAST < 6.0
+        } elseif ($opencastVersion < '6.0.0') {
+            $parameters = array(
+                'metadata' => json_encode(
+                    array(
+                        'workflow' => $workflowName,
+                        'configuration' => $configurationParameters,
+                        'eventIds' => $mediaPackagesIds,
+                    )
+                ),
+            );
+        // DEFAULT
+        } else {
+            $configurationsById = array();
+            foreach ($mediaPackagesIds as $mediaPackageId) {
+                $configurationsById[$mediaPackageId] = $configurationParameters;
+            }
+            $parameters = array(
+                'metadata' => json_encode(
+                    array(
+                        'workflow' => $workflowName,
+                        'configuration' => $configurationsById,
+                    )
+                ),
             );
         }
 
