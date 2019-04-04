@@ -195,6 +195,12 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function multimediaInfoAction(MultimediaObject $multimediaObject, Request $request)
     {
+        $requestRoute = $this->container->get('request_stack')->getMasterRequest()->get('_route');
+        $isMagicRoute = false;
+        if (-1 !== strpos('magic', $requestRoute)) {
+            $isMagicRoute = true;
+        }
+
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $password = $request->get('broadcast_password');
         $showDownloads = true;
@@ -208,6 +214,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             'multimediaObject' => $multimediaObject,
             'editor_chapters' => $editorChapters,
             'showDownloads' => $showDownloads,
+            'isMagicRoute' => $isMagicRoute,
         );
     }
 }
