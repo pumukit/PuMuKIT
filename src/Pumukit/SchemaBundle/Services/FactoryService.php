@@ -226,7 +226,16 @@ class FactoryService
             }
         }
 
-        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
+        // Add other owners in case of exists
+        foreach ($prototype->getRoles() as $embeddedRole) {
+            if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
+                $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
+                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                    $person = $this->dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(array('_id' => $embeddedPerson->getId()));
+                    $mm = $this->personService->createRelationPerson($person, $role, $mm);
+                }
+            }
+        }
 
         $this->dm->persist($mm);
         $this->dm->persist($series);
@@ -451,6 +460,7 @@ class FactoryService
             $tagAdded = $this->tagService->addTagToMultimediaObject($new, $tag->getId(), false);
         }
 
+        // Create roles except Owners because $this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()
         foreach ($prototype->getRoles() as $embeddedRole) {
             if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
                 foreach ($embeddedRole->getPeople() as $embeddedPerson) {
