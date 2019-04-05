@@ -2,8 +2,8 @@
 
 namespace Pumukit\WebTVBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 
@@ -24,17 +24,17 @@ class BreadcrumbsService
     /**
      * BreadcrumbsService constructor.
      *
-     * @param Router  $router
-     * @param Session $session
-     * @param         $translator
-     * @param string  $allTitle
-     * @param string  $allRoute
-     * @param string  $homeTitle
-     * @param null    $parentWeb
+     * @param RouterInterface  $router
+     * @param SessionInterface $session
+     * @param                  $translator
+     * @param string           $allTitle
+     * @param string           $allRoute
+     * @param string           $homeTitle
+     * @param null             $parentWeb
      */
     public function __construct(
-        Router $router,
-        Session $session,
+        RouterInterface $router,
+        SessionInterface $session,
         $translator,
         $allTitle = 'All',
         $allRoute = 'pumukit_webtv_medialibrary_index',
