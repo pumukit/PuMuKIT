@@ -483,7 +483,7 @@ class EmbeddedEventSessionService
         );
 
         $time = new \MongoDate(time());
-        $pipelinek[] = array(
+        $pipeline[] = array(
             '$match' => array(
                 '$or' => array(
                     array(
