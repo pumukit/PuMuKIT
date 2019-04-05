@@ -72,7 +72,7 @@ class LiveTwigExtension extends \Twig_Extension
     /**
      * @param EmbeddedEvent $event
      *
-     * @Deprecated use getPosterPic
+     * @deprecated use getPosterPic
      *
      * @return string
      */
@@ -96,7 +96,7 @@ class LiveTwigExtension extends \Twig_Extension
     /**
      * @param EmbeddedEvent $event
      *
-     * @Deprecated use getPosterPicTextColor
+     * @deprecated use getPosterPicTextColor
      *
      * @return string
      */
