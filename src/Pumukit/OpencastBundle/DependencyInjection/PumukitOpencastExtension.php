@@ -36,7 +36,7 @@ class PumukitOpencastExtension extends Extension
 
             $env = $container->getParameter('kernel.environment');
 
-            if ('dev' == $env) {
+            if ('dev' !== $env) {
                 foreach ($config['url_mapping'] as $m) {
                     if (!realpath($m['path'])) {
                         throw new \RuntimeException(sprintf(
