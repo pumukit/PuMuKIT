@@ -34,12 +34,16 @@ class PumukitOpencastExtension extends Extension
                     $config['host']));
             }
 
-            foreach ($config['url_mapping'] as $m) {
-                if (!realpath($m['path'])) {
-                    throw new \RuntimeException(sprintf(
-                        'The "%s" directory does not exist. Check "pumukit_opencast.url_mapping".',
-                        $m['path']
+            $env = $container->getParameter('kernel.environment');
+
+            if ('dev' == $env) {
+                foreach ($config['url_mapping'] as $m) {
+                    if (!realpath($m['path'])) {
+                        throw new \RuntimeException(sprintf(
+                            'The "%s" directory does not exist. Check "pumukit_opencast.url_mapping".',
+                            $m['path']
                     ));
+                    }
                 }
             }
 
