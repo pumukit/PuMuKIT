@@ -10,6 +10,7 @@ COPY --chown=www-data:www-data doc/docker/pumukit/parameters.yml app/config/para
 
 RUN set -eux; \
     composer install -a -n --no-scripts; \
+    php vendor/sensio/distribution-bundle/Resources/bin/build_bootstrap.php; \
     php app/console a:i; \
     composer clear-cache
 
