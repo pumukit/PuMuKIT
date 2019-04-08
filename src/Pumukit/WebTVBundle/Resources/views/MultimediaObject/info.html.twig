@@ -54,7 +54,7 @@
         </p>
 
         {% if not multimediaObject.getSeries().isHide() %}
-            {% if 'pumukit_webtv_multimediaobject_magicindex' ==  app.request.attributes.get('_route') %}
+            {% if isMagicRoute %}
                 <div>
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
