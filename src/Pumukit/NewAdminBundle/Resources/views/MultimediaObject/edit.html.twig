@@ -15,40 +15,38 @@
             <div role="tabpanel">
                 <ul id="menuTab" class="nav nav-tabs" role="tablist">
                     {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-                        <li{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
+                        <li class="{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_publication">
                             <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
                         </li>
                     {% elseif show_simple_pub_tab %}
                         <li>
-                            <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab">{% trans %}Publication{% endtrans %}</a>
+                            <a href="#pubMm" aria-controls="pubMm" role="tab" data-toggle="tab" class="publication">{% trans %}Publication{% endtrans %}</a>
                         </li>
                     {% endif %}
-                    <li{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} class="active"{% endif %}>
+                    <li class="{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_metadata">
                         <a href="#metaMm" aria-controls="metaMm" role="tab" data-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
                     </li>
                     {% if not is_naked() %}
                         <li>
-                            <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab">{% trans %}Tags{% endtrans %}</a>
+                            <a href="#tagMm" aria-controls="tagMm" role="tab" data-toggle="tab" class="task_tags">{% trans %}Tags{% endtrans %}</a>
                         </li>
-                    {% endif %}
-                    {% if not is_naked() %}
                         <li>
-                            <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab">{% trans %}Owners & Groups{% endtrans %}</a>
+                            <a href="#groupMm" aria-controls="groupMm" role="tab" data-toggle="tab" class="task_owners_and_groups">{% trans %}Owners & Groups{% endtrans %}</a>
                         </li>
                     {% endif %}
                     <li>
-                        <a href="#personMm" aria-controls="personMm" role="tab" data-toggle="tab">{% trans %}People{% endtrans %}</a>
+                        <a href="#personMm" aria-controls="personMm" role="tab" data-toggle="tab" class="task_people">{% trans %}People{% endtrans %}</a>
                     </li>
                     <li>
-                        <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab">{% trans %}Multimedia{% endtrans %}</a>
+                        <a href="#mediaMm" aria-controls="mediaMm" role="tab" data-toggle="tab" class="task_media_attachments">{% trans %}Multimedia{% endtrans %}</a>
                     </li>
                     {% if active_editor and ( mm.properties['externalplayer'] is not defined or mm.properties['externalplayer'] == '') %}
                         <li>
-                            <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab">{% trans %}Media Edition{% endtrans %}</a>
+                            <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab" class="task_media_editor">{% trans %}Media Edition{% endtrans %}</a>
                         </li>
                     {% endif %}
                     <li class="pull-right">
-                        <a title="{% trans %}Select metadata to sync on all multimedia objects of this series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" style="color:white;text-decoration: none;">
+                        <a title="{% trans %}Select metadata to sync on all multimedia objects of this series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" class="button_sync_metadata" data-toggle="modal" data-backdrop="static" data-target="#myModal" style="color:white;text-decoration: none;">
                             {% trans %}Sync{% endtrans %}
                         </a>
                     </li>

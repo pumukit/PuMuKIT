@@ -28,10 +28,12 @@
                         </select>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukit_new_admin_live_event_create') }}">
-                            {% trans %} New event and series{% endtrans %}</a>
-                        <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-                            {% trans %} New event from series{% endtrans %}</a>
+                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised button_new_event_and_series" href="{{ path('pumukit_new_admin_live_event_create') }}">
+                            {% trans %} New event and series{% endtrans %}
+                        </a>
+                        <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised  button_new_event_from_series" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                            {% trans %} New event from series{% endtrans %}
+                        </a>
                     </div>
                 </div>
             </div>
