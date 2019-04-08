@@ -622,7 +622,7 @@ class EmbeddedEventSessionService
     /**
      * Get poster text color.
      *
-     * @deprectad NOTE: Use multimediaObject.getProperty('postertextcolor') to get text color and getDefaultPosterTextColor
+     * @deprecated NOTE: Use multimediaObject.getProperty('postertextcolor') to get text color and getDefaultPosterTextColor
      *
      * @param MultimediaObject $multimediaObject
      *
@@ -641,7 +641,7 @@ class EmbeddedEventSessionService
     /**
      * Get poster text color.
      *
-     * @deprected Use getPicPosterTextColor
+     * @deprecated Use getPicPosterTextColor
      *
      * @param EmbeddedEvent $event
      *
@@ -1081,7 +1081,7 @@ class EmbeddedEventSessionService
     /**
      * Get poster.
      *
-     * @deprected: Use getPicPoster
+     * @deprecated: Use getPicPoster
      *
      * @param array
      *

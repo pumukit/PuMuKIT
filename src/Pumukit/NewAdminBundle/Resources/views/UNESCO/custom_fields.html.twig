@@ -48,7 +48,6 @@
                 'custom_field_7' : $('#custom_field_7').val(),
             },
             success: function(response){
-                //
                 //location.reload();
                 $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
                 let message = "Change fields successfully";
