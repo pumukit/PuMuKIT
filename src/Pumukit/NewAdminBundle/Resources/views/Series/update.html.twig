@@ -1,39 +1,39 @@
 <div class="well">
-  {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
-  <div id="links_series_{{ series.id }}">
-    {% include 'PumukitNewAdminBundle:Series:links.html.twig' %}
-  </div>
+        <div id="links_series_{{ series.id }}">
+            {% include 'PumukitNewAdminBundle:Series:links.html.twig' %}
+        </div>
 
-  {% if is_naked() %}
-    {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
-  {% else %}
-  <div role="tabpanel">
-    <ul id="seriesTab" class="nav nav-tabs" role="tablist">
-      <li class="active">
-        <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Series Metadata{% endtrans %}</a>
-      </li>
-      {% if mmtemplate %}
-      <li>
-        <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Videos Metadata Template{% endtrans %}</a>
-      </li>
-      {% endif %}
-    </ul>
+        {% if is_naked() %}
+            {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
+        {% else %}
+            <div role="tabpanel">
+                <ul id="seriesTab" class="nav nav-tabs" role="tablist">
+                    <li class="active">
+                        <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab task-series-updatemeta">{% trans %}Series Metadata{% endtrans %}</a>
+                    </li>
+                    {% if mmtemplate %}
+                        <li>
+                            <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab task-multimedia-object-template">{% trans %}Videos Metadata Template{% endtrans %}</a>
+                        </li>
+                    {% endif %}
+                </ul>
 
-    <div class="tab-content">
-      <div id="editSeries" role="tabpanel" class="tab-pane active">
-        {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
-      </div>
-      {% if mmtemplate %}
-      <div id="editTemplate" role="tabpanel" class="tab-pane">
-        {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
-      </div>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
+                <div class="tab-content">
+                    <div id="editSeries" role="tabpanel" class="tab-pane active">
+                        {% include 'PumukitNewAdminBundle:Series:updatemeta.html.twig' %}
+                    </div>
+                    {% if mmtemplate %}
+                        <div id="editTemplate" role="tabpanel" class="tab-pane">
+                            {% include 'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig' %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
 
-  {% else %}
-    {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-  {% endif %}
+    {% else %}
+        {% trans %}You don't have enough permissions to access this content.{% endtrans %}
+    {% endif %}
 </div>
