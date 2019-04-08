@@ -171,7 +171,9 @@
                             <li></li>
                         </ul>
                     </td>
-                    <td colspan="11"><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a></td>
+                    <td colspan="11">
+                        <a class="button_new_master" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_track_create', {'id': mm.id}) }}">{% trans %}New master{% endtrans %}...</a>
+                    </td>
                 </tr>
                 {% if mm.tracks|length == 0 and is_granted('ROLE_SUPER_ADMIN') %}
                     <tr>
@@ -181,7 +183,7 @@
                             </ul>
                         </td>
                         <td colspan="11">
-                            <a href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                            <a class="button_new_external_video" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
                                 {% trans %}New video external{% endtrans %}...
                             </a>
                         </td>
