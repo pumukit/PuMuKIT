@@ -80,6 +80,14 @@ class JobGeneratorListener
         $jobs = array();
         $default_profiles = $this->profileService->getDefaultProfiles();
 
+        if ($this->containsTrackWithProfileWithTargetTag($multimediaObject, $pubChannelCod)) {
+            $this->logger->info(sprintf("JobGeneratorListener can't create a new job for multimedia object %s,".
+                                        'because it already contains a track with a profile with this target (%s)',
+                                        $multimediaObject->getId(), $pubChannelCod));
+
+            return $jobs;
+        }
+
         foreach ($this->profiles as $targetProfile => $profile) {
             $targets = $this->getTargets($profile['target']);
 
@@ -157,5 +165,20 @@ class JobGeneratorListener
         }
 
         return $return;
+    }
+
+    private function containsTrackWithProfileWithTargetTag(MultimediaObject $multimediaObject, $pubChannelCod)
+    {
+        foreach ($multimediaObject->getTracks() as $track) {
+            $profileName = $track->getProfileName();
+            if ($profileName && isset($this->profiles[$profileName])) {
+                $targets = $this->getTargets($this->profiles[$profileName]['target']);
+                if (in_array($pubChannelCod, $targets['standard'])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
