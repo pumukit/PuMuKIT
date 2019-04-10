@@ -26,59 +26,59 @@ class TagType extends AbstractType
             ->add(
                 'metatag',
                 CheckboxType::class,
-                array(
+                [
                     'required' => false,
-                    'label_attr' => array('title' => $this->translator->trans('Not valid to tagged objets')),
-                    'attr' => array(
-                        'aria-label' => $this->translator->trans('Metatag', array(), null, $this->locale),
-                    ),
-                )
+                    'label_attr' => ['title' => $this->translator->trans('Not valid to tagged objets')],
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Metatag', [], null, $this->locale),
+                    ],
+                ]
             )
             ->add(
                 'display',
                 CheckboxType::class,
-                array(
+                [
                     'required' => false,
-                    'label_attr' => array('title' => $this->translator->trans('Show tag on WebTV portal and edit categories on multimedia objects')),
-                    'attr' => array(
-                        'aria-label' => $this->translator->trans('Display', array(), null, $this->locale),
-                    ),
-                )
+                    'label_attr' => ['title' => $this->translator->trans('Show tag on WebTV portal and edit categories on multimedia objects')],
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Display', [], null, $this->locale),
+                    ],
+                ]
             )
             ->add(
                 'cod',
                 TextType::class,
-                array(
-                    'attr' => array(
-                        'aria-label' => $this->translator->trans('Cod', array(), null, $this->locale),
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Cod', [], null, $this->locale),
                         'pattern' => "^\w*$",
                         'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
-                    ),
-                    'label' => $this->translator->trans('Code', array(), null, $this->locale),
-                )
+                    ],
+                    'label' => $this->translator->trans('Code', [], null, $this->locale),
+                ]
             )
             ->add(
                 'i18n_title',
                 TextI18nType::class,
-                array(
-                    'attr' => array(
-                        'aria-label' => $this->translator->trans('Title', array(), null, $this->locale),
-                    ),
-                    'label' => $this->translator->trans('Name', array(), null, $this->locale),
-                )
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Title', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
             )
             ->add(
                 'i18n_description',
                 TextareaI18nType::class,
-                array(
+                [
                     'required' => false,
-                    'attr' => array(
+                    'attr' => [
                         'style' => 'resize:vertical;',
-                        'aria-label' => $this->translator->trans('Description', array(), null, $this->locale),
-                    ),
-                    'label' => $this->translator->trans('Description', array(), null, $this->locale),
-                )
+                        'aria-label' => $this->translator->trans('Description', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
             );
 
         $builder->addEventListener(
@@ -89,14 +89,14 @@ class TagType extends AbstractType
                 $fields = $tag->getProperty('customfield');
                 foreach (array_filter(preg_split('/[,\s]+/', $fields)) as $field) {
                     $auxField = explode(':', $field);
-                    $formOptions = array(
+                    $formOptions = [
                         'mapped' => false,
                         'required' => false,
-                        'attr' => array(
-                            'aria-label' => $this->translator->trans($auxField[0], array(), null, $this->locale),
-                        ),
+                        'attr' => [
+                            'aria-label' => $this->translator->trans($auxField[0], [], null, $this->locale),
+                        ],
                         'data' => $tag->getProperty($auxField[0]),
-                    );
+                    ];
 
                     try {
                         $type = $auxField[1] ?? TextType::class;
@@ -126,9 +126,9 @@ class TagType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Pumukit\SchemaBundle\Document\Tag',
-            )
+            ]
         );
 
         $resolver->setRequired('translator');

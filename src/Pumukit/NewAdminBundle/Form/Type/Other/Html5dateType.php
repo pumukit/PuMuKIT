@@ -9,17 +9,12 @@ class Html5dateType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'compound' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'compound' => false,
+            ]
+        );
     }
-
-    /*
-    public function getParent()
-    {
-        return 'form';
-    }
-    */
 
     public function getBlockPrefix()
     {

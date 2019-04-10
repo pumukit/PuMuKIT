@@ -25,49 +25,68 @@ class MultimediaObjectType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $invertText = $this->translator->trans('Invert', array(), null, $this->locale).' (CAMERA-SCREEN)';
+        $invertText = $this->translator->trans('Invert', [], null, $this->locale).' (CAMERA-SCREEN)';
 
         $builder
-            ->add('opencastinvert', CheckboxType::class,
-                  array(
-                        'required' => false,
-                        'mapped' => false,
-                        'attr' => array('aria-label' => $invertText),
-                        'label' => $invertText, ))
-            ->add('opencastlanguage', CustomLanguageType::class,
-                  array(
-                        'required' => true,
-                        'mapped' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Language', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Language', array(), null, $this->locale), ))
-            ->add('durationinminutesandseconds', new TrackdurationType(),
-                  array(
-                        'required' => true,
-                        'disabled' => true,
-                        'attr' => array('aria-label' => $this->translator->trans('Duration', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Duration', array(), null, $this->locale), ))
-          ;
+            ->add(
+                'opencastinvert',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'mapped' => false,
+                    'attr' => ['aria-label' => $invertText],
+                    'label' => $invertText,
+                ]
+            )
+            ->add(
+                'opencastlanguage',
+                CustomLanguageType::class,
+                [
+                    'required' => true,
+                    'mapped' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Language', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Language', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'durationinminutesandseconds',
+                TrackdurationType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Duration', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Duration', [], null, $this->locale),
+                ]
+            );
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            $multimediaObject = $event->getData();
-            $event->getForm()->get('opencastinvert')->setData($multimediaObject->getProperty('opencastinvert'));
-            $event->getForm()->get('opencastlanguage')->setData($multimediaObject->getProperty('opencastlanguage'));
-        });
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $multimediaObject = $event->getData();
+                $event->getForm()->get('opencastinvert')->setData($multimediaObject->getProperty('opencastinvert'));
+                $event->getForm()->get('opencastlanguage')->setData($multimediaObject->getProperty('opencastlanguage'));
+            }
+        );
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $opencastInvert = $event->getForm()->get('opencastinvert')->getData();
-            $opencastLanguage = strtolower($event->getForm()->get('opencastlanguage')->getData());
-            $multimediaObject = $event->getData();
-            $multimediaObject->setProperty('opencastinvert', $opencastInvert);
-            $multimediaObject->setProperty('opencastlanguage', $opencastLanguage);
-        });
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                $opencastInvert = $event->getForm()->get('opencastinvert')->getData();
+                $opencastLanguage = strtolower($event->getForm()->get('opencastlanguage')->getData());
+                $multimediaObject = $event->getData();
+                $multimediaObject->setProperty('opencastinvert', $opencastInvert);
+                $multimediaObject->setProperty('opencastlanguage', $opencastLanguage);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-                                     'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
-                                     ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+            ]
+        );
     }
 
     public function getBlockPrefix()

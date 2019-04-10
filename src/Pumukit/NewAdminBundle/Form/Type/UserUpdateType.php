@@ -25,52 +25,81 @@ class UserUpdateType extends AbstractType
 
         $user = $builder->getData();
         $builder
-            ->add('enabled', HiddenType::class, array('data' => true))
-            ->add('fullname', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name and Surname', array(), null, $this->locale)),
-                      'disabled' => !$user->isLocal(),
-                      'label' => $this->translator->trans('Name and Surname', array(), null, $this->locale), ))
-            ->add('username', TextType::class,
-                  array(
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Username', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Username', array(), null, $this->locale), ))
-            ->add('plain_password', PasswordType::class,
-                  array(
-                      'attr' => array('autocomplete' => 'off', 'aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
-                      'disabled' => !$user->isLocal(),
-                      'required' => false,
-                      'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
-            ->add('email', EmailType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
-                      'disabled' => !$user->isLocal(),
-                      'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
-            ->add('permissionProfile', null,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
+            ->add('enabled', HiddenType::class, ['data' => true])
+            ->add(
+                'fullname',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name and Surname', [], null, $this->locale)],
+                    'disabled' => ! $user->isLocal(),
+                    'label' => $this->translator->trans('Name and Surname', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'username',
+                TextType::class,
+                [
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Username', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Username', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'plain_password',
+                PasswordType::class,
+                [
+                    'attr' => ['autocomplete' => 'off', 'aria-label' => $this->translator->trans('Password', [], null, $this->locale)],
+                    'disabled' => ! $user->isLocal(),
+                    'required' => false,
+                    'label' => $this->translator->trans('Password', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Email', [], null, $this->locale)],
+                    'disabled' => ! $user->isLocal(),
+                    'label' => $this->translator->trans('Email', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'permissionProfile',
+                null,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
+                ]
+            );
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            $user = $event->getData();
-            if ($user->hasRole('ROLE_SUPER_ADMIN')) {
-                $event->getForm()->remove('permissionProfile');
-                $event->getForm()->add('permissionProfilePlacebo', ChoiceType::class,
-                                       array(
-                                           'mapped' => false,
-                                           'choices' => array('System Super Administrator' => 'ROLE_SUPER_ADMIN'),
-                                           'attr' => array('aria-label' => $this->translator->trans('Permission Profile', array(), null, $this->locale)),
-                                           'label' => $this->translator->trans('Permission Profile', array(), null, $this->locale), ));
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $user = $event->getData();
+                if ($user->hasRole('ROLE_SUPER_ADMIN')) {
+                    $event->getForm()->remove('permissionProfile');
+                    $event->getForm()->add(
+                        'permissionProfilePlacebo',
+                        ChoiceType::class,
+                        [
+                            'mapped' => false,
+                            'choices' => ['System Super Administrator' => 'ROLE_SUPER_ADMIN'],
+                            'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
+                            'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
+                        ]
+                    );
+                }
             }
-        });
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\User',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\User',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

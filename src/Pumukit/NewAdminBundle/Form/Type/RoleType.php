@@ -21,38 +21,68 @@ class RoleType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('display', CheckboxType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Display', array(), null, $this->locale)), ))
-            ->add('read_only', CheckboxType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Read only', array(), null, $this->locale)), ))
-            ->add('cod', TextType::class, array(
-                'attr' => array(
-                    'pattern' => "^\w*$",
-                    'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
-                    'oninput' => "setCustomValidity('')", ),
-                'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
-            ->add('xml', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('XML', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('XML', array(), null, $this->locale), ))
-            ->add('i18n_name', TextI18nType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_text', TextareaI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Text', array(), null, $this->locale), ));
+            ->add(
+                'display',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Display', [], null, $this->locale)],
+                ]
+            )
+            ->add(
+                'read_only',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Read only', [], null, $this->locale)],
+                ]
+            )
+            ->add(
+                'cod',
+                TextType::class,
+                [
+                    'attr' => [
+                        'pattern' => "^\w*$",
+                        'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
+                        'oninput' => "setCustomValidity('')",
+                    ],
+                    'label' => $this->translator->trans('Code', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'xml',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('XML', [], null, $this->locale)],
+                    'label' => $this->translator->trans('XML', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_name',
+                TextI18nType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_text',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Text', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Text', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Role',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Role',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

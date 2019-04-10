@@ -14,17 +14,21 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('hide', null,
-                  array(
-                      'required' => false,
-                  )
+            ->add(
+                'hide',
+                null,
+                [
+                    'required' => false,
+                ]
             )
             ->add('name')
-            ->add('i18n_text', 'textareai18n',
-                  array(
-                      'attr' => array('style' => 'height: 200px;'),
-                      'label' => 'Text',
-                  )
+            ->add(
+                'i18n_text',
+                'textareai18n',
+                [
+                    'attr' => ['style' => 'height: 200px;'],
+                    'label' => 'Text',
+                ]
             );
     }
 
@@ -33,9 +37,11 @@ class TemplateType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\TemplateBundle\Document\Template',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\TemplateBundle\Document\Template',
+            ]
+        );
     }
 
     /**

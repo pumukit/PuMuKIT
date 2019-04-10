@@ -19,23 +19,33 @@ class TrackType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_description', TextI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('language', CustomLanguageType::class,
-                  array(
-                      'required' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ));
+            ->add(
+                'i18n_description',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'language',
+                CustomLanguageType::class,
+                [
+                    'required' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Video/Audio language', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Video/Audio language', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Track',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Track',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

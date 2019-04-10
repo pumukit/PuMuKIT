@@ -13,7 +13,7 @@ abstract class AbstractI18nType extends AbstractType
     private $locales;
     private $translators;
 
-    public function __construct(array $locales = array(), array $translators = array())
+    public function __construct(array $locales = [], array $translators = [])
     {
         $this->locales = $locales;
         $this->translators = $translators;
@@ -25,10 +25,12 @@ abstract class AbstractI18nType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'compound' => false,
-            'multiple' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'compound' => false,
+                'multiple' => false,
+            ]
+        );
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

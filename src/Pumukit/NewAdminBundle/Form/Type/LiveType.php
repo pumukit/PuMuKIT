@@ -31,56 +31,89 @@ class LiveType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_name', TextI18nType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_description', TextareaI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('url', UrlType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
-            ->add('source_name', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('STREAM', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('STREAM', array(), null, $this->locale), ))
-            ->add('passwd', TextType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Password', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Password', array(), null, $this->locale), ))
-            ->add('broadcasting', ChoiceType::class,
-                  array(
-                      'choices' => array('On hold' => '0', 'Live Broadcasting' => '1'),
-                      'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
-            ->add('live_type', ChoiceType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Technology', array(), null, $this->locale)),
-                      'choices' => array(
-                          'WOWZA' => Live::LIVE_TYPE_WOWZA,
-                          'Adobe Media Server' => Live::LIVE_TYPE_AMS,
-                          'FMS (deprecated use WOWZA or AMS)' => Live::LIVE_TYPE_FMS,
-                          'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
-                      ),
-                      'label' => $this->translator->trans('Technology', array(), null, $this->locale), ))
-            ->add('chat', CheckboxType::class,
-                array(
+            ->add(
+                'i18n_name',
+                TextI18nType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_description',
+                TextareaI18nType::class,
+                [
                     'required' => false,
-                    'attr' => array('aria-label' => $this->translator->trans('Enable chat on this channel\'s page', array(), null, $this->locale)),
-                    'label' => $this->translator->trans('Enable chat on this channel\'s page', array(), null, $this->locale),
-                ));
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'url',
+                UrlType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
+                    'label' => $this->translator->trans('URL', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'source_name',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('STREAM', [], null, $this->locale)],
+                    'label' => $this->translator->trans('STREAM', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'passwd',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Password', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Password', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'broadcasting',
+                ChoiceType::class,
+                [
+                    'choices' => ['On hold' => '0', 'Live Broadcasting' => '1'],
+                    'attr' => ['aria-label' => $this->translator->trans('Status', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Status', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'live_type',
+                ChoiceType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Technology', [], null, $this->locale)],
+                    'choices' => [
+                        'WOWZA' => Live::LIVE_TYPE_WOWZA,
+                        'Adobe Media Server' => Live::LIVE_TYPE_AMS,
+                        'FMS (deprecated use WOWZA or AMS)' => Live::LIVE_TYPE_FMS,
+                        'WMS (deprecated)' => Live::LIVE_TYPE_WMS,
+                    ],
+                    'label' => $this->translator->trans('Technology', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'chat',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Enable chat on this channel\'s page', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Enable chat on this channel\'s page', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\LiveBundle\Document\Live',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\LiveBundle\Document\Live',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

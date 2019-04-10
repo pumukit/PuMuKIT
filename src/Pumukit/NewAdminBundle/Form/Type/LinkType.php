@@ -19,24 +19,37 @@ class LinkType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_name', TextI18nType::class,
-                  array('required' => true,
-                        'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('url', UrlType::class,
-                  array('required' => true,
-                        'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale),
-                                        'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
-                                        'onchange' => "setCustomValidity('')", ),
-                        'label' => $this->translator->trans('URL', array(), null, $this->locale), ))
-            ;
+            ->add(
+                'i18n_name',
+                TextI18nType::class,
+                [
+                    'required' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'url',
+                UrlType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('URL', [], null, $this->locale),
+                        'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
+                        'onchange' => "setCustomValidity('')",
+                    ],
+                    'label' => $this->translator->trans('URL', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Link',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Link',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

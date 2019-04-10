@@ -20,26 +20,42 @@ class SeriestypeType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('cod', TextType::class,
-                  array('required' => true,
-                        'attr' => array('aria-label' => $this->translator->trans('Code', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Code', array(), null, $this->locale), ))
-            ->add('i18n_name', TextI18nType::class,
-                  array('required' => true,
-                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_description', TextareaI18nType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ;
+            ->add(
+                'cod',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Code', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Code', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_name',
+                TextI18nType::class,
+                [
+                    'required' => true,
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_description',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\SeriesType',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\SeriesType',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
