@@ -45,7 +45,7 @@
   {% endfor %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
+    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" class="button_new_material" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
   </tr>
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
