@@ -289,7 +289,7 @@ class SimpleController extends Controller
      *
      * @param $externalData
      *
-     * @return null|object
+     * @return object|null
      */
     private function getSeriesByExternalData($externalData)
     {

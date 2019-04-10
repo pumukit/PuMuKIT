@@ -40,7 +40,7 @@ class EventsType extends AbstractType
                     'label' => $this->translator->trans('Description', [], null, $this->locale),
                     'attr' => [
                         'class' => 'form-control',
-                        'style' => 'resize:vertical;'
+                        'style' => 'resize:vertical;',
                     ],
                 ]
             )
@@ -98,7 +98,7 @@ class EventsType extends AbstractType
                     'label' => $this->translator->trans('Already held event message', [], null, $this->locale),
                     'attr' => [
                         'class' => 'form-control',
-                        'style' => 'resize:vertical;'
+                        'style' => 'resize:vertical;',
                     ],
                 ]
             )
@@ -110,7 +110,7 @@ class EventsType extends AbstractType
                     'label' => $this->translator->trans('Not yet held event message', [], null, $this->locale),
                     'attr' => [
                         'class' => 'form-control',
-                        'style' => 'resize:vertical;'
+                        'style' => 'resize:vertical;',
                     ],
                 ]
             )

@@ -43,7 +43,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Series $series
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findPrototype(Series $series)
     {
@@ -99,7 +99,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param $picId
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findByPicId($picId)
     {
@@ -157,7 +157,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param $trackId
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneByTrackId($trackId)
     {
@@ -609,7 +609,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneWithTag(Tag $tag)
     {
@@ -661,7 +661,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param $tags
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneWithAllTags($tags)
     {
@@ -695,7 +695,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneWithoutTag(Tag $tag)
     {
@@ -743,7 +743,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param Tag $tag
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneSeriesFieldWithTag(Tag $tag)
     {
@@ -783,7 +783,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param $tags
      *
-     * @return array|null|object
+     * @return array|object|null
      */
     public function findOneSeriesFieldWithAllTags($tags)
     {
@@ -1014,7 +1014,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $criteria
      *
-     * @return null|object
+     * @return object|null
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      */

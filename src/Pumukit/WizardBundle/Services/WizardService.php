@@ -108,7 +108,7 @@ class WizardService
      * @param       $seriesData
      * @param array $options
      *
-     * @return mixed|null|object|Series
+     * @return mixed|object|Series|null
      *
      * @throws \Exception
      */
@@ -141,7 +141,7 @@ class WizardService
     /**
      * @param array $seriesData
      *
-     * @return mixed|null|object|Series
+     * @return mixed|object|Series|null
      *
      * @throws \Exception
      */
@@ -164,7 +164,7 @@ class WizardService
     /**
      * @param array $seriesData
      *
-     * @return mixed|null|Series
+     * @return mixed|Series|null
      *
      * @throws \Exception
      */
@@ -307,7 +307,7 @@ class WizardService
      * @param $series
      * @param $user
      *
-     * @return mixed|null|MultimediaObject
+     * @return mixed|MultimediaObject|null
      *
      * @throws \Exception
      */

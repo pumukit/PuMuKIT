@@ -264,7 +264,7 @@ class FactoryService
      * @param string $id
      * @param string $sessionId
      *
-     * @return null|object Series
+     * @return object|null Series
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException

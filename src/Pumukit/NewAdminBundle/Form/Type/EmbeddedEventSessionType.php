@@ -25,7 +25,7 @@ class EmbeddedEventSessionType extends AbstractType
                 [
                     'data_class' => 'DateTime',
                     'label' => $this->translator->trans('Start', [], null, $this->locale),
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control'],
                 ]
             )
             ->add(
@@ -44,7 +44,7 @@ class EmbeddedEventSessionType extends AbstractType
                 [
                     'label' => $this->translator->trans('Notes', [], null, $this->locale),
                     'required' => false,
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control'],
                 ]
             );
     }

@@ -31,7 +31,7 @@ class UserUpdateType extends AbstractType
                 TextType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Name and Surname', [], null, $this->locale)],
-                    'disabled' => ! $user->isLocal(),
+                    'disabled' => !$user->isLocal(),
                     'label' => $this->translator->trans('Name and Surname', [], null, $this->locale),
                 ]
             )
@@ -49,7 +49,7 @@ class UserUpdateType extends AbstractType
                 PasswordType::class,
                 [
                     'attr' => ['autocomplete' => 'off', 'aria-label' => $this->translator->trans('Password', [], null, $this->locale)],
-                    'disabled' => ! $user->isLocal(),
+                    'disabled' => !$user->isLocal(),
                     'required' => false,
                     'label' => $this->translator->trans('Password', [], null, $this->locale),
                 ]
@@ -59,7 +59,7 @@ class UserUpdateType extends AbstractType
                 EmailType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Email', [], null, $this->locale)],
-                    'disabled' => ! $user->isLocal(),
+                    'disabled' => !$user->isLocal(),
                     'label' => $this->translator->trans('Email', [], null, $this->locale),
                 ]
             )

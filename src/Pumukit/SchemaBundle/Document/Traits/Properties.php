@@ -54,7 +54,7 @@ trait Properties
      *
      * @param string $key
      *
-     * @return \DateTime|null|false
+     * @return \DateTime|false|null
      */
     public function getPropertyAsDateTime($key)
     {

@@ -295,7 +295,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
      *
      * @Template("PumukitWebTVBundle:Modules:widget_menu.html.twig")
      *
-     * @return null|Response
+     * @return Response|null
      *
      * @throws \Exception
      */

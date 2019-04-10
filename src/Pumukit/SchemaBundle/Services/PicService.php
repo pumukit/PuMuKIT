@@ -298,7 +298,7 @@ class PicService
      * @param bool $absolute
      * @param bool $hd
      *
-     * @return null|string
+     * @return string|null
      */
     public function getPosterUrl($object, $absolute = false, $hd = true)
     {

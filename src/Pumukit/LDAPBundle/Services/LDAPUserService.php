@@ -152,7 +152,7 @@ class LDAPUserService
      * @param string $key
      * @param string $type
      *
-     * @return null|string|string[]
+     * @return string|string[]|null
      */
     protected function getGroupKey($key, $type = null)
     {

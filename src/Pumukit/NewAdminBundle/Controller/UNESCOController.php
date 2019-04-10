@@ -368,7 +368,7 @@ class UNESCOController extends Controller implements NewAdminController
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
      * @Template("PumukitNewAdminBundle:UNESCO:show.html.twig")
      *
-     * @param null|string $id
+     * @param string|null $id
      *
      * @return array
      *
