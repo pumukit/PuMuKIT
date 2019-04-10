@@ -4,6 +4,7 @@ namespace Pumukit\NewAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,63 +24,101 @@ class TrackUpdateType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_description', TextI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('hide', CheckboxType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Hide', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Hide', array(), null, $this->locale), ))
-            ->add('allowDownload', CheckboxType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Allow download', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Allow download', array(), null, $this->locale), ))
-            ->add('language', CustomLanguageType::class,
-                  array(
-                      'required' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Video/Audio language', array(), null, $this->locale), ))
-            ->add('durationinminutesandseconds', new TrackdurationType(),
-                  array(
-                      'required' => true,
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Duration', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Duration', array(), null, $this->locale), ))
-            ->add('resolution', new TrackresolutionType(),
-                  array(
-                      'required' => true,
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Resolution', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Resolution', array(), null, $this->locale), ))
-            ->add('size', 'integer',
-                  array(
-                      'required' => true,
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('Size', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Size', array(), null, $this->locale), ))
-            ->add('path', TextType::class,
-                  array(
-                      'required' => true,
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('File', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('File', array(), null, $this->locale), ))
-            ->add('url', TextType::class,
-                  array(
-                      'required' => true,
-                      'disabled' => true,
-                      'attr' => array('aria-label' => $this->translator->trans('URL', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('URL', array(), null, $this->locale), ));
+            ->add(
+                'i18n_description',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'hide',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Hide', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Hide', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'allowDownload',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Allow download', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Allow download', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'language',
+                CustomLanguageType::class,
+                [
+                    'required' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Video/Audio language', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Video/Audio language', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'durationinminutesandseconds',
+                TrackdurationType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Duration', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Duration', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'resolution',
+                TrackresolutionType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Resolution', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Resolution', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'size',
+                IntegerType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('Size', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Size', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'path',
+                TextType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('File', [], null, $this->locale)],
+                    'label' => $this->translator->trans('File', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'url',
+                TextType::class,
+                [
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
+                    'label' => $this->translator->trans('URL', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Track',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Track',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
