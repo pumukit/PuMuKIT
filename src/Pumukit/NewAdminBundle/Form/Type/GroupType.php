@@ -19,31 +19,45 @@ class GroupType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('key', TextType::class,
-                  array(
-                      'attr' => array(
-                          'aria-label' => $this->translator->trans('Key', array(), null, $this->locale),
-                          'pattern' => "^\w*$",
-                          'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
-                          'oninput' => "setCustomValidity('')", ),
-                      'label' => $this->translator->trans('Key', array(), null, $this->locale), ))
-            ->add('name', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('comments', TextareaType::class,
-                  array(
-                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Comments', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Comments', array(), null, $this->locale),
-                      'required' => false, ))
-            ;
+            ->add(
+                'key',
+                TextType::class,
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Key', [], null, $this->locale),
+                        'pattern' => "^\w*$",
+                        'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
+                        'oninput' => "setCustomValidity('')",
+                    ],
+                    'label' => $this->translator->trans('Key', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'comments',
+                TextareaType::class,
+                [
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Comments', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Comments', [], null, $this->locale),
+                    'required' => false,
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Group',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Group',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

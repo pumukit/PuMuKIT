@@ -96,7 +96,7 @@ class Builder implements ContainerAwareInterface
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_SERIES)) {
             $options = ['route' => 'pumukitnewadmin_series_index', 'attributes' => ['class' => 'menu_series']];
             $series = $mediaManager->addChild('Series', $options);
-            $series->addChild('Multimedia', array('route' => 'pumukitnewadmin_mms_index', 'attributes' => ['class' => 'menu_series_mms']));
+            $series->addChild('Multimedia', ['route' => 'pumukitnewadmin_mms_index', 'attributes' => ['class' => 'menu_series_mms']]);
             $series->setDisplayChildren(false);
 
             $activeMmsListAll = $this->container->getParameter('pumukit2.show_mms_list_all_menu');

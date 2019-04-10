@@ -27,78 +27,148 @@ class MultimediaObjectMetaType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_title', TextI18nType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Title', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Title', array(), null, $this->locale), ))
-            ->add('i18n_subtitle', TextI18nType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Subtitle', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Subtitle', array(), null, $this->locale), ))
-            ->add('i18n_description', TextareaI18nType::class,
-                  array('required' => false,
-                        'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('comments', TextareaType::class,
-                  array('required' => false,
-                        'attr' => array('style' => 'resize:vertical;'),
-                        'label' => $this->translator->trans('Comments', array(), null, $this->locale), ))
-            ->add('i18n_keyword', TextI18nAdvanceType::class,
-                  array('required' => false,
-                        'attr' => array('class' => 'mmobj materialtags', 'aria-label' => $this->translator->trans('Keywords', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Keywords', array(), null, $this->locale), ))
-            ->add('copyright', TextType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Copyright', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Copyright', array(), null, $this->locale), ))
-            ->add('license', LicenseType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('License', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('License', array(), null, $this->locale), ))
-            ->add('public_date', Html5dateType::class,
-                  array('data_class' => 'DateTime',
-                        'attr' => array('aria-label' => $this->translator->trans('Publication Date', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Publication Date', array(), null, $this->locale), ))
-            ->add('record_date', Html5dateType::class,
-                  array('data_class' => 'DateTime',
-                        'attr' => array('aria-label' => $this->translator->trans('Recording Date', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Recording Date', array(), null, $this->locale), ))
-            ->add('i18n_line2', TextareaI18nType::class,
-                  array('required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked', 'style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Headline', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Headline', array(), null, $this->locale), ))
-            ->add('subseries', CheckboxType::class,
-                  array('mapped' => false,
-                        'required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked',
-                                        'aria-label' => $this->translator->trans('Subseries', array(), null, $this->locale), ),
-                        'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ))
-            ->add('subseriestitle', TextI18nType::class,
-                  array('mapped' => false,
-                        'required' => false,
-                        'attr' => array('groupclass' => 'hidden-naked', 'aria-label' => $this->translator->trans('Subseries', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Subseries', array(), null, $this->locale), ));
+            ->add(
+                'i18n_title',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Title', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Title', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_subtitle',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Subtitle', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Subtitle', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_description',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Description', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'comments',
+                TextareaType::class,
+                [
+                    'required' => false,
+                    'attr' => ['style' => 'resize:vertical;'],
+                    'label' => $this->translator->trans('Comments', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_keyword',
+                TextI18nAdvanceType::class,
+                [
+                    'required' => false,
+                    'attr' => ['class' => 'mmobj materialtags', 'aria-label' => $this->translator->trans('Keywords', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Keywords', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'copyright',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Copyright', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'license',
+                LicenseType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
+                    'label' => $this->translator->trans('License', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'public_date',
+                Html5dateType::class,
+                [
+                    'data_class' => 'DateTime',
+                    'attr' => ['aria-label' => $this->translator->trans('Publication Date', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Publication Date', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'record_date',
+                Html5dateType::class,
+                [
+                    'data_class' => 'DateTime',
+                    'attr' => ['aria-label' => $this->translator->trans('Recording Date', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Recording Date', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_line2',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['groupclass' => 'hidden-naked', 'style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Headline', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Headline', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'subseries',
+                CheckboxType::class,
+                [
+                    'mapped' => false,
+                    'required' => false,
+                    'attr' => [
+                        'groupclass' => 'hidden-naked',
+                        'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Subseries', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'subseriestitle',
+                TextI18nType::class,
+                [
+                    'mapped' => false,
+                    'required' => false,
+                    'attr' => ['groupclass' => 'hidden-naked', 'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Subseries', [], null, $this->locale),
+                ]
+            );
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            $multimediaObject = $event->getData();
-            $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));
-            $event->getForm()->get('subseriestitle')->setData($multimediaObject->getProperty('subseriestitle'));
-        });
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $multimediaObject = $event->getData();
+                $event->getForm()->get('subseries')->setData($multimediaObject->getProperty('subseries'));
+                $event->getForm()->get('subseriestitle')->setData($multimediaObject->getProperty('subseriestitle'));
+            }
+        );
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $subseries = $event->getForm()->get('subseries')->getData();
-            $subseriestitle = $event->getForm()->get('subseriestitle')->getData();
-            $multimediaObject = $event->getData();
-            $multimediaObject->setProperty('subseries', $subseries);
-            $multimediaObject->setProperty('subseriestitle', $subseriestitle);
-        });
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                $subseries = $event->getForm()->get('subseries')->getData();
+                $subseriestitle = $event->getForm()->get('subseriestitle')->getData();
+                $multimediaObject = $event->getData();
+                $multimediaObject->setProperty('subseries', $subseries);
+                $multimediaObject->setProperty('subseriestitle', $subseriestitle);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

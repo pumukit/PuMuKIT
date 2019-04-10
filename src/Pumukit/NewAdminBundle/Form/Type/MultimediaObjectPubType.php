@@ -19,24 +19,30 @@ class MultimediaObjectPubType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('status', ChoiceType::class,
-                  array('choices' => array(
-                      'Published' => MultimediaObject::STATUS_PUBLISHED,
-                      'Blocked' => MultimediaObject::STATUS_BLOQ,
-                      'Hidden' => MultimediaObject::STATUS_HIDE,
-                  ),
-                        'disabled' => $options['not_granted_change_status'],
-                        'attr' => array('aria-label' => $this->translator->trans('Status', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Status', array(), null, $this->locale), ))
-            ;
+            ->add(
+                'status',
+                ChoiceType::class,
+                [
+                    'choices' => [
+                        'Published' => MultimediaObject::STATUS_PUBLISHED,
+                        'Blocked' => MultimediaObject::STATUS_BLOQ,
+                        'Hidden' => MultimediaObject::STATUS_HIDE,
+                    ],
+                    'disabled' => $options['not_granted_change_status'],
+                    'attr' => ['aria-label' => $this->translator->trans('Status', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Status', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
-            'not_granted_change_status' => true,
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\MultimediaObject',
+                'not_granted_change_status' => true,
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

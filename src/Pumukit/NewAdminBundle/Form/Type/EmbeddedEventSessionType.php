@@ -19,20 +19,43 @@ class EmbeddedEventSessionType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('start', Html5dateType::class,
-                  array('data_class' => 'DateTime', 'label' => $this->translator->trans('Start', array(), null, $this->locale), 'attr' => array('class' => 'form-control')))
-            ->add('duration', Html5dateType::class,
-                  array('data_class' => 'DateTime', 'label' => $this->translator->trans('End', array(), null, $this->locale),
-                        'required' => false, 'attr' => array('class' => 'form-control'), ))
-            ->add('notes', TextareaType::class,
-                  array('label' => $this->translator->trans('Notes', array(), null, $this->locale), 'required' => false, 'attr' => array('class' => 'form-control')));
+            ->add(
+                'start',
+                Html5dateType::class,
+                [
+                    'data_class' => 'DateTime',
+                    'label' => $this->translator->trans('Start', [], null, $this->locale),
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'duration',
+                Html5dateType::class,
+                [
+                    'data_class' => 'DateTime',
+                    'label' => $this->translator->trans('End', [], null, $this->locale),
+                    'required' => false,
+                    'attr' => ['class' => 'form-control'],
+                ]
+            )
+            ->add(
+                'notes',
+                TextareaType::class,
+                [
+                    'label' => $this->translator->trans('Notes', [], null, $this->locale),
+                    'required' => false,
+                    'attr' => ['class' => 'form-control']
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\EmbeddedEventSession',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\EmbeddedEventSession',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

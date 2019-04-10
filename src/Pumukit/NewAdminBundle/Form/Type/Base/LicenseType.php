@@ -9,12 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LicenseType extends AbstractType
 {
-    private $licenses = array();
+    private $licenses = [];
 
     /**
-     * @param array $licenses: list of licenses, if is a sequential array use text as value and label
+     * @param array $licenses : list of licenses, if is a sequential array use text as value and label
      */
-    public function __construct(array $licenses = array())
+    public function __construct(array $licenses = [])
     {
         if (array_keys($licenses) !== range(0, count($licenses) - 1)) {
             //is associative
@@ -32,10 +32,12 @@ class LicenseType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'required' => true,
-            'choices' => $this->licenses,
-        ));
+        $resolver->setDefaults(
+            [
+                'required' => true,
+                'choices' => $this->licenses,
+            ]
+        );
     }
 
     /**

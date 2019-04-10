@@ -22,52 +22,86 @@ class PersonType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('i18n_honorific', TextI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Honorific', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Honorific', array(), null, $this->locale), ))
-            ->add('name', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ))
-            ->add('i18n_post', TextI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Post', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Post', array(), null, $this->locale), ))
-            ->add('i18n_firm', TextI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Firm', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Firm', array(), null, $this->locale), ))
-            ->add('i18n_bio', TextareaI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Bio', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Bio', array(), null, $this->locale), ))
-            ->add('email', EmailType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Email', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Email', array(), null, $this->locale), ))
-            ->add('web', UrlType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Web', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Web', array(), null, $this->locale), ))
-            ->add('phone', TextType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Phone', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Phone', array(), null, $this->locale), ));
+            ->add(
+                'i18n_honorific',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Honorific', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Honorific', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_post',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Post', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Post', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_firm',
+                TextI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Firm', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Firm', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_bio',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Bio', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Bio', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Email', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Email', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'web',
+                UrlType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Web', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Web', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'phone',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => ['aria-label' => $this->translator->trans('Phone', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Phone', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\Person',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\Person',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

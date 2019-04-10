@@ -18,17 +18,23 @@ class PermissionProfileType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('name', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Name', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Name', array(), null, $this->locale), ));
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'attr' => ['aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'label' => $this->translator->trans('Name', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\SchemaBundle\Document\PermissionProfile',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');

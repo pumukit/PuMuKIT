@@ -10,17 +10,17 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CustomLanguageType extends AbstractType
 {
-    public static $addonLanguages = array(
+    public static $addonLanguages = [
         'lse' => 'Spanish Sign Language',
         'ssp' => 'Spanish Sign Language',
         'lsi' => 'International Sign Language',
         'sgn' => 'International Sign Language',
-    );
+    ];
 
     private $translator;
     private $customLanguages;
 
-    public function __construct(TranslatorInterface $translator, array $customLanguages = array())
+    public function __construct(TranslatorInterface $translator, array $customLanguages = [])
     {
         $this->translator = $translator;
         $this->customLanguages = $customLanguages;
@@ -31,9 +31,11 @@ class CustomLanguageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array_flip(self::getLanguageNames($this->customLanguages, $this->translator)),
-        ));
+        $resolver->setDefaults(
+            [
+                'choices' => array_flip(self::getLanguageNames($this->customLanguages, $this->translator)),
+            ]
+        );
     }
 
     public static function getLanguageNames($customLanguages, $translator)
@@ -41,12 +43,12 @@ class CustomLanguageType extends AbstractType
         $languageNames = Intl::getLanguageBundle()->getLanguageNames();
 
         if ($customLanguages) {
-            $choices = array();
+            $choices = [];
             foreach ($customLanguages as $aux) {
                 $code = strtolower($aux);
                 $choices[$code] = isset($languageNames[$code]) ?
-                                $languageNames[$code] :
-                                (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
+                    $languageNames[$code] :
+                    (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
             }
         } else {
             $choices = $languageNames;
