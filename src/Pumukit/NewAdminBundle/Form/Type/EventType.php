@@ -21,39 +21,79 @@ class EventType extends AbstractType
         $this->locale = $options['locale'];
 
         $builder
-            ->add('name', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Event', array(), null, $this->locale), ))
-            ->add('i18n_description', TextareaI18nType::class,
-                  array(
-                      'required' => false,
-                      'attr' => array('style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Event', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Description', array(), null, $this->locale), ))
-            ->add('place', TextType::class,
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Location', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Location', array(), null, $this->locale), ))
-            ->add('live', null,
-                  array(
-                      'required' => false,
-                      'attr' => array('aria-label' => $this->translator->trans('Channels', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Channels', array(), null, $this->locale), ))
-            ->add('schedule', new EventscheduleType(),
-                  array(
-                      'attr' => array('aria-label' => $this->translator->trans('Schedule', array(), null, $this->locale)),
-                      'label' => $this->translator->trans('Schedule', array(), null, $this->locale), ))
-            ->add('display', CheckboxType::class,
-                  array('required' => false,
-                        'attr' => array('aria-label' => $this->translator->trans('Announce', array(), null, $this->locale)),
-                        'label' => $this->translator->trans('Announce', array(), null, $this->locale), ));
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Event', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Event', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'i18n_description',
+                TextareaI18nType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'style' => 'resize:vertical;',
+                        'aria-label' => $this->translator->trans('Event', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Description', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'place',
+                TextType::class,
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Location', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Location', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'live',
+                null,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Channels', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Channels', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'schedule',
+                EventscheduleType::class,
+                [
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Schedule', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Schedule', [], null, $this->locale),
+                ]
+            )
+            ->add(
+                'display',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'aria-label' => $this->translator->trans('Announce', [], null, $this->locale),
+                    ],
+                    'label' => $this->translator->trans('Announce', [], null, $this->locale),
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Pumukit\LiveBundle\Document\Event',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Pumukit\LiveBundle\Document\Event',
+            ]
+        );
 
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
