@@ -207,7 +207,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     {
         $requestRoute = $this->container->get('request_stack')->getMasterRequest()->get('_route');
         $isMagicRoute = false;
-        if (-1 !== strpos('magic', $requestRoute)) {
+        if (false !== strpos($requestRoute, 'magic')) {
             $isMagicRoute = true;
         }
 

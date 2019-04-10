@@ -175,6 +175,23 @@ class JobGeneratorListenerTest extends WebTestCase
         /* $this->assertEquals(array(), $jobs);  //generate a video from an audio has no sense. */
     }
 
+    public function testNotGenerateJobsForPublishedVideo()
+    {
+        $track = new Track();
+        $track->setTags(array('master', 'profile:video'));
+        $track->setPath('path');
+        $track->setOnlyAudio(false);
+        $track->setWidth(640);
+        $track->setHeight(480);
+        $mmobj = new MultimediaObject();
+        $mmobj->addTrack($track);
+
+        $jobs = $this->invokeMethod($this->jobGeneratorListener, 'generateJobs', array($mmobj, 'TAGC'));
+        $this->assertEquals(array(), $jobs);
+
+        //$this->assertEquals(1, 2);
+    }
+
     private function invokeMethod(&$object, $methodName, array $parameters = array())
     {
         $reflection = new \ReflectionClass(get_class($object));
