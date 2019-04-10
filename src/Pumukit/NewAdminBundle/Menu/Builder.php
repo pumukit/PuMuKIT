@@ -62,8 +62,8 @@ class Builder extends ContainerAware
      */
     protected function addWizardMenu(KnpItemInterface $menu)
     {
-        if ($this->authorizationChecker->isGranted([Permission::ACCESS_WIZARD_UPLOAD] && $this->authorizationChecker->isGranted([Permission::SHOW_WIZARD_MENU]))) {
-            if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($this->authorizationChecker->isGranted(Permission::ACCESS_WIZARD_UPLOAD) && $this->authorizationChecker->isGranted(Permission::SHOW_WIZARD_MENU)) {
                 $masterRequest = $this->container->get('request_stack')->getMasterRequest();
                 $class = ($masterRequest && (0 === strpos($masterRequest->attributes->get('_route'), 'pumukitwizard_default_'))) ? 'active' : '';
                 $class .= ' menu_wizard_upload_new_videos';
