@@ -226,6 +226,7 @@ class FactoryService
             }
         }
 
+        $mm = $this->addLoggedInUserAsPerson($mm, $loggedInUser);
         // Add other owners in case of exists
         foreach ($prototype->getRoles() as $embeddedRole) {
             if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
