@@ -94,11 +94,9 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->defaultLanguage = $this->getContainer()->getParameter('locale');
 
-        $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(
-            [
-                '_id' => $input->getArgument('user'),
-            ]
-        );
+        $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy([
+            '_id' => $input->getArgument('user'),
+        ]);
 
         $this->path = $input->getArgument('path');
         $this->inboxDepth = $input->getArgument('inbox-depth');

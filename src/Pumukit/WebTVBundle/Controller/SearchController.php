@@ -240,12 +240,10 @@ class SearchController extends Controller implements WebTVControllerInterface
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$request->getLocale())->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ('' != $searchFound) {
-            $queryBuilder->field('$text')->equals(
-                [
-                    '$search' => TextIndexUtils::cleanTextIndex($searchFound),
-                    '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
-                ]
-            );
+            $queryBuilder->field('$text')->equals([
+                '$search' => TextIndexUtils::cleanTextIndex($searchFound),
+                '$language' => TextIndexUtils::getCloseLanguage($request->getLocale()),
+            ]);
         }
 
         return $queryBuilder;

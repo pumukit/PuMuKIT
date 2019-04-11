@@ -149,11 +149,9 @@ class WizardService
     {
         $seriesId = $this->getKeyData('id', $seriesData);
         if ($seriesId && ('null' !== $seriesId)) {
-            $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
-                [
-                    '_id' => $seriesId,
-                ]
-            );
+            $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy([
+                '_id' => $seriesId,
+            ]);
         } else {
             $series = $this->createSeries($seriesData);
         }
