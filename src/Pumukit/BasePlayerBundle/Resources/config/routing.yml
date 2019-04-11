@@ -1,8 +1,3 @@
-pumukit_base_player_parent:
-    resource: "../../src/Pumukit/BasePlayerBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 pumukit_base_player:
     resource: "@PumukitBasePlayerBundle/Controller/"
     type:     annotation
