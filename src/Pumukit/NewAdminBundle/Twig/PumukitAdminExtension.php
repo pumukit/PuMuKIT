@@ -241,7 +241,11 @@ class PumukitAdminExtension extends \Twig_Extension
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
+                if ($multimediaObject->containsTagWithCod('PUCHWEBTV')) {
+                    $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
+                } else {
+                    $iconText = $this->translator->trans('Published');
+                }
                 break;
             case MultimediaObject::STATUS_HIDE:
                 $iconText = $this->translator->trans('Hidden: is not listed in the Series but can be played with magic URL');
