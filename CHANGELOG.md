@@ -4,6 +4,9 @@ Web version of the changelog in http://pumukit.org/pmk-2-x-release-archive/
 To get the diff for a specific change, go to https://github.com/campusdomar/PuMuKIT2/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/campusdomar/PuMuKIT2/compare/2.0.0...2.1.0-rc1
 
+## [2.6.0](https://github.com/campusdomar/PuMuKIT2/compare/2.6.0...2.5.0) (2019-04-02)
+- Added custom columns configuration at UNESCO catalogue.
+- Bugfixing.
 
 ## [2.5.0](https://github.com/campusdomar/PuMuKIT2/compare/2.5.0...2.4.0) (2019-01-10)
 - Added a button to synchronize metadata from one to the rest of the MMO of a Series.
