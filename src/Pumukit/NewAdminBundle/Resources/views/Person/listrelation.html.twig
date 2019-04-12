@@ -51,7 +51,7 @@
                 </td>
                 <td colspan="6">
                     <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}"
-                       class="new_person_relation new_person_relation_{{ role.getCod() }"
+                       class="new_person_relation new_person_relation_{{ role.getCod() }}"
                        href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id}) }}"
                        data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
                         {% trans %}new{% endtrans %}...
