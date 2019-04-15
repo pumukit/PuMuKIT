@@ -39,10 +39,11 @@ class JobService
     private $tokenStorage;
     private $propService;
     private $inboxPath;
+    private $binPath;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
-                                TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService,
+                                TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService, $binPath,
                                 $environment = 'dev', $tmpPath = null, $inboxPath = null)
     {
         $this->dm = $documentManager;
@@ -58,6 +59,7 @@ class JobService
         $this->dispatcher = $dispatcher;
         $this->environment = $environment;
         $this->propService = $propService;
+        $this->binPath = $binPath;
     }
 
     /**
@@ -453,9 +455,8 @@ class JobService
           $pb->add('exec');
           }
         */
-
-        //$console = $this->getContainer()->getParameter('kernel.root_dir').'/console';
-        $console = __DIR__.'/../../../../app/console';
+        
+        $console = $this->binPath . 'console';
 
         $pb
             ->add('php')

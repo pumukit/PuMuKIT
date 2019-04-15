@@ -30,6 +30,7 @@
             <argument type="service" id="pumukitschema.track"/>
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="pumukitencoder.mmpropertyjob"/>
+            <argument>%kernel.root_dir%/../bin/</argument>
             <argument>%kernel.environment%</argument>
             <argument>%pumukit2.tmp%</argument>
             <argument>%pumukit2.inbox%</argument>
