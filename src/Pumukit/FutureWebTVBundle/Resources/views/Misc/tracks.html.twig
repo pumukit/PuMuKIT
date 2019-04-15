@@ -20,24 +20,26 @@
         {% else %}
             {% set url_track = url('pumukit_webtv_multimediaobject_index', {'id': object.id, 'track_id': track.id}) %}
         {% endif %}
-        <a class="list-group-item list-group-item-custom" href="{{ url_track }}" title="{{ "Url track"|trans }}">
-            {% if object.isOnlyAudio() %}
-                <i class="fa fa-headphones"></i>
-            {% else %}
-                <i class="fa fa-video-camera"></i>
-            {% endif %}
-
-            {% spaceless %}
-                {% if track.isOnlyAudio %}
-                    {{ object.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
-                {% elseif track.containsTag('download') %}
-                    {% trans %}Download master{% endtrans %}
+        <li class="list-group-item list-group-item-custom">
+            <a href="{{ url_track }}" title="{{ "Url track"|trans }}">
+                {% if object.isOnlyAudio() %}
+                    <i class="fa fa-headphones"></i>
                 {% else %}
-                    {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
+                    <i class="fa fa-video-camera"></i>
                 {% endif %}
-            {% endspaceless %}
 
-            <span class="language"> ({{ track.getLanguage()|language_name }})</span>
-        </a>
+                {% spaceless %}
+                    {% if track.isOnlyAudio %}
+                        {{ object.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
+                    {% elseif track.containsTag('download') %}
+                        {% trans %}Download master{% endtrans %}
+                    {% else %}
+                        {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
+                    {% endif %}
+                {% endspaceless %}
+
+                <span class="language"> ({{ track.getLanguage()|language_name }})</span>
+            </a>
+        </li>
     {% endfor %}
 {% endif %}
