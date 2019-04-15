@@ -174,7 +174,7 @@
         if (video.readyState == 4) {
             init_extractpic();
         } else {
-            video.addEventListener("loadeddata", init_extractpic, false);
+            video.addEventListener("canplaythrough", init_extractpic, false);
         }
 
 
