@@ -11,7 +11,7 @@
                 <a href="{{ videoUrl }}" title="{{ videoUrl }}">
                     <div class="embed-responsive embed-responsive-16by9">
                         <div class="embed-responsive-item text-center">
-                            <img alt="image" src="{{ object|first_url_pic(true) }}" class="img-responsive img_adapter_4_3" />
+                            <img alt="{{ object.getTitle()|default('No title'|trans) }}" src="{{ object|first_url_pic(true) }}" class="img-responsive img_adapter_4_3" />
                         </div>
                     </div>
                 </a>
