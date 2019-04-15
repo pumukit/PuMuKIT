@@ -17,10 +17,10 @@ class SeriesListener
         $this->logger = $logger;
     }
 
-    public function onSeriesSync(SeriesEvent $event)
+    public function onSeriesSync(SeriesEvent $event, $eventName)
     {
         $series = $event->getSeries();
-        switch ($event->getName()) {
+        switch ($eventName) {
         case 'series.update':
             $this->seriesSyncService->updateSeries($series);
             break;
