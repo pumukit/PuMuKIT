@@ -455,8 +455,8 @@ class JobService
           $pb->add('exec');
           }
         */
-        
-        $console = $this->binPath . 'console';
+
+        $console = $this->binPath.'console';
 
         $pb
             ->add('php')
