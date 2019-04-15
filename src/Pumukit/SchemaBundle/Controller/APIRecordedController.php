@@ -152,7 +152,7 @@ class APIRecordedController extends Controller
      */
     public function globalStatsAction(Request $request)
     {
-        $serializer = $this->get('serializer');
+        $serializer = $this->get('jms_serializer');
         $recordsService = $this->get('pumukitschema.stats');
 
         $groupBy = $request->get('group_by') ?: 'month';
