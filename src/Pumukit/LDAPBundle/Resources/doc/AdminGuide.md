@@ -16,10 +16,10 @@ configure it, read the below section.
 How to install and configure LDAPBundle
 ---------------------------------------
 
-1.- Install the bundle into your Pumukit2 root project:
+1.- Install the bundle into your Pumukit root project:
 
 ```
-$ cd /path/to/pumukit2/
+$ cd /path/to/pumukit/
 $ php app/console pumukit:install:bundle Pumukit/LDAPBundle/PumukitLDAPBundle
 ```
 

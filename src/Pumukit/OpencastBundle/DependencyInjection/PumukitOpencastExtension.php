@@ -80,7 +80,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit_opencast.client'))
               ->addArgument(new Parameter('pumukit.locales'));
 
-            $pumukit2customlanguages = $container->hasParameter('pumukit.customlanguages') ?
+            $pumukitcustomlanguages = $container->hasParameter('pumukit.customlanguages') ?
                 new Parameter('pumukit.customlanguages') :
                 array();
 
@@ -97,7 +97,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Parameter('pumukit.locales'))
               ->addArgument(new Parameter('pumukit_opencast.default_tag_imported'))
               ->addArgument(new Reference('pumukit_opencast.series_importer'))
-              ->addArgument($pumukit2customlanguages);
+              ->addArgument($pumukitcustomlanguages);
 
             $container
               ->register('pumukit_opencast.workflow', "Pumukit\OpencastBundle\Services\WorkflowService")

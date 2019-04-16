@@ -315,9 +315,9 @@ class DefaultController extends Controller
             $data = $request->request->get('pumukit_multimedia_object_contact');
             $bodyMail = sprintf(" * URL: %s\n * ".$translator->trans('Email').": %s\n * ".$translator->trans('Name').": %s\n * ".$translator->trans('Content').": %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
-            $pumukit2info = $this->container->getParameter('pumukit.info');
+            $pumukitInfo = $this->container->getParameter('pumukit.info');
             $subject = sprintf('%s - %s: %s',
-                $pumukit2info['title'],
+                $pumukitInfo['title'],
                 $translator->trans('New contact from live event'),
                 $multimediaObject->getEmbeddedEvent()->getName()
             );
