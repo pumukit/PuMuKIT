@@ -3,7 +3,7 @@
 namespace Pumukit\BasePlayerBundle\Services;
 
 /**
- * Wrapper around the pumukit2.intro parameter.
+ * Wrapper around the pumukit.intro parameter.
  */
 class IntroService
 {

@@ -368,9 +368,9 @@
         <source>Select a file on the tree</source>
         <target xml:lang="es-ES" state="translated">Seleccione un archivo en el árbol</target>
       </trans-unit>
-      <trans-unit id="affa928796995b6d2f52cedcfe3538cb" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.">
-        <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target xml:lang="es-ES" state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit2.inbox&lt;/code&gt; en su archivo de configuración.</target>
+      <trans-unit id="affa928796995b6d2f52cedcfe3538cb" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
+        <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
+        <target xml:lang="es-ES" state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit.inbox&lt;/code&gt; en su archivo de configuración.</target>
       </trans-unit>
       <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
         <source>not exists</source>

@@ -365,9 +365,9 @@
         <source>Select a file on the tree</source>
         <target xml:lang="ja" state="needs-translation">Select a file on the tree</target>
       </trans-unit>
-      <trans-unit id="affa928796995b6d2f52cedcfe3538cb" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.">
-        <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target xml:lang="ja" state="needs-translation">To use the inbox mode define the inbox path as &lt;code&gt;pumukit2.inbox&lt;/code&gt; parameter in your config file.</target>
+      <trans-unit id="affa928796995b6d2f52cedcfe3538cb" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
+        <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
+        <target xml:lang="ja" state="needs-translation">To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</target>
       </trans-unit>
       <trans-unit id="d333d17be3621ef941f39c3ccfda0c7e" resname="not exists">
         <source>not exists</source>

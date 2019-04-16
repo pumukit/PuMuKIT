@@ -342,7 +342,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             unset($permissions[Permission::ACCESS_BROADCASTS]);
         }
 
-        if (!$this->container->hasParameter('pumukit2.use_series_channels') || !$this->container->getParameter('pumukit2.use_series_channels')) {
+        if (!$this->container->hasParameter('pumukit.use_series_channels') || !$this->container->getParameter('pumukit.use_series_channels')) {
             unset($permissions[Permission::ACCESS_SERIES_TYPES]);
         }
 

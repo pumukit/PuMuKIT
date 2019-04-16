@@ -33,7 +33,7 @@ class LiveRepositoryTest extends WebTestCase
 
     public function testRepository()
     {
-        $url = 'http://www.pumukit2.com/liveo1';
+        $url = 'http://www.pumukit.com/liveo1';
         $passwd = 'password';
         $live_type = Live::LIVE_TYPE_FMS;
         $width = 640;

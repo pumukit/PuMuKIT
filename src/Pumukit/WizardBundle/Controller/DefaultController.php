@@ -287,7 +287,7 @@ class DefaultController extends Controller
             }
         }
 
-        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit.customlanguages'), $this->get('translator'));
 
         $showTags = $this->container->getParameter('pumukit_wizard.show_tags');
         $showObjectLicense = $this->container->getParameter('pumukit_wizard.show_object_license');
@@ -811,7 +811,7 @@ class DefaultController extends Controller
         if ($fieldName && $defaultValue) {
             if ($isI18nField) {
                 $resourceData[$fieldName] = array();
-                $locales = $this->container->getParameter('pumukit2.locales');
+                $locales = $this->container->getParameter('pumukit.locales');
                 foreach ($locales as $locale) {
                     $resourceData[$fieldName][$locale] = $defaultValue;
                 }

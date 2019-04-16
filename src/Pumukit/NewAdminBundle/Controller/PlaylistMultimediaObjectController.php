@@ -84,7 +84,7 @@ class PlaylistMultimediaObjectController extends Controller
     public function infoAction(MultimediaObject $mmobj, Request $request)
     {
         $mmService = $this->get('pumukitschema.multimedia_object');
-        $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
+        $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
 
         return array(
             'mm' => $mmobj,
@@ -436,7 +436,7 @@ class PlaylistMultimediaObjectController extends Controller
             'id' => $request->get('id'),
             'ids' => $request->get('ids'),
             'num_mm' => $count,
-            'locales' => $this->container->getParameter('pumukit2.locales'),
+            'locales' => $this->container->getParameter('pumukit.locales'),
         );
     }
 

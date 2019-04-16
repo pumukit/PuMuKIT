@@ -238,7 +238,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function linksAction(MultimediaObject $resource)
     {
         $mmService = $this->get('pumukitschema.multimedia_object');
-        $warningOnUnpublished = $this->container->getParameter('pumukit2.warning_on_unpublished');
+        $warningOnUnpublished = $this->container->getParameter('pumukit.warning_on_unpublished');
 
         return array(
             'mm' => $resource,

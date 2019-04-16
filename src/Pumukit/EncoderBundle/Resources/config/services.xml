@@ -32,8 +32,8 @@
             <argument type="service" id="pumukitencoder.mmpropertyjob"/>
             <argument>%kernel.root_dir%/../bin/</argument>
             <argument>%kernel.environment%</argument>
-            <argument>%pumukit2.tmp%</argument>
-            <argument>%pumukit2.inbox%</argument>
+            <argument>%pumukit.tmp%</argument>
+            <argument>%pumukit.inbox%</argument>
             <tag name="monolog.logger" channel="encoder"/>
         </service>
 
@@ -46,8 +46,8 @@
             <argument type="service" id="pumukitschema.mmspic"/>
             <argument>%pumukitencode.thumbnail.width%</argument>
             <argument>%pumukitencode.thumbnail.height%</argument>
-            <argument>%pumukit2.uploads_dir%/pic</argument>
-            <argument>%pumukit2.uploads_url%/pic</argument>
+            <argument>%pumukit.uploads_dir%/pic</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
             <argument>%pumukit.picextractor.command%</argument>
         </service>
 

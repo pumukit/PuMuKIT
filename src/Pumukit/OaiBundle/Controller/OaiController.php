@@ -79,7 +79,7 @@ class OaiController extends Controller
         $XMLrequest->addAttribute('verb', 'Identify');
 
         $XMLidentify = new SimpleXMLExtended('<Identify></Identify>');
-        $info = $this->container->getParameter('pumukit2.info');
+        $info = $this->container->getParameter('pumukit.info');
         $XMLidentify->addChild('repositoryName', $info['description']);
         $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', array(), true));
         $XMLidentify->addChild('protocolVersion', '2.0');

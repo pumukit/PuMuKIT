@@ -24,7 +24,7 @@
         </service>
 
         <service id="pumukit_baseplayer.intro" class="Pumukit\BasePlayerBundle\Services\IntroService">
-          <argument>%pumukit2.intro%</argument>
+          <argument>%pumukit.intro%</argument>
         </service>
 
         <service id="pumukit_baseplayer.useragent_parser" class="Pumukit\BasePlayerBundle\Services\UserAgentParserService">

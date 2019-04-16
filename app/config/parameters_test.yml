@@ -1,5 +1,5 @@
 parameters:
     locale: en
-    pumukit2.locales:
+    pumukit.locales:
         - en
         - es

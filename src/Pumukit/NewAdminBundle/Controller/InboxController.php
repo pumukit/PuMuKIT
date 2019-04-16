@@ -49,7 +49,7 @@ class InboxController extends Controller implements NewAdminController
             foreach ($finder as $f) {
                 if (0 !== (count(glob("$f/*")))) {
                     $contentFinder = new Finder();
-                    if (!$this->getParameter('pumukit2.inbox_depth')) {
+                    if (!$this->getParameter('pumukit.inbox_depth')) {
                         $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());
@@ -70,11 +70,11 @@ class InboxController extends Controller implements NewAdminController
      */
     public function formAction($onlyDir = false)
     {
-        if (!$this->container->hasParameter('pumukit2.inbox')) {
+        if (!$this->container->hasParameter('pumukit.inbox')) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
         }
 
-        $dir = realpath($this->container->getParameter('pumukit2.inbox'));
+        $dir = realpath($this->container->getParameter('pumukit.inbox'));
 
         if (!file_exists($dir)) {
             return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', array('dir' => $dir));

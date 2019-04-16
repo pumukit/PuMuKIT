@@ -280,7 +280,7 @@ class DefaultController extends Controller
      */
     public function playlistAction(Live $live)
     {
-        $intro = $this->container->hasParameter('pumukit2.intro') ? $this->container->getParameter('pumukit2.intro') : null;
+        $intro = $this->container->hasParameter('pumukit.intro') ? $this->container->getParameter('pumukit.intro') : null;
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $mmobjsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('properties.is_live_playlist' => true));
 
@@ -315,7 +315,7 @@ class DefaultController extends Controller
             $data = $request->request->get('pumukit_multimedia_object_contact');
             $bodyMail = sprintf(" * URL: %s\n * ".$translator->trans('Email').": %s\n * ".$translator->trans('Name').": %s\n * ".$translator->trans('Content').": %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
-            $pumukit2info = $this->container->getParameter('pumukit2.info');
+            $pumukit2info = $this->container->getParameter('pumukit.info');
             $subject = sprintf('%s - %s: %s',
                 $pumukit2info['title'],
                 $translator->trans('New contact from live event'),

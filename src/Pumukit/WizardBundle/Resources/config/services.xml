@@ -8,7 +8,7 @@
         <service id="pumukit_wizard.license" class="Pumukit\WizardBundle\Services\LicenseService">
             <argument>%pumukit_wizard.show_license%</argument>
             <argument>%pumukit_wizard.license_dir%</argument>
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
             <argument type="service" id="translator" />
         </service>
 
@@ -21,8 +21,8 @@
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="pumukitschema.tag" />
             <argument>%kernel.root_dir%/../</argument>
-            <argument>%pumukit2.locales%</argument>
-            <argument>%pumukit2.inbox_depth%</argument>
+            <argument>%pumukit.locales%</argument>
+            <argument>%pumukit.inbox_depth%</argument>
         </service>
 
         <service id="pumukit_wizard.form_dispatcher" class="Pumukit\WizardBundle\Services\FormEventDispatcherService">

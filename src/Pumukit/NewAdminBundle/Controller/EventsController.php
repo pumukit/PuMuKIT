@@ -81,7 +81,7 @@ class EventsController extends Controller implements NewAdminController
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
-        $languages = $this->container->getParameter('pumukit2.locales');
+        $languages = $this->container->getParameter('pumukit.locales');
 
         $factoryService = $this->get('pumukitschema.factory');
 
@@ -648,8 +648,8 @@ class EventsController extends Controller implements NewAdminController
             'pumukitnewadmin_series_template',
         );
         $showSeriesTypeTab = $this->container->hasParameter(
-            'pumukit2.use_series_channels'
-        ) && $this->container->getParameter('pumukit2.use_series_channels');
+            'pumukit.use_series_channels'
+        ) && $this->container->getParameter('pumukit.use_series_channels');
         if (!$showSeriesTypeTab) {
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }

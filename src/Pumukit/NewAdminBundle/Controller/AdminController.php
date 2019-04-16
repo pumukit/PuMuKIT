@@ -306,7 +306,7 @@ class AdminController extends ResourceController implements NewAdminController
      */
     public function exportRolesAction()
     {
-        $languages = $this->getParameter('pumukit2.locales');
+        $languages = $this->getParameter('pumukit.locales');
 
         $csv = array('id', 'cod', 'xml', 'display');
         foreach ($languages as $language) {

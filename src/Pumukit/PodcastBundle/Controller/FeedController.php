@@ -144,7 +144,7 @@ class FeedController extends Controller
     private function getValues(Request $request, $audioVideoType = 'video', $series = null)
     {
         $container = $this->container;
-        $pumukit2Info = $container->getParameter('pumukit2.info');
+        $pumukit2Info = $container->getParameter('pumukit.info');
         $assetsHelper = $container->get('templating.helper.assets');
 
         $values = array();

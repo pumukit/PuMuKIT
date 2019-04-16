@@ -5,6 +5,29 @@ imports:
     - { resource: parameters_deploy.yml, ignore_errors: true }
     - { resource: encoder.yml }
 
+parameters:
+    locale:  "%env(LOCALE)%"
+    secret:  "%env(SECRET)%"
+
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true
+
+    pumukit.info:
+        title:               "%env(PUMUKIT_TITLE)%"
+        description:         "%env(PUMUKIT_DESCRIPTION)%"
+        keywords:            "%env(PUMUKIT_KEYWORDS)%"
+        email:               "%env(PUMUKIT_EMAIL)%"
+        logo:                "%env(PUMUKIT_LOGO)%"
+    pumukit.locales:         "%env(json:PUMUKIT_LOCALES)%"
+    pumukit.uploads_dir:     "%env(PUMUKIT_UPLOADS_DIR)%"
+    pumukit.uploads_url:     "%env(PUMUKIT_UPLOADS_URL)%"
+    pumukit.inbox:           "%env(PUMUKIT_INBOX)%"
+    pumukit.tmp:             "%env(PUMUKIT_TMP)%"
+    pumukit.delete_on_disk:  "%env(bool:PUMUKIT_DELETE_ON_DISK)%"
+
+
+
 framework:
     #esi:             ~
     translator:      { fallback: "%locale%" }
@@ -32,8 +55,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        pumukit2_info: "%pumukit2.info%"
-        locales:       "%pumukit2.locales%"
+        pumukit_info:  "%pumukit.info%"
+        pumukit2_info: "%pumukit.info%"
+        locales:       "%pumukit.locales%"
 
 # Assetic Configuration
 assetic:
@@ -52,9 +76,9 @@ assetic:
 doctrine_mongodb:
     connections:
         default:
-            server: "%mongodb_server%"
+            server: "%env(MONGODB_SERVER)%"
             options: {}
-    default_database: "%mongodb_database%"
+    default_database: "%env(MONGODB_DATABASE)%"
     auto_generate_hydrator_classes: true
     auto_generate_proxy_classes: true
     document_managers:
@@ -77,10 +101,10 @@ doctrine_mongodb:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: "%env(MAILER_TRANSPORT)%"
+    host:      "%env(MAILER_HOST)%"
+    username:  "%env(MAILER_USER)%"
+    password:  "%env(MAILER_PASSWORD)%"
     spool:     { type: memory }
 
 # FOSUser Configuration

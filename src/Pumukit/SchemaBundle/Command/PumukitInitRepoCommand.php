@@ -47,7 +47,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
-        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
+        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), array('en')));
         $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
 
         $repoName = $input->getArgument('repo');

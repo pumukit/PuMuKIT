@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="security.role_hierarchy.class">Pumukit\SchemaBundle\Security\RoleHierarchy</parameter>
-        <parameter key="pumukit2.insecure_http_client">false</parameter>
+        <parameter key="pumukit.insecure_http_client">false</parameter>
     </parameters>
 
     <services>
@@ -16,7 +16,7 @@
         <service id="pumukitschema.schema.locale" class="Pumukit\SchemaBundle\EventListener\LocaleListener">
             <argument type="service" id="request_stack" />
             <argument>%kernel.default_locale%</argument>
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
             <tag name="doctrine_mongodb.odm.event_listener" event="postLoad" />
             <tag name="kernel.event_subscriber" />
         </service>
@@ -61,26 +61,26 @@
             <argument type="service" id="pumukitschema.series_dispatcher" />
             <argument type="service" id="translator" />
             <argument>%pumukitschema.enable_add_user_as_person%</argument>
-            <argument>%pumukit2.locales%</argument>
-            <argument type="expression">parameter('pumukitschema.default_copyright') ? parameter('pumukitschema.default_copyright') : parameter('pumukit2.info')['title']</argument>
+            <argument>%pumukit.locales%</argument>
+            <argument type="expression">parameter('pumukitschema.default_copyright') ? parameter('pumukitschema.default_copyright') : parameter('pumukit.info')['title']</argument>
             <argument>%pumukitschema.default_license%</argument>
         </service>
 
         <service id="pumukitschema.seriespic" class="Pumukit\SchemaBundle\Services\SeriesPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.series_dispatcher" />
-            <argument>%pumukit2.locales%</argument>
-            <argument>%pumukit2.uploads_dir%/pic/</argument>
-            <argument>%pumukit2.uploads_url%/pic</argument>
-            <argument>%pumukit2.delete_on_disk%</argument>
+            <argument>%pumukit.locales%</argument>
+            <argument>%pumukit.uploads_dir%/pic/</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.mmspic" class="Pumukit\SchemaBundle\Services\MultimediaObjectPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.pic_dispatcher"/>
-            <argument>%pumukit2.uploads_dir%/pic/</argument>
-            <argument>%pumukit2.uploads_url%/pic</argument>
-            <argument>%pumukit2.delete_on_disk%</argument>
+            <argument>%pumukit.uploads_dir%/pic/</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.mmsduration" class="Pumukit\SchemaBundle\Services\MultimediaObjectDurationService">
@@ -184,9 +184,9 @@
         <service id="pumukitschema.material" class="Pumukit\SchemaBundle\Services\MaterialService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.material_dispatcher"/>
-            <argument>%pumukit2.uploads_dir%/material</argument>
-            <argument>%pumukit2.uploads_url%/material</argument>
-            <argument>%pumukit2.delete_on_disk%</argument>
+            <argument>%pumukit.uploads_dir%/material</argument>
+            <argument>%pumukit.uploads_url%/material</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.caption" class="Pumukit\SchemaBundle\Services\CaptionService">
@@ -196,8 +196,8 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="pumukitschema.track_dispatcher"/>
             <argument type="service" id="pumukitencoder.profile"/>
-            <argument>%pumukit2.tmp%</argument>
-            <argument>%pumukit2.delete_on_disk%</argument>
+            <argument>%pumukit.tmp%</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
         </service>
 
         <service id="pumukitschema.person" class="Pumukit\SchemaBundle\Services\PersonService">
