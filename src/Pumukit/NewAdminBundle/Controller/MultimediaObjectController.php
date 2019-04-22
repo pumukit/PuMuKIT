@@ -659,7 +659,6 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
         $mms = new Pagerfanta($adapter);
 
-        dump($page);
         $mms
             ->setMaxPerPage($maxPerPage)
             ->setNormalizeOutOfRangePages(true);
