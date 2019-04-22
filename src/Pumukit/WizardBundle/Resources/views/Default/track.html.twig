@@ -97,30 +97,31 @@
                     </div>
                     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
                         <div class="form-group">
-                            <label for="pumukitwizard_track_filetype" class="control-label">{% trans %}Mode{% endtrans %}</label>
+                            <span><strong>{% trans %}Mode{% endtrans %}</strong></span>
                             {% if 'single' == form_data.type.option %}
                                 <div class="radio">
-                                    <label>
-                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
+                                    <label for="radio_inbox">
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_inbox" value="inbox" onclick="$('#pumukitwizard_track_file').hide();$('#pumukitwizard_track_inbox').show();"/>
                                         {% trans %}Inbox on server{% endtrans %}
                                     </label>
                                 </div>
                                 <div class="radio">
-                                    <label>
-                                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
+                                    <label for="radio_file">
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" onclick="$('#pumukitwizard_track_inbox').hide();$('#pumukitwizard_track_file').show();"/>
                                         {% trans %}Local hard drive{% endtrans %}
                                     </label>
                                 </div>
                             {% elseif 'multiple' == form_data.type.option %}
                                 <div class="radio">
-                                    <label><input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/>
+                                    <label for="radio_directory">
+                                        <input class="priority_checkbox" type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_directory" value="directory" checked="checked"/>
                                         {% trans %}Inbox directory on server{% endtrans %}
                                     </label>
                                 </div>
                             {% endif %}
                         </div>
                     {% else %}
-                        <input type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
+                        <input class="priority_checkbox"  type="radio" name="pumukitwizard_form_data[track][filetype]" id="radio_file" value="file" checked="checked" style="display:none"/>
                     {% endif %}
                     {% if 'single' == form_data.type.option %}
                         <div class="form-group" id="pumukitwizard_track_file">
