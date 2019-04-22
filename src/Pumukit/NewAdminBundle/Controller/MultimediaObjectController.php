@@ -37,6 +37,13 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Overwrite to search criteria with date.
      *
      * @Template
+     *
+     * @param Request $request
+     *
+     * @return array|Response
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function indexAction(Request $request)
     {
@@ -46,6 +53,10 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
+        }
+
+        if ($request->get('page')) {
+            $this->get('session')->set('admin/mms/page', $request->get('page'));
         }
 
         $this->get('session')->set('admin/series/id', $series->getId());
@@ -635,6 +646,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $session = $this->get('session');
         $page = $session->get('admin/mms/page', 1);
+
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array('rank' => 'asc');
