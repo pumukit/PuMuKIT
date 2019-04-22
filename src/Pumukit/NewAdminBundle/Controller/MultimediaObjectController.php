@@ -56,7 +56,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         }
 
         if ($request->get('page')) {
-            $this->get('session')->set('admin/mms/page', $request->get('page'));
+            $page = (int) $request->get('page', 1);
+            if ($page < 1) {
+                $page = 1;
+            }
+            $this->get('session')->set('admin/mms/page', $page);
+        }
+
+        if ($request->get('paginate', null)) {
+            $session->set('admin/mms/paginate', $request->get('paginate', 10));
         }
 
         $this->get('session')->set('admin/series/id', $series->getId());
