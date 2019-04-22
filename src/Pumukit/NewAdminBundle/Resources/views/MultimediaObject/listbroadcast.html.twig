@@ -7,7 +7,7 @@
         {% endif %}
     </div>
     <div class="col-md-3 text-right">
-        <a id="change_broadcast_profile" title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+        <a class="change_broadcast_profile" title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
             {% trans %}Change{% endtrans %}
         </a>
     </div>

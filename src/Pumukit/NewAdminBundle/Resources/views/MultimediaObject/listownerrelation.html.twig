@@ -67,7 +67,7 @@
                     <tr>
                         <td>
                             <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}"
-                               id="add_new_owner"
+                               class="add_owner_link"
                                href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
                                data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
                                 {% trans %}new{% endtrans %}...
