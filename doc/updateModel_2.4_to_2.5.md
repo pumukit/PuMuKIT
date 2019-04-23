@@ -25,7 +25,7 @@ db.Series.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists:
     db.Series.update({'_id': s._id}, {$set: {'numerical_id': NumberLong(s.properties.pumukit1id)}});
 });
 
-db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(m) {
+db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'status': {$ne: -2}, 'numerical_id': {$exists: false}}).snapshot().forEach(function(m) {
     db.MultimediaObject.update({'_id': m._id}, {$set: {'numerical_id': NumberLong(m.properties.pumukit1id)}});
 });
 ```
@@ -36,7 +36,7 @@ db.MultimediaObject.find({'properties.pumukit1id': {$exists: 1}, 'numerical_id':
 db.MultimediaObject.find({'numerical_id': {$exists:1}}).sort({'numerical_id': -1}).limit(1).forEach(function(m) {
     var nextNumericalID = m['numerical_id'] + 1;
 
-    db.MultimediaObject.find({'numerical_id': {$exists :false}, 'properties.pumukit1id': {$exists: false}}).forEach(function(mm) {
+    db.MultimediaObject.find({'numerical_id': {$exists :false}}).forEach(function(mm) {
           mm['numerical_id'] = NumberLong(nextNumericalID);
           db.MultimediaObject.save(mm);
           nextNumericalID = nextNumericalID + 1;
