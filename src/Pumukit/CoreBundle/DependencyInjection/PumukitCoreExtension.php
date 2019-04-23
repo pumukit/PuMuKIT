@@ -15,7 +15,10 @@ use Symfony\Component\DependencyInjection\Loader;
 class PumukitCoreExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * @param array            $configs
+     * @param ContainerBuilder $container
+     *
+     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -30,6 +33,7 @@ class PumukitCoreExtension extends Extension
         $container->setParameter('pumukit2.tmp', $config['tmp']);
         $container->setParameter('pumukit2.delete_on_disk', $config['delete_on_disk']);
         $container->setParameter('pumukit2.use_series_channels', $config['use_series_channels']);
+        $container->setParameter('pumukit.full_magic_url', $config['full_magic_url']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
