@@ -223,17 +223,23 @@ class PumukitAdminExtension extends \Twig_Extension
     /**
      * Get status text.
      *
-     * @param int $status
+     * @param int|MultimediaObject $status
      *
      * @return string
      */
-    public function getStatusText($status)
+    public function getStatusText($param)
     {
         $iconText = 'New';
 
+        $status = $param instanceof MultimediaObject ? $param->getStatus() : $param;
+
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
-                $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
+                if ($param instanceof MultimediaObject && $param->containsTagWithCod('PUCHWEBTV')) {
+                    $iconText = $this->translator->trans('Published: is listed in the Series and can be played with published URL');
+                } else {
+                    $iconText = $this->translator->trans('Published');
+                }
                 break;
             case MultimediaObject::STATUS_HIDE:
                 $iconText = $this->translator->trans('Hidden: is not listed in the Series but can be played with magic URL');
