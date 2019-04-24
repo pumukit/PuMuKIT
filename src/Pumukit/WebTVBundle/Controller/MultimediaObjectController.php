@@ -185,10 +185,9 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
     public function preExecute(MultimediaObject $multimediaObject, Request $request, $secret = false)
     {
-        $fullMagicUrl = $this->getMagicUrlConfiguration();
         if ($multimediaObject->getProperty('opencasturl') && !$request->query->has('track_id')) {
             if ($secret) {
-                return $this->forward('PumukitWebTVBundle:Opencast:magic', array('request' => $request, 'multimediaObject' => $multimediaObject, 'fullMagicUrl' => $fullMagicUrl));
+                return $this->forward('PumukitWebTVBundle:Opencast:magic', array('request' => $request, 'multimediaObject' => $multimediaObject));
             } else {
                 return $this->forward('PumukitWebTVBundle:Opencast:index', array('request' => $request, 'multimediaObject' => $multimediaObject));
             }
