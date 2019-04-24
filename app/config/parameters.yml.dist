@@ -1,13 +1,13 @@
 # This file is auto-generated during the composer install
 parameters:
-    env(MONGODB_SERVER): 'mongodb://localhost:27017'
-    env(MONGODB_DATABASE): pumukit
-    env(MAILER_TRANSPORT): smtp
-    env(MAILER_HOST): 127.0.0.1
-    env(MAILER_USER): null
-    env(MAILER_PASSWORD): null
-    env(LOCALE): en
-    env(SECRET): ThisTokenIsNotSoSecretChangeIt
+    env(PUMUKIT_MONGODB_SERVER): 'mongodb://localhost:27017'
+    env(PUMUKIT_MONGODB_DATABASE): pumukit
+    env(PUMUKIT_MAILER_TRANSPORT): smtp
+    env(PUMUKIT_MAILER_HOST): 127.0.0.1
+    env(PUMUKIT_MAILER_USER): null
+    env(PUMUKIT_MAILER_PASSWORD): null
+    env(PUMUKIT_LOCALE): en
+    env(PUMUKIT_SECRET): ThisTokenIsNotSoSecretChangeIt
     env(PUMUKIT_TITLE): UPumukitTV
     env(PUMUKIT_DESCRIPTION): 'Pumukit University TV Website'
     env(PUMUKIT_KEYWORDS): 'webtv, Tv, Pumukit University, uvigo, uvigotv, pumukit'

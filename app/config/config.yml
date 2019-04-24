@@ -6,8 +6,8 @@ imports:
     - { resource: encoder.yml }
 
 parameters:
-    locale:  "%env(LOCALE)%"
-    secret:  "%env(SECRET)%"
+    locale:  "%env(PUMUKIT_LOCALE)%"
+    secret:  "%env(PUMUKIT_SECRET)%"
 
     debug_toolbar:          true
     debug_redirects:        false
@@ -75,9 +75,9 @@ assetic:
 doctrine_mongodb:
     connections:
         default:
-            server: "%env(MONGODB_SERVER)%"
+            server: "%env(PUMUKIT_MONGODB_SERVER)%"
             options: {}
-    default_database: "%env(MONGODB_DATABASE)%"
+    default_database: "%env(PUMUKIT_MONGODB_DATABASE)%"
     auto_generate_hydrator_classes: true
     auto_generate_proxy_classes: true
     document_managers:
@@ -100,10 +100,10 @@ doctrine_mongodb:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%env(MAILER_TRANSPORT)%"
-    host:      "%env(MAILER_HOST)%"
-    username:  "%env(MAILER_USER)%"
-    password:  "%env(MAILER_PASSWORD)%"
+    transport: "%env(PUMUKIT_MAILER_TRANSPORT)%"
+    host:      "%env(PUMUKIT_MAILER_HOST)%"
+    username:  "%env(PUMUKIT_MAILER_USER)%"
+    password:  "%env(PUMUKIT_MAILER_PASSWORD)%"
     spool:     { type: memory }
 
 # FOSUser Configuration
