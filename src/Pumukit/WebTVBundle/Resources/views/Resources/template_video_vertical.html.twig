@@ -6,7 +6,7 @@
 {% set videoTitle = object.title | default('No title'|trans) %}
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
-    <div class="row">
+    <div class="row {% if current.getId()|default('') == multimediaObject.getId() %}current{% endif %}">
         <div class="col-sm-6 col-md-5">
             <a href="{{ videoPath }}" title="{{ videoTitle }}">
                 <div class="embed-responsive embed-responsive-16by9">

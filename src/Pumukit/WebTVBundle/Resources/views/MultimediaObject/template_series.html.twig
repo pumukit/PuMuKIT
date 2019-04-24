@@ -9,4 +9,12 @@
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        $( document ).ready(function() {
+            var element = document.querySelector('.panel-series .current');
+            if (element) { element.scrollIntoView(false); }
+        });
+    </script>
+    
 {% endif %}
