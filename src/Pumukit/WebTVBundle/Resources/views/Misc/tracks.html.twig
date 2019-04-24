@@ -1,6 +1,6 @@
 {% if object.getProperty('opencast') is not empty or object.isMultistream() %}
     <li class="list-group-item">
-        <a href="{{ url_mmobj }}" title="{{ "Url track"|trans }}">
+        <a href="{{ videoUrl }}" title="{{ "Url track"|trans }}">
             <i class="fas fa-video"></i>
             {% spaceless %}
                 {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
