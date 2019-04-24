@@ -4,8 +4,11 @@ FROM teltek/pumukit-base
 # default build for production
 ARG APP_ENV=prod
 
-# copy only specifically what we need
+# copy the code into the docker
 COPY --chown=www-data:www-data . ./
+
+# load environment variables
+RUN source doc/docker/.env
 
 RUN set -eux; \
     composer install -a -n --no-scripts; \
