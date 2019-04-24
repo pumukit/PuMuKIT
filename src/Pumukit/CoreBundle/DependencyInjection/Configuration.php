@@ -66,7 +66,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultFalse()
                 ->end()
                 ->booleanNode('full_magic_url')
-                    ->defaultTrue() //DefaultFalse in pmk 3.0
+                    ->defaultFalse()
                 ->end()
             ->end();
 
