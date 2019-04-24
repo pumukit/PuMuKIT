@@ -1,31 +1,22 @@
+# This file is auto-generated during the composer install
 parameters:
-    mongodb_server:    mongodb://localhost:27017
-    mongodb_database:  pumukit
+    env(PUMUKIT_MONGODB_SERVER): 'mongodb://localhost:27017'
+    env(PUMUKIT_MONGODB_DATABASE): pumukit
+    env(PUMUKIT_MAILER_TRANSPORT): smtp
+    env(PUMUKIT_MAILER_HOST): 127.0.0.1
+    env(PUMUKIT_MAILER_USER): null
+    env(PUMUKIT_MAILER_PASSWORD): null
+    env(PUMUKIT_LOCALE): en
+    env(PUMUKIT_SECRET): ThisTokenIsNotSoSecretChangeIt
+    env(PUMUKIT_TITLE): UPumukitTV
+    env(PUMUKIT_DESCRIPTION): 'Pumukit University TV Website'
+    env(PUMUKIT_KEYWORDS): 'webtv, Tv, Pumukit University, uvigo, uvigotv, pumukit'
+    env(PUMUKIT_EMAIL): tv@pumukit.tv
+    env(PUMUKIT_LOGO): /bundles/pumukitwebtv/images/webtv/logo80px.png
+    env(PUMUKIT_LOCALES): '["en", "es"]'
+    env(PUMUKIT_UPLOADS_DIR): '%kernel.root_dir%/../web/uploads'
+    env(PUMUKIT_UPLOADS_URL): /uploads
+    env(PUMUKIT_INBOX): '%kernel.root_dir%/../web/storage/inbox'
+    env(PUMUKIT_TMP): '%kernel.root_dir%/../web/storage/tmp'
+    env(PUMUKIT_DELETE_ON_DISK): true
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
-
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
-
-    debug_toolbar:          true
-    debug_redirects:        false
-    use_assetic_controller: true
-
-    pumukit2.info:
-        title:        "UPumukitTV"
-        description:  "Pumukit University TV Website"
-        keywords:     "webtv, Tv, Pumukit University, uvigo, uvigotv, pumukit"
-        email:        "tv@pumukit.tv"
-        logo:         "/bundles/pumukitwebtv/images/webtv/logo80px.png"
-    pumukit2.locales:
-        - en
-        - es
-    pumukit2.uploads_dir: "%kernel.root_dir%/../web/uploads"
-    pumukit2.uploads_url: "/uploads"
-    pumukit2.inbox:   "%kernel.root_dir%/../web/storage/inbox"
-    pumukit2.tmp:     "%kernel.root_dir%/../web/storage/tmp"
-    pumukit2.delete_on_disk: true
-    pumukit2.use_series_channels: false   #If true the "Series Type" logic will be used.

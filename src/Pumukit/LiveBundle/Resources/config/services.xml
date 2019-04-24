@@ -14,9 +14,9 @@
         </service>
         <service id="pumukitlive.legacyeventpic" class="Pumukit\LiveBundle\Services\LegacyEventPicService">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
-            <argument>%pumukit2.uploads_dir%/pic</argument>
-            <argument>%pumukit2.uploads_url%/pic</argument>
-            <argument>%pumukit2.delete_on_disk%</argument>
+            <argument>%pumukit.uploads_dir%/pic</argument>
+            <argument>%pumukit.uploads_url%/pic</argument>
+            <argument>%pumukit.delete_on_disk%</argument>
         </service>
     </services>
 </container>

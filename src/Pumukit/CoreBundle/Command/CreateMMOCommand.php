@@ -58,7 +58,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
         $this->tagService = $this->getContainer()->get('pumukitschema.tag');
-        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit2.locales'), array('en')));
+        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), array('en')));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -80,7 +80,7 @@ EOT
 
         $path = $input->getArgument('file');
         /*
-        $inboxPath = realpath($this->getContainer()->getParameter('pumukit2.inbox'));
+        $inboxPath = realpath($this->getContainer()->getParameter('pumukit.inbox'));
         if (strpos($path, $inboxPath) !== 0) {
             $output->writeln('<error>Path file ('.$path.') in not in the inbox ('.$inboxPath.')</error>');
             return false;

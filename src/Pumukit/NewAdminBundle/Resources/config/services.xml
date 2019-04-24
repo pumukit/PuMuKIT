@@ -5,35 +5,35 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="pumukit2.customlanguages" type="collection">%pumukit2.customlanguages%</parameter>
-        <parameter key="pumukit2.warning_on_unpublished">false</parameter>
-        <parameter key="pumukit2.show_dashboard_tab">true</parameter>
-        <parameter key="pumukit2.show_mms_list_all_menu">false</parameter>
-        <parameter key="pumukit2.inbox_depth">true</parameter>
+        <parameter key="pumukit.customlanguages" type="collection">%pumukit.customlanguages%</parameter>
+        <parameter key="pumukit.warning_on_unpublished">false</parameter>
+        <parameter key="pumukit.show_dashboard_tab">true</parameter>
+        <parameter key="pumukit.show_mms_list_all_menu">false</parameter>
+        <parameter key="pumukit.inbox_depth">true</parameter>
     </parameters>
 
     <services>
         <service id="form.type.texti18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType">
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="texti18n" />
         </service>
 
         <service id="form.type.texti18nadvance" class="Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType">
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="texti18nadvance" />
         </service>
 
         <service id="form.type.textareai18n" class="Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType">
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
             <argument>%pumukit_new_admin.metadata_translators%</argument>
             <tag name="form.type" alias="textareai18n"/>
         </service>
 
         <service id="form.type.customlanguage" class="Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType">
             <argument type="service" id="translator"/>
-            <argument>%pumukit2.customlanguages%</argument>
+            <argument>%pumukit.customlanguages%</argument>
             <tag name="form.type" alias="customlanguage"/>
         </service>
 
@@ -74,7 +74,7 @@
             <argument type="service" id="translator"/>
             <argument type="service" id="router"/>
             <argument>%pumukit_new_admin.base_catalogue_tag%</argument>
-            <argument>%pumukit2.locales%</argument>
+            <argument>%pumukit.locales%</argument>
         </service>
 
         <service id="pumukitnewadmin.filter" class="Pumukit\NewAdminBundle\EventListener\FilterListener">

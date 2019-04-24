@@ -6,7 +6,6 @@ ARG APP_ENV=prod
 
 # copy only specifically what we need
 COPY --chown=www-data:www-data . ./
-COPY --chown=www-data:www-data doc/docker/pumukit/parameters.yml app/config/parameters.yml
 
 RUN set -eux; \
     composer install -a -n --no-scripts; \

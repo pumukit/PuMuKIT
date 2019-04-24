@@ -17,13 +17,13 @@ class LocaleListener implements EventSubscriberInterface
 {
     private $requestStack;
     private $defaultLocale;
-    private $pumukit2Locales;
+    private $pumukitLocales;
 
-    public function __construct(RequestStack $requestStack, $defaultLocale = 'en', $pumukit2Locales = array())
+    public function __construct(RequestStack $requestStack, $defaultLocale = 'en', $pumukitLocales = array())
     {
         $this->requestStack = $requestStack;
         $this->defaultLocale = $defaultLocale;
-        $this->pumukit2Locales = $pumukit2Locales;
+        $this->pumukitLocales = $pumukitLocales;
     }
 
     /**
@@ -52,19 +52,19 @@ class LocaleListener implements EventSubscriberInterface
         $sessionLocale = $request->getSession()->get('_locale');
 
         // try to see if the locale has been set as a _locale routing parameter
-        if ($requestLocale && in_array($requestLocale, $this->pumukit2Locales)) {
+        if ($requestLocale && in_array($requestLocale, $this->pumukitLocales)) {
             $request->getSession()->set('_locale', $requestLocale);
         } else {
-            if (!$sessionLocale || !in_array($sessionLocale, $this->pumukit2Locales)) {
-                $validLocales = array_intersect($request->getLanguages(), $this->pumukit2Locales);
+            if (!$sessionLocale || !in_array($sessionLocale, $this->pumukitLocales)) {
+                $validLocales = array_intersect($request->getLanguages(), $this->pumukitLocales);
                 if ($validLocales) {
                     $request->getSession()->set('_locale', current($validLocales));
-                } elseif (in_array($this->defaultLocale, $this->pumukit2Locales)) {
+                } elseif (in_array($this->defaultLocale, $this->pumukitLocales)) {
                     $request->getSession()->set('_locale', $this->defaultLocale);
-                } elseif (!empty($this->pumukit2Locales)) {
-                    $request->getSession()->set('_locale', $this->pumukit2Locales[0]);
+                } elseif (!empty($this->pumukitLocales)) {
+                    $request->getSession()->set('_locale', $this->pumukitLocales[0]);
                 } else {
-                    throw new \Exception('Pumukit2.Locales is empty. You should define it in your parameters.');
+                    throw new \Exception('Pumukit.Locales is empty. You should define it in your parameters.');
                 }
             }
 

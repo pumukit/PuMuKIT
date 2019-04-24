@@ -30,7 +30,7 @@ class SimpleController extends Controller
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
 
-        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit.customlanguages'), $this->get('translator'));
 
         return array(
             'series' => $series,
@@ -117,7 +117,7 @@ class SimpleController extends Controller
         $licenseService = $this->get('pumukit_wizard.license');
         $licenseContent = $licenseService->getLicenseContent($request->getLocale());
 
-        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit2.customlanguages'), $this->get('translator'));
+        $languages = CustomLanguageType::getLanguageNames($this->container->getParameter('pumukit.customlanguages'), $this->get('translator'));
 
         $showMmTitle = $this->getParameter('pumukit_wizard.show_simple_mm_title');
         $showSeriesTitle = $this->getParameter('pumukit_wizard.show_simple_series_title');
@@ -242,7 +242,7 @@ class SimpleController extends Controller
         $factoryService = $this->get('pumukitschema.factory');
         $multimediaObject = $factoryService->createMultimediaObject($series, true, $this->getUser());
 
-        foreach ($this->container->getParameter('pumukit2.locales') as $locale) {
+        foreach ($this->container->getParameter('pumukit.locales') as $locale) {
             $multimediaObject->setTitle($title, $locale);
         }
 
@@ -328,7 +328,7 @@ class SimpleController extends Controller
     private function createI18nTitleFromFile($title)
     {
         $i18nTitle = array();
-        foreach ($this->container->getParameter('pumukit2.locales') as $locale) {
+        foreach ($this->container->getParameter('pumukit.locales') as $locale) {
             $i18nTitle[$locale] = $title;
         }
 

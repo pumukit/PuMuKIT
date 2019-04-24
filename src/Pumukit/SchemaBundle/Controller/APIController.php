@@ -227,7 +227,7 @@ class APIController extends Controller implements NewAdminController
     {
         $serializer = $this->get('jms_serializer');
 
-        $locales = $this->container->getParameter('pumukit2.locales');
+        $locales = $this->container->getParameter('pumukit.locales');
         $data = $serializer->serialize($locales, $request->getRequestFormat());
 
         return new Response($data);

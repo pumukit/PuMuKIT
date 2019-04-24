@@ -52,7 +52,7 @@ class Builder implements ContainerAwareInterface
      */
     protected function addDashboardMenu(KnpItemInterface $menu)
     {
-        $showDashboardTab = $this->container->getParameter('pumukit2.show_dashboard_tab');
+        $showDashboardTab = $this->container->getParameter('pumukit.show_dashboard_tab');
 
         if ($showDashboardTab && $this->authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $options = ['route' => 'pumukit_newadmin_dashboard_index', 'attributes' => ['class' => 'menu_dashboard']];
@@ -99,7 +99,7 @@ class Builder implements ContainerAwareInterface
             $series->addChild('Multimedia', ['route' => 'pumukitnewadmin_mms_index', 'attributes' => ['class' => 'menu_series_mms']]);
             $series->setDisplayChildren(false);
 
-            $activeMmsListAll = $this->container->getParameter('pumukit2.show_mms_list_all_menu');
+            $activeMmsListAll = $this->container->getParameter('pumukit.show_mms_list_all_menu');
             if ($activeMmsListAll) {
                 $options = ['route' => 'pumukitnewadmin_mms_indexall', 'attributes' => ['class' => 'menu_multimedia_object_all']];
                 $mediaManager->addChild($this->container->getParameter('pumukit_new_admin.multimedia_object_label'), $options);
@@ -257,7 +257,7 @@ class Builder implements ContainerAwareInterface
      */
     protected function addSeriesTypeMenu(KnpItemInterface $tables)
     {
-        $showSeriesTypeTab = $this->container->hasParameter('pumukit2.use_series_channels') && $this->container->getParameter('pumukit2.use_series_channels');
+        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->container->getParameter('pumukit.use_series_channels');
         if ($showSeriesTypeTab && $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
             $options = ['route' => 'pumukitnewadmin_seriestype_index', 'attributes' => ['class' => 'menu_series_type']];
             $tables->addChild('Series types', $options);

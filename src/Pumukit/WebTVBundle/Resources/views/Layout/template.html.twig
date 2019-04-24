@@ -12,9 +12,9 @@
         {% endif %}
         <meta name="revisit-after" content="1 days"/>
         <meta name="language" content="{{ app.request.locale }}"/>
-        <meta name="keywords" content="{% block keywords %}{{ pumukit2_info.keywords }}{% endblock %}"/>
+        <meta name="keywords" content="{% block keywords %}{{ pumukit_info.keywords }}{% endblock %}"/>
     {% endblock %}
-    <title>{% block title %}{{ pumukit2_info.title|default('PuMuKIT') }}{% endblock %}</title>
+    <title>{% block title %}{{ pumukit_info.title|default('PuMuKIT') }}{% endblock %}</title>
 
     {% block stylesheets %}
         <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>

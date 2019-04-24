@@ -50,7 +50,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->roleRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
         $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
-        $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit2.locales');
+        $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit.locales');
 
         $factoryService = $this->getContainer()->get('pumukitschema.factory');
 

@@ -144,7 +144,7 @@ class FeedController extends Controller
     private function getValues(Request $request, $audioVideoType = 'video', $series = null)
     {
         $container = $this->container;
-        $pumukit2Info = $container->getParameter('pumukit2.info');
+        $pumukitInfo = $container->getParameter('pumukit.info');
         $assetsHelper = $container->get('templating.helper.assets');
 
         $values = array();
@@ -153,7 +153,7 @@ class FeedController extends Controller
         $values['image_url'] = $values['base_url'].$assetsHelper->getUrl('/bundles/pumukitpodcast/images/gc_'.$audioVideoType.'.jpg');
         $values['language'] = $request->getLocale();
         $values['itunes_author'] = $container->getParameter('pumukit_podcast.itunes_author');
-        $values['email'] = $pumukit2Info['email'];
+        $values['email'] = $pumukitInfo['email'];
         $values['itunes_explicit'] = $container->getParameter('pumukit_podcast.itunes_explicit') ? 'yes' : 'no';
 
         if ($series) {
@@ -167,13 +167,13 @@ class FeedController extends Controller
         } else {
             $values['channel_title'] = $container->getParameter('pumukit_podcast.channel_title') ?
               $container->getParameter('pumukit_podcast.channel_title') :
-              $pumukit2Info['title'];
+              $pumukitInfo['title'];
             $values['channel_description'] = $container->getParameter('pumukit_podcast.channel_description') ?
               $container->getParameter('pumukit_podcast.channel_description') :
-              $pumukit2Info['description'];
+              $pumukitInfo['description'];
             $values['copyright'] = $container->getParameter('pumukit_podcast.channel_copyright') ?
               $container->getParameter('pumukit_podcast.channel_copyright') :
-              (isset($pumukit2Info['copyright']) ? $pumukit2Info['copyright'] : 'PuMuKIT2 2015');
+              (isset($pumukitInfo['copyright']) ? $pumukitInfo['copyright'] : 'PuMuKIT2 2015');
             $values['itunes_category'] = $container->getParameter('pumukit_podcast.itunes_category');
             $values['itunes_summary'] = $container->getParameter('pumukit_podcast.itunes_summary') ?
               $container->getParameter('pumukit_podcast.itunes_summary') :

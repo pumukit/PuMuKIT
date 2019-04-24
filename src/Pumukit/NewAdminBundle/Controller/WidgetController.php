@@ -13,7 +13,7 @@ class WidgetController extends Controller
      */
     public function languageselectAction()
     {
-        $array_locales = $this->container->getParameter('pumukit2.locales');
+        $array_locales = $this->container->getParameter('pumukit.locales');
         if (count($array_locales) <= 1) {
             return new Response('');
         }

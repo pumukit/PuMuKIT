@@ -72,13 +72,7 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml",
-            "env-map": {
-                "opencast_host":  "PUMUKIT2_OPENCAST_HOST",
-                "opencast_username": "PUMUKIT2_OPENCAST_USERNAME",
-                "opencast_password": "PUMUKIT2_OPENCAST_PASSWORD",
-                "opencast_player": "PUMUKIT2_OPENCAST_PLAYER"
-            }
+            "file": "app/config/parameters.yml"
         },
         "branch-alias": {
             "dev-master": "3.0.x-dev"

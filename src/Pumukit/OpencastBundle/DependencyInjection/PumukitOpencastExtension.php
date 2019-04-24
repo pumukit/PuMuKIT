@@ -58,7 +58,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument($config['delete_archive_mediapackage'])
               ->addArgument($config['deletion_workflow_name'])
               ->addArgument($config['manage_opencast_users'])
-              ->addArgument(new Parameter('pumukit2.insecure_http_client'))
+              ->addArgument(new Parameter('pumukit.insecure_http_client'))
               ->addArgument($config['admin_host'])
               ->addArgument(new Reference('logger'))
               ->addArgument(new Reference('security.role_hierarchy'));
@@ -78,10 +78,10 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('doctrine_mongodb.odm.document_manager'))
               ->addArgument(new Reference('pumukitschema.factory'))
               ->addArgument(new Reference('pumukit_opencast.client'))
-              ->addArgument(new Parameter('pumukit2.locales'));
+              ->addArgument(new Parameter('pumukit.locales'));
 
-            $pumukit2customlanguages = $container->hasParameter('pumukit2.customlanguages') ?
-                new Parameter('pumukit2.customlanguages') :
+            $pumukitcustomlanguages = $container->hasParameter('pumukit.customlanguages') ?
+                new Parameter('pumukit.customlanguages') :
                 array();
 
             $container
@@ -94,10 +94,10 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukit_opencast.client'))
               ->addArgument(new Reference('pumukit_opencast.job'))
               ->addArgument(new Reference('pumukit.inspection'))
-              ->addArgument(new Parameter('pumukit2.locales'))
+              ->addArgument(new Parameter('pumukit.locales'))
               ->addArgument(new Parameter('pumukit_opencast.default_tag_imported'))
               ->addArgument(new Reference('pumukit_opencast.series_importer'))
-              ->addArgument($pumukit2customlanguages);
+              ->addArgument($pumukitcustomlanguages);
 
             $container
               ->register('pumukit_opencast.workflow', "Pumukit\OpencastBundle\Services\WorkflowService")

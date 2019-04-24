@@ -4,7 +4,7 @@ pumukit_new_admin:
     prefix:   /admin
 
 pumukitnewadmin_js:
-    path: /admin/pumukit2.js
+    path: /admin/pumukit.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -14,7 +14,7 @@ pumukitnewadmin_js:
         _format: js
 
 pumukitnewadmin_locale_js:
-    path: /admin/pumukit2.{_locale}.js
+    path: /admin/pumukit.{_locale}.js
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
@@ -24,7 +24,7 @@ pumukitnewadmin_locale_js:
         _format: js
 
 pumukitnewadmin_css:
-    path: /admin/pumukit2.css
+    path: /admin/pumukit.css
     methods: [GET]
     defaults:
         _controller: FrameworkBundle:Template:template
