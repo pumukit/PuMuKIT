@@ -2,7 +2,7 @@
     {% for lang in languages %}
         {% set text = ("Language"|trans ~ " - " ~ lang | language_name(false)) %}
         <li>
-            <a href="{{ path('pumukit_locale', {'locale': lang } ) }}" class="{% if app.request.getLocale() == lang %}language-active{% endif %}" title="{{ text }}">
+            <a href="{{ path('pumukit_locale', {'locale': lang } ) }}" class="language_option {% if app.request.getLocale() == lang %}language-active{% endif %}" title="{{ text }}">
                 {{ lang | language_name(false) }}
             </a>
         </li>

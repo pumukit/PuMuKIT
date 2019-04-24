@@ -35,7 +35,7 @@ class TagCatalogueService
     private $baseTagCod = 'UNESCO';
     private $configuredTag;
 
-    private $allDefaultFields;
+    private $allDefaultFields = null;
 
     private $locales;
 
@@ -55,8 +55,6 @@ class TagCatalogueService
         $this->router = $router;
         $this->configuredTag = $configuredTag;
         $this->locales = $locales;
-
-        $this->allDefaultFields = $this->getAllCustomListFields();
     }
 
     /**
@@ -276,11 +274,12 @@ class TagCatalogueService
      */
     public function renderField(MultimediaObject $object, SessionInterface $session, $field)
     {
-        if (!isset($this->allDefaultFields[$field]['render'])) {
+        $allDefaultFields = $this->getAllCustomListFields();
+        if (!isset($allDefaultFields[$field]['render'])) {
             throw new \Exception('Render field key doesnt exists');
         }
 
-        $key = $this->allDefaultFields[$field]['render'];
+        $key = $allDefaultFields[$field]['render'];
         switch ($key) {
             case 'text':
                 return $this->textRenderField($object, $field);
@@ -500,6 +499,10 @@ class TagCatalogueService
      */
     public function getAllCustomListFields()
     {
+        if ($this->allDefaultFields) {
+            return $this->allDefaultFields;
+        }
+
         $allFields = [
             'id' => [
                 'label' => $this->translator->trans('Video ID'),
@@ -705,6 +708,8 @@ class TagCatalogueService
                 ),
             ];
         }
+
+        $this->allDefaultFields = $allFields;
 
         return $allFields;
     }

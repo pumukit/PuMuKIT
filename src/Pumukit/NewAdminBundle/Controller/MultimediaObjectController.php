@@ -37,30 +37,50 @@ class MultimediaObjectController extends SortableAdminController implements NewA
      * Overwrite to search criteria with date.
      *
      * @Template
+     *
+     * @param Request $request
+     *
+     * @return array|Response
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
     public function indexAction(Request $request)
     {
+        $session = $this->get('session');
         $factoryService = $this->get('pumukitschema.factory');
 
-        $sessionId = $this->get('session')->get('admin/series/id', null);
+        $sessionId = $session->get('admin/series/id', null);
         $series = $factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }
 
-        $this->get('session')->set('admin/series/id', $series->getId());
+        if ($request->get('page')) {
+            $page = (int) $request->get('page', 1);
+            if ($page < 1) {
+                $page = 1;
+            }
+            $session->set('admin/mms/page', $page);
+        }
+
+        if ($request->get('paginate', null)) {
+            $session->set('admin/mms/paginate', $request->get('paginate', 10));
+        }
+
+        $session->set('admin/series/id', $series->getId());
 
         $mms = $this->getListMultimediaObjects($series);
 
         $update_session = true;
         foreach ($mms as $mm) {
-            if ($mm->getId() == $this->get('session')->get('admin/mms/id')) {
+            if ($mm->getId() == $session->get('admin/mms/id')) {
                 $update_session = false;
             }
         }
 
         if ($update_session) {
-            $this->get('session')->remove('admin/mms/id');
+            $session->remove('admin/mms/id');
         }
 
         return array(
@@ -635,6 +655,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $session = $this->get('session');
         $page = $session->get('admin/mms/page', 1);
+
         $maxPerPage = $session->get('admin/mms/paginate', 10);
 
         $sorting = array('rank' => 'asc');

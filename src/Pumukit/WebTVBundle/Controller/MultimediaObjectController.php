@@ -123,6 +123,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             'magic_url' => true,
             'editor_chapters' => $editorChapters,
             'cinema_mode' => $this->getParameter('pumukit_web_tv.cinema_mode'),
+            'fullMagicUrl' => $this->getMagicUrlConfiguration(),
         ];
     }
 
@@ -162,7 +163,8 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         $multimediaObjectMagicUrl = $request->get('magicUrl', false);
 
         $showMagicUrl = ($fromSecret || $relatedLink || $multimediaObjectMagicUrl);
-        $status = ($showMagicUrl) ?
+        $fullMagicUrl = $this->getMagicUrlConfiguration();
+        $status = ($showMagicUrl && $fullMagicUrl) ?
             [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN] :
             [MultimediaObject::STATUS_PUBLISHED];
 
@@ -172,6 +174,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             'series' => $series,
             'multimediaObjects' => $multimediaObjects,
             'showMagicUrl' => $showMagicUrl,
+            'fullMagicUrl' => $fullMagicUrl,
         ];
     }
 
@@ -220,11 +223,22 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         }
         $editorChapters = $this->getChapterMarks($multimediaObject);
 
+        $fullMagicUrl = $this->getMagicUrlConfiguration();
+
         return [
             'multimediaObject' => $multimediaObject,
             'editor_chapters' => $editorChapters,
             'showDownloads' => $showDownloads,
             'isMagicRoute' => $isMagicRoute,
+            'fullMagicUrl' => $fullMagicUrl,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    private function getMagicUrlConfiguration()
+    {
+        return $this->container->getParameter('pumukit.full_magic_url');
     }
 }

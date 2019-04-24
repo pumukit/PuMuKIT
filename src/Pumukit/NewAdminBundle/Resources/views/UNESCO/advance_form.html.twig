@@ -1,6 +1,7 @@
 <br />
 <div class="well">
     <div class="row">
+
         <h4 class="text-center"><strong>{% trans %}Advanced search form{% endtrans %}</strong></h4>
         <hr />
 
@@ -296,16 +297,15 @@
 
             {% if genre is defined and genre is not empty %}
                 <div class="clearfix"></div>
-                    <div class="form-group" style="margin-top:10px;">
-                        <label for="genre" class="col-md-3 control-label">{% trans %}Genre{% endtrans %}</label>
-                        <div class="col-md-9">
-                            <select id="genre" name="criteria[genre]" class="form-control">
-                                <option value="all">{% trans %}All{% endtrans %}</option>
-                                {% for key, value in genre %}
-                                    <option value="{{ key }}" {% if criteria and key == criteria['genre'] %}selected{% endif %}>{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <label for="genre" class="col-md-3 control-label">{% trans %}Genre{% endtrans %}</label>
+                    <div class="col-md-9">
+                        <select id="genre" name="criteria[genre]" class="form-control">
+                            <option value="all">{% trans %}All{% endtrans %}</option>
+                            {% for key, value in genre %}
+                                <option value="{{ key }}" {% if criteria and key == criteria['genre'] %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
             {% endif %}

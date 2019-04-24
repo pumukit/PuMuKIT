@@ -71,6 +71,8 @@
 
                             var message = '{% trans %}Event successfully updated.{% endtrans %}';
                             success(message);
+
+                            $("#options_events").val('default');
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             no_success(errorThrown + ': ' + textStatus);

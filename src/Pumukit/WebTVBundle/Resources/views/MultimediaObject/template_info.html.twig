@@ -22,7 +22,7 @@
 {% include "PumukitWebTVBundle:Misc:chapter_marks.html.twig" %}
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
             <h4> {{ multimediaObject.getSubtitle() }} </h4>
         {% endif %}
@@ -31,22 +31,22 @@
             {{ multimediaObject.getDescription()|nl2br }}
         </p>
 
-        <div class="text-left">
+        <div class="text-left video-license">
             {% if multimediaObject.getLicense() is not empty %}
                 {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
             {% endif %}
         </div>
 
         {% if not multimediaObject.getSeries().isHide() %}
-            {% if isMagicRoute %}
-                <div>
+            {% if isMagicRoute and fullMagicUrl %}        
+                <div class="video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_magicindex', {secret: multimediaObject.getSeries().getSecret() }) }}">
                         {{ multimediaObject.getSeriesTitle()|default('') }}
                     </a>
                 </div>
             {% else %}
-                <div>
+                <div class="video-series">
                     {% trans %}i18n.one.Series{% endtrans %}:
                     <a href="{{ path('pumukit_webtv_series_index', {id: multimediaObject.getSeries().getId() }) }}">
                         {{ multimediaObject.getSeriesTitle()|default('') }}
@@ -71,9 +71,9 @@
 
                 {% for track in multimediaObject.getTracks() if track.allowDownload() and not track.getHide() and showDownloads %}
                     {% set none_attach = false %}
-                    <div class="material">
+                    <div class="tracks">
                         <span class="glyphicon glyphicon-facetime-video"></span>
-                        <a download href="{{ track_url(track) }}?forcedl=1">
+                        <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
                             {% if track.isOnlyAudio() %}
                                 {% trans %}Download this audio{% endtrans %}
                             {% else %}
