@@ -65,6 +65,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('use_series_channels')
                     ->defaultFalse()
                 ->end()
+                ->booleanNode('full_magic_url')
+                    ->defaultFalse()
+                ->end()
             ->end();
 
         return $treeBuilder;

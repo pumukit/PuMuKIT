@@ -31,6 +31,7 @@ class OpencastController extends PlayerController implements WebTVControllerInte
 
         $array['magic_url'] = true;
         $array['cinema_mode'] = $this->getParameter('pumukit_web_tv.cinema_mode');
+        $array['fullMagicUrl'] = $this->container->getParameter('pumukit.full_magic_url');
 
         return $this->render(
             'PumukitWebTVBundle:MultimediaObject:template.html.twig',
