@@ -56,7 +56,6 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         pumukit_info:  "%pumukit.info%"
-        pumukit2_info: "%pumukit.info%"
         locales:       "%pumukit.locales%"
 
 # Assetic Configuration
