@@ -19,11 +19,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $response = $this->preExecute($multimediaObject, $request);
-        if ($response instanceof Response) {
-            return $response;
-        }
-
         $track = null;
 
         if ($request->query->has('track_id')) {
@@ -82,11 +77,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             )
             || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
             return $this->render('PumukitWebTVBundle:Index:404notfound.html.twig');
-        }
-
-        $response = $this->preExecute($multimediaObject, $request, true);
-        if ($response instanceof Response) {
-            return $response;
         }
 
         $request->attributes->set('noindex', true);
@@ -189,17 +179,6 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
         $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
         return ['multimediaObjects' => $relatedMms];
-    }
-
-    public function preExecute(MultimediaObject $multimediaObject, Request $request, $secret = false)
-    {
-        if ($multimediaObject->getProperty('opencasturl') && !$request->query->has('track_id')) {
-            if ($secret) {
-                return $this->forward('PumukitWebTVBundle:Opencast:magic', ['request' => $request, 'multimediaObject' => $multimediaObject]);
-            } else {
-                return $this->forward('PumukitWebTVBundle:Opencast:index', ['request' => $request, 'multimediaObject' => $multimediaObject]);
-            }
-        }
     }
 
     /**
