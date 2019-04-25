@@ -28,7 +28,7 @@
                         </select>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <a title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised button_new_event_and_series" href="{{ path('pumukit_new_admin_live_event_create') }}">
+                        <a id="button_new_event_from_series" title="{% trans %}Create new series of live events{% endtrans %}" class="btn btn-pumukit btn-raised button_new_event_and_series" href="#">
                             {% trans %} New event and series{% endtrans %}
                         </a>
                         <a href="{{ path('pumukitnewadmin_live_event_change_series') }}" title="{% trans %}Create new live event{% endtrans %}" class="btn btn-pumukit btn-raised  button_new_event_from_series" data-toggle="modal" data-backdrop="static" data-target="#myModal">
@@ -81,6 +81,24 @@
                     return false;
                 }
             }
+        });
+
+        $(document).on('click', '#button_new_event_from_series', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{{ path('pumukit_new_admin_live_event_create') }}",
+                method: 'POST',
+                success: function(response){
+                    var routeList = "{{ path('pumukit_new_admin_live_event_list') }}";
+                    $('#list_events').load(routeList);
+                    var message = '{% trans %}Live event successfully created.{% endtrans %}';
+                    success(message);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    no_success(errorThrown+': '+textStatus);
+                }
+            });
+            return false;
         });
 
         $(document).on('click', '#pumukit_new_admin_event_cancel', function(){
