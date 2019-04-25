@@ -98,7 +98,7 @@ class AnnounceServiceTest extends WebTestCase
 
         //We create a serie to hold our mmobjs
         $series2 = $this->factoryService->createSeries();
-        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '31/05/1999'));
+        $series2->setPublicDate(\DateTime::createFromFormat('d/m/Y', '30/05/1999'));
         $series2->setAnnounce(true);
         $this->dm->persist($series2);
         $this->dm->flush();
@@ -107,7 +107,7 @@ class AnnounceServiceTest extends WebTestCase
         $mm11 = $this->factoryService->createMultimediaObject($series2);
         $mm22 = $this->factoryService->createMultimediaObject($series2);
         $mm33 = $this->factoryService->createMultimediaObject($series2);
-        $mm11->setPublicDate(\DateTime::createFromFormat('d/m/Y', '01/05/1999'));
+        $mm11->setPublicDate(\DateTime::createFromFormat('d/m/Y', '02/05/1999'));
         $mm22->setPublicDate(\DateTime::createFromFormat('d/m/Y', '05/04/1999'));
         $mm33->setPublicDate(\DateTime::createFromFormat('d/m/Y', '03/05/1999'));
         $mm11->addTag($tagPudenew);
