@@ -24,10 +24,6 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
         if ($response instanceof Response) {
             return $response;
         }
-        //Go to opencast
-        if ($multimediaObject->getProperty('opencast')) {
-            return $this->forward('PumukitBasePlayerBundle:BasePlayer:opencast', array('request' => $request, 'multimediaObject' => $multimediaObject));
-        }
 
         $track = $request->query->has('track_id') ?
                $multimediaObject->getTrackById($request->query->get('track_id')) :
@@ -95,30 +91,6 @@ class BasePlayerController extends BasePlayerControllero implements PersonalCont
             'when_dispatch_view_event' => $this->container->getParameter('pumukitplayer.when_dispatch_view_event'),
             'track' => $track,
             'magic_url' => true,
-        );
-    }
-
-    /**
-     * @Route("/videoplayer/opencast/{id}", name="pumukit_videoplayer_opencast" )
-     * @Template("PumukitJWPlayerBundle:JWPlayer:player_opencast.html.twig")
-     */
-    public function opencastAction(MultimediaObject $multimediaObject, Request $request)
-    {
-        //Detect if it's mobile: (Refactor this using javascript... )
-        $userAgent = $request->headers->get('user-agent');
-        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
-        $userAgentParserService = $this->get('pumukit_baseplayer.useragent_parser');
-        $isMobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
-        $isOldBrowser = $userAgentParserService->isOldBrowser($userAgent);
-
-        $this->dispatchViewEvent($multimediaObject);
-
-        return array(
-            'intro' => $this->get('pumukit_baseplayer.intro')->getIntroForMultimediaObject($request->query->get('intro'), $multimediaObject->getProperty('intro')),
-            'multimediaObject' => $multimediaObject,
-            'object' => $multimediaObject,
-            'is_mobile_device' => $isMobileDevice,
-            'is_old_browser' => $isOldBrowser,
         );
     }
 }
