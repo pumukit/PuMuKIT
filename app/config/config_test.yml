@@ -17,7 +17,7 @@ swiftmailer:
     disable_delivery: true
 
 doctrine_mongodb:
-    default_database: "%mongodb_database%_test"
+    default_database: "%env(PUMUKIT_MONGODB_DATABASE)%_test"
 
 pumukit_encoder:
     cpus: 
