@@ -48,6 +48,8 @@
             {{ render(controller('PumukitWebTVBundle:Modules:breadcrumbs')) }}
         {% endif %}
 
+        {% block custom_block_before_body %}{% endblock %}
+
         <div class="container-fluid content-pmk">
             {% block body_without_container %}
                 <div class="container main-content">
@@ -60,6 +62,8 @@
                 </div>
             {% endblock %}
         </div>
+
+        {% block custom_block_after_body %}{% endblock %}
 
         {% include "PumukitWebTVBundle:Layout:template_footer.html.twig" %}
 
