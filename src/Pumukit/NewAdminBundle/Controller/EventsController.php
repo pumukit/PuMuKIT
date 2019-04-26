@@ -134,7 +134,7 @@ class EventsController extends Controller implements NewAdminController
         $session->set('admin/live/event/id', $multimediaObject->getId());
         $this->get('session')->set('admin/live/event/page', 1);
 
-        return $this->redirectToRoute('pumukit_new_admin_live_event_index');
+        return $this->redirectToRoute('pumukit_new_admin_live_event_list');
     }
 
     /**
