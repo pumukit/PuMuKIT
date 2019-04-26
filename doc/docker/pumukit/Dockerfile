@@ -100,8 +100,7 @@ COPY doc/docker/pumukit/php.ini /usr/local/etc/php/php.ini
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN set -eux; \
-    composer global require "rubenrua/symfony-clean-tags-composer-plugin" --prefer-dist --no-progress --no-suggest --classmap-authoritative; \
-    composer clear-cache
+    composer global require "rubenrua/symfony-clean-tags-composer-plugin" --prefer-dist --no-progress --no-suggest --classmap-authoritative
     
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
