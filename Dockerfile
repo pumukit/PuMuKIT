@@ -11,6 +11,7 @@ COPY --chown=www-data:www-data . ./
 RUN source doc/docker/.env
 
 RUN set -eux; \
+    composer global require rubenrua/symfony-clean-tags-composer-plugin -a -n; \
     composer install -a -n; \
     php vendor/sensio/distribution-bundle/Resources/bin/build_bootstrap.php; \
     php app/console a:i
