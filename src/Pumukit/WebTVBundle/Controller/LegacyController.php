@@ -90,9 +90,9 @@ class LegacyController extends Controller implements WebTVController
     }
 
     /**
-     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", requirements={"_locale"=".."})
-     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
-     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
      *
      * Parameters:
      * - {_locale} matches the current locale
