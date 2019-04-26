@@ -89,8 +89,7 @@
                 url: "{{ path('pumukit_new_admin_live_event_create') }}",
                 method: 'POST',
                 success: function(response){
-                    var routeList = "{{ path('pumukit_new_admin_live_event_list') }}";
-                    $('#list_events').load(routeList);
+                    $('#list_events').html(response);
                     var message = '{% trans %}Live event successfully created.{% endtrans %}';
                     success(message);
                 },
