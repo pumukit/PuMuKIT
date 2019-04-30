@@ -3556,16 +3556,16 @@
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "1e8aa1ac5e9ef970e186eb59e238cd060c8b6fdc"
+                "reference": "5dc8de5a4684a93e90595f9f7d5a5e1accbfa7fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/1e8aa1ac5e9ef970e186eb59e238cd060c8b6fdc",
-                "reference": "1e8aa1ac5e9ef970e186eb59e238cd060c8b6fdc",
+                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/5dc8de5a4684a93e90595f9f7d5a5e1accbfa7fa",
+                "reference": "5dc8de5a4684a93e90595f9f7d5a5e1accbfa7fa",
                 "shasum": ""
             },
             "require": {
@@ -3598,7 +3598,7 @@
                 "teltek",
                 "ui"
             ],
-            "time": "2019-03-25T16:37:52+00:00"
+            "time": "2019-03-27T09:41:40+00:00"
         },
         {
             "name": "twig/extensions",
@@ -3657,16 +3657,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.8.1",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "91cc2594d3143761ce0399c1caffd0b500ffe5b9"
+                "reference": "82a1c055c8ed4c4705023bfd0405f3c74db6e3ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/91cc2594d3143761ce0399c1caffd0b500ffe5b9",
-                "reference": "91cc2594d3143761ce0399c1caffd0b500ffe5b9",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/82a1c055c8ed4c4705023bfd0405f3c74db6e3ae",
+                "reference": "82a1c055c8ed4c4705023bfd0405f3c74db6e3ae",
                 "shasum": ""
             },
             "require": {
@@ -3682,7 +3682,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "2.9-dev"
                 }
             },
             "autoload": {
@@ -3720,7 +3720,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-04-16T17:14:24+00:00"
+            "time": "2019-04-28T06:57:38+00:00"
         },
         {
             "name": "vipx/bot-detect",
@@ -4753,16 +4753,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.1.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656"
+                "reference": "3095910f0f0fb155ac4021fc51a4a7a39ac04e8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6fda8ce1974b62b14935adc02a9ed38252eca656",
-                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/3095910f0f0fb155ac4021fc51a4a7a39ac04e8a",
+                "reference": "3095910f0f0fb155ac4021fc51a4a7a39ac04e8a",
                 "shasum": ""
             },
             "require": {
@@ -4777,7 +4777,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -4802,7 +4802,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2019-02-01T05:27:49+00:00"
+            "time": "2019-04-25T07:55:20+00:00"
         },
         {
             "name": "sebastian/exporter",
