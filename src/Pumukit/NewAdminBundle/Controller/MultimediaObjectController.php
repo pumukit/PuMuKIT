@@ -935,7 +935,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $mms = $multimediaObjectRepo
              ->createQueryBuilder()
              ->field('_id')->notEqual($multimediaObject->getId())
-             ->field('islive')->equals(false)
+             ->field('type')->notEqual(MultimediaObject::TYPE_LIVE)
              ->field('series')->references($multimediaObject->getSeries())
              ->getQuery()->execute()
              ->toArray();

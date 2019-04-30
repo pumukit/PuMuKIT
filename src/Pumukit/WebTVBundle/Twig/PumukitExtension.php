@@ -422,7 +422,7 @@ class PumukitExtension extends \Twig_Extension
             'series' => new \MongoId($series),
             'status' => MultimediaObject::STATUS_PUBLISHED,
             'tags.cod' => 'PUCHWEBTV',
-            'islive' => false,
+            'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
         ];
 
         $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);

@@ -789,7 +789,7 @@ class SeriesController extends AdminController implements NewAdminController
                 }
 
                 foreach ($multimediaObjects as $multimediaObject) {
-                    if (!$multimediaObject->islive()) {
+                    if (!$multimediaObject->isLive()) {
                         $this->modifyBroadcastGroups(
                             $multimediaObject,
                             $type,

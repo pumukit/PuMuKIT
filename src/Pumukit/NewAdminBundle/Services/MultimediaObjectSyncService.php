@@ -73,8 +73,8 @@ class MultimediaObjectSyncService
     {
         $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
             array(
-                'status' => array('$ne' => -2),
-                'islive' => false,
+                'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE),
+                'type' => array('$ne' => MultimediaObject::TYPE_LIVE),
                 'series' => new \MongoId($multimediaObject->getSeries()->getId()),
                 '_id' => array('$ne' => new \MongoId($multimediaObject->getId())),
             )

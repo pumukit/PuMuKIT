@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class SearchController.

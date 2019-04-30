@@ -126,7 +126,11 @@ EOT
         $mmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
 
         $tagsInMMAggResult = $mmColl->aggregate(array(
-            array('$match' => array('islive' => false, 'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE))),
+            array('$match' => array(
+                'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
+                'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE,
+                ),
+            )),
             array('$project' => array('_id' => '$tags.cod')),
             array('$unwind' => '$_id'),
             array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),

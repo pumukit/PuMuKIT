@@ -451,7 +451,7 @@ class EmbeddedEventSessionService
 
         $pipeline[] = array(
             '$match' => array(
-                'islive' => true,
+                'type' => MultimediaObject::TYPE_LIVE,
                 'embeddedEvent.display' => true,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
@@ -857,7 +857,7 @@ class EmbeddedEventSessionService
     {
         $pipeline[] = array(
             '$match' => array(
-                'islive' => true,
+                'type' => MultimediaObject::TYPE_LIVE,
                 'embeddedEvent.display' => true,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
@@ -909,7 +909,7 @@ class EmbeddedEventSessionService
         $pipeline = array();
         $pipeline[] = array(
             '$match' => array(
-                'islive' => true,
+                'type' => MultimediaObject::TYPE_LIVE,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
         );
@@ -990,14 +990,14 @@ class EmbeddedEventSessionService
             $pipeline[] = array(
                 '$match' => array(
                     '_id' => new \MongoId($multimediaObjectId),
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
             );
         } else {
             $pipeline[] = array(
                 '$match' => array(
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
@@ -1210,7 +1210,7 @@ class EmbeddedEventSessionService
             $pipeline[] = array(
                 '$match' => array(
                     '_id' => array('$nin' => array(new \MongoId($multimediaObjectId))),
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
@@ -1218,7 +1218,7 @@ class EmbeddedEventSessionService
         } else {
             $pipeline[] = array(
                 '$match' => array(
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),

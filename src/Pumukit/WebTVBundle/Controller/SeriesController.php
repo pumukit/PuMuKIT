@@ -10,6 +10,7 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class SeriesController.

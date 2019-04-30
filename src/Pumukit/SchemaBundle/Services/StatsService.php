@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class StatsService
 {
@@ -23,7 +24,10 @@ class StatsService
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$record_date');
 
         $pipeline = array();
-        $criteria = array('islive' => false, 'status' => array('$ne' => -2));
+        $criteria = array(
+            'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
+            'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE),
+        );
         $pipeline[] = array('$match' => $criteria);
 
         $this->dm->getFilterCollection()->enable('backoffice');

@@ -48,13 +48,16 @@ class MultimediaObject
     const TYPE_VIDEO = 1;
     const TYPE_AUDIO = 2;
     const TYPE_EXTERNAL = 3;
+    const TYPE_LIVE = 4;
 
     public static $typeTexts = array(
         self::TYPE_UNKNOWN => '',
         self::TYPE_VIDEO => 'Video',
         self::TYPE_AUDIO => 'Audio',
         self::TYPE_EXTERNAL => 'External',
+        self::TYPE_LIVE => 'Live',
     );
+
     /**
      * @var int
      * @MongoDB\Id
@@ -69,13 +72,6 @@ class MultimediaObject
      * @MongoDB\UniqueIndex(safe=1)
      */
     private $numerical_id;
-
-    /**
-     * @var bool
-     * @MongoDB\Field(type="boolean")
-     * @MongoDB\Index
-     */
-    private $islive = false;
 
     /**
      * @var int
@@ -273,7 +269,6 @@ class MultimediaObject
         $this->tags = new ArrayCollection();
         $this->people = new ArrayCollection();
         $this->groups = new ArrayCollection();
-        $this->islive = false;
         $this->type = self::TYPE_UNKNOWN;
 
         $this->__LinkConstruct();
@@ -392,23 +387,11 @@ class MultimediaObject
     }
 
     /**
-     * Set islive.
-     *
-     * @param int $islive
-     */
-    public function setIsLive($islive)
-    {
-        $this->islive = $islive;
-    }
-
-    /**
-     * Get islive.
-     *
-     * @return int
+     * @return bool
      */
     public function isLive()
     {
-        return $this->islive;
+        return self::TYPE_LIVE === $this->type;
     }
 
     /**

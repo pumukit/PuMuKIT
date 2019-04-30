@@ -10,11 +10,6 @@
             <argument >%pumukit_web_tv.linktagtosearch%</argument>
         </service>
 
-        <service id="pumukit_web_tv.filter" class="Pumukit\WebTVBundle\EventListener\FilterListener">
-          <argument type="service" id="doctrine_mongodb.odm.document_manager" />
-          <tag name="kernel.event_listener" event="kernel.controller"/>
-        </service>
-
         <service id="pumukit_web_tv.twig_extension" class="Pumukit\WebTVBundle\Twig\PumukitExtension">
           <argument type="service" id="doctrine_mongodb.odm.document_manager" />
           <argument type="service" id="router.request_context" on-invalid="ignore" />

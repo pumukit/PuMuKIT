@@ -44,8 +44,12 @@ class MultimediaObjectListener
     /**
      * @param $multimediaObject
      */
-    public function updateType($multimediaObject)
+    public function updateType(MultimediaObject $multimediaObject)
     {
+        if ($multimediaObject->isLive()) {
+            return;
+        }
+
         if ($multimediaObject->getProperty('opencast')) {
             $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
         } elseif ($multimediaObject->getProperty('externalplayer')) {

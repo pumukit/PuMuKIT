@@ -989,7 +989,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         return $this->createQueryBuilder()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
-            ->field('islive')->equals(false);
+            ->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
     }
 
     /**
@@ -1588,7 +1588,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $pipeline[] = array(
             '$match' => array(
                 '_id' => new \MongoId($multimediaObjectId),
-                'islive' => true,
+                'type' => MultimediaObject::TYPE_LIVE,
                 'embeddedEvent.embeddedEventSession' => array('$exists' => true),
             ),
         );
@@ -1670,14 +1670,14 @@ class MultimediaObjectRepository extends DocumentRepository
             $pipeline[] = array(
                 '$match' => array(
                     '_id' => new \MongoId($multimediaObjectId),
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),
             );
         } else {
             $pipeline[] = array(
                 '$match' => array(
-                    'islive' => true,
+                    'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
                     'embeddedEvent.embeddedEventSession' => array('$exists' => true),
                 ),

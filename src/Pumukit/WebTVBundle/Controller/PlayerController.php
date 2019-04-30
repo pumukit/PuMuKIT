@@ -4,6 +4,7 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class PlayerController.

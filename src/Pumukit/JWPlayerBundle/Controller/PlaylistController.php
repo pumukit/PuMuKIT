@@ -3,6 +3,7 @@
 namespace Pumukit\JWPlayerBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\Series;
@@ -22,7 +23,7 @@ class PlaylistController extends BasePlaylistController
         $dm = $this->get('doctrine_mongodb')->getManager();
         if (!$series->isPlaylist()) {
             $criteria = array(
-                'islive' => false,
+                'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
                 'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
                 'tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)),
             );

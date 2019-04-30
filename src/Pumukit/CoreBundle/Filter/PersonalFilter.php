@@ -16,19 +16,19 @@ class PersonalFilter extends WebTVFilter
         }
     }
 
-    private function getMultimediaObjectCriteria()
+    protected function getMultimediaObjectCriteria()
     {
-        $criteria = array();
-        $criteria_portal = $this->getCriteria();
-        $criteria_backoffice = array();
+        $criteria = [];
+        $criteria_portal = parent::getMultimediaObjectCriteria();
+        $criteria_backoffice = [];
         if (isset($this->parameters['people']) && isset($this->parameters['groups'])) {
-            $criteria_backoffice['$or'] = array(
-                array('people' => $this->parameters['people']),
-                array('groups' => $this->parameters['groups']),
-            );
+            $criteria_backoffice['$or'] = [
+                ['people' => $this->parameters['people']],
+                ['groups' => $this->parameters['groups']],
+            ];
         }
         if ($criteria_portal && $criteria_backoffice) {
-            $criteria['$or'] = array($criteria_portal, $criteria_backoffice);
+            $criteria['$or'] = [$criteria_portal, $criteria_backoffice];
         } else {
             $criteria = $criteria_portal ?: $criteria_backoffice;
         }
@@ -36,11 +36,15 @@ class PersonalFilter extends WebTVFilter
         return $criteria;
     }
 
-    private function getSeriesCriteria()
+    protected function getSeriesCriteria()
     {
-        $criteria = array();
-        if (isset($this->parameters['person_id']) && isset($this->parameters['role_code']) && isset($this->parameters['series_groups'])) {
-            $criteria['_id'] = $this->getSeriesMongoQuery($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups']);
+        $criteria = [];
+        if (isset($this->parameters['person_id'], $this->parameters['role_code'], $this->parameters['series_groups'])) {
+            $criteria['_id'] = $this->getSeriesMongoQuery(
+                $this->parameters['person_id'],
+                $this->parameters['role_code'],
+                $this->parameters['series_groups']
+            );
         }
 
         return $criteria;
@@ -50,11 +54,10 @@ class PersonalFilter extends WebTVFilter
      * Get series mongo query
      * Match the Series
      * with given ids.
-     *
      * Query in MongoDB:
-     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });
+     * db.Series.find({ "_id": { "$in": [ ObjectId("__id_1__"), ObjectId("__id_2__")... ] } });.
      *
-     * @param $personId
+     * @param        $personId
      * @param string $roleCode
      * @param array  $groups
      *
@@ -62,10 +65,14 @@ class PersonalFilter extends WebTVFilter
      */
     private function getSeriesMongoQuery($personId, $roleCode, $groups)
     {
-        $seriesIds = array();
+        $seriesIds = [];
         if ((null !== $personId) && (null !== $roleCode)) {
             $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
+            $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups(
+                $personId,
+                $roleCode,
+                $groups
+            );
             $seriesIds['$in'] = $referencedSeries->toArray();
         }
 

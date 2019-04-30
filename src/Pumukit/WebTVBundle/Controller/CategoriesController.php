@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 //Used on countMmobjsInTags TODO Move to service
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class CategoriesController.

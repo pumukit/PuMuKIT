@@ -2,6 +2,7 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
@@ -50,7 +51,7 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
 
         //Today object
         $mm11 = $this->factoryService->createMultimediaObject($series);
-        $mm11->setIsLive(true);
+        $mm11->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
         $mm11->setEmbeddedEvent($event);
 
@@ -117,7 +118,7 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
 
         //Other today object
         $mm12 = $this->factoryService->createMultimediaObject($series);
-        $mm12->setIsLive(true);
+        $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
         $mm12->setEmbeddedEvent($event);
 
@@ -149,7 +150,7 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
 
         //Other future object
         $mm12 = $this->factoryService->createMultimediaObject($series);
-        $mm12->setIsLive(true);
+        $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
         $mm12->setEmbeddedEvent($event);
 
@@ -181,7 +182,7 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
 
         //Other future object
         $mm12 = $this->factoryService->createMultimediaObject($series);
-        $mm12->setIsLive(true);
+        $mm12->setType(MultimediaObject::TYPE_LIVE);
         $event = new EmbeddedEvent();
         $mm12->setEmbeddedEvent($event);
 

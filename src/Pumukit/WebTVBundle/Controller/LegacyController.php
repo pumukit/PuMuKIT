@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class LegacyController.

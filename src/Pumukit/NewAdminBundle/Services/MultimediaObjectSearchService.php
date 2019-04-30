@@ -58,7 +58,7 @@ class MultimediaObjectSearchService
             }
         }
 
-        $new_criteria['islive'] = false;
+        $new_criteria['type'] = ['$ne' => MultimediaObject::TYPE_LIVE];
 
         if ('' !== $bAnnounce) {
             if (('' !== $bChannel) && $bChannel && $bAnnounce) {
