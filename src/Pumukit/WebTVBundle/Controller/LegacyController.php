@@ -107,9 +107,10 @@ class LegacyController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", requirements={"_locale"=".."})
-     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
-     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", requirements={"_locale"=".."})
+     * @Route("/{_locale}/mmobj/iframe/id/{pumukit1id}", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
+     * @Route("/index.php/{_locale}/video/iframe/{pumukit1id}.html", defaults={"filter": false}, requirements={"_locale"=".."})
+     *
      * Parameters:
      * - {_locale} matches the current locale
      * - {pumukit1id} matches multimediaObject.properties("pumukit1id")
@@ -131,11 +132,11 @@ class LegacyController extends Controller implements WebTVControllerInterface
             throw $this->createNotFoundException();
         }
 
-        return $this->redirectToRoute(
-            'pumukit_webtv_multimediaobject_iframe',
-            ['id' => $multimediaObject->getId()],
-            Response::HTTP_MOVED_PERMANENTLY
-        );
+        if ($multimediaObject->isHidden()) {
+            return $this->redirectToRoute('pumukit_webtv_multimediaobject_magiciframe', ['secret' => $multimediaObject->getSecret()], Response::HTTP_MOVED_PERMANENTLY);
+        } else {
+            return $this->redirectToRoute('pumukit_webtv_multimediaobject_iframe', ['id' => $multimediaObject->getId()], Response::HTTP_MOVED_PERMANENTLY);
+        }
     }
 
     /**
