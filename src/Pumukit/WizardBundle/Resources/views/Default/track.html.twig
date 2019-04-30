@@ -69,19 +69,19 @@
                             <label for="pumukitwizard_track_priority" class="control-label">{% trans %}Priority{% endtrans %}</label>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="1"/>
+                                    <input type="radio" class="low-priority" name="pumukitwizard_form_data[track][priority]" value="1"/>
                                     {% trans %}Low-Priority{% endtrans %}
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>
+                                    <input type="radio" class="normal-priority" name="pumukitwizard_form_data[track][priority]" value="2" checked="checked"/>
                                     {% trans %}Normal-Priority{% endtrans %}
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="pumukitwizard_form_data[track][priority]" value="3"/>
+                                    <input type="radio" class="high-priority"  name="pumukitwizard_form_data[track][priority]" value="3"/>
                                     {% trans %}High-Priority{% endtrans %}
                                 </label>
                             </div>

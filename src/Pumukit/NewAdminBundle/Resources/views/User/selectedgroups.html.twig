@@ -1,6 +1,6 @@
 {% for user_group in user.getGroups() %}
     {% if (user_group.isLocal() and user.isLocal()) or (user_group.isLocal() and not user.isLocal()) or (not user_group.isLocal() and user.isLocal()) %}
-        <a href="#" class="list-group-item pumukitnewadmin-trim-row"
+        <a href="#" class="list-group-item pumukitnewadmin-trim-row group_{{ user_group.key }}"
            id="add_group_{{ user_group.id }}"
            onclick="return select_group(this);"
            ondblclick="delete_group_user('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', '{{ user.getOrigin() }}');">
@@ -9,7 +9,7 @@
         </a>
     {% else %}
         {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
-        <a href="#" class="list-group-item disabled-group-item"
+        <a href="#" class="list-group-item disabled-group-item group_{{ user_group.key }}"
            id="add_group_{{ user_group.id }}"
            onclick="return false;"
            ondblclick="window.alert('{{ message }}');">
