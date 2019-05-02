@@ -317,7 +317,7 @@
 {%- endblock textareai18n_widget %}
 
 {% block widgeti18n_attributes -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    {%- set attr = attr|merge({class: ([attr.class|default(''), id, 'locale-' ~ locale, 'form-control']|join(' '))|trim}) -%}
     id="{{ id }}_{{ locale }}" name="{{ full_name }}[{{ locale }}]"
     {%- if disabled %} disabled="disabled"{% endif -%}
     {%- if required %} required="required"{% endif -%}
