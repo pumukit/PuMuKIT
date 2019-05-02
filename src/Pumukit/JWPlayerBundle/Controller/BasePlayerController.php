@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Pumukit\CoreBundle\Controller\PersonalController;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
-class BasePlayerController extends BasePlayerControllero implements PersonalController
+class BasePlayerController extends BasePlayerControllero implements PersonalControllerInterface
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index", defaults={"no_channels": true} )
