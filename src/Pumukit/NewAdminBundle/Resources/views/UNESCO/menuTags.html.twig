@@ -45,13 +45,18 @@
 
             var id = $('.success .checkbox label').first().data('id');
 
-            var preview = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__' }) }}";
-            var preview = preview.replace('__ID__', id);
-            $('#preview_mms').load(preview);
+            if(id != null) {
+                var preview = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__' }) }}";
+                var preview = preview.replace('__ID__', id);
+                $('#preview_mms').load(preview);
 
-            var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
-            var edit = edit.replace("__MMO__", id);
-            $('#edit_mms').load(edit);
+                var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" }) }}";
+                var edit = edit.replace("__MMO__", id);
+                $('#edit_mms').load(edit);
+            } else {
+                $('#edit_mms').html('');
+                $('#preview_mms').html('');
+            }
         });
     });
 
