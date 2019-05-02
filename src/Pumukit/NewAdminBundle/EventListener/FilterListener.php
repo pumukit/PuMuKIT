@@ -46,7 +46,7 @@ class FilterListener
         //@deprecated: PuMuKIT 2.2: This logic will be removed eventually. Please implement the interface WebTVBundleController to use the filter.
         $deprecatedCheck = (false !== strpos($req->attributes->get('_controller'), 'pumukitnewadmin'));
 
-        if (($controller[0] instanceof NewAdminController /*deprecated*/ || $deprecatedCheck)
+        if (($controller[0] instanceof NewAdminControllerInterface /*deprecated*/ || $deprecatedCheck)
             && $event->isMasterRequest()
             && $isFilterActivated) {
             if ($this->addUserAsPerson) {
