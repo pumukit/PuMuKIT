@@ -214,7 +214,6 @@
             <argument type="service" id="pumukitschema.permission"/>
             <argument type="service" id="pumukitschema.permissionprofile"/>
             <argument>%pumukitschema.personal_scope_delete_owners%</argument>
-            <argument>%pumukitschema.gen_user_salt%</argument>
         </service>
 
         <service id="pumukitschema.group" class="Pumukit\SchemaBundle\Services\GroupService">
@@ -262,5 +261,9 @@
           <argument>%pumukit_new_admin.advance_live_event_create_default_pic%</argument>
         </service>
 
+        <service id="fos_user.util.password_updater" class="Pumukit\SchemaBundle\Services\PasswordUpdater" public="false">
+            <argument type="service" id="security.encoder_factory" />
+            <argument>%pumukitschema.gen_user_salt%</argument>
+        </service>
     </services>
 </container>

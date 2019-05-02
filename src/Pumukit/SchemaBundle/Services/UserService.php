@@ -20,7 +20,6 @@ class UserService
     private $personalScopeDeleteOwners;
     private $dispatcher;
     private $permissionProfileService;
-    private $genUserSalt;
 
     /**
      * UserService constructor.
@@ -30,9 +29,8 @@ class UserService
      * @param PermissionService          $permissionService
      * @param PermissionProfileService   $permissionProfileService
      * @param bool                       $personalScopeDeleteOwners
-     * @param bool                       $genUserSalt
      */
-    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false, $genUserSalt = false)
+    public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
@@ -43,7 +41,6 @@ class UserService
         $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
         $this->permissionProfileService = $permissionProfileService;
-        $this->genUserSalt = $genUserSalt;
     }
 
     /**
@@ -423,7 +420,7 @@ class UserService
      */
     public function instantiate($userName = '', $email = '', $enabled = true)
     {
-        $user = new User($this->genUserSalt);
+        $user = new User();
         if ($userName) {
             $user->setUsername($userName);
         }

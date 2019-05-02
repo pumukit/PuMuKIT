@@ -59,13 +59,10 @@ class User extends BaseUser
     /**
      * Constructor.
      */
-    public function __construct($genUserSalt = false)
+    public function __construct()
     {
         $this->groups = new ArrayCollection();
         parent::__construct();
-        if (false === $genUserSalt) {
-            $this->salt = '';
-        }
     }
 
     /**

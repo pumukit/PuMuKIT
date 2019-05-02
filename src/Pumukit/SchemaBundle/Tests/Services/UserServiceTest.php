@@ -46,12 +46,11 @@ class UserServiceTest extends WebTestCase
             ->get('logger');
 
         $personalScopeDeleteOwners = false;
-        $genUserSalt = true;
 
         $this->userService = new UserService(
             $this->dm, $userDispatcher,
             $permissionService, $permissionProfileService,
-            $personalScopeDeleteOwners, $genUserSalt
+            $personalScopeDeleteOwners
         );
 
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);

@@ -43,12 +43,11 @@ class PermissionProfileListenerTest extends WebTestCase
         );
 
         $personalScopeDeleteOwners = false;
-        $genUserSalt = true;
 
         $this->userService = new UserService(
             $this->dm, $userDispatcher,
             $permissionService, $this->permissionProfileService,
-            $personalScopeDeleteOwners, $genUserSalt
+            $personalScopeDeleteOwners
         );
         $this->logger = static::$kernel->getContainer()
             ->get('logger');
