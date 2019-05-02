@@ -54,7 +54,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $statusPub = array(
             MultimediaObject::STATUS_PUBLISHED => 'Published',
-            MultimediaObject::STATUS_BLOQ => 'Blocked',
+            MultimediaObject::STATUS_BLOCKED => 'Blocked',
             MultimediaObject::STATUS_HIDE => 'Hidden',
         );
 

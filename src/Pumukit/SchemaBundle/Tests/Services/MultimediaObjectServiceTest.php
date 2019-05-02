@@ -113,7 +113,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->assertTrue($this->mmsService->isHidden($mm, $webTVCode));
 
-        $mm->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm->setStatus(MultimediaObject::STATUS_BLOCKED);
         $this->dm->persist($mm);
         $this->dm->flush();
 

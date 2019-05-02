@@ -381,7 +381,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
 
         $mmStatus = array(
             'published' => MultimediaObject::STATUS_PUBLISHED,
-            'blocked' => MultimediaObject::STATUS_BLOQ,
+            'blocked' => MultimediaObject::STATUS_BLOCKED,
             'hidden' => MultimediaObject::STATUS_HIDE,
         );
 

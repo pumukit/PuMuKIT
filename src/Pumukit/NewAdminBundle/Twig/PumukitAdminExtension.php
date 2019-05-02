@@ -212,7 +212,7 @@ class PumukitAdminExtension extends \Twig_Extension
             case MultimediaObject::STATUS_HIDE:
                 $iconClass = 'mdi-device-signal-wifi-0-bar';
                 break;
-            case MultimediaObject::STATUS_BLOQ:
+            case MultimediaObject::STATUS_BLOCKED:
                 $iconClass = 'mdi-device-wifi-lock';
                 break;
         }
@@ -244,7 +244,7 @@ class PumukitAdminExtension extends \Twig_Extension
             case MultimediaObject::STATUS_HIDE:
                 $iconText = $this->translator->trans('Hidden: is not listed in the Series but can be played with magic URL');
                 break;
-            case MultimediaObject::STATUS_BLOQ:
+            case MultimediaObject::STATUS_BLOCKED:
                 $iconText = $this->translator->trans('Blocked: cannot be accessed outside the back-end');
                 break;
         }
@@ -548,7 +548,7 @@ class PumukitAdminExtension extends \Twig_Extension
                 case MultimediaObject::STATUS_HIDE:
                     $mmobjsHidden = $mmobjCount['count'];
                     break;
-                case MultimediaObject::STATUS_BLOQ:
+                case MultimediaObject::STATUS_BLOCKED:
                     $mmobjsBlocked = $mmobjCount['count'];
                     break;
             }

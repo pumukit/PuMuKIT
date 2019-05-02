@@ -29,7 +29,6 @@ class MultimediaObject
     }
 
     const STATUS_PUBLISHED = 0;
-    const STATUS_BLOQ = 1; //Kept for backwards compatibility
     const STATUS_BLOCKED = 1;
     const STATUS_HIDE = 2; //Kept for backwards compatibility
     const STATUS_HIDDEN = 2;

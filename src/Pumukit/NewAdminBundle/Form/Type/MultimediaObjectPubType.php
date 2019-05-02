@@ -25,7 +25,7 @@ class MultimediaObjectPubType extends AbstractType
                 [
                     'choices' => [
                         'Published' => MultimediaObject::STATUS_PUBLISHED,
-                        'Blocked' => MultimediaObject::STATUS_BLOQ,
+                        'Blocked' => MultimediaObject::STATUS_BLOCKED,
                         'Hidden' => MultimediaObject::STATUS_HIDE,
                     ],
                     'disabled' => $options['not_granted_change_status'],
