@@ -3,15 +3,17 @@
 namespace Pumukit\SchemaBundle\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PersonalFilter extends SchemaFilter
 {
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
-        if ("Pumukit\SchemaBundle\Document\MultimediaObject" === $targetDocument->reflClass->name) {
+        if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();
         }
-        if ("Pumukit\SchemaBundle\Document\Series" === $targetDocument->reflClass->name) {
+        if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
     }
