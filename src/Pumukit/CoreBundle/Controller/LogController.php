@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class LogController extends Controller implements AdminController
+class LogController extends Controller implements AdminControllerInterface
 {
     /**
      * @param $file
