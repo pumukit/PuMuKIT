@@ -25,8 +25,8 @@ class MultimediaObjectPubType extends AbstractType
                 [
                     'choices' => [
                         'Published' => MultimediaObject::STATUS_PUBLISHED,
-                        'Blocked' => MultimediaObject::STATUS_BLOQ,
-                        'Hidden' => MultimediaObject::STATUS_HIDE,
+                        'Blocked' => MultimediaObject::STATUS_BLOCKED,
+                        'Hidden' => MultimediaObject::STATUS_HIDDEN,
                     ],
                     'disabled' => $options['not_granted_change_status'],
                     'attr' => ['aria-label' => $this->translator->trans('Status', [], null, $this->locale)],

@@ -340,7 +340,7 @@ class FactoryServiceTest extends WebTestCase
         $this->assertEquals($new->getLicense(), $src->getLicense());
         $this->assertEquals($new->getPublicDate(), $src->getPublicDate());
         $this->assertEquals($new->getRecordDate(), $src->getRecordDate());
-        $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOQ);
+        $this->assertEquals($new->getStatus(), MultimediaObject::STATUS_BLOCKED);
         $this->assertEquals($new->getEmbeddedBroadcast()->getType(), $src->getEmbeddedBroadcast()->getType());
         $this->assertEquals($new->getEmbeddedBroadcast()->getName(), $src->getEmbeddedBroadcast()->getName());
         $this->assertEquals($new->getEmbeddedBroadcast()->getPassword(), $src->getEmbeddedBroadcast()->getPassword());

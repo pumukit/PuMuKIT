@@ -134,7 +134,7 @@ class SeriesServiceTest extends WebTestCase
 
         $mm11->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm12->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        $mm13->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm13->setStatus(MultimediaObject::STATUS_BLOCKED);
 
         $mm11->setEmbeddedBroadcast($embeddedBroadcast11);
         $mm12->setEmbeddedBroadcast($embeddedBroadcast12);

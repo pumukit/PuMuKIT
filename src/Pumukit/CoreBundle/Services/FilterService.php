@@ -19,7 +19,7 @@ class FilterService
 {
     const MAGIC_STATUS = [
         MultimediaObject::STATUS_PUBLISHED,
-        MultimediaObject::STATUS_HIDE,
+        MultimediaObject::STATUS_HIDDEN,
     ];
 
     const PUBLIC_STATUS = [
@@ -28,7 +28,7 @@ class FilterService
 
     const ALL_STATUS = [
         MultimediaObject::STATUS_PUBLISHED,
-        MultimediaObject::STATUS_HIDE,
+        MultimediaObject::STATUS_HIDDEN,
         MultimediaObject::STATUS_BLOCKED,
     ];
 

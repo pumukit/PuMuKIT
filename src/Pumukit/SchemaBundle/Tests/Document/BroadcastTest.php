@@ -74,10 +74,10 @@ class BroadcastTest extends TestCase
         $mm5 = new MultimediaObject();
 
         $mm1->setStatus(MultimediaObject::STATUS_PROTOTYPE);
-        $mm2->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm2->setStatus(MultimediaObject::STATUS_BLOCKED);
         $mm3->setStatus(MultimediaObject::STATUS_PUBLISHED);
         $mm4->setStatus(MultimediaObject::STATUS_PUBLISHED);
-        $mm5->setStatus(MultimediaObject::STATUS_HIDE);
+        $mm5->setStatus(MultimediaObject::STATUS_HIDDEN);
 
         $mm1->setBroadcast($privateBroadcast);
         $mm2->setBroadcast($privateBroadcast);

@@ -1435,8 +1435,8 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = array(
             MultimediaObject::STATUS_PUBLISHED => 'Published',
-            MultimediaObject::STATUS_BLOQ => 'Blocked',
-            MultimediaObject::STATUS_HIDE => 'Hidden',
+            MultimediaObject::STATUS_BLOCKED => 'Blocked',
+            MultimediaObject::STATUS_HIDDEN => 'Hidden',
         );
 
         return array(

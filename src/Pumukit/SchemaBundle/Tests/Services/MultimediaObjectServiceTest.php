@@ -79,7 +79,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->assertTrue($this->mmsService->isPublished($mm, $webTVCode));
 
-        $mm->setStatus(MultimediaObject::STATUS_HIDE);
+        $mm->setStatus(MultimediaObject::STATUS_HIDDEN);
         $this->dm->persist($mm);
         $this->dm->flush();
 
@@ -107,13 +107,13 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->assertTrue($this->mmsService->isHidden($mm, $webTVCode));
 
-        $mm->setStatus(MultimediaObject::STATUS_HIDE);
+        $mm->setStatus(MultimediaObject::STATUS_HIDDEN);
         $this->dm->persist($mm);
         $this->dm->flush();
 
         $this->assertTrue($this->mmsService->isHidden($mm, $webTVCode));
 
-        $mm->setStatus(MultimediaObject::STATUS_BLOQ);
+        $mm->setStatus(MultimediaObject::STATUS_BLOCKED);
         $this->dm->persist($mm);
         $this->dm->flush();
 
