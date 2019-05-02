@@ -41,11 +41,11 @@ class FilterListener
             return;
         }
         list($controller, $routeParams) = $this->filterService->getEventData($event);
-        if (current($controller) instanceof AdminController) {
+        if (current($controller) instanceof AdminControllerInterface) {
             $this->enableAdminFilter();
         } elseif (current($controller) instanceof WebTVControllerInterface) {
             $this->enableWebTVFilter($routeParams);
-        } elseif (current($controller) instanceof PersonalController) {
+        } elseif (current($controller) instanceof PersonalControllerInterface) {
             $this->enablePersonalFilter($routeParams);
         }
     }
