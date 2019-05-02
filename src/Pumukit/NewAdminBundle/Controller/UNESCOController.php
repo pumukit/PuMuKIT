@@ -419,7 +419,7 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
         $statusPub = array(
             MultimediaObject::STATUS_PUBLISHED => $translator->trans('Published'),
             MultimediaObject::STATUS_BLOCKED => $translator->trans('Blocked'),
-            MultimediaObject::STATUS_HIDE => $translator->trans('Hidden'),
+            MultimediaObject::STATUS_HIDDEN => $translator->trans('Hidden'),
         );
 
         $broadcasts = array(

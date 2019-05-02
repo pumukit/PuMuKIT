@@ -30,7 +30,6 @@ class MultimediaObject
 
     const STATUS_PUBLISHED = 0;
     const STATUS_BLOCKED = 1;
-    const STATUS_HIDE = 2; //Kept for backwards compatibility
     const STATUS_HIDDEN = 2;
     const STATUS_NEW = -1;
     const STATUS_PROTOTYPE = -2;

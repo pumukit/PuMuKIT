@@ -818,7 +818,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
 
         $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
-        $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+        $mmHide->setStatus(MultimediaObject::STATUS_HIDDEN);
 
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOCKED);
@@ -834,22 +834,22 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDDEN))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOCKED))));
         $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))));
         $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))));
+        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN))));
 
         $mmArray = array($mmNew->getId() => $mmNew);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
         $mmArray = array($mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDE))->toArray());
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDDEN))->toArray());
         $mmArray = array($mmBloq->getId() => $mmBloq);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOCKED))->toArray());
         $mmArray = array($mmPublished->getId() => $mmPublished);
         $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))->toArray());
         $mmArray = array($mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDE))->toArray());
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN))->toArray());
     }
 
     public function testFindPrototype()
@@ -866,7 +866,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
 
         $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
-        $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+        $mmHide->setStatus(MultimediaObject::STATUS_HIDDEN);
 
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOCKED);
@@ -901,7 +901,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $mmNew->setStatus(MultimediaObject::STATUS_NEW);
 
         $mmHide = $this->createMultimediaObjectAssignedToSeries('Status hide', $series);
-        $mmHide->setStatus(MultimediaObject::STATUS_HIDE);
+        $mmHide->setStatus(MultimediaObject::STATUS_HIDDEN);
 
         $mmBloq = $this->createMultimediaObjectAssignedToSeries('Status bloq', $series);
         $mmBloq->setStatus(MultimediaObject::STATUS_BLOCKED);

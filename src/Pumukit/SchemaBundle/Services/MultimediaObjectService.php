@@ -48,7 +48,7 @@ class MultimediaObjectService
      */
     public function isHidden($mm, $pubChannelCod)
     {
-        $hasStatus = in_array($mm->getStatus(), array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDE));
+        $hasStatus = in_array($mm->getStatus(), array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN));
         $hasPubChannel = $mm->containsTagWithCod($pubChannelCod);
 
         return $hasStatus && $hasPubChannel;
