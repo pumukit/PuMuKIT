@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Role;
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
  */
-class RoleController extends SortableAdminController implements NewAdminController
+class RoleController extends SortableAdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'role';
     public static $repoName = 'PumukitSchemaBundle:Role';

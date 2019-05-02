@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class ManualController extends Controller implements NewAdminController
+class ManualController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Route("/manual")

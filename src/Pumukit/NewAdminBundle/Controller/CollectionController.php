@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class CollectionController extends Controller implements NewAdminController
+class CollectionController extends Controller implements NewAdminControllerInterface
 {
     /**
      * Returns true if the user has enough permissions to delete the $resource passed.

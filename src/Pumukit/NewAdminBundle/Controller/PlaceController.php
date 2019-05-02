@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  * @Route("/places")
  */
-class PlaceController extends Controller implements NewAdminController
+class PlaceController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @param Request $request

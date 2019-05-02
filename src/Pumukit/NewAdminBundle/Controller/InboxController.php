@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_INBOX')")
  */
-class InboxController extends Controller implements NewAdminController
+class InboxController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Route("/inbox", defaults={"_format"="json"})

@@ -28,7 +28,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectController extends SortableAdminController implements NewAdminController
+class MultimediaObjectController extends SortableAdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'mms';
     public static $repoName = 'PumukitSchemaBundle:MultimediaObject';

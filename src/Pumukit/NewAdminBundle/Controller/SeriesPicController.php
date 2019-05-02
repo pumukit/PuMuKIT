@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Series;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class SeriesPicController extends Controller implements NewAdminController
+class SeriesPicController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")

@@ -11,7 +11,7 @@ use Pumukit\NewAdminBundle\Controller\NewAdminController;
 /**
  * @Route("/api/media")
  */
-class APIController extends Controller implements NewAdminController
+class APIController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})

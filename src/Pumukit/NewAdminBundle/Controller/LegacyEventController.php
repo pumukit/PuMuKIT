@@ -11,7 +11,7 @@ use Pumukit\LiveBundle\Document\Event;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
-class LegacyEventController extends AdminController implements NewAdminController
+class LegacyEventController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'event';
     public static $repoName = 'PumukitLiveBundle:Event';

@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Series;
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
  */
-class PlaylistPicController extends Controller implements NewAdminController
+class PlaylistPicController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")

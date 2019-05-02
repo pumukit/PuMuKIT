@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\NewAdminBundle\Form\Type\PersonType;
 
-class PersonController extends AdminController implements NewAdminController
+class PersonController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'person';
     public static $repoName = 'PumukitSchemaBundle:Person';

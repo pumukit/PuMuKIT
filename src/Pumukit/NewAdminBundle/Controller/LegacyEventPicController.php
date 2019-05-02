@@ -11,7 +11,7 @@ use Pumukit\LiveBundle\Document\Event;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  */
-class LegacyEventPicController extends Controller implements NewAdminController
+class LegacyEventPicController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")

@@ -13,7 +13,7 @@ use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
  */
-class UserController extends AdminController implements NewAdminController
+class UserController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'user';
     public static $repoName = 'PumukitSchemaBundle:User';

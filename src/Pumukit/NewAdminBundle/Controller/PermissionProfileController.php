@@ -14,7 +14,7 @@ use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 /**
  * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
  */
-class PermissionProfileController extends AdminController implements NewAdminController
+class PermissionProfileController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'permissionprofile';
     public static $repoName = 'PumukitSchemaBundle:PermissionProfile';

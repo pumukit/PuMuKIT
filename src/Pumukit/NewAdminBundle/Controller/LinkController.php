@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class LinkController extends Controller implements NewAdminController
+class LinkController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject")

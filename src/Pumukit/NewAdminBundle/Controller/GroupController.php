@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 /**
  * @Security("is_granted('ROLE_ACCESS_GROUPS')")
  */
-class GroupController extends AdminController implements NewAdminController
+class GroupController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'group';
     public static $repoName = 'PumukitSchemaBundle:Group';
