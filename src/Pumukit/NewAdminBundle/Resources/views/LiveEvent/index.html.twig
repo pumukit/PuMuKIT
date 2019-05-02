@@ -69,7 +69,7 @@
                             var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
                             $('#list_events').load(mm);
 
-                            var message = '{% trans %}Event successfully updated.{% endtrans %}';
+                            var message = '{% trans %}Event{% endtrans %} ' + '{% trans %}successfully deleted.{% endtrans %}';
                             success(message);
 
                             $("#options_events").val('default');
