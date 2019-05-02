@@ -6,15 +6,17 @@ namespace Pumukit\CoreBundle\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class AdminFilter extends BsonFilter
 {
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
-        if ("Pumukit\SchemaBundle\Document\MultimediaObject" === $targetDocument->reflClass->name) {
+        if (MultimediaObject::class === $targetDocument->reflClass->name) {
             return $this->getMultimediaObjectCriteria();
         }
-        if ("Pumukit\SchemaBundle\Document\Series" === $targetDocument->reflClass->name) {
+        if (Series::class === $targetDocument->reflClass->name) {
             return $this->getSeriesCriteria();
         }
     }
