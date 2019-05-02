@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class ConfigController extends Controller implements AdminController
+class ConfigController extends Controller implements AdminControllerInterface
 {
     /**
      * @return JsonResponse|Response

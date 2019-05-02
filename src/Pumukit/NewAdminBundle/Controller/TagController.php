@@ -14,7 +14,7 @@ use Pumukit\NewAdminBundle\Form\Type\TagType;
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
  */
-class TagController extends Controller implements NewAdminController
+class TagController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Template

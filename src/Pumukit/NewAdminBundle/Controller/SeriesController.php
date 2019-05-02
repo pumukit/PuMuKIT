@@ -20,7 +20,7 @@ use Pagerfanta\Pagerfanta;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class SeriesController extends AdminController implements NewAdminController
+class SeriesController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'series';
     public static $repoName = 'PumukitSchemaBundle:Series';

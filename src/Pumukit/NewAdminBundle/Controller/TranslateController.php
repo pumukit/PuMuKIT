@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TranslateController implements NewAdminController
+class TranslateController implements NewAdminControllerInterface
 {
     /**
      * Translate controller.

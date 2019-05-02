@@ -21,7 +21,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class TrackController extends Controller implements NewAdminController
+class TrackController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")

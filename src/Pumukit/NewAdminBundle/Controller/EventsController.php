@@ -26,7 +26,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
  * @Route("liveevent/")
  */
-class EventsController extends Controller implements NewAdminController
+class EventsController extends Controller implements NewAdminControllerInterface
 {
     private $regex = '/^[0-9a-z]{24}$/';
 

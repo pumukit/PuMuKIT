@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TestBackofficeController extends Controller implements AdminController
+class TestBackofficeController extends Controller implements AdminControllerInterface
 {
     /**
      * @Route("/test/backofficefilter.{_format}", name="pumukit_core_tests_backofficefilter", defaults={"_format":"json"})

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
  */
-class DashboardController extends Controller implements NewAdminController
+class DashboardController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Route("/dashboard")

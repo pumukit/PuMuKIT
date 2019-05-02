@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AdminController extends ResourceController implements NewAdminController
+class AdminController extends ResourceController implements NewAdminControllerInterface
 {
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session.

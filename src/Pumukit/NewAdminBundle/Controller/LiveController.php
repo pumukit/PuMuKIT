@@ -11,7 +11,7 @@ use Pumukit\LiveBundle\Document\Live;
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
  */
-class LiveController extends AdminController implements NewAdminController
+class LiveController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'live';
     public static $repoName = 'PumukitLiveBundle:Live';

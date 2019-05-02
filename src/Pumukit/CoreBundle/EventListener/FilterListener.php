@@ -5,9 +5,9 @@ namespace Pumukit\CoreBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\FilterService;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Pumukit\CoreBundle\Controller\AdminController;
+use Pumukit\CoreBundle\Controller\AdminControllerInterface;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Pumukit\CoreBundle\Controller\PersonalController;
+use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 
 /**
  * Class FilterListener.
@@ -41,11 +41,11 @@ class FilterListener
             return;
         }
         list($controller, $routeParams) = $this->filterService->getEventData($event);
-        if (current($controller) instanceof AdminController) {
+        if (current($controller) instanceof AdminControllerInterface) {
             $this->enableAdminFilter();
         } elseif (current($controller) instanceof WebTVControllerInterface) {
             $this->enableWebTVFilter($routeParams);
-        } elseif (current($controller) instanceof PersonalController) {
+        } elseif (current($controller) instanceof PersonalControllerInterface) {
             $this->enablePersonalFilter($routeParams);
         }
     }

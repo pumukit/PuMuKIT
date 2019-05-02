@@ -24,7 +24,7 @@ use Pagerfanta\Pagerfanta;
  *
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class UNESCOController extends Controller implements NewAdminController
+class UNESCOController extends Controller implements NewAdminControllerInterface
 {
     public static $baseTags = array(
         'Health Sciences' => array(

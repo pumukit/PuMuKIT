@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
-class MultimediaObjectPicController extends Controller implements NewAdminController
+class MultimediaObjectPicController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Template("PumukitNewAdminBundle:Pic:create.html.twig")

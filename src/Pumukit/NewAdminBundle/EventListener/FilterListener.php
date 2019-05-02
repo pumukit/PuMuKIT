@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\NewAdminBundle\Controller\NewAdminController;
+use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 
 class FilterListener
 {

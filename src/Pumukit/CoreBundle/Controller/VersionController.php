@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class VersionController extends Controller implements AdminController
+class VersionController extends Controller implements AdminControllerInterface
 {
     /**
      * @Route("/admin/versions", name="pumukit_stats_versions")

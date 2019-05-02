@@ -6,12 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Pumukit\NewAdminBundle\Controller\NewAdminController;
+use Pumukit\NewAdminBundle\Controller\NewAdminControllerInterface;
 
 /**
  * @Route("/api/media")
  */
-class APIController extends Controller implements NewAdminController
+class APIController extends Controller implements NewAdminControllerInterface
 {
     /**
      * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
