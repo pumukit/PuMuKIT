@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\CoreBundle\Controller\PersonalController;
+use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerControllero;
 
 class BasePlayerController extends BasePlayerControllero implements PersonalControllerInterface
