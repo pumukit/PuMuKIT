@@ -157,7 +157,6 @@ class SeriesController extends AdminController implements NewAdminControllerInte
                 $this->get('pumukitschema.sorted_multimedia_object')->reorder($resource);
             }
 
-
             $criteria = $this->getCriteria($request->get('criteria', array()));
             $resources = $this->getResources($request, $criteria, $resource->getId());
 
