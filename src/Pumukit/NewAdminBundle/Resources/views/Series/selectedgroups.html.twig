@@ -1,5 +1,5 @@
 {% for group in resource.getGroups() %}
-<a href="#" class="list-group-item add-{{ resource_name }}-group-item pumukitnewadmin-trim-row"
+<a href="#" class="list-group-item add-{{ resource_name }}-group-item pumukitnewadmin-trim-row group_{{ group.key }}"
    id="add_{{ resource_name }}_group_{{ group.id }}"
    onclick="javascript:return select_group(this);"
    ondblclick="javascript:delete_group('{{ group.id }}', '{{ group.key }}', '{{ group.name }}', '{{ group.origin }}', '{{ resource_name }}');">
