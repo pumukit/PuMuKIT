@@ -19,12 +19,10 @@ class SeriesTest extends TestCase
         $description = 'description';
         $header = 'header';
         $footer = 'footer';
-        $copyright = 'copyright';
         $keyword = 'keyword';
         $line2 = 'line2';
         $locale = 'en';
         $properties = array('property1', 'property2');
-        $license = 'license';
 
         $series = new Series();
 
@@ -36,12 +34,10 @@ class SeriesTest extends TestCase
         $series->setDescription($description);
         $series->setHeader($header);
         $series->setFooter($footer);
-        $series->setCopyright($copyright);
         $series->setKeyword($keyword);
         $series->setLine2($line2);
         $series->setLocale($locale);
         $series->setProperties($properties);
-        $series->setLicense($license);
 
         $this->assertEquals($series_type, $series->getSeriesType());
         $this->assertEquals($announce, $series->getAnnounce());
@@ -51,19 +47,16 @@ class SeriesTest extends TestCase
         $this->assertEquals($description, $series->getDescription());
         $this->assertEquals($header, $series->getHeader());
         $this->assertEquals($footer, $series->getFooter());
-        $this->assertEquals($copyright, $series->getCopyright());
         $this->assertEquals($keyword, $series->getKeyword());
         $this->assertEquals($line2, $series->getLine2());
         $this->assertEquals($locale, $series->getLocale());
         $this->assertEquals($properties, $series->getProperties());
-        $this->assertEquals($license, $series->getLicense());
 
         $titleEs = 'título';
         $subtitleEs = 'subtítulo';
         $descriptionEs = 'descripción';
         $headerEs = 'cabecera';
         $footerEs = 'pie';
-        $copyrightEs = 'derechos de copia';
         $keywordEs = 'palabra clave';
         $line2Es = 'línea 2';
         $localeEs = 'es';
@@ -130,8 +123,6 @@ class SeriesTest extends TestCase
         $pic->setUrl($url);
 
         $series = new Series();
-        $pic1 = new Pic();
-        $pic2 = new Pic();
 
         $this->assertEquals(0, count($series->getPics()));
 
