@@ -9,7 +9,10 @@
 
 <script>
     $( document ).ready(function() {
-        var element = document.getElementsByClassName('current');
-        element[0].scrollIntoView(false);
+        var element = document.querySelector('.current');
+        var panel = document.querySelector('.panel-series .panel-body');
+        if (panel && element) {
+            panel.scrollTop = element.offsetTop - 200;
+        }
     });
 </script>
