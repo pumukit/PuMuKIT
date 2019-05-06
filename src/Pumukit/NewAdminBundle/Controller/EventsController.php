@@ -1084,6 +1084,8 @@ class EventsController extends Controller implements NewAdminController
             throw new \Exception($exception->getMessage());
         }
 
+        $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
+
         return new JsonResponse(array('success'));
     }
 }
