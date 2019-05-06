@@ -3,7 +3,7 @@
   <div>
     {% for locale in locales %}
     <div class="input-group">
-      <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="multimediaobject_i18n_title[{{ locale }}]" class="form-control" value="">
+      <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="multimediaobject_i18n_title[{{ locale }}]" class="pumukitwizard_multimediaobject_i18n_title locale-{{ locale }} form-control" value="">
       <span class="input-group-addon">{{ locale }}</span>
     </div>
     {% endfor %}

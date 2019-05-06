@@ -16,9 +16,9 @@
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_title, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_title_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_title][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_title locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_title_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -31,9 +31,9 @@
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_subtitle, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_subtitle locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_subtitle_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -46,9 +46,9 @@
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_description, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_description_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_description][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_description locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_description_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>
@@ -90,9 +90,9 @@
             {% for locale in locales %}
             <div class="input-group">
               {% if form_data.multimediaobject is defined %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="{{ attribute(form_data.multimediaobject.i18n_line2, locale) }}" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
               {% else %}
-              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
+              <input type="text" id="pumukitwizard_multimediaobject_i18n_line2_{{ locale }}" name="pumukitwizard_form_data[multimediaobject][i18n_line2][{{ locale }}]" class="form-control pumukitwizard_multimediaobject_i18n_line2 locale-{{ locale }}" value="" aria-labelledby="pumukitwizard_multimediaobject_i18n_line2_label">
               {% endif %}
               <span class="input-group-addon">{{ locale }}</span>
             </div>

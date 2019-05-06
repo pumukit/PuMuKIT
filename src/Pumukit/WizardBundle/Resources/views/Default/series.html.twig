@@ -42,9 +42,9 @@
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_title is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_title, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control pumukitwizard_series_i18n_title locale-{{ locale }}" value="{{ attribute(form_data.series.i18n_title, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
+            <input type="text" id="pumukitwizard_series_i18n_title_{{ locale }}" name="pumukitwizard_form_data[series][i18n_title][{{ locale }}]" class="form-control pumukitwizard_series_i18n_title locale-{{ locale }}" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_title_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
@@ -55,9 +55,9 @@
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_subtitle is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_series_i18n_subtitle locale-{{ locale }}" value="{{ attribute(form_data.series.i18n_subtitle, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
+            <input type="text" id="pumukitwizard_series_i18n_subtitle_{{ locale }}" name="pumukitwizard_form_data[series][i18n_subtitle][{{ locale }}]" class="form-control pumukitwizard_series_i18n_subtitle locale-{{ locale }}" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_subtitle_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>
@@ -68,9 +68,9 @@
           {% for locale in locales %}
           <div class="input-group">
             {% if form_data.series.i18n_description is defined %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="{{ attribute(form_data.series.i18n_description, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control pumukitwizard_series_i18n_description locale-{{ locale }}" value="{{ attribute(form_data.series.i18n_description, locale) }}" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
             {% else %}
-            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
+            <input type="text" id="pumukitwizard_series_i18n_description_{{ locale }}" name="pumukitwizard_form_data[series][i18n_description][{{ locale }}]" class="form-control pumukitwizard_series_i18n_description locale-{{ locale }}" value="" {{ form_data.series.new is defined ? (form_data.series.new ? '':'disabled="disabled"') : '' }} aria-labelledby="pumukitwizard_series_i18n_description_label">
             {% endif %}
             <span class="input-group-addon">{{ locale }}</span>
           </div>

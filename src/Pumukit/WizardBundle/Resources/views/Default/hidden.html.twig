@@ -16,7 +16,7 @@
   {% endif %}
   {% for field, locales in form_data.series if step != 'series' %}
     {% for locale, value in locales %}
-      <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_track_series_{{ field }}_{{ locale }}" value="{{ value }}">
+      <input type="hidden" name="pumukitwizard_form_data[series][{{ field }}][{{ locale }}]" id="pumukitwizard_track_series_{{ field }}_{{ locale }}" value="{{ value }}" class="pumukitwizard_track_series_{{ field }} locale-{{ locale }}">
     {% endfor %}
   {% endfor %}
 {% endif %}
@@ -44,7 +44,7 @@
 
   {% for field, locales in form_data.multimediaobject %}
     {% for locale, value in locales %}
-      <input type="hidden" name="pumukitwizard_form_data[multimediaobject][{{ field }}][{{ locale }}]" id="pumukitwizard_track_multimediaobject_{{ field }}_{{ locale }}" value="{{ value }}">
+      <input type="hidden" name="pumukitwizard_form_data[multimediaobject][{{ field }}][{{ locale }}]" id="pumukitwizard_track_multimediaobject_{{ field }}_{{ locale }}" value="{{ value }}" class="pumukitwizard_track_multimediaobject_{{ field }} locale-{{ locale }}">
     {% endfor %}
   {% endfor %}
 {% endif %}
