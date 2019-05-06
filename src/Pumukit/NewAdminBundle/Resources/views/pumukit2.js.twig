@@ -2594,11 +2594,11 @@ function create_element_group_in_add_groups_user(group_id, group_key, group_name
 
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
     if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
-        var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row"';
+        var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="delete_group_user(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+user_origin+'\');"';
     } else {
-        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
+        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
@@ -2625,11 +2625,11 @@ function create_element_group_in_delete_groups_user(group_id, group_key, group_n
     var delete_groups_list = $('#delete_groups');
 
     if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
-        var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row"';
+        var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         var item_onclick = 'onclick="return select_group(this);"';
         var item_ondblclick = 'ondblclick="add_group_user(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + user_origin + '\');"';
     } else {
-        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
+        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
     }
@@ -2696,9 +2696,9 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
     var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
     if ((group_origin == local_origin) || (resource != "user")){
         if (resource == "user") {
-            var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row"';
+            var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         } else {
-            var item_class = 'class="list-group-item add-' + resource + '-group-item pumukitnewadmin-trim-row"';
+            var item_class = 'class="list-group-item add-' + resource + '-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         }
         if ((can_modify_groups == 'no') && ((resource == 'mm') || (resource == 'mm_template'))){
             var item_onclick = 'onclick="return false;"';
@@ -2708,7 +2708,7 @@ function create_element_group_in_add_groups(group_id, group_key, group_name, gro
             var item_ondblclick = 'ondblclick="javascript:delete_group(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+resource+'\');"';
         }
     } else {
-        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row"';
+        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
         var item_onclick = 'onclick="return false;"';
         var item_ondblclick = 'ondblclick="javascript:window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
         group_origin = group_origin.toUpperCase();
@@ -2727,11 +2727,11 @@ function create_element_group_in_delete_groups(group_id, group_key, group_name, 
     if ((group_origin == local_origin) || (resource != "user")){
         if (resource == "user") {
             var item_id = 'id="delete_group_' + group_id;
-            var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row"';
+            var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
             var $delete_groups_list = $('#delete_groups');
         } else {
             var item_id = 'id="delete_' + resource + '_group_' + group_id;
-            var item_class = 'class="list-group-item delete-' + resource + '-group-item pumukitnewadmin-trim-row"';
+            var item_class = 'class="list-group-item delete-' + resource + '-group-item pumukitnewadmin-trim-row  group_' + group_key +'"';
             var $delete_groups_list = $('#delete_' + resource + '_groups');
         }
         if ((can_modify_groups == 'no') && ((resource == 'mm') || (resource == 'mm_template'))){
