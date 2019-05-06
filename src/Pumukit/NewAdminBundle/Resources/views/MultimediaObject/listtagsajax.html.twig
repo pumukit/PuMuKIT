@@ -9,6 +9,7 @@
              c_{{ node.path|replace({ ("|" ~ node.cod ~ "|"): '', '|': ' c_'}) }}
              {{ (children_length)?'collapsed':'element' }}
              {{ node.getMetatag()?'metatag' }}
+             tag-add-{{ node.cod }}
              {{ (node.getNumberMultimediaObjects()==0)?'nomm' }}">
 
      {% if not node.getMetatag() %}

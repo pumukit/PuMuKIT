@@ -34,6 +34,7 @@
                                 {% for embedded_tag in mm.getTags() if embedded_tag.isDescendantOf(parent) %}
                                     <a href="#" class="list-group-item" id="select_li_{{ embedded_tag.id }}"
                                        onclick="javascript:return select_tree_tag(this);"
+                                       class="tag-rm-{{ embedded_tag.cod }}"
                                        ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
                                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
                                             {{ embedded_tag.getCod() }} -
