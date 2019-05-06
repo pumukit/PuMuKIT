@@ -11,10 +11,13 @@
     </div>
 
     <script>
-        $( document ).ready(function() {
-            var element = document.querySelector('.panel-series .current');
-            if (element) { element.scrollIntoView(false); }
+        $(function() {
+            var element = document.querySelector('.current');
+            var panel = document.querySelector('.panel-series .panel-body');
+            if (panel && element) {
+                panel.scrollTop = element.offsetTop - 200;
+            }
         });
     </script>
-    
+
 {% endif %}
