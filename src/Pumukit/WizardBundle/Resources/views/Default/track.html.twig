@@ -11,14 +11,14 @@
                 <legend hidden>{% trans %}File{% endtrans %}</legend>
                 <div class="col-md-10">
                     {% if status is not empty %}
-                        <div class="form-group" id="pumukitwizard_status">
+                        <div class="form-group" id="pumukitwizard_status_block">
                             <label for="pumukitwizard_status" class="control-label">{% trans %}Status{% endtrans %}</label>
                             <select id="pumukitwizard_status" name="pumukitwizard_form_data[multimediaobject][status]" class="form-control">
                                 {% for key, value in status %}
                                     <option value="{{ key }}" {% if key == statusSelected %}selected{% endif %}>{{ value|trans }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+                        </div>  
                     {% endif %}
                     {% if not is_granted('ROLE_DISABLED_WIZARD_TRACK_PROFILES') or is_granted('ROLE_SUPER_ADMIN') %}
                         <div class="form-group" id="pumukitwizard_track_profile">
