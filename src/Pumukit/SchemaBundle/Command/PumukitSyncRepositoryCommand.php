@@ -58,21 +58,28 @@ EOT
             }
         }
 
-        $jobsPendingInMmObj = $mmObjColl->aggregate(array(
-            array('$unwind' => '$properties.pending_jobs'),
-            array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()))[0]['count'];
+        $jobsPendingInMmObjResult = $mmObjColl->aggregate(
+            array(
+                array('$unwind' => '$properties.pending_jobs'),
+                array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
+            ),
+            array('cursor' => array())
+        )->toArray();
 
-        $jobsExecutingInMmObj = $mmObjColl->aggregate(array(
+        $jobsPendingInMmObj = $jobsPendingInMmObjResult[0]['count'] ?? 0;
+
+        $jobsExecutingInMmObjResult = $mmObjColl->aggregate(array(
             array('$unwind' => '$properties.executing_jobs'),
             array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()))[0]['count'];
+        ), array('cursor' => array()))->toArray();
 
-        if ($jobsPending != $jobsPendingInMmObj) {
+        $jobsExecutingInMmObj = $jobsExecutingInMmObjResult[0]['count'] ?? 0;
+
+        if ($jobsPending != $jobsPendingInMmObj && 0 != $jobsPendingInMmObj) {
             $this->cleanJobsProperties('pending', $output);
         }
 
-        if ($jobsExecuting != $jobsExecutingInMmObj) {
+        if ($jobsExecuting != $jobsExecutingInMmObj && 0 != $jobsExecutingInMmObj) {
             $this->cleanJobsProperties('executing', $output);
         }
     }
