@@ -17,7 +17,14 @@ RUN apk  add --no-cache \
 			libssl1.0 \
 			libgomp \
 			expat \
+			python \
+			py-setuptools \
+			py-argparse \
+			py2-pip \
+			py-gflags \
 ;
+
+RUN pip install google-api-python-client==1.2
 
 COPY --from=jrottenberg/ffmpeg:4.0-alpine /usr/local /usr/local
 
@@ -101,7 +108,10 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN set -eux; \
     composer global require "rubenrua/symfony-clean-tags-composer-plugin" --prefer-dist --no-progress --no-suggest --classmap-authoritative
-    
+
+# Install youtube requiriments
+
+
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /srv/pumukit
