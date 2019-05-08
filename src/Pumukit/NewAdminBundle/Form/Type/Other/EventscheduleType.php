@@ -12,6 +12,7 @@ class EventscheduleType extends AbstractType
         $resolver->setDefaults(
             [
                 'compound' => false,
+                'multiple' => false,
             ]
         );
     }
