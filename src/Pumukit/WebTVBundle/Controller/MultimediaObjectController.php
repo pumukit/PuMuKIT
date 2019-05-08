@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
@@ -145,7 +146,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
             $secretSeriesUrl = $this->generateUrl(
                 'pumukit_webtv_series_magicindex',
                 ['secret' => $series->getSecret()],
-                true
+                UrlGeneratorInterface::ABSOLUTE_URL
             );
             $fromSecret = 0 === strpos($referer, $secretSeriesUrl);
         }
