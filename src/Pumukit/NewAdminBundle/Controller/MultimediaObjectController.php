@@ -474,7 +474,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     }
 
     /**
-     * @Template("PumukitNewAdminBundle:MultimediaObject:listtagsajax.html")
+     * @Template("PumukitNewAdminBundle:MultimediaObject:listtagsajax.html.twig")
      */
     public function getChildrenTagAction(Tag $tag, Request $request)
     {

@@ -132,7 +132,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Delete Group.
      *
-     * @Template("PumukitNewAdminBundle:Group:list.html")
+     * @Template("PumukitNewAdminBundle:Group:list.html.twig")
      */
     public function deleteAction(Request $request)
     {

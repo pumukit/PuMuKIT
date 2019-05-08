@@ -551,7 +551,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
      * Delete Person.
      *
      * @Security("is_granted('ROLE_SCOPE_GLOBAL')")
-     * @Template("PumukitNewAdminBundle:Person:list.html")
+     * @Template("PumukitNewAdminBundle:Person:list.html.twig")
      */
     public function deleteAction(Request $request)
     {
