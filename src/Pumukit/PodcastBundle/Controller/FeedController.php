@@ -146,12 +146,11 @@ class FeedController extends Controller
     {
         $container = $this->container;
         $pumukitInfo = $container->getParameter('pumukit.info');
-        $assetsHelper = $container->get('templating.helper.assets');
 
         $values = array();
         $values['base_url'] = $this->getBaseUrl().$request->getBasePath();
         $values['requestURI'] = $values['base_url'].$request->getRequestUri();
-        $values['image_url'] = $values['base_url'].$assetsHelper->getUrl('/bundles/pumukitpodcast/images/gc_'.$audioVideoType.'.jpg');
+        $values['image_url'] = $values['base_url'].'/bundles/pumukitpodcast/images/gc_'.$audioVideoType.'.jpg';
         $values['language'] = $request->getLocale();
         $values['itunes_author'] = $container->getParameter('pumukit_podcast.itunes_author');
         $values['email'] = $pumukitInfo['email'];
