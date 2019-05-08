@@ -5,6 +5,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -69,7 +70,7 @@ class DashboardController extends Controller implements NewAdminControllerInterf
             $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
             $XMLSeries->addAttribute('start', $s->getPublicDate()->format("M j Y H:i:s \G\M\TP"));
             $XMLSeries->addAttribute('title', $s->getTitle());
-            $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', array('id' => $s->getId()), true));
+            $XMLSeries->addAttribute('link', $this->get('router')->generate('pumukit_webtv_series_index', array('id' => $s->getId()), UrlGeneratorInterface::ABSOLUTE_URL));
         }
 
         return new Response($XML->asXML(), 200, array('Content-Type' => 'text/xml'));

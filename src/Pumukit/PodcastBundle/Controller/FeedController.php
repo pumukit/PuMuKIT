@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -34,7 +35,7 @@ class FeedController extends Controller
 
         $xml = new \SimpleXMLElement('<list/>');
         foreach ($series as $s) {
-            $url = $router->generate('pumukit_podcast_series_collection', array('id' => $s), true);
+            $url = $router->generate('pumukit_podcast_series_collection', array('id' => $s), UrlGeneratorInterface::ABSOLUTE_URL);
             $xml->addChild('podcast', $url);
         }
 
@@ -262,7 +263,7 @@ class FeedController extends Controller
                 }
 
                 if ($multimediaObject->isPublished() && $multimediaObject->containsTagWithCod('PUCHWEBTV')) {
-                    $link = $router->generate('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), true);
+                    $link = $router->generate('pumukit_webtv_multimediaobject_index', array('id' => $multimediaObject->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                     $item->addChild('link', $link);
                 }
 

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -58,7 +59,7 @@ class OaiController extends Controller
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
         $XMLrequest->addAttribute('verb', 'GetRecord');
         $XMLrequest->addAttribute('identifier', $identifier);
@@ -74,14 +75,14 @@ class OaiController extends Controller
 
     private function identify()
     {
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
         $XMLrequest->addAttribute('verb', 'Identify');
 
         $XMLidentify = new SimpleXMLExtended('<Identify></Identify>');
         $info = $this->container->getParameter('pumukit.info');
         $XMLidentify->addChild('repositoryName', $info['description']);
-        $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', array(), true));
+        $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL));
         $XMLidentify->addChild('protocolVersion', '2.0');
         $XMLidentify->addChild('adminEmail', $info['email']);
         $XMLidentify->addChild('earliestDatestamp', '1990-02-01T12:00:00Z');
@@ -114,7 +115,7 @@ class OaiController extends Controller
             return $this->error('noRecordsMatch', 'The combination of the values of the from, until, and set arguments results in an empty list');
         }
 
-        $XMLrequestText = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $XMLrequestText = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($XMLrequestText);
         $XMLrequest->addAttribute('metadataPrefix', 'oai_dc');
         if ($token->getFrom()) {
@@ -167,7 +168,7 @@ class OaiController extends Controller
             return $this->error('idDoesNotExist', 'The value of the identifier argument is unknown or illegal in this repository');
         }
 
-        $XMLrequestText = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $XMLrequestText = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($XMLrequestText);
         $XMLrequest->addAttribute('verb', 'ListMetadataFormats');
         if ($request->query->has('identifier')) {
@@ -203,7 +204,7 @@ class OaiController extends Controller
             ->getQuery()
             ->execute();
 
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
         $XMLrequest->addAttribute('verb', 'ListSets');
 
@@ -235,7 +236,7 @@ class OaiController extends Controller
      */
     protected function error($cod, $msg = '')
     {
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), true).'</request>';
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', array(), UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
 
         $error = '<error>'.$msg.'</error>';
@@ -302,9 +303,9 @@ class OaiController extends Controller
 
         switch ($this->container->getParameter('pumukitoai.dc_identifier_url_mapping')) {
             case 'all':
-                $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), true);
+                $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
-                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
+                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
                     $url = $this->generateTrackFileUrl($track);
@@ -312,7 +313,7 @@ class OaiController extends Controller
                 }
                 break;
             case 'portal_and_track':
-                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
+                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 foreach ($object->getFilteredTracksWithTags(array('display')) as $track) {
                     $url = $this->generateTrackFileUrl($track);
@@ -326,11 +327,11 @@ class OaiController extends Controller
                 }
                 break;
             case 'iframe':
-                $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), true);
+                $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', array('id' => $object->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 break;
             default: //portal
-                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), true);
+                $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', array('id' => $object->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 break;
         }
@@ -459,6 +460,6 @@ class OaiController extends Controller
     {
         $trackService = $this->get('pumukit_baseplayer.trackurl');
 
-        return $trackService->generateTrackFileUrl($track, true);
+        return $trackService->generateTrackFileUrl($track, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

@@ -37,7 +37,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
      */
     public function onLogoutSuccess(Request $request)
     {
-        $url = $this->router->generate('pumukit_webtv_index_index', array(), true);
+        $url = $this->router->generate('pumukit_webtv_index_index', array(), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->casService->logoutWithRedirectService($url);
 
         /* Call CAS API to do authentication */
@@ -47,7 +47,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
           \phpCAS::logout();
         } else {
           // generate absolute URL
-          $url = $this->router->generate($this->options['cas_logout'], array(), true);
+          $url = $this->router->generate($this->options['cas_logout'], array(), UrlGeneratorInterface::ABSOLUTE_URL);
           \phpCAS::logoutWithRedirectService($url);
         }
         return null;

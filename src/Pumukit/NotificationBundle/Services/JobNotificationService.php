@@ -5,6 +5,7 @@ namespace Pumukit\NotificationBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
@@ -244,7 +245,7 @@ class JobNotificationService
     private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
     {
         if (null !== $multimediaObject) {
-            return $this->router->generate('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId()), true);
+            return $this->router->generate('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
         return 'No link found to Multimedia Object with id "'.$id.'".';
