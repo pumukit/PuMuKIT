@@ -101,7 +101,7 @@ RUN set -eux; \
 
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY doc/docker/pumukit/php.ini /usr/local/etc/php/php.ini
+COPY php.ini /usr/local/etc/php/php.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
