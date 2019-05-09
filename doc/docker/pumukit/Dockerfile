@@ -63,7 +63,6 @@ RUN set -eux; \
  	docker-php-ext-install -j$(nproc) \
  		intl \
 		exif \
-		intl \
 		ldap \
 		gettext \
 		pcntl \
