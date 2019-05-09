@@ -6,7 +6,7 @@
             <li class="active">{{ configuredTag.getTitle() }} {% trans %}catalogue{% endtrans %}</li>
         </ul>
     </h3>
-    
+
     <div class="col-md-2">
         <div class="well" id="tag_list_unesco">
             {{ render(controller('PumukitNewAdminBundle:UNESCO:menuTags')) }}
@@ -93,6 +93,13 @@
                 url: '{{ path('pumukitnewadmin_unesco_removesession') }}',
                 method: 'POST',
                 success: function (response) {
+                    var inputs = document.querySelectorAll('form#myForm input');
+                    for (var i = 0, len = inputs.length; i < len; i++) {
+                        if (inputs[i].type == "text") {
+                            inputs[i].value = "";
+                        }
+                    }
+
                     location.reload();
                 }
             });
