@@ -76,14 +76,16 @@ class OpencastImportService
     {
         $series = $this->seriesImportService->importSeries($mediaPackage, $loggedInUser);
 
-        $onemultimediaobjects = null;
+        $multimediaObject = null;
         $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
         $mediaPackageId = $this->getMediaPackageField($mediaPackage, 'id');
         if ($mediaPackageId) {
-            $onemultimediaobjects = $multimediaobjectsRepo->findOneBy(array('properties.opencast' => $mediaPackageId));
+            $multimediaObject = $multimediaobjectsRepo->findOneBy(array('properties.opencast' => $mediaPackageId));
         }
 
-        if (null === $onemultimediaobjects) {
+        if ($multimediaObject) {
+            $this->syncTracks($multimediaObject, $mediaPackage);
+        } else {
             $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $loggedInUser);
             $multimediaObject->setSeries($series);
 
@@ -378,5 +380,56 @@ class OpencastImportService
                 $this->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, $trackTags);
             }
         }
+    }
+
+    public function syncTracks(MultimediaObject $multimediaObject, $mediaPackage = null)
+    {
+        $mediaPackageId = $multimediaObject->getProperty('opencast');
+        if (!$mediaPackageId) {
+            return;
+        }
+
+        if (!$mediaPackage) {
+            $mediaPackage = $this->opencastClient->getMediaPackage($mediaPackageId);
+        }
+
+        if (!$mediaPackage) {
+            throw new \Exception('Opencast communication error');
+        }
+
+        $media = $this->getMediaPackageField($mediaPackage, 'media');
+        $tracks = $this->getMediaPackageField($media, 'track');
+        if (isset($tracks[0])) {
+            // NOTE: Multiple tracks
+            $limit = count($tracks);
+            for ($i = 0; $i < $limit; ++$i) {
+                $track = $tracks[$i];
+                $type = $this->getMediaPackageField($track, 'type');
+                $url = $this->getMediaPackageField($track, 'url');
+                if ($type && $url) {
+                    $this->syncTrack($multimediaObject, $type, $url);
+                }
+            }
+        } else {
+            // NOTE: Single track
+            $type = $this->getMediaPackageField($tracks, 'type');
+            $url = $this->getMediaPackageField($track, 'url');
+            if ($type && $url) {
+                $this->syncTrack($multimediaObject, $type, $url);
+            }
+        }
+    }
+
+    private function syncTrack(MultimediaObject $multimediaObject, $type, $url)
+    {
+        $track = $multimediaObject->getTrackWithAllTags(array('opencast', $type));
+        if (!$track) {
+            return false;
+        }
+
+        $track->setUrl($url);
+        $track->setPath($this->opencastService->getPath($url));
+
+        return true;
     }
 }
