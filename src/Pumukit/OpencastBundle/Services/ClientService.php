@@ -893,7 +893,7 @@ class ClientService
         } else {
             if ($this->insecure) {
                 $dargs = array(
-                    "ssl" => array("verify_peer" => false,"verify_peer_name" = >false),
+                    'ssl' => array('verify_peer' => false, 'verify_peer_name' => false),
                 );
                 $response = array('var' => file_get_contents($url, false, stream_context_create($dargs)));
             } else {
