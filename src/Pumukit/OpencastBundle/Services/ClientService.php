@@ -891,7 +891,14 @@ class ClientService
             }
             $response = $this->request($path);
         } else {
-            $response = array('var' => file_get_contents($url));
+            if ($this->insecure) {
+                $dargs = array(
+                    "ssl" => array("verify_peer" => false,"verify_peer_name" = >false),
+                );
+                $response = array('var' => file_get_contents($url, false, stream_context_create($dargs)));
+            } else {
+                $response = array('var' => file_get_contents($url));
+            }
         }
 
         $start = strrpos($response['var'], '<dcterms:spatial>');
