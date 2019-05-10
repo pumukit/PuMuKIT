@@ -50,7 +50,7 @@
   <td></td><td></td><td></td><td></td><td></td>
   <td>
     &nbsp;{% spaceless %}{{ mm.id }} - <strong>{% trans %}Opencast Matterhorn Recording{% endtrans %}</strong>
-    &nbsp;<a target="_blank" href="{{ (mm.getProperty('opencasturl')|replace({'%id%': mm.getProperty('opencast')}))~(mm.getProperty('opencastinvert')?'&display=invert':'') }}">{{ mm.getProperty('opencast') }}</a>
+    &nbsp;<a target="_blank" href="{{player}}?id={{mm.getProperty('opencast') ~ (mm.getProperty('opencastinvert')?'&display=invert':'')}}">{{ mm.getProperty('opencast') }}</a>
     {% endspaceless %}
   </td>
 </tr>

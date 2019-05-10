@@ -31,12 +31,15 @@ class MultimediaObjectController extends Controller
         if ($this->container->hasParameter('pumukit_opencast.sbs.profile')) {
             $sbsProfile = $this->container->getParameter('pumukit_opencast.sbs.profile');
         }
+        $opencastClient = $this->get('pumukit_opencast.client');
 
         return array(
-                     'mm' => $multimediaObject,
-                     'generate_sbs' => $generateSbs,
-                     'sbs_profile' => $sbsProfile,
-                     );
+            'mm' => $multimediaObject,
+            'generate_sbs' => $generateSbs,
+            'sbs_profile' => $sbsProfile,
+            'player' => $opencastClient->getPlayerUrl(),
+        );
+
     }
 
     /**
