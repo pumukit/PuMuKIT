@@ -14,7 +14,7 @@
     </div>
     {% endif %}
     <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ event.display ? '#FFEAD6' : '#DDD' }}" >
-      {{ event.date|date('Y-m-d H:i') }} {{ event.duration }} {% trans %}min.{% endtrans %}
+      {{ event.date|localizeddate('medium','medium',app.request.getLocale()) }} {{ event.duration }} {% trans %}min.{% endtrans %}
     </p>
   </div>
   {% else %}

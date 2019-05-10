@@ -19,7 +19,7 @@
       </div>
       <div>
         <span>{% trans %}DATE{% endtrans %}: </span>
-        <span>{{ mm.getPublicDate()|date('d/m/Y') }}</span>
+        <span>{{ mm.getPublicDate()|localizeddate('medium','none',app.request.getLocale()) }}</span>
       </div>
       {% endif %}
     </div>

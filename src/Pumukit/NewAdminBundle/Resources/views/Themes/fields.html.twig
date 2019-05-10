@@ -356,14 +356,14 @@
 
 {# Event Widgets #}
 {% block eventschedule_widget -%}
-  <div class="row">
-    <div class="col-md-6">
-      {% trans %}Date{% endtrans %}: <input class="form-control" type="datetime-local" value="{{ value['date']|date('Y-m-d\\TH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}[date]" />&nbsp;&nbsp;&nbsp;
+    <div class="row">
+        <div class="col-md-6">
+            {% trans %}Date{% endtrans %}: <input class="form-control" type="datetime-local" value="{{ value['date']|date('Y-m-d\\TH:i')|default("") }}" id="{{ id }}_date" name="{{ full_name }}[date]" />&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="col-md-6">
+            {% trans %}Duration(min){% endtrans %}: <input class="form-control" type="number" min="1" value="{{ value['duration']|default("") }}" id="{{ id }}_duration" name="{{ full_name }}[duration]"/>
+        </div>
     </div>
-    <div class="col-md-6">
-      {% trans %}Duration(min){% endtrans %}: <input class="form-control" type="number" min="1" value="{{ value['duration']|default("") }}" id="{{ id }}_duration" name="{{ full_name }}[duration]"/>
-    </div>
-  </div>
 {%- endblock eventschedule_widget %}
 
 {# HTML5 Date Widget #}
