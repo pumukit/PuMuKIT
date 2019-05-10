@@ -33,13 +33,12 @@ class MultimediaObjectController extends Controller
         }
         $opencastClient = $this->get('pumukit_opencast.client');
 
-        return array(
+        return [
             'mm' => $multimediaObject,
             'generate_sbs' => $generateSbs,
             'sbs_profile' => $sbsProfile,
             'player' => $opencastClient->getPlayerUrl(),
-        );
-
+        ];
     }
 
     /**
@@ -51,7 +50,6 @@ class MultimediaObjectController extends Controller
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $form = $this->createForm(new MultimediaObjectType($translator, $locale), $multimediaObject);
-
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -61,14 +59,14 @@ class MultimediaObjectController extends Controller
                     return new Response($e->getMessage(), 400);
                 }
 
-                return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
+                return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
             }
         }
 
-        return array(
-                     'form' => $form->createView(),
-                     'multimediaObject' => $multimediaObject,
-                     );
+        return [
+            'form' => $form->createView(),
+            'multimediaObject' => $multimediaObject,
+        ];
     }
 
     /**
@@ -79,10 +77,8 @@ class MultimediaObjectController extends Controller
     {
         $presenterDeliveryUrl = '';
         $presentationDeliveryUrl = '';
-
         $presenterDeliveryTrack = $multimediaObject->getTrackWithTag('presenter/delivery');
         $presentationDeliveryTrack = $multimediaObject->getTrackWithTag('presentation/delivery');
-
         if (null !== $presenterDeliveryTrack) {
             $presenterDeliveryUrl = $presenterDeliveryTrack->getUrl();
         }
@@ -90,10 +86,10 @@ class MultimediaObjectController extends Controller
             $presentationDeliveryUrl = $presentationDeliveryTrack->getUrl();
         }
 
-        return array(
-                     'presenter_delivery_url' => $presenterDeliveryUrl,
-                     'presentation_delivery_url' => $presentationDeliveryUrl,
-                     );
+        return [
+            'presenter_delivery_url' => $presenterDeliveryUrl,
+            'presentation_delivery_url' => $presentationDeliveryUrl,
+        ];
     }
 
     /**
@@ -104,6 +100,6 @@ class MultimediaObjectController extends Controller
         $opencastUrls = $this->get('pumukit_opencast.import')->getOpencastUrls($multimediaObject->getProperty('opencast'));
         $this->get('pumukit_opencast.job')->generateSbsTrack($multimediaObject, $opencastUrls);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', array('id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]));
     }
 }
