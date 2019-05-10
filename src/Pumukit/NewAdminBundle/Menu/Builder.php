@@ -147,11 +147,13 @@ class Builder implements ContainerAwareInterface
     {
         $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event') ? $this->container->getParameter('pumukit_new_admin.advance_live_event') : false;
         $options = ['attributes' => ['class' => 'menu_live']];
-        $live = $menu->addChild('Live management', $options);
-        if ($advanceLiveEvent) {
-            $this->addAdvancedLive($live);
-        } else {
-            $this->addBasicLive($live);
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+            $live = $menu->addChild('Live management', $options);
+            if ($advanceLiveEvent) {
+                $this->addAdvancedLive($live);
+            } else {
+                $this->addBasicLive($live);
+            }
         }
     }
 
@@ -160,15 +162,13 @@ class Builder implements ContainerAwareInterface
      */
     protected function addAdvancedLive(KnpItemInterface $live)
     {
-        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-            if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
-                $options = ['route' => 'pumukit_new_admin_live_event_index', 'attributes' => ['class' => 'menu_live_events']];
-                $live->addChild('Live Events', $options);
-            }
-            if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-                $options = ['route' => 'pumukitnewadmin_live_index', 'attributes' => ['class' => 'menu_live_channels']];
-                $live->addChild('Channel configuration', $options);
-            }
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
+            $options = ['route' => 'pumukit_new_admin_live_event_index', 'attributes' => ['class' => 'menu_live_events']];
+            $live->addChild('Live Events', $options);
+        }
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+            $options = ['route' => 'pumukitnewadmin_live_index', 'attributes' => ['class' => 'menu_live_channels']];
+            $live->addChild('Channel configuration', $options);
         }
     }
 
@@ -177,15 +177,13 @@ class Builder implements ContainerAwareInterface
      */
     protected function addBasicLive(KnpItemInterface $live)
     {
-        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-            if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
-                $options = ['route' => 'pumukitnewadmin_live_index', 'attributes' => ['class' => 'menu_live_channels']];
-                $live->addChild('Live Channels', $options);
-            }
-            if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
-                $options = ['route' => 'pumukitnewadmin_event_index', 'attributes' => ['class' => 'menu_live_events']];
-                $live->addChild('Live Events', $options);
-            }
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
+            $options = ['route' => 'pumukitnewadmin_live_index', 'attributes' => ['class' => 'menu_live_channels']];
+            $live->addChild('Live Channels', $options);
+        }
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS)) {
+            $options = ['route' => 'pumukitnewadmin_event_index', 'attributes' => ['class' => 'menu_live_events']];
+            $live->addChild('Live Events', $options);
         }
     }
 
