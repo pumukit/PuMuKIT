@@ -47,9 +47,9 @@
       <td>{{ job.getProfile() }}</td>
       <td>{{ job.getCpu() }}</td>
       <td>{{ job.getPriority() }}</td>
-      <td>{{ job.getTimeini('Y-m-d H:i:s') }}</td>
-      <td>{{ job.getTimestart('Y-m-d H:i:s') }}</td>
-      <td>{{ job.getTimeend('Y-m-d H:i:s') }}</td>
+      <td>{{ job.getTimeini('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}</td>
+      <td>{{ job.getTimestart('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}</td>
+      <td>{{ job.getTimeend('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}</td>
     </tr>
     {% endfor %}
   </tbody>
