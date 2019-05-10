@@ -1,56 +1,64 @@
 <tr>
-  <td><ul><li></li></ul></td>
-  <td>
-    <a title="{% trans %}Edit Opencast file of multimedia object{% endtrans %} {{ mm.id }}"
-       data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
-       href="{{ path('pumukit_opencast_mm_update', {'id': mm.id}) }}">
-      <i class="mdi-editor-mode-edit"></i>
-    </a>
-  </td>
-  <td>
-    <a title="{% trans %}File info of multimedia object{% endtrans %} {{ mm.id }}"
-       data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
-       href="{{ path('pumukit_opencast_mm_info', {'id': mm.id}) }}">
-      <i class="mdi-action-info"></i>
-    </a>
-  </td>
-  <td>
-    <div class="dropdown">
-      <i class="mdi-image-camera-alt" id="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}">
-        <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
-        {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
-        {% for percentage in percentages %}
-        <li>
-          <a href="#" onclick="extract_pic('{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
-            <i class="mdi-image-camera"></i> {{ percentage }}
-          </a>
-        </li>
-        {% endfor %}
-        <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
-      </ul>
-    </div>
-  </td>
-  <td>
-    <div class="dropdown">
-      <i class="mdi-navigation-refresh" id="list_profiles_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ mm.id }}">
-        <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
-        {% if generate_sbs %}
-        <li>
-          <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukit_opencast_mm_generatesbs', {'id': mm.id}) }}'); return false;">
-            <i class="mdi-image-camera-roll"></i> {{ sbs_profile }}
-          </a>
-        </li>
-        {% endif %}
-        <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
-      </ul>
-    </div>
-  </td>
-  <td></td><td></td><td></td><td></td><td></td>
-  <td>
-    &nbsp;{% spaceless %}{{ mm.id }} - <strong>{% trans %}Opencast Matterhorn Recording{% endtrans %}</strong>
-    &nbsp;<a target="_blank" href="{{ (mm.getProperty('opencasturl')|replace({'%id%': mm.getProperty('opencast')}))~(mm.getProperty('opencastinvert')?'&display=invert':'') }}">{{ mm.getProperty('opencast') }}</a>
-    {% endspaceless %}
-  </td>
+    <td>
+        <ul>
+            <li></li>
+        </ul>
+    </td>
+    <td>
+        <a title="{% trans %}Edit Opencast file of multimedia object{% endtrans %} {{ mm.id }}"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukit_opencast_mm_update', {'id': mm.id}) }}">
+            <i class="mdi-editor-mode-edit"></i>
+        </a>
+    </td>
+    <td>
+        <a title="{% trans %}File info of multimedia object{% endtrans %} {{ mm.id }}"
+           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+           href="{{ path('pumukit_opencast_mm_info', {'id': mm.id}) }}">
+            <i class="mdi-action-info"></i>
+        </a>
+    </td>
+    <td>
+        <div class="dropdown">
+            <i class="mdi-image-camera-alt" id="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}">
+                <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
+                {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
+                {% for percentage in percentages %}
+                    <li>
+                        <a href="#" onclick="extract_pic('{{ (mm.getTrackWithTag('presenter/delivery'))?mm.getTrackWithTag('presenter/delivery').getId(): 'null' }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                            <i class="mdi-image-camera"></i> {{ percentage }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+            </ul>
+        </div>
+    </td>
+    <td>
+        <div class="dropdown">
+            <i class="mdi-navigation-refresh" id="list_profiles_{{ mm.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ mm.id }}">
+                <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
+                {% if generate_sbs %}
+                    <li>
+                        <a href="#" onclick="$('#tracks_mms_{{ mm.id }}').load('{{ path('pumukit_opencast_mm_generatesbs', {'id': mm.id}) }}'); return false;">
+                            <i class="mdi-image-camera-roll"></i> {{ sbs_profile }}
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+            </ul>
+        </div>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+        &nbsp;{% spaceless %}{{ mm.id }} - <strong>{% trans %}Opencast Matterhorn Recording{% endtrans %}</strong>
+            &nbsp;<a target="_blank" href="{{ player }}?id={{ mm.getProperty('opencast') ~ (mm.getProperty('opencastinvert')?'&display=invert':'') }}">{{ mm.getProperty('opencast') }}</a>
+        {% endspaceless %}
+    </td>
 </tr>
