@@ -129,7 +129,7 @@
                     <div class="col-md-6">
                         {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
                         {% if app.session.get('admin/playlistmms/criteria')|length != 0 %}
-                            <a title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                            <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                         {% endif %}
                     </div>
                     <div class="col-md-6 text-right">
