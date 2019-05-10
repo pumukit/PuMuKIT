@@ -19,7 +19,7 @@
       {{ mmobj.description }}
     </div>
     <div class="date mmobj" style="font-style:italic">
-      {{ mmobj.recordDate|date("d/m/Y") }}
+      {{ mmobj.recordDate|localizeddate('medium','none',app.request.getLocale()) }}
     </div>
   </div>
 </div>
