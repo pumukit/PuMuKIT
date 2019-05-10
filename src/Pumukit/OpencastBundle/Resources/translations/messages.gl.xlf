@@ -120,9 +120,9 @@
         <source>Transcode to profile</source>
         <target xml:lang="gl" state="translated">Transcodificar ao perfil</target>
       </trans-unit>
-      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Matterhorn Recording">
-        <source>Opencast Matterhorn Recording</source>
-        <target xml:lang="gl" state="translated">Gravación de Opencast Matterhorn</target>
+      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Recording">
+        <source>Opencast Recording</source>
+        <target xml:lang="gl" state="translated">Gravación de Opencast</target>
       </trans-unit>
       <trans-unit id="00da4a0903d7faecfeb939d677e211ca" resname="opencast track info">
         <source>opencast track info</source>

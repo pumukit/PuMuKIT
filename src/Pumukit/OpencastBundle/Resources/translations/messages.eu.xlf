@@ -159,11 +159,11 @@
           <target xml:lang="eu">Transcodificar al perfil</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Matterhorn Recording">
-        <source>Opencast Matterhorn Recording</source>
-        <target xml:lang="eu" state="translated">Opencast Matterhorn Grabaketa</target>
+      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Recording">
+        <source>Opencast Recording</source>
+        <target xml:lang="eu" state="translated">Opencast Grabaketa</target>
         <alt-trans>
-          <target xml:lang="eu">Grabación de Opencast Matterhorn</target>
+          <target xml:lang="eu">Grabación de Opencast</target>
         </alt-trans>
       </trans-unit>
       <trans-unit id="00da4a0903d7faecfeb939d677e211ca" resname="opencast track info">
