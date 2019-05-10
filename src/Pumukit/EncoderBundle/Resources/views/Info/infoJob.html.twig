@@ -19,7 +19,7 @@
       <dt>{% trans %}Duration{% endtrans %}</dt>
       <dd>{% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}: {{ job.getNewDuration()|duration_string }}</dd>
       <dt>{% trans %}Times{% endtrans %}</dt>
-      <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}, {% trans %}started{% endtrans %}: {{ job.getTimestart('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend('Y-m-d H:i:s')|localizeddate('medium','medium',app.request.getLocale()) }}</dd>
+      <dd>{% trans %}Created{% endtrans %}: {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()) }}, {% trans %}started{% endtrans %}: {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()) }}, {% trans %}finished{% endtrans %}: {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()) }}</dd>
       <dt>{% trans %}Priority{% endtrans %}</dt>
       <dd>
         {% if job.isPending() %}
