@@ -85,6 +85,8 @@ class OpencastImportService
 
         if ($multimediaObject) {
             $this->syncTracks($multimediaObject, $mediaPackage);
+
+            $multimediaObject = $this->mmsService->updateMultimediaObject($multimediaObject);
         } else {
             $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $loggedInUser);
             $multimediaObject->setSeries($series);
