@@ -85,6 +85,7 @@ class OpencastImportService
 
         if ($multimediaObject) {
             $this->syncTracks($multimediaObject, $mediaPackage);
+            $this->syncPics($multimediaObject, $mediaPackage);
 
             $multimediaObject = $this->mmsService->updateMultimediaObject($multimediaObject);
         } else {
@@ -318,9 +319,12 @@ class OpencastImportService
             $type = $this->getMediaPackageField($itemAttachment, 'type');
             if ('presenter/search+preview' == $type) {
                 $tags = $this->getMediaPackageField($itemAttachment, 'tags');
+                $type = $this->getMediaPackageField($itemAttachment, 'type');
                 $url = $this->getMediaPackageField($itemAttachment, 'url');
                 if ($tags || $url) {
                     $pic = new Pic();
+                    $pic->addTag('opencast');
+                    $pic->addTag($type);
                     if ($tags) {
                         foreach ($tags as $tag) {
                             $pic->addTag($tag);
@@ -431,6 +435,54 @@ class OpencastImportService
 
         $track->setUrl($url);
         $track->setPath($this->opencastService->getPath($url));
+
+        return true;
+    }
+
+    public function syncPics(MultimediaObject $multimediaObject, $mediaPackage = null)
+    {
+        $mediaPackageId = $multimediaObject->getProperty('opencast');
+        if (!$mediaPackageId) {
+            return;
+        }
+
+        if (!$mediaPackage) {
+            $mediaPackage = $this->opencastClient->getMediaPackage($mediaPackageId);
+        }
+
+        if (!$mediaPackage) {
+            throw new \Exception('Opencast communication error');
+        }
+
+        $attachments = $this->getMediaPackageField($mediaPackage, 'attachments');
+        $attachment = $this->getMediaPackageField($attachments, 'attachment');
+        if (isset($attachment[0])) {
+            $limit = count($attachment);
+            for ($i = 0; $i < $limit; ++$i) {
+                $pic = $attachment[$i];
+                $type = $this->getMediaPackageField($pic, 'type');
+                $url = $this->getMediaPackageField($pic, 'url');
+                if ($type && $url) {
+                    $this->syncPic($multimediaObject, $type, $url);
+                }
+            }
+        } else {
+            $type = $this->getMediaPackageField($attachment, 'type');
+            $url = $this->getMediaPackageField($attachment, 'url');
+            if ($type && $url) {
+                $this->syncPic($multimediaObject, $type, $url);
+            }
+        }
+    }
+
+    private function syncPic(MultimediaObject $multimediaObject, $type, $url)
+    {
+        $pic = $multimediaObject->getPicWithAllTags(array('opencast', $type));
+        if (!$pic) {
+            return false;
+        }
+
+        $pic->setUrl($url);
 
         return true;
     }
