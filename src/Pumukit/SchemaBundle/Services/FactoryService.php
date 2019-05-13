@@ -457,10 +457,12 @@ class FactoryService
         }
 
         // Create roles except Owners because $this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()
-        foreach ($prototype->getRoles() as $embeddedRole) {
-            if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
-                foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                    $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+        if ($prototype) {
+            foreach ($prototype->getRoles() as $embeddedRole) {
+                if ($this->personService->getPersonalScopeRoleCode() !== $embeddedRole->getCod()) {
+                    foreach ($embeddedRole->getPeople() as $embeddedPerson) {
+                        $new->addPersonWithRole($embeddedPerson, $embeddedRole);
+                    }
                 }
             }
         }
