@@ -415,7 +415,7 @@ class OpencastImportService
         } else {
             // NOTE: Single track
             $type = $this->getMediaPackageField($tracks, 'type');
-            $url = $this->getMediaPackageField($track, 'url');
+            $url = $this->getMediaPackageField($tracks, 'url');
             if ($type && $url) {
                 $this->syncTrack($multimediaObject, $type, $url);
             }
