@@ -126,8 +126,8 @@
         <source>Transcode to profile</source>
         <target xml:lang="zh-TW" state="translated">轉碼到設定檔</target>
       </trans-unit>
-      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Matterhorn Recording">
-        <source>Opencast Matterhorn Recording</source>
+      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Recording">
+        <source>Opencast Recording</source>
         <target xml:lang="zh-TW" state="translated">Opencast 錄製</target>
       </trans-unit>
       <trans-unit id="00da4a0903d7faecfeb939d677e211ca" resname="opencast track info">

@@ -10,7 +10,7 @@ class UserAgentParserService
 {
     /**
      * Returns true if the userAgent belongs to an 'old' browser.
-     * This function is used in PuMuKIT ONLY for the player_matterhorn template (to show a warning if it's 'old'. This can be better solved using a script to check for feature support).
+     * This function is used in PuMuKIT ONLY for the player opencast template (to show a warning if it's 'old'. This can be better solved using a script to check for feature support).
      *
      * @param string
      *
