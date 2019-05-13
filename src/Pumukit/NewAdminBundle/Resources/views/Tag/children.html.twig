@@ -13,17 +13,17 @@
                     </div>
                 </td>
                 <td headers="th-icons">
-                    <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));">
+                    <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));" class="tag_delete_{{ tag.cod }}">
                         <i class="mdi-content-clear"></i>
                     </a>
                 </td>
                 <td headers="th-icons">
-                    <a title="{% trans %}Edit tag {% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <a title="{% trans %}Edit tag {% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" class="tag_edit_{{ tag.cod }}">
                         <i class="mdi-editor-mode-edit"></i>
                     </a>
                 </td>
                 <td headers="th-icons">
-                    <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                    <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" class="tag_children_{{ tag.cod }}">
                         <i class="mdi-image-add-to-photos"></i>
                     </a>
                 </td>
