@@ -25,5 +25,7 @@
 /bin/
 /composer.phar
 *~
+.idea/
+.idea_modules/
 \#*\#
 TAGS
