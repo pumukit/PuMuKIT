@@ -254,7 +254,7 @@
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
                 {% if locale in form.vars.translators %}
-                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" onclick="pmk_translate(this)" data-locale="{{ locale }}">
+                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" ondblclick="pmk_translate(this, false)" onclick="pmk_translate(this, true)" data-locale="{{ locale }}">
                         <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                     </span>
                 {% endif %}
