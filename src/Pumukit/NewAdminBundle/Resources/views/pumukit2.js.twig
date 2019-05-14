@@ -3369,7 +3369,8 @@ $(document).on('click', '#pumukitnewadmin_mmo_duration_sort_not_selected', funct
 });
 
 
-window.pmk_translate = function(element, input_type = 'input') {
+
+window.pmk_translate = function(element, input_type = 'input', show_prompt = true) {
     $e = $(element);
     var target_lang = $e.data("locale")
     var text = $e.parent().parent().find(input_type).val();
@@ -3377,7 +3378,11 @@ window.pmk_translate = function(element, input_type = 'input') {
     $e.children().addClass('pmk-job-animate');
     $.post(route, {"q": text, "target_lang": target_lang}, function(data, textStatus, jqXHR){
         $e.children().removeClass('pmk-job-animate');
-        var translation = prompt("{% trans %}Please enter your translation:{% endtrans %}", data.text);
+        if (show_prompt) {
+            var translation = prompt("{% trans %}Please enter your translation:{% endtrans %}", data.text);
+        } else {
+            var translation = data.text;
+        }
         if (translation != null && translation != "") {
             $e.parent().find(input_type).val(translation);
         }
