@@ -26,7 +26,7 @@
                         <li class="dropdown-header">{{ app.user.email }}</li>
                         {{ render( controller( 'PumukitNewAdminBundle:Widget:languageselect') ) }}
                         <li class="divider"></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}" style="background-color: #fff;">{% trans %}Logout{% endtrans %}</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}" class="login-menu-button" style="background-color: #fff;">{% trans %}Logout{% endtrans %}</a></li>
                       </ul>
                     </li>
                 </ul>
