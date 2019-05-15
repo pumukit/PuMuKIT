@@ -15,43 +15,36 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>project</td>
-                    <td>pumukit/pumukit</td>
-                    <td><span class="label label-success">{{constant('Pumukit\\PumukitVersion::VERSION')}}</span></td>
-                    <td></td>
-                    <td>Media Portal</td>
-                </tr>
-            {% for item in pumukitPackages %}
-                <tr>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.name }}</td>
-                    <td><span class="label label-success">{{ item.version }}</span></td>
-                    <td>
-                        {% if item.keywords is defined %}
-                            {% for keyword in item.keywords %}
-                                <span class="label label-info">{{ keyword }}</span>
-                            {% endfor  %}
-                        {% endif %}
-                    </td>
-                    <td>{{ item.description }}</td>
-                </tr>
-            {% endfor %}
-            {% for item in otherPackages %}
-                <tr class="otherPackages" style="display:none">
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.name }}</td>
-                    <td><span class="label label-success">{{ item.version }}</span></td>
-                    <td>
-                        {% if item.keywords is defined %}
-                            {% for keyword in item.keywords %}
-                                <span class="label label-info">{{ keyword }}</span>
-                            {% endfor  %}
-                        {% endif %}
-                    </td>
-                    <td>{{ item.description }}</td>
-                </tr>
-            {% endfor %}
+                {% for item in pumukitPackages %}
+                    <tr>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.name }}</td>
+                        <td><span class="label label-success">{{ item.version }}</span></td>
+                        <td>
+                            {% if item.keywords is defined %}
+                                {% for keyword in item.keywords %}
+                                    <span class="label label-info">{{ keyword }}</span>
+                                {% endfor  %}
+                            {% endif %}
+                        </td>
+                        <td>{{ item.description }}</td>
+                    </tr>
+                {% endfor %}
+                {% for item in otherPackages %}
+                    <tr class="otherPackages" style="display:none">
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.name }}</td>
+                        <td><span class="label label-success">{{ item.version }}</span></td>
+                        <td>
+                            {% if item.keywords is defined %}
+                                {% for keyword in item.keywords %}
+                                    <span class="label label-info">{{ keyword }}</span>
+                                {% endfor  %}
+                            {% endif %}
+                        </td>
+                        <td>{{ item.description }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
         <button id="expandOtherPackages" class="btn btn-primary" type="button">{{ 'Other packages' | trans }}</button>
