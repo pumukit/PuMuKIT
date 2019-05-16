@@ -23,7 +23,7 @@
                     </a>
                 </td>
                 <td headers="th-icons">
-                    <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" class="tag_children_{{ tag.cod }}">
+                    <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" class="tag_create_children_{{ tag.cod }}">
                         <i class="mdi-image-add-to-photos"></i>
                     </a>
                 </td>
@@ -34,7 +34,7 @@
                 </td>
                 <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}">
                     <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
-                      <i class="mdi- tag_icon"></i>
+                      <i class="mdi- tag_icon tag_children_{{ tag.cod }}"></i>
                         {{ tag.title }}
                     </span>
                 </td>
