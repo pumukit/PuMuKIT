@@ -22,7 +22,7 @@ class SeriesSyncService
     {
         //TTK-21470: Since having a series in an Opencast object is not required, but it is in PuMuKIT
         // we need THIS series to not be synced to Opencast. Ideally series would be OPTIONAL.
-        if ($series->getProperty('opencast') == 'default') {
+        if ('default' == $series->getProperty('opencast')) {
             return;
         }
 
@@ -42,6 +42,12 @@ class SeriesSyncService
 
     public function updateSeries($series)
     {
+        //TTK-21470: Since having a series in an Opencast object is not required, but it is in PuMuKIT
+        // we need THIS series to not be synced to Opencast. Ideally series would be OPTIONAL.
+        if ('default' == $series->getProperty('opencast')) {
+            return;
+        }
+
         try {
             $output = $this->clientService->updateOpencastSeries($series);
         } catch (\Exception $e) {
