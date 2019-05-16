@@ -5,6 +5,8 @@ namespace Pumukit\OpencastBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
 
 class SeriesImportService
 {
@@ -13,11 +15,12 @@ class SeriesImportService
     private $opencastClient;
     private $otherLocales;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, ClientService $opencastClient, array $otherLocales = array())
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, ClientService $opencastClient, SeriesEventDispatcherService $seriesDispatcher, array $otherLocales = array())
     {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
         $this->opencastClient = $opencastClient;
+        $this->seriesDispatcher = $seriesDispatcher;
         $this->otherLocales = $otherLocales;
     }
 

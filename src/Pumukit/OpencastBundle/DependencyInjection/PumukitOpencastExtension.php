@@ -74,6 +74,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('doctrine_mongodb.odm.document_manager'))
               ->addArgument(new Reference('pumukitschema.factory'))
               ->addArgument(new Reference('pumukit_opencast.client'))
+              ->addArgument(new Reference('pumukitschema.series_dispatcher'))
               ->addArgument(new Parameter('pumukit2.locales'));
 
             $pumukit2customlanguages = $container->hasParameter('pumukit2.customlanguages') ?
