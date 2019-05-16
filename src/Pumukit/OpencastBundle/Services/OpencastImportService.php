@@ -216,7 +216,7 @@ class OpencastImportService
         return null;
     }
 
-    public function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null, $trackTags = array('display'))
+    public function createTrackFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $index = null, $trackTags = array('display'), $defaultLanguage = null)
     {
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');
@@ -232,7 +232,7 @@ class OpencastImportService
 
         $track = new Track();
 
-        $language = $this->getMediaPackageLanguage($mediaPackage);
+        $language = $this->getMediaPackageLanguage($mediaPackage, $defaultLanguage);
         $track->setLanguage($language);
 
         $tagsArray = $this->getMediaPackageField($opencastTrack, 'tags');
@@ -359,7 +359,7 @@ class OpencastImportService
         return $track;
     }
 
-    private function getMediaPackageLanguage($mediaPackage)
+    private function getMediaPackageLanguage($mediaPackage, $defaultLanguage = null)
     {
         $language = $this->getMediaPackageField($mediaPackage, 'language');
         if ($language) {
@@ -369,7 +369,7 @@ class OpencastImportService
             }
         }
 
-        return  \Locale::getDefault();
+        return ($defaultLanguage !== null) ? $defaultLanguage : \Locale::getDefault();
     }
 
     public function importTracksFromMediaPackage($mediaPackage, MultimediaObject $multimediaObject, $trackTags)

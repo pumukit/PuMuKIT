@@ -1965,7 +1965,7 @@ $(document).ready(function(){
                     var message = 'Successfully delete User from Group.';
                     success(message);
                 }
-            }).done(can_be_deleted(group_id));
+            }).done(function() {can_be_deleted(group_id);});
         }
         event.preventDefault();
         event.stopPropagation();
@@ -1990,7 +1990,7 @@ $(document).ready(function(){
                     var message = 'Successfully delete admin MultimediaObjects from Group.';
                     success(message);
                 }
-            }).done(can_be_deleted(group_id));
+            }).done(function() {can_be_deleted(group_id);});
         }
         event.preventDefault();
         event.stopPropagation();
@@ -2015,7 +2015,7 @@ $(document).ready(function(){
                     var message = 'Successfully delete play MultimediaObjects from Group.';
                     success(message);
                 }
-            }).done(can_be_deleted(group_id));
+            }).done(function() {can_be_deleted(group_id);});
         }
         event.preventDefault();
         event.stopPropagation();
@@ -3043,7 +3043,7 @@ delete_user_from_group = function(user_id, group_id, count, action)
                     var message = 'Successfully delete User from Group.';
                     success(message);
                 }
-        }).done(can_be_deleted(group_id));
+        }).done(function() {can_be_deleted(group_id);});
     }
     return false;
 }
@@ -3069,7 +3069,7 @@ delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
                     var message = 'Successfully delete MultimediaObject from Group.';
                     success(message);
                 }
-        }).done(can_be_deleted(group_id));
+        }).done(function() {can_be_deleted(group_id);});
     }
     return false;
 }
@@ -3095,7 +3095,7 @@ delete_embeddedbroadcast_from_group = function(mm_id, group_id, count, action)
                     var message = 'Successfully delete MultimediaObject from Group.';
                     success(message);
                 }
-        }).done(can_be_deleted(group_id));
+        }).done(function() {can_be_deleted(group_id);});
     }
     return false;
 }

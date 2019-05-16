@@ -51,7 +51,7 @@ class SeriesImportService
     {
         $publicDate = new \DateTime('now');
 
-        $series = $this->factoryService->createSeries($loggedInUser);
+        $series = $this->factoryService->doCreateCollection(Series::TYPE_SERIES, $loggedInUser);
         $series->setPublicDate($publicDate);
         $series->setTitle($title);
         foreach ($this->otherLocales as $locale) {
@@ -62,6 +62,7 @@ class SeriesImportService
 
         $this->dm->persist($series);
         $this->dm->flush();
+        $this->seriesDispatcher->dispatchCreate($series);
 
         return $series;
     }

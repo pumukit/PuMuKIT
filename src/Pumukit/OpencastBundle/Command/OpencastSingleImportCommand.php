@@ -19,6 +19,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             ->addArgument('id', InputArgument::REQUIRED, 'Opencast id to import')
             ->addOption('invert', 'i', InputOption::VALUE_NONE, 'Inverted recording (CAMERA <-> SCREEN)')
             ->addOption('mmobjid', 'o', InputOption::VALUE_OPTIONAL, 'Use an existing multimedia object. Not create a new one')
+            ->addOption('language', null, InputOption::VALUE_OPTIONAL, 'Default language if not present in Opencast', null)
         ;
     }
 
@@ -33,7 +34,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
 
         if ($mmObjId = $input->getOption('mmobjid')) {
             if ($mmobj = $mmobjRepo->find($mmObjId)) {
-                $this->completeMultimediaObject($mmobj, $opencastId, $input->getOption('invert'));
+                $this->completeMultimediaObject($mmobj, $opencastId, $input->getOption('invert'), $input->getOption('language'));
             } else {
                 $output->writeln('No multimedia object with id '.$mmObjId);
             }
@@ -46,7 +47,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
         }
     }
 
-    protected function completeMultimediaObject(MultimediaObject $multimediaObject, $opencastId, $invert)
+    protected function completeMultimediaObject(MultimediaObject $multimediaObject, $opencastId, $invert, $language)
     {
         $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
         $opencastClient = $this->getContainer()->get('pumukit_opencast.client');
@@ -67,11 +68,11 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             // NOTE: Multiple tracks
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
-                $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i);
+                $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, array('display'), $language);
             }
         } else {
             // NOTE: Single track
-            $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject);
+            $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, array('display'), $language);
         }
 
         $mmsService->updateMultimediaObject($multimediaObject);
