@@ -14,11 +14,11 @@
         ]
     },
     "require": {
-        "php": "^5.6",
+        "php": ">=5.5.9",
+        "ext-mongo": "*",
         "symfony/symfony": "2.8.*",
         "doctrine/mongodb-odm": "1.0.x-dev#328c1eba840a4f3b81d3a28211b3f1ce5445ceaf",
         "doctrine/mongodb-odm-bundle": "3.0.x-dev#1ac417f1e1374474778707f9f0d7d82b19d17922",
-	"ext-mongo": "^1.6.6",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
