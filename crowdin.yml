@@ -1,0 +1,3 @@
+files:
+  - source: /src/Pumukit/*/Resources/translations/messages.en.xlf
+    translation: /%original_path%/messages.%two_letters_code%.xlf
