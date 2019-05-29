@@ -587,119 +587,119 @@
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
-        <target>__Event pic</target>
+        <target>Event pic</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
-        <target>__Menu</target>
+        <target>Menu</target>
       </trans-unit>
       <trans-unit id="MIUxXxN" resname="Sort by date">
         <source>Sort by date</source>
-        <target>__Sort by date</target>
+        <target>Sort by date</target>
       </trans-unit>
       <trans-unit id="OqwCASq" resname="Sort alphabetically">
         <source>Sort alphabetically</source>
-        <target>__Sort alphabetically</target>
+        <target>Sort alphabetically</target>
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
-        <target>__Powered by</target>
+        <target>Powered by</target>
       </trans-unit>
       <trans-unit id="OEjvXg." resname="Full catalogue">
         <source>Full catalogue</source>
-        <target>__Full catalogue</target>
+        <target>Full catalogue</target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target>__License</target>
+        <target>License</target>
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target>__Url track</target>
+        <target>Url track</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target>__Edit multimedia object</target>
+        <target>Edit multimedia object</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target>__Live</target>
+        <target>Live</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target>__The event has not been held yet</target>
+        <target>The event has not been held yet</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target>__The event has already been held</target>
+        <target>The event has already been held</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
-        <target>__days</target>
+        <target>days</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target>__There aren't events at this moment</target>
+        <target>There aren't events at this moment</target>
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
-        <target>__Current live event</target>
+        <target>Current live event</target>
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
-        <target>__Next live event</target>
+        <target>Next live event</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target>__Event</target>
+        <target>Event</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target>__Place</target>
+        <target>Place</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target>__Time</target>
+        <target>Time</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target>__JWPlayer does not support your browser version</target>
+        <target>JWPlayer does not support your browser version</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target>__Please use 9.0 or higher version or use another browser.</target>
+        <target>Please use 9.0 or higher version or use another browser.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target>__The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target>__Live chat</target>
+        <target>Live chat</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target>__Chat icon</target>
+        <target>Chat icon</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target>__Name</target>
+        <target>Name</target>
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target>__Name cannot be empty</target>
+        <target>Name cannot be empty</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target>__Message</target>
+        <target>Message</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target>__Sorry but there was an error</target>
+        <target>Sorry but there was an error</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target>__Event chat</target>
+        <target>Event chat</target>
       </trans-unit>
     </body>
   </file>
