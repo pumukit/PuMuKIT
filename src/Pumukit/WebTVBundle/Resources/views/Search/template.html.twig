@@ -18,7 +18,7 @@
     {% else %}
         <h1>
             {% if template_title is defined %}
-                {{ template_title |trans }}
+                {{ template_title }}
             {% else %}
                 {% if type == "series" %}
                     {% trans %}Series search{% endtrans %}
