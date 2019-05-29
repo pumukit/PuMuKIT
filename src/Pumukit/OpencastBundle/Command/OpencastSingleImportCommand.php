@@ -62,6 +62,11 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
         }
         $multimediaObject->setProperty('opencastinvert', boolval($invert));
 
+        if ($language) {
+            $parsedLocale = \Locale::parseLocale($language);
+            $multimediaObject->setProperty('opencastlanguage', $parsedLocale['language']);
+        }
+
         $media = $opencastImportService->getMediaPackageField($mediaPackage, 'media');
         $tracks = $opencastImportService->getMediaPackageField($media, 'track');
         if (isset($tracks[0])) {
