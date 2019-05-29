@@ -3584,171 +3584,171 @@
       </trans-unit>
       <trans-unit id="4h_TXxH" resname="Copy">
         <source>Copy</source>
-        <target>__Copy</target>
+        <target>Copy</target>
       </trans-unit>
       <trans-unit id="j_FHaW_" resname="Translate">
         <source>Translate</source>
-        <target>__Translate</target>
+        <target>Translate</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target>__Iframe URL</target>
+        <target>Iframe URL</target>
       </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target>__Autocomplete series</target>
+        <target>Autocomplete series</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target>__Series successfully updated.</target>
+        <target>Series successfully updated.</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
-        <target>__Day</target>
+        <target>Day</target>
       </trans-unit>
       <trans-unit id="MQylA_8" resname="Month">
         <source>Month</source>
-        <target>__Month</target>
+        <target>Month</target>
       </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
-        <target>__Num</target>
+        <target>Num</target>
       </trans-unit>
       <trans-unit id="iTvUpcp" resname="Total Time">
         <source>Total Time</source>
-        <target>__Total Time</target>
+        <target>Total Time</target>
       </trans-unit>
       <trans-unit id="msfeW55" resname="Total Size">
         <source>Total Size</source>
-        <target>__Total Size</target>
+        <target>Total Size</target>
       </trans-unit>
       <trans-unit id="ybPDgkf" resname="Total">
         <source>Total</source>
-        <target>__Total</target>
+        <target>Total</target>
       </trans-unit>
       <trans-unit id="K2m_11l" resname="Num series">
         <source>Num series</source>
-        <target>__Num series</target>
+        <target>Num series</target>
       </trans-unit>
       <trans-unit id="DoL48E_" resname="Num objects">
         <source>Num objects</source>
-        <target>__Num objects</target>
+        <target>Num objects</target>
       </trans-unit>
       <trans-unit id="22fF_E2" resname="Total hours">
         <source>Total hours</source>
-        <target>__Total hours</target>
+        <target>Total hours</target>
       </trans-unit>
       <trans-unit id="Uc32slY" resname="Total size">
         <source>Total size</source>
-        <target>__Total size</target>
+        <target>Total size</target>
       </trans-unit>
       <trans-unit id="ppxN7OF" resname="Storage">
         <source>Storage</source>
-        <target>__Storage</target>
+        <target>Storage</target>
       </trans-unit>
       <trans-unit id="XFT.IFz" resname="Numerical ID">
         <source>Numerical ID</source>
-        <target>__Numerical ID</target>
+        <target>Numerical ID</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
-        <target>__Show</target>
+        <target>Show</target>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target>__Show presenter</target>
+        <target>Show presenter</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target>__presenter</target>
+        <target>presenter</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
-        <target>__Show presentation</target>
+        <target>Show presentation</target>
       </trans-unit>
       <trans-unit id="v6wxT_." resname="presentation">
         <source>presentation</source>
-        <target>__presentation</target>
+        <target>presentation</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target>__Select metadata to sync on all multimedia objects of this series</target>
+        <target>Select metadata to sync on all multimedia objects of this series</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
-        <target>__Sync</target>
+        <target>Sync</target>
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
-        <target>__Sync metadata for all multimedia objects</target>
+        <target>Sync metadata for all multimedia objects</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target>__There was an error sync up metadata.</target>
+        <target>There was an error sync up metadata.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target>__Sync up metadata was successfully.</target>
+        <target>Sync up metadata was successfully.</target>
       </trans-unit>
       <trans-unit id=".3bGq3U" resname="Configure your fields list">
         <source>Configure your fields list</source>
-        <target>__Configure your fields list</target>
+        <target>Configure your fields list</target>
       </trans-unit>
       <trans-unit id=".lxppRP" resname="Video ID">
         <source>Video ID</source>
-        <target>__Video ID</target>
+        <target>Video ID</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target>__Series Title</target>
+        <target>Series Title</target>
       </trans-unit>
       <trans-unit id="SJTnZeA" resname="Track name">
         <source>Track name</source>
-        <target>__Track name</target>
+        <target>Track name</target>
       </trans-unit>
       <trans-unit id="uyP.XFA" resname="Numerical series ID">
         <source>Numerical series ID</source>
-        <target>__Numerical series ID</target>
+        <target>Numerical series ID</target>
       </trans-unit>
       <trans-unit id="NiTFfNE" resname="Numerical video ID">
         <source>Numerical video ID</source>
-        <target>__Numerical video ID</target>
+        <target>Numerical video ID</target>
       </trans-unit>
       <trans-unit id="p3BiCQV" resname="Without filter">
         <source>Without filter</source>
-        <target>__Without filter</target>
+        <target>Without filter</target>
       </trans-unit>
       <trans-unit id="YWOkHA5" resname="Custom field">
         <source>Custom field</source>
-        <target>__Custom field</target>
+        <target>Custom field</target>
       </trans-unit>
       <trans-unit id="0lBOUri" resname="catalogue">
         <source>catalogue</source>
-        <target>__catalogue</target>
+        <target>catalogue</target>
       </trans-unit>
       <trans-unit id="awFD0Dh" resname="Return">
         <source>Return</source>
-        <target>__Return</target>
+        <target>Return</target>
       </trans-unit>
       <trans-unit id="8zto_mL" resname="Please enter your translation:">
         <source>Please enter your translation:</source>
-        <target>__Please enter your translation:</target>
+        <target>Please enter your translation:</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
-        <target>__Error</target>
+        <target>Error</target>
       </trans-unit>
       <trans-unit id="_2ahr06" resname="Original name">
         <source>Original name</source>
-        <target>__Original name</target>
+        <target>Original name</target>
       </trans-unit>
       <trans-unit id="9ShOV_x" resname="No name">
         <source>No name</source>
-        <target>__No name</target>
+        <target>No name</target>
       </trans-unit>
       <trans-unit id="rArhFm_" resname="Upload date">
         <source>Upload date</source>
-        <target>__Upload date</target>
+        <target>Upload date</target>
       </trans-unit>
     </body>
   </file>
