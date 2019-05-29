@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>__Status</target>
+        <target>Status</target>
       </trans-unit>
     </body>
   </file>
