@@ -701,6 +701,10 @@
         <source>Event chat</source>
         <target>Event chat</target>
       </trans-unit>
+      <trans-unit id="DKsclhd" resname="video">
+        <source>video</source>
+        <target>video</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
