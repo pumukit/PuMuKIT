@@ -5,161 +5,165 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="a09db87872b455033c3903d60d4cf0fd" resname="Current live event">
+      <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
         <target>Current live event</target>
       </trans-unit>
-      <trans-unit id="19633d75b6ef363510f653f26704a4e1" resname="Next live event">
+      <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
         <target>Next live event</target>
       </trans-unit>
-      <trans-unit id="030d962d0faa148f02848881a3b4fdb6" resname="EVENT">
+      <trans-unit id="s8XJFie" resname="EVENT">
         <source>EVENT</source>
         <target>EVENT</target>
       </trans-unit>
-      <trans-unit id="8c756b7e3daff6db3808a377b05a148f" resname="PLACE">
+      <trans-unit id="BohT_Se" resname="PLACE">
         <source>PLACE</source>
         <target>PLACE</target>
       </trans-unit>
-      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+      <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
         <target>DATE</target>
       </trans-unit>
-      <trans-unit id="346ff32eaa3c09983fb2ec057816d352" resname="TIME">
+      <trans-unit id="WIhnXZm" resname="TIME">
         <source>TIME</source>
         <target>TIME</target>
       </trans-unit>
-      <trans-unit id="b024381f0498329c791a3991c10660af" resname="No title">
+      <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
         <target>No title</target>
       </trans-unit>
-      <trans-unit id="a4ecfc70574394990cf17bd83df499f7" resname="Event">
+      <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
         <target>Event</target>
       </trans-unit>
-      <trans-unit id="7b9cf007806ed854cd12ab800c8a982b" resname="Place">
+      <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
         <target>Place</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+      <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
         <target>Date</target>
       </trans-unit>
-      <trans-unit id="a76d4ef5f3f6a672bbfab2865563e530" resname="Time">
+      <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
         <target>Time</target>
       </trans-unit>
-      <trans-unit id="bbd3b0ed90fe9d5902acef4f19ce0b08" resname="JWPlayer does not support your browser version">
+      <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
         <target>JWPlayer does not support your browser version</target>
       </trans-unit>
-      <trans-unit id="bf31624e1480f387a3765209d49699d2" resname="Please use 9.0 or higher version or use another browser.">
+      <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
         <target>Please use 9.0 or higher version or use another browser.</target>
       </trans-unit>
-      <trans-unit id="86e281242526ed976357d768570b4f7e" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
+      <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
         <target>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
       </trans-unit>
-      <trans-unit id="d56cc3fe0db39a01db08f43f90eef01d" resname="The event has not been held yet">
+      <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
         <target>The event has not been held yet</target>
       </trans-unit>
-      <trans-unit id="6cb2e290e1fbd2f5e3fdedb555b3ae69" resname="The event has already been held">
+      <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
         <target>The event has already been held</target>
       </trans-unit>
-      <trans-unit id="955ad3298db330b5ee880c2c9e6f23a0" resname="Live">
+      <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
         <target>Live</target>
       </trans-unit>
-      <trans-unit id="5ab88857f33f829648393a4f0cdfab8f" resname="Private Video">
+      <trans-unit id="OxlkZOz" resname="Private Video">
         <source>Private Video</source>
         <target>Private Video</target>
       </trans-unit>
-      <trans-unit id="e01c294e24ff18aa879b207078fed4c4" resname="This video is private with restricted access">
+      <trans-unit id="BcxKeUd" resname="This video is private with restricted access">
         <source>This video is private with restricted access</source>
         <target>This video is private with restricted access</target>
       </trans-unit>
-      <trans-unit id="a9217438f67c281903d6925f2da1d3b5" resname="Enter a valid password to watch it">
+      <trans-unit id="hrl4QaS" resname="Enter a valid password to watch it">
         <source>Enter a valid password to watch it</source>
         <target>Enter a valid password to watch it</target>
       </trans-unit>
-      <trans-unit id="535a02388a6f1638b53d0f5552be8e50" resname="Introduce a password">
+      <trans-unit id="AmXL6i2" resname="Introduce a password">
         <source>Introduce a password</source>
         <target>Introduce a password</target>
       </trans-unit>
-      <trans-unit id="f1bc76917b4b9eefae0a2c2f249eae3e" resname="Password is not valid">
+      <trans-unit id="DyCJYAX" resname="Password is not valid">
         <source>Password is not valid</source>
         <target>Password is not valid</target>
       </trans-unit>
-      <trans-unit id="3bbbad631029e3575da7a151bba4f37c" resname="Log In">
+      <trans-unit id="Le1KPuZ" resname="Log In">
         <source>Log In</source>
         <target>Log In</target>
       </trans-unit>
-      <trans-unit id="85eba6875ff4050ab452daf774d472f9" resname="Enter pass">
+      <trans-unit id="8aBdu0t" resname="Enter pass">
         <source>Enter pass</source>
         <target>Enter pass</target>
       </trans-unit>
-      <trans-unit id="6d1169d8724055e3ac0db023a31112b0" resname="New contact from live event">
+      <trans-unit id="7tKy0KB" resname="New contact from live event">
         <source>New contact from live event</source>
         <target>New contact from live event</target>
       </trans-unit>
-      <trans-unit id="44fdec47036f482b68b748f9d786801b" resname="days">
+      <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
         <target>days</target>
       </trans-unit>
-      <trans-unit id="f15c1cae7882448b3fb0404682e17e61" resname="Content">
+      <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
         <target>Content</target>
       </trans-unit>
-      <trans-unit id="354a63f6238072439da28c8b5ac3b265" resname="Obsolete browser">
+      <trans-unit id="ZYNLahi" resname="Obsolete browser">
         <source>Obsolete browser</source>
         <target>Obsolete browser</target>
       </trans-unit>
-      <trans-unit id="a025e05161bb17cbab898f0e77b09a2b" resname="Iframe">
+      <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
         <target>Iframe</target>
       </trans-unit>
-      <trans-unit id="eb42ae8f1d7f9a8fd41de416e1815ec0" resname="Media Thumbnail">
+      <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
         <target>Media Thumbnail</target>
       </trans-unit>
-      <trans-unit id="0726dd84c9bfbd2d3432d8cedc42e3eb" resname="There aren't events at this moment">
+      <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
         <target>There aren't events at this moment</target>
       </trans-unit>
-      <trans-unit id="572743c5198afb6ae40cdcfbfa4a97ec" resname="email send">
+      <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
         <target>email send</target>
       </trans-unit>
-      <trans-unit id="f904fa91eb58b7c4d3675b9062db3be1" resname="please verify form data">
+      <trans-unit id="TPzY.dq" resname="please verify form data">
         <source>please verify form data</source>
         <target>please verify form data</target>
       </trans-unit>
-      <trans-unit id="9b8262bc7fb8041b6b73488feb3472ca" resname="Event chat">
+      <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
         <target>Event chat</target>
       </trans-unit>
-      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+      <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
         <target>Name</target>
       </trans-unit>
-      <trans-unit id="744bb349653a2001187d48840da8051a" resname="Name cannot be empty">
+      <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
         <target>Name cannot be empty</target>
       </trans-unit>
-      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4" resname="Message">
+      <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
         <target>Message</target>
       </trans-unit>
-      <trans-unit id="9b6449cd47c236450bbc9ccf0a358a56" resname="Sorry but there was an error">
+      <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
         <target>Sorry but there was an error</target>
       </trans-unit>
-      <trans-unit id="cd8a74815a738bc4e89ef73f49bf5e16" resname="Chat icon">
+      <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
         <target>Chat icon</target>
+      </trans-unit>
+      <trans-unit id="HHzHKHy" resname="Live chat">
+        <source>Live chat</source>
+        <target>__Live chat</target>
       </trans-unit>
     </body>
   </file>
