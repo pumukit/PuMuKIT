@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="U_MugDs" resname="You don't have enough permissions to access this content.">
         <source>You don't have enough permissions to access this content.</source>
-        <target state="needs-translation">You don't have enough permissions to access this content.</target>
+        <target state="translated">У вас нет обязательных прав доступа для просмотра этого контента.</target>
       </trans-unit>
       <trans-unit id="NxktSEx" resname="Job info">
         <source>Job info</source>
@@ -71,7 +71,7 @@
       </trans-unit>
       <trans-unit id="BTQ_mEU" resname="finished">
         <source>finished</source>
-        <target state="needs-translation">finished</target>
+        <target state="translated">законченный</target>
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="translated">Нет</target>
       </trans-unit>
       <trans-unit id="7DckhU_" resname="No showing">
         <source>No showing</source>
