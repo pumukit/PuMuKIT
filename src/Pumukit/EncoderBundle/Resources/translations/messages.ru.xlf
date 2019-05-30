@@ -27,15 +27,15 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Статус</target>
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Мм</target>
       </trans-unit>
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
@@ -91,11 +91,11 @@
       </trans-unit>
       <trans-unit id="5GTGYFq" resname="RETRY">
         <source>RETRY</source>
-        <target state="needs-translation">RETRY</target>
+        <target state="translated">ПОВТОРИТЬ</target>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
-        <target state="needs-translation">DELETE</target>
+        <target state="translated">УДАЛИТЬ</target>
       </trans-unit>
       <trans-unit id="Lxeg_NU" resname="Jobs">
         <source>Jobs</source>
@@ -159,7 +159,7 @@
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
-        <target state="needs-translation">Error</target>
+        <target state="translated">Ошибка</target>
       </trans-unit>
       <trans-unit id="XZoXy3C" resname="jobs">
         <source>jobs</source>
