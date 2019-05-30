@@ -15,7 +15,7 @@
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target state="needs-translation">SERIES</target>
+        <target state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="ZbL57DM" resname="VIDEO">
         <source>VIDEO</source>
@@ -311,7 +311,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Series</target>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
@@ -319,7 +319,7 @@
       </trans-unit>
       <trans-unit id="ZI.xJ3." resname="ERROR!!">
         <source>ERROR!!</source>
-        <target state="needs-translation">ERROR!!</target>
+        <target state="translated">ERROR!!</target>
       </trans-unit>
       <trans-unit id="X9RxnLY" resname="There was an error:">
         <source>There was an error:</source>
@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estado</target>
       </trans-unit>
     </body>
   </file>
