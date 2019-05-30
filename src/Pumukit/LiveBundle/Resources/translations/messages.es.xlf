@@ -119,7 +119,7 @@
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
@@ -163,7 +163,7 @@
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target state="needs-translation">Live chat</target>
+        <target state="translated">Chat en vivo</target>
       </trans-unit>
     </body>
   </file>
