@@ -91,7 +91,10 @@
       </trans-unit>
       <trans-unit id="5GTGYFq" resname="RETRY">
         <source>RETRY</source>
-        <target state="translated">REINTENTO</target>
+        <target state="translated">REINTENTAR</target>
+        <alt-trans>
+          <target>REINTENTO</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
@@ -103,7 +106,10 @@
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="translated">Tareas</target>
+        <target state="translated">No</target>
+        <alt-trans>
+          <target>Tareas</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="7DckhU_" resname="No showing">
         <source>No showing</source>
