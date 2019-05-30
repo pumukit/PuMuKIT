@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
-        <target state="translated">DATE</target>
+        <target state="needs-translation">DATE</target>
       </trans-unit>
       <trans-unit id="WIhnXZm" resname="TIME">
         <source>TIME</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
-        <target state="translated">Date</target>
+        <target state="needs-translation">Date</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
@@ -163,7 +163,7 @@
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target>Live chat</target>
+        <target state="needs-translation">Live chat</target>
       </trans-unit>
     </body>
   </file>

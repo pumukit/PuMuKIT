@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="w22Bnnv" resname="Use">
         <source>Use</source>
-        <target>Uso</target>
+        <target state="translated">Uso</target>
       </trans-unit>
       <trans-unit id="cXVRejc" resname="or">
         <source>or</source>
-        <target>o</target>
+        <target state="translated">o</target>
       </trans-unit>
       <trans-unit id="Rz7eYBN" resname="to improve your experience in watching recorded lectures">
         <source>to improve your experience in watching recorded lectures</source>
@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="sf.a06d" resname="Web explorers with HTML5 and h.264 codec video support">
         <source>Web explorers with HTML5 and h.264 codec video support</source>
-        <target>Navegadores web con soporte para los codecs HTML5 y h.264</target>
+        <target state="translated">Navegadores web con soporte para los codecs HTML5 y h.264</target>
       </trans-unit>
       <trans-unit id="9XsilUM" resname="Use &lt;a href=&quot;https://www.google.com/intl/es/chrome/browser/?hl=es&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Google Chrome&lt;/a&gt; or &lt;a href=&quot;http://www.apple.com/es/safari/&quot; target=&quot;_blank&quot; style=&quot;color: #FFF;&quot;&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures">
         <source>Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; or &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; to improve your experience in watching recorded lectures</source>
-        <target state="translated"><![CDATA[Use <a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;">Google Chrome</a> o <a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;">Safari</a> para mejorar su experiencia durante el visionado de conferencias]]></target>
+        <target state="translated">Use &lt;a href="https://www.google.com/intl/es/chrome/browser/?hl=es" target="_blank" style="color: #FFF;"&gt;Google Chrome&lt;/a&gt; o &lt;a href="http://www.apple.com/es/safari/" target="_blank" style="color: #FFF;"&gt;Safari&lt;/a&gt; para mejorar su experiencia durante el visionado de conferencias</target>
       </trans-unit>
     </body>
   </file>

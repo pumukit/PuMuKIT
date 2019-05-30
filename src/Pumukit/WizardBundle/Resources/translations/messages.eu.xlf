@@ -47,11 +47,11 @@
       </trans-unit>
       <trans-unit id="cBQgXdI" resname="Upload another video">
         <source>Upload another video</source>
-        <target>Beste bideo bat igo</target>
+        <target state="translated">Beste bideo bat igo</target>
       </trans-unit>
       <trans-unit id="sAPKPpm" resname="Upload another Multimedia Object in same Series">
         <source>Upload another Multimedia Object in same Series</source>
-        <target state="translated">Seriera bestes Multimedia Objetu bat igo </target>
+        <target state="translated">Seriera bestes Multimedia Objetu bat igo</target>
       </trans-unit>
       <trans-unit id="GXZu1sy" resname="Cancel">
         <source>Cancel</source>
@@ -299,7 +299,7 @@
       </trans-unit>
       <trans-unit id="COpQaKq" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target state="translated">Ezin dira   %max_filesize% baino handiagoak diren bideoak igo. Atarira bideoak igotzeko gomendatzen den bideo erresoluzioa 4:3koa edo 16:9koa da. </target>
+        <target state="translated">Ezin dira   %max_filesize% baino handiagoak diren bideoak igo. Atarira bideoak igotzeko gomendatzen den bideo erresoluzioa 4:3koa edo 16:9koa da.</target>
       </trans-unit>
       <trans-unit id="WyeFaHz" resname="Empty title">
         <source>Empty title</source>
@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>Status</target>
+        <target state="needs-translation">Status</target>
       </trans-unit>
     </body>
   </file>

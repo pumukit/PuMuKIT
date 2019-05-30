@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="uX6x6RT" resname="Pending jobs (paused &amp; waiting)">
         <source>Pending jobs (paused &amp; waiting)</source>
-        <target state="translated"><![CDATA[Tarefas pendentes (pausadas & agardando)]]></target>
+        <target state="translated">Tarefas pendentes (pausadas &amp; agardando)</target>
       </trans-unit>
       <trans-unit id="IhosPrb" resname="Executing jobs">
         <source>Executing jobs</source>
@@ -171,11 +171,11 @@
       </trans-unit>
       <trans-unit id="NpPnkTp" resname="Encoder">
         <source>Encoder</source>
-        <target state="needs-translation">Encoder</target>
+        <target state="translated">Codificador</target>
       </trans-unit>
       <trans-unit id="RRKgQYP" resname="This cpu only executes jobs from the following profiles:">
         <source>This cpu only executes jobs from the following profiles:</source>
-        <target state="needs-translation">This cpu only executes jobs from the following profiles:</target>
+        <target state="translated">Esta cpu só executa traballos dos seguintes perfiles:</target>
       </trans-unit>
     </body>
   </file>

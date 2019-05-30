@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -19,11 +19,11 @@
       </trans-unit>
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
-        <target>Inicio de sesión</target>
+        <target state="translated">Inicio de sesión</target>
       </trans-unit>
       <trans-unit id="4XUQNaU" resname="login to search for">
         <source>login to search for</source>
-        <target>iniciar sesión para buscar</target>
+        <target state="translated">iniciar sesión para buscar</target>
       </trans-unit>
       <trans-unit id="3VrOngG" resname="working">
         <source>working</source>

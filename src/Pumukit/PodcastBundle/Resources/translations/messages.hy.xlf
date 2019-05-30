@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hy-AM" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="iRi6XXq" resname="Podcast info For Multimedia Object:">
+        <source>Podcast info For Multimedia Object:</source>
+        <target state="needs-translation">Podcast info For Multimedia Object:</target>
+      </trans-unit>
+      <trans-unit id="kg5BPH1" resname="Status">
+        <source>Status</source>
+        <target state="needs-translation">Status</target>
+      </trans-unit>
+      <trans-unit id="EBpIBDL" resname="Not published on PodcastEDU/iTunesU.">
+        <source>Not published on PodcastEDU/iTunesU.</source>
+        <target state="needs-translation">Not published on PodcastEDU/iTunesU.</target>
+      </trans-unit>
+      <trans-unit id="oxi14Qd" resname="WARNING, Not video tracks with">
+        <source>WARNING, Not video tracks with</source>
+        <target state="needs-translation">WARNING, Not video tracks with</target>
+      </trans-unit>
+      <trans-unit id="wI.JpGF" resname="WARNING, Not audio tracks with">
+        <source>WARNING, Not audio tracks with</source>
+        <target state="needs-translation">WARNING, Not audio tracks with</target>
+      </trans-unit>
+      <trans-unit id="LvQuwh2" resname="Published">
+        <source>Published</source>
+        <target state="needs-translation">Published</target>
+      </trans-unit>
+      <trans-unit id="eRn553e" resname="Podcast info For Series:">
+        <source>Podcast info For Series:</source>
+        <target state="needs-translation">Podcast info For Series:</target>
+      </trans-unit>
+      <trans-unit id="3tB7c9g" resname="It downloads and subscribes to an audio-only podcasts of this series.">
+        <source>It downloads and subscribes to an audio-only podcasts of this series.</source>
+        <target state="needs-translation">It downloads and subscribes to an audio-only podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id=".19D.92" resname="Audio POD">
+        <source>Audio POD</source>
+        <target state="needs-translation">Audio POD</target>
+      </trans-unit>
+      <trans-unit id="f8RqpkC" resname="Subscribe to this series podcast (requires iTunes)">
+        <source>Subscribe to this series podcast (requires iTunes)</source>
+        <target state="needs-translation">Subscribe to this series podcast (requires iTunes)</target>
+      </trans-unit>
+      <trans-unit id="BaeZGD3" resname="It downloads and subscribes to the full video podcasts of this series.">
+        <source>It downloads and subscribes to the full video podcasts of this series.</source>
+        <target state="needs-translation">It downloads and subscribes to the full video podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id="keTiCIy" resname="Video POD">
+        <source>Video POD</source>
+        <target state="needs-translation">Video POD</target>
+      </trans-unit>
+      <trans-unit id="OO3T4j2" resname="It downloads and subscribes to the video and audio podcasts of this series.">
+        <source>It downloads and subscribes to the video and audio podcasts of this series.</source>
+        <target state="needs-translation">It downloads and subscribes to the video and audio podcasts of this series.</target>
+      </trans-unit>
+      <trans-unit id="6BPh_z7" resname="All POD">
+        <source>All POD</source>
+        <target state="needs-translation">All POD</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

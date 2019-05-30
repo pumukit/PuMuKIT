@@ -107,23 +107,23 @@
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
-        <target state="needs-translation">days</target>
+        <target state="translated">días</target>
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
-        <target state="needs-translation">Content</target>
+        <target state="translated">Contido</target>
       </trans-unit>
       <trans-unit id="ZYNLahi" resname="Obsolete browser">
         <source>Obsolete browser</source>
-        <target state="needs-translation">Obsolete browser</target>
+        <target state="translated">Navegador obsoleto</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="2SnrnwG" resname="Media Thumbnail">
         <source>Media Thumbnail</source>
-        <target state="needs-translation">Media Thumbnail</target>
+        <target state="translated">Miniatura</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
@@ -131,11 +131,11 @@
       </trans-unit>
       <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
-        <target state="needs-translation">email send</target>
+        <target state="translated">email enviado</target>
       </trans-unit>
       <trans-unit id="TPzY.dq" resname="please verify form data">
         <source>please verify form data</source>
-        <target state="needs-translation">please verify form data</target>
+        <target state="translated">por favor verifique os datos do formulario</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
@@ -159,11 +159,11 @@
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target state="needs-translation">Chat icon</target>
+        <target state="translated">Icono do chat</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target>Live chat</target>
+        <target state="translated">Chat en directo</target>
       </trans-unit>
     </body>
   </file>

@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="translated">reset</target>
+        <target state="needs-translation">reset</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
@@ -43,11 +43,11 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="translated">Id</target>
+        <target state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="translated">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="translated">OK</target>
+        <target state="needs-translation">OK</target>
       </trans-unit>
       <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="CscPjL9" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target>i18n.one.Series</target>
+        <target state="needs-translation">i18n.one.Series</target>
       </trans-unit>
     </body>
   </file>
