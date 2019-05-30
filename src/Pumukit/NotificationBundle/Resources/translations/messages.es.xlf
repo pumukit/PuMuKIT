@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">Cpu</target>
       </trans-unit>
       <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
