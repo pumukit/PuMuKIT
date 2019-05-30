@@ -2463,7 +2463,7 @@
       </trans-unit>
       <trans-unit id="3y.zuwr" resname="STREAM">
         <source>STREAM</source>
-        <target state="needs-translation">STREAM</target>
+        <target state="translated">STREAM</target>
       </trans-unit>
       <trans-unit id="MWnOZEK" resname="Technology">
         <source>Technology</source>
@@ -2547,7 +2547,7 @@
       </trans-unit>
       <trans-unit id="SvMvKSS" resname="IFRAME">
         <source>IFRAME</source>
-        <target state="needs-translation">IFRAME</target>
+        <target state="translated">IFRAME</target>
       </trans-unit>
       <trans-unit id="sXY1cJs" resname="Successfully updated groups in User.">
         <source>Successfully updated groups in User.</source>
@@ -2611,7 +2611,7 @@
       </trans-unit>
       <trans-unit id="sLn_JP_" resname="Manual">
         <source>Manual</source>
-        <target state="needs-translation">Manual</target>
+        <target state="translated">Manual</target>
       </trans-unit>
       <trans-unit id="XqGUv5j" resname="Series picture">
         <source>Series picture</source>
@@ -2703,7 +2703,7 @@
       </trans-unit>
       <trans-unit id="k2oWHDk" resname="Editor">
         <source>Editor</source>
-        <target state="needs-translation">Editor</target>
+        <target state="translated">Editor</target>
       </trans-unit>
       <trans-unit id="UUVDL8u" resname="Relations list">
         <source>Relations list</source>
@@ -2759,11 +2759,11 @@
       </trans-unit>
       <trans-unit id="8bdQWvp" resname="Social">
         <source>Social</source>
-        <target state="needs-translation">Social</target>
+        <target state="translated">Social</target>
       </trans-unit>
       <trans-unit id="vNGOrV_" resname="Twitter">
         <source>Twitter</source>
-        <target state="needs-translation">Twitter</target>
+        <target state="translated">Twitter</target>
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
@@ -2796,8 +2796,7 @@
       <trans-unit id="FpAfuZM" resname="Select an&#10; action...">
         <source>Select an
  action...</source>
-        <target state="needs-translation">Select an
- action...</target>
+        <target state="translated">Seleccione una acción...</target>
       </trans-unit>
       <trans-unit id="Fv0AJbm" resname="Create new series of live events">
         <source>Create new series of live events</source>
@@ -3013,7 +3012,7 @@
       </trans-unit>
       <trans-unit id="OEOXHc." resname="ID">
         <source>ID</source>
-        <target state="needs-translation">ID</target>
+        <target state="translated">ID</target>
       </trans-unit>
       <trans-unit id="uBc67J6" resname="Multimedia object ID">
         <source>Multimedia object ID</source>
@@ -3137,7 +3136,7 @@
       </trans-unit>
       <trans-unit id="Nr3mbyi" resname="manual">
         <source>manual</source>
-        <target state="needs-translation">manual</target>
+        <target state="translated">manual</target>
       </trans-unit>
       <trans-unit id="n17fyKD" resname="publication date ascending">
         <source>publication date ascending</source>
@@ -3173,7 +3172,7 @@
       </trans-unit>
       <trans-unit id="R4fq98k" resname="Legal">
         <source>Legal</source>
-        <target state="needs-translation">Legal</target>
+        <target state="translated">Legal</target>
       </trans-unit>
       <trans-unit id="p2zJo2w" resname="Humanities">
         <source>Humanities</source>
@@ -3201,7 +3200,7 @@
       </trans-unit>
       <trans-unit id="nBHDWlo" resname="Videos VOD">
         <source>Videos VOD</source>
-        <target state="needs-translation">Videos VOD</target>
+        <target state="translated">Videos VOD</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
@@ -3601,55 +3600,58 @@
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
-        <target state="needs-translation">Sync metadata for all multimedia objects</target>
+        <target state="translated">Sincronizar metadatos para todos los objetos multimedia</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target state="needs-translation">Select metadata to sync on all multimedia objects of this series</target>
+        <target state="translated">Seleccione metadatos para sincronizar en todos los objetos multimedia de esta serie</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
-        <target state="needs-translation">Sync</target>
+        <target state="translated">Sinc</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="needs-translation">There was an error sync up metadata.</target>
+        <target state="translated">Hubo un error sincronizando metadatos.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="needs-translation">Sync up metadata was successfully.</target>
+        <target state="translated">Sincronización de metadatos realizado con éxito.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
-        <target state="needs-translation">Show</target>
+        <target state="translated">Mostrar</target>
+        <alt-trans>
+          <target>Ver</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target state="needs-translation">Show presenter</target>
+        <target state="translated">Mostrar presentador</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target state="needs-translation">presenter</target>
+        <target state="translated">ponente</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
-        <target state="needs-translation">Show presentation</target>
+        <target state="translated">Ver presentación</target>
       </trans-unit>
       <trans-unit id="v6wxT_." resname="presentation">
         <source>presentation</source>
-        <target state="needs-translation">presentation</target>
+        <target state="translated">presentación</target>
       </trans-unit>
       <trans-unit id="_2ahr06" resname="Original name">
         <source>Original name</source>
-        <target state="needs-translation">Original name</target>
+        <target state="translated">Nombre original</target>
       </trans-unit>
       <trans-unit id="9ShOV_x" resname="No name">
         <source>No name</source>
-        <target state="needs-translation">No name</target>
+        <target state="translated">Sin nombre</target>
       </trans-unit>
       <trans-unit id="rArhFm_" resname="Upload date">
         <source>Upload date</source>
-        <target state="needs-translation">Upload date</target>
+        <target state="translated">Fecha de subida</target>
       </trans-unit>
       <trans-unit id="awFD0Dh" resname="Return">
         <source>Return</source>
@@ -3701,79 +3703,79 @@
       </trans-unit>
       <trans-unit id="4h_TXxH" resname="Copy">
         <source>Copy</source>
-        <target state="needs-translation">Copy</target>
+        <target state="translated">Copiar</target>
       </trans-unit>
       <trans-unit id="j_FHaW_" resname="Translate">
         <source>Translate</source>
-        <target state="needs-translation">Translate</target>
+        <target state="translated">Traducir</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target state="needs-translation">Iframe URL</target>
+        <target state="translated">URL de Iframe</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
-        <target state="needs-translation">Day</target>
+        <target state="translated">Día</target>
       </trans-unit>
       <trans-unit id="MQylA_8" resname="Month">
         <source>Month</source>
-        <target state="needs-translation">Month</target>
+        <target state="translated">Mes</target>
       </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
-        <target state="needs-translation">Num</target>
+        <target state="translated">Num</target>
       </trans-unit>
       <trans-unit id="iTvUpcp" resname="Total Time">
         <source>Total Time</source>
-        <target state="needs-translation">Total Time</target>
+        <target state="translated">Tiempo total</target>
       </trans-unit>
       <trans-unit id="msfeW55" resname="Total Size">
         <source>Total Size</source>
-        <target state="needs-translation">Total Size</target>
+        <target state="translated">Tamaño total</target>
       </trans-unit>
       <trans-unit id="ybPDgkf" resname="Total">
         <source>Total</source>
-        <target state="needs-translation">Total</target>
+        <target state="translated">Total</target>
       </trans-unit>
       <trans-unit id="K2m_11l" resname="Num series">
         <source>Num series</source>
-        <target state="needs-translation">Num series</target>
+        <target state="translated">Num. series</target>
       </trans-unit>
       <trans-unit id="DoL48E_" resname="Num objects">
         <source>Num objects</source>
-        <target state="needs-translation">Num objects</target>
+        <target state="translated">Num. objetos</target>
       </trans-unit>
       <trans-unit id="22fF_E2" resname="Total hours">
         <source>Total hours</source>
-        <target state="needs-translation">Total hours</target>
+        <target state="translated">Horas totales</target>
       </trans-unit>
       <trans-unit id="Uc32slY" resname="Total size">
         <source>Total size</source>
-        <target state="needs-translation">Total size</target>
+        <target state="translated">Tamaño total</target>
       </trans-unit>
       <trans-unit id="ppxN7OF" resname="Storage">
         <source>Storage</source>
-        <target state="needs-translation">Storage</target>
+        <target state="translated">Almacenamiento</target>
       </trans-unit>
       <trans-unit id="XFT.IFz" resname="Numerical ID">
         <source>Numerical ID</source>
-        <target state="needs-translation">Numerical ID</target>
+        <target state="translated">ID numérico</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target state="needs-translation">Series Title</target>
+        <target state="translated">Título de la serie</target>
       </trans-unit>
       <trans-unit id="0lBOUri" resname="catalogue">
         <source>catalogue</source>
-        <target state="needs-translation">catalogue</target>
+        <target state="translated">catálogo</target>
       </trans-unit>
       <trans-unit id="8zto_mL" resname="Please enter your translation:">
         <source>Please enter your translation:</source>
-        <target state="needs-translation">Please enter your translation:</target>
+        <target state="translated">Por favor, introduce tu traducción:</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
-        <target state="needs-translation">Error</target>
+        <target state="translated">Error</target>
       </trans-unit>
     </body>
   </file>
