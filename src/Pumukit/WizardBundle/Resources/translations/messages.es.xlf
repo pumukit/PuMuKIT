@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="r_lWsHJ" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
-        <target>Audio/Vídeo subido correctamente</target>
+        <target state="translated">Audio/Vídeo subido correctamente</target>
       </trans-unit>
       <trans-unit id="x5.NBqq" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
@@ -15,15 +15,15 @@
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target>SERIES</target>
+        <target state="needs-translation">SERIES</target>
       </trans-unit>
       <trans-unit id="ZbL57DM" resname="VIDEO">
         <source>VIDEO</source>
-        <target>VÍDEO</target>
+        <target state="translated">VÍDEO</target>
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
-        <target>FECHA</target>
+        <target state="translated">FECHA</target>
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
@@ -311,7 +311,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="translated">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
@@ -319,7 +319,7 @@
       </trans-unit>
       <trans-unit id="ZI.xJ3." resname="ERROR!!">
         <source>ERROR!!</source>
-        <target state="translated">ERROR!!</target>
+        <target state="needs-translation">ERROR!!</target>
       </trans-unit>
       <trans-unit id="X9RxnLY" resname="There was an error:">
         <source>There was an error:</source>
@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>Status</target>
+        <target state="needs-translation">Status</target>
       </trans-unit>
     </body>
   </file>
