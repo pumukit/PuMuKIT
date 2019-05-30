@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="gQwK6zu" resname="Opencast Importer">
         <source>Opencast Importer</source>
-        <target>Importador de Opencast</target>
+        <target state="translated">Importador de Opencast</target>
       </trans-unit>
       <trans-unit id="2Y7g5fk" resname="ERROR">
         <source>ERROR</source>
-        <target>ERROR</target>
+        <target state="needs-translation">ERROR</target>
       </trans-unit>
       <trans-unit id="LQBPGOH" resname="Execute on the server">
         <source>Execute on the server</source>
-        <target>Ejecutar en el servidor</target>
+        <target state="translated">Ejecutar en el servidor</target>
       </trans-unit>
       <trans-unit id="tIERwQx" resname="where">
         <source>where</source>
-        <target>donde</target>
+        <target state="translated">donde</target>
       </trans-unit>
       <trans-unit id="ScJmuqq" resname="Search">
         <source>Search</source>
-        <target>Buscar</target>
+        <target state="translated">Buscar</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="translated">reset</target>
+        <target state="needs-translation">reset</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
@@ -39,15 +39,15 @@
       </trans-unit>
       <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target state="translated">Img</target>
+        <target state="needs-translation">Img</target>
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="translated">Id</target>
+        <target state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="translated">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="translated">OK</target>
+        <target state="needs-translation">OK</target>
       </trans-unit>
       <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
@@ -155,7 +155,7 @@
       </trans-unit>
       <trans-unit id="CscPjL9" resname="i18n.one.Series">
         <source>i18n.one.Series</source>
-        <target>i18n.one.Series</target>
+        <target state="needs-translation">i18n.one.Series</target>
       </trans-unit>
     </body>
   </file>
