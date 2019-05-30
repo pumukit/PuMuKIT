@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="zh-TW" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="VrVkt1x" resname="Templates">
+        <source>Templates</source>
+        <target state="needs-translation">Templates</target>
+      </trans-unit>
+      <trans-unit id="GP3VSbL" resname="New">
+        <source>New</source>
+        <target state="needs-translation">New</target>
+      </trans-unit>
+      <trans-unit id="8HYsTzv" resname="Are you sure?">
+        <source>Are you sure?</source>
+        <target state="needs-translation">Are you sure?</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Delete">
+        <source>Delete</source>
+        <target state="needs-translation">Delete</target>
+      </trans-unit>
+      <trans-unit id="2u52BrM" resname="Reset">
+        <source>Reset</source>
+        <target state="needs-translation">Reset</target>
+      </trans-unit>
+      <trans-unit id="3Qrnpcv" resname="Save changes">
+        <source>Save changes</source>
+        <target state="needs-translation">Save changes</target>
+      </trans-unit>
+      <trans-unit id="f1_fMrh" resname="No templates">
+        <source>No templates</source>
+        <target state="needs-translation">No templates</target>
+      </trans-unit>
+      <trans-unit id="Gyk1v1d" resname="Access Templates section">
+        <source>Access Templates section</source>
+        <target state="needs-translation">Access Templates section</target>
+      </trans-unit>
+      <trans-unit id="7EYXAPJ" resname="Edit Templates">
+        <source>Edit Templates</source>
+        <target state="needs-translation">Edit Templates</target>
+      </trans-unit>
+      <trans-unit id="FwMioy8" resname="Info">
+        <source>Info</source>
+        <target state="needs-translation">Info</target>
+      </trans-unit>
+      <trans-unit id="z3AXMYV" resname="Warning: This link will give a 404 error while this template is hide.">
+        <source>Warning: This link will give a 404 error while this template is hide.</source>
+        <target state="needs-translation">Warning: This link will give a 404 error while this template is hide.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
