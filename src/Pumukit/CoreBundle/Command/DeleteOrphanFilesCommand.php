@@ -85,7 +85,7 @@ EOT
     /**
      * @param OutputInterface $output
      * @param DocumentManager $documentManager
-     * @param                 $path
+     * @param string          $path
      */
     private function findFilesOfPath(OutputInterface $output, DocumentManager $documentManager, $path)
     {
@@ -113,7 +113,7 @@ EOT
 
     /**
      * @param DocumentManager $documentManager
-     * @param                 $filePath
+     * @param string          $filePath
      *
      * @return bool
      */
@@ -161,7 +161,7 @@ EOT
 
     /**
      * @param OutputInterface $output
-     * @param                 $directoryPath
+     * @param string          $directoryPath
      */
     private function isEmptyDirectory(OutputInterface $output, $directoryPath)
     {

@@ -164,7 +164,7 @@ EOT
 
     /**
      * @param DocumentManager $documentManager
-     * @param                 $type
+     * @param string          $type
      *
      * @return bool
      *
@@ -193,7 +193,7 @@ EOT
 
     /**
      * @param OutputInterface $output
-     * @param                 $message
+     * @param string          $message
      */
     private function showMessage(OutputInterface $output, $message)
     {
@@ -203,7 +203,7 @@ EOT
     /**
      * @param DocumentManager  $documentManager
      * @param MultimediaObject $multimediaObject
-     * @param                  $type
+     * @param string           $type
      *
      * @throws \Exception
      */
@@ -224,8 +224,8 @@ EOT
 
     /**
      * @param DocumentManager $documentManager
-     * @param                 $elements
-     * @param                 $type
+     * @param iterable        $elements
+     * @param string          $type
      */
     private function fixPath(DocumentManager $documentManager, $elements, $type)
     {
@@ -376,7 +376,7 @@ EOT
      *
      * @param DocumentManager $documentManager
      *
-     * @return array|MultimediaObject[]|\Pumukit\SchemaBundle\Document\Role[]
+     * @return array
      */
     private function findPicsWithoutPaths(DocumentManager $documentManager)
     {
@@ -395,7 +395,7 @@ EOT
      *
      * @param DocumentManager $documentManager
      *
-     * @return array|MultimediaObject[]|\Pumukit\SchemaBundle\Document\Role[]
+     * @return array
      */
     private function findMaterialsWithoutPaths(DocumentManager $documentManager)
     {
@@ -479,7 +479,7 @@ EOT
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return bool
      */
@@ -494,8 +494,8 @@ EOT
     }
 
     /**
-     * @param $oldPath
-     * @param $newPath
+     * @param string $oldPath
+     * @param string $newPath
      *
      * @throws \Exception
      */
@@ -515,8 +515,8 @@ EOT
     }
 
     /**
-     * @param $oldPath
-     * @param $newPath
+     * @param string $oldPath
+     * @param string $newPath
      *
      * @return mixed
      */
@@ -553,10 +553,10 @@ EOT
 
     /**
      * @param DocumentManager $documentManager
-     * @param                 $multimediaObjectId
-     * @param                 $oldPath
-     * @param                 $newPath
-     * @param                 $newUrl
+     * @param string          $multimediaObjectId
+     * @param string          $oldPath
+     * @param string          $newPath
+     * @param string          $newUrl
      */
     private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
@@ -576,10 +576,10 @@ EOT
 
     /**
      * @param DocumentManager $documentManager
-     * @param                 $multimediaObjectId
-     * @param                 $oldPath
-     * @param                 $newPath
-     * @param                 $newUrl
+     * @param string          $multimediaObjectId
+     * @param string          $oldPath
+     * @param string          $newPath
+     * @param string          $newUrl
      */
     private function updateMultimediaObjectMaterial(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
@@ -599,8 +599,8 @@ EOT
 
     /**
      * @param OutputInterface $output
-     * @param                 $haveChanges
-     * @param                 $oldDirName
+     * @param bool            $haveChanges
+     * @param string|null     $oldDirName
      *
      * @return bool
      */

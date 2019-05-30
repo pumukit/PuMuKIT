@@ -18,6 +18,10 @@ class VersionController extends Controller implements AdminControllerInterface
     public function indexAction(Request $request)
     {
         $composerLockFile = realpath($this->container->getParameter('kernel.root_dir').'/../composer.lock');
+        if (!$composerLockFile) {
+            throw new \Exception('Error reading composer.lock');
+        }
+
         $composerLock = json_decode(file_get_contents($composerLockFile));
 
         $pumukit = array();
@@ -39,6 +43,9 @@ class VersionController extends Controller implements AdminControllerInterface
     public function infoAction(Request $request)
     {
         $composerLockFile = realpath($this->container->getParameter('kernel.root_dir').'/../composer.lock');
+        if (!$composerLockFile) {
+            throw new \Exception('Error reading composer.lock');
+        }
 
         $composerLock = file_get_contents($composerLockFile);
 

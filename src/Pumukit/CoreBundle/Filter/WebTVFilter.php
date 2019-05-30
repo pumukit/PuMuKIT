@@ -84,7 +84,7 @@ class WebTVFilter extends BsonFilter
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */

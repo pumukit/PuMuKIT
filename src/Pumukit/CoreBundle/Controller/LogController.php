@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class LogController extends Controller implements AdminControllerInterface
 {
     /**
-     * @param $file
+     * @param string $file
      *
      * @return JsonResponse|Response
      *

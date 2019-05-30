@@ -206,17 +206,17 @@ class FilterService
     }
 
     /**
-     * @return object|string|void
+     * @return User|null
      */
     public function checkUserActivateFilter()
     {
         if (!$this->addUserAsPerson) {
-            return;
+            return null;
         }
 
         $loggedInUser = $this->getLoggedInUser();
         if ($loggedInUser && ($loggedInUser->hasRole(PermissionProfile::SCOPE_GLOBAL) || $loggedInUser->hasRole('ROLE_SUPER_ADMIN'))) {
-            return;
+            return null;
         }
 
         return $loggedInUser;
@@ -225,7 +225,7 @@ class FilterService
     /**
      * Get logged in user.
      *
-     * @return object|string|void
+     * @return User|null
      */
     private function getLoggedInUser()
     {
@@ -236,7 +236,7 @@ class FilterService
             }
         }
 
-        return;
+        return null;
     }
 
     /**

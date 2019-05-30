@@ -74,7 +74,7 @@ EOT
         }
 
         if ('IN_CLOSE_WRITE' != $input->getArgument('inotify_event')) {
-            return false;
+            return -1;
         }
         $locale = $this->getContainer()->getParameter('locale');
 
