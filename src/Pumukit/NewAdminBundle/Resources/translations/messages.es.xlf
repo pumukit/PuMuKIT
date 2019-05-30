@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target state="needs-translation">reset</target>
+        <target state="translated">reiniciar</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target state="needs-translation">Img</target>
+        <target state="translated">Img</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="jIzdvYg" resname="min.">
         <source>min.</source>
-        <target state="needs-translation">min.</target>
+        <target state="translated">min.</target>
       </trans-unit>
       <trans-unit id="preRnFs" resname="Select or create any live event.">
         <source>Select or create any live event.</source>
@@ -387,7 +387,7 @@
       </trans-unit>
       <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target state="needs-translation">OK</target>
+        <target state="translated">OK</target>
       </trans-unit>
       <trans-unit id="8iT6pMv" resname="Edit file of multimedia object">
         <source>Edit file of multimedia object</source>
@@ -415,7 +415,7 @@
       </trans-unit>
       <trans-unit id="56JB3rr" resname="URL">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
       </trans-unit>
       <trans-unit id="1AVfr6N" resname="Resolution">
         <source>Resolution</source>
@@ -583,7 +583,7 @@
       </trans-unit>
       <trans-unit id="M.Z9z4s" resname="Multimedia">
         <source>Multimedia</source>
-        <target state="needs-translation">Multimedia</target>
+        <target state="translated">Multimedia</target>
       </trans-unit>
       <trans-unit id="d9YkHEs" resname="Media Edition">
         <source>Media Edition</source>
@@ -779,7 +779,7 @@
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target state="needs-translation">Email</target>
+        <target state="translated">Email</target>
       </trans-unit>
       <trans-unit id="KcuvVWb" resname="Edit Person">
         <source>Edit Person</source>
@@ -811,7 +811,7 @@
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Reiniciar</target>
       </trans-unit>
       <trans-unit id="adcjyWa" resname="Press OK for changes to take effect">
         <source>Press OK for changes to take effect</source>
@@ -1035,7 +1035,7 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="needs-translation">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
       <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
@@ -1043,11 +1043,11 @@
       </trans-unit>
       <trans-unit id="zaFNCy2" resname="INFO">
         <source>INFO</source>
-        <target state="needs-translation">INFO</target>
+        <target state="translated">INFO</target>
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target state="needs-translation">SERIES</target>
+        <target state="translated">SERIES</target>
       </trans-unit>
       <trans-unit id="GyokaI7" resname="Select any person">
         <source>Select any person</source>
@@ -1223,7 +1223,7 @@
       </trans-unit>
       <trans-unit id="aNA2dZe" resname="Id:">
         <source>Id:</source>
-        <target state="needs-translation">Id:</target>
+        <target state="translated">Id:</target>
       </trans-unit>
       <trans-unit id="dZVMX02" resname="Preview:">
         <source>Preview:</source>
@@ -1279,7 +1279,7 @@
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Info</target>
       </trans-unit>
       <trans-unit id="MksTT1f" resname="Preview">
         <source>Preview</source>
@@ -1323,11 +1323,11 @@
       </trans-unit>
       <trans-unit id=".Yjgpj8" resname="Cod">
         <source>Cod</source>
-        <target state="needs-translation">Cod</target>
+        <target state="translated">Cod</target>
       </trans-unit>
       <trans-unit id="wlM3BVR" resname="Roles">
         <source>Roles</source>
-        <target state="needs-translation">Roles</target>
+        <target state="translated">Roles</target>
       </trans-unit>
       <trans-unit id="NOEIwIl" resname="Display">
         <source>Display</source>
@@ -1379,7 +1379,7 @@
       </trans-unit>
       <trans-unit id="HqRCoTS" resname="No">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="translated">No</target>
       </trans-unit>
       <trans-unit id="gwCPg2E" resname="change status of multimedia objects inside the series">
         <source>change status of multimedia objects inside the series</source>
@@ -1503,7 +1503,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Series</target>
       </trans-unit>
       <trans-unit id="PEN92mY" resname="There are no series types with those values.">
         <source>There are no series types with those values.</source>
@@ -1643,11 +1643,11 @@
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="needs-translation">Mm</target>
+        <target state="translated">Mm</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target state="needs-translation">Cpu</target>
+        <target state="translated">Cpu</target>
       </trans-unit>
       <trans-unit id="m7clAFB" resname="Before">
         <source>Before</source>
@@ -2375,7 +2375,7 @@
       </trans-unit>
       <trans-unit id="wDUpbl_" resname="Subseries">
         <source>Subseries</source>
-        <target state="needs-translation">Subseries</target>
+        <target state="translated">Subseries</target>
       </trans-unit>
       <trans-unit id="U_Z_uFz" resname="USERS">
         <source>USERS</source>
