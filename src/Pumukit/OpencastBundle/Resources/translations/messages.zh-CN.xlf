@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="zh-CN" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="gQwK6zu" resname="Opencast Importer">
+        <source>Opencast Importer</source>
+        <target state="translated">Opencast 傳輸</target>
+      </trans-unit>
+      <trans-unit id="2Y7g5fk" resname="ERROR">
+        <source>ERROR</source>
+        <target state="translated">錯誤</target>
+      </trans-unit>
+      <trans-unit id="LQBPGOH" resname="Execute on the server">
+        <source>Execute on the server</source>
+        <target state="translated">在伺服器上執行</target>
+      </trans-unit>
+      <trans-unit id="tIERwQx" resname="where">
+        <source>where</source>
+        <target state="translated">在哪裡</target>
+      </trans-unit>
+      <trans-unit id="ScJmuqq" resname="Search">
+        <source>Search</source>
+        <target state="translated">搜尋</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target state="translated">名稱</target>
+      </trans-unit>
+      <trans-unit id="Ab4wu0o" resname="reset">
+        <source>reset</source>
+        <target state="translated">重設</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target state="translated">篩選器</target>
+      </trans-unit>
+      <trans-unit id="Vlmffir" resname="Img">
+        <source>Img</source>
+        <target state="needs-translation">Img</target>
+      </trans-unit>
+      <trans-unit id="EhVukhv" resname="Id">
+        <source>Id</source>
+        <target state="translated">編號</target>
+      </trans-unit>
+      <trans-unit id="qCleCP9" resname="Series">
+        <source>Series</source>
+        <target state="translated">系列</target>
+      </trans-unit>
+      <trans-unit id="T8UqPEx" resname="Duration">
+        <source>Duration</source>
+        <target state="translated">持續時間</target>
+      </trans-unit>
+      <trans-unit id="mcQKtAW" resname="Date">
+        <source>Date</source>
+        <target state="translated">日期：</target>
+      </trans-unit>
+      <trans-unit id="BHN8L4F" resname="There are no mediapackages with those values.">
+        <source>There are no mediapackages with those values.</source>
+        <target state="translated">沒有與這些值相同的媒體包。</target>
+      </trans-unit>
+      <trans-unit id="XNGPYDz" resname="play in opencast">
+        <source>play in opencast</source>
+        <target state="translated">使用Opencast撥放</target>
+      </trans-unit>
+      <trans-unit id="Q25hAW4" resname="Play">
+        <source>Play</source>
+        <target state="translated">開始</target>
+      </trans-unit>
+      <trans-unit id="436CDnO" resname="View on Pumukit">
+        <source>View on Pumukit</source>
+        <target state="translated">在 Pumukit 上瀏覽</target>
+      </trans-unit>
+      <trans-unit id="Mh8XnIC" resname="Imported">
+        <source>Imported</source>
+        <target state="translated">已匯入</target>
+      </trans-unit>
+      <trans-unit id="LP_bqr9" resname="Import">
+        <source>Import</source>
+        <target state="translated">匯入</target>
+      </trans-unit>
+      <trans-unit id="PAWgkpr" resname="Import inverted">
+        <source>Import inverted</source>
+        <target state="needs-translation">Import inverted</target>
+      </trans-unit>
+      <trans-unit id="GXZu1sy" resname="Cancel">
+        <source>Cancel</source>
+        <target state="translated">取消</target>
+      </trans-unit>
+      <trans-unit id="c.hOhIO" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
+        <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
+        <target state="translated">{0} 使用者 |{1} mediaPackages |]1，Inf] 媒體包</target>
+      </trans-unit>
+      <trans-unit id="uQjDk6r" resname="Cancel current search">
+        <source>Cancel current search</source>
+        <target state="translated">取消當前搜索</target>
+      </trans-unit>
+      <trans-unit id="tUVjur1" resname="Cancel search">
+        <source>Cancel search</source>
+        <target state="translated">取消搜索</target>
+      </trans-unit>
+      <trans-unit id="tnyLS2m" resname="Edit Opencast file of multimedia object">
+        <source>Edit Opencast file of multimedia object</source>
+        <target state="translated">編輯多媒體物件的opencast檔</target>
+      </trans-unit>
+      <trans-unit id="JyToKKj" resname="File info of multimedia object">
+        <source>File info of multimedia object</source>
+        <target state="translated">多媒體物件的檔案資訊</target>
+      </trans-unit>
+      <trans-unit id="EaAlxnm" resname="Capture frame from">
+        <source>Capture frame from</source>
+        <target state="needs-translation">Capture frame from</target>
+      </trans-unit>
+      <trans-unit id="XtfaAeR" resname="Transcode to profile">
+        <source>Transcode to profile</source>
+        <target state="translated">轉碼到設定檔</target>
+      </trans-unit>
+      <trans-unit id="iAm2glF" resname="Opencast Recording">
+        <source>Opencast Recording</source>
+        <target state="needs-translation">Opencast Recording</target>
+      </trans-unit>
+      <trans-unit id="OhTMa7h" resname="opencast track info">
+        <source>opencast track info</source>
+        <target state="translated">opencast 的資訊</target>
+      </trans-unit>
+      <trans-unit id="0yYyluM" resname="URLs for images">
+        <source>URLs for images</source>
+        <target state="translated">圖像的 Url</target>
+      </trans-unit>
+      <trans-unit id="nvB3oSM" resname="Presenter">
+        <source>Presenter</source>
+        <target state="translated">演講者</target>
+      </trans-unit>
+      <trans-unit id="XV7hV3U" resname="Presentation">
+        <source>Presentation</source>
+        <target state="translated">展示</target>
+      </trans-unit>
+      <trans-unit id="VlM5vE0" resname="OK">
+        <source>OK</source>
+        <target state="translated">確認</target>
+      </trans-unit>
+      <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
+        <source>update Opencast track of Multimedia Object</source>
+        <target state="translated">更新多媒體物件的檔案資訊</target>
+      </trans-unit>
+      <trans-unit id="rSgp7EK" resname="Track successfully updated.">
+        <source>Track successfully updated.</source>
+        <target state="translated">已成功更新的影音資訊。</target>
+      </trans-unit>
+      <trans-unit id="MKllK6J" resname="{0} Media Packages |{1} Media Package|]1,Inf] Media Packages">
+        <source>{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</source>
+        <target state="needs-translation">{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</target>
+      </trans-unit>
+      <trans-unit id="CscPjL9" resname="i18n.one.Series">
+        <source>i18n.one.Series</source>
+        <target state="needs-translation">i18n.one.Series</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
