@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="es-ES" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="iRi6XXq" resname="Podcast info For Multimedia Object:">
         <source>Podcast info For Multimedia Object:</source>
-        <target>Información de podcast para el Objeto Multimedia:</target>
+        <target state="translated">Información de podcast para el Objeto Multimedia:</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>Estado</target>
+        <target state="translated">Estado</target>
       </trans-unit>
       <trans-unit id="EBpIBDL" resname="Not published on PodcastEDU/iTunesU.">
         <source>Not published on PodcastEDU/iTunesU.</source>
-        <target>No publicado en PodcastEDU/iTunesU.</target>
+        <target state="translated">No publicado en PodcastEDU/iTunesU.</target>
       </trans-unit>
       <trans-unit id="oxi14Qd" resname="WARNING, Not video tracks with">
         <source>WARNING, Not video tracks with</source>
-        <target>ADVERTENCIA, no hay pistas de vídeo con</target>
+        <target state="translated">ADVERTENCIA, no hay pistas de vídeo con</target>
       </trans-unit>
       <trans-unit id="wI.JpGF" resname="WARNING, Not audio tracks with">
         <source>WARNING, Not audio tracks with</source>
-        <target>ADVERTENCIA, no hay pistas de audio con</target>
+        <target state="translated">ADVERTENCIA, no hay pistas de audio con</target>
       </trans-unit>
       <trans-unit id="LvQuwh2" resname="Published">
         <source>Published</source>
@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id=".19D.92" resname="Audio POD">
         <source>Audio POD</source>
-        <target state="translated">Audio POD</target>
+        <target state="needs-translation">Audio POD</target>
       </trans-unit>
       <trans-unit id="f8RqpkC" resname="Subscribe to this series podcast (requires iTunes)">
         <source>Subscribe to this series podcast (requires iTunes)</source>
