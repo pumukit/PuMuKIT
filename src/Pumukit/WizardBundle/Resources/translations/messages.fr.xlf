@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
-        <target state="translated">DATE</target>
+        <target state="needs-translation">DATE</target>
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target state="translated">Description</target>
+        <target state="needs-translation">Description</target>
       </trans-unit>
       <trans-unit id="ODzWwLh" resname="Subtitle">
         <source>Subtitle</source>
@@ -271,7 +271,7 @@
       </trans-unit>
       <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
-        <target state="translated">Tag</target>
+        <target state="needs-translation">Tag</target>
       </trans-unit>
       <trans-unit id="5fZBzo5" resname="Select a tag...">
         <source>Select a tag...</source>
@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target>Status</target>
+        <target state="needs-translation">Status</target>
       </trans-unit>
     </body>
   </file>
