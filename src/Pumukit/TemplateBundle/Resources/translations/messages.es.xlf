@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="2u52BrM" resname="Reset">
         <source>Reset</source>
-        <target state="needs-translation">Reset</target>
+        <target state="translated">Reiniciar</target>
       </trans-unit>
       <trans-unit id="3Qrnpcv" resname="Save changes">
         <source>Save changes</source>
@@ -43,11 +43,11 @@
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Info</target>
       </trans-unit>
       <trans-unit id="z3AXMYV" resname="Warning: This link will give a 404 error while this template is hide.">
         <source>Warning: This link will give a 404 error while this template is hide.</source>
-        <target state="needs-translation">Warning: This link will give a 404 error while this template is hide.</target>
+        <target state="translated">Advertencia: Este enlace dará un error 404 mientras que esta plantilla esté oculta.</target>
       </trans-unit>
     </body>
   </file>
