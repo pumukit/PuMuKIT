@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="bnUjEOx" resname="Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.">
         <source>Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.</source>
-        <target>Ezin da bideoa id batera %videoId% ezabatzeko. %JobsCount% lanpostu exekutatzean ditu.</target>
+        <target state="translated">Ezin da bideoa id batera %videoId% ezabatzeko. %JobsCount% lanpostu exekutatzean ditu.</target>
       </trans-unit>
     </body>
   </file>
