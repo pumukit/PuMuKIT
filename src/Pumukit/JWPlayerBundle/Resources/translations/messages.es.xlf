@@ -15,7 +15,10 @@
       </trans-unit>
       <trans-unit id="Rz7eYBN" resname="to improve your experience in watching recorded lectures">
         <source>to improve your experience in watching recorded lectures</source>
-        <target state="translated">para mejorar su experiencia durante la visualización de conferencias</target>
+        <target state="translated">para mejorar su experiencia durante la visualización de clases grabadas</target>
+        <alt-trans>
+          <target>para mejorar su experiencia durante la visualización de conferencias</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="sf.a06d" resname="Web explorers with HTML5 and h.264 codec video support">
         <source>Web explorers with HTML5 and h.264 codec video support</source>
