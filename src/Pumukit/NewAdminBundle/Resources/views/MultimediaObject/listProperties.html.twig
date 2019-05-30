@@ -14,6 +14,19 @@
                 </script>
             {% endautoescape %}
         </div>
+        <br />
+        <h3>{% trans %}Stats{% endtrans %}</h3>
+        <div class="form-group">
+            <ul class="list-unstyled">
+                <li>
+                    <strong>{% trans %}Viewed{% endtrans %}:</strong>
+                    {{ multimediaObject.numview|default(0) }}
+                    {% transchoice multimediaObject.getNumview() %}
+                        {0}times|{1}time|]1,Inf]times
+                    {% endtranschoice %}
+                </li>
+            </ul>
+        </div>
     </fieldset>
     <div class="modal-footer">
         <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
