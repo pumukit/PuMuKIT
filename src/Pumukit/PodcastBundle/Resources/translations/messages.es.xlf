@@ -55,7 +55,10 @@
       </trans-unit>
       <trans-unit id="OO3T4j2" resname="It downloads and subscribes to the video and audio podcasts of this series.">
         <source>It downloads and subscribes to the video and audio podcasts of this series.</source>
-        <target state="translated">Se descarga y se suscribe a los podcasts de vídeo y audio de esta serie.</target>
+        <target state="translated">Descargarse y suscribirse a los podcasts de vídeo y audio de esta serie.</target>
+        <alt-trans>
+          <target>Se descarga y se suscribe a los podcasts de vídeo y audio de esta serie.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="6BPh_z7" resname="All POD">
         <source>All POD</source>
