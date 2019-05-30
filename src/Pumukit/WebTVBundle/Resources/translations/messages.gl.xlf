@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="Rks8nO0" resname="PuMuKIT">
         <source>PuMuKIT</source>
-        <target state="translated">PuMuKIT</target>
+        <target state="needs-translation">PuMuKIT</target>
       </trans-unit>
       <trans-unit id="oByF8Cc" resname="PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.">
         <source>PuMuKIT (PUblicador MUltimedia en KIT) permite publicar vía Internet los contenidos audiovisuales producidos en una Institución, Universidad, etc..  PuMuKIT publica los contenidos multimedia almacenados en su base de datos de dos modos diferentes: Generando un portal WEB, una WEB-TV y creando flujos RSS compatibles ARCA.</source>
@@ -71,7 +71,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="translated">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
       <trans-unit id="yaljlGP" resname="Videos">
         <source>Videos</source>
@@ -255,11 +255,11 @@
       </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
-        <target state="translated">URL:</target>
+        <target state="needs-translation">URL:</target>
       </trans-unit>
       <trans-unit id="Qw_p6ul" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target state="translated">IFRAME:</target>
+        <target state="needs-translation">IFRAME:</target>
       </trans-unit>
       <trans-unit id="pP5lJk7" resname="Language">
         <source>Language</source>
@@ -363,7 +363,7 @@
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target state="translated">Email</target>
+        <target state="needs-translation">Email</target>
       </trans-unit>
       <trans-unit id="fWDZgc4" resname="Search by multimedia objects">
         <source>Search by multimedia objects</source>
@@ -523,7 +523,7 @@
       </trans-unit>
       <trans-unit id="Z0fvRV9" resname="Health &amp; Medicine">
         <source>Health &amp; Medicine</source>
-        <target state="needs-translation"><![CDATA[Health & Medicine]]></target>
+        <target state="needs-translation">Health &amp; Medicine</target>
       </trans-unit>
       <trans-unit id="t4wWGP2" resname="Law">
         <source>Law</source>
@@ -531,7 +531,7 @@
       </trans-unit>
       <trans-unit id="HPPfeB0" resname="Social Matters &amp; Education">
         <source>Social Matters &amp; Education</source>
-        <target state="needs-translation"><![CDATA[Social Matters & Education]]></target>
+        <target state="needs-translation">Social Matters &amp; Education</target>
       </trans-unit>
       <trans-unit id="GnUpqxT" resname="Subjects">
         <source>Subjects</source>
@@ -571,135 +571,139 @@
       </trans-unit>
       <trans-unit id="iCgsLsi" resname="Most viewed on the last month">
         <source>Most viewed on the last month</source>
-        <target>Mais vistos no último mes</target>
+        <target state="translated">Mais vistos no último mes</target>
       </trans-unit>
       <trans-unit id="wodtiBE" resname="Hightlight">
         <source>Hightlight</source>
-        <target>Destacados</target>
+        <target state="translated">Destacados</target>
       </trans-unit>
       <trans-unit id="9cm9ExS" resname="Show more">
         <source>Show more</source>
-        <target>Ver máis</target>
+        <target state="translated">Ver máis</target>
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
-        <target>Event pic</target>
+        <target state="needs-translation">Event pic</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
-        <target>Menu</target>
+        <target state="needs-translation">Menu</target>
       </trans-unit>
       <trans-unit id="MIUxXxN" resname="Sort by date">
         <source>Sort by date</source>
-        <target>Sort by date</target>
+        <target state="needs-translation">Sort by date</target>
       </trans-unit>
       <trans-unit id="OqwCASq" resname="Sort alphabetically">
         <source>Sort alphabetically</source>
-        <target>Sort alphabetically</target>
+        <target state="needs-translation">Sort alphabetically</target>
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
-        <target>Powered by</target>
+        <target state="needs-translation">Powered by</target>
       </trans-unit>
       <trans-unit id="OEjvXg." resname="Full catalogue">
         <source>Full catalogue</source>
-        <target>Full catalogue</target>
+        <target state="needs-translation">Full catalogue</target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target>License</target>
+        <target state="needs-translation">License</target>
       </trans-unit>
       <trans-unit id="J.EVWdm" resname="There are no multimedia objects">
         <source>There are no multimedia objects</source>
-        <target>There are no multimedia objects</target>
+        <target state="needs-translation">There are no multimedia objects</target>
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target>Url track</target>
+        <target state="needs-translation">Url track</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
-        <target>Edit multimedia object</target>
+        <target state="needs-translation">Edit multimedia object</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
-        <target>Live</target>
+        <target state="needs-translation">Live</target>
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target>The event has not been held yet</target>
+        <target state="needs-translation">The event has not been held yet</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target>The event has already been held</target>
+        <target state="needs-translation">The event has already been held</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
-        <target>days</target>
+        <target state="needs-translation">days</target>
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target>There aren't events at this moment</target>
+        <target state="needs-translation">There aren't events at this moment</target>
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
-        <target>Current live event</target>
+        <target state="needs-translation">Current live event</target>
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
-        <target>Next live event</target>
+        <target state="needs-translation">Next live event</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target>Event</target>
+        <target state="needs-translation">Event</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target>Place</target>
+        <target state="needs-translation">Place</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target>Time</target>
+        <target state="needs-translation">Time</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target>JWPlayer does not support your browser version</target>
+        <target state="needs-translation">JWPlayer does not support your browser version</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target>Please use 9.0 or higher version or use another browser.</target>
+        <target state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target>Live chat</target>
+        <target state="needs-translation">Live chat</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target>Chat icon</target>
+        <target state="needs-translation">Chat icon</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target>Name</target>
+        <target state="needs-translation">Name</target>
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target>Name cannot be empty</target>
+        <target state="needs-translation">Name cannot be empty</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target>Message</target>
+        <target state="needs-translation">Message</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target>Sorry but there was an error</target>
+        <target state="needs-translation">Sorry but there was an error</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target>Event chat</target>
+        <target state="needs-translation">Event chat</target>
+      </trans-unit>
+      <trans-unit id="DKsclhd" resname="video">
+        <source>video</source>
+        <target state="needs-translation">video</target>
       </trans-unit>
     </body>
   </file>
