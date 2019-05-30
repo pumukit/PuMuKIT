@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="_XTjOlq" resname="To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
         <source>To use the inbox mode define the inbox path as &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
-        <target state="translated"><![CDATA[Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro <code>pumukit.inbox</code> en su archivo de configuración.]]></target>
+        <target state="translated">Para utilizar el modo de bandeja de entrada, defina la ruta de la bandeja de entrada como parámetro &lt;code&gt;pumukit.inbox&lt;/code&gt; en su archivo de configuración.</target>
       </trans-unit>
       <trans-unit id="5V8Ndup" resname="not exists">
         <source>not exists</source>
@@ -575,7 +575,7 @@
       </trans-unit>
       <trans-unit id="Hhnvc4L" resname="Owners &amp; Groups">
         <source>Owners &amp; Groups</source>
-        <target state="translated"><![CDATA[Jabeak & Taldeak]]></target>
+        <target state="translated">Jabeak &amp; Taldeak</target>
       </trans-unit>
       <trans-unit id="fbIIlwU" resname="People">
         <source>People</source>
@@ -583,7 +583,7 @@
       </trans-unit>
       <trans-unit id="M.Z9z4s" resname="Multimedia">
         <source>Multimedia</source>
-        <target state="translated">Multimedia</target>
+        <target state="needs-translation">Multimedia</target>
       </trans-unit>
       <trans-unit id="d9YkHEs" resname="Media Edition">
         <source>Media Edition</source>
@@ -727,7 +727,7 @@
       </trans-unit>
       <trans-unit id="t00dckA" resname="Mm. Obj.">
         <source>Mm. Obj.</source>
-        <target state="translated">Mm. Obj.</target>
+        <target state="needs-translation">Mm. Obj.</target>
       </trans-unit>
       <trans-unit id="J4d1a9v" resname="Multimedia object properties">
         <source>Multimedia object properties</source>
@@ -1035,7 +1035,7 @@
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target state="translated">Id</target>
+        <target state="needs-translation">Id</target>
       </trans-unit>
       <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
@@ -1043,7 +1043,7 @@
       </trans-unit>
       <trans-unit id="zaFNCy2" resname="INFO">
         <source>INFO</source>
-        <target state="translated">INFO</target>
+        <target state="needs-translation">INFO</target>
       </trans-unit>
       <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
@@ -1223,7 +1223,7 @@
       </trans-unit>
       <trans-unit id="aNA2dZe" resname="Id:">
         <source>Id:</source>
-        <target state="translated">Id:</target>
+        <target state="needs-translation">Id:</target>
       </trans-unit>
       <trans-unit id="dZVMX02" resname="Preview:">
         <source>Preview:</source>
@@ -1299,7 +1299,7 @@
       </trans-unit>
       <trans-unit id="7utrTpP" resname="Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;">
         <source>Please, enter an url with the following format: &lt;b&gt;https://example.domain.org/video/XXXXXXXX&lt;/b&gt;</source>
-        <target state="translated"><![CDATA[Mesedez satu honako formaua <b>https://ejemplo.dominio.org/video/XXXXXXXX</b> duen URLa.]]></target>
+        <target state="translated">Mesedez satu honako formaua &lt;b&gt;https://ejemplo.dominio.org/video/XXXXXXXX&lt;/b&gt; duen URLa.</target>
       </trans-unit>
       <trans-unit id="Bpiop_k" resname="or enter the ID of the Multimedia Object.">
         <source>or enter the ID of the Multimedia Object.</source>
@@ -1539,7 +1539,7 @@
       </trans-unit>
       <trans-unit id="J.i8Nti" resname="Create child tag for">
         <source>Create child tag for</source>
-        <target state="translated">Semea kategoria sortu </target>
+        <target state="translated">Semea kategoria sortu</target>
       </trans-unit>
       <trans-unit id="cOyRaWI" resname="create new tag">
         <source>create new tag</source>
@@ -1623,7 +1623,7 @@
       </trans-unit>
       <trans-unit id="liAqQOK" resname="&lt;span class=&quot;alert alert-dismissable alert-warning&quot;&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;">
         <source>&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Warning: This multimedia object is not correctly published on WebTV&lt;/i&gt;&lt;/span&gt;</source>
-        <target state="translated"><![CDATA[<span class="alert alert-dismissable alert-warning"><i>Oharra:Multimedia objetua ez ondo publikatu EHUtb-n</i></span>]]></target>
+        <target state="translated">&lt;span class="alert alert-dismissable alert-warning"&gt;&lt;i&gt;Oharra:Multimedia objetua ez ondo publikatu EHUtb-n&lt;/i&gt;&lt;/span&gt;</target>
       </trans-unit>
       <trans-unit id="6h4Em02" resname="Embedded Iframe">
         <source>Embedded Iframe</source>
@@ -1643,7 +1643,7 @@
       </trans-unit>
       <trans-unit id="I0S1ntK" resname="Mm">
         <source>Mm</source>
-        <target state="translated">Mm</target>
+        <target state="needs-translation">Mm</target>
       </trans-unit>
       <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
@@ -1951,7 +1951,7 @@
       </trans-unit>
       <trans-unit id="evNsUIU" resname="Playlist">
         <source>Playlist</source>
-        <target state="translated">Playlist</target>
+        <target state="needs-translation">Playlist</target>
       </trans-unit>
       <trans-unit id="CnuGXCW" resname="Are you sure you want to delete the Permission Profile">
         <source>Are you sure you want to delete the Permission Profile</source>
@@ -2327,7 +2327,7 @@
       </trans-unit>
       <trans-unit id="9HA4HnV" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database, &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="translated"><![CDATA[Sar ezazu gehitu nahi duzun pertsonaren izena. Pertsona hori datu basean baldin badago bere izena zerrenda batean agertuko zaizu non aukeratu dezakezun <strong>usarla</strong>.Ez baldin badago, <strong>sortu</strong> >sarrera berria izenarekin]]></target>
+        <target state="translated">Sar ezazu gehitu nahi duzun pertsonaren izena. Pertsona hori datu basean baldin badago bere izena zerrenda batean agertuko zaizu non aukeratu dezakezun &lt;strong&gt;usarla&lt;/strong&gt;.Ez baldin badago, &lt;strong&gt;sortu&lt;/strong&gt; &gt;sarrera berria izenarekin</target>
       </trans-unit>
       <trans-unit id=".EOJuwR" resname="My Playlists">
         <source>My Playlists</source>
@@ -2463,7 +2463,7 @@
       </trans-unit>
       <trans-unit id="3y.zuwr" resname="STREAM">
         <source>STREAM</source>
-        <target state="translated">STREAM</target>
+        <target state="needs-translation">STREAM</target>
       </trans-unit>
       <trans-unit id="MWnOZEK" resname="Technology">
         <source>Technology</source>
@@ -3551,9 +3551,9 @@
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
         &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
         &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
-        <target state="needs-translation"><![CDATA[Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
-        <strong>use him/her</strong>. If he/she doesn't exist in the database,
-        <strong>create</strong> a new entrance with the written name]]></target>
+        <target state="needs-translation">Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
+        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
+        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</target>
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
@@ -3579,173 +3579,213 @@
         <source>Place successfully created.</source>
         <target state="needs-translation">Place successfully created.</target>
       </trans-unit>
-      <trans-unit id="4h_TXxH" resname="Copy">
-        <source>Copy</source>
-        <target>Copy</target>
-      </trans-unit>
-      <trans-unit id="j_FHaW_" resname="Translate">
-        <source>Translate</source>
-        <target>Translate</target>
-      </trans-unit>
-      <trans-unit id="algu._j" resname="Iframe URL">
-        <source>Iframe URL</source>
-        <target>Iframe URL</target>
-      </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target>Autocomplete series</target>
+        <target state="needs-translation">Autocomplete series</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target>Series successfully updated.</target>
+        <target state="needs-translation">Series successfully updated.</target>
       </trans-unit>
-      <trans-unit id="jyNk4Ru" resname="Day">
-        <source>Day</source>
-        <target>Day</target>
+      <trans-unit id="qsxJV33" resname="Error: Series have another owners on others events">
+        <source>Error: Series have another owners on others events</source>
+        <target state="needs-translation">Error: Series have another owners on others events</target>
       </trans-unit>
-      <trans-unit id="MQylA_8" resname="Month">
-        <source>Month</source>
-        <target>Month</target>
+      <trans-unit id="c9nOksT" resname="Error: Series have some events">
+        <source>Error: Series have some events</source>
+        <target state="needs-translation">Error: Series have some events</target>
       </trans-unit>
-      <trans-unit id="A3MtGeZ" resname="Num">
-        <source>Num</source>
-        <target>Num</target>
+      <trans-unit id="otgkhCc" resname="Cloned event successfully">
+        <source>Cloned event successfully</source>
+        <target state="needs-translation">Cloned event successfully</target>
       </trans-unit>
-      <trans-unit id="iTvUpcp" resname="Total Time">
-        <source>Total Time</source>
-        <target>Total Time</target>
+      <trans-unit id="ZKHf6Mw" resname="Deleted event successfully">
+        <source>Deleted event successfully</source>
+        <target state="needs-translation">Deleted event successfully</target>
       </trans-unit>
-      <trans-unit id="msfeW55" resname="Total Size">
-        <source>Total Size</source>
-        <target>Total Size</target>
+      <trans-unit id="qmeq21W" resname="Delete event and series successfully">
+        <source>Delete event and series successfully</source>
+        <target state="needs-translation">Delete event and series successfully</target>
       </trans-unit>
-      <trans-unit id="ybPDgkf" resname="Total">
-        <source>Total</source>
-        <target>Total</target>
-      </trans-unit>
-      <trans-unit id="K2m_11l" resname="Num series">
-        <source>Num series</source>
-        <target>Num series</target>
-      </trans-unit>
-      <trans-unit id="DoL48E_" resname="Num objects">
-        <source>Num objects</source>
-        <target>Num objects</target>
-      </trans-unit>
-      <trans-unit id="22fF_E2" resname="Total hours">
-        <source>Total hours</source>
-        <target>Total hours</target>
-      </trans-unit>
-      <trans-unit id="Uc32slY" resname="Total size">
-        <source>Total size</source>
-        <target>Total size</target>
-      </trans-unit>
-      <trans-unit id="ppxN7OF" resname="Storage">
-        <source>Storage</source>
-        <target>Storage</target>
-      </trans-unit>
-      <trans-unit id="XFT.IFz" resname="Numerical ID">
-        <source>Numerical ID</source>
-        <target>Numerical ID</target>
-      </trans-unit>
-      <trans-unit id="DfbxytN" resname="Show">
-        <source>Show</source>
-        <target>Show</target>
-      </trans-unit>
-      <trans-unit id="BXaTJaC" resname="Show presenter">
-        <source>Show presenter</source>
-        <target>Show presenter</target>
-      </trans-unit>
-      <trans-unit id="JaVio6g" resname="presenter">
-        <source>presenter</source>
-        <target>presenter</target>
-      </trans-unit>
-      <trans-unit id="9eMldhu" resname="Show presentation">
-        <source>Show presentation</source>
-        <target>Show presentation</target>
-      </trans-unit>
-      <trans-unit id="v6wxT_." resname="presentation">
-        <source>presentation</source>
-        <target>presentation</target>
-      </trans-unit>
-      <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
-        <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target>Select metadata to sync on all multimedia objects of this series</target>
-      </trans-unit>
-      <trans-unit id="jSYaNy." resname="Sync">
-        <source>Sync</source>
-        <target>Sync</target>
+      <trans-unit id="iDcYYvG" resname="Option not allowed">
+        <source>Option not allowed</source>
+        <target state="needs-translation">Option not allowed</target>
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
-        <target>Sync metadata for all multimedia objects</target>
+        <target state="needs-translation">Sync metadata for all multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
+        <source>Select metadata to sync on all multimedia objects of this series</source>
+        <target state="needs-translation">Select metadata to sync on all multimedia objects of this series</target>
+      </trans-unit>
+      <trans-unit id="jSYaNy." resname="Sync">
+        <source>Sync</source>
+        <target state="needs-translation">Sync</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target>There was an error sync up metadata.</target>
+        <target state="needs-translation">There was an error sync up metadata.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target>Sync up metadata was successfully.</target>
+        <target state="needs-translation">Sync up metadata was successfully.</target>
       </trans-unit>
-      <trans-unit id=".3bGq3U" resname="Configure your fields list">
-        <source>Configure your fields list</source>
-        <target>Configure your fields list</target>
+      <trans-unit id="DfbxytN" resname="Show">
+        <source>Show</source>
+        <target state="needs-translation">Show</target>
       </trans-unit>
-      <trans-unit id=".lxppRP" resname="Video ID">
-        <source>Video ID</source>
-        <target>Video ID</target>
+      <trans-unit id="BXaTJaC" resname="Show presenter">
+        <source>Show presenter</source>
+        <target state="needs-translation">Show presenter</target>
       </trans-unit>
-      <trans-unit id="8.FNcj3" resname="Series Title">
-        <source>Series Title</source>
-        <target>Series Title</target>
+      <trans-unit id="JaVio6g" resname="presenter">
+        <source>presenter</source>
+        <target state="needs-translation">presenter</target>
       </trans-unit>
-      <trans-unit id="SJTnZeA" resname="Track name">
-        <source>Track name</source>
-        <target>Track name</target>
+      <trans-unit id="9eMldhu" resname="Show presentation">
+        <source>Show presentation</source>
+        <target state="needs-translation">Show presentation</target>
       </trans-unit>
-      <trans-unit id="uyP.XFA" resname="Numerical series ID">
-        <source>Numerical series ID</source>
-        <target>Numerical series ID</target>
-      </trans-unit>
-      <trans-unit id="NiTFfNE" resname="Numerical video ID">
-        <source>Numerical video ID</source>
-        <target>Numerical video ID</target>
-      </trans-unit>
-      <trans-unit id="p3BiCQV" resname="Without filter">
-        <source>Without filter</source>
-        <target>Without filter</target>
-      </trans-unit>
-      <trans-unit id="YWOkHA5" resname="Custom field">
-        <source>Custom field</source>
-        <target>Custom field</target>
-      </trans-unit>
-      <trans-unit id="0lBOUri" resname="catalogue">
-        <source>catalogue</source>
-        <target>catalogue</target>
-      </trans-unit>
-      <trans-unit id="awFD0Dh" resname="Return">
-        <source>Return</source>
-        <target>Return</target>
-      </trans-unit>
-      <trans-unit id="8zto_mL" resname="Please enter your translation:">
-        <source>Please enter your translation:</source>
-        <target>Please enter your translation:</target>
-      </trans-unit>
-      <trans-unit id="VKDowX6" resname="Error">
-        <source>Error</source>
-        <target>Error</target>
+      <trans-unit id="v6wxT_." resname="presentation">
+        <source>presentation</source>
+        <target state="needs-translation">presentation</target>
       </trans-unit>
       <trans-unit id="_2ahr06" resname="Original name">
         <source>Original name</source>
-        <target>Original name</target>
+        <target state="needs-translation">Original name</target>
       </trans-unit>
       <trans-unit id="9ShOV_x" resname="No name">
         <source>No name</source>
-        <target>No name</target>
+        <target state="needs-translation">No name</target>
       </trans-unit>
       <trans-unit id="rArhFm_" resname="Upload date">
         <source>Upload date</source>
-        <target>Upload date</target>
+        <target state="needs-translation">Upload date</target>
+      </trans-unit>
+      <trans-unit id="awFD0Dh" resname="Return">
+        <source>Return</source>
+        <target state="needs-translation">Return</target>
+      </trans-unit>
+      <trans-unit id=".lxppRP" resname="Video ID">
+        <source>Video ID</source>
+        <target state="needs-translation">Video ID</target>
+      </trans-unit>
+      <trans-unit id="cM.uhTI" resname="Without criteria">
+        <source>Without criteria</source>
+        <target state="needs-translation">Without criteria</target>
+      </trans-unit>
+      <trans-unit id=".bZIb_I" resname="Multiple criteria">
+        <source>Multiple criteria</source>
+        <target state="needs-translation">Multiple criteria</target>
+      </trans-unit>
+      <trans-unit id="SJTnZeA" resname="Track name">
+        <source>Track name</source>
+        <target state="needs-translation">Track name</target>
+      </trans-unit>
+      <trans-unit id="NiTFfNE" resname="Numerical video ID">
+        <source>Numerical video ID</source>
+        <target state="needs-translation">Numerical video ID</target>
+      </trans-unit>
+      <trans-unit id="uyP.XFA" resname="Numerical series ID">
+        <source>Numerical series ID</source>
+        <target state="needs-translation">Numerical series ID</target>
+      </trans-unit>
+      <trans-unit id="cXCGmaz" resname="Criteria">
+        <source>Criteria</source>
+        <target state="needs-translation">Criteria</target>
+      </trans-unit>
+      <trans-unit id="p3BiCQV" resname="Without filter">
+        <source>Without filter</source>
+        <target state="needs-translation">Without filter</target>
+      </trans-unit>
+      <trans-unit id=".3bGq3U" resname="Configure your fields list">
+        <source>Configure your fields list</source>
+        <target state="needs-translation">Configure your fields list</target>
+      </trans-unit>
+      <trans-unit id="YWOkHA5" resname="Custom field">
+        <source>Custom field</source>
+        <target state="needs-translation">Custom field</target>
+      </trans-unit>
+      <trans-unit id="acQEWR6" resname="Views">
+        <source>Views</source>
+        <target state="needs-translation">Views</target>
+      </trans-unit>
+      <trans-unit id="4h_TXxH" resname="Copy">
+        <source>Copy</source>
+        <target state="needs-translation">Copy</target>
+      </trans-unit>
+      <trans-unit id="j_FHaW_" resname="Translate">
+        <source>Translate</source>
+        <target state="needs-translation">Translate</target>
+      </trans-unit>
+      <trans-unit id="algu._j" resname="Iframe URL">
+        <source>Iframe URL</source>
+        <target state="needs-translation">Iframe URL</target>
+      </trans-unit>
+      <trans-unit id="jyNk4Ru" resname="Day">
+        <source>Day</source>
+        <target state="needs-translation">Day</target>
+      </trans-unit>
+      <trans-unit id="MQylA_8" resname="Month">
+        <source>Month</source>
+        <target state="needs-translation">Month</target>
+      </trans-unit>
+      <trans-unit id="A3MtGeZ" resname="Num">
+        <source>Num</source>
+        <target state="needs-translation">Num</target>
+      </trans-unit>
+      <trans-unit id="iTvUpcp" resname="Total Time">
+        <source>Total Time</source>
+        <target state="needs-translation">Total Time</target>
+      </trans-unit>
+      <trans-unit id="msfeW55" resname="Total Size">
+        <source>Total Size</source>
+        <target state="needs-translation">Total Size</target>
+      </trans-unit>
+      <trans-unit id="ybPDgkf" resname="Total">
+        <source>Total</source>
+        <target state="needs-translation">Total</target>
+      </trans-unit>
+      <trans-unit id="K2m_11l" resname="Num series">
+        <source>Num series</source>
+        <target state="needs-translation">Num series</target>
+      </trans-unit>
+      <trans-unit id="DoL48E_" resname="Num objects">
+        <source>Num objects</source>
+        <target state="needs-translation">Num objects</target>
+      </trans-unit>
+      <trans-unit id="22fF_E2" resname="Total hours">
+        <source>Total hours</source>
+        <target state="needs-translation">Total hours</target>
+      </trans-unit>
+      <trans-unit id="Uc32slY" resname="Total size">
+        <source>Total size</source>
+        <target state="needs-translation">Total size</target>
+      </trans-unit>
+      <trans-unit id="ppxN7OF" resname="Storage">
+        <source>Storage</source>
+        <target state="needs-translation">Storage</target>
+      </trans-unit>
+      <trans-unit id="XFT.IFz" resname="Numerical ID">
+        <source>Numerical ID</source>
+        <target state="needs-translation">Numerical ID</target>
+      </trans-unit>
+      <trans-unit id="8.FNcj3" resname="Series Title">
+        <source>Series Title</source>
+        <target state="needs-translation">Series Title</target>
+      </trans-unit>
+      <trans-unit id="0lBOUri" resname="catalogue">
+        <source>catalogue</source>
+        <target state="needs-translation">catalogue</target>
+      </trans-unit>
+      <trans-unit id="8zto_mL" resname="Please enter your translation:">
+        <source>Please enter your translation:</source>
+        <target state="needs-translation">Please enter your translation:</target>
+      </trans-unit>
+      <trans-unit id="VKDowX6" resname="Error">
+        <source>Error</source>
+        <target state="needs-translation">Error</target>
       </trans-unit>
     </body>
   </file>
