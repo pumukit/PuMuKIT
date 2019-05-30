@@ -163,7 +163,7 @@
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target>Live chat</target>
+        <target state="needs-translation">Live chat</target>
       </trans-unit>
     </body>
   </file>
