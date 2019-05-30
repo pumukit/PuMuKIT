@@ -5,340 +5,341 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="81a4445d30afa85c43f155b461918401" resname="Audio/Video uploaded successfully">
+      <trans-unit id="r_lWsHJ" resname="Audio/Video uploaded successfully">
         <source>Audio/Video uploaded successfully</source>
-        <target xml:lang="zh-TW" state="translated">音訊/視頻上傳成功</target>
+        <target state="translated">音訊/視頻上傳成功</target>
       </trans-unit>
-      <trans-unit id="966ae94a46e9a6cf2fe524f7bd33f791" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
+      <trans-unit id="x5.NBqq" resname="The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.">
         <source>The video must be encoded to be available at the website. An email will be sent to you when finishing encoding notifying the availability of your video at the website.</source>
-        <target xml:lang="zh-TW" state="translated">該視頻編碼完成並且確定可在網頁上瀏覽後，將發送一封電子郵件通知您。</target>
+        <target state="translated">該視頻編碼完成並且確定可在網頁上瀏覽後，將發送一封電子郵件通知您。</target>
       </trans-unit>
-      <trans-unit id="764ba341884a1bd017da8032c4fb350a" resname="SERIES">
+      <trans-unit id="KGDhGAr" resname="SERIES">
         <source>SERIES</source>
-        <target xml:lang="zh-TW" state="translated">系列</target>
+        <target state="translated">系列</target>
       </trans-unit>
-      <trans-unit id="e60ae31f67ab883c746bb71c7a145c18" resname="VIDEO">
+      <trans-unit id="ZbL57DM" resname="VIDEO">
         <source>VIDEO</source>
-        <target xml:lang="zh-TW" state="translated">視頻</target>
+        <target state="translated">視頻</target>
       </trans-unit>
-      <trans-unit id="633a6c7a6b9958f8174250094daf1e6a" resname="DATE">
+      <trans-unit id="F.mgpRK" resname="DATE">
         <source>DATE</source>
-        <target xml:lang="zh-TW" state="translated">日期</target>
+        <target state="translated">日期</target>
       </trans-unit>
-      <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa" resname="Actions">
+      <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
-        <target xml:lang="zh-TW" state="translated">操作</target>
+        <target state="translated">操作</target>
       </trans-unit>
-      <trans-unit id="4a8a4f3d4d0f09e16347e8a1c4bedb20" resname="Edit Multimedia Object">
+      <trans-unit id="t6I5qa8" resname="Edit Multimedia Object">
         <source>Edit Multimedia Object</source>
-        <target xml:lang="zh-TW" state="translated">編輯多媒體物件</target>
+        <target state="translated">編輯多媒體物件</target>
       </trans-unit>
-      <trans-unit id="be5b3fae8a55670cb583c472c1db6eec" resname="Back to Series">
+      <trans-unit id="jZGQt7g" resname="Back to Series">
         <source>Back to Series</source>
-        <target xml:lang="zh-TW" state="translated">回到系列</target>
+        <target state="translated">回到系列</target>
       </trans-unit>
-      <trans-unit id="e11c6540433c2a394c533b8131fc2b46" resname="Create another Multimedia Object in same Series">
+      <trans-unit id="3_2mQNJ" resname="Create another Multimedia Object in same Series">
         <source>Create another Multimedia Object in same Series</source>
-        <target xml:lang="zh-TW" state="translated">在同一系列中創建另一個多媒體物件</target>
+        <target state="translated">在同一系列中創建另一個多媒體物件</target>
       </trans-unit>
-      <trans-unit id="b050796730bc9fb6c6cc1c0a671c1803" resname="Create another Multimedia Object in a new Series">
+      <trans-unit id="0hIabiz" resname="Create another Multimedia Object in a new Series">
         <source>Create another Multimedia Object in a new Series</source>
-        <target xml:lang="zh-TW" state="translated">在新系列中創建另一個多媒體物件</target>
+        <target state="translated">在新系列中創建另一個多媒體物件</target>
       </trans-unit>
-      <trans-unit id="76c4d065fdc391cc3939df61dea1d9b6" resname="Upload another video">
+      <trans-unit id="cBQgXdI" resname="Upload another video">
         <source>Upload another video</source>
-        <target xml:lang="zh-TW" state="translated">另一個視頻上傳</target>
+        <target state="translated">另一個視頻上傳</target>
       </trans-unit>
-      <trans-unit id="56acfb948c5ac0cf6f3d4a195248618a" resname="Upload another Multimedia Object in same Series">
+      <trans-unit id="sAPKPpm" resname="Upload another Multimedia Object in same Series">
         <source>Upload another Multimedia Object in same Series</source>
-        <target xml:lang="zh-TW" state="translated">上傳同一系列中的另一個多媒體物件。</target>
+        <target state="translated">上傳同一系列中的另一個多媒體物件。</target>
       </trans-unit>
-      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+      <trans-unit id="GXZu1sy" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="zh-TW" state="translated">取消</target>
+        <target state="translated">取消</target>
       </trans-unit>
-      <trans-unit id="10ac3d04253ef7e1ddc73e6091c0cd55" resname="Next">
+      <trans-unit id="H.V6Kdf" resname="Next">
         <source>Next</source>
-        <target xml:lang="zh-TW" state="translated">下一個</target>
+        <target state="translated">下一個</target>
       </trans-unit>
-      <trans-unit id="b78a3223503896721cca1303f776159b" resname="Title">
+      <trans-unit id="fozSBW2" resname="Title">
         <source>Title</source>
-        <target xml:lang="zh-TW" state="translated">標題：</target>
+        <target state="translated">標題：</target>
       </trans-unit>
-      <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39" resname="Description">
+      <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target xml:lang="zh-TW" state="translated">說明</target>
+        <target state="translated">說明</target>
       </trans-unit>
-      <trans-unit id="035f4e29da2d6d31303f7d7cfa1be13b" resname="Subtitle">
+      <trans-unit id="ODzWwLh" resname="Subtitle">
         <source>Subtitle</source>
-        <target xml:lang="zh-TW" state="translated">副標題：</target>
+        <target state="translated">副標題：</target>
       </trans-unit>
-      <trans-unit id="c6568e77f61109390e82d035aaacaef0" resname="Headline">
+      <trans-unit id="xfWkyBV" resname="Headline">
         <source>Headline</source>
-        <target xml:lang="zh-TW" state="translated">摘要：</target>
+        <target state="translated">摘要：</target>
       </trans-unit>
-      <trans-unit id="98787e0ea3ebdac853b739123f35ad8d" resname="Step 1: Series">
+      <trans-unit id="MxAia._" resname="Step 1: Series">
         <source>Step 1: Series</source>
-        <target xml:lang="zh-TW" state="translated">第 1 步︰ 系列</target>
+        <target state="translated">第 1 步︰ 系列</target>
       </trans-unit>
-      <trans-unit id="35bc5fb60ebdee8bbd4b8c68d797cb74" resname="Create a new Series for the Multimedia Object">
+      <trans-unit id="6Ltd47Y" resname="Create a new Series for the Multimedia Object">
         <source>Create a new Series for the Multimedia Object</source>
-        <target xml:lang="zh-TW" state="translated">為多媒體物件創建一新的系列</target>
+        <target state="translated">為多媒體物件創建一新的系列</target>
       </trans-unit>
-      <trans-unit id="42c9c567af4142d1cc75f0665952abf0" resname="Step 2: Type">
+      <trans-unit id="gNeEsYc" resname="Step 2: Type">
         <source>Step 2: Type</source>
-        <target xml:lang="zh-TW" state="translated">第 2 步︰ 類型</target>
+        <target state="translated">第 2 步︰ 類型</target>
       </trans-unit>
-      <trans-unit id="076de82c8cf022f48f74f7e9c3c40b1b" resname="Choose option type">
+      <trans-unit id="i1yAxJf" resname="Choose option type">
         <source>Choose option type</source>
-        <target xml:lang="zh-TW" state="translated">選擇選項類型</target>
+        <target state="translated">選擇選項類型</target>
       </trans-unit>
-      <trans-unit id="48c7c41b72e1d678923ce3571aa65b2d" resname="Step">
+      <trans-unit id="jmpsynq" resname="Step">
         <source>Step</source>
-        <target xml:lang="zh-TW" state="translated">步驟：</target>
+        <target state="translated">步驟：</target>
       </trans-unit>
-      <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
+      <trans-unit id="nt31c8t" resname="Metadata">
         <source>Metadata</source>
-        <target xml:lang="zh-TW" state="translated">後設資料</target>
+        <target state="translated">後設資料</target>
       </trans-unit>
-      <trans-unit id="c2f27ee4404e902513128c40d208e108" resname="Insert the data for the Multimedia Object">
+      <trans-unit id="7leM6_R" resname="Insert the data for the Multimedia Object">
         <source>Insert the data for the Multimedia Object</source>
-        <target xml:lang="zh-TW" state="translated">將資料插入多媒體物件</target>
+        <target state="translated">將資料插入多媒體物件</target>
       </trans-unit>
-      <trans-unit id="0b27918290ff5323bea1e3b78a9cf04e" resname="File">
+      <trans-unit id="UACc4dp" resname="File">
         <source>File</source>
-        <target xml:lang="zh-TW" state="translated">檔案</target>
+        <target state="translated">檔案</target>
       </trans-unit>
-      <trans-unit id="c3e635ca964a04246b5abb062f917280" resname="Upload the multimedia file">
+      <trans-unit id="QniSq2j" resname="Upload the multimedia file">
         <source>Upload the multimedia file</source>
-        <target xml:lang="zh-TW" state="translated">上傳的多媒體檔案</target>
+        <target state="translated">上傳的多媒體檔案</target>
       </trans-unit>
-      <trans-unit id="eafecfd638c10dc2c75c61f8350e3d1c" resname="Step 3: Files">
+      <trans-unit id="MjCYv38" resname="Step 3: Files">
         <source>Step 3: Files</source>
-        <target xml:lang="zh-TW" state="translated">第 3 步︰ 檔案</target>
+        <target state="translated">第 3 步︰ 檔案</target>
       </trans-unit>
-      <trans-unit id="f83728109c1c28ccebf67c5f9d71a8c0" resname="Step %i%: Error">
+      <trans-unit id="HqSH6QG" resname="Step %i%: Error">
         <source>Step %i%: Error</source>
-        <target xml:lang="zh-TW" state="needs-translation">Step %i%: Error</target>
+        <target state="needs-translation">Step %i%: Error</target>
       </trans-unit>
-      <trans-unit id="3a1a080b0618ea27f46f91137df1b3c4" resname="Failure in wizard proccess">
+      <trans-unit id="lkrHUmH" resname="Failure in wizard proccess">
         <source>Failure in wizard proccess</source>
-        <target xml:lang="zh-TW" state="translated">在引導過程失敗</target>
+        <target state="translated">在引導過程失敗</target>
       </trans-unit>
-      <trans-unit id="2688c6fafa9408f68f3bf46c8fcfaa02" resname="Step %i%: End">
+      <trans-unit id="NadneHn" resname="Step %i%: End">
         <source>Step %i%: End</source>
-        <target xml:lang="zh-TW" state="needs-translation">Step %i%: End</target>
+        <target state="needs-translation">Step %i%: End</target>
       </trans-unit>
-      <trans-unit id="02e6aaa27238464c1fde7bd88bd8b7a2" resname="Wait for the end of transcoding to be notified">
+      <trans-unit id="dYXSzu." resname="Wait for the end of transcoding to be notified">
         <source>Wait for the end of transcoding to be notified</source>
-        <target xml:lang="zh-TW" state="translated">等待轉碼結束的通知</target>
-        <alt-trans>
-          <target xml:lang="zh-TW">等待結束了轉碼要通知</target>
-        </alt-trans>
+        <target state="translated">等待轉碼結束的通知</target>
       </trans-unit>
-      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+      <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="zh-TW" state="translated">配置文件</target>
+        <target state="translated">配置文件</target>
       </trans-unit>
-      <trans-unit id="5c7314e0275926ee426d0ed1af6928f4" resname="Publication Channels">
+      <trans-unit id="S1TDJ_4" resname="Publication Channels">
         <source>Publication Channels</source>
-        <target xml:lang="zh-TW" state="translated">發行頻道</target>
+        <target state="translated">發行頻道</target>
       </trans-unit>
-      <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
+      <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
-        <target xml:lang="zh-TW" state="translated">優先順序</target>
+        <target state="translated">優先順序</target>
       </trans-unit>
-      <trans-unit id="7b2580149fa254a97b1e42c08aa3df94" resname="Low-Priority">
+      <trans-unit id="Lr9qxBC" resname="Low-Priority">
         <source>Low-Priority</source>
-        <target xml:lang="zh-TW" state="translated">低優先順序</target>
+        <target state="translated">低優先順序</target>
       </trans-unit>
-      <trans-unit id="634197cd21d33506bcee84a2c0143b6a" resname="Normal-Priority">
+      <trans-unit id="mguqIPS" resname="Normal-Priority">
         <source>Normal-Priority</source>
-        <target xml:lang="zh-TW" state="translated">普通優先順序</target>
+        <target state="translated">普通優先順序</target>
       </trans-unit>
-      <trans-unit id="7050cf0d21fcaca51e96bdaf8c6413e0" resname="High-Priority">
+      <trans-unit id="wy28cpg" resname="High-Priority">
         <source>High-Priority</source>
-        <target xml:lang="zh-TW" state="translated">高優先順序</target>
+        <target state="translated">高優先順序</target>
       </trans-unit>
-      <trans-unit id="cb76fb50035786c968dabe4987c5d5db" resname="Video/Audio language">
+      <trans-unit id="Kp9S5.y" resname="Video/Audio language">
         <source>Video/Audio language</source>
-        <target xml:lang="zh-TW" state="translated">視頻/音訊語言</target>
+        <target state="translated">視頻/音訊語言</target>
       </trans-unit>
-      <trans-unit id="650be61892bf690026089544abbd9d26" resname="Mode">
+      <trans-unit id="XiPsajA" resname="Mode">
         <source>Mode</source>
-        <target xml:lang="zh-TW" state="translated">模式</target>
+        <target state="translated">模式</target>
       </trans-unit>
-      <trans-unit id="2b2884d35c4381b201c8423a590a6236" resname="Inbox on server">
+      <trans-unit id="e0jJK_e" resname="Inbox on server">
         <source>Inbox on server</source>
-        <target xml:lang="zh-TW" state="translated">在伺服器上的收件匣</target>
+        <target state="translated">在伺服器上的收件匣</target>
       </trans-unit>
-      <trans-unit id="38c75b7c8a7878e5c633f56d3572de2c" resname="Local hard drive">
+      <trans-unit id="8vdBP_d" resname="Local hard drive">
         <source>Local hard drive</source>
-        <target xml:lang="zh-TW" state="translated">本地硬碟上</target>
+        <target state="translated">本地硬碟上</target>
       </trans-unit>
-      <trans-unit id="606257a79c31efa1d61589c6a48f5b2e" resname="Inbox directory on server">
+      <trans-unit id="qCDi58t" resname="Inbox directory on server">
         <source>Inbox directory on server</source>
-        <target xml:lang="zh-TW" state="translated">在伺服器上的收件匣目錄</target>
+        <target state="translated">在伺服器上的收件匣目錄</target>
       </trans-unit>
-      <trans-unit id="45c1d7f6167c454c8e40dc9dbe8b9432" resname="Audio/video file">
+      <trans-unit id="v1S3IJZ" resname="Audio/video file">
         <source>Audio/video file</source>
-        <target xml:lang="zh-TW" state="translated">音訊/視頻檔</target>
+        <target state="translated">音訊/視頻檔</target>
       </trans-unit>
-      <trans-unit id="02552d3c116b8a96f9ff0001b6ae661c" resname="Under">
+      <trans-unit id="gOStBWv" resname="Under">
         <source>Under</source>
-        <target xml:lang="zh-TW" state="translated">在下</target>
+        <target state="translated">在下</target>
       </trans-unit>
-      <trans-unit id="46b5f8c58b679b4243cbdb5749642c86" resname="Progress">
+      <trans-unit id="RmSCf46" resname="Progress">
         <source>Progress</source>
-        <target xml:lang="zh-TW" state="translated">進展</target>
+        <target state="translated">進展</target>
       </trans-unit>
-      <trans-unit id="e08ad75931308230cd41ec229bf0689e" resname="Empty file field">
+      <trans-unit id="39B8U6X" resname="Empty file field">
         <source>Empty file field</source>
-        <target xml:lang="zh-TW" state="translated">空檔欄位</target>
+        <target state="translated">空檔欄位</target>
       </trans-unit>
-      <trans-unit id="a1fa27779242b4902f7ae3bdd5c6d508" resname="Type">
+      <trans-unit id="uq3fcPt" resname="Type">
         <source>Type</source>
-        <target xml:lang="zh-TW" state="translated">型態</target>
+        <target state="translated">型態</target>
       </trans-unit>
-      <trans-unit id="473e56fdfc7526af60d45f3b085e7233" resname="Add one single multimedia object">
+      <trans-unit id="G8yiJzC" resname="Add one single multimedia object">
         <source>Add one single multimedia object</source>
-        <target xml:lang="zh-TW" state="translated">添加一個單一的多媒體物件</target>
+        <target state="translated">添加一個單一的多媒體物件</target>
       </trans-unit>
-      <trans-unit id="29b0b1445e27d0f0b3316b4c62f0b9d9" resname="Add multiple multimedia objects">
+      <trans-unit id="8HHHynz" resname="Add multiple multimedia objects">
         <source>Add multiple multimedia objects</source>
-        <target xml:lang="zh-TW" state="translated">添加多個多媒體物件</target>
+        <target state="translated">添加多個多媒體物件</target>
       </trans-unit>
-      <trans-unit id="ac645573724145961004e8cf4ca1f161" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
+      <trans-unit id="n1s3Bkh" resname="The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.">
         <source>The video will be encoded and available soon. An email will be sent to you when the encoding is finished notifying you the availability of your video.</source>
-        <target xml:lang="zh-TW" state="translated">該視頻編碼完成後，將發送一封電子郵件通知您。</target>
+        <target state="translated">該視頻編碼完成後，將發送一封電子郵件通知您。</target>
       </trans-unit>
-      <trans-unit id="0e0c1fbe23cc8b0a6efe81ad19696cde" resname="Main action">
+      <trans-unit id="xkqwKmh" resname="Main action">
         <source>Main action</source>
-        <target xml:lang="zh-TW" state="translated">主要行動</target>
+        <target state="translated">主要行動</target>
       </trans-unit>
-      <trans-unit id="9877bbb1e06f0d527d6db7730b280808" resname="Other actions">
+      <trans-unit id="rF87yjA" resname="Other actions">
         <source>Other actions</source>
-        <target xml:lang="zh-TW" state="translated">其他操作</target>
+        <target state="translated">其他操作</target>
       </trans-unit>
-      <trans-unit id="00e7eb6faf895de659ff4867af26f4b2" resname="Back to Media Manager">
+      <trans-unit id="YJ5DE.c" resname="Back to Media Manager">
         <source>Back to Media Manager</source>
-        <target xml:lang="zh-TW" state="translated">回到媒體櫃</target>
+        <target state="translated">回到媒體櫃</target>
       </trans-unit>
-      <trans-unit id="3581c92a1b99446dd964e2f17a237fb0" resname="back to My Multimedia Series">
+      <trans-unit id="RA85Z.v" resname="back to My Multimedia Series">
         <source>back to My Multimedia Series</source>
-        <target xml:lang="zh-TW" state="translated">回到我的多媒體系列</target>
+        <target state="translated">回到我的多媒體系列</target>
       </trans-unit>
-      <trans-unit id="bdd2527a33dde2cebd2505fe6c632901" resname="Step %i%: Series">
+      <trans-unit id="PVvSGK7" resname="Step %i%: Series">
         <source>Step %i%: Series</source>
-        <target xml:lang="zh-TW" state="translated">步驟 %i%︰ 系列</target>
+        <target state="translated">步驟 %i%︰ 系列</target>
       </trans-unit>
-      <trans-unit id="c25f54728be4b84db806278226cb807c" resname="Step %i%: Type">
+      <trans-unit id=".tDcUBd" resname="Step %i%: Type">
         <source>Step %i%: Type</source>
-        <target xml:lang="zh-TW" state="translated">步驟 %i%︰ 類型</target>
+        <target state="translated">步驟 %i%︰ 類型</target>
       </trans-unit>
-      <trans-unit id="db92647ad45e71b6a0c78c4db8bd1b59" resname="Step %i%: Metadata">
+      <trans-unit id="08NyRGE" resname="Step %i%: Metadata">
         <source>Step %i%: Metadata</source>
-        <target xml:lang="zh-TW" state="translated">步驟 %i%︰ 後設資料</target>
+        <target state="translated">步驟 %i%︰ 後設資料</target>
       </trans-unit>
-      <trans-unit id="dbc36739335bda25dfacef1bd59b542f" resname="Step %i%: File">
+      <trans-unit id="vXMxh04" resname="Step %i%: File">
         <source>Step %i%: File</source>
-        <target xml:lang="zh-TW" state="translated">步驟 %i%︰ 檔案</target>
+        <target state="translated">步驟 %i%︰ 檔案</target>
       </trans-unit>
-      <trans-unit id="0facbdaa7637bd7301367e5d6dc289bd" resname="Step %i% Files">
+      <trans-unit id="i8foJhr" resname="Step %i% Files">
         <source>Step %i% Files</source>
-        <target xml:lang="zh-TW" state="translated">步驟 %i%檔案</target>
+        <target state="translated">步驟 %i%檔案</target>
       </trans-unit>
-      <trans-unit id="7944880ab2acaba249065098a6aad7db" resname="Select an inbox folder with the multimedia files">
+      <trans-unit id="0mHcUcS" resname="Select an inbox folder with the multimedia files">
         <source>Select an inbox folder with the multimedia files</source>
-        <target xml:lang="zh-TW" state="translated">選取包含多媒體檔案的收件匣資料夾</target>
+        <target state="translated">選取包含多媒體檔案的收件匣資料夾</target>
       </trans-unit>
-      <trans-unit id="aa5744ab814190a3518c1146c8202b4d" resname="Upload local file">
+      <trans-unit id="a1b7xcD" resname="Upload local file">
         <source>Upload local file</source>
-        <target xml:lang="zh-TW" state="translated">上傳本地檔</target>
+        <target state="translated">上傳本地檔</target>
       </trans-unit>
-      <trans-unit id="91412465ea9169dfd901dd5e7c96dd99" resname="Upload">
+      <trans-unit id="hl6J3nj" resname="Upload">
         <source>Upload</source>
-        <target xml:lang="zh-TW" state="translated">上載</target>
+        <target state="translated">上載</target>
       </trans-unit>
-      <trans-unit id="794df3791a8c800841516007427a2aa3" resname="License">
+      <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
-        <target xml:lang="zh-TW" state="needs-translation">License</target>
+        <target state="needs-translation">License</target>
       </trans-unit>
-      <trans-unit id="ed7cbe05c78bda722c4b95b90229cd96" resname="Accept license">
+      <trans-unit id="Kweggdq" resname="Accept license">
         <source>Accept license</source>
-        <target xml:lang="zh-TW" state="needs-translation">Accept license</target>
+        <target state="needs-translation">Accept license</target>
       </trans-unit>
-      <trans-unit id="54dbf8c824164f5c7eb2c312f29c96a3" resname="You must accept the license to continue.">
+      <trans-unit id="KpaRooJ" resname="You must accept the license to continue.">
         <source>You must accept the license to continue.</source>
-        <target xml:lang="zh-TW" state="needs-translation">You must accept the license to continue.</target>
+        <target state="needs-translation">You must accept the license to continue.</target>
       </trans-unit>
-      <trans-unit id="c101058e7ea21bbbf2a5ac893088e90b" resname="Tag">
+      <trans-unit id="FQORaiq" resname="Tag">
         <source>Tag</source>
-        <target xml:lang="zh-TW" state="needs-translation">Tag</target>
+        <target state="needs-translation">Tag</target>
       </trans-unit>
-      <trans-unit id="29d271e331716d9ff2243f12ee3f8404" resname="Select a tag...">
+      <trans-unit id="5fZBzo5" resname="Select a tag...">
         <source>Select a tag...</source>
-        <target xml:lang="zh-TW" state="needs-translation">Select a tag...</target>
+        <target state="needs-translation">Select a tag...</target>
       </trans-unit>
-      <trans-unit id="d6119981b8a25ac77c76304c50cfc39b" resname="Select a license...">
+      <trans-unit id="axiQO6p" resname="Select a license...">
         <source>Select a license...</source>
-        <target xml:lang="zh-TW" state="needs-translation">Select a license...</target>
+        <target state="needs-translation">Select a license...</target>
       </trans-unit>
-      <trans-unit id="663d453bd8b2344ef7e523e0440ae0ca" resname="Accept the license">
+      <trans-unit id="RLAnzlw" resname="Accept the license">
         <source>Accept the license</source>
-        <target xml:lang="zh-TW" state="needs-translation">Accept the license</target>
+        <target state="needs-translation">Accept the license</target>
       </trans-unit>
-      <trans-unit id="0a575aecb818b164b99e1ee5a89482d4" resname="Accept license.">
+      <trans-unit id="djjaiGU" resname="Accept license.">
         <source>Accept license.</source>
-        <target xml:lang="zh-TW" state="needs-translation">Accept license.</target>
+        <target state="needs-translation">Accept license.</target>
       </trans-unit>
-      <trans-unit id="6b112ccf2395a353328c66503dbac721" resname="Step %i%: License">
+      <trans-unit id="OQFiIn2" resname="Step %i%: License">
         <source>Step %i%: License</source>
-        <target xml:lang="zh-TW" state="needs-translation">Step %i%: License</target>
+        <target state="needs-translation">Step %i%: License</target>
       </trans-unit>
-      <trans-unit id="53a39dc22ce23facdcb1e4a4d5ebb2d2" resname="Step %i%: Files">
+      <trans-unit id="VgLM3Db" resname="Step %i%: Files">
         <source>Step %i%: Files</source>
-        <target xml:lang="zh-TW" state="needs-translation">Step %i%: Files</target>
+        <target state="needs-translation">Step %i%: Files</target>
       </trans-unit>
-      <trans-unit id="1fd8a2680427818dd7906799f52a1a86" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
+      <trans-unit id="COpQaKq" resname="Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.">
         <source>Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</source>
-        <target xml:lang="zh-TW" state="needs-translation">Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
+        <target state="needs-translation">Not allowed to upload videos bigger than %max_filesize%. The recommended video resolutions are 4:3 or 16:9 to ensure the proper functioning in the process of uploading videos to the web portal.</target>
       </trans-unit>
-      <trans-unit id="59c7d9ba6844507c0d76094f047a5eb8" resname="Empty title">
+      <trans-unit id="WyeFaHz" resname="Empty title">
         <source>Empty title</source>
-        <target xml:lang="zh-TW" state="needs-translation">Empty title</target>
+        <target state="needs-translation">Empty title</target>
       </trans-unit>
-      <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f" resname="Back">
+      <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
-        <target xml:lang="zh-TW" state="needs-translation">Back</target>
+        <target state="needs-translation">Back</target>
       </trans-unit>
-      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+      <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target xml:lang="zh-TW" state="needs-translation">Series</target>
+        <target state="needs-translation">Series</target>
       </trans-unit>
-      <trans-unit id="03c2e7e41ffc181a4e84080b4710e81e" resname="New">
+      <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
-        <target xml:lang="zh-TW" state="needs-translation">New</target>
+        <target state="needs-translation">New</target>
       </trans-unit>
-      <trans-unit id="5d2fda977ed0be40ee5c8293be11bb3e" resname="ERROR!!">
+      <trans-unit id="ZI.xJ3." resname="ERROR!!">
         <source>ERROR!!</source>
-        <target xml:lang="zh-TW" state="needs-translation">ERROR!!</target>
+        <target state="needs-translation">ERROR!!</target>
       </trans-unit>
-      <trans-unit id="d4c841f869c6570cbb747ede7870a916" resname="There was an error:">
+      <trans-unit id="X9RxnLY" resname="There was an error:">
         <source>There was an error:</source>
-        <target xml:lang="zh-TW" state="needs-translation">There was an error:</target>
+        <target state="needs-translation">There was an error:</target>
       </trans-unit>
-      <trans-unit id="a2a86c91777e281aab7ce50c73e186e2" resname="Series title">
+      <trans-unit id="kihsarY" resname="Series title">
         <source>Series title</source>
-        <target xml:lang="zh-TW" state="needs-translation">Series title</target>
+        <target state="needs-translation">Series title</target>
       </trans-unit>
-      <trans-unit id="ffeed24e8e4fd763c1d0d02c6e5d6e15" resname="Upload file">
+      <trans-unit id="2ZvNeLW" resname="Upload file">
         <source>Upload file</source>
-        <target xml:lang="zh-TW" state="needs-translation">Upload file</target>
+        <target state="needs-translation">Upload file</target>
       </trans-unit>
-      <trans-unit id="09038ef8099e1bea60c8397ce2ec6db9" resname="Multimedia Object title">
+      <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target xml:lang="zh-TW" state="needs-translation">Multimedia Object title</target>
+        <target state="needs-translation">Multimedia Object title</target>
+      </trans-unit>
+      <trans-unit id="kg5BPH1" resname="Status">
+        <source>Status</source>
+        <target>Status</target>
       </trans-unit>
     </body>
   </file>

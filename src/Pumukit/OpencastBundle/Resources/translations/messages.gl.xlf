@@ -5,156 +5,157 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="ccc3ab201e088eb8a2c4ae2d14beeb4d" resname="Opencast Importer">
+      <trans-unit id="gQwK6zu" resname="Opencast Importer">
         <source>Opencast Importer</source>
-        <target xml:lang="gl" state="translated">Importador de Opencast</target>
+        <target state="translated">Importador de Opencast</target>
       </trans-unit>
-      <trans-unit id="bb1ca97ec761fc37101737ba0aa2e7c5" resname="ERROR">
+      <trans-unit id="2Y7g5fk" resname="ERROR">
         <source>ERROR</source>
-        <target xml:lang="gl" state="translated">ERRO</target>
+        <target state="translated">ERRO</target>
       </trans-unit>
-      <trans-unit id="a11b072c3d08c062a300f31d69537da5" resname="Execute on the server">
+      <trans-unit id="LQBPGOH" resname="Execute on the server">
         <source>Execute on the server</source>
-        <target xml:lang="gl" state="translated">Executar no servidor</target>
+        <target state="translated">Executar no servidor</target>
       </trans-unit>
-      <trans-unit id="567904efe9e64d9faf3e41ef402cb568" resname="where">
+      <trans-unit id="tIERwQx" resname="where">
         <source>where</source>
-        <target xml:lang="gl" state="translated">onde</target>
+        <target state="translated">onde</target>
       </trans-unit>
-      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+      <trans-unit id="ScJmuqq" resname="Search">
         <source>Search</source>
-        <target xml:lang="gl" state="translated">Buscar</target>
+        <target state="translated">Buscar</target>
       </trans-unit>
-      <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+      <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target xml:lang="gl" state="translated">Nome</target>
+        <target state="translated">Nome</target>
       </trans-unit>
-      <trans-unit id="86266ee937d97f812a8e57d22b62ee29" resname="reset">
+      <trans-unit id="Ab4wu0o" resname="reset">
         <source>reset</source>
-        <target xml:lang="gl" state="translated">reset</target>
+        <target state="translated">reset</target>
       </trans-unit>
-      <trans-unit id="b2c97ae425dd751b0e48a3acae79cf4a" resname="filter">
+      <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
-        <target xml:lang="gl" state="translated">filtrar</target>
+        <target state="translated">filtrar</target>
       </trans-unit>
-      <trans-unit id="21133d71a056222fa2096906538e4e04" resname="Img">
+      <trans-unit id="Vlmffir" resname="Img">
         <source>Img</source>
-        <target xml:lang="gl" state="translated">Imx</target>
+        <target state="translated">Imx</target>
       </trans-unit>
-      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+      <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target xml:lang="gl" state="translated">Id</target>
+        <target state="translated">Id</target>
       </trans-unit>
-      <trans-unit id="9d948e617b083222afc868add2f50ec2" resname="Series">
+      <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target xml:lang="gl" state="translated">Series</target>
-        <alt-trans>
-          <target xml:lang="gl">Serie</target>
-        </alt-trans>
+        <target state="translated">Series</target>
       </trans-unit>
-      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+      <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="gl" state="translated">Duración</target>
+        <target state="translated">Duración</target>
       </trans-unit>
-      <trans-unit id="44749712dbec183e983dcd78a7736c41" resname="Date">
+      <trans-unit id="mcQKtAW" resname="Date">
         <source>Date</source>
-        <target xml:lang="gl" state="translated">Data</target>
+        <target state="translated">Data</target>
       </trans-unit>
-      <trans-unit id="984c6990081d06520196629b3ce40e54" resname="There are no mediapackages with those values.">
+      <trans-unit id="BHN8L4F" resname="There are no mediapackages with those values.">
         <source>There are no mediapackages with those values.</source>
-        <target xml:lang="gl" state="translated">Non existen paquetes multimedia con eses valores.</target>
+        <target state="translated">Non existen paquetes multimedia con eses valores.</target>
       </trans-unit>
-      <trans-unit id="b754e0e9927059d42b166c04f3ef8975" resname="play in opencast">
+      <trans-unit id="XNGPYDz" resname="play in opencast">
         <source>play in opencast</source>
-        <target xml:lang="gl" state="translated">reproducir en opencast</target>
+        <target state="translated">reproducir en opencast</target>
       </trans-unit>
-      <trans-unit id="de3c731be5633838089a07179d301d7b" resname="Play">
+      <trans-unit id="Q25hAW4" resname="Play">
         <source>Play</source>
-        <target xml:lang="gl" state="translated">Reproducir</target>
+        <target state="translated">Reproducir</target>
       </trans-unit>
-      <trans-unit id="ad10bb5ab7a1c1883447a5dda931bb47" resname="View on Pumukit">
+      <trans-unit id="436CDnO" resname="View on Pumukit">
         <source>View on Pumukit</source>
-        <target xml:lang="gl" state="translated">Ver en Pumukit</target>
+        <target state="translated">Ver en Pumukit</target>
       </trans-unit>
-      <trans-unit id="858a2b552953bc182248fe9374646398" resname="Imported">
+      <trans-unit id="Mh8XnIC" resname="Imported">
         <source>Imported</source>
-        <target xml:lang="gl" state="translated">Importado</target>
+        <target state="translated">Importado</target>
       </trans-unit>
-      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import">
+      <trans-unit id="LP_bqr9" resname="Import">
         <source>Import</source>
-        <target xml:lang="gl" state="translated">Importar</target>
+        <target state="translated">Importar</target>
       </trans-unit>
-      <trans-unit id="98b21d345c906eb9ab72133821217a43" resname="Import inverted">
+      <trans-unit id="PAWgkpr" resname="Import inverted">
         <source>Import inverted</source>
-        <target xml:lang="gl" state="translated">Importar invertido</target>
+        <target state="translated">Importar invertido</target>
       </trans-unit>
-      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+      <trans-unit id="GXZu1sy" resname="Cancel">
         <source>Cancel</source>
-        <target xml:lang="gl" state="translated">Cancelar</target>
+        <target state="translated">Cancelar</target>
       </trans-unit>
-      <trans-unit id="63ca19d0f7bd43783e79c5ff2e2a7b4a" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
+      <trans-unit id="c.hOhIO" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
         <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
-        <target xml:lang="gl" state="needs-translation">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
+        <target state="needs-translation">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
       </trans-unit>
-      <trans-unit id="919180ed16fc428cad01c39777bb0485" resname="Cancel current search">
+      <trans-unit id="uQjDk6r" resname="Cancel current search">
         <source>Cancel current search</source>
-        <target xml:lang="gl" state="translated">Cancelar a busca actual</target>
+        <target state="translated">Cancelar a busca actual</target>
       </trans-unit>
-      <trans-unit id="036934cf9842451c835a9981a067d0c3" resname="Cancel search">
+      <trans-unit id="tUVjur1" resname="Cancel search">
         <source>Cancel search</source>
-        <target xml:lang="gl" state="translated">Cancelar busca</target>
+        <target state="translated">Cancelar busca</target>
       </trans-unit>
-      <trans-unit id="967840de4334a3f36a61a835b080f063" resname="Edit Opencast file of multimedia object">
+      <trans-unit id="tnyLS2m" resname="Edit Opencast file of multimedia object">
         <source>Edit Opencast file of multimedia object</source>
-        <target xml:lang="gl" state="translated">Editar o arquivo de Opencast do obxecto multimedia</target>
+        <target state="translated">Editar o arquivo de Opencast do obxecto multimedia</target>
       </trans-unit>
-      <trans-unit id="c3e53f75912bdea8c95c7ae9851d659a" resname="File info of multimedia object">
+      <trans-unit id="JyToKKj" resname="File info of multimedia object">
         <source>File info of multimedia object</source>
-        <target xml:lang="gl" state="translated">Arquivo de información do obxecto multimedia</target>
+        <target state="translated">Arquivo de información do obxecto multimedia</target>
       </trans-unit>
-      <trans-unit id="ab6b7e1b0708d1ad1d4ba0f137f95817" resname="Capture frame from">
+      <trans-unit id="EaAlxnm" resname="Capture frame from">
         <source>Capture frame from</source>
-        <target xml:lang="gl" state="translated">Capturar fotograma de</target>
+        <target state="translated">Capturar fotograma de</target>
       </trans-unit>
-      <trans-unit id="0e3a50ba0067d015c223dcaed58f9fb3" resname="Transcode to profile">
+      <trans-unit id="XtfaAeR" resname="Transcode to profile">
         <source>Transcode to profile</source>
-        <target xml:lang="gl" state="translated">Transcodificar ao perfil</target>
+        <target state="translated">Transcodificar ao perfil</target>
       </trans-unit>
-      <trans-unit id="d558bba8df660191517b4fec78783e88" resname="Opencast Recording">
+      <trans-unit id="iAm2glF" resname="Opencast Recording">
         <source>Opencast Recording</source>
-        <target xml:lang="gl" state="translated">Gravación de Opencast</target>
+        <target state="translated">Gravación de Opencast</target>
       </trans-unit>
-      <trans-unit id="00da4a0903d7faecfeb939d677e211ca" resname="opencast track info">
+      <trans-unit id="OhTMa7h" resname="opencast track info">
         <source>opencast track info</source>
-        <target xml:lang="gl" state="translated">información da pista de opencast</target>
+        <target state="translated">información da pista de opencast</target>
       </trans-unit>
-      <trans-unit id="52d75534a246ed7c58239ab61d736cfb" resname="URLs for images">
+      <trans-unit id="0yYyluM" resname="URLs for images">
         <source>URLs for images</source>
-        <target xml:lang="gl" state="translated">URLs para imaxes</target>
+        <target state="translated">URLs para imaxes</target>
       </trans-unit>
-      <trans-unit id="1d9e0c7f416168ad1b1d297816b48341" resname="Presenter">
+      <trans-unit id="nvB3oSM" resname="Presenter">
         <source>Presenter</source>
-        <target xml:lang="gl" state="translated">Relator</target>
+        <target state="translated">Relator</target>
       </trans-unit>
-      <trans-unit id="c7bc3fddddb62d5b656adc30cea77a55" resname="Presentation">
+      <trans-unit id="XV7hV3U" resname="Presentation">
         <source>Presentation</source>
-        <target xml:lang="gl" state="translated">Presentación</target>
+        <target state="translated">Presentación</target>
       </trans-unit>
-      <trans-unit id="e0aa021e21dddbd6d8cecec71e9cf564" resname="OK">
+      <trans-unit id="VlM5vE0" resname="OK">
         <source>OK</source>
-        <target xml:lang="gl" state="translated">OK</target>
+        <target state="translated">OK</target>
       </trans-unit>
-      <trans-unit id="a0a7b04286793b4b5812c07b4ec10475" resname="update Opencast track of Multimedia Object">
+      <trans-unit id="pTjOkcc" resname="update Opencast track of Multimedia Object">
         <source>update Opencast track of Multimedia Object</source>
-        <target xml:lang="gl" state="translated">actualizar a pista de Opencast do Obxecto Multimedia</target>
+        <target state="translated">actualizar a pista de Opencast do Obxecto Multimedia</target>
       </trans-unit>
-      <trans-unit id="befcc65c57d8bf87d3b1cc3f52dcff0b" resname="Track successfully updated.">
+      <trans-unit id="rSgp7EK" resname="Track successfully updated.">
         <source>Track successfully updated.</source>
-        <target xml:lang="gl" state="translated">A pista actualizouse correctamente.</target>
+        <target state="translated">A pista actualizouse correctamente.</target>
       </trans-unit>
-      <trans-unit id="8112b5a95e74fc08c9aa975f6ac02fcb" resname="{0} Media Packages |{1} Media Package|]1,Inf] Media Packages">
+      <trans-unit id="MKllK6J" resname="{0} Media Packages |{1} Media Package|]1,Inf] Media Packages">
         <source>{0} Media Packages |{1} Media Package|]1,Inf] Media Packages</source>
-        <target xml:lang="gl" state="translated">{0} Paquetes Multimedia |{1} Paquete Multimedia|]1,Inf] Paquetes Multimedia</target>
+        <target state="translated">{0} Paquetes Multimedia |{1} Paquete Multimedia|]1,Inf] Paquetes Multimedia</target>
+      </trans-unit>
+      <trans-unit id="CscPjL9" resname="i18n.one.Series">
+        <source>i18n.one.Series</source>
+        <target>i18n.one.Series</target>
       </trans-unit>
     </body>
   </file>

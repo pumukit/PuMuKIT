@@ -5,85 +5,85 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="490aa6e856ccf208a054389e47ce0d06" resname="Id">
+      <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
-        <target xml:lang="fr" state="needs-translation">Id</target>
+        <target state="needs-translation">Id</target>
       </trans-unit>
-      <trans-unit id="ec53a8c4f07baed5d8825072c89799be" resname="Status">
+      <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target xml:lang="fr" state="needs-translation">Status</target>
+        <target state="needs-translation">Status</target>
       </trans-unit>
-      <trans-unit id="66a0a78cd1e3aaed9aa1073b49b48270" resname="Multimedia Object Id">
+      <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
-        <target xml:lang="fr" state="needs-translation">Multimedia Object Id</target>
+        <target state="needs-translation">Multimedia Object Id</target>
       </trans-unit>
-      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+      <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
-        <target xml:lang="fr" state="translated">Profil</target>
+        <target state="translated">Profil</target>
       </trans-unit>
-      <trans-unit id="54c82ef76ecbbd4c2293e09bae01b54e" resname="Cpu">
+      <trans-unit id="gCuh9lB" resname="Cpu">
         <source>Cpu</source>
-        <target xml:lang="fr" state="needs-translation">Cpu</target>
+        <target state="needs-translation">Cpu</target>
       </trans-unit>
-      <trans-unit id="502996d9790340c5fd7b86a5b93b1c9f" resname="Priority">
+      <trans-unit id="1g27oHk" resname="Priority">
         <source>Priority</source>
-        <target xml:lang="fr" state="needs-translation">Priority</target>
+        <target state="needs-translation">Priority</target>
       </trans-unit>
-      <trans-unit id="e02d2ae03de9d493df2b6b2d2813d302" resname="Duration">
+      <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target xml:lang="fr" state="translated">Durée</target>
+        <target state="translated">Durée</target>
       </trans-unit>
-      <trans-unit id="36961322944d2a6b24a72b0293e873c9" resname="New Duration">
+      <trans-unit id="6yM2NjP" resname="New Duration">
         <source>New Duration</source>
-        <target xml:lang="fr" state="needs-translation">New Duration</target>
+        <target state="needs-translation">New Duration</target>
       </trans-unit>
-      <trans-unit id="ae4b4760a9029fe4ac4cc850946b3537" resname="Initial Time">
+      <trans-unit id="ACBfrGE" resname="Initial Time">
         <source>Initial Time</source>
-        <target xml:lang="fr" state="needs-translation">Initial Time</target>
+        <target state="needs-translation">Initial Time</target>
       </trans-unit>
-      <trans-unit id="2bbc845892f400626baab5af687527c5" resname="Start Time">
+      <trans-unit id="JxGJrji" resname="Start Time">
         <source>Start Time</source>
-        <target xml:lang="fr" state="needs-translation">Start Time</target>
+        <target state="needs-translation">Start Time</target>
       </trans-unit>
-      <trans-unit id="c91a577b72313356fad611c55f43c10f" resname="End Time">
+      <trans-unit id="SLzN3Ym" resname="End Time">
         <source>End Time</source>
-        <target xml:lang="fr" state="needs-translation">End Time</target>
+        <target state="needs-translation">End Time</target>
       </trans-unit>
-      <trans-unit id="ee97be03cb04119af45014d815621ce1" resname="Command">
+      <trans-unit id="cTFmlx1" resname="Command">
         <source>Command</source>
-        <target xml:lang="fr" state="needs-translation">Command</target>
+        <target state="needs-translation">Command</target>
       </trans-unit>
-      <trans-unit id="29c2c02a361c9d7028472e5d92cd4a54" resname="Output">
+      <trans-unit id="skOby43" resname="Output">
         <source>Output</source>
-        <target xml:lang="fr" state="needs-translation">Output</target>
+        <target state="needs-translation">Output</target>
       </trans-unit>
-      <trans-unit id="a114134ff06747be968e691ea851239f" resname="Multimedia Object Admin Link">
+      <trans-unit id="QeYqvyp" resname="Multimedia Object Admin Link">
         <source>Multimedia Object Admin Link</source>
-        <target xml:lang="fr" state="needs-translation">Multimedia Object Admin Link</target>
+        <target state="needs-translation">Multimedia Object Admin Link</target>
       </trans-unit>
-      <trans-unit id="0a3573688f840d220e260fed1a22e801" resname="Technical info">
+      <trans-unit id="QFUsnzv" resname="Technical info">
         <source>Technical info</source>
-        <target xml:lang="fr" state="needs-translation">Technical info</target>
+        <target state="needs-translation">Technical info</target>
       </trans-unit>
-      <trans-unit id="4acd6f830ae820b400fa57ff7c5a8a69" resname="Job Id">
+      <trans-unit id="cvY.5HK" resname="Job Id">
         <source>Job Id</source>
-        <target xml:lang="fr" state="needs-translation">Job Id</target>
+        <target state="needs-translation">Job Id</target>
       </trans-unit>
-      <trans-unit id="ce21470ab49d1d1976bc3dc72438c183" resname="Metadata">
+      <trans-unit id="nt31c8t" resname="Metadata">
         <source>Metadata</source>
-        <target xml:lang="fr" state="needs-translation">Metadata</target>
+        <target state="needs-translation">Metadata</target>
       </trans-unit>
-      <trans-unit id="6544bf0080fae39fefe95d729bf175f4" resname="Multimedia Object Title">
+      <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target xml:lang="fr" state="needs-translation">Multimedia Object Title</target>
+        <target state="needs-translation">Multimedia Object Title</target>
       </trans-unit>
-      <trans-unit id="d3a7a1dacbd10db0bed5401db874ac12" resname="Series Id">
+      <trans-unit id="NfPDbcX" resname="Series Id">
         <source>Series Id</source>
-        <target xml:lang="fr" state="needs-translation">Series Id</target>
+        <target state="needs-translation">Series Id</target>
       </trans-unit>
-      <trans-unit id="8bc8df68c1bbcb7463b2b309430e77e8" resname="Series Title">
+      <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target xml:lang="fr" state="needs-translation">Series Title</target>
+        <target state="needs-translation">Series Title</target>
       </trans-unit>
     </body>
   </file>
