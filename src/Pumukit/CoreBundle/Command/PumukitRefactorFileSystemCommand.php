@@ -560,6 +560,7 @@ EOT
      */
     private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
+        /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
             array('_id' => new \MongoId($multimediaObjectId))
         );
@@ -583,6 +584,7 @@ EOT
      */
     private function updateMultimediaObjectMaterial(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
+        /** @var MultimediaObject */
         $multimediaObject = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
             array('_id' => new \MongoId($multimediaObjectId))
         );
