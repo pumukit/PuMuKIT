@@ -75,15 +75,15 @@
       </trans-unit>
       <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target state="needs-translation">Multimedia Object Title</target>
+        <target state="translated">Título do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="NfPDbcX" resname="Series Id">
         <source>Series Id</source>
-        <target state="needs-translation">Series Id</target>
+        <target state="translated">Id da serie</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target state="needs-translation">Series Title</target>
+        <target state="translated">Titulo da serie</target>
       </trans-unit>
     </body>
   </file>
