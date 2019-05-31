@@ -41,7 +41,7 @@ class CrudController extends Controller
         $editForm = null;
         if ($active) {
             $deleteForm = $this->createDeleteForm($active);
-            $editForm = $this->createForm(new TemplateType(), $active);
+            $editForm = $this->createForm(TemplateType::class, $active);
 
             $editForm->handleRequest($request);
 
