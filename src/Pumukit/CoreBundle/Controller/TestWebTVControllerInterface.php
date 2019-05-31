@@ -12,7 +12,6 @@ class TestWebTVControllerInterface extends Controller implements WebTVController
 {
     /**
      * @Route("/test/webtvfilter.{_format}", name="pumukit_core_tests_webtvfilter", defaults={"_format":"json"})
-     * @Template()
      */
     public function testAction(Request $request)
     {

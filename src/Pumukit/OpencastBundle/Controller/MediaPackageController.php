@@ -20,7 +20,7 @@ class MediaPackageController extends Controller
 {
     /**
      * @Route("/opencast/mediapackage", name="pumukitopencast")
-     * @Template()
+     * @Template("PumukitOpencastBundle:MediaPackage:index.html.twig")
      */
     public function indexAction(Request $request)
     {

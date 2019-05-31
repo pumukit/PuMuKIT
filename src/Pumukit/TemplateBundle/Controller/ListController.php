@@ -12,7 +12,7 @@ class ListController extends Controller
 {
     /**
      * @Route("/t/{name}", name="pumukit_template")
-     * @Template()
+     * @Template("PumukitTemplateBundle:List:index.html.twig")
      */
     public function indexAction(PumukitTemplate $template, Request $request)
     {

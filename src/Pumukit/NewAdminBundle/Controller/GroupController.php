@@ -23,7 +23,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Index.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:Group:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -43,7 +43,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * List action.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:Group:list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -248,7 +248,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
     /**
      * Info Action.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:Group:info.html.twig")
      *
      * @param Request $request
      *

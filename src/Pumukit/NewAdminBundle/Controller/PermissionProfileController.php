@@ -22,7 +22,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:PermissionProfile:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -45,7 +45,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      *
      * Overwrite to have permissions list
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:PermissionProfile:list.html.twig")
      */
     public function listAction(Request $request)
     {
@@ -78,7 +78,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      * Create Action
      * Overwrite to give PermissionProfileType name correctly.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:PermissionProfile:create.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -111,7 +111,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      * Overwrite to return list and not index
      * and show toast message.
      *
-     * @Template()
+     * @Template("PumukitNewAdminBundle:PermissionProfile:update.html.twig")
      */
     public function updateAction(Request $request)
     {

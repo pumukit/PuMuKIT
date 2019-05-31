@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class WidgetController extends Controller
 {
     /**
-     * @Template()
+     * @Template("PumukitNewAdminBundle:Widget:languageselect.html.twig")
      */
     public function languageselectAction()
     {

@@ -12,7 +12,7 @@ class ModalController extends Controller
 {
     /**
      * @Route("/admin/podcast/model/mm/{id}", name="pumukitpodcast_modal_index", defaults={"filter": false})
-     * @Template()
+     * @Template("PumukitPodcastBundle:Modal:index.html.twig")
      */
     public function indexAction(Request $request, MultimediaObject $mm)
     {

@@ -12,7 +12,6 @@ class TestPersonalController extends Controller implements PersonalControllerInt
 {
     /**
      * @Route("/test/personalfilter.{_format}", name="pumukit_core_tests_personalfilter", defaults={"_format":"json"})
-     * @Template()
      */
     public function testAction(Request $request)
     {

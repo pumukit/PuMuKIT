@@ -12,7 +12,6 @@ class TestBackofficeController extends Controller implements AdminControllerInte
 {
     /**
      * @Route("/test/backofficefilter.{_format}", name="pumukit_core_tests_backofficefilter", defaults={"_format":"json"})
-     * @Template()
      */
     public function testAction(Request $request)
     {
