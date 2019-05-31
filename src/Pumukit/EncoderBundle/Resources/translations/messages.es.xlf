@@ -89,12 +89,9 @@
         <source>Cancel</source>
         <target state="translated">Cancelar</target>
       </trans-unit>
-      <trans-unit id="5GTGYFq" resname="RETRY">
+      <trans-unit id="5GTGYFq" resname="RETRY" approved="yes">
         <source>RETRY</source>
         <target state="translated">REINTENTAR</target>
-        <alt-trans>
-          <target>REINTENTO</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="ZdrrN4v" resname="DELETE">
         <source>DELETE</source>
@@ -104,12 +101,9 @@
         <source>Jobs</source>
         <target state="translated">Trabajos</target>
       </trans-unit>
-      <trans-unit id="HqRCoTS" resname="No">
+      <trans-unit id="HqRCoTS" resname="No" approved="yes">
         <source>No</source>
         <target state="translated">No</target>
-        <alt-trans>
-          <target>Tareas</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7DckhU_" resname="No showing">
         <source>No showing</source>
