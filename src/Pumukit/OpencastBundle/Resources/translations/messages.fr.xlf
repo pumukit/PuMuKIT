@@ -89,10 +89,6 @@
         <source>Cancel</source>
         <target state="translated">Annuler</target>
       </trans-unit>
-      <trans-unit id="c.hOhIO" resname="{0} users|{1} mediaPackages|]1,Inf] Media Packages">
-        <source>{0} users|{1} mediaPackages|]1,Inf] Media Packages</source>
-        <target state="needs-translation">{0} users|{1} mediaPackages|]1,Inf] Media Packages</target>
-      </trans-unit>
       <trans-unit id="uQjDk6r" resname="Cancel current search">
         <source>Cancel current search</source>
         <target state="translated">Annuler la recherche en cours</target>
