@@ -69,10 +69,15 @@ class TrackController extends Controller implements NewAdminControllerInterface
                 $multimediaObject = $jobService->createTrackFromInboxOnServer($multimediaObject, $request->get('file'), $profile, $priority, $language, $description);
             }
         } catch (\Exception $e) {
+            $logger = $this->container->get('logger');
+            $logger->warning($e->getMessage());
+
+            $message = ('dev' === $this->getParameter('kernel.environment')) ? $e->getMessage() : 'The file is not a valid video or audio file';
+
             return array(
                 'mm' => $multimediaObject,
                 'uploaded' => 'failed',
-                'message' => 'The file is not a valid video or audio file',
+                'message' => $message,
             );
         }
 
