@@ -3,6 +3,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
+    reportUnmatchedIgnoredErrors: false
     doctrine:
         objectManagerLoader: doc/object-manager.php
     ignoreErrors:
