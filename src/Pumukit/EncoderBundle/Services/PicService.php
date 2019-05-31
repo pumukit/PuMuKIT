@@ -7,6 +7,8 @@ use Symfony\Component\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PicService
 {

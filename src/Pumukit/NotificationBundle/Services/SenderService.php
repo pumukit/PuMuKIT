@@ -5,6 +5,7 @@ namespace Pumukit\NotificationBundle\Services;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Person;
 
 class SenderService
 {

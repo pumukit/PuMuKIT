@@ -20,7 +20,7 @@ class EventRepositoryTest extends WebTestCase
         $this->repo = $this->dm->getRepository(Event::class);
 
         $this->dm->getDocumentCollection(Event::class)->remove(array());
-        $this->dm->getDocumentCollection(Live:class)->remove(array());
+        $this->dm->getDocumentCollection(Live::class)->remove(array());
         $this->dm->flush();
     }
 

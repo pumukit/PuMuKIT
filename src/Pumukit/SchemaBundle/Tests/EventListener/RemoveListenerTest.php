@@ -8,6 +8,8 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class RemoveListenerTest extends WebTestCase
 {

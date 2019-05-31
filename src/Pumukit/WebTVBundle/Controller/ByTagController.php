@@ -11,6 +11,8 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class ByTagController.

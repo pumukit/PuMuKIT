@@ -11,6 +11,7 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\User;
 
 class JobNotificationService
 {

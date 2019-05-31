@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Services\CaptionService;
 use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\Services\LinkService;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class PumukitExtension.

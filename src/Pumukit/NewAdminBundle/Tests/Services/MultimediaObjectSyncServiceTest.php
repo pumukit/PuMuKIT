@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class MultimediaObjectSyncServiceTest extends WebTestCase
 {

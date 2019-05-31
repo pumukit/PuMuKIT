@@ -5,6 +5,8 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Group;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class GroupService
 {

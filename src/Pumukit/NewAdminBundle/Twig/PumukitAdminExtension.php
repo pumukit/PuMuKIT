@@ -13,6 +13,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
+use Pumukit\SchemaBundle\Document\Role;
 
 class PumukitAdminExtension extends \Twig_Extension
 {

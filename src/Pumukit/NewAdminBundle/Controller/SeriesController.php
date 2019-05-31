@@ -16,6 +16,8 @@ use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")

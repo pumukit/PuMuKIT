@@ -4,6 +4,7 @@ namespace Pumukit\LiveBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\LiveBundle\Document\Live;
+use Pumukit\LiveBundle\Document\Event;
 
 /**
  * EventRepository.

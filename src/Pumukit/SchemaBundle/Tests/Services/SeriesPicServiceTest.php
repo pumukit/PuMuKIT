@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesPicServiceTest extends WebTestCase
 {

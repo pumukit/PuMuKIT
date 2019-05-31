@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @deprecated in version 2.3

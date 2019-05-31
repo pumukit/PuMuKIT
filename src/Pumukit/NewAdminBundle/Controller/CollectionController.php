@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class CollectionController extends Controller implements NewAdminControllerInterface
 {

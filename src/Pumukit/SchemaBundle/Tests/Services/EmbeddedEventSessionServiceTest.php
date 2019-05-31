@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
+use Pumukit\SchemaBundle\Document\Series;
 
 class EmbeddedEventSessionServiceTest extends WebTestCase
 {

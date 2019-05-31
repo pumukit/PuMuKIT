@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Pumukit\LiveBundle\Document\Event;
+use Pumukit\LiveBundle\Document\Live;
 
 /**
  * @Route("/api/live")
@@ -59,7 +61,7 @@ class APIController extends Controller
      */
     public function livessAction(Request $request)
     {
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live:class);
+        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live::class);
         $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');

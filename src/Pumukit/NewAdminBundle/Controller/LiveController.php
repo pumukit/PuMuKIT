@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
@@ -14,7 +15,7 @@ use Pumukit\LiveBundle\Document\Live;
 class LiveController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'live';
-    public static $repoName = Live:class;
+    public static $repoName = Live::class;
 
     /**
      * Create Action

@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\LiveBundle\Document\Live;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
@@ -558,7 +561,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setUrl($externalURL);
 
                 if (isset($data['live'])) {
-                    $live = $dm->getRepository(Live:class)->findOneBy(
+                    $live = $dm->getRepository(Live::class)->findOneBy(
                         array('_id' => new \MongoId($data['live']))
                     );
                     $event->setLive($live);

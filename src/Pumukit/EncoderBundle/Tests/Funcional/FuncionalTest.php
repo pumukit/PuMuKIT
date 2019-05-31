@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bridge\Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Pumukit\EncoderBundle\Document\Job;
 
 class FuncionalTest extends WebTestCase
 {

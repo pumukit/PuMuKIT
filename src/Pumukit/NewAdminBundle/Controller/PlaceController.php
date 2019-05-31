@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")

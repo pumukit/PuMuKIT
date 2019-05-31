@@ -8,6 +8,8 @@ use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class TrackServiceTest extends WebTestCase
 {

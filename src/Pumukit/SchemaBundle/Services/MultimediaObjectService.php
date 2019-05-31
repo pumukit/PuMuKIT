@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectService
 {

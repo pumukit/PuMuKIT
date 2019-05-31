@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\EventListener\Log;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class LogTest extends WebTestCase
 {

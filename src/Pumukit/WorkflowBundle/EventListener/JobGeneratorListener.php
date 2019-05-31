@@ -9,6 +9,7 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class JobGeneratorListener
 {

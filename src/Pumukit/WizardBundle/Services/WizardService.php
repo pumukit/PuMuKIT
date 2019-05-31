@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class WizardService.

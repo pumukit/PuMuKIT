@@ -35,7 +35,7 @@ class ChatController extends Controller
         if (!$username) {
             $sessionCookie = $request->cookies->get('PHPSESSID');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $messageRepo = $dm->getRepository(Message:class);
+            $messageRepo = $dm->getRepository(Message::class);
             $message = $messageRepo->findOneBy(array('cookie' => $sessionCookie));
             if ($message && ($author = $message->getAuthor())) {
                 $username = $author;
@@ -66,7 +66,7 @@ class ChatController extends Controller
         if (!$username) {
             $sessionCookie = $request->cookies->get('PHPSESSID');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $messageRepo = $dm->getRepository(Message:class);
+            $messageRepo = $dm->getRepository(Message::class);
             $message = $messageRepo->findOneBy(array('cookie' => $sessionCookie));
             if ($message && ($author = $message->getAuthor())) {
                 $username = $author;
@@ -161,7 +161,7 @@ class ChatController extends Controller
     public function listAction(MultimediaObject $multimediaObject)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository(Message:class);
+        $repo = $dm->getRepository(Message::class);
         $messages = $repo->findBy(
             array('multimediaObject' => $multimediaObject->getId()),
             array('insertDate' => 'asc')
@@ -184,7 +184,7 @@ class ChatController extends Controller
     public function listBasicAction(Live $live)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository(Message:class);
+        $repo = $dm->getRepository(Message::class);
         $messages = $repo->findBy(
             array('channel' => $live->getId()),
             array('insertDate' => 'asc')

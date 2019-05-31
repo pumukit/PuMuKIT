@@ -11,6 +11,9 @@ use ZipArchive;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {

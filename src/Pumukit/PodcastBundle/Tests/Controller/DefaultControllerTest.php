@@ -3,6 +3,8 @@
 namespace Pumukit\PodcastBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class DefaultControllerTest extends WebTestCase
 {

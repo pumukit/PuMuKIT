@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")

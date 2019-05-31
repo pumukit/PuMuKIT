@@ -7,6 +7,7 @@ use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\MaterialService;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MaterialServiceTest extends WebTestCase
 {

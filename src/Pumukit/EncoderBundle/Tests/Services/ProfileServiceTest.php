@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\EncoderBundle\Document\Job;
 
 class ProfileServiceTest extends WebTestCase
 {

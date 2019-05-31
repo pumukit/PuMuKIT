@@ -18,6 +18,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * @Route("/unesco")

@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class SecurityController.

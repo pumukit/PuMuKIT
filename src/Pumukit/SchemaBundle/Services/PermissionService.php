@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class PermissionService
 {

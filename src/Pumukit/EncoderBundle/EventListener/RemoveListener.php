@@ -4,6 +4,7 @@ namespace Pumukit\EncoderBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Pumukit\SchemaBundle\Event\TrackEvent;
+use Pumukit\EncoderBundle\Document\Job;
 
 class RemoveListener
 {

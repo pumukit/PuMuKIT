@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\SchemaBundle\EventListener\MultimediaObjectListener;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PicServiceTest extends WebTestCase
 {

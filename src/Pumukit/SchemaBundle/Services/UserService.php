@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Person;
 
 class UserService
 {

@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesService
 {

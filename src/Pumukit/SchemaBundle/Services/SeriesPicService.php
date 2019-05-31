@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesPicService
 {

@@ -8,6 +8,7 @@ use Pumukit\LiveBundle\Services\LiveService;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
+use Pumukit\LiveBundle\Document\Event;
 
 class LiveTwigExtension extends \Twig_Extension
 {

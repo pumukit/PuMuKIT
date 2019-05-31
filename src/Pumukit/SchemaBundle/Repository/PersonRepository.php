@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * PersonRepository.

@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class OpencastImportService
 {

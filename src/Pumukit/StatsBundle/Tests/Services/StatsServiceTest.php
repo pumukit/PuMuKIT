@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Services\StatsService;
 use Pumukit\StatsBundle\Document\ViewsLog;
+use Pumukit\SchemaBundle\Document\Series;
 
 class StatsServiceTest extends WebTestCase
 {

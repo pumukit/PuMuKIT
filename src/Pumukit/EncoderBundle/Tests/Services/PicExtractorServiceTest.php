@@ -8,6 +8,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PicExtractorServiceTest extends WebTestCase
 {

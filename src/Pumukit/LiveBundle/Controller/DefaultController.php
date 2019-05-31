@@ -252,7 +252,7 @@ class DefaultController extends Controller
      */
     public function defaultAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Live:class);
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Live::class);
         $live = $repo->findOneBy(array());
 
         if (!$live) {

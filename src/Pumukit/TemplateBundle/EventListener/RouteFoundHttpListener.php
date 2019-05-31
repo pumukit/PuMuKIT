@@ -2,13 +2,13 @@
 
 namespace Pumukit\TemplateBundle\EventListener;
 
+use Pumukit\TemplateBundle\Document\Template;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\EventListener\LocaleListener;
-use Pumukit\TemplateBundle\Document\Template;
 
 class RouteFoundHttpListener
 {
