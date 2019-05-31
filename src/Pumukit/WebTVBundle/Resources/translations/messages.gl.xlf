@@ -39,7 +39,10 @@
       </trans-unit>
       <trans-unit id="6njlRCj" resname="Videos you may also be interested in">
         <source>Videos you may also be interested in</source>
-        <target state="translated">Tamén che interesan</target>
+        <target state="translated">Tamén che poden interesar</target>
+        <alt-trans>
+          <target>Tamén che interesan</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
@@ -83,7 +86,10 @@
       </trans-unit>
       <trans-unit id="wTlux3Y" resname="There are no videos with these specifications">
         <source>There are no videos with these specifications</source>
-        <target state="translated">Non existen vídeos de estas características</target>
+        <target state="translated">Non existen vídeos destas características</target>
+        <alt-trans>
+          <target>Non existen vídeos de estas características</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -647,63 +653,63 @@
       </trans-unit>
       <trans-unit id="QcHoioP" resname="Next live event">
         <source>Next live event</source>
-        <target state="needs-translation">Next live event</target>
+        <target state="translated">Próximo evento de directo</target>
       </trans-unit>
       <trans-unit id="Th9Jqci" resname="Event">
         <source>Event</source>
-        <target state="needs-translation">Event</target>
+        <target state="translated">Evento</target>
       </trans-unit>
       <trans-unit id="6UY9zPB" resname="Place">
         <source>Place</source>
-        <target state="needs-translation">Place</target>
+        <target state="translated">Lugar</target>
       </trans-unit>
       <trans-unit id="M7k0ds9" resname="Time">
         <source>Time</source>
-        <target state="needs-translation">Time</target>
+        <target state="translated">Hora</target>
       </trans-unit>
       <trans-unit id="VXRvY92" resname="JWPlayer does not support your browser version">
         <source>JWPlayer does not support your browser version</source>
-        <target state="needs-translation">JWPlayer does not support your browser version</target>
+        <target state="translated">JWPlayer non é compatible coa versión do seu navegador</target>
       </trans-unit>
       <trans-unit id="e9X3KLs" resname="Please use 9.0 or higher version or use another browser.">
         <source>Please use 9.0 or higher version or use another browser.</source>
-        <target state="needs-translation">Please use 9.0 or higher version or use another browser.</target>
+        <target state="translated">Por favor, empregue a versión 9.0 ou superior ou use outro navegador.</target>
       </trans-unit>
       <trans-unit id="wlNtjtj" resname="The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.">
         <source>The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</source>
-        <target state="needs-translation">The Flash Plugin needs to be installed. JWPlayer needs minimum Flash version 10.1.82.76 to stream.</target>
+        <target state="translated">É necesario instalar o plugin Flash. JWPlayer require polo menos a versión 10.1.82.76 de Flash para reproducir.</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target state="needs-translation">Live chat</target>
+        <target state="translated">Chat en directo</target>
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target state="needs-translation">Chat icon</target>
+        <target state="translated">Icono do chat</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="translated">Nome</target>
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target state="needs-translation">Name cannot be empty</target>
+        <target state="translated">O nome non pode estar baleiro</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target state="needs-translation">Message</target>
+        <target state="translated">Mensaxe</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
-        <target state="needs-translation">Sorry but there was an error</target>
+        <target state="translated">Sentímolo, pero houbo un erro</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="needs-translation">Event chat</target>
+        <target state="translated">Chat do evento</target>
       </trans-unit>
       <trans-unit id="DKsclhd" resname="video">
         <source>video</source>
-        <target state="needs-translation">video</target>
+        <target state="translated">vídeo</target>
       </trans-unit>
     </body>
   </file>
