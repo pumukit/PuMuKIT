@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Annotation;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -218,6 +219,25 @@ class AnnotationsAPIController extends Controller
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
 
         $response = $serializer->serialize($annotation, 'xml');
+
+        return new Response($response);
+    }
+
+    /**
+     * @Route("/reset/{id}")
+     * @Method("DELETE")
+     * @Security("has_role('ROLE_ACCESS_MULTIMEDIA_SERIES')")
+     */
+    public function deleteAllAction(MultimediaObject $multimediaobject, Request $request)
+    {
+        $serializer = $this->get('jms_serializer');
+
+        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
+        $annonQB = $annonRepo->createQueryBuilder();
+        $annonQB->field('multimedia_object')->equals(new \MongoId($multimediaobject->getId()));
+        $annonQB->remove()->getQuery()->execute();
+
+        $response = $serializer->serialize(array('status' => 'ok'), 'xml');
 
         return new Response($response);
     }
