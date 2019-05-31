@@ -2759,11 +2759,11 @@
       </trans-unit>
       <trans-unit id="8bdQWvp" resname="Social">
         <source>Social</source>
-        <target state="needs-translation">Social</target>
+        <target state="translated">Social</target>
       </trans-unit>
       <trans-unit id="vNGOrV_" resname="Twitter">
         <source>Twitter</source>
-        <target state="needs-translation">Twitter</target>
+        <target state="translated">Twitter</target>
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
@@ -2875,10 +2875,7 @@
                             In case this series already exists in the database, a pull-down list will be shown,
                             where you can select it and use it. If it doesn't exist in the database,
                             create a new entrance with the written name.</source>
-        <target state="needs-translation">Add the name of the series you want to use.
-                            In case this series already exists in the database, a pull-down list will be shown,
-                            where you can select it and use it. If it doesn't exist in the database,
-                            create a new entrance with the written name.</target>
+        <target state="translated">Escriba o nome da serie que desexa utilizar. No caso de que xa exista na base de datos aparecerá nunha lista despregable, onde vostede pode seleccionala e usala. Se non existe na base de datos, crearase unha nova entrada co nome escrito.</target>
       </trans-unit>
       <trans-unit id="8JSxSlF" resname="Video URL">
         <source>Video URL</source>
@@ -2958,7 +2955,7 @@
       </trans-unit>
       <trans-unit id="Y9QAQRw" resname="Thumbnail generated.">
         <source>Thumbnail generated.</source>
-        <target state="needs-translation">Thumbnail generated.</target>
+        <target state="translated">Miniatura xerada.</target>
       </trans-unit>
       <trans-unit id="mNfVhoI" resname="Move up thumbnail">
         <source>Move up thumbnail</source>
