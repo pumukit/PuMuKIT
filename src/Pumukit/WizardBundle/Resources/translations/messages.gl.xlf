@@ -311,7 +311,7 @@
       </trans-unit>
       <trans-unit id="qCleCP9" resname="Series">
         <source>Series</source>
-        <target state="needs-translation">Series</target>
+        <target state="translated">Serie</target>
       </trans-unit>
       <trans-unit id="GP3VSbL" resname="New">
         <source>New</source>
@@ -319,27 +319,27 @@
       </trans-unit>
       <trans-unit id="ZI.xJ3." resname="ERROR!!">
         <source>ERROR!!</source>
-        <target state="needs-translation">ERROR!!</target>
+        <target state="translated">ERRO!!</target>
       </trans-unit>
       <trans-unit id="X9RxnLY" resname="There was an error:">
         <source>There was an error:</source>
-        <target state="needs-translation">There was an error:</target>
+        <target state="translated">Houbo un erro:</target>
       </trans-unit>
       <trans-unit id="kihsarY" resname="Series title">
         <source>Series title</source>
-        <target state="needs-translation">Series title</target>
+        <target state="translated">Título da serie</target>
       </trans-unit>
       <trans-unit id="2ZvNeLW" resname="Upload file">
         <source>Upload file</source>
-        <target state="needs-translation">Upload file</target>
+        <target state="translated">Subir un ficheiro</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target state="needs-translation">Multimedia Object title</target>
+        <target state="translated">Título do obxecto multimedia</target>
       </trans-unit>
       <trans-unit id="kg5BPH1" resname="Status">
         <source>Status</source>
-        <target state="needs-translation">Status</target>
+        <target state="translated">Estado</target>
       </trans-unit>
     </body>
   </file>

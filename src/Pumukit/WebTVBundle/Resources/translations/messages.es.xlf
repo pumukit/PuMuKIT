@@ -179,7 +179,7 @@
       </trans-unit>
       <trans-unit id="OrWf0.0" resname="Download master">
         <source>Download master</source>
-        <target state="translated">Descarga master</target>
+        <target state="translated">Descargar máster</target>
       </trans-unit>
       <trans-unit id="WEBL323" resname="403 Forbidden">
         <source>403 Forbidden</source>
