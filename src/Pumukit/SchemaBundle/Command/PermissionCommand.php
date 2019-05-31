@@ -57,7 +57,7 @@ EOT
     private function getProfile($profileName)
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $repo = $dm->getRepository(PermissionProfile::class);
         $profile = $repo->findOneByName($profileName);
 
         if (!$profile) {

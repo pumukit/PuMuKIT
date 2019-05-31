@@ -46,9 +46,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $this->get('session')->set('admin/live/event/page', $request->query->get('page'));
         }
 
-        $aRoles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
-        $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
-        $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(
+        $aRoles = $dm->getRepository(Role::class)->findAll();
+        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PUBCHANNELS'));
+        $aChannels = $dm->getRepository(Tag::class)->findBy(
             array('parent.$id' => new \MongoId($aPubChannel->getId()))
         );
 
@@ -93,7 +93,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $dm->persist($series);
             $createSeries = true;
         } else {
-            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
+            $series = $dm->getRepository(Series::class)->findOneBy(
                 array('_id' => new \MongoId($series))
             );
         }
@@ -216,10 +216,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $session->set('admin/live/event/sort/field', $sortField);
         $session->set('admin/live/event/sort/type', $sortType);
         if ('embeddedEvent.embeddedEventSession.start' === $sortField) {
-            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+            $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy($criteria);
             $multimediaObjects = $this->reorderMultimediaObjectsByNextNearSession($multimediaObjects, $sortType);
         } else {
-            $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+            $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(
                 $criteria,
                 array($sortField => $sortType)
             );
@@ -358,7 +358,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
                 array('_id' => new \MongoId($multimediaObjectId))
             );
             $this->deleteEvent($multimediaObject);
@@ -442,7 +442,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     private function deleteEventAndSeries(MultimediaObject $multimediaObject)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $aggregate = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
         $user = $this->getUser();
         $pipeline = array();
         $pipeline[] = array('$match' => array('series' => new \MongoId($multimediaObject->getSeries()->getId())));
@@ -465,7 +465,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             throw new \Exception($translator->trans('Error: Series have another owners on others events'));
         } else {
             $series = $multimediaObject->getSeries();
-            $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+            $seriesRepo = $dm->getRepository(Series::class);
             $count = $seriesRepo->countMultimediaObjects($series);
             if (1 === $count) {
                 $factoryService->deleteMultimediaObject($multimediaObject);
@@ -558,7 +558,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setUrl($externalURL);
 
                 if (isset($data['live'])) {
-                    $live = $dm->getRepository('PumukitLiveBundle:Live')->findOneBy(
+                    $live = $dm->getRepository(Live:class)->findOneBy(
                         array('_id' => new \MongoId($data['live']))
                     );
                     $event->setLive($live);
@@ -741,7 +741,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($id));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($id));
 
         return array('multimediaObject' => $multimediaObject);
     }
@@ -759,7 +759,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
             new \MongoId($multimediaObject)
         );
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
@@ -788,7 +788,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
             new \MongoId($multimediaObject)
         );
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
@@ -833,7 +833,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $form = $this->createForm(EmbeddedEventSessionType::class, null, array('translator' => $translator, 'locale' => $locale));
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
             new \MongoId($multimediaObject)
         );
 
@@ -874,7 +874,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $value = $request->query->get('term');
 
-        $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
+        $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(Series::class);
 
         $user = $this->getUser();
         $pipeline = array();
@@ -921,7 +921,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($multimediaObject)) {
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('_id' => new \MongoId($multimediaObject)));
+            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(array('_id' => new \MongoId($multimediaObject)));
 
             return array('multimediaObject' => $multimediaObject);
         }
@@ -942,7 +942,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $series = $request->request->get('seriesSuggest');
         if ($series) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => new \MongoId($series)));
+            $series = $dm->getRepository(Series::class)->findOneBy(array('_id' => new \MongoId($series)));
             if ($series) {
                 $multimediaObject->setSeries($series);
                 $dm->flush();
@@ -1036,7 +1036,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
 
-        $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(array('_id' => $multimediaObject->getSeries()->getId()));
+        $series = $dm->getRepository(Series::class)->findOneBy(array('_id' => $multimediaObject->getSeries()->getId()));
         if (!$series) {
             throw new \Exception($translator->trans('Series not found'));
         }

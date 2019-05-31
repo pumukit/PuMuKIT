@@ -47,7 +47,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function createBuilderWithTag($tag, $sort = array())
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithTag($tag);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
@@ -65,7 +65,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findOneWithTag($tag)
     {
-        $referencedOneSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneSeriesFieldWithTag($tag);
+        $referencedOneSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findOneSeriesFieldWithTag($tag);
 
         return $this->createQueryBuilder()->field('_id')->equals($referencedOneSeries)->getQuery()->getSingleResult();
     }
@@ -82,7 +82,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithAnyTag($tags);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAnyTag($tags);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
@@ -103,7 +103,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithAllTags($tags);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
@@ -121,7 +121,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findOneWithAllTags($tags)
     {
-        $referencedOneSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneSeriesFieldWithAllTags($tags);
+        $referencedOneSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findOneSeriesFieldWithAllTags($tags);
 
         return $this->createQueryBuilder()->field('_id')->equals($referencedOneSeries)->getQuery()->getSingleResult();
     }
@@ -138,7 +138,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithTag($tag);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
         $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray());
 
@@ -156,7 +156,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findOneWithoutTag($tag)
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithTag($tag);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
         return $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray())->getQuery()->getSingleResult();
     }
@@ -171,7 +171,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithAllTags($tags);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
         $qb = $this->createQueryBuilder()->field('_id')->notIn($referencedSeries->toArray());
 
@@ -201,7 +201,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findSeriesByPersonId($personId)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
 
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonId($personId);
 
@@ -222,7 +222,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
 
         return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
@@ -257,7 +257,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
 
         return $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->getQuery()->execute();
@@ -277,7 +277,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
@@ -356,7 +356,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function countPublic()
     {
-        return $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()->distinct('series')->getQuery()->execute()->count();
+        return $this->getDocumentManager()->getRepository(MultimediaObject::class)->createStandardQueryBuilder()->distinct('series')->getQuery()->execute()->count();
     }
 
     /**
@@ -390,7 +390,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = array())
     {
-        $referencedSeries = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject')->findSeriesFieldWithTag($tag);
+        $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->field('series_type')->references($seriesType);
 
@@ -424,7 +424,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastType($type);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
@@ -481,7 +481,7 @@ class SeriesRepository extends DocumentRepository
      */
     public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
     {
-        $repoMmobj = $this->getDocumentManager()->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type, $groups);
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
@@ -649,7 +649,7 @@ class SeriesRepository extends DocumentRepository
         $dm = $this->getDocumentManager();
 
         /* Find user series (properties.owners) */
-        $seriesCollection = $dm->getDocumentCollection('PumukitSchemaBundle:Series');
+        $seriesCollection = $dm->getDocumentCollection(Series::class);
 
         if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
             $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
@@ -666,7 +666,7 @@ class SeriesRepository extends DocumentRepository
         $aSeries = $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
 
         /* Find mmo user groups */
-        $mmoCollection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $groups = [];
         foreach ($user->getGroups() as $group) {
@@ -701,7 +701,7 @@ class SeriesRepository extends DocumentRepository
     public function countMmobjsBySeries($seriesList = array())
     {
         return $this->getDocumentManager()
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->getRepository(MultimediaObject::class)
             ->countMmobjsBySeries($seriesList);
     }
 
@@ -713,7 +713,7 @@ class SeriesRepository extends DocumentRepository
     public function getMultimediaObjects(Series $series)
     {
         return $this->getDocumentManager()
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->getRepository(MultimediaObject::class)
             ->findWithoutPrototype($series);
     }
 
@@ -725,7 +725,7 @@ class SeriesRepository extends DocumentRepository
     public function countMultimediaObjects(Series $series)
     {
         return $this->getDocumentManager()
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->getRepository(MultimediaObject::class)
             ->countWithoutPrototype($series);
     }
 }

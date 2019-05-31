@@ -27,9 +27,9 @@ class DefaultControllerTest extends WebTestCase
         $this->router = static::$kernel->getContainer()->get('router');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
     }
 

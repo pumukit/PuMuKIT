@@ -19,11 +19,11 @@ class TagTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Tag');
+          ->getRepository(Tag::class);
 
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection(Tag::class)
       ->remove(array());
     }
 

@@ -25,20 +25,20 @@ class RemoveListenerTest extends WebTestCase
 
         $this->logger = static::$kernel->getContainer()->get('logger');
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repoJobs = $this->dm->getRepository('PumukitEncoderBundle:Job');
-        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->repoJobs = $this->dm->getRepository(Job::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->repoSeries = $this->dm->getRepository(Series::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
+        $this->dm->getDocumentCollection(Job::class)
           ->remove(array());
         $this->dm->flush();
     }

@@ -112,7 +112,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -131,7 +131,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -154,7 +154,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+              ->getRepository(MultimediaObject::class);
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');

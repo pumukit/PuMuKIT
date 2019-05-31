@@ -15,7 +15,7 @@ class TagService
     public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
-        $this->repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->repository = $this->dm->getRepository(Tag::class);
         $this->dispatcher = $dispatcher;
     }
 
@@ -220,7 +220,7 @@ class TagService
     {
         $tag = $this->saveTag($tag);
 
-        $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+        $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
         $query = $qb
             ->update()
@@ -273,7 +273,7 @@ class TagService
     {
         if ($this->canDeleteTag($tag)) {
             $this->dm->clear('Pumukit\SchemaBundle\Document\MultimediaObject');
-            $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+            $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb
                 ->update()

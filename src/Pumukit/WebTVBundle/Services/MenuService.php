@@ -105,8 +105,8 @@ class MenuService
      */
     private function getEvents()
     {
-        $channels = $this->dm->getRepository('PumukitLiveBundle:Live')->findAll();
-        $events = $this->dm->getRepository('PumukitLiveBundle:Event')->findNextEvents();
+        $channels = $this->dm->getRepository(Live:class)->findAll();
+        $events = $this->dm->getRepository(Event::class)->findNextEvents();
         $liveEventTypeSession = false;
 
         return [

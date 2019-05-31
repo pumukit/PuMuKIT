@@ -136,7 +136,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
 
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
 
         $limit = $this->container->getParameter('limit_objs_player_series');
 
@@ -177,7 +177,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
     {
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
         $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
         return ['multimediaObjects' => $relatedMms];

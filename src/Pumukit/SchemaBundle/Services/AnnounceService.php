@@ -12,8 +12,8 @@ class AnnounceService
     public function __construct(DocumentManager $documentManager)
     {
         $dm = $documentManager;
-        $this->seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
-        $this->mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->seriesRepo = $dm->getRepository(Series::class);
+        $this->mmobjRepo = $dm->getRepository(MultimediaObject::class);
     }
 
     public function getLast($limit = 3, $withPudenewTag = true, $useRecordDate = false)

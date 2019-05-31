@@ -18,10 +18,10 @@ class RoleRepositoryTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-            ->getRepository('PumukitSchemaBundle:Role');
+            ->getRepository(Role::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove(array());
         $this->dm->flush();
     }
 

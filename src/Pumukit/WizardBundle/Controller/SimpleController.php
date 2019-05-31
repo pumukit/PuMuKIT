@@ -279,7 +279,7 @@ class SimpleController extends Controller
     private function getSeries($seriesId)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:Series');
+        $repo = $dm->getRepository(Series::class);
 
         return $repo->find($seriesId);
     }
@@ -294,7 +294,7 @@ class SimpleController extends Controller
     private function getSeriesByExternalData($externalData)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:Series');
+        $repo = $dm->getRepository(Series::class);
 
         if (isset($externalData['seriesData']['title'])) {
             return $repo->findOneBy(array('title' => $externalData['seriesData']['title'], 'properties.owners' => $this->getUser()->getId()));

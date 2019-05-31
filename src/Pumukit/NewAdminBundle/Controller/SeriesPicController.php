@@ -128,7 +128,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -151,7 +151,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');
@@ -178,7 +178,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$series = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested series does not exist');

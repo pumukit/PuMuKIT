@@ -27,9 +27,9 @@ class GroupService
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->translator = $translator;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Group');
-        $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(Group::class);
+        $this->userRepo = $this->dm->getRepository(User::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
     /**

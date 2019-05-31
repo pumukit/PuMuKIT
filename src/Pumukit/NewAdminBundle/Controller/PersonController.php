@@ -16,7 +16,7 @@ use Pumukit\NewAdminBundle\Form\Type\PersonType;
 class PersonController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'person';
-    public static $repoName = 'PumukitSchemaBundle:Person';
+    public static $repoName = Person::class;
 
     /**
      * Index.
@@ -588,7 +588,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $personService = $this->get('pumukitschema.person');
         $translator = $this->get('translator');
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $dm->getRepository(MultimediaObject::class);
 
         foreach ($ids as $id) {
             $person = $this->find($id);

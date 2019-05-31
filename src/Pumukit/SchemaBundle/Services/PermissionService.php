@@ -19,7 +19,7 @@ class PermissionService
      */
     public function __construct(DocumentManager $documentManager, array $externalPermissions = array())
     {
-        $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Tag');
+        $this->repo = $documentManager->getRepository(Tag::class);
         $this->externalPermissions = $externalPermissions;
     }
 

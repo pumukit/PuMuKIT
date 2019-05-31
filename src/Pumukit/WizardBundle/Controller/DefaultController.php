@@ -80,7 +80,7 @@ class DefaultController extends Controller
             $user = $this->getUser();
             $reuseAdminSeries = $this->getParameter('pumukit_wizard.reuse_admin_series');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $userSeries = $dm->getRepository('PumukitSchemaBundle:Series')->findUserSeries($user, $reuseAdminSeries);
+            $userSeries = $dm->getRepository(Series::class)->findUserSeries($user, $reuseAdminSeries);
 
             usort($userSeries, function ($a, $b) use ($request) {
                 return strcmp($a['_id']['title'][$request->getLocale()], $b['_id']['title'][$request->getLocale()]);
@@ -229,7 +229,7 @@ class DefaultController extends Controller
         if ($showTags) {
             $tagCode = $this->container->getParameter('pumukit_wizard.tag_parent_code');
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagRepo = $dm->getRepository(Tag::class);
             $tagParent = $tagRepo->findOneBy(array('cod' => $tagCode));
             if ($tagParent) {
                 $availableTags = $tagParent->getChildren();
@@ -568,7 +568,7 @@ class DefaultController extends Controller
     public function endAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $dm->getRepository(MultimediaObject::class);
 
         $series = $this->findSeriesById($request->get('seriesId'));
         $multimediaObject = $mmRepo->find($request->get('mmId'));
@@ -744,7 +744,7 @@ class DefaultController extends Controller
 
         $tagService = $this->get('pumukitschema.tag');
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $tagRepo = $dm->getRepository(Tag::class);
 
         $tag = $tagRepo->findOneByCod($tagCode);
         if ($tag) {
@@ -851,7 +851,7 @@ class DefaultController extends Controller
     private function findSeriesById($id)
     {
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:Series');
+            ->getRepository(Series::class);
 
         return $seriesRepo->find($id);
     }

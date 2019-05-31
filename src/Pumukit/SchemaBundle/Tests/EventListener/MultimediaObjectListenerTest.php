@@ -31,7 +31,7 @@ class MultimediaObjectListenerTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $dispatcher = new EventDispatcher();
         /* $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher); */
@@ -42,7 +42,7 @@ class MultimediaObjectListenerTest extends WebTestCase
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
         $this->dm->flush();
     }

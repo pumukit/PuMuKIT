@@ -53,7 +53,7 @@ EOT
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');

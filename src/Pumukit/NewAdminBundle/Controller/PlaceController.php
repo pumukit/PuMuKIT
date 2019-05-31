@@ -30,8 +30,8 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $placeTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
-        $places = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
+        $placeTag = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
+        $places = $dm->getRepository(Tag::class)->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
 
         return array('places' => $places);
     }
@@ -48,8 +48,8 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $placeTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
-        $places = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
+        $placeTag = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
+        $places = $dm->getRepository(Tag::class)->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
 
         return array('places' => $places);
     }
@@ -83,7 +83,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('tags._id' => new \MongoId($tag->getId())));
+        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(array('tags._id' => new \MongoId($tag->getId())));
 
         $series = array();
         foreach ($multimediaObjects as $multimediaObject) {
@@ -108,10 +108,10 @@ class PlaceController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
 
         if ($id) {
-            $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('_id' => new \MongoId($id)));
+            $parent = $dm->getRepository(Tag::class)->findOneBy(array('_id' => new \MongoId($id)));
             $isPrecinct = true;
         } else {
-            $parent = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PLACES'));
+            $parent = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
             $isPrecinct = false;
         }
 

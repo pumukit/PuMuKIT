@@ -233,7 +233,7 @@ class DefaultController extends Controller
     private function getMultimediaObjects($seriesId)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $qb = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder()
+        $qb = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
             ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
             ->field('tags.cod')->equals('PUCHWEBTV')
             ->field('series')->equals(new \MongoId($seriesId));
@@ -252,7 +252,7 @@ class DefaultController extends Controller
      */
     public function defaultAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitLiveBundle:Live');
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Live:class);
         $live = $repo->findOneBy(array());
 
         if (!$live) {
@@ -282,7 +282,7 @@ class DefaultController extends Controller
     {
         $intro = $this->container->hasParameter('pumukit.intro') ? $this->container->getParameter('pumukit.intro') : null;
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $mmobjsPlaylist = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('properties.is_live_playlist' => true));
+        $mmobjsPlaylist = $dm->getRepository(MultimediaObject::class)->findBy(array('properties.is_live_playlist' => true));
 
         $response = array('live' => $live);
         if ($mmobjsPlaylist) {

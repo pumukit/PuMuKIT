@@ -18,7 +18,7 @@ class APIKeywordsController extends Controller
     public function seriesAction(Request $request)
     {
         return $this->base(
-            'PumukitSchemaBundle:Series',
+            Series::class,
             $request->getLocale(),
             $request->getRequestFormat(),
             1000
@@ -31,7 +31,7 @@ class APIKeywordsController extends Controller
     public function mmobjAction(Request $request)
     {
         return $this->base(
-            'PumukitSchemaBundle:MultimediaObject',
+            MultimediaObject::class,
             $request->getLocale(),
             $request->getRequestFormat(),
             1000

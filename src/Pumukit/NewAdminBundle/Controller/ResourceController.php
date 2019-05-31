@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 class ResourceController extends Controller
 {
     public static $resourceName = 'series';
-    public static $repoName = 'PumukitSchemaBundle:Series';
+    public static $repoName = Series::class;
 
     public function getResourceName()
     {

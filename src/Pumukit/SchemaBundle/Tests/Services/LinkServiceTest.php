@@ -20,14 +20,14 @@ class LinkServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repoMmobj = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $this->linkService = static::$kernel->getContainer()
           ->get('pumukitschema.link');
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
     }
 

@@ -130,7 +130,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
 
         $job = null;
         if ($track->getPath()) {
-            $job = $dm->getRepository('PumukitEncoderBundle:Job')->findOneBy(array('path_end' => $track->getPath()));
+            $job = $dm->getRepository(Job::class)->findOneBy(array('path_end' => $track->getPath()));
         }
 
         return array(

@@ -23,7 +23,7 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:PermissionProfile');
+          ->getRepository(PermissionProfile::class);
         $this->permissionProfileService = static::$kernel->getContainer()
           ->get('pumukitschema.permissionprofile');
         $this->dispatcher = static::$kernel->getContainer()
@@ -31,7 +31,7 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
         $this->dm->flush();
 
         $this->permissionProfileService = new PermissionProfileService($this->dm, $this->dispatcher, $this->permissionService);

@@ -27,7 +27,7 @@ class SeriesImportService
 
     public function importSeries($mediaPackage, User $loggedInUser = null)
     {
-        $seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $seriesRepo = $this->dm->getRepository(Series::class);
         $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
         if (isset($seriesOpencastId)) {
             $series = $seriesRepo->findOneBy(array('properties.opencast' => $seriesOpencastId));

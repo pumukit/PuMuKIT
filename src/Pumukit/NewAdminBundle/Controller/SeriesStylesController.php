@@ -36,7 +36,7 @@ class SeriesStylesController extends Controller
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $styles = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findAll();
+        $styles = $dm->getRepository(SeriesStyle::class)->findAll();
 
         usort($styles, function ($a, $b) {
             return strtolower($a->getName()) > strtolower($b->getName());
@@ -81,7 +81,7 @@ class SeriesStylesController extends Controller
 
         $id = $request->request->get('id');
         if (isset($id)) {
-            $style = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findOneBy(
+            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
                 array('_id' => new \MongoId($request->request->get('id')))
             );
         } else {
@@ -110,10 +110,10 @@ class SeriesStylesController extends Controller
         $translator = $this->get('translator');
         $session = $this->get('session');
 
-        $style = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findOneBy(array('_id' => new \MongoId($id)));
+        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(array('_id' => new \MongoId($id)));
 
         if ($style) {
-            $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(
+            $series = $dm->getRepository(Series::class)->findOneBy(
                 array('series_style' => new \MongoId($style->getId()))
             );
 
@@ -144,7 +144,7 @@ class SeriesStylesController extends Controller
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($id)) {
-            $style = $dm->getRepository('PumukitSchemaBundle:SeriesStyle')->findOneBy(
+            $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
                 array('_id' => new \MongoId($id))
             );
         } else {

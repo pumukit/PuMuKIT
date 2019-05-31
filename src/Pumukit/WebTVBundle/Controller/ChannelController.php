@@ -45,8 +45,8 @@ class ChannelController extends Controller implements WebTVControllerInterface
         $numberCols = $this->container->getParameter('columns_objs_bytag');
         $limit = $this->container->getParameter('limit_objs_bytag');
 
-        $repoSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $repoMmobj = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoSeries = $this->get('doctrine_mongodb')->getRepository(Series::class);
+        $repoMmobj = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         $channelTitle = $this->getChannelTitle($channelNumber);
         $channelTags = $this->getTagsForChannel($channelNumber);
@@ -102,7 +102,7 @@ class ChannelController extends Controller implements WebTVControllerInterface
     {
         $tagCods = isset($this->tags[$channelNumber]) ? $this->tags[$channelNumber] : [];
         $tags = [];
-        $repoTags = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $repoTags = $this->get('doctrine_mongodb')->getRepository(Tag::class);
         foreach ($tagCods as $tagCod) {
             $tags[] = $repoTags->findOneByCod($tagCod);
         }

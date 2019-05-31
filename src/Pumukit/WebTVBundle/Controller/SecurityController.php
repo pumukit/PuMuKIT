@@ -32,7 +32,7 @@ class SecurityController extends Controller
         }
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObject = $dm->find('PumukitSchemaBundle:MultimediaObject', $id);
+        $multimediaObject = $dm->find(MultimediaObject::class, $id);
 
         if (!$multimediaObject) {
             throw $this->createNotFoundException();

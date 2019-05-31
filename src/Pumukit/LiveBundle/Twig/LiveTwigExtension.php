@@ -60,7 +60,7 @@ class LiveTwigExtension extends \Twig_Extension
      */
     public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
     {
-        $eventRepo = $this->dm->getRepository('PumukitLiveBundle:Event');
+        $eventRepo = $this->dm->getRepository(Event::class);
 
         return $eventRepo->findFutureAndNotFinished($limit, null, $live);
     }

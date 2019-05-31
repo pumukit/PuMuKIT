@@ -34,7 +34,7 @@ class SeriesSearchService
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
-                    $mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+                    $mmRepo = $this->dm->getRepository(MultimediaObject::class);
                     $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale)->toArray();
                     $ids[] = $value;
 

@@ -24,21 +24,21 @@ class PersonServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Person');
+          ->getRepository(Person::class);
         $this->roleRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Role');
+          ->getRepository(Role::class);
         $this->repoMmobj = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $this->personService = static::$kernel->getContainer()
           ->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Person::class)->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(User::class)->remove(array());
         $this->dm->flush();
     }
 

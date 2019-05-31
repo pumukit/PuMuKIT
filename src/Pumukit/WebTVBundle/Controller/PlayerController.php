@@ -30,14 +30,14 @@ class PlayerController extends Controller implements WebTVControllerInterface
         //Get editor chapters for the editor template.
         //Once the chapter marks player plugin is created, this part won't be needed.
         $marks = $this->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:Annotation')
+            ->getRepository(Annotation::class)
             ->createQueryBuilder()
             ->field('type')->equals('paella/marks')
             ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
             ->getQuery()->getSingleResult();
 
         $trimming = $this->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:Annotation')
+            ->getRepository(Annotation::class)
             ->createQueryBuilder()
             ->field('type')->equals('paella/trimming')
             ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))

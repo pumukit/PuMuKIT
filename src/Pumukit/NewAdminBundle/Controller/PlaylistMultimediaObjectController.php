@@ -157,7 +157,7 @@ class PlaylistMultimediaObjectController extends Controller
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $total = $mmobjs->count()->getQuery()->execute();
 
         return array(
@@ -181,7 +181,7 @@ class PlaylistMultimediaObjectController extends Controller
         $page = $request->get('modal_page', 1);
         $limit = $request->get('modal_limit', 20);
         //Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $mmobjs = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $adapter = new DoctrineODMMongoDBAdapter($mmobjs);
         $mmobjs = new Pagerfanta($adapter);
         $mmobjs
@@ -206,7 +206,7 @@ class PlaylistMultimediaObjectController extends Controller
         $criteria = array('search' => $value);
         $criteria = $this->get('pumukitnewadmin.multimedia_object_search')->processMMOCriteria($criteria, $request->getLocale());
 
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
+        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
         $queryBuilder->setQueryArray($criteria);
         $queryBuilder->sortMeta('score', 'textScore');
@@ -226,7 +226,7 @@ class PlaylistMultimediaObjectController extends Controller
         $mmobjService = $this->get('pumukitschema.multimedia_object');
         $this->enableFilter();
         $id = $request->query->get('mmid', '');
-        $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
+        $mmobj = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class)->find($id);
         $user = $this->getUser();
         $canBePlayed = null;
         $canUserPlay = null;
@@ -257,7 +257,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
         foreach ($mmobjIds as $id) {
             $mmobj = $mmobjRepo->find($id);
             if (!$mmobj) {
@@ -283,7 +283,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        //$mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        //$mmobjRepo = $dm->getRepository(MultimediaObject::class);
         $mms = $playlist->getPlaylist()->getMultimediaObjects();
         foreach ($mmobjIds as $pos => $id) {
             if (isset($mms[$pos]) && $mms[$pos]->getId() == $id) {
@@ -307,7 +307,7 @@ class PlaylistMultimediaObjectController extends Controller
         }
 
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $playlistEmbed = $series->getPlaylist();
         $mmobjId = $request->query->get('mm_id');
@@ -412,9 +412,9 @@ class PlaylistMultimediaObjectController extends Controller
     public function addModalAction(Request $request)
     {
         $repoSeries = $this->getDoctrine()
-                    ->getRepository('PumukitSchemaBundle:Series');
+                    ->getRepository(Series::class);
         $repoMms = $this->getDoctrine()
-                 ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                 ->getRepository(MultimediaObject::class);
 
         $series = $repoSeries->createQueryBuilder()
                 ->field('type')->equals(Series::TYPE_PLAYLIST)
@@ -450,8 +450,8 @@ class PlaylistMultimediaObjectController extends Controller
     public function addBatchToSeveralPlaylistAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
+        $seriesRepo = $dm->getRepository(Series::class);
 
         $mmobjIds = $this->getIds($request, 'ids');
         $playlistIds = $this->getIds($request, 'series_ids');

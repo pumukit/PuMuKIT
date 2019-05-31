@@ -29,7 +29,7 @@ class CollectionController extends Controller implements NewAdminControllerInter
                 return false;
             }
             $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                       ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                       ->getRepository(MultimediaObject::class);
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role) ||
@@ -51,7 +51,7 @@ class CollectionController extends Controller implements NewAdminControllerInter
     {
         $factoryService = $this->get('pumukitschema.factory');
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                    ->getRepository('PumukitSchemaBundle:Series');
+                    ->getRepository(Series::class);
         foreach ($ids as $id) {
             $collection = $seriesRepo->find($id);
             if (!$collection || !$this->isUserAllowedToDelete($collection)) {

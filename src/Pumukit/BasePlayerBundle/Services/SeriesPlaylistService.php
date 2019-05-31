@@ -16,7 +16,7 @@ class SeriesPlaylistService
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
     /**

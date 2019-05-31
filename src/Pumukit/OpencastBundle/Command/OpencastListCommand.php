@@ -59,7 +59,7 @@ EOT
         $output->writeln('Total - '.$total);
 
         foreach ($mediaPackages as $mediaPackage) {
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy([
+            $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->findOneBy([
                 'properties.opencast' => $mediaPackage['id'],
             ]);
 

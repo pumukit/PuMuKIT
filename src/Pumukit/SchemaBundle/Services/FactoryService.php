@@ -229,9 +229,9 @@ class FactoryService
         // Add other owners in case of exists
         foreach ($prototype->getRoles() as $embeddedRole) {
             if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
-                $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
+                $role = $this->dm->getRepository(Role::class)->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
                 foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                    $person = $this->dm->getRepository('PumukitSchemaBundle:Person')->findOneBy(array('_id' => $embeddedPerson->getId()));
+                    $person = $this->dm->getRepository(Person::class)->findOneBy(array('_id' => $embeddedPerson->getId()));
                     $mm = $this->personService->createRelationPerson($person, $role, $mm);
                 }
             }
@@ -281,7 +281,7 @@ class FactoryService
      */
     public function findSeriesById($id, $sessionId = null)
     {
-        $repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $repo = $this->dm->getRepository(Series::class);
 
         if (null !== $id) {
             $series = $repo->find($id);
@@ -306,7 +306,7 @@ class FactoryService
      */
     public function findMultimediaObjectById($id)
     {
-        $repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $this->dm->getRepository(MultimediaObject::class);
 
         return $repo->find($id);
     }
@@ -320,7 +320,7 @@ class FactoryService
      */
     public function getParentTags()
     {
-        $repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $this->dm->getRepository(Tag::class);
 
         return $repo->findOneByCod('ROOT')->getChildren();
     }
@@ -337,7 +337,7 @@ class FactoryService
     public function getMultimediaObjectPrototype(Series $series = null)
     {
         return $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject')
+          ->getRepository(MultimediaObject::class)
           ->findPrototype($series);
     }
 
@@ -353,7 +353,7 @@ class FactoryService
      */
     public function getTagsByCod($cod, $getChildren)
     {
-        $repository = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $repository = $this->dm->getRepository(Tag::class);
 
         $tags = $repository->findOneByCod($cod);
 
@@ -373,7 +373,7 @@ class FactoryService
      */
     public function deleteSeries(Series $series)
     {
-        $repoMmobjs = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoMmobjs = $this->dm->getRepository(MultimediaObject::class);
 
         $multimediaObjects = $repoMmobjs->findBySeries($series);
         foreach ($multimediaObjects as $mm) {
@@ -397,7 +397,7 @@ class FactoryService
         if (null !== $series = $multimediaObject->getSeries()) {
             $this->seriesDispatcher->dispatchUpdate($series);
         }
-        $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
+        $annotRepo = $this->dm->getRepository(Annotation::class);
         $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($multimediaObject->getId())));
         foreach ($annotations as $annot) {
             $this->dm->remove($annot);
@@ -493,10 +493,10 @@ class FactoryService
         $this->dm->persist($newSeries);
         $this->dm->flush();
 
-        $multimediaObjectPrototype = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
+        $multimediaObjectPrototype = $this->dm->getRepository(MultimediaObject::class)->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
         $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(array('series' => $series->getId()));
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(array('series' => $series->getId()));
         foreach ($multimediaObjects as $multimediaObject) {
             if (!$multimediaObject->isLive()) {
                 $this->cloneMultimediaObject($multimediaObject, $newSeries);
@@ -613,7 +613,7 @@ class FactoryService
             $this->dm->persist($clonedLink);
             $new->addLink($clonedLink);
         }
-        $annotRepo = $this->dm->getRepository('PumukitSchemaBundle:Annotation');
+        $annotRepo = $this->dm->getRepository(Annotation::class);
         $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($src->getId())));
         foreach ($annotations as $annot) {
             $clonedAnnot = clone $annot;
@@ -707,7 +707,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
+        $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(array('numerical_id' => -1))
             ->getQuery()
@@ -741,7 +741,7 @@ class FactoryService
             $this->dm->getFilterCollection()->disable($enableFilter);
         }
 
-        $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
+        $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
             ->sort(array('numerical_id' => -1))
             ->getQuery()

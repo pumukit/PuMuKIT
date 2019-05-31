@@ -22,7 +22,7 @@ class PermissionProfileService
     public function __construct(DocumentManager $documentManager, PermissionProfileEventDispatcherService $dispatcher, PermissionService $permissionService)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->repo = $this->dm->getRepository(PermissionProfile::class);
         $this->dispatcher = $dispatcher;
         $this->permissionService = $permissionService;
     }

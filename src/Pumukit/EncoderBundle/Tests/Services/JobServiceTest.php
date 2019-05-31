@@ -30,17 +30,17 @@ class JobServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(Job::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->logger = static::$kernel->getContainer()->get('logger');
         $this->trackService = static::$kernel->getContainer()->get('pumukitschema.track');
         $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);

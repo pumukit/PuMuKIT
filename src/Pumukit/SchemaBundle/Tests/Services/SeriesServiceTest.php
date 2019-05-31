@@ -24,13 +24,13 @@ class SeriesServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Series');
+          ->getRepository(Series::class);
         $this->seriesService = static::$kernel->getContainer()
           ->get('pumukitschema.series');
         $this->seriesDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.series_dispatcher');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
     }
 

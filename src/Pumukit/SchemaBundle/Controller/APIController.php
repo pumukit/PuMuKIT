@@ -18,9 +18,9 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function statsAction(Request $request)
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
+        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live:class);
         $serializer = $this->get('jms_serializer');
 
         $totalSeries = $seriesRepo->countPublic();
@@ -48,7 +48,7 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function multimediaObjectsAction(Request $request)
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');
@@ -113,7 +113,7 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function seriesAction(Request $request)
     {
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $serializer = $this->get('jms_serializer');
         $limit = $request->get('limit');
         $page = $request->get('page');
@@ -173,7 +173,7 @@ class APIController extends Controller implements NewAdminControllerInterface
      */
     public function liveAction(Request $request)
     {
-        $liveRepo = $this->get('doctrine_mongodb')->getRepository('PumukitLiveBundle:Live');
+        $liveRepo = $this->get('doctrine_mongodb')->getRepository(Live:class);
         $serializer = $this->get('jms_serializer');
 
         $limit = $request->get('limit');

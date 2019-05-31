@@ -32,7 +32,7 @@ class PicExtractorServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
         $this->inspectionService = static::$kernel->getContainer()->get('pumukit.inspection');
@@ -40,8 +40,8 @@ class PicExtractorServiceTest extends WebTestCase
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
 
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);

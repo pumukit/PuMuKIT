@@ -33,7 +33,7 @@ class MediaPackageController extends Controller
         }
 
         $opencastClient = $this->get('pumukit_opencast.client');
-        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         $limit = 10;
         $page = $request->get('page', 1);

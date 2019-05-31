@@ -71,7 +71,7 @@ EOT
     private function listJobs(OutputInterface $output, $all = false)
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $jobRepo = $dm->getRepository('PumukitEncoderBundle:Job');
+        $jobRepo = $dm->getRepository(Job::class);
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
         $stats = $jobService->getAllJobsStatus();
@@ -116,11 +116,11 @@ EOT
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
-        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
+        if (null === ($job = $dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 
-        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
+        if (null === ($job = $dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 

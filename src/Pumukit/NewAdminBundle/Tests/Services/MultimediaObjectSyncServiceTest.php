@@ -24,15 +24,15 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
 
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove(array());
         $this->dm->flush();
     }
 

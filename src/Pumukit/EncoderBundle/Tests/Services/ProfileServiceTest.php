@@ -17,9 +17,9 @@ class ProfileServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove(array());
         $this->dm->flush();
 
         $this->profileService = new ProfileService($this->getDemoProfiles(), $this->dm);

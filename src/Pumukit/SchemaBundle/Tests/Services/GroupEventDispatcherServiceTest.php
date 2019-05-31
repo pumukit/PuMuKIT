@@ -26,7 +26,7 @@ class GroupEventDispatcherServiceTest extends WebTestCase
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
+        $this->dm->getDocumentCollection(Group::class)->remove(array());
         $this->dm->flush();
 
         MockUpGroupListener::$called = false;

@@ -34,11 +34,11 @@ class StatsServiceTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation')
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection(Tag::class)
             ->remove(array());
     }
 

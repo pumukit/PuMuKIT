@@ -69,7 +69,7 @@ EOT
             'pics.path' => new \MongoRegex(sprintf('/%s/i', $this->extensionFile)),
         );
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         if (!$multimediaObjects) {
             $output->writeln('No multimedia objects found to regenerate pics');

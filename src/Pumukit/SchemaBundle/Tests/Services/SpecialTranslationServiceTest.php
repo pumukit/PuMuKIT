@@ -21,12 +21,12 @@ class SpecialTranslationServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
                                    ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
         $this->specialTranslationService = static::$kernel->getContainer()
                                                           ->get('pumukitschema.special_translation');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Group::class)->remove(array());
         $this->dm->flush();
     }
 

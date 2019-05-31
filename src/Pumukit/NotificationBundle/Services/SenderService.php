@@ -63,7 +63,7 @@ class SenderService
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
         $this->environment = $environment;
-        $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
+        $this->personRepo = $this->dm->getRepository(Person::class);
     }
 
     /**

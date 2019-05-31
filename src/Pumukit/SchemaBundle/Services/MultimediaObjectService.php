@@ -18,8 +18,8 @@ class MultimediaObjectService
     public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->dispatcher = $dispatcher;
     }
 

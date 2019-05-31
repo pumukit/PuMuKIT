@@ -380,7 +380,7 @@ EOT
      */
     private function findPicsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+        $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
             array(
                 'pics.url' => new \MongoRegex('/uploads/pic/'),
                 'pics.path' => array('$exists' => false),
@@ -399,7 +399,7 @@ EOT
      */
     private function findMaterialsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+        $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
             array(
                 'materials.url' => new \MongoRegex('/uploads/material/'),
                 'materials.path' => array('$exists' => false),
@@ -418,7 +418,7 @@ EOT
      */
     private function findWrongPathPics(DocumentManager $documentManager)
     {
-        $collection = $documentManager->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = array(
             array(
@@ -452,7 +452,7 @@ EOT
      */
     private function findWrongPathMaterials(DocumentManager $documentManager)
     {
-        $collection = $documentManager->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = array(
             array(

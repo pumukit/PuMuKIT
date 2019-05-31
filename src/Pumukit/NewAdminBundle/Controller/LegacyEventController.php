@@ -14,7 +14,7 @@ use Pumukit\LiveBundle\Document\Event;
 class LegacyEventController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'event';
-    public static $repoName = 'PumukitLiveBundle:Event';
+    public static $repoName = Event::class;
 
     /**
      * @var array
@@ -44,7 +44,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $repo = $this
               ->get('doctrine_mongodb.odm.document_manager')
-              ->getRepository('PumukitLiveBundle:Event');
+              ->getRepository(Event::class);
 
         $eventsMonth = $repo->findInMonth($month, $year);
 
@@ -101,7 +101,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $repo = $this
               ->get('doctrine_mongodb.odm.document_manager')
-              ->getRepository('PumukitLiveBundle:Event');
+              ->getRepository(Event::class);
 
         $eventsMonth = $repo->findInMonth($month, $year);
 

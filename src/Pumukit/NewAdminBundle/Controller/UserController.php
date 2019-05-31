@@ -16,7 +16,7 @@ use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
 class UserController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'user';
-    public static $repoName = 'PumukitSchemaBundle:User';
+    public static $repoName = User::class;
 
     /**
      * Overwrite to check Users creation.
@@ -32,10 +32,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         $criteria = $this->getCriteria($request->get('criteria', array()));
         $users = $this->getResources($request, $criteria);
-        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $repo = $dm->getRepository(PermissionProfile::class);
         $profiles = $repo->findAll();
 
-        $origins = $dm->createQueryBuilder('PumukitSchemaBundle:User')->distinct('origin')->getQuery()->execute();
+        $origins = $dm->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
         return array('users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray());
     }
@@ -162,7 +162,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
      */
     public function batchDeleteAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
 
         $ids = $request->get('ids');
 
@@ -287,7 +287,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
     private function modifyUserGroups(User $user, $addGroups = array(), $deleteGroups = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groupRepo = $dm->getRepository(Group::class);
         $userService = $this->get('pumukitschema.user');
 
         foreach ($addGroups as $addGroup) {
@@ -313,7 +313,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     private function isAllowedToBeDeleted(User $userToDelete)
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
 
         $loggedInUser = $this->getUser();
 
@@ -372,7 +372,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     private function getNumberAdminUsers()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
@@ -381,7 +381,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
     private function getUniqueAdminUser()
     {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:User');
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
 
         return $repo->createQueryBuilder()->where(
             "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
@@ -432,8 +432,8 @@ class UserController extends AdminController implements NewAdminControllerInterf
     public function promoteAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $profileRepo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
-        $usersRepo = $dm->getRepository('PumukitSchemaBundle:User');
+        $profileRepo = $dm->getRepository(PermissionProfile::class);
+        $usersRepo = $dm->getRepository(User::class);
 
         $ids = $request->request->get('ids');
         $profile = $profileRepo->find($request->request->get('profile'));

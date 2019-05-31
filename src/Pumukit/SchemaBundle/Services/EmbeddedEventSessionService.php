@@ -168,7 +168,7 @@ class EmbeddedEventSessionService
     public function __construct(DocumentManager $documentManager, $defaultPoster, $defaultThumbnail)
     {
         $this->dm = $documentManager;
-        $this->collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $this->collection = $this->dm->getDocumentCollection(MultimediaObject::class);
         $this->defaultPoster = $defaultPoster;
         $this->defaultThumbnail = $defaultThumbnail;
     }

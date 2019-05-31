@@ -22,7 +22,7 @@ class TagController extends Controller implements NewAdminControllerInterface
     public function indexAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -128,7 +128,7 @@ class TagController extends Controller implements NewAdminControllerInterface
     public function listAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(Tag::class);
 
         $root_name = 'ROOT';
         $root = $repo->findOneByCod($root_name);
@@ -148,7 +148,7 @@ class TagController extends Controller implements NewAdminControllerInterface
     public function batchDeleteAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(Tag::class);
 
         $ids = $request->get('ids');
 

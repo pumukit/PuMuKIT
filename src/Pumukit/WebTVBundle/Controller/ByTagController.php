@@ -32,7 +32,7 @@ class ByTagController extends Controller implements WebTVControllerInterface
         $numberCols = $this->container->getParameter('columns_objs_bytag');
         $limit = $this->container->getParameter('limit_objs_bytag');
 
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         if ($request->get('useTagAsGeneral')) {
             //This should be included on SchemaBundle:MultimediaObjectRepository.
@@ -72,7 +72,7 @@ class ByTagController extends Controller implements WebTVControllerInterface
     public function seriesAction(Tag $tag, Request $request)
     {
         $numberCols = $this->container->getParameter('columns_objs_bytag');
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $series = $repo->createBuilderWithTag($tag, ['public_date' => -1]);
 
         $pagerfanta = $this->createPager($series, $request->query->get('page', 1));

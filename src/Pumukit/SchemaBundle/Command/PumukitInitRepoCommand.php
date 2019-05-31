@@ -48,7 +48,7 @@ EOT
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
         $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), array('en')));
-        $this->tagsRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->tagsRepo = $this->dm->getRepository(Tag::class);
 
         $repoName = $input->getArgument('repo');
 
@@ -175,17 +175,17 @@ EOT
 
     protected function removeTags()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove(array());
     }
 
     protected function removeRoles()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove(array());
     }
 
     protected function removePermissionProfiles()
     {
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
     }
 
     protected function createRoot()

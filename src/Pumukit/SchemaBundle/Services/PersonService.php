@@ -36,9 +36,9 @@ class PersonService
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->userService = $userService;
-        $this->repoPerson = $documentManager->getRepository('PumukitSchemaBundle:Person');
-        $this->repoMmobj = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoRole = $documentManager->getRepository('PumukitSchemaBundle:Role');
+        $this->repoPerson = $documentManager->getRepository(Person::class);
+        $this->repoMmobj = $documentManager->getRepository(MultimediaObject::class);
+        $this->repoRole = $documentManager->getRepository(Role::class);
         $this->addUserAsPerson = $addUserAsPerson;
         $this->personalScopeRoleCode = $personalScopeRoleCode;
     }
@@ -146,7 +146,7 @@ class PersonService
     {
         $role = $this->saveRole($role);
 
-        $qb = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject');
+        $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
         $query = $qb
             ->update()
@@ -429,7 +429,7 @@ class PersonService
      */
     public function getPersonalScopeRole()
     {
-        $personalScopeRole = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneByCod($this->personalScopeRoleCode);
+        $personalScopeRole = $this->dm->getRepository(Role::class)->findOneByCod($this->personalScopeRoleCode);
         if ($this->addUserAsPerson && (null === $personalScopeRole)) {
             throw new \Exception('Invalid Personal Scope Role Code: "'.$this->personalScopeRoleCode
                                  .'". There is no Role with this data. '

@@ -16,7 +16,7 @@ class SortedMultimediaObjectsService
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
     }
 
     /**
@@ -33,7 +33,7 @@ class SortedMultimediaObjectsService
         $rank = 1;
         foreach ($mms as $mm) {
             $this->dm
-                ->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+                ->createQueryBuilder(MultimediaObject::class)
                 ->update()
                 ->field('rank')->set($rank++)
                 ->field('_id')->equals($mm->getId())

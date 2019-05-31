@@ -22,7 +22,7 @@ class RemoveListener
         $multimediaObject = $event->getMultimediaObject();
 
         $dm = $this->container->get('doctrine_mongodb.odm.document_manager');
-        $jobRepo = $dm->getRepository('PumukitEncoderBundle:Job');
+        $jobRepo = $dm->getRepository(Job::class);
         $jobService = $this->container->get('pumukitencoder.job');
         $relatedJob = $jobRepo->findOneBy(array('path_end' => $trackPath, 'mm_id' => $multimediaObject->getId()));
         if ($relatedJob) {

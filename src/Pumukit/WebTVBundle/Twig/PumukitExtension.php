@@ -204,7 +204,7 @@ class PumukitExtension extends \Twig_Extension
         $fulltitle = '';
 
         if ($precinctEmbeddedTag) {
-            $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagRepo = $this->dm->getRepository(Tag::class);
             $precinctTag = $tagRepo->findOneBy(['cod' => $precinctEmbeddedTag->getCod()]);
             if ($precinctTag) {
                 if ($precinctTag->getTitle()) {
@@ -425,7 +425,7 @@ class PumukitExtension extends \Twig_Extension
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
         ];
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         return count($multimediaObjects);
     }

@@ -80,7 +80,7 @@ class OpencastImportService
         $multimediaObject = null;
         $track = null;
 
-        $multimediaobjectsRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $multimediaobjectsRepo = $this->dm->getRepository(MultimediaObject::class);
         $mediaPackageId = $this->getMediaPackageField($mediaPackage, 'id');
         if ($mediaPackageId) {
             $multimediaObject = $multimediaobjectsRepo->findOneBy(array('properties.opencast' => $mediaPackageId));
@@ -150,7 +150,7 @@ class OpencastImportService
                 $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject);
             }
 
-            $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+            $tagRepo = $this->dm->getRepository(Tag::class);
             $opencastTag = $tagRepo->findOneByCod($this->defaultTagImported);
             if ($opencastTag) {
                 $tagService = $this->tagService;

@@ -94,7 +94,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->defaultLanguage = $this->getContainer()->getParameter('locale');
 
-        $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy([
+        $this->user = $this->dm->getRepository(User::class)->findOneBy([
             '_id' => $input->getArgument('user'),
         ]);
 
@@ -132,7 +132,7 @@ EOT
      */
     private function importFiles(OutputInterface $output)
     {
-        $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(['_id' => $this->series]);
+        $series = $this->dm->getRepository(Series::class)->findOneBy(['_id' => $this->series]);
         if (!$series) {
             throw new \Exception(__FUNCTION__.' - Series not found'.$this->series);
         }

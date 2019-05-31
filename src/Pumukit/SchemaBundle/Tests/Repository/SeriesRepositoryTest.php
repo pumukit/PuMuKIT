@@ -26,23 +26,23 @@ class SeriesRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->repo = $this->dm->getRepository(Series::class);
         $this->personService = static::$kernel->getContainer()->get('pumukitschema.person');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
+        $this->dm->getDocumentCollection(Role::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')
+        $this->dm->getDocumentCollection(Person::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection(Tag::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
+        $this->dm->getDocumentCollection(Group::class)
             ->remove(array());
         $this->dm->flush();
     }

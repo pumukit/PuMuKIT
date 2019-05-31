@@ -18,7 +18,7 @@ class TestWebTVControllerInterface extends Controller implements WebTVController
     {
         $mmobjRepo = $this
           ->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $data = $mmobjRepo->createQueryBuilder()->distinct('_id')->getQuery()->execute();
         $serializer = $this->get('jms_serializer');
         $response = $serializer->serialize($data, $request->getRequestFormat());

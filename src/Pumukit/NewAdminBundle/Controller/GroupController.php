@@ -18,7 +18,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 class GroupController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'group';
-    public static $repoName = 'PumukitSchemaBundle:Group';
+    public static $repoName = Group::class;
 
     /**
      * Index.
@@ -32,7 +32,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $origins = $dm
-                 ->createQueryBuilder('PumukitSchemaBundle:Group')
+                 ->createQueryBuilder(Group::class)
                  ->distinct('origin')
                  ->getQuery()
                  ->execute();
@@ -263,7 +263,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $limit = 101;
         $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort, $limit);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
         if ($locale) {
             $sort = array('title.'.$locale => 1);
         } else {
@@ -311,11 +311,11 @@ class GroupController extends AdminController implements NewAdminControllerInter
             $resources = $this->get('pumukitschema.group')->findUsersInGroup($group);
         } elseif ('multimediaobject' === $resourceName) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $mmobjRepo = $dm->getRepository(MultimediaObject::class);
             $resources = $mmobjRepo->findWithGroup($group);
         } elseif ('embeddedbroadcast' === $resourceName) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
-            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $mmobjRepo = $dm->getRepository(MultimediaObject::class);
             $resources = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
         } else {
             throw new \Exception('Invalid resource name');

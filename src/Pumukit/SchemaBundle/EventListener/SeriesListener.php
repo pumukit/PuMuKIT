@@ -19,7 +19,7 @@ class SeriesListener
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
-        $this->mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmRepo = $dm->getRepository(MultimediaObject::class);
     }
 
     public function postUpdate(SeriesEvent $event)

@@ -31,9 +31,9 @@ class LogTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
     }
 

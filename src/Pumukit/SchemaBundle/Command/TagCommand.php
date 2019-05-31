@@ -54,7 +54,7 @@ EOT
     private function initParameters()
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
     }
 
     private function getTag($tagCode)

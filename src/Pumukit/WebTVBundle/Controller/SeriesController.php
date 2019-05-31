@@ -30,7 +30,7 @@ class SeriesController extends Controller implements WebTVControllerInterface
     {
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
 
         $objects = $mmobjRepo->createBuilderWithSeriesAndStatus($series, [MultimediaObject::STATUS_PUBLISHED], ['rank' => 1]);
 
@@ -59,7 +59,7 @@ class SeriesController extends Controller implements WebTVControllerInterface
 
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
 
         $objects = $mmobjRepo->createBuilderWithSeries($series, ['rank' => 1]);
 

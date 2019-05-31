@@ -68,7 +68,7 @@ class EventRepository extends DocumentRepository
      */
     public function findCurrentEvents($limit = null, $marginBefore = 0, $marginAfter = 0)
     {
-        $dmColl = $this->dm->getDocumentCollection('PumukitLiveBundle:Event');
+        $dmColl = $this->dm->getDocumentCollection(Event::class);
 
         $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
         $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));

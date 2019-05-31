@@ -37,7 +37,7 @@ class AnnotationsAPIController extends Controller
 
         //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
         $resAnnotations = array();
-        $annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
+        $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
@@ -117,7 +117,7 @@ class AnnotationsAPIController extends Controller
         //$opencastAnnotationService = $this->container->get('video_editor.opencast_annotations');
         $serializer = $this->get('jms_serializer');
 
-        //$annonRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Annotation');
+        //$annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
         $episode = $request->get('episode');
         $type = $request->get('type');
         $value = $request->get('value');

@@ -37,7 +37,7 @@ class DashboardController extends Controller implements NewAdminControllerInterf
             $storage = $this->get('pumukitencoder.profile')->getDirOutInfo();
             $data['storage'] = $storage;
 
-            $seriesRepo = $dm->getRepository('PumukitSchemaBundle:series');
+            $seriesRepo = $dm->getRepository(Series::class);
 
             $data['num_series'] = $seriesRepo->count();
             $data['num_mm'] = array_sum(array_map(function ($e) {
@@ -59,7 +59,7 @@ class DashboardController extends Controller implements NewAdminControllerInterf
      */
     public function seriesTimelineAction(Request $request)
     {
-        $repo = $this->get('doctrine_mongodb')->getManager()->getRepository('PumukitSchemaBundle:Series');
+        $repo = $this->get('doctrine_mongodb')->getManager()->getRepository(Series::class);
         $series = $repo->findAll();
 
         $XML = new \SimpleXMLElement('<data></data>');

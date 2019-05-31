@@ -31,11 +31,11 @@ class RemoveElementTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
-            ->getRepository('PumukitSchemaBundle:MultimediaObject');
+            ->getRepository(MultimediaObject::class);
         $this->userRepo = $this->dm
-            ->getRepository('PumukitSchemaBundle:User');
+            ->getRepository(User::class);
         $this->groupRepo = $this->dm
-            ->getRepository('PumukitSchemaBundle:Group');
+            ->getRepository(Group::class);
         $this->factoryService = static::$kernel->getContainer()
             ->get('pumukitschema.factory');
         $this->mmService = static::$kernel->getContainer()
@@ -48,11 +48,11 @@ class RemoveElementTest extends WebTestCase
             ->get('pumukitschema.group');
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
+        $this->dm->getDocumentCollection(Group::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')
+        $this->dm->getDocumentCollection(User::class)
             ->remove(array());
         $this->dm->flush();
     }

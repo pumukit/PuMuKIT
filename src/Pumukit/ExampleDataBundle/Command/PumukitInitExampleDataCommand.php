@@ -48,17 +48,17 @@ EOT
     {
         $newFile = $this->getContainer()->getParameter('kernel.cache_dir').'/tmp_file.zip';
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->roleRepo = $this->dm->getRepository('PumukitSchemaBundle:Role');
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->roleRepo = $this->dm->getRepository(Role::class);
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->pmk2AllLocales = $this->getContainer()->getParameter('pumukit.locales');
 
         $factoryService = $this->getContainer()->get('pumukitschema.factory');
 
         if ($input->getOption('force')) {
-            $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
-            $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')->remove(array());
-            $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-            $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+            $this->dm->getDocumentCollection(Job::class)->remove(array());
+            $this->dm->getDocumentCollection(Person::class)->remove(array());
+            $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+            $this->dm->getDocumentCollection(Series::class)->remove(array());
             $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')->remove(array());
         } elseif (!$input->getOption('append')) {
             $output->writeln('<error>ATTENTION:</error> This operation should not be executed in a production environment.');
@@ -411,7 +411,7 @@ EOT
 
     private function loadTagsMultimediaObject($multimediaObject, $tags)
     {
-        $tags_repository = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $tags_repository = $this->getContainer()->get('doctrine_mongodb')->getRepository(Tag::class);
         $tagService = $this->getContainer()->get('pumukitschema.tag');
         $limit = count($tags);
         for ($i = 0; $i < $limit; ++$i) {
@@ -445,7 +445,7 @@ EOT
 
     private function loadViewsLog($output)
     {
-        $mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $viewsLogColl = $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog');
 
         $allMmobjs = $mmobjRepo->findStandardBy(array());

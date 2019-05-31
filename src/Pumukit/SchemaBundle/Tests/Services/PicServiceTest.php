@@ -42,8 +42,8 @@ class PicServiceTest extends WebTestCase
         $this->webDir = realpath($this->rootDir.'/../web/bundles/pumukitschema');
         $this->localhost = $this->context->getScheme().'://localhost';
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
 
         $this->picService = new PicService($this->context, $this->webDir, $this->defaultSeriesPic, $this->defaultPlaylistPic, $this->defaultVideoPic, $this->defaultAudioHDPic, $this->defaultAudioSDPic);
@@ -230,7 +230,7 @@ class PicServiceTest extends WebTestCase
         // MULTIMEDIA OBJECT SECTION
         // Workaround for detached Series document
         $this->dm->clear(get_class($series));
-        $series = $this->dm->find('PumukitSchemaBundle:Series', $series->getId());
+        $series = $this->dm->find(Series::class, $series->getId());
 
         $mm = $this->factoryService->createMultimediaObject($series);
         $mm->setSeries($series);
