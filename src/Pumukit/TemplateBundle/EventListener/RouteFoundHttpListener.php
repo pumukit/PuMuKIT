@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\EventListener\LocaleListener;
+use Pumukit\TemplateBundle\Document\Template;
 
 class RouteFoundHttpListener
 {
-    private $repository;
+    private $dm;
     private $httpKernel;
     private $requestStack;
     private $requestFixer;
@@ -21,7 +22,7 @@ class RouteFoundHttpListener
                                 RequestStack $requestStack,
                                 LocaleListener $requestFixer)
     {
-        $this->repository = $dm->getRepository('PumukitTemplateBundle:Template');
+        $this->dm = $dm;
         $this->httpKernel = $httpKernel;
         $this->requestStack = $requestStack;
         $this->requestFixer = $requestFixer;
@@ -29,6 +30,7 @@ class RouteFoundHttpListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
+        $repo = $this->dm->getRepository(Template::class);
         $exception = $event->getException();
 
         if ($exception instanceof NotFoundHttpException) {
@@ -38,7 +40,7 @@ class RouteFoundHttpListener
             $pathInfo = $request->getPathInfo();
             $name = substr($pathInfo, 1);
 
-            $t = $this->repository->findOneBy(array('name' => $name, 'hide' => false));
+            $t = $repo->findOneBy(array('name' => $name, 'hide' => false));
             if ($t) {
                 $response = $this->forward('PumukitTemplateBundle:List:index', array('name' => $name));
                 $response->headers->set('X-Status-Code', 200);
