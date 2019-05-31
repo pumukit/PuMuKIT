@@ -2967,11 +2967,11 @@
       </trans-unit>
       <trans-unit id="8FhetqB" resname="Generate thumbnail">
         <source>Generate thumbnail</source>
-        <target state="needs-translation">Generate thumbnail</target>
+        <target state="translated">Xerar nova miniatura</target>
       </trans-unit>
       <trans-unit id="09oq1kk" resname="Search person">
         <source>Search person</source>
-        <target state="needs-translation">Search person</target>
+        <target state="translated">Buscar persoa</target>
       </trans-unit>
       <trans-unit id="TpIMycx" resname="Delete User">
         <source>Delete User</source>
@@ -3003,7 +3003,7 @@
       </trans-unit>
       <trans-unit id="H5oCcEu" resname="No sessions defined.">
         <source>No sessions defined.</source>
-        <target state="needs-translation">No sessions defined.</target>
+        <target state="translated">Non se definiron sesións.</target>
       </trans-unit>
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
@@ -3077,7 +3077,7 @@
       </trans-unit>
       <trans-unit id="1y_GdUG" resname="Advanced search form">
         <source>Advanced search form</source>
-        <target state="needs-translation">Advanced search form</target>
+        <target state="translated">Búsqueda avanzada</target>
       </trans-unit>
       <trans-unit id="KUc83Og" resname="Publication date">
         <source>Publication date</source>
@@ -3113,7 +3113,7 @@
       </trans-unit>
       <trans-unit id="yyT31Aq" resname="Sorting">
         <source>Sorting</source>
-        <target state="needs-translation">Sorting</target>
+        <target state="translated">Ordear</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
