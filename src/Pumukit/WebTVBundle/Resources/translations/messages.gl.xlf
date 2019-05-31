@@ -639,7 +639,7 @@
       </trans-unit>
       <trans-unit id="70fBjSz" resname="There aren't events at this moment">
         <source>There aren't events at this moment</source>
-        <target state="needs-translation">There aren't events at this moment</target>
+        <target state="translated">Non hai eventos neste momento</target>
       </trans-unit>
       <trans-unit id="RoN3Re7" resname="Current live event">
         <source>Current live event</source>
