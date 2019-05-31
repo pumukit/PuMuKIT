@@ -39,15 +39,15 @@
       </trans-unit>
       <trans-unit id="7EYXAPJ" resname="Edit Templates">
         <source>Edit Templates</source>
-        <target state="needs-translation">Edit Templates</target>
+        <target state="translated">Editar a plantilla</target>
       </trans-unit>
       <trans-unit id="FwMioy8" resname="Info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">Info</target>
       </trans-unit>
       <trans-unit id="z3AXMYV" resname="Warning: This link will give a 404 error while this template is hide.">
         <source>Warning: This link will give a 404 error while this template is hide.</source>
-        <target state="needs-translation">Warning: This link will give a 404 error while this template is hide.</target>
+        <target state="translated">Advertencia. O enlace devolve un erro 404 mentras esta plantilla está oculta.</target>
       </trans-unit>
     </body>
   </file>
