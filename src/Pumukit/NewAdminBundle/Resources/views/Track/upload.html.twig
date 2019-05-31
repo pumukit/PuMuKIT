@@ -8,6 +8,6 @@
   var uploaded = '{{ uploaded }}';
 
   if ('success' == uploaded) parent.success('{% trans %}New Track added.{% endtrans %}');
-  else parent.no_success('{{ message }}');
+  else parent.no_success('{{ message|escape('js') }}');
 </script>
 {% endif %}
