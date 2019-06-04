@@ -1,23 +1,27 @@
-<!-- Filter -->
+{% set criteria = app.session.get('admin/opencast/criteria') %}
 <div class="well">
-  <form class="form-horizontal" id="filter_mediapackages" action="{{ path('pumukitopencast') }}" method="get">
+    <form class="form-horizontal" id="filter_mediapackages" action="{{ path('pumukitopencast') }}" method="get">
+        <div class="panel panel-default" style="margin-bottom:10px">
+            <div class="panel-heading" role="tab" id="headingSearch">
+                <h2 class="panel-title">
+                    {% trans %}Search{% endtrans %}
+                </h2>
+            </div>
 
-  <fieldset>
-    <legend hidden>{% trans %}Search{% endtrans %}</legend>
-    <h2>{% trans %}Search{% endtrans %}</h2>
-    <div class="form-group">
-      <label for="filters_name" class="col-md-2 control-label">{% trans %}Name{% endtrans %}:</label>
-      {% set criteria = app.session.get('admin/opencast/criteria') %}
-      <div class="col-md-10">
-        <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
-      </div>
-    </div>
-  </fieldset>
+            <div class="panel-body">
+                <label for="filters_name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+                <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
+            </div>
 
-  <div class="text-right">
-    <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
-    <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
-  </div>
+        </div>
 
-</form>
+        <div class="row">
+            <div class="col-md-6">
+                <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            </div>
+            <div class="col-md-6">
+                <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
+            </div>
+        </div>
+    </form>
 </div>
