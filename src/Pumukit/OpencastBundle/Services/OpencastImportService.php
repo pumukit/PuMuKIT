@@ -141,10 +141,19 @@ class OpencastImportService
             if (isset($attachment[0])) {
                 $limit = count($attachment);
                 for ($j = 0; $j < $limit; ++$j) {
-                    $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j);
+                    $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j, 'presenter/player+preview');
+                }
+
+                if (0 === $multimediaObject->getPics()) {
+                    for ($j = 0; $j < $limit; ++$j) {
+                        $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j, 'presenter/search+preview');
+                    }
                 }
             } else {
-                $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject);
+                $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, null, 'presenter/player+preview');
+                if (0 === $multimediaObject->getPics()) {
+                    $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, null, 'presenter/search+preview');
+                }
             }
 
             $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
@@ -308,7 +317,7 @@ class OpencastImportService
         return $track;
     }
 
-    private function createPicFromAttachment($attachment, MultimediaObject $multimediaObject, $index = null)
+    private function createPicFromAttachment($attachment, MultimediaObject $multimediaObject, $index = null, $targetType = 'presenter/search+preview')
     {
         if ($attachment) {
             if (null === $index) {
@@ -317,7 +326,7 @@ class OpencastImportService
                 $itemAttachment = $attachment[$index];
             }
             $type = $this->getMediaPackageField($itemAttachment, 'type');
-            if ('presenter/search+preview' == $type) {
+            if ($targetType == $type) {
                 $tags = $this->getMediaPackageField($itemAttachment, 'tags');
                 $type = $this->getMediaPackageField($itemAttachment, 'type');
                 $url = $this->getMediaPackageField($itemAttachment, 'url');
