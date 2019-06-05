@@ -232,7 +232,15 @@ class OpencastService
                 continue;
             }
 
-            if (!in_array($attachment['type'], array('presenter/search+preview', 'presentation/search+preview'))) {
+            if (!in_array(
+                $attachment['type'],
+                array(
+                    'presenter/search+preview',
+                    'presentation/search+preview',
+                    'presenter/player+preview',
+                    'presentation/player+preview',
+                ))
+            ) {
                 continue;
             }
 
