@@ -128,7 +128,7 @@ class OpencastImportService
 
             $media = $this->getMediaPackageField($mediaPackage, 'media');
             $tracks = $this->getMediaPackageField($media, 'track');
-            if (is_array($tracks)) {
+            if (is_array($tracks) && isset($tracks[0])) {
                 // NOTE: Multiple tracks
                 $limit = count($tracks);
                 for ($i = 0; $i < $limit; ++$i) {
@@ -141,7 +141,7 @@ class OpencastImportService
 
             $attachments = $this->getMediaPackageField($mediaPackage, 'attachments');
             $attachment = $this->getMediaPackageField($attachments, 'attachment');
-            if (is_array($attachment)) {
+            if (is_array($attachment) && isset($attachment[0])) {
                 $limit = count($attachment);
                 for ($j = 0; $j < $limit; ++$j) {
                     $multimediaObject = $this->createPicFromAttachment($attachment, $multimediaObject, $j, 'presenter/player+preview');
@@ -186,7 +186,7 @@ class OpencastImportService
             }
             $media = $this->getMediaPackageField($archiveMediaPackage, 'media');
             $tracks = $this->getMediaPackageField($media, 'track');
-            if (is_array($tracks)) {
+            if (is_array($tracks) && isset($tracks[0])) {
                 // NOTE: Multiple tracks
                 $limit = count($tracks);
                 for ($i = 0; $i < $limit; ++$i) {
@@ -246,7 +246,7 @@ class OpencastImportService
 
         $tagsArray = $this->getMediaPackageField($opencastTrack, 'tags');
         $tags = $this->getMediaPackageField($tagsArray, 'tag');
-        if (is_array($tags)) {
+        if (is_array($tags) && isset($tags[0])) {
             // NOTE: Multiple tags
             $limit = count($tags);
             for ($i = 0; $i < $limit; ++$i) {
@@ -385,7 +385,7 @@ class OpencastImportService
     {
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');
-        if (is_array($tracks)) {
+        if (is_array($tracks) && isset($tracks[0])) {
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
                 if (false === stripos($tracks[$i]['url'], 'rtmp:')) {
@@ -416,7 +416,7 @@ class OpencastImportService
 
         $media = $this->getMediaPackageField($mediaPackage, 'media');
         $tracks = $this->getMediaPackageField($media, 'track');
-        if (is_array($tracks)) {
+        if (is_array($tracks) && isset($tracks[0])) {
             // NOTE: Multiple tracks
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
@@ -467,7 +467,7 @@ class OpencastImportService
 
         $attachments = $this->getMediaPackageField($mediaPackage, 'attachments');
         $attachment = $this->getMediaPackageField($attachments, 'attachment');
-        if (is_array($attachment)) {
+        if (is_array($attachment) && isset($attachment[0])) {
             $limit = count($attachment);
             for ($i = 0; $i < $limit; ++$i) {
                 $pic = $attachment[$i];
