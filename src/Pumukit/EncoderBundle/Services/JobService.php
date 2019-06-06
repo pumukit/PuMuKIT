@@ -47,7 +47,7 @@ class JobService
                                 $environment = 'dev', $tmpPath = null, $inboxPath = null)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->repo = $this->dm->getRepository(Job::class);
         $this->profileService = $profileService;
         $this->cpuService = $cpuService;
         $this->inspectionService = $inspectionService;
@@ -852,7 +852,7 @@ class JobService
             return false;
         }
 
-        $mmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        $mmobj = $this->dm->getRepository(MultimediaObject::class)->find($job->getMmId());
 
         $profile = $this->getProfile($job);
         $tempDir = $profile['streamserver']['dir_out'].'/'.$mmobj->getSeries()->getId();
@@ -914,7 +914,7 @@ class JobService
      */
     private function getMultimediaObject($job)
     {
-        $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($job->getMmId());
+        $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->find($job->getMmId());
 
         if (!$multimediaObject) {
             $errorMsg = sprintf('[createTrackWithJob] Multimedia object %s not found when the job %s creates the track', $job->getMmId(), $job->getId());

@@ -38,7 +38,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         $yearFound = $request->query->get('year');
         // --- END Get Variables --
         // --- Get valid series ids ---
-        $validSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject')
+        $validSeries = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->distinct('series')
             ->getQuery()
@@ -137,7 +137,7 @@ class SearchController extends Controller implements WebTVControllerInterface
 
         // --- Query to get existing languages ---
         $searchLanguages = $this->get('doctrine_mongodb')
-            ->getRepository('PumukitSchemaBundle:MultimediaObject')
+            ->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->distinct('tracks.language')
             ->getQuery()->execute();
@@ -192,7 +192,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function getParentTag()
     {
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $tagRepo = $this->get('doctrine_mongodb')->getRepository(Tag::class);
         $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
 
         $parentTag = $tagRepo->findOneByCod($searchByTagCod);
@@ -213,7 +213,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function getOptionalParentTag()
     {
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $tagRepo = $this->get('doctrine_mongodb')->getRepository(Tag::class);
 
         $searchByTagCod = $this->container->getParameter('search.parent_tag_2.cod');
         $parentTagOptional = null;
@@ -375,7 +375,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function getMmobjsYears()
     {
-        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(MultimediaObject::class);
         $pipeline = [
             ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]],
             ['$group' => ['_id' => ['$year' => '$record_date']]],
@@ -395,7 +395,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function getSeriesYears()
     {
-        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection('PumukitSchemaBundle:Series');
+        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(Series::class);
         $pipeline = [
             ['$group' => ['_id' => ['$year' => '$public_date']]],
             ['$sort' => ['_id' => 1]],
@@ -414,7 +414,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function createSeriesQueryBuilder()
     {
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
 
         return $repo->createQueryBuilder();
     }
@@ -424,7 +424,7 @@ class SearchController extends Controller implements WebTVControllerInterface
      */
     protected function createMultimediaObjectQueryBuilder()
     {
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         return $repo->createStandardQueryBuilder();
     }

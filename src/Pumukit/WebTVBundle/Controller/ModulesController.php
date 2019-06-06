@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class ModulesController.
@@ -33,7 +36,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             $objects = $this->get('pumukit_stats.stats')->getMostViewedUsingFilters(30, $limit);
             $title = $translator->trans('Most viewed on the last month');
         } else {
-            $objects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy([], ['numview' => -1], $limit, 0);
+            $objects = $dm->getRepository(MultimediaObject::class)->findStandardBy([], ['numview' => -1], $limit, 0);
             $title = $translator->trans('Most viewed');
         }
 
@@ -97,7 +100,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
 
-        $last = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy(
+        $last = $dm->getRepository(MultimediaObject::class)->findStandardBy(
             ['tags.cod' => ['$ne' => 'PUDENEW']],
             [
                 'public_date' => -1,
@@ -134,7 +137,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
 
         $limit = $this->container->getParameter('limit_objs_recentlyadded');
 
-        $last = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findStandardBy(
+        $last = $dm->getRepository(MultimediaObject::class)->findStandardBy(
             [],
             [
                 'public_date' => -1,
@@ -161,8 +164,8 @@ class ModulesController extends Controller implements WebTVControllerInterface
      */
     public function statsAction()
     {
-        $mmRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:series');
+        $mmRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
 
         $counts = [
             'series' => $seriesRepo->countPublic(),
@@ -216,14 +219,14 @@ class ModulesController extends Controller implements WebTVControllerInterface
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
 
         if (is_array($categories)) {
-            $tags = $dm->createQueryBuilder('PumukitSchemaBundle:Tag')
+            $tags = $dm->createQueryBuilder(Tag::class)
                 ->field('cod')->in($categories)
                 ->field('display')->equals(true)
                 ->sort('title.'.$request->getLocale(), 1)
                 ->getQuery()
                 ->execute();
         } else {
-            $tag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array(
+            $tag = $dm->getRepository(Tag::class)->findOneBy(array(
                 'cod' => $categories,
             ));
 

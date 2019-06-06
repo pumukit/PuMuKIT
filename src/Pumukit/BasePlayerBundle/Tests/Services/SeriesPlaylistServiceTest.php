@@ -22,12 +22,12 @@ class SeriesPlaylistServiceTest extends WebTestCase
         $options = array('environment' => 'test');
         static::bootKernel($options);
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->seriesPlaylistService = static::$kernel->getContainer()->get('pumukit_baseplayer.seriesplaylist');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
 
         $track = new Track();

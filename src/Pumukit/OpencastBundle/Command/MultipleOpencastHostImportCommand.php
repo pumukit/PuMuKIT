@@ -179,7 +179,7 @@ EOT
             $criteria['_id'] = new \MongoId($this->id);
         }
 
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         return $multimediaObjects;
     }

@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
+use Pumukit\SchemaBundle\Document\Series;
 
 class EmbeddedEventSessionServiceTest extends WebTestCase
 {
@@ -26,9 +27,9 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
           ->remove(array());
         $this->dm->flush();
     }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @Route("/podcast")
@@ -27,7 +28,7 @@ class FeedController extends Controller
     {
         $router = $this->get('router');
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
 
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
@@ -104,7 +105,7 @@ class FeedController extends Controller
 
     private function createPodcastMultimediaObjectByAudioQueryBuilder($isOnlyAudio = false)
     {
-        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('tracks')->elemMatch(
@@ -134,7 +135,7 @@ class FeedController extends Controller
     private function getPodcastMultimediaObjectsBySeries(Series $series)
     {
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('series')->references($series);
@@ -236,7 +237,7 @@ class FeedController extends Controller
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $router = $this->get('router');
-        $tagRepo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $tagRepo = $dm->getRepository(Tag::class);
         $itunesUTag = $tagRepo->findOneByCod('ITUNESU');
 
         foreach ($multimediaObjects as $multimediaObject) {

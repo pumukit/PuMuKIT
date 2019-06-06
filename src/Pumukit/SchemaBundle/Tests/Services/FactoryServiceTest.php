@@ -28,24 +28,24 @@ class FactoryServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Series');
+          ->getRepository(Series::class);
         $this->mmobjRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $this->translator = static::$kernel->getContainer()
           ->get('translator');
         $this->factory = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->locales = $this->factory->getLocales();
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
+        $this->dm->getDocumentCollection(Role::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection(Tag::class)
           ->remove(array());
         $this->dm->flush();
     }
@@ -292,9 +292,9 @@ class FactoryServiceTest extends WebTestCase
         $this->dm->persist($role);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
+        $this->assertEquals(1, count($this->dm->getRepository(Role::class)->findAll()));
         $this->factory->deleteResource($role);
-        $this->assertEquals(0, count($this->dm->getRepository('PumukitSchemaBundle:Role')->findAll()));
+        $this->assertEquals(0, count($this->dm->getRepository(Role::class)->findAll()));
     }
 
     public function testClone()

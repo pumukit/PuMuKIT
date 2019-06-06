@@ -5,6 +5,8 @@ namespace Pumukit\SchemaBundle\Services;
 use Pumukit\SchemaBundle\Document\Group;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class GroupService
 {
@@ -27,9 +29,9 @@ class GroupService
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
         $this->translator = $translator;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Group');
-        $this->userRepo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(Group::class);
+        $this->userRepo = $this->dm->getRepository(User::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
     }
 
     /**

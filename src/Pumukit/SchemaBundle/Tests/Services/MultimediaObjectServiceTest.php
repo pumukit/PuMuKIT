@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectServiceTest extends WebTestCase
 {
@@ -26,9 +27,9 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $this->tagRepo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Tag');
+          ->getRepository(Tag::class);
         $this->factory = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->mmsService = static::$kernel->getContainer()
@@ -36,11 +37,11 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->tagService = static::$kernel->getContainer()
           ->get('pumukitschema.tag');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove(array());
+        $this->dm->getDocumentCollection(Group::class)->remove(array());
+        $this->dm->getDocumentCollection(User::class)->remove(array());
         $this->dm->flush();
     }
 

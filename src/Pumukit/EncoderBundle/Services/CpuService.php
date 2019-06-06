@@ -24,8 +24,8 @@ class CpuService
     {
         $this->cpus = $cpus;
         $this->dm = $documentManager;
-        $this->jobRepo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-        $this->cpuRepo = $this->dm->getRepository('PumukitEncoderBundle:CpuStatus');
+        $this->jobRepo = $this->dm->getRepository(Job::class);
+        $this->cpuRepo = $this->dm->getRepository(CpuStatus::class);
     }
 
     /**

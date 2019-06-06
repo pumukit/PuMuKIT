@@ -21,18 +21,18 @@ class UserRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->groupRepo = $this->dm->getRepository('PumukitSchemaBundle:Group');
+        $this->repo = $this->dm->getRepository(User::class);
+        $this->groupRepo = $this->dm->getRepository(Group::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')
+        $this->dm->getDocumentCollection(Person::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')
+        $this->dm->getDocumentCollection(PermissionProfile::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')
+        $this->dm->getDocumentCollection(User::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
+        $this->dm->getDocumentCollection(Group::class)
             ->remove(array());
         $this->dm->flush();
     }

@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -52,7 +54,7 @@ class OaiController extends Controller
 
         $identifier = $request->query->get('identifier');
 
-        $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjColl = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $object = $mmObjColl->find(array('id' => $identifier));
 
         if (null === $object) {
@@ -161,7 +163,7 @@ class OaiController extends Controller
     {
         $identifier = $request->query->get('identifier');
 
-        $mmObjColl = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmObjColl = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
         $mmObj = $mmObjColl->find(array('id' => $identifier));
 
         if ($request->query->has('identifier') && null === $mmObj) {
@@ -196,7 +198,7 @@ class OaiController extends Controller
             return $this->error('badArgument', 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax');
         }
 
-        $allSeries = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $allSeries = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $allSeries = $allSeries
             ->createQueryBuilder()
             ->limit($limit)
@@ -251,8 +253,8 @@ class OaiController extends Controller
      */
     protected function filter($limit, $offset, \DateTime $from = null, \DateTime $until = null, $set = null)
     {
-        $multimediaObjectRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $multimediaObjectRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
 
         $queryBuilder = $multimediaObjectRepo
             ->createStandardQueryBuilder()

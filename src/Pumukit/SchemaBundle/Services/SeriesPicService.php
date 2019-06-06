@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Pic;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesPicService
 {
@@ -30,7 +31,7 @@ class SeriesPicService
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
-        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 

@@ -26,12 +26,12 @@ class JobNotificationServiceTest extends WebTestCase
         }
 
         $this->dm = $this->container->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitEncoderBundle:Job');
+        $this->repo = $this->dm->getRepository(Job::class);
 
         $this->jobNotificationService = $this->container
           ->get('pumukit_notification.listener');
 
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove(array());
         $this->dm->flush();
     }
 

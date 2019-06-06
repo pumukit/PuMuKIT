@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Person;
 
 class UserService
 {
@@ -33,10 +34,10 @@ class UserService
     public function __construct(DocumentManager $documentManager, UserEventDispatcherService $dispatcher, PermissionService $permissionService, PermissionProfileService $permissionProfileService, $personalScopeDeleteOwners = false)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
-        $this->groupRepo = $this->dm->getRepository('PumukitSchemaBundle:Group');
+        $this->repo = $this->dm->getRepository(User::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
+        $this->personRepo = $this->dm->getRepository(Person::class);
+        $this->groupRepo = $this->dm->getRepository(Group::class);
         $this->permissionService = $permissionService;
         $this->dispatcher = $dispatcher;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
@@ -126,7 +127,7 @@ class UserService
             if (in_array($user->getId(), $owners)) {
                 if ($object->isCollection()) {
                     // NOTE: Check all MultimediaObjects from the Series, even the prototype
-                    $mmObjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+                    $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
                     $multimediaObjects = $mmObjRepo->createQueryBuilder()
                       ->field('series')->equals($object);
                     $deleteOwnerInSeries = true;

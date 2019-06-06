@@ -3,6 +3,8 @@
 namespace Pumukit\StatsBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class StatsService
 {
@@ -16,8 +18,8 @@ class StatsService
     public function __construct(DocumentManager $documentManager, $useAggregation = false)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
+        $this->repoSeries = $this->dm->getRepository(Series::class);
         $this->collectionName = $useAggregation ? 'PumukitStatsBundle:ViewsAggregation' : 'PumukitStatsBundle:ViewsLog';
         $this->sumValue = $useAggregation ? '$numView' : 1;
     }

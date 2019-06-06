@@ -3,6 +3,8 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class AnnounceService
 {
@@ -12,8 +14,8 @@ class AnnounceService
     public function __construct(DocumentManager $documentManager)
     {
         $dm = $documentManager;
-        $this->seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
-        $this->mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->seriesRepo = $dm->getRepository(Series::class);
+        $this->mmobjRepo = $dm->getRepository(MultimediaObject::class);
     }
 
     public function getLast($limit = 3, $withPudenewTag = true, $useRecordDate = false)

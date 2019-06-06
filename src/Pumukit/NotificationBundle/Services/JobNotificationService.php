@@ -11,6 +11,7 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Document\User;
 
 class JobNotificationService
 {
@@ -223,7 +224,7 @@ class JobNotificationService
         if (Job::STATUS_FINISHED === $job->getStatus()) {
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
             foreach ($aPeople as $people) {
-                $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
+                $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $people->getEmail()));
                 if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_COMPLETE) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }
@@ -232,7 +233,7 @@ class JobNotificationService
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
 
             foreach ($aPeople as $people) {
-                $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $people->getEmail()));
+                $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $people->getEmail()));
                 if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_ERRORS) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }

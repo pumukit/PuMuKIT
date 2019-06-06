@@ -8,6 +8,7 @@ use Pumukit\LiveBundle\Services\LiveService;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
+use Pumukit\LiveBundle\Document\Event;
 
 class LiveTwigExtension extends \Twig_Extension
 {
@@ -60,7 +61,7 @@ class LiveTwigExtension extends \Twig_Extension
      */
     public function getFutureAndNotFinishedEvent($limit = null, Live $live = null)
     {
-        $eventRepo = $this->dm->getRepository('PumukitLiveBundle:Event');
+        $eventRepo = $this->dm->getRepository(Event::class);
 
         return $eventRepo->findFutureAndNotFinished($limit, null, $live);
     }

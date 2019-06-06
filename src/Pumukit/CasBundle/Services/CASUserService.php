@@ -225,7 +225,7 @@ class CASUserService
     {
         $cleanKey = preg_replace('/\W/', '', $key);
 
-        $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneBy(
+        $group = $this->dm->getRepository(Group::class)->findOneBy(
             ['key' => $cleanKey]
         );
 

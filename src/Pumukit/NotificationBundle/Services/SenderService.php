@@ -5,6 +5,7 @@ namespace Pumukit\NotificationBundle\Services;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Person;
 
 class SenderService
 {
@@ -63,7 +64,7 @@ class SenderService
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
         $this->environment = $environment;
-        $this->personRepo = $this->dm->getRepository('PumukitSchemaBundle:Person');
+        $this->personRepo = $this->dm->getRepository(Person::class);
     }
 
     /**

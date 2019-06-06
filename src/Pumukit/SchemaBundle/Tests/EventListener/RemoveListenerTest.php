@@ -8,6 +8,8 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class RemoveListenerTest extends WebTestCase
 {
@@ -29,10 +31,10 @@ class RemoveListenerTest extends WebTestCase
 
         $this->logger = static::$kernel->getContainer()->get('logger');
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repoJobs = $this->dm->getRepository('PumukitEncoderBundle:Job');
-        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $this->repoSeries = $this->dm->getRepository('PumukitSchemaBundle:Series');
-        $this->repoUser = $this->dm->getRepository('PumukitSchemaBundle:User');
+        $this->repoJobs = $this->dm->getRepository(Job::class);
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
+        $this->repoSeries = $this->dm->getRepository(Series::class);
+        $this->repoUser = $this->dm->getRepository(User::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->embeddedBroadcastService = static::$kernel->getContainer()
             ->get('pumukitschema.embeddedbroadcast');
@@ -40,13 +42,13 @@ class RemoveListenerTest extends WebTestCase
 
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
+        $this->dm->getDocumentCollection(Group::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
+        $this->dm->getDocumentCollection(Job::class)
           ->remove(array());
         $this->dm->flush();
     }

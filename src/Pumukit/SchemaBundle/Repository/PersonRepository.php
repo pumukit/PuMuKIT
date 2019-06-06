@@ -3,6 +3,7 @@
 namespace Pumukit\SchemaBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * PersonRepository.
@@ -20,7 +21,7 @@ class PersonRepository extends DocumentRepository
           ->execute();
 
         $mmobjRepo = $this->getDocumentManager()
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         foreach ($people as $person) {
             $mms = $mmobjRepo->findByPersonIdWithRoleCod($person->getId(), $roleCode);
             if ($mms->count() > 0) {

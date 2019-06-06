@@ -53,7 +53,7 @@ class MultimediaObjectPropertyJobService
 
     private function addPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
-        $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->createQueryBuilder(MultimediaObject::class)
             ->update()
             ->field('properties.'.$key)->push($value)
             ->field('_id')->equals($multimediaObject->getId())
@@ -64,7 +64,7 @@ class MultimediaObjectPropertyJobService
     private function delPropertyInArray(MultimediaObject $multimediaObject, $key, $value)
     {
         //Try to delete all the property if is the last job in this state.
-        $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+        $out = $this->dm->createQueryBuilder(MultimediaObject::class)
              ->update()
              ->field('properties.'.$key)->unsetField()
              ->field('_id')->equals($multimediaObject->getId())
@@ -77,7 +77,7 @@ class MultimediaObjectPropertyJobService
         }
 
         // If not delete job from the property
-        $out = $this->dm->createQueryBuilder('PumukitSchemaBundle:MultimediaObject')
+        $out = $this->dm->createQueryBuilder(MultimediaObject::class)
              ->update()
              ->field('properties.'.$key)->pull($value)
              ->field('_id')->equals($multimediaObject->getId())

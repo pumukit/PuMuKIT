@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/admin")
@@ -33,7 +34,7 @@ class MediaPackageController extends Controller
         }
 
         $opencastClient = $this->get('pumukit_opencast.client');
-        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repository_multimediaobjects = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         $limit = 10;
         $page = $request->get('page', 1);

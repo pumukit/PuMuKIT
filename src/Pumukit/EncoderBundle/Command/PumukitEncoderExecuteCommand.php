@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\EncoderBundle\Document\Job;
 
 class PumukitEncoderExecuteCommand extends ContainerAwareCommand
 {
@@ -33,7 +34,7 @@ EOT
             throw new \RuntimeException("Argument 'ID' is required in order to execute this command correctly.");
         }
 
-        if (null === ($job = $dm->find('PumukitEncoderBundle:Job', $id))) {
+        if (null === ($job = $dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id $id.");
         }
 

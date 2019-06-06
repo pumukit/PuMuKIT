@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class SeriesPicServiceTest extends WebTestCase
 {
@@ -26,7 +28,7 @@ class SeriesPicServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository('PumukitSchemaBundle:Series');
+          ->getRepository(Series::class);
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->seriesPicService = static::$kernel->getContainer()
@@ -39,8 +41,8 @@ class SeriesPicServiceTest extends WebTestCase
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
     }
 
@@ -90,8 +92,8 @@ class SeriesPicServiceTest extends WebTestCase
         $series1 = $this->factoryService->createSeries();
         $series2 = $this->factoryService->createSeries();
 
-        $series1 = $this->dm->find('PumukitSchemaBundle:Series', $series1->getId());
-        $series2 = $this->dm->find('PumukitSchemaBundle:Series', $series2->getId());
+        $series1 = $this->dm->find(Series::class, $series1->getId());
+        $series2 = $this->dm->find(Series::class, $series2->getId());
 
         $mm11 = $this->factoryService->createMultimediaObject($series1);
         $mm12 = $this->factoryService->createMultimediaObject($series1);

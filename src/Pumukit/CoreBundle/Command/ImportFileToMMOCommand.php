@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class ImportFileToMMOCommand extends ContainerAwareCommand
 {
@@ -43,7 +44,7 @@ EOT
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->jobService = $this->getContainer()->get('pumukitencoder.job');
         $this->profileService = $this->getContainer()->get('pumukitencoder.profile');
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');

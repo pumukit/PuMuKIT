@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\OpencastBundle\Services\ClientService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class OpencastImportSegmentsCommand.
@@ -164,7 +165,7 @@ EOT
             $criteria['_id'] = new \MongoId($this->id);
         }
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         return $multimediaObjects;
     }

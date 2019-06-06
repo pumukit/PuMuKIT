@@ -17,10 +17,10 @@ class TagRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->repo = $this->dm->getRepository(Tag::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove(array());
         $this->dm->flush();
     }
 

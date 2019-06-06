@@ -17,7 +17,7 @@ use Pumukit\NewAdminBundle\Form\Type\PermissionProfileType;
 class PermissionProfileController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'permissionprofile';
-    public static $repoName = 'PumukitSchemaBundle:PermissionProfile';
+    public static $repoName = PermissionProfile::class;
 
     /**
      * Overwrite to update the criteria with MongoRegex, and save it in the session.
@@ -188,7 +188,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     public function batchUpdateAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $repo = $dm->getRepository(PermissionProfile::class);
         $permissionProfileService = $this->get('pumukitschema.permissionprofile');
 
         $selectedDefault = $request->get('selected_default');

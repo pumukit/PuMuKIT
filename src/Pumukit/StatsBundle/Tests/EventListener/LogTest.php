@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\EventListener\Log;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class LogTest extends WebTestCase
 {
@@ -31,9 +33,9 @@ class LogTest extends WebTestCase
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
     }
 

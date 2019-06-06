@@ -12,6 +12,8 @@ use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class ByUserController.
@@ -33,7 +35,7 @@ class ByUserController extends Controller implements WebTVControllerInterface
         list($scroll_list, $numberCols, $limit, $roleCode) = $this->getParameters();
         $person = $user->getPerson();
 
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         $mmobjs = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         $this->updateBreadcrumbs($user->getFullname(), 'pumukit_webtv_byuser_multimediaobjects', ['username' => $user->getUsername()]);
@@ -68,7 +70,7 @@ class ByUserController extends Controller implements WebTVControllerInterface
     public function seriesAction(User $user, Request $request)
     {
         list($scroll_list, $numberCols, $limit, $roleCode) = $this->getParameters();
-        $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+        $repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $person = $user->getPerson();
         $series = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
 
@@ -120,10 +122,10 @@ class ByUserController extends Controller implements WebTVControllerInterface
         }
 
         if ('multimediaobject' === $type) {
-            $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $repo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
             $qb = $repo->createBuilderByPersonIdWithRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         } else {
-            $repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
+            $repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
             $qb = $repo->createBuilderByPersonIdAndRoleCod($person->getId(), $roleCode, ['public_date' => -1]);
         }
 

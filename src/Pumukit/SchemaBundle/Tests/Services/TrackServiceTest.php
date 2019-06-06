@@ -8,6 +8,8 @@ use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class TrackServiceTest extends WebTestCase
 {
@@ -31,9 +33,9 @@ class TrackServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb')->getManager();
         $this->repoJobs = $this->dm
-          ->getRepository('PumukitEncoderBundle:Job');
+          ->getRepository(Job::class);
         $this->repoMmobj = $this->dm
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
         $this->trackDispatcher = static::$kernel->getContainer()
@@ -41,13 +43,13 @@ class TrackServiceTest extends WebTestCase
         $this->tokenStorage = static::$kernel->getContainer()
           ->get('security.token_storage');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
           ->remove(array());
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
           ->remove(array());
-        $this->dm->getDocumentCollection('PumukitEncoderBundle:Job')
+        $this->dm->getDocumentCollection(Job::class)
           ->remove(array());
         $this->dm->flush();
 

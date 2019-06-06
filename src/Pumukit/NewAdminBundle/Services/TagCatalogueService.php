@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * Class TagCatalogueService.
@@ -69,7 +71,7 @@ class TagCatalogueService
             $tagCod = $this->baseTagCod;
         }
 
-        $tag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(
+        $tag = $this->dm->getRepository(Tag::class)->findOneBy(
             ['cod' => $tagCod]
         );
 
@@ -121,7 +123,7 @@ class TagCatalogueService
                 } elseif (('seriesID' === $key) && !empty($value)) {
                     $newCriteria['series'] = $value;
                 } elseif (('series.numerical_id' === $key) && !empty($value)) {
-                    $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(['numerical_id' => intval($value)]);
+                    $series = $this->dm->getRepository(Series::class)->findOneBy(['numerical_id' => intval($value)]);
                     if ($series) {
                         $newCriteria['series'] = new \MongoId($series->getId());
                     } else {
@@ -698,7 +700,7 @@ class TagCatalogueService
             ],
         ];
 
-        $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+        $roles = $this->dm->getRepository(Role::class)->findAll();
         foreach ($roles as $role) {
             $allFields['role.'.$role->getCod()] = [
                 'label' => $role->getName(),

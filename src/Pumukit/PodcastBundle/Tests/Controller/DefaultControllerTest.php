@@ -3,6 +3,8 @@
 namespace Pumukit\PodcastBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class DefaultControllerTest extends WebTestCase
 {
@@ -27,9 +29,9 @@ class DefaultControllerTest extends WebTestCase
         $this->router = static::$kernel->getContainer()->get('router');
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
     }
 

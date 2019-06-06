@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\EventListener;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * NOTE: This listener is to update the seriesTitle field in each
@@ -19,7 +20,7 @@ class SeriesListener
     public function __construct(DocumentManager $dm)
     {
         $this->dm = $dm;
-        $this->mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmRepo = $dm->getRepository(MultimediaObject::class);
     }
 
     public function postUpdate(SeriesEvent $event)

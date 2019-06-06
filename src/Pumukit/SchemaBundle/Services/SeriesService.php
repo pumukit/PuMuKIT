@@ -6,6 +6,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesService
 {
@@ -17,8 +18,8 @@ class SeriesService
     public function __construct(DocumentManager $documentManager, SeriesEventDispatcherService $seriesDispatcher)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Series');
-        $this->mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(Series::class);
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->seriesDispatcher = $seriesDispatcher;
     }
 

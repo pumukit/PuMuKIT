@@ -6,6 +6,7 @@ use Pumukit\OpencastBundle\Services\ClientService;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class OpencastListCommand.
@@ -59,7 +60,7 @@ EOT
         $output->writeln('Total - '.$total);
 
         foreach ($mediaPackages as $mediaPackage) {
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy([
+            $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->findOneBy([
                 'properties.opencast' => $mediaPackage['id'],
             ]);
 

@@ -37,7 +37,7 @@ class LinkService
         $this->dm->persist($multimediaObject);
         $this->dm->flush();
 
-        return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
+        return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
 
     /**
@@ -58,7 +58,7 @@ class LinkService
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
 
-        return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
+        return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
 
     /**
@@ -82,7 +82,7 @@ class LinkService
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
 
-        return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
+        return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
 
     /**
@@ -102,7 +102,7 @@ class LinkService
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
 
-        return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
+        return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
 
     /**
@@ -122,6 +122,6 @@ class LinkService
         // NOTE Workaround to fix embedded documents modifications
         $this->dm->clear(get_class($multimediaObject));
 
-        return $this->dm->find('PumukitSchemaBundle:MultimediaObject', $multimediaObject->getId());
+        return $this->dm->find(MultimediaObject::class, $multimediaObject->getId());
     }
 }

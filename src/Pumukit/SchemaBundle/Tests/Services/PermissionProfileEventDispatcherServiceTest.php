@@ -26,7 +26,7 @@ class PermissionProfileEventDispatcherServiceTest extends WebTestCase
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
         $this->dm->flush();
 
         MockUpPermissionProfileListener::$called = false;

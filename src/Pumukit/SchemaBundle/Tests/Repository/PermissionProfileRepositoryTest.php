@@ -19,9 +19,9 @@ class PermissionProfileRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->repo = $this->dm->getRepository(PermissionProfile::class);
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')
+        $this->dm->getDocumentCollection(PermissionProfile::class)
             ->remove(array());
     }
 

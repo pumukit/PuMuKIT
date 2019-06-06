@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class PermissionService
 {
@@ -19,7 +20,7 @@ class PermissionService
      */
     public function __construct(DocumentManager $documentManager, array $externalPermissions = array())
     {
-        $this->repo = $documentManager->getRepository('PumukitSchemaBundle:Tag');
+        $this->repo = $documentManager->getRepository(Tag::class);
         $this->externalPermissions = $externalPermissions;
     }
 

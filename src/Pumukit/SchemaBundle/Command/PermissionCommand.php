@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class PermissionCommand extends ContainerAwareCommand
 {
@@ -57,7 +58,7 @@ EOT
     private function getProfile($profileName)
     {
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $repo = $dm->getRepository(PermissionProfile::class);
         $profile = $repo->findOneByName($profileName);
 
         if (!$profile) {

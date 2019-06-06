@@ -242,7 +242,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findPeopleWithRoleCode($roleCode)
     {
         $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = array(
             array('$match' => array('people.cod' => "$roleCode")),
@@ -290,7 +290,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findPersonWithRoleCodeAndEmail($roleCode, $email)
     {
         $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = array(
             array(
@@ -1039,7 +1039,7 @@ class MultimediaObjectRepository extends DocumentRepository
         $qb = $this->createQueryBuilder()->field('_id')->notEqual($multimediaObject->getId())->field('series')->notEqual($multimediaObject->getSeries()->getId())->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
 
         // Includes PUCHWEBTV code
-        $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $tagRepo = $this->dm->getRepository(Tag::class);
         $unescoTag = $tagRepo->findOneByCod($tagBase);
         $codes = array();
         foreach ($multimediaObject->getTags() as $tag) {
@@ -1583,7 +1583,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findNextEventSessions($multimediaObjectId)
     {
         $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline[] = array(
             '$match' => array(
@@ -1664,7 +1664,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function findNowEventSessions($multimediaObjectId = null, $limit = 0)
     {
         $dm = $this->getDocumentManager();
-        $collection = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         if ($multimediaObjectId) {
             $pipeline[] = array(
@@ -1766,7 +1766,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $dm = $this->getDocumentManager();
 
-        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObjectsColl = $dm->getDocumentCollection(MultimediaObject::class);
 
         $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
         if ($seriesList) {
@@ -1808,7 +1808,7 @@ class MultimediaObjectRepository extends DocumentRepository
     {
         $dm = $this->getDocumentManager();
 
-        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObjectsColl = $dm->getDocumentCollection(MultimediaObject::class);
 
         $pipeline = array(
             array('$project' => array('_id' => '$tags.cod')),

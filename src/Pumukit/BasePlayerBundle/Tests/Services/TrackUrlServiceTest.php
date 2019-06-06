@@ -21,7 +21,7 @@ class TrackUrlServiceTest extends WebTestCase
 
         $this->client = static::createClient();
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->trackurlService = static::$kernel->getContainer()->get('pumukit_baseplayer.trackurl');
     }
 

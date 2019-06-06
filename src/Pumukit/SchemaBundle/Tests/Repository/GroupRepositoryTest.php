@@ -16,10 +16,10 @@ class GroupRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Group');
+        $this->repo = $this->dm->getRepository(Group::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')
+        $this->dm->getDocumentCollection(Group::class)
             ->remove(array());
         $this->dm->flush();
     }

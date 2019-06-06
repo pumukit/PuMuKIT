@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PersonRepositoryTest extends WebTestCase
 {
@@ -19,17 +21,17 @@ class PersonRepositoryTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:Person');
+        $this->repo = $this->dm->getRepository(Person::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Role')
+        $this->dm->getDocumentCollection(Role::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Person')
+        $this->dm->getDocumentCollection(Person::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
         $this->dm->flush();
     }

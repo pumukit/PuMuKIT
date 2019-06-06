@@ -5,6 +5,8 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
@@ -322,7 +324,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
+        $roles = $dm->getRepository(Role::class)->findAll();
         if (!$roles) {
             throw new \Exception('Not roles found');
         }
@@ -362,7 +364,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $permissionProfiles = $dm->getRepository('PumukitSchemaBundle:PermissionProfile')->findAll();
+        $permissionProfiles = $dm->getRepository(PermissionProfile::class)->findAll();
         if (!$permissionProfiles) {
             throw new \Exception('Not permission profiles found');
         }

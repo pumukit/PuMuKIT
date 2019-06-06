@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Route("/api/keywords")
@@ -18,7 +20,7 @@ class APIKeywordsController extends Controller
     public function seriesAction(Request $request)
     {
         return $this->base(
-            'PumukitSchemaBundle:Series',
+            Series::class,
             $request->getLocale(),
             $request->getRequestFormat(),
             1000
@@ -31,7 +33,7 @@ class APIKeywordsController extends Controller
     public function mmobjAction(Request $request)
     {
         return $this->base(
-            'PumukitSchemaBundle:MultimediaObject',
+            MultimediaObject::class,
             $request->getLocale(),
             $request->getRequestFormat(),
             1000

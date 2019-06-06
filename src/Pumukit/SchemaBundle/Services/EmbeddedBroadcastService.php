@@ -29,7 +29,7 @@ class EmbeddedBroadcastService
     public function __construct(DocumentManager $documentManager, MultimediaObjectService $mmsService, MultimediaObjectEventDispatcherService $dispatcher, AuthorizationCheckerInterface $authorizationChecker, EngineInterface $templating, RouterInterface $router, $disabledBroadcast)
     {
         $this->dm = $documentManager;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->mmsService = $mmsService;
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;

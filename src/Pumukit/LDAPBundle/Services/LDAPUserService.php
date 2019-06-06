@@ -63,7 +63,7 @@ class LDAPUserService
             throw new \InvalidArgumentException('Uid is not set ');
         }
 
-        $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('username' => $username));
+        $user = $this->dm->getRepository(User::class)->findOneBy(array('username' => $username));
         if (count($user) <= 0) {
             try {
                 $user = $this->newUser($info, $username);
@@ -93,7 +93,7 @@ class LDAPUserService
     {
         $email = $this->getEmail($info);
 
-        $user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy(array('email' => $email));
+        $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $email));
         if (count($user) <= 0) {
             $user = new User();
             $user->setEmail($email);
@@ -135,7 +135,7 @@ class LDAPUserService
         $cleanKey = $this->getGroupKey($key, $type);
         $cleanName = $this->getGroupName($key, $type);
 
-        $group = $this->dm->getRepository('PumukitSchemaBundle:Group')->findOneByKey($cleanKey);
+        $group = $this->dm->getRepository(Group::class)->findOneByKey($cleanKey);
         if ($group) {
             return $group;
         }

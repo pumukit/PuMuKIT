@@ -10,6 +10,8 @@
 namespace Pumukit\SchemaBundle\Tests\Other;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectInSeriesTest extends WebTestCase
 {
@@ -26,11 +28,11 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $container = static::$kernel->getContainer();
         $this->factoryService = $container->get('pumukitschema.factory');
         $this->dm = $container->get('doctrine_mongodb')->getManager();
-        $this->seriesRepo = $this->dm->getRepository('PumukitSchemaBundle:Series');
-        $this->mmobjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->seriesRepo = $this->dm->getRepository(Series::class);
+        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
     }
 
     public function tearDown()

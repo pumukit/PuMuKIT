@@ -7,11 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Pumukit\SchemaBundle\Utils\Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pumukit\SchemaBundle\Document\Series;
 
 class ResourceController extends Controller
 {
     public static $resourceName = 'series';
-    public static $repoName = 'PumukitSchemaBundle:Series';
+    public static $repoName = Series::class;
 
     public function getResourceName()
     {

@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 
 /**
  * Class ImportWizardCommand.
@@ -94,7 +96,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->defaultLanguage = $this->getContainer()->getParameter('locale');
 
-        $this->user = $this->dm->getRepository('PumukitSchemaBundle:User')->findOneBy([
+        $this->user = $this->dm->getRepository(User::class)->findOneBy([
             '_id' => $input->getArgument('user'),
         ]);
 
@@ -132,7 +134,7 @@ EOT
      */
     private function importFiles(OutputInterface $output)
     {
-        $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(['_id' => $this->series]);
+        $series = $this->dm->getRepository(Series::class)->findOneBy(['_id' => $this->series]);
         if (!$series) {
             throw new \Exception(__FUNCTION__.' - Series not found'.$this->series);
         }

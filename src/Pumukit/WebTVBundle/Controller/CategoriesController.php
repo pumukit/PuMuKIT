@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 //Used on countMmobjsInTags TODO Move to service
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class CategoriesController.
@@ -27,7 +28,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
         $parentCod = $this->container->getParameter('categories_tag_cod');
 
         $groundsRoot = $this->getDoctrine()
-            ->getRepository('PumukitSchemaBundle:Tag')
+            ->getRepository(Tag::class)
             ->findOneByCod($parentCod);
 
         if (!isset($groundsRoot)) {
@@ -41,7 +42,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
 
         $allGrounds = [];
         $tagsTree = $this->getDoctrine()
-            ->getRepository('PumukitSchemaBundle:Tag')
+            ->getRepository(Tag::class)
             ->getTree($groundsRoot);
 
         //Create array structure
@@ -158,7 +159,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
         $parentCod = $this->container->getParameter('categories_tag_cod');
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObjectsColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $multimediaObjectsColl = $dm->getDocumentCollection(MultimediaObject::class);
         $criteria = ['status' => MultimediaObject::STATUS_PUBLISHED, 'tags.cod' => array('$all' => ['PUCHWEBTV', $parentCod])];
         $criteria['$or'] = [
             ['tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]], 'properties.opencast' => ['$exists' => false]],
@@ -189,7 +190,7 @@ class CategoriesController extends Controller implements WebTVControllerInterfac
     private function countGeneralMmobjsInTag($tag, $provider = null)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $dm->getRepository(MultimediaObject::class);
         $qb = $repo->createBuilderWithGeneralTag($tag);
         if (null !== $provider) {
             $qb = $qb->field('tags.cod')->equals($provider);

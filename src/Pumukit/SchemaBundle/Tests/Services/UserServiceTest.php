@@ -31,8 +31,8 @@ class UserServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:User');
-        $this->permissionProfileRepo = $this->dm->getRepository('PumukitSchemaBundle:PermissionProfile');
+        $this->repo = $this->dm->getRepository(User::class);
+        $this->permissionProfileRepo = $this->dm->getRepository(PermissionProfile::class);
 
         $dispatcher = new EventDispatcher();
         $userDispatcher = new UserEventDispatcherService($dispatcher);
@@ -56,9 +56,9 @@ class UserServiceTest extends WebTestCase
         $listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
         $dispatcher->addListener('permissionprofile.update', array($listener, 'postUpdate'));
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:User')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Group')->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:PermissionProfile')->remove(array());
+        $this->dm->getDocumentCollection(User::class)->remove(array());
+        $this->dm->getDocumentCollection(Group::class)->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
         $this->dm->flush();
     }
 

@@ -32,7 +32,7 @@ class InfoController extends Controller
         $cpus = $cpuService->getCpus();
 
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $jobRepo = $dm->getRepository('PumukitEncoderBundle:Job');
+        $jobRepo = $dm->getRepository(Job::class);
 
         $pendingStates = array();
         if ($request->query->get('show_waiting', true)) {

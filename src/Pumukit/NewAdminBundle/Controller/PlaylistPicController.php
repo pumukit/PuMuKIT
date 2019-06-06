@@ -105,7 +105,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -124,7 +124,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');
@@ -147,7 +147,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository('PumukitSchemaBundle:Series');
+              ->getRepository(Series::class);
 
         if (!$playlist = $repo->findByPicId($picId)) {
             throw $this->createNotFoundException('Requested playlist does not exist');

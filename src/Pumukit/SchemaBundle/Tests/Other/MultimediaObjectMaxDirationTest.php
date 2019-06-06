@@ -5,6 +5,7 @@ namespace Pumukit\SchemaBundle\Tests\Other;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Document\Series;
 
 class MultimediaObjectMaxDirationTest extends WebTestCase
 {
@@ -19,13 +20,13 @@ class MultimediaObjectMaxDirationTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
         $this->dm->flush();
     }

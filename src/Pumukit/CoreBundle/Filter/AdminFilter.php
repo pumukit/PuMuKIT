@@ -62,7 +62,7 @@ class AdminFilter extends BsonFilter
     {
         $seriesIds = array();
         if ((null !== $personId) && (null !== $roleCode)) {
-            $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $repoMmobj = $this->dm->getRepository(MultimediaObject::class);
             $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCode, $groups);
             $seriesIds['$in'] = $referencedSeries->toArray();
         }

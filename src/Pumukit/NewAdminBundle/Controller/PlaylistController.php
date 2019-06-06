@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\NewAdminBundle\Form\Type\PlaylistType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
@@ -157,9 +158,9 @@ class PlaylistController extends CollectionController
 
         // Removes ids on session (if the series/mmobj does not exist now, we should get rid of the stored id)
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                    ->getRepository('PumukitSchemaBundle:Series');
+                    ->getRepository(Series::class);
         $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                   ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                   ->getRepository(MultimediaObject::class);
 
         //        $this->get('doctrine_mongodb.odm.document_manager')->clear();
         $playlist = $seriesRepo->find($this->get('session')->get('admin/playlist/id'));
@@ -193,7 +194,7 @@ class PlaylistController extends CollectionController
         $sorting = $this->getSorting($request);
         $criteria = $this->getCriteria($request);
         $criteria = array_merge($criteria, array('type' => Series::TYPE_PLAYLIST));
-        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder();
+        $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class)->createQueryBuilder();
         $queryBuilder->setQueryArray($criteria);
         //Sort playlist
         $queryBuilder->sort($sorting);

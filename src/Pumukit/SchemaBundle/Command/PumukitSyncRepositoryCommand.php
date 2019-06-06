@@ -7,6 +7,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\Role;
 
 class PumukitSyncRepositoryCommand extends ContainerAwareCommand
 {
@@ -31,7 +34,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
 
-        $this->mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->mmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncTags($input, $output);
         $this->syncNumberMultimediaObjectsOnBroadcast($input, $output);
@@ -41,8 +44,8 @@ EOT
 
     private function syncJobsInMultimediaObjectsProperties(InputInterface $input, OutputInterface $output)
     {
-        $jobColl = $this->dm->getDocumentCollection('PumukitEncoderBundle:Job');
-        $mmObjColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $jobColl = $this->dm->getDocumentCollection(Job::class);
+        $mmObjColl = $this->dm->getDocumentCollection(MultimediaObject::class);
 
         $jobsPending = 0;
         $jobsExecuting = 0;
@@ -97,8 +100,8 @@ EOT
             throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
         }
 
-        $jobRepo = $this->dm->getRepository('PumukitEncoderBundle:Job');
-        $mmObjRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $jobRepo = $this->dm->getRepository(Job::class);
+        $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $pendingJobsId = $jobRepo->createQueryBuilder()
                        ->hydrate(false)
@@ -128,9 +131,9 @@ EOT
 
     private function syncTags(InputInterface $input, OutputInterface $output)
     {
-        $tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
-        $tagColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag');
-        $mmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $tagRepo = $this->dm->getRepository(Tag::class);
+        $tagColl = $this->dm->getDocumentCollection(Tag::class);
+        $mmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
 
         $tagsInMMAggResult = $mmColl->aggregate(array(
             array('$match' => array(
@@ -174,7 +177,7 @@ EOT
      */
     private function syncNumberMultimediaObjectsOnBroadcast(InputInterface $input, OutputInterface $output)
     {
-        $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Broadcast');
+        $broadcastRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository(Broadcast::class);
 
         $output->writeln(' ');
 
@@ -190,7 +193,7 @@ EOT
 
     private function syncNumberPeopleInMultimediaObjectsOnRoles(InputInterface $input, OutputInterface $output)
     {
-        $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Role');
+        $rolesRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository(Role::class);
 
         $output->writeln(' ');
 

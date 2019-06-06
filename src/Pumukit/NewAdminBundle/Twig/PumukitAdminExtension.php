@@ -13,6 +13,7 @@ use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
+use Pumukit\SchemaBundle\Document\Role;
 
 class PumukitAdminExtension extends \Twig_Extension
 {
@@ -482,7 +483,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function countMultimediaObjects($series)
     {
-        return $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countInSeries($series);
+        return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
     }
 
     /**
@@ -532,7 +533,7 @@ class PumukitAdminExtension extends \Twig_Extension
         $mmobjsHidden = 0;
         $mmobjsBlocked = 0;
 
-        $seriesColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $seriesColl = $this->dm->getDocumentCollection(MultimediaObject::class);
         $aggrPipe = array(
             array('$match' => array('series' => new \MongoId($series->getId()))),
             array('$group' => array('_id' => '$status',
@@ -564,7 +565,7 @@ class PumukitAdminExtension extends \Twig_Extension
         if (isset($this->countMmobjsWithTag[$series->getId()][$tagCod])) {
             return $this->countMmobjsWithTag[$series->getId()][$tagCod];
         }
-        $repoSeries = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repoSeries = $this->dm->getRepository(MultimediaObject::class);
         $qb = $repoSeries->createStandardQueryBuilder()->field('series')->equals(new \MongoId($series->getId()))->field('tags.cod')->equals('PUDENEW');
         $count = $qb->count()->getQuery()->execute();
 
@@ -694,7 +695,7 @@ class PumukitAdminExtension extends \Twig_Extension
         if (isset($rolesCached[$display])) {
             $roles = $rolesCached[$display];
         } else {
-            $roles = $this->dm->getRepository('PumukitSchemaBundle:Role')->findBy(array('display' => $display), array('rank' => 1));
+            $roles = $this->dm->getRepository(Role::class)->findBy(array('display' => $display), array('rank' => 1));
             $rolesCached[$display] = $roles;
         }
 

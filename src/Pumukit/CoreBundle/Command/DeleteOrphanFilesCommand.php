@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Finder\Finder;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class DeleteOrphanFilesCommand.
@@ -119,33 +121,33 @@ EOT
      */
     private function findInMongoDB(DocumentManager $documentManager, $filePath)
     {
-        $mmobjPic = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjPic = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
             'pics.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
-        $mmobjMaterial = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjMaterial = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
             'materials.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
 
-        $mmobjTracks = $documentManager->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(array(
+        $mmobjTracks = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
             'tracks.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
 
-        $seriesPic = $documentManager->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
+        $seriesPic = $documentManager->getRepository(Series::class)->findOneBy(array(
             'pic.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',
             ),
         ));
-        $seriesMaterial = $documentManager->getRepository('PumukitSchemaBundle:Series')->findOneBy(array(
+        $seriesMaterial = $documentManager->getRepository(Series::class)->findOneBy(array(
             'materials.path' => array(
                 '$regex' => $filePath,
                 '$options' => 'i',

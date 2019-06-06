@@ -4,6 +4,8 @@ namespace Pumukit\NewAdminBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class MultimediaObjectSyncService
 {
@@ -71,7 +73,7 @@ class MultimediaObjectSyncService
      */
     public function getMultimediaObjectsToSync(MultimediaObject $multimediaObject)
     {
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy(
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(
             array(
                 'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE),
                 'type' => array('$ne' => MultimediaObject::TYPE_LIVE),
@@ -253,7 +255,7 @@ class MultimediaObjectSyncService
      */
     public function syncOwners(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
-        $roleOwner = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(
+        $roleOwner = $this->dm->getRepository(Role::class)->findOneBy(
             array('cod' => 'owner')
         );
         $role = $originData->getEmbeddedRole($roleOwner);
@@ -278,7 +280,7 @@ class MultimediaObjectSyncService
      */
     public function syncPublishingDecisions(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
-        $pubDecisionTag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(
+        $pubDecisionTag = $this->dm->getRepository(Tag::class)->findOneBy(
             array('cod' => $this->publishingDecisionCode)
         );
 
@@ -312,7 +314,7 @@ class MultimediaObjectSyncService
      */
     public function syncTags(MultimediaObject $multimediaObject, MultimediaObject $originData, $tagId)
     {
-        $tag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(
+        $tag = $this->dm->getRepository(Tag::class)->findOneBy(
             array('_id' => new \MongoId($tagId))
         );
 
@@ -340,7 +342,7 @@ class MultimediaObjectSyncService
      */
     public function syncRoles(MultimediaObject $multimediaObject, MultimediaObject $originData, $roleId)
     {
-        $role = $this->dm->getRepository('PumukitSchemaBundle:Role')->findOneBy(
+        $role = $this->dm->getRepository(Role::class)->findOneBy(
             array('_id' => new \MongoId($roleId))
         );
 

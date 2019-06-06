@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
 {
@@ -69,7 +70,7 @@ EOT
             'pics.path' => new \MongoRegex(sprintf('/%s/i', $this->extensionFile)),
         );
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         if (!$multimediaObjects) {
             $output->writeln('No multimedia objects found to regenerate pics');

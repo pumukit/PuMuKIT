@@ -28,7 +28,7 @@ class MultimediaObjectPicService
             throw new \InvalidArgumentException("The path '".$targetPath."' for storing Pics does not exist.");
         }
         $this->targetUrl = $targetUrl;
-        $this->repo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repo = $this->dm->getRepository(MultimediaObject::class);
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
     }
 

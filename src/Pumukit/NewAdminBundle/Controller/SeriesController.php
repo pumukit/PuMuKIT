@@ -16,6 +16,8 @@ use Pumukit\NewAdminBundle\Form\Type\SeriesType;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -23,7 +25,7 @@ use Pagerfanta\Pagerfanta;
 class SeriesController extends AdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'series';
-    public static $repoName = 'PumukitSchemaBundle:Series';
+    public static $repoName = Series::class;
 
     /**
      * Overwrite to search criteria with date.
@@ -100,7 +102,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $dm = $this->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
 
-        $series = $dm->getRepository('PumukitSchemaBundle:Series')->findOneBy(['_id' => new \MongoId($id)]);
+        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new \MongoId($id)]);
         if (!$series) {
             throw new \Exception($translator->trans('No series found with ID').' '.$id);
         }
@@ -385,7 +387,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         );
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $multimediaObjects = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findWithoutPrototype($series);
+        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findWithoutPrototype($series);
 
         $pubChannels = $this->get('pumukitschema.factory')->getTagsByCod('PUBCHANNELS', true);
 
@@ -440,7 +442,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         if ($request->query->has('empty_series') || $this->get('session')->has('admin/series/empty_series')) {
             $this->get('session')->set('admin/series/empty_series', true);
             $dm = $this->get('doctrine_mongodb')->getManager();
-            $mmObjColl = $dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+            $mmObjColl = $dm->getDocumentCollection(MultimediaObject::class);
             $pipeline = array(
                 array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
                 array('$match' => array('count' => 1)),
@@ -582,8 +584,8 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     private function modifyMultimediaObjectsStatus($values)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
-        $repoTags = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(MultimediaObject::class);
+        $repoTags = $dm->getRepository(Tag::class);
         $tagService = $this->get('pumukitschema.tag');
 
         $executeFlush = false;
@@ -663,7 +665,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
         $type = $this->get('session')->get('admin/series/type');
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $dm->getRepository(MultimediaObject::class);
         $numberMultimediaObjectsInSeries1 = $mmRepo->countInSeries($series1);
         $numberMultimediaObjectsInSeries2 = $mmRepo->countInSeries($series2);
 
@@ -718,7 +720,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
                 $enableFilter = true;
                 $dm->getFilterCollection()->disable('backoffice');
             }
-            $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $mmobjRepo = $dm->getRepository(MultimediaObject::class);
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role) ||
@@ -751,7 +753,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     public function updateBroadcastAction(Series $series, Request $request)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $dm->getRepository(MultimediaObject::class);
         $broadcasts = $this->get('pumukitschema.embeddedbroadcast')->getAllTypes();
         $allGroups = $this->getAllGroups();
         $seriesService = $this->get('pumukitschema.series');
@@ -845,7 +847,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = [], $deleteGroups = [], $executeFlush = true)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groupRepo = $dm->getRepository(Group::class);
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
@@ -878,7 +880,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
     private function getFirstMultimediaObject(Series $series)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmRepo = $dm->getRepository(MultimediaObject::class);
         $all = $mmRepo->findBySeries($series);
         foreach ($all as $multimediaObject) {
             return $multimediaObject;

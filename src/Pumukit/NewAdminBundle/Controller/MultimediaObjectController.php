@@ -24,6 +24,9 @@ use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -31,7 +34,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class MultimediaObjectController extends SortableAdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'mms';
-    public static $repoName = 'PumukitSchemaBundle:MultimediaObject';
+    public static $repoName = MultimediaObject::class;
 
     /**
      * Overwrite to search criteria with date.
@@ -124,7 +127,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $sTagCode = $request->attributes->get('microsite_custom_tag');
 
             $dm = $this->get('doctrine_mongodb')->getManager();
-            $aTag = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $sTagCode));
+            $aTag = $dm->getRepository(Tag::class)->findOneBy(array('cod' => $sTagCode));
 
             if ($aTag) {
                 $mmobj->addTag($aTag);
@@ -208,7 +211,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         //If the 'pudenew' tag is not being used, set the display to 'false'.
         if (!$this->container->getParameter('show_latest_with_pudenew')) {
             $this->get('doctrine_mongodb.odm.document_manager')
-                ->getRepository('PumukitSchemaBundle:Tag')
+                ->getRepository(Tag::class)
                 ->findOneByCod('PUDENEW')
                 ->setDisplay(false);
         }
@@ -278,7 +281,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($request->request->get('id')));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($request->request->get('id')));
         $method = $request->getMethod();
         if (in_array($method, array('POST', 'PUT', 'PATCH'))) {
             $social = $multimediaObject->getEmbeddedSocial();
@@ -584,7 +587,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function searchTagAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(Tag::class);
 
         $search_text = $request->get('search_text');
         $lang = $request->getLocale();
@@ -593,7 +596,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $parent = $repo->findOneById($request->get('parent'));
         $parent_path = str_replace('|', "\|", $parent->getPath());
 
-        $qb = $dm->createQueryBuilder('PumukitSchemaBundle:Tag');
+        $qb = $dm->createQueryBuilder(Tag::class);
         $children = $qb->addOr($qb->expr()->field('title.'.$lang)->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
                   ->addOr($qb->expr()->field('cod')->equals(new \MongoRegex('/.*'.$search_text.'.*/i')))
                   ->addAnd($qb->expr()->field('path')->equals(new \MongoRegex('/'.$parent_path.'(.+[\|]+)+/')))
@@ -662,7 +665,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $mmsQueryBuilder = $this
                          ->get('doctrine_mongodb.odm.document_manager')
-                         ->getRepository('PumukitSchemaBundle:MultimediaObject')
+                         ->getRepository(MultimediaObject::class)
                          ->getQueryBuilderOrderedBy($series, $sorting);
 
         $adapter = new DoctrineODMMongoDBAdapter($mmsQueryBuilder);
@@ -789,7 +792,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $tagService = $this->get('pumukitschema.tag');
         $tagNew = $this->get('doctrine_mongodb.odm.document_manager')
-                ->getRepository('PumukitSchemaBundle:Tag')->findOneByCod('PUDENEW');
+                ->getRepository(Tag::class)->findOneByCod('PUDENEW');
         foreach ($ids as $id) {
             $resource = $this->find($id);
 
@@ -871,7 +874,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         foreach ($ids as $id) {
-            $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->find($id);
+            $multimediaObject = $dm->getRepository(MultimediaObject::class)->find($id);
 
             if (!$multimediaObject) {
                 continue;
@@ -924,7 +927,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $all = $request->query->get('all');
 
         $multimediaObjectRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                              ->getRepository('PumukitSchemaBundle:MultimediaObject');
+                              ->getRepository(MultimediaObject::class);
         $multimediaObject = $multimediaObjectRepo
                           ->find($request->query->get('id'));
 
@@ -971,7 +974,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function reloadTagsAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:Tag');
+        $repo = $dm->getRepository(Tag::class);
 
         $mmId = $request->get('mmId');
         $parent = $repo->findOneById(''.$request->get('parentId'));
@@ -1273,7 +1276,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     private function modifyMultimediaObjectGroups(MultimediaObject $multimediaObject, $addGroups = array(), $deleteGroups = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groupRepo = $dm->getRepository(Group::class);
         $multimediaObjectService = $this->get('pumukitschema.multimedia_object');
         foreach ($addGroups as $addGroup) {
             $groupIdArray = explode('_', $addGroup);
@@ -1301,7 +1304,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     private function modifyBroadcastGroups(MultimediaObject $multimediaObject, $type = EmbeddedBroadcast::TYPE_PUBLIC, $password = '', $addGroups = array(), $deleteGroups = array())
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository('PumukitSchemaBundle:Group');
+        $groupRepo = $dm->getRepository(Group::class);
         $embeddedBroadcastService = $this->get('pumukitschema.embeddedbroadcast');
         $embeddedBroadcastService->updateTypeAndName($type, $multimediaObject, false);
         if (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
@@ -1376,7 +1379,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
 
         $userInOwners = false;
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $personRepo = $dm->getRepository('PumukitSchemaBundle:Person');
+        $personRepo = $dm->getRepository(Person::class);
         foreach ($multimediaObject->getProperty('owners') as $owner) {
             $person = $personRepo->find($owner);
             if ($person) {
@@ -1428,9 +1431,9 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             $this->get('session')->remove('admin/mmslist/id');
         }
 
-        $aRoles = $dm->getRepository('PumukitSchemaBundle:Role')->findAll();
-        $aPubChannel = $dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => 'PUBCHANNELS'));
-        $aChannels = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
+        $aRoles = $dm->getRepository(Role::class)->findAll();
+        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PUBCHANNELS'));
+        $aChannels = $dm->getRepository(Tag::class)->findBy(array('parent.$id' => new \MongoId($aPubChannel->getId())));
 
         $multimediaObjectLabel = $this->get('translator')->trans($this->container->getParameter('pumukit_new_admin.multimedia_object_label'));
         $statusPub = array(
@@ -1584,7 +1587,7 @@ class MultimediaObjectController extends SortableAdminController implements NewA
     public function updatePropertyAction(Request $request)
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
-        $multimediaObject = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneById(new \MongoId($request->get('id')));
+        $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($request->get('id')));
         $method = $request->getMethod();
         if (in_array($method, array('POST'))) {
             $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));
@@ -1615,14 +1618,14 @@ class MultimediaObjectController extends SortableAdminController implements NewA
         $locale = $request->getLocale();
         $syncService = $this->container->get('pumukitnewadmin.multimedia_object_sync');
 
-        $tags = $dm->getRepository('PumukitSchemaBundle:Tag')->findBy(
+        $tags = $dm->getRepository(Tag::class)->findBy(
             array('metatag' => true, 'display' => true, 'properties.hide_in_tag_group' => array('$exists' => false)),
             array('cod' => 1)
         );
         if (!$tags) {
             throw new \Exception($translator->trans('No tags defined with metatag'));
         }
-        $roles = $dm->getRepository('PumukitSchemaBundle:Role')->findBy(array(), array("name.$locale" => 1));
+        $roles = $dm->getRepository(Role::class)->findBy(array(), array("name.$locale" => 1));
         if (0 === count($roles)) {
             throw new \Exception($translator->trans('No roles defined'));
         }

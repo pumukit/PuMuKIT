@@ -4,6 +4,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class StatsService
 {
@@ -13,13 +14,13 @@ class StatsService
     public function __construct(DocumentManager $documentManager)
     {
         $this->dm = $documentManager;
-        $this->repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
     }
 
     public function getGlobalStats($groupBy = 'month', $sort = -1)
     {
-        $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
-        $dmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
+        $dmRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$record_date');
 
@@ -59,7 +60,7 @@ class StatsService
 
     public function getMmobjRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
         $mongoGroup = array('numMmobjs' => array('$sum' => 1));
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
@@ -69,7 +70,7 @@ class StatsService
 
     public function getSeriesRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:Series');
+        $dmColl = $this->dm->getDocumentCollection(Series::class);
         $mongoGroup = array('numSeries' => array('$sum' => 1));
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'public_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
@@ -79,7 +80,7 @@ class StatsService
 
     public function getHoursRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
     {
-        $dmColl = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+        $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
         $mongoGroup = array('seconds' => array('$sum' => '$duration'));
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);

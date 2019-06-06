@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\Tag;
 
 class TagCommand extends ContainerAwareCommand
 {
@@ -54,7 +55,7 @@ EOT
     private function initParameters()
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-        $this->tagRepo = $this->dm->getRepository('PumukitSchemaBundle:Tag');
+        $this->tagRepo = $this->dm->getRepository(Tag::class);
     }
 
     private function getTag($tagCode)

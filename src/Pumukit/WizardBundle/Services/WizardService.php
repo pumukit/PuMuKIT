@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class WizardService.
@@ -149,7 +150,7 @@ class WizardService
     {
         $seriesId = $this->getKeyData('id', $seriesData);
         if ($seriesId && ('null' !== $seriesId)) {
-            $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findOneBy([
+            $series = $this->dm->getRepository(Series::class)->findOneBy([
                 '_id' => $seriesId,
             ]);
         } else {
@@ -292,7 +293,7 @@ class WizardService
             return $addedTags;
         }
 
-        $tag = $this->dm->getRepository('PumukitSchemaBundle:Tag')->findOneBy(array('cod' => $tagCode));
+        $tag = $this->dm->getRepository(Tag::class)->findOneBy(array('cod' => $tagCode));
         if ($tag) {
             $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         }

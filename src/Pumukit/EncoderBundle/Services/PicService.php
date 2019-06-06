@@ -7,6 +7,8 @@ use Symfony\Component\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 
 class PicService
 {
@@ -48,9 +50,9 @@ class PicService
     public function findPicsByOptions($id = null, $size = null, $path = null, $extension = null, $tags = null, $exists = null, $type = null)
     {
         if ('series' == $type) {
-            $collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:Series');
+            $collection = $this->dm->getDocumentCollection(Series::class);
         } else {
-            $collection = $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject');
+            $collection = $this->dm->getDocumentCollection(MultimediaObject::class);
         }
 
         $pipeline = array(array('$match' => array('pics' => array('$exists' => true))));
@@ -240,7 +242,7 @@ class PicService
             $ext = pathinfo($pic['path'], PATHINFO_EXTENSION);
             $picPath = $this->createFromPic($pic, $params, $no_replace, $ext);
 
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findOneBy(
+            $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->findOneBy(
                 array('pics.path' => $pic['path'])
             );
 

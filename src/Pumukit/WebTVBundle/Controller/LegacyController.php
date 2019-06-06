@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * Class LegacyController.
@@ -33,7 +34,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
     public function seriesAction($pumukit1id)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+        $seriesRepo = $dm->getRepository(Series::class);
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -81,7 +82,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
     public function multimediaObjectAction($pumukit1id)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -122,7 +123,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
     public function multimediaObjectIframeAction($pumukit1id)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('properties.pumukit1id')->equals($pumukit1id)
@@ -154,7 +155,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
     public function trackAction($pumukit1id)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $mmobjRepo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $dm->getRepository(MultimediaObject::class);
 
         $multimediaObject = $mmobjRepo->createQueryBuilder()
             ->field('tracks.tags')->equals(new \MongoRegex("/\bpumukit1id:".$pumukit1id."\b/i"))
@@ -179,7 +180,7 @@ class LegacyController extends Controller implements WebTVControllerInterface
     public function magicAction($hash)
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $seriesRepo = $dm->getRepository('PumukitSchemaBundle:Series');
+        $seriesRepo = $dm->getRepository(Series::class);
 
         $series = $seriesRepo->createQueryBuilder()
             ->field('properties.pumukit1magic')->equals($hash)

@@ -26,7 +26,7 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove(array());
         $this->dm->flush();
 
         MockUpSeriesListener::$called = false;

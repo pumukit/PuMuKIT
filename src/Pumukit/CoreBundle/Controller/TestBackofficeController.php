@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class TestBackofficeController extends Controller implements AdminControllerInterface
 {
@@ -18,7 +19,7 @@ class TestBackofficeController extends Controller implements AdminControllerInte
     {
         $mmobjRepo = $this
           ->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository('PumukitSchemaBundle:MultimediaObject');
+          ->getRepository(MultimediaObject::class);
         $data = $mmobjRepo->createQueryBuilder()->distinct('_id')->getQuery()->execute();
         $serializer = $this->get('jms_serializer');
         $response = $serializer->serialize($data, $request->getRequestFormat());

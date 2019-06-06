@@ -30,7 +30,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             $output->writeln('Importing opencast recording: '.$opencastId);
         }
         $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
-        $mmobjRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $this->getContainer()->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
         if ($mmObjId = $input->getOption('mmobjid')) {
             if ($mmobj = $mmobjRepo->find($mmObjId)) {

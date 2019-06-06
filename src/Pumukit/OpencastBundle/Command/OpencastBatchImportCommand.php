@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class OpencastBatchImportCommand extends ContainerAwareCommand
 {
@@ -42,7 +43,7 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
             $mediaPackages = $opencastClientService->getMediaPackages('', $batchSize, $batchPlace);
 
             $opencastImportService = $this->getContainer()->get('pumukit_opencast.import');
-            $repositoryMultimediaObjects = $this->getContainer()->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $repositoryMultimediaObjects = $this->getContainer()->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
 
             foreach ($mediaPackages[1] as $mediaPackage) {
                 $output->writeln('Importing mediapackage: '.$mediaPackage['id']);

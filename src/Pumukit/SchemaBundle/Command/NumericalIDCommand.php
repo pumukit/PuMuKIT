@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Pumukit\SchemaBundle\Document\Series;
 
 class NumericalIDCommand extends ContainerAwareCommand
 {
@@ -122,7 +123,7 @@ EOT
     {
         $criteria = $this->createCriteria($criteria, $withPumukit1Id);
 
-        $multimediaObjects = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->findBy($criteria);
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy($criteria);
 
         return $multimediaObjects;
     }
@@ -131,7 +132,7 @@ EOT
     {
         $criteria = $this->createCriteria($criteria, $withPumukit1Id);
 
-        $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->findBy($criteria);
+        $series = $this->dm->getRepository(Series::class)->findBy($criteria);
 
         return $series;
     }
@@ -148,7 +149,7 @@ EOT
     private function getLastNumericalID($series = false)
     {
         if ($series) {
-            $series = $this->dm->getRepository('PumukitSchemaBundle:Series')->createQueryBuilder()
+            $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
                 ->field('numerical_id')->exists(true)
                 ->sort(array('numerical_id' => -1))
                 ->getQuery()
@@ -156,7 +157,7 @@ EOT
 
             $lastNumericalID = $series->getNumericalID();
         } else {
-            $multimediaObject = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject')->createQueryBuilder()
+            $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
                 ->field('numerical_id')->exists(true)
                 ->sort(array('numerical_id' => -1))
                 ->getQuery()

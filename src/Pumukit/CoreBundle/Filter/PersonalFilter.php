@@ -69,7 +69,7 @@ class PersonalFilter extends WebTVFilter
     {
         $seriesIds = [];
         if ((null !== $personId) && (null !== $roleCode)) {
-            $repoMmobj = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+            $repoMmobj = $this->dm->getRepository(MultimediaObject::class);
             $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups(
                 $personId,
                 $roleCode,

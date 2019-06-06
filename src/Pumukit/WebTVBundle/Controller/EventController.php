@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class EventController.
@@ -109,7 +110,7 @@ class EventController extends Controller implements WebTVControllerInterface
     public function twitterAction($id)
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
-        $repo = $dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $repo = $dm->getRepository(MultimediaObject::class);
         $multimediaObject = $repo->find($id);
         $enableTwitter = $this->container->getParameter('pumukit_live.twitter.enable');
 

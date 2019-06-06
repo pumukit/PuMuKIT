@@ -109,7 +109,7 @@ class TrackFileController extends Controller
      */
     private function getMmobjAndTrack($id)
     {
-        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject');
+        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
 
         $mmobj = $mmobjRepo->findOneByTrackId($id);
         if (!$mmobj) {

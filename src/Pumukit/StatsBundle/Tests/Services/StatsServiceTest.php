@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\StatsBundle\Services\StatsService;
 use Pumukit\StatsBundle\Document\ViewsLog;
+use Pumukit\SchemaBundle\Document\Series;
 
 class StatsServiceTest extends WebTestCase
 {
@@ -34,11 +35,11 @@ class StatsServiceTest extends WebTestCase
             ->remove(array());
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsAggregation')
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:MultimediaObject')
+        $this->dm->getDocumentCollection(MultimediaObject::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Series')
+        $this->dm->getDocumentCollection(Series::class)
             ->remove(array());
-        $this->dm->getDocumentCollection('PumukitSchemaBundle:Tag')
+        $this->dm->getDocumentCollection(Tag::class)
             ->remove(array());
     }
 

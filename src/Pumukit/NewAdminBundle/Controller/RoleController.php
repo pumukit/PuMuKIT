@@ -16,7 +16,7 @@ use Pumukit\SchemaBundle\Document\Role;
 class RoleController extends SortableAdminController implements NewAdminControllerInterface
 {
     public static $resourceName = 'role';
-    public static $repoName = 'PumukitSchemaBundle:Role';
+    public static $repoName = Role::class;
 
     /**
      * Update role.

@@ -5,6 +5,7 @@ namespace Pumukit\NewAdminBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class SeriesSearchService
 {
@@ -34,7 +35,7 @@ class SeriesSearchService
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
-                    $mmRepo = $this->dm->getRepository('PumukitSchemaBundle:MultimediaObject');
+                    $mmRepo = $this->dm->getRepository(MultimediaObject::class);
                     $ids = $mmRepo->getIdsWithSeriesTextOrId($value, 100, 0, $locale)->toArray();
                     $ids[] = $value;
 

@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class MediaLibraryController.
@@ -29,8 +32,8 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
         $templateTitle = $this->get('translator')->trans($templateTitle);
         $this->get('pumukit_web_tv.breadcrumbs')->addList($templateTitle, 'pumukit_webtv_medialibrary_index', ['sort' => $sort]);
 
-        $series_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Series');
-        $tags_repo = $this->get('doctrine_mongodb')->getRepository('PumukitSchemaBundle:Tag');
+        $series_repo = $this->get('doctrine_mongodb')->getRepository(Series::class);
+        $tags_repo = $this->get('doctrine_mongodb')->getRepository(Tag::class);
 
         $array_tags = $this->container->getParameter('pumukit_web_tv.media_library.filter_tags');
         $selectionTags = $tags_repo->findBy(['cod' => ['$in' => $array_tags]]);
@@ -41,7 +44,7 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
         $result = [];
 
         $hasCatalogueThumbnails = $this->container->getParameter('catalogue_thumbnails');
-        $aggregatedNumMmobjs = $dm->getRepository('PumukitSchemaBundle:MultimediaObject')->countMmobjsBySeries();
+        $aggregatedNumMmobjs = $dm->getRepository(MultimediaObject::class)->countMmobjsBySeries();
 
         switch ($sort) {
             case 'alphabetically':
