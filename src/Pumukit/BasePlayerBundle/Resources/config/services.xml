@@ -27,6 +27,10 @@
           <argument>%pumukit.intro%</argument>
         </service>
 
+        <service id="pumukit_baseplayer.player_service" class="Pumukit\BasePlayerBundle\Services\PlayerService">
+          <argument>%kernel.bundles%</argument>
+        </service>
+
         <service id="pumukit_baseplayer.useragent_parser" class="Pumukit\BasePlayerBundle\Services\UserAgentParserService">
         </service>
     </services>
