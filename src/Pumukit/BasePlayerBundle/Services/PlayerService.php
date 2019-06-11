@@ -43,7 +43,7 @@ class PlayerService
      */
     public function getMagicControllerPlayer(MultimediaObject $multimediaObject)
     {
-        $url = $this->router->generate('pumukit_videoplayer_magicindex', ['id' => $multimediaObject->getId()]);
+        $url = $this->router->generate('pumukit_videoplayer_magicindex', ['secret' => $multimediaObject->getSecret()]);
         $url = $this->cleanUrl($url);
         $endpoint = $this->router->match($url);
 
