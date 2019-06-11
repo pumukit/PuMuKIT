@@ -2,45 +2,61 @@
 
 namespace Pumukit\BasePlayerBundle\Services;
 
-/**
- * Wrapper around the pumukit.intro parameter.
- */
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+
 class PlayerService
 {
-    private $kernelBundles = [];
+    /**
+     * @var Router
+     */
+    private $router;
 
-    const publicControllerString = ':BasePlayer:index';
-    const magicControllerString = ':BasePlayer:magic';
-
-    public function __construct(array $kernelBundles)
+    /**
+     * PlayerService constructor.
+     *
+     * @param Router $router
+     */
+    public function __construct(Router $router)
     {
-        $this->kernelBundles = $kernelBundles;
+        $this->router = $router;
     }
 
-    public function getInstalledPlayerBundle()
+    /**
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return mixed
+     */
+    public function getPublicControllerPlayer(MultimediaObject $multimediaObject)
     {
-        if (array_key_exists('PumukitPaellaPlayerBundle', $this->kernelBundles)) {
-            return 'PumukitPaellaPlayerBundle';
-        }
+        $url = $this->router->generate('pumukit_videoplayer_index', ['id' => $multimediaObject->getId()]);
+        $url = $this->cleanUrl($url);
+        $endpoint = $this->router->match($url);
 
-        return 'PumukitJWPlayerBundle';
+        return $endpoint['_controller'];
     }
 
-    public function getPublicControllerPlayer()
+    /**
+     * @param MultimediaObject $multimediaObject
+     *
+     * @return mixed
+     */
+    public function getMagicControllerPlayer(MultimediaObject $multimediaObject)
     {
-        $bundle = $this->getInstalledPlayerBundle();
+        $url = $this->router->generate('pumukit_videoplayer_magicindex', ['id' => $multimediaObject->getId()]);
+        $url = $this->cleanUrl($url);
+        $endpoint = $this->router->match($url);
 
-        $publicController = $bundle.self::publicControllerString;
-
-        return $publicController;
+        return $endpoint['_controller'];
     }
 
-    public function getMagicControllerPlayer()
+    /**
+     * @param $url
+     *
+     * @return mixed
+     */
+    private function cleanUrl($url)
     {
-        $bundle = $this->getInstalledPlayerBundle();
-
-        $magicController = $bundle.self::magicControllerString;
-
-        return $magicController;
+        return str_replace('app_dev.php/', '', $url);
     }
 }

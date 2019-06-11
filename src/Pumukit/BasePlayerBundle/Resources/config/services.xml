@@ -28,7 +28,7 @@
         </service>
 
         <service id="pumukit_baseplayer.player_service" class="Pumukit\BasePlayerBundle\Services\PlayerService">
-          <argument>%kernel.bundles%</argument>
+            <argument type="service" id="router" />
         </service>
 
         <service id="pumukit_baseplayer.useragent_parser" class="Pumukit\BasePlayerBundle\Services\UserAgentParserService">

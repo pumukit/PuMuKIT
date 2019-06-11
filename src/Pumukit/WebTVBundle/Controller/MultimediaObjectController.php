@@ -60,8 +60,10 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $playerController = $this->get('pumukit_baseplayer.player_service')->getPublicControllerPlayer();
+        dump(2);
+        $playerController = $this->get('pumukit_baseplayer.player_service')->getPublicControllerPlayer($multimediaObject);
 
+        dump($playerController);
         return $this->forward($playerController, ['request' => $request, 'multimediaObject' => $multimediaObject]);
     }
 
@@ -126,7 +128,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function magicIframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $playerController = $this->get('pumukit_baseplayer.player_service')->getMagicControllerPlayer();
+        $playerController = $this->get('pumukit_baseplayer.player_service')->getMagicControllerPlayer($multimediaObject);
 
         return $this->forward($playerController, ['request' => $request, 'multimediaObject' => $multimediaObject]);
     }
