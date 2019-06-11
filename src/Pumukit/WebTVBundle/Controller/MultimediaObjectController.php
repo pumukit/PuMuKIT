@@ -60,7 +60,7 @@ class MultimediaObjectController extends PlayerController implements WebTVContro
      */
     public function iframeAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $playerController = $this->get('pumukit_baseplayer.player_service')->getMagicControllerPlayer($multimediaObject);
+        $playerController = $this->get('pumukit_baseplayer.player_service')->getPublicControllerPlayer($multimediaObject);
 
         return $this->forward($playerController, ['request' => $request, 'multimediaObject' => $multimediaObject]);
     }
