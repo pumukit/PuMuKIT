@@ -204,6 +204,7 @@ class PlaylistMultimediaObjectController extends Controller
     public function searchModalAction(Request $request)
     {
         $this->enableFilter();
+        $limit = 50;
         $value = $request->query->get('search', '');
 
         $criteria = array('search' => $value);
@@ -212,10 +213,12 @@ class PlaylistMultimediaObjectController extends Controller
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository('PumukitSchemaBundle:MultimediaObject')->createStandardQueryBuilder();
         $criteria = array_merge($queryBuilder->getQueryArray(), $criteria);
         $queryBuilder->setQueryArray($criteria);
+        $queryBuilder->limit($limit);
         $queryBuilder->sortMeta('score', 'textScore');
+
         $adapter = new DoctrineODMMongoDBAdapter($queryBuilder);
         $mmobjs = new Pagerfanta($adapter);
-        $mmobjs->setMaxPerPage($mmobjs->getNbResults() ?: 1);
+        $mmobjs->setMaxPerPage($limit);
 
         return array('mmobjs' => $mmobjs);
     }
