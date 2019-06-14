@@ -52,13 +52,13 @@
 <strong>{% trans %}New Duration{% endtrans %}:</strong> {{ job.getNewDuration() }}
 </li>
 <li>
-<strong>{% trans %}Initial Time{% endtrans %}:</strong> {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()) }}
+<strong>{% trans %}Initial Time{% endtrans %}:</strong> {{ job.getTimeini()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
 </li>
 <li>
-<strong>{% trans %}Start Time{% endtrans %}:</strong> {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()) }}
+<strong>{% trans %}Start Time{% endtrans %}:</strong> {{ job.getTimestart()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
 </li>
 <li>
-<strong>{% trans %}End Time{% endtrans %}:</strong> {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()) }}
+<strong>{% trans %}End Time{% endtrans %}:</strong> {{ job.getTimeend()|localizeddate('medium','medium',app.request.getLocale()|default("en")) }}
 </li>
 <li>
 <strong>{% trans %}Command{% endtrans %}:</strong>
