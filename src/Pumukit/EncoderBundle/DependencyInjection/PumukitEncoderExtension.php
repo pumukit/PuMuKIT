@@ -32,7 +32,6 @@ class PumukitEncoderExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-
         $container->setParameter('pumukitencode.delete_inbox_files', $config['delete_inbox_files']);
         $container->setParameter('pumukitencode.cpulist', $config['cpus']);
         $container->setParameter('pumukitencode.profilelist', $config['profiles']);
