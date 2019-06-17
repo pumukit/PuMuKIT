@@ -24,12 +24,24 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pumukit_encoder');
 
         //Doc in http://symfony.com/doc/current/components/config/definition.html
+        $this->addGlobalConfig($rootNode);
         $this->addCpusSection($rootNode);
         $this->addProfilesSection($rootNode);
         $this->addThumbnailSection($rootNode);
         $this->addTargetDefaultProfiles($rootNode);
 
         return $treeBuilder;
+    }
+
+    public static function addGlobalConfig(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->booleanNode('delete_inbox_files')
+                    ->defaultValue(false)
+                    ->info('Delete imported inbox files')
+                ->end()
+            ->end();
     }
 
     /**
