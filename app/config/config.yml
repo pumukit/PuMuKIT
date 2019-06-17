@@ -93,6 +93,9 @@ doctrine_mongodb:
                 personal:
                     class:     Pumukit\CoreBundle\Filter\PersonalFilter
                     enabled:   false
+                microsite:
+                    class:     Pumukit\CoreBundle\Filter\MicrositeFilter
+                    enabled:   false
 
 
 # Swiftmailer Configuration

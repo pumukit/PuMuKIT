@@ -1328,6 +1328,15 @@ class MultimediaObjectController extends SortableAdminController implements NewA
             }
         }
 
+        if (EmbeddedBroadcast::TYPE_GROUPS !== $type) {
+            $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
+            if ($embeddedBroadcast->getGroups()) {
+                foreach ($embeddedBroadcast->getGroups() as $group) {
+                    $embeddedBroadcast->removeGroup($group);
+                }
+            }
+        }
+
         $dm->flush();
     }
 

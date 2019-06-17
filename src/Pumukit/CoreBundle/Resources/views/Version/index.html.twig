@@ -10,6 +10,7 @@
                 <th>{% trans %}Type{% endtrans %}</th>
                 <th>{% trans %}Name{% endtrans %}</th>
                 <th>{% trans %}Version{% endtrans %}</th>
+                <th>{% trans %}Commit{% endtrans %}</th>
                 <th>{% trans %}Tags{% endtrans %}</th>
                 <th>{% trans %}Description{% endtrans %}</th>
             </tr>
@@ -20,6 +21,7 @@
                         <td>{{ item.type }}</td>
                         <td>{{ item.name }}</td>
                         <td><span class="label label-success">{{ item.version }}</span></td>
+                        <td>{{ item.source.reference|slice(0, 9)|default('') }}</td>
                         <td>
                             {% if item.keywords is defined %}
                                 {% for keyword in item.keywords %}
@@ -35,6 +37,7 @@
                         <td>{{ item.type }}</td>
                         <td>{{ item.name }}</td>
                         <td><span class="label label-success">{{ item.version }}</span></td>
+                        <td>{{ item.source.reference|slice(0, 9)|default('') }}</td>
                         <td>
                             {% if item.keywords is defined %}
                                 {% for keyword in item.keywords %}
