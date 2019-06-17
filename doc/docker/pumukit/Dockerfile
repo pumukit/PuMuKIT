@@ -108,8 +108,13 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN set -eux; \
     composer global require "rubenrua/symfony-clean-tags-composer-plugin" --prefer-dist --no-progress --no-suggest --classmap-authoritative
 
-# Install youtube requiriments
+# Download and install pumukit to get the composer cache and improve build times
 
+RUN git clone https://github.com/pumukit/pumukit /srv/pumukit/
+
+RUN composer require -a -n --no-scripts
+
+RUN rm -rf /srv/pumukit/*
 
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
