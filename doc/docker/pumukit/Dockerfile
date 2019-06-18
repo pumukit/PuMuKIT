@@ -112,7 +112,7 @@ RUN set -eux; \
 
 RUN git clone https://github.com/pumukit/pumukit /srv/pumukit/
 
-RUN composer require -a -n --no-scripts
+RUN composer install -a -n --no-scripts
 
 RUN rm -rf /srv/pumukit/*
 
