@@ -158,7 +158,7 @@ class MultimediaObjectPicService
         $fileName = uniqid().'.'.$format;
         $path = $absCurrentDir.'/'.$fileName;
         while (file_exists($path)) {
-            $fileName = uniqid().'.png';
+            $fileName = uniqid().'.'.$format;
             $path = $absCurrentDir.'/'.$fileName;
         }
 
