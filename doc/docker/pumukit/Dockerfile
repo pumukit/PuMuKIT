@@ -110,7 +110,7 @@ RUN set -eux; \
 
 # Download and install pumukit to get the composer cache and improve build times
 
-RUN git clone https://github.com/pumukit/pumukit /srv/pumukit/
+RUN git clone https://github.com/pumukit/pumukit /srv/pumukit && cd /srv/pumukit
 
 RUN composer install -a -n --no-scripts
 
