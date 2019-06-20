@@ -24,7 +24,7 @@ class PersonController extends Controller
      * @Route("/button", name="pumukit_ldap_person_button")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template()
+     * @Template("PumukitLDAPBundle:Person:button.html.twig")
      */
     public function buttonAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {
@@ -42,7 +42,7 @@ class PersonController extends Controller
      * @Route("/listautocomplete/{mmId}/{roleId}", name="pumukit_ldap_person_listautocomplete")
      * @ParamConverter("multimediaObject", class="PumukitSchemaBundle:MultimediaObject", options={"id" = "mmId"})
      * @ParamConverter("role", class="PumukitSchemaBundle:Role", options={"id" = "roleId"})
-     * @Template()
+     * @Template("PumukitLDAPBundle:Person:listautocomplete.html.twig")
      */
     public function listautocompleteAction(MultimediaObject $multimediaObject, Role $role, Request $request)
     {

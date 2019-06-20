@@ -3,7 +3,6 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +12,6 @@ class TestPersonalController extends Controller implements PersonalControllerInt
 {
     /**
      * @Route("/test/personalfilter.{_format}", name="pumukit_core_tests_personalfilter", defaults={"_format":"json"})
-     * @Template()
      */
     public function testAction(Request $request)
     {

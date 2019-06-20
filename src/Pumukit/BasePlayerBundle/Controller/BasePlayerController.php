@@ -9,19 +9,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 abstract class BasePlayerController extends Controller
 {
     /**
      * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
-     * @Template()
      */
     abstract public function indexAction(MultimediaObject $multimediaObject, Request $request);
 
     /**
      * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex")
-     * @Template()
      */
     abstract public function magicAction(MultimediaObject $multimediaObject, Request $request);
 

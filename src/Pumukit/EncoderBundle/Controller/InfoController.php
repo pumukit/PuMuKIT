@@ -22,7 +22,7 @@ class InfoController extends Controller
 {
     /**
      * @Route("/", name="pumukit_encoder_info")
-     * @Template()
+     * @Template("PumukitEncoderBundle:Info:index.html.twig")
      */
     public function indexAction(Request $request)
     {

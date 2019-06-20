@@ -25,7 +25,7 @@ class DefaultController extends Controller
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:license.html.twig")
      */
     public function licenseAction(Request $request)
     {
@@ -61,7 +61,7 @@ class DefaultController extends Controller
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:series.html.twig")
      */
     public function seriesAction(Request $request)
     {
@@ -108,7 +108,7 @@ class DefaultController extends Controller
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:type.html.twig")
      */
     public function typeAction($id, Request $request)
     {
@@ -191,7 +191,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:multimediaobject.html.twig")
      */
     public function multimediaobjectAction(Request $request)
     {
@@ -264,7 +264,7 @@ class DefaultController extends Controller
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:track.html.twig")
      */
     public function trackAction(Request $request)
     {
@@ -335,7 +335,7 @@ class DefaultController extends Controller
      *
      * @throws \Exception
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:upload.html.twig")
      */
     public function uploadAction(Request $request)
     {
@@ -564,7 +564,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:end.html.twig")
      */
     public function endAction(Request $request)
     {
@@ -597,7 +597,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:error.html.twig")
      */
     public function errorAction(Request $request)
     {
@@ -622,7 +622,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Default:steps.html.twig")
      */
     public function stepsAction(Request $request)
     {

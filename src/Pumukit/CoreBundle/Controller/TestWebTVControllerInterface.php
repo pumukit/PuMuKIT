@@ -3,7 +3,6 @@
 namespace Pumukit\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +12,6 @@ class TestWebTVControllerInterface extends Controller implements WebTVController
 {
     /**
      * @Route("/test/webtvfilter.{_format}", name="pumukit_core_tests_webtvfilter", defaults={"_format":"json"})
-     * @Template()
      */
     public function testAction(Request $request)
     {

@@ -23,7 +23,7 @@ class SimpleController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Simple:index.html.twig")
      */
     public function indexAction(Series $series, Request $request)
     {
@@ -103,7 +103,7 @@ class SimpleController extends Controller
      *
      * @return array
      *
-     * @Template()
+     * @Template("PumukitWizardBundle:Simple:embedindex.html.twig")
      */
     public function embedindexAction(Request $request)
     {

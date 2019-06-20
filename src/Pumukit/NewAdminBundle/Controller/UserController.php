@@ -26,7 +26,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
      * @param Request $request
      *
      * @return array|Response
-     * @Template()
+     * @Template("PumukitNewAdminBundle:User:index.html.twig")
      */
     public function indexAction(Request $request)
     {

@@ -13,7 +13,7 @@ class CrudController extends Controller
 {
     /**
      * @Route("/admin/templates/")
-     * @Template()
+     * @Template("PumukitTemplateBundle:Crud:index.html.twig")
      */
     public function indexAction(Request $request)
     {
