@@ -20,7 +20,8 @@ class ListController extends Controller
             throw $this->createNotFoundException('Page not found!');
         }
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($template->getName(), 'pumukit_webtv_index_index', array(), true);
+        $routeName = $request->get('_forwarded')->get('_route') ?? $request->get('_route') ?? 'pumukit_webtv_index_index';
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($template->getName(), $routeName, array(), true);
 
         return array('template' => $template);
     }

@@ -40,11 +40,12 @@ class JobService
     private $propService;
     private $inboxPath;
     private $binPath;
+    private $deleteInboxFiles;
 
     public function __construct(DocumentManager $documentManager, ProfileService $profileService, CpuService $cpuService,
                                 InspectionServiceInterface $inspectionService, EventDispatcherInterface $dispatcher, LoggerInterface $logger,
                                 TrackService $trackService, TokenStorage $tokenStorage, MultimediaObjectPropertyJobService $propService, $binPath,
-                                $environment = 'dev', $tmpPath = null, $inboxPath = null)
+                                $environment = 'dev', $tmpPath = null, $inboxPath = null, $deleteInboxFiles = false)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(Job::class);
@@ -60,6 +61,7 @@ class JobService
         $this->environment = $environment;
         $this->propService = $propService;
         $this->binPath = $binPath;
+        $this->deleteInboxFiles = $deleteInboxFiles;
     }
 
     /**
@@ -332,7 +334,7 @@ class JobService
     {
         if (false !== strpos($job->getPathIni(), $this->tmpPath)) {
             unlink($job->getPathIni());
-        } elseif (false !== strpos($job->getPathIni(), $this->inboxPath)) {
+        } elseif ($this->deleteInboxFiles && false !== strpos($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
         }
     }
