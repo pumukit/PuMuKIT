@@ -161,7 +161,7 @@ class MultimediaObjectPicService
         $path = $absCurrentDir.'/'.$fileName;
         while (file_exists($path)) {
             $mongoId = new \MongoId();
-            $fileName = $mongoId.'.png';
+            $fileName = $mongoId.'.'.$format;
             $path = $absCurrentDir.'/'.$fileName;
         }
 
