@@ -35,7 +35,7 @@ class RoutingManipulator extends Manipulator
      *
      * @throws \RuntimeException If bundle is already imported
      */
-    public function addResource($bundle, $format, $prefix = '/', $type = '', $path = 'routing', $defaults = [], $appendToEnd = false)
+    public function addResource($bundle, $format, $prefix = '/', $type = '', $path = 'routing', $appendToEnd = false)
     {
         $current = '';
         $code = sprintf("%s:\n", Container::underscore(substr($bundle, 0, -6)).('/' !== $prefix ? '_'.str_replace('/', '_', substr($prefix, 1)) : ''));
