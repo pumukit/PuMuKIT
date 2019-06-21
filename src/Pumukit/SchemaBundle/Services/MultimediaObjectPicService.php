@@ -155,10 +155,13 @@ class MultimediaObjectPicService
         $fs = new Filesystem();
         $fs->mkdir($absCurrentDir);
 
-        $fileName = uniqid().'.'.$format;
+        $mongoId = new \MongoId();
+
+        $fileName = $mongoId.'.'.$format;
         $path = $absCurrentDir.'/'.$fileName;
         while (file_exists($path)) {
-            $fileName = uniqid().'.'.$format;
+            $mongoId = new \MongoId();
+            $fileName = $mongoId.'.'.$format;
             $path = $absCurrentDir.'/'.$fileName;
         }
 

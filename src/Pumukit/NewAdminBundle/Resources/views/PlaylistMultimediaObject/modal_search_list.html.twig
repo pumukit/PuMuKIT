@@ -1,5 +1,5 @@
 <hr>
-<b>{{ mmobjs.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}:</b>
+<b>{{ (mmobjs.getNbResults <= 50)? mmobjs.getNbResults : 50 }} {% trans %}Mm. Obj.{% endtrans %}:</b>
 <br>
 <br>
 <div class="row" style="height:100%;overflow:auto">
