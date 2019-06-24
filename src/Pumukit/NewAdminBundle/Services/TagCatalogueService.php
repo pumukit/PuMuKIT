@@ -316,7 +316,7 @@ class TagCatalogueService
                 $text = $object->getTitle();
                 break;
             case 'seriesTitle':
-                $text = $object->getSeriesTitle();
+                $text = $object->getSeries()->getTitle();
                 $route = $this->router->generate('pumukitnewadmin_mms_index', array('id' => $object->getSeries()->getId()));
                 $text = "<a href='".$route."'>".$text.'</a>';
                 break;
