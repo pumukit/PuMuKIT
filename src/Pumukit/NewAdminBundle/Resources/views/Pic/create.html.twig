@@ -8,30 +8,6 @@
 
 <div class="modal-body">
 
-    <div id="tv_admin_container_url">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-        <form id="add_banner">
-            <input type="hidden" name="type" id="type" value="url">
-            <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
-
-            <fieldset>
-                <legend hidden>{% trans %}Write the URL{% endtrans %}</legend>
-                <div class="form-group">
-                    <label for="url">{% trans %}Write the URL{% endtrans %}:</label>
-                    <div class="">
-                        <input type="text" name="url" id="url" value="" size="65" class="form-control">
-                        <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans %}</span>
-                    </div>
-                </div>
-            </fieldset>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
-            </div>
-        </form>
-    </div>
-    <div class="clearfix"></div>
-
     <div id="tv_admin_container_file">
         <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'is_event_poster': event_poster}) }}">
             <input type="hidden" name="type" id="type" value="url">
@@ -50,9 +26,6 @@
                 <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''){window.alert('{% trans %}Select a file on first place. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
             </div>
         </form>
-        {% else %}
-            {% trans %}You don't have enough permissions to access this content.{% endtrans %}
-        {% endif %}
     </div>
 
     <div class="clearfix"></div>
@@ -69,33 +42,3 @@
         <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    $('#add_banner').on('submit', function(event) {
-        event.preventDefault();
-        var testUrl = test_form_url($('#url').val());
-        if(testUrl) {
-            $.ajax({
-                url: '{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'is_event_poster': event_poster}) }}',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function (response) {
-                    $('#myModal').modal('hide');
-                    var resource_name = '{{ resource_name }}';
-                    var event_poster = "{{ event_poster }}";
-                    if ('event' == resource_name) {
-                        $('#list_events').html(response);
-                        $('#preview_event').load('{{ path('pumukitnewadmin_event_show', {'id': resource.id})|raw }}');
-                    } else if (event_poster) {
-                        $('#pic_events_{{ resource.id }}').html(response);
-                    } else {
-                        $('#pic_{{ resource_name }}_{{ resource.id }}').html(response);
-                    }
-                    success('{% trans %}New Thumbnail added.{% endtrans %}');
-                }
-            });
-            return false;
-        }
-    });
-</script>
