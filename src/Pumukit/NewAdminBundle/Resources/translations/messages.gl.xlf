@@ -1583,7 +1583,10 @@
       </trans-unit>
       <trans-unit id="Dn4yQHj" resname="create new track">
         <source>create new track</source>
-        <target state="translated">crear nova categoría</target>
+        <target state="translated">crear nova pista</target>
+        <alt-trans>
+          <target>crear nova categoría</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
