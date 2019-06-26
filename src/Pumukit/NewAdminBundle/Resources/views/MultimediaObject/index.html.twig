@@ -75,7 +75,7 @@
                             {# RENDERS ANY BUTTONS DEFINED IN AN EXTRA PLUGIN #}
                             {% for item in get_extra_buttons() %}
                                 {% if app.user and is_granted(item.accessRole) %}
-                                    <a title="{{ item.name }}" class="btn btn-pumukit btn-raised" href="{{ path(item.uri, {'series': series.id }) }}">
+                                    <a title="{{ item.name }}" class="btn btn-pumukit btn-raised qa_series_button_{{ item.name }}" href="{{ path(item.uri, {'series': series.id }) }}">
                                         <i class="mdi-content-add"></i>
                                         {{ item.name | trans }}
                                     </a>
