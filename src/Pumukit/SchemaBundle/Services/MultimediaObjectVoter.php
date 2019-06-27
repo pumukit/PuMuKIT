@@ -118,19 +118,6 @@ class MultimediaObjectVoter extends Voter
             return true;
         }
 
-        // Test broadcast
-        $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcastNotNull();
-        if (EmbeddedBroadcast::TYPE_LOGIN === $embeddedBroadcast->getType()) {
-            if (!$user instanceof User || !$this->isViewerOrWithScope($user)) {
-                return false;
-            }
-        }
-        if (EmbeddedBroadcast::TYPE_GROUPS === $embeddedBroadcast->getType()) {
-            if (!$user instanceof User || !$this->isViewerOrWithScope($user) || !$this->isUserRelatedToBroadcast($multimediaObject->getEmbeddedBroadcastNotNull(), $user)) {
-                return false;
-            }
-        }
-
         // Public play
         if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
             return true;
