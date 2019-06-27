@@ -3,7 +3,6 @@
         <h1>{{ title }}</h1>
         <div class="row">
             {% for object in objects %}
-                {% dump(object) %}
                 {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'event' : object['data'][0] } %}
                 {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
             {% endfor %}
