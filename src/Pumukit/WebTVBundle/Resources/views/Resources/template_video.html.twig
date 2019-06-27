@@ -19,7 +19,7 @@
                 </div>
             </a>
 
-            {% if show_info|default(true) %}
+            {% if show_info is defined and show_info %}
                 <div class="caption">
                     <p class="title_image_representation">
                         <a href="{{ videoPath }}" title="{{ videoTitle }}">

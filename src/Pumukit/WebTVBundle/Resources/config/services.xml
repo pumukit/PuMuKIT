@@ -51,6 +51,7 @@
             <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="pumukitschema.eventsession" />
             <argument>%pumukit_new_admin.advance_live_event%</argument>
+            <argument>%wall_block.wall_tag%</argument>
         </service>
     </services>
 </container>
