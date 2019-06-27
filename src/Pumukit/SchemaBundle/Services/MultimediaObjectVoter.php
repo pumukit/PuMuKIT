@@ -14,6 +14,7 @@ class MultimediaObjectVoter extends Voter
 {
     const EDIT = 'edit';
     const PLAY = 'play';
+    const VIEW_METADATA = 'view_metadata';
 
     private $mmobjService;
     private $requestStack;
@@ -27,7 +28,7 @@ class MultimediaObjectVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, array(self::EDIT, self::PLAY))) {
+        if (!in_array($attribute, array(self::EDIT, self::PLAY, self::VIEW_METADATA))) {
             return false;
         }
 
@@ -48,6 +49,8 @@ class MultimediaObjectVoter extends Voter
             return $this->canEdit($multimediaObject, $user);
         case self::PLAY:
             return $this->canPlay($multimediaObject, $user);
+        case self::VIEW_METADATA:
+            return $this->canViewMetadata($multimediaObject, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -94,6 +97,26 @@ class MultimediaObjectVoter extends Voter
                 return false;
             }
         }*/
+
+        // Public play
+        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
+            return true;
+        }
+
+        /* Legacy code */
+        if ($this->mmobjService->isHidden($multimediaObject, 'PUCHOPENEDX')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function canViewMetadata(MultimediaObject $multimediaObject, $user = null)
+    {
+        // Private play
+        if ($this->canEdit($multimediaObject, $user)) {
+            return true;
+        }
 
         // Public play
         if ($this->mmobjService->isHidden($multimediaObject, 'PUCHWEBTV') || $this->mmobjService->isHidden($multimediaObject, 'PUCHPODCAST')) {
