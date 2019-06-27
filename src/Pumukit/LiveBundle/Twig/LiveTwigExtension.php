@@ -15,12 +15,14 @@ class LiveTwigExtension extends \Twig_Extension
     private $dm;
     private $liveService;
     private $eventsService;
+    private $eventDefaultPic;
 
-    public function __construct(DocumentManager $documentManager, LiveService $liveService, EmbeddedEventSessionService $eventsService)
+    public function __construct(DocumentManager $documentManager, LiveService $liveService, EmbeddedEventSessionService $eventsService, $eventDefaultPic)
     {
         $this->dm = $documentManager;
         $this->liveService = $liveService;
         $this->eventsService = $eventsService;
+        $this->eventDefaultPic = $eventDefaultPic;
     }
 
     public function getFunctions()
@@ -33,6 +35,7 @@ class LiveTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('poster', array($this, 'getEventPoster')),
             new \Twig_SimpleFunction('poster_text_color', array($this, 'getPosterTextColor')),
             new \Twig_SimpleFunction('event_first_thumbnail', array($this, 'getEventThumbnail')),
+            new \Twig_SimpleFunction('event_default_pic', array($this, 'getEventDefaultPic')),
         );
     }
 
@@ -128,5 +131,13 @@ class LiveTwigExtension extends \Twig_Extension
         } else {
             return $this->eventsService->getEventThumbnailByEventId($event['event']['_id']);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventDefaultPic()
+    {
+        return $this->eventDefaultPic;
     }
 }

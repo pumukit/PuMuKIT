@@ -342,4 +342,26 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'categories_title' => $categoriesTitle,
         ];
     }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_event.html.twig")
+     *
+     * @return array
+     */
+    public function liveBlockAction()
+    {
+        $listService = $this->get('pumukit_web_tv.list_service');
+        $title = $this->get('translator')->trans('Live events');
+
+        $objects = $listService->getLives();
+
+        return [
+            'objects' => $objects,
+            'objectByCol' => $this->container->getParameter('live_block.objects_by_col'),
+            'title' => $title,
+            'class' => 'live_events',
+            'show_info' => false,
+            'show_more' => false,
+        ];
+    }
 }

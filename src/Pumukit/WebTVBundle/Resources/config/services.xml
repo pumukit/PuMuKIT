@@ -46,5 +46,11 @@
             <argument type="service" id="pumukitschema.eventsession" />
             <argument>%pumukit_new_admin.advance_live_event%</argument>
         </service>
+
+        <service id="pumukit_web_tv.list_service" class="Pumukit\WebTVBundle\Services\ListService">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="pumukitschema.eventsession" />
+            <argument>%pumukit_new_admin.advance_live_event%</argument>
+        </service>
     </services>
 </container>
