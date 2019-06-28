@@ -54,3 +54,4 @@ parameters:
   columns_objs_event:       4                            # Number of columns for byuser.  (Default 2)
 
   live_block.objects_by_col: 4
+  wall_block.wall_tag: 'WALL'

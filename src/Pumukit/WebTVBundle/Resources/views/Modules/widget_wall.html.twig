@@ -1,0 +1,34 @@
+{% if objects %}
+    <div class="block-wall-pmk {{ class }}">
+        <h1>{{ title }}</h1>
+        <div class="row wall-container">
+            <div class="col-xs-12 col-md-8 wall-image">
+                <div class="row">
+                    {% set object = objects|first %}
+                    {% include 'PumukitWebTVBundle:Resources:template_video.html.twig' %}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4 wall-info">
+                <div class="row">
+                    <div class="wall-title">
+                        <h4>{{ object.getTitle() }}</h4>
+                    </div>
+
+
+                    <div class="wall-subtitle">
+                        {{ object.getSubtitle() }}
+                    </div>
+
+                    <div class="wall-labels">
+                        {% for tag in object.getTags() %}
+                            <span class="label label-default label-pmk">
+                                {{ tag.cod }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
