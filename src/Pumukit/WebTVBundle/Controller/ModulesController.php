@@ -48,6 +48,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'mostviewed',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => false,
         ];
     }
 
@@ -80,6 +81,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'title' => $title,
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -117,6 +119,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -154,6 +157,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -276,6 +280,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -362,6 +367,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'live_events',
             'show_info' => false,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_events',
         ];
     }
 
@@ -387,5 +393,17 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'show_info' => false,
             'show_more' => false,
         ];
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_search.html.twig")
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function searchBlockAction()
+    {
+        return [];
     }
 }

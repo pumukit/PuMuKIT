@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\WebTVBundle\Services\SearchService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,6 +25,11 @@ class SearchController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/searchseries", name="pumukit_webtv_search_series")
      * @Template("PumukitWebTVBundle:Search:template.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function seriesAction(Request $request)
     {
@@ -63,7 +69,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         $totalObjects = $pagerfanta->getNbResults();
 
         // -- Get years array --
-        $searchYears = $this->getSeriesYears();
+        $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::SERIES);
 
         // -- Init Number Cols for showing results ---
         $numberCols = $this->container->getParameter('columns_objs_search');
@@ -91,15 +97,9 @@ class SearchController extends Controller implements WebTVControllerInterface
         //Add translated title to breadcrumbs.
         $templateTitle = $this->container->getParameter('menu.search_title') ?: 'Multimedia objects search';
         $templateTitle = $this->get('translator')->trans($templateTitle);
-        $this->get('pumukit_web_tv.breadcrumbs')->addList(
-            $blockedTag ? $blockedTag->getTitle() : $templateTitle,
-            'pumukit_webtv_search_multimediaobjects'
-        );
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle,'pumukit_webtv_search_multimediaobjects');
 
-        // --- Get Tag Parent for Tag Fields ---
-        $parentTag = $this->getParentTag();
-        $parentTagOptional = $this->getOptionalParentTag();
-        // --- END Get Tag Parent for Tag Fields ---
+        [$parentTag, $parentTagOptional] = $this->get('pumukit_web_tv.search_service')->getSearchTags();
 
         // --- Get Variables ---
         $searchFound = $request->query->get('search');
@@ -142,7 +142,7 @@ class SearchController extends Controller implements WebTVControllerInterface
             ->distinct('tracks.language')
             ->getQuery()->execute();
         // --- Get years array ---
-        $searchYears = $this->getMmobjsYears();
+        $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::MULTIMEDIA_OBJECT);
 
         // -- Init Number Cols for showing results ---
         $numberCols = $this->container->getParameter('columns_objs_search');
@@ -170,58 +170,14 @@ class SearchController extends Controller implements WebTVControllerInterface
      * @param $objects
      * @param $page
      *
-     * @return Pagerfanta
+     * @return mixed|Pagerfanta
+     * @throws \Exception
      */
     protected function createPager($objects, $page)
     {
         $limit = $this->container->getParameter('limit_objs_search');
-
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit);
-        $pagerfanta->setNormalizeOutOfRangePages(true);
-        $pagerfanta->setCurrentPage($page);
-
-        return $pagerfanta;
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
-     *
-     * @throws \Exception
-     */
-    protected function getParentTag()
-    {
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository(Tag::class);
-        $searchByTagCod = $this->container->getParameter('search.parent_tag.cod');
-
-        $parentTag = $tagRepo->findOneByCod($searchByTagCod);
-        if (!isset($parentTag)) {
-            throw new \Exception(
-                sprintf(
-                    'The parent Tag with COD:  \' %s  \' does not exist. Check if your tags are initialized and that you added the correct \'cod\' to parameters.yml (search.parent_tag.cod)',
-                    $searchByTagCod
-                )
-            );
-        }
-
-        return $parentTag;
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|null
-     */
-    protected function getOptionalParentTag()
-    {
-        $tagRepo = $this->get('doctrine_mongodb')->getRepository(Tag::class);
-
-        $searchByTagCod = $this->container->getParameter('search.parent_tag_2.cod');
-        $parentTagOptional = null;
-        if ($searchByTagCod) {
-            $parentTagOptional = $tagRepo->findOneByCod($searchByTagCod);
-        }
-
-        return $parentTagOptional;
+        $pager = $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
+        return $pager;
     }
 
     /**
@@ -368,45 +324,6 @@ class SearchController extends Controller implements WebTVControllerInterface
         }
 
         return $queryBuilder;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getMmobjsYears()
-    {
-        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(MultimediaObject::class);
-        $pipeline = [
-            ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]],
-            ['$group' => ['_id' => ['$year' => '$record_date']]],
-            ['$sort' => ['_id' => 1]],
-        ];
-        $yearResults = $mmObjColl->aggregate($pipeline, array('cursor' => array()));
-        $years = [];
-        foreach ($yearResults as $year) {
-            $years[] = $year['_id'];
-        }
-
-        return $years;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSeriesYears()
-    {
-        $mmObjColl = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(Series::class);
-        $pipeline = [
-            ['$group' => ['_id' => ['$year' => '$public_date']]],
-            ['$sort' => ['_id' => 1]],
-        ];
-        $yearResults = $mmObjColl->aggregate($pipeline, array('cursor' => array()));
-        $years = [];
-        foreach ($yearResults as $year) {
-            $years[] = $year['_id'];
-        }
-
-        return $years;
     }
 
     /**
