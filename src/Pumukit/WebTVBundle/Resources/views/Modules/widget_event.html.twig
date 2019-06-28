@@ -1,6 +1,6 @@
 {% if objects %}
     <div class="block-event-pmk {{ class }}">
-        <h1>{{ title }}</h1>
+        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% include 'PumukitWebTVBundle:Resources:template_event.html.twig' with {'event' : object['data'][0] } %}

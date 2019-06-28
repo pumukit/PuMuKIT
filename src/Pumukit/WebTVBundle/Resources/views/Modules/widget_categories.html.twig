@@ -1,6 +1,6 @@
 {% if objects %}
     <div class="{{ class }}">
-        <h1>{{ title|trans }}</h1>
+        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% include 'PumukitWebTVBundle:Resources:template_category.html.twig' %}
