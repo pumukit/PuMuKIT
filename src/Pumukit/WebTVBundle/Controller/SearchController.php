@@ -51,7 +51,7 @@ class SearchController extends Controller implements WebTVControllerInterface
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $queryBuilder = $this->createSeriesQueryBuilder();
-        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addValidSeries($queryBuilder);
+        $queryBuilder = $this->get('pumukit_web_tv.search_service')->addValidSeriesQueryBuilder($queryBuilder);
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
         $queryBuilder = $this->get('pumukit_web_tv.search_service')->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
         if ('' == $searchFound) {

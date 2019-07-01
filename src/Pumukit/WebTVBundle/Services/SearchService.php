@@ -273,6 +273,11 @@ class SearchService
         return $queryBuilder;
     }
 
+    /**
+     * @param Builder $queryBuilder
+     *
+     * @return Builder
+     */
     public function addValidSeriesQueryBuilder(Builder $queryBuilder)
     {
         $validSeries = $this->documentManager->getRepository(MultimediaObject::class)
