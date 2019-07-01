@@ -28,7 +28,7 @@
                     {% if event['pics'] is defined and (event['pics']|length > 0) %}
                         <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
                     {% else %}
-                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ defaultPic }}" />
+                        <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_default_pic() }}" />
                     {% endif %}
                 </div>
             </div>

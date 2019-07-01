@@ -48,6 +48,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'mostviewed',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => false,
         ];
     }
 
@@ -78,8 +79,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'objectByCol' => $this->container->getParameter('hightlight.objects_by_col'),
             'class' => 'highlight',
             'title' => $title,
-            'show_info' => false,
+            'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -117,6 +119,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -154,6 +157,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -276,6 +280,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'class' => 'recently',
             'show_info' => true,
             'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_announces_latestuploads',
         ];
     }
 
@@ -341,5 +346,64 @@ class ModulesController extends Controller implements WebTVControllerInterface
             'catalogue_title' => $catalogueTitle,
             'categories_title' => $categoriesTitle,
         ];
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_event.html.twig")
+     *
+     * @return array
+     */
+    public function liveBlockAction()
+    {
+        $listService = $this->get('pumukit_web_tv.list_service');
+        $title = $this->get('translator')->trans('Live events');
+
+        $objects = $listService->getLives();
+
+        return [
+            'objects' => $objects,
+            'objectByCol' => $this->container->getParameter('live_block.objects_by_col'),
+            'title' => $title,
+            'class' => 'live_events',
+            'show_info' => false,
+            'show_more' => false,
+            'show_more_path' => 'pumukit_webtv_events',
+        ];
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_wall.html.twig")
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function wallBlockAction()
+    {
+        $listService = $this->get('pumukit_web_tv.list_service');
+        $title = $this->get('translator')->trans('Wall');
+
+        $objects = $listService->getWallVideos();
+
+        return [
+            'objects' => $objects,
+            'objectByCol' => 1,
+            'title' => $title,
+            'class' => 'wall_block',
+            'show_info' => false,
+            'show_more' => false,
+        ];
+    }
+
+    /**
+     * @Template("PumukitWebTVBundle:Modules:widget_search.html.twig")
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function searchBlockAction()
+    {
+        return [];
     }
 }

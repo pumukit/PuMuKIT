@@ -1,0 +1,15 @@
+{% if blocked_tag is defined and blocked_tag is not null %}
+    <h1>{{ blocked_tag.title }}</h1>
+{% else %}
+    <h1>
+        {% if template_title is defined %}
+            {{ template_title }}
+        {% else %}
+            {% if type == "series" %}
+                {% trans %}Series search{% endtrans %}
+            {% else %}
+                {% trans %}Multimedia objects search{% endtrans %}
+            {% endif %}
+        {% endif %}
+    </h1>
+{% endif %}

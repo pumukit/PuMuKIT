@@ -327,6 +327,7 @@ class EmbeddedEventSessionService
             '$project' => array(
                 'multimediaObjectId' => '$multimediaObjectId',
                 'event' => '$event',
+                'pics' => '$pics',
                 'sessions' => '$sessions',
                 'session' => '$sessions',
                 'sessionEnds' => '$sessionEnds',
@@ -342,6 +343,7 @@ class EmbeddedEventSessionService
                         'session' => '$session',
                         'multimediaObjectId' => '$multimediaObjectId',
                         'sessionEnds' => '$sessionEnds',
+                        'pics' => '$pics',
                     ),
                 ),
             ),

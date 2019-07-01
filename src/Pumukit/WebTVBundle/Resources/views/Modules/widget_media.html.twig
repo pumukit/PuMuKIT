@@ -3,7 +3,7 @@
 
 {% if objects and selected_design == 'horizontal' %}
     <div class="block-media-pmk {{ class }}">
-        <h1>{{ title }}</h1>
+        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% if object.isCollection() %}
@@ -28,7 +28,7 @@
     </div>
 {% elseif objects and selected_design == 'vertical' %}
     <div class="block-media-pmk {{ class }}">
-        <h1>{{ title }}</h1>
+        {% include "PumukitWebTVBundle:Resources:template_widget_title.html.twig" %}
         <div class="row">
             {% for object in objects %}
                 {% if object.isCollection() %}
