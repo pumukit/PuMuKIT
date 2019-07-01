@@ -3,9 +3,11 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 
 class SearchService
 {
@@ -105,5 +107,183 @@ class SearchService
         }
 
         return $years;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguages()
+    {
+        $searchLanguages = $this->documentManager->getRepository(MultimediaObject::class)
+                                ->createStandardQueryBuilder()
+                                ->distinct('tracks.language')
+                                ->getQuery()
+                                ->execute();
+
+        return $searchLanguages;
+    }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $typeFound
+     *
+     * @return Builder
+     */
+    public function addTypeQueryBuilder(Builder $queryBuilder, $typeFound)
+    {
+        if ('' != $typeFound) {
+            $queryBuilder->field('type')->equals(
+                ('audio' == $typeFound) ? Multimediaobject::TYPE_AUDIO : Multimediaobject::TYPE_VIDEO
+            );
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $durationFound
+     *
+     * @return Builder
+     */
+    public function addDurationQueryBuilder(Builder $queryBuilder, $durationFound)
+    {
+        if ('' != $durationFound) {
+            if ('-5' == $durationFound) {
+                $queryBuilder->field('tracks.duration')->lte(300);
+            }
+            if ('-10' == $durationFound) {
+                $queryBuilder->field('tracks.duration')->lte(600);
+            }
+            if ('-30' == $durationFound) {
+                $queryBuilder->field('tracks.duration')->lte(1800);
+            }
+            if ('-60' == $durationFound) {
+                $queryBuilder->field('tracks.duration')->lte(3600);
+            }
+            if ('+60' == $durationFound) {
+                $queryBuilder->field('tracks.duration')->gt(3600);
+            }
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $locale
+     * @param string  $searchFound
+     *
+     * @return Builder
+     *
+     * @throws \MongoException
+     */
+    public function addSearchQueryBuilder(Builder $queryBuilder, $locale, $searchFound)
+    {
+        $searchFound = trim($searchFound);
+
+        if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
+            $searchFound = str_replace('*', '.*', $searchFound);
+            $mRegex = new \MongoRegex("/$searchFound/i");
+            $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
+            $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
+        } elseif ('' != $searchFound) {
+            $queryBuilder->field('$text')->equals([
+                '$search' => TextIndexUtils::cleanTextIndex($searchFound),
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+            ]);
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $startFound
+     * @param string  $endFound
+     * @param string  $yearFound
+     * @param string  $dateField
+     *
+     * @return mixed
+     */
+    public function addDateQueryBuilder(Builder $queryBuilder, $startFound, $endFound, $yearFound, $dateField = 'record_date')
+    {
+        if (null !== $yearFound && '' !== $yearFound) {
+            $start = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', $yearFound));
+            $end = \DateTime::createFromFormat('d/m/Y:H:i:s', sprintf('01/01/%s:00:00:00', ($yearFound) + 1));
+            $queryBuilder->field($dateField)->gte($start);
+            $queryBuilder->field($dateField)->lt($end);
+        } else {
+            if ('' != $startFound) {
+                $start = \DateTime::createFromFormat('!Y-m-d', $startFound);
+                $queryBuilder->field($dateField)->gt($start);
+            }
+            if ('' != $endFound) {
+                $end = \DateTime::createFromFormat('!Y-m-d', $endFound);
+                $end->modify('+1 day');
+                $queryBuilder->field($dateField)->lt($end);
+            }
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param Builder $queryBuilder
+     * @param string  $languageFound
+     *
+     * @return Builder
+     */
+    public function addLanguageQueryBuilder(Builder $queryBuilder, $languageFound)
+    {
+        if ('' != $languageFound) {
+            $queryBuilder->field('tracks.language')->equals($languageFound);
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param Builder    $queryBuilder
+     * @param array|null $tagsFound
+     * @param Tag|null   $blockedTag
+     * @param bool       $useTagAsGeneral
+     *
+     * @return Builder
+     *
+     * @throws \MongoException
+     */
+    public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, $useTagAsGeneral = false)
+    {
+        if (null !== $blockedTag) {
+            $tagsFound[] = $blockedTag->getCod();
+        }
+        if (null !== $tagsFound) {
+            $tagsFound = array_values(array_diff($tagsFound, ['All', '']));
+        }
+
+        if ($tagsFound && count($tagsFound) > 0) {
+            $queryBuilder->field('tags.cod')->all($tagsFound);
+        }
+
+        if ($useTagAsGeneral && null !== $blockedTag) {
+            $queryBuilder->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($blockedTag->getPath()).'.*\|/')]);
+        }
+
+        return $queryBuilder;
+    }
+
+    public function addValidSeriesQueryBuilder(Builder $queryBuilder)
+    {
+        $validSeries = $this->documentManager->getRepository(MultimediaObject::class)
+                            ->createStandardQueryBuilder()
+                            ->distinct('series')
+                            ->getQuery()
+                            ->execute()
+                            ->toArray();
+
+        $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
+
+        return $queryBuilder;
     }
 }
