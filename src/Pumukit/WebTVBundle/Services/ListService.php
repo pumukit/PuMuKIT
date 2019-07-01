@@ -4,7 +4,6 @@ namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class ListService
