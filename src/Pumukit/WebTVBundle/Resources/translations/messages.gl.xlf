@@ -711,6 +711,18 @@
         <source>video</source>
         <target state="translated">vídeo</target>
       </trans-unit>
+      <trans-unit id="926pIe3" resname="Wall">
+        <source>Wall</source>
+        <target state="needs-translation">Wall</target>
+      </trans-unit>
+      <trans-unit id="xj62cgx" resname="Private">
+        <source>Private</source>
+        <target state="needs-translation">Private</target>
+      </trans-unit>
+      <trans-unit id="Ewpvcv4" resname="Advance search">
+        <source>Advance search</source>
+        <target state="needs-translation">Advance search</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
