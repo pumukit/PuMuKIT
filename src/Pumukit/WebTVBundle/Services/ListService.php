@@ -61,12 +61,6 @@ class ListService
      */
     public function getWallVideos()
     {
-        $publishingDecisionTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $this->publishingDecisionCode]);
-        $tag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $this->wallTag]);
-        if (!$tag || !$tag->isDescendantOf($publishingDecisionTag)) {
-            throw new \Exception('Configured tag for wall block ('.$this->wallTag.') doesnt exists or is not child of '.$this->publishingDecisionCode);
-        }
-
         $criteria = [
             'tags.cod' => $this->wallTag,
         ];
