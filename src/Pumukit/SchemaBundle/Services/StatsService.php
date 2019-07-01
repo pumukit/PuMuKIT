@@ -53,7 +53,7 @@ class StatsService
         );
         $pipeline[] = array('$sort' => array('_id' => $sort));
 
-        $aggregation = $dmColl->aggregate($pipeline);
+        $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
 
         return $aggregation->toArray();
     }
