@@ -18,7 +18,14 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-9 col-md-9">
-            {% include "PumukitWebTVBundle:Resources:template_video_info.html.twig" with {'show_video_elements' : true } %}
+            {% include "PumukitWebTVBundle:Resources:template_video_info.html.twig" with {
+                'show_video_date': true,
+                'show_video_broadcast' : true,
+                'show_video_broadcast_unify': true,
+                'show_video_elements' : false,
+                'show_video_views' : false,
+                'show_video_description': true
+            } %}
         </div>
     </div>
 </div>

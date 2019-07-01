@@ -1,26 +1,71 @@
-<h4>{{ object.getTitle()| default('No title'|trans) }}</h4>
-{% if object.getSubtitle() %}
-    <h5>
-        <small>{{ object.getSubtitle()|default ('') }}</small>
-    </h5>
-{% endif %}
-<p>
-    {% trans %}Duration{% endtrans %}:
-    {{ mmobj_duration(object) | duration_string }}
-</p>
-<p>
-    {% trans %}Viewed{% endtrans %}: <span class="numView">{{ object.getNumview() }}</span>
-    {% transchoice object.getNumview() %}
-        {0}times|{1}time|]1,Inf]times
-    {% endtranschoice %}
-</p>
+<div class="row">
 
-{% if show_video_elements|default(false) %}
-    <ul class="list-group">
-        {% include "PumukitWebTVBundle:Misc:tracks.html.twig" %}
-        {% include "PumukitWebTVBundle:Misc:materials.html.twig" %}
-        {% include "PumukitWebTVBundle:Misc:links.html.twig" %}
-    </ul>
+    {% if show_video_broadcast is defined and show_video_broadcast %}
+        <div class="col-xs-10">
+            <h4 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h4>
+        </div>
 
-    {% include "PumukitWebTVBundle:Misc:people.html.twig" %}
-{% endif %}
+        {% set broadcastType = object.getEmbeddedBroadcast().getType() %}
+        <div class="col-xs-2 text-right">
+            <span class="label label-default label-pmk label-pmk-{{ broadcastType }}">
+                {% if show_video_broadcast_unify is defined and show_video_broadcast_unify and broadcastType != 'public' %}
+                    {{ "Private"|trans }}
+                {% else %}
+                    {{ broadcastType|capitalize }}
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <div class="col-xs-12">
+            <h4 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h4>
+        </div>
+    {% endif %}
+
+    {% if show_video_date is defined and show_video_date %}
+        <div class="col-xs-12 video-date">
+            {{ object.getRecordDate()|localizeddate('medium','none', app.request.getLocale()) }}
+        </div>
+    {% endif %}
+
+    {% if show_video_subtitle is defined and show_video_subtitle %}
+        <div class="col-xs-12">
+            <h5 class="video-subtitle">
+                <small>{{ object.getSubtitle()|default ('') }}</small>
+            </h5>
+        </div>
+    {% endif %}
+
+    {% if show_video_description is defined and show_video_description %}
+        <div class="col-xs-12 video-description">
+            {{ object.getDescription()|default('') }}
+        </div>
+    {% endif %}
+
+    {% if show_video_duration is defined and show_video_duration %}
+        <div class="col-xs-12 video-duration">
+            {% trans %}Duration{% endtrans %}:
+            {{ mmobj_duration(object) | duration_string }}
+        </div>
+    {% endif %}
+
+    {% if show_video_views is defined and show_video_views %}
+        <div class="col-xs-12 video-views">
+            {% trans %}Viewed{% endtrans %}: <span class="numView">{{ object.getNumview() }}</span>
+            {% transchoice object.getNumview() %}
+                {0}times|{1}time|]1,Inf]times
+            {% endtranschoice %}
+        </div>
+    {% endif %}
+
+    {% if show_video_elements is defined and show_video_elements %}
+        <div class="col-xs-12 video-elements">
+            <ul class="list-group">
+                {% include "PumukitWebTVBundle:Misc:tracks.html.twig" %}
+                {% include "PumukitWebTVBundle:Misc:materials.html.twig" %}
+                {% include "PumukitWebTVBundle:Misc:links.html.twig" %}
+            </ul>
+
+            {% include "PumukitWebTVBundle:Misc:people.html.twig" %}
+        </div>
+    {% endif %}
+</div>

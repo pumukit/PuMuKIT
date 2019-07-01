@@ -7,9 +7,9 @@
     <div class="announces">
         {% for object in last %}
             {% if object.isCollection() %}
-                {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' %}
+                {% include 'PumukitWebTVBundle:Resources:template_series.html.twig' with {'show_info': true } %}
             {% else %}
-                {% include "PumukitWebTVBundle:Resources:template_video.html.twig" %}
+                {% include "PumukitWebTVBundle:Resources:template_video.html.twig" with {'show_info': true } %}
             {% endif %}
             {% include "PumukitWebTVBundle:Resources:template_clearfix.html.twig" %}
         {% endfor %}
