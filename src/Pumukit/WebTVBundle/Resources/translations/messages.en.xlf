@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="es" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -704,6 +704,18 @@
       <trans-unit id="DKsclhd" resname="video">
         <source>video</source>
         <target>video</target>
+      </trans-unit>
+      <trans-unit id="926pIe3" resname="Wall">
+        <source>Wall</source>
+        <target>Wall</target>
+      </trans-unit>
+      <trans-unit id="xj62cgx" resname="Private">
+        <source>Private</source>
+        <target>Private</target>
+      </trans-unit>
+      <trans-unit id="Ewpvcv4" resname="Advance search">
+        <source>Advance search</source>
+        <target>Advance search</target>
       </trans-unit>
     </body>
   </file>
