@@ -295,7 +295,7 @@
       </trans-unit>
       <trans-unit id="s6ikH_i" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target state="translated">Ir al panel de gestión de contenidos</target>
+        <target state="translated">Ir al back office</target>
       </trans-unit>
       <trans-unit id="ZWiU94y" resname="Manage my videos">
         <source>Manage my videos</source>
