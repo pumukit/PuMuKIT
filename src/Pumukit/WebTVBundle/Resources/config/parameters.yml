@@ -1,8 +1,8 @@
 parameters:
   breadcrumbs_home_title:    'UPumukitTV'                 # 'Home' option title for the breadcrumbs service.
   catalogue_thumbnails:      true                         # If set to true, the full catalogue will list thumbnails instead of text.
-  scroll_list_byuser:        true                        # If true, the list of multimedia objects and series of a user is not paginated.
-  scroll_list_bytag:         true
+  scroll_list_byuser:        false                        # If true, the list of multimedia objects and series of a user is not paginated.
+  scroll_list_bytag:         false
   limit_objs_bytag:          12                           # ByTag Pager limit.   (Default 10)
   limit_objs_search:         12                           # Search Pager limit.  (Default 10)
   limit_objs_series:         12                           # Search Pager limit.  (Default 10)
