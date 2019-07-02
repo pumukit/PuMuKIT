@@ -80,6 +80,7 @@ class PumukitExtension extends \Twig_Extension
             new \Twig_SimpleFilter('precinct_fulltitle', [$this, 'getPrecinctFulltitle']),
             new \Twig_SimpleFilter('duration_minutes_seconds', [$this, 'getDurationInMinutesSeconds']),
             new \Twig_SimpleFilter('duration_string', [$this, 'getDurationString']),
+            new \Twig_SimpleFilter('first_dynamic_pic', [$this, 'getDynamicPic']),
         ];
     }
 
@@ -113,6 +114,17 @@ class PumukitExtension extends \Twig_Extension
     public function getFirstUrlPicFilter($object, $absolute = false, $hd = false)
     {
         return $this->picService->getFirstUrlPic($object, $absolute, $hd);
+    }
+
+    /**
+     * @param      $object
+     * @param bool $absolute
+     *
+     * @return string|null
+     */
+    public function getDynamicPic($object, $absolute = false)
+    {
+        return $this->picService->getDynamicPic($object, $absolute);
     }
 
     /**
