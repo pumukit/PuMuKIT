@@ -295,7 +295,7 @@
       </trans-unit>
       <trans-unit id="s6ikH_i" resname="Go to back-office">
         <source>Go to back-office</source>
-        <target state="translated">Ir al panel de gestión de contenidos</target>
+        <target state="translated">Ir al back office</target>
       </trans-unit>
       <trans-unit id="ZWiU94y" resname="Manage my videos">
         <source>Manage my videos</source>
@@ -704,6 +704,18 @@
       <trans-unit id="DKsclhd" resname="video">
         <source>video</source>
         <target state="translated">vídeo</target>
+      </trans-unit>
+      <trans-unit id="926pIe3" resname="Wall">
+        <source>Wall</source>
+        <target state="needs-translation">Wall</target>
+      </trans-unit>
+      <trans-unit id="xj62cgx" resname="Private">
+        <source>Private</source>
+        <target state="needs-translation">Private</target>
+      </trans-unit>
+      <trans-unit id="Ewpvcv4" resname="Advance search">
+        <source>Advance search</source>
+        <target state="needs-translation">Advance search</target>
       </trans-unit>
     </body>
   </file>
