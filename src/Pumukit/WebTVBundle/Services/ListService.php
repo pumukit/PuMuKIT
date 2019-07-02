@@ -40,15 +40,17 @@ class ListService
     }
 
     /**
+     * @param $limit
+     *
      * @return array
      */
-    public function getLives()
+    public function getLives($limit)
     {
         if (!$this->advanceLiveEvents) {
             return [];
         }
 
-        $objects = $this->embeddedEventSessionService->findCurrentSessions();
+        $objects = $this->embeddedEventSessionService->findCurrentSessions([], $limit);
 
         return $objects;
     }

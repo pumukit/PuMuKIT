@@ -357,8 +357,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
     {
         $listService = $this->get('pumukit_web_tv.list_service');
         $title = $this->get('translator')->trans('Live events');
+        $limit = $this->container->getParameter('limit_objs_live_block');
 
-        $objects = $listService->getLives();
+        $objects = $listService->getLives($limit);
 
         return [
             'objects' => $objects,
