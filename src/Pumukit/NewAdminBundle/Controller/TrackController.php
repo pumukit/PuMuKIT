@@ -96,7 +96,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $track = $multimediaObject->getTrackById($request->get('id'));
-        $form = $this->createForm(TrackUpdateType::class, $track, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(TrackUpdateType::class, $track, array('translator' => $translator, 'locale' => $locale, 'is_super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')));
 
         $profiles = $this->get('pumukitencoder.profile')->getProfiles();
 
