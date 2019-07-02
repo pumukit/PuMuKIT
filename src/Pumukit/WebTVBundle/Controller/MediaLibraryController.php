@@ -19,7 +19,7 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
      * @Template("PumukitWebTVBundle:MediaLibrary:template.html.twig")
      *
      * @param Request $request
-     * @param         $sort
+     * @param string  $sort
      *
      * @return array
      *
