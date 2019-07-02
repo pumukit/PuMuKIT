@@ -20,7 +20,7 @@ class SecurityController extends Controller
      * @Template("PumukitCoreBundle:Security:editButton.html.twig")
      *
      * @param Request $request
-     * @param         $id
+     * @param string  $id
      *
      * @return array
      */

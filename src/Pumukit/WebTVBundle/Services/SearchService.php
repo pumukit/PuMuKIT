@@ -43,7 +43,7 @@ class SearchService
     }
 
     /**
-     * @return null|object|Tag
+     * @return object|Tag|null
      *
      * @throws \Exception
      */
@@ -63,7 +63,7 @@ class SearchService
     }
 
     /**
-     * @return null|object|Tag
+     * @return object|Tag|null
      */
     public function getOptionalParentTag()
     {

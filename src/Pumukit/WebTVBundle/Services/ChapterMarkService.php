@@ -43,8 +43,10 @@ class ChapterMarkService
                          ->field('multimediaObject')->equals(new \MongoId($multimediaObject->getId()))
                          ->getQuery()->getSingleResult();
 
+        $editorChapters = [];
+
         if (!$marks) {
-            return [];
+            return $editorChapters;
         }
 
         $marks = json_decode($marks->getValue(), true);

@@ -14,7 +14,7 @@ class LocaleController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
      *
-     * @param         $locale
+     * @param string  $locale
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
