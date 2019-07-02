@@ -3,6 +3,7 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -78,6 +79,7 @@ class ListService
      * @param null   $parentTag
      *
      * @return array
+     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
     public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
@@ -177,7 +179,49 @@ class ListService
 
         return [
             $result,
-            $aggregatedNumMmobjs
+            $aggregatedNumMmobjs,
         ];
+    }
+
+    /**
+     * @param Builder   $qb
+     * @param \DateTime $date
+     *
+     * @return array
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function getNextElementsByQueryBuilder(Builder $qb, \DateTime $date)
+    {
+        $counter = 0;
+        $dateStart = clone $date;
+        $dateStart->modify('first day of next month');
+        $dateEnd = clone $date;
+        $dateEnd->modify('last day of next month');
+        $dateEnd->setTime(23, 59, 59);
+        do {
+            ++$counter;
+            $dateStart->modify('first day of last month');
+            $dateEnd->modify('last day of last month');
+            $last = $this->getNextElementsByDates($qb, $dateStart, $dateEnd);
+        } while (empty($last) && $counter < 24);
+
+        return [$dateEnd, $last];
+    }
+
+    /**
+     * @param Builder   $qb
+     * @param \DateTime $dateStart
+     * @param \DateTime $dateEnd
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    private function getNextElementsByDates(Builder $qb, \DateTime $dateStart, \DateTime $dateEnd)
+    {
+        $qb->field('public_date')->range($dateStart, $dateEnd);
+
+        return $qb->sort(['public_date' => -1])->getQuery()->execute()->toArray();
     }
 }
