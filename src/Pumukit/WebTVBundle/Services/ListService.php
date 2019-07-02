@@ -4,6 +4,8 @@ namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 class ListService
@@ -20,8 +22,6 @@ class ListService
 
     private $advanceLiveEvents;
     private $wallTag;
-
-    private $publishingDecisionCode = 'PUBDECISIONS';
 
     /**
      * ListService constructor.
@@ -69,5 +69,115 @@ class ListService
         $objects = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy($criteria);
 
         return $objects;
+    }
+
+    /**
+     * @param array  $criteria
+     * @param string $sort
+     * @param string $locale
+     * @param null   $parentTag
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
+    {
+        $result = [];
+        $seriesRepository = $this->documentManager->getRepository(Series::class);
+        $aggregatedNumMmobjs = $this->documentManager->getRepository(MultimediaObject::class)->countMmobjsBySeries();
+
+        switch ($sort) {
+            case 'alphabetically':
+                $sortField = 'title.'.$locale;
+                $series = $seriesRepository->findBy($criteria, [$sortField => 1]);
+
+                foreach ($series as $serie) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
+                        continue;
+                    }
+
+                    $key = mb_substr(trim($serie->getTitle()), 0, 1, 'UTF-8');
+                    if (!isset($result[$key])) {
+                        $result[$key] = [];
+                    }
+                    $result[$key][] = $serie;
+                }
+                break;
+            case 'date':
+                $sortField = 'public_date';
+                $series = $seriesRepository->findBy($criteria, [$sortField => -1]);
+
+                foreach ($series as $serie) {
+                    if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
+                        continue;
+                    }
+
+                    $key = $serie->getPublicDate()->format('m/Y');
+                    if (!isset($result[$key])) {
+                        $result[$key] = [];
+                    }
+
+                    $title = $serie->getTitle();
+                    if (!isset($result[$key][$title])) {
+                        $result[$key][$title] = $serie;
+                    } else {
+                        $result[$key][$title.rand()] = $serie;
+                    }
+                }
+
+                array_walk(
+                    $result,
+                    function (&$e, $key) {
+                        ksort($e);
+
+                        return array_values($e);
+                    }
+                );
+
+                break;
+            case 'tags':
+                $p_cod = $parentTag;
+                $parentTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => $p_cod]);
+                if (!isset($parentTag)) {
+                    break;
+                }
+
+                $tags = $parentTag->getChildren();
+
+                foreach ($tags as $tag) {
+                    if ($tag->getNumberMultimediaObjects() < 1) {
+                        continue;
+                    }
+                    $key = $tag->getTitle();
+
+                    $sortField = 'title.'.$locale;
+                    $seriesQB = $seriesRepository->createBuilderWithTag($tag, [$sortField => 1]);
+                    if ($criteria) {
+                        $seriesQB->addAnd($criteria);
+                    }
+                    $series = $seriesQB->getQuery()->execute();
+
+                    if (!$series) {
+                        continue;
+                    }
+
+                    foreach ($series as $serie) {
+                        if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
+                            continue;
+                        }
+
+                        if (!isset($result[$key])) {
+                            $result[$key] = [];
+                        }
+                        $result[$key][] = $serie;
+                    }
+                }
+                break;
+        }
+
+        return [
+            $result,
+            $aggregatedNumMmobjs
+        ];
     }
 }
