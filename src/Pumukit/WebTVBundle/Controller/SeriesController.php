@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -25,22 +24,22 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param Request $request
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function indexAction(Series $series, Request $request)
     {
-        $mmobjRepo = $this
-            ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
 
         $objects = $mmobjRepo->createBuilderWithSeriesAndStatus($series, [MultimediaObject::STATUS_PUBLISHED], ['rank' => 1]);
 
-        $pagerfanta = $this->createPager($objects, $request->query->get('page', 1));
+        $pager = $this->createPager($objects, $request->query->get('page', 1));
 
         $this->updateBreadcrumbs($series);
 
         return [
             'series' => $series,
-            'multimediaObjects' => $pagerfanta,
+            'multimediaObjects' => $pager,
         ];
     }
 
@@ -52,24 +51,24 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param Request $request
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function magicIndexAction(Series $series, Request $request)
     {
         $request->attributes->set('noindex', true);
 
-        $mmobjRepo = $this
-            ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository(MultimediaObject::class);
+        $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
 
         $objects = $mmobjRepo->createBuilderWithSeries($series, ['rank' => 1]);
 
-        $pagerfanta = $this->createPager($objects, $request->query->get('page', 1));
+        $pager = $this->createPager($objects, $request->query->get('page', 1));
 
         $this->updateBreadcrumbs($series);
 
         return [
             'series' => $series,
-            'multimediaObjects' => $pagerfanta,
+            'multimediaObjects' => $pager,
             'magic_url' => true,
         ];
     }
@@ -87,20 +86,15 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param $objects
      * @param $page
      *
-     * @return Pagerfanta
+     * @return mixed|Pagerfanta
+     *
+     * @throws \Exception
      */
     private function createPager($objects, $page)
     {
         $limit = $this->container->getParameter('limit_objs_series');
+        $pager = $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
 
-        if (0 == $limit) {
-            return $objects->getQuery()->execute();
-        }
-        $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($limit);
-        $pagerfanta->setCurrentPage($page);
-
-        return $pagerfanta;
+        return $pager;
     }
 }

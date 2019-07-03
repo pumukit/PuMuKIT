@@ -1,11 +1,10 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Controller;
+namespace Pumukit\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class LocaleController.
@@ -15,7 +14,7 @@ class LocaleController extends Controller implements WebTVControllerInterface
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
      *
-     * @param         $locale
+     * @param string  $locale
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

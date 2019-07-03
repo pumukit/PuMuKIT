@@ -1,6 +1,6 @@
 <?php
 
-namespace Pumukit\WebTVBundle\Controller;
+namespace Pumukit\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +17,10 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
-     * @Template("PumukitWebTVBundle:Security:editButton.html.twig")
+     * @Template("PumukitCoreBundle:Security:editButton.html.twig")
      *
      * @param Request $request
-     * @param         $id
+     * @param string  $id
      *
      * @return array
      */
