@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ template_title }}</h1>
+    {% set title = template_title %}
+    {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
 
     <div class="announces" id="announces"></div>
 

@@ -3,7 +3,7 @@
 {% block body %}
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="title-for-crumbs">{{ title }}</h1>
+            {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
         </div>
 
         <div class="col-xs-12">
@@ -22,7 +22,9 @@
                 </h2>
             </div>
             {% set objects = result.objects %}
-            {% include 'PumukitWebTVBundle:Channel:template_list.html.twig' %}
+            <div class="col-xs-12">
+                {% include 'PumukitWebTVBundle:Channel:template_list.html.twig' %}
+            </div>
         {% else %}
             <div class="col-xs-12">
                 <h3 class="text-center">{% trans %}No resources available{% endtrans %}</h3>
