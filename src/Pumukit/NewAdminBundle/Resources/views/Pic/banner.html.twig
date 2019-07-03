@@ -6,18 +6,6 @@
 
 <div class="modal-body">
 
-    <div class="form-group">
-        <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
-        <div class="radio">
-            <label><input type="radio" name="banner_type" id="radio_banner_url" value="banner_url" onclick="$('#div_banner_file').hide();$('#div_banner_url').show();"/> {% trans %}Banner from URL{% endtrans %}
-            </label>
-        </div>
-        <div class="radio">
-            <label><input type="radio" name="banner_type" id="radio_banner_file" value="banner_file" checked="checked" onclick="$('#div_banner_url').hide();$('#div_banner_file').show();"/> {% trans %}Banner from local hard drive{% endtrans %}
-            </label>
-        </div>
-    </div>
-
     <div id="div_banner_url" style="display:none;">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <form onsubmit="$.ajax({
@@ -38,13 +26,6 @@
 
                 <fieldset>
                     <legend hidden>{% trans %}Banner URL{% endtrans %}</legend>
-                    <div class="form-group">
-                        <label for="url">{% trans %}Banner URL{% endtrans %}:</label>
-                        <div class="">
-                            <input type="text" name="url" id="url" value="" size="65" class="form-control">
-                            <span id="error_url" style="display:none" class="error">{% trans %}URL format not valid{% endtrans %}</span>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="url_bannerTargetUrl">{% trans %}Write the target URL{% endtrans %}:</label>
                         <div class="">
