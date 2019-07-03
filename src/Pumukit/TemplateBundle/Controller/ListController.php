@@ -26,7 +26,7 @@ class ListController extends Controller
         }
 
         $routeName = $request->get('_route');
-        if ($request->get('_forwarded')) {
+        if ($request->get('_forwarded') && $request->get('_forwarded')->get('_route')) {
             $routeName = $request->get('_forwarded')->get('_route');
         }
 
