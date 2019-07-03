@@ -7,8 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class ChannelController.
