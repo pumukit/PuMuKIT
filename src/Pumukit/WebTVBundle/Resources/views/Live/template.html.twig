@@ -1,9 +1,8 @@
 {% extends 'PumukitWebTVBundle::layout.html.twig' %}
 
 {% block body %}
-
-    <div class="col-xs-12">
-        <h1 class="event_title">{% trans %}Events{% endtrans %}</h1>
+        {% set title = "Events"|trans %}
+        {% include "PumukitWebTVBundle:Misc:page_title.html.twig" %}
 
         {% if eventsNow is empty and eventsToday is empty and eventsFuture is empty %}
             <div class="row">
@@ -78,6 +77,5 @@
             {% endif %}
 
         {% endif %}
-    </div>
 
 {% endblock %}
