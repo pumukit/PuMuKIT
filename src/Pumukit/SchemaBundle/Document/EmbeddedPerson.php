@@ -452,7 +452,7 @@ class EmbeddedPerson
              [$this->getPost(), $this->getFirm(), $this->getBio()] :
              [$this->getPost(), $this->getFirm()];
         $aux = array_filter($aux, function ($a) {
-            return !is_null($a) && ('' != $a);
+            return null !== $a && ('' != $a);
         });
 
         return implode(', ', $aux);
