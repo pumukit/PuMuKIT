@@ -40,7 +40,7 @@ class FilterListener
         if (!$canBeActivated) {
             return;
         }
-        list($controller, $routeParams) = $this->filterService->getEventData($event);
+        [$controller, $routeParams] = $this->filterService->getEventData($event);
         if (current($controller) instanceof AdminControllerInterface) {
             $this->enableAdminFilter();
         } elseif (current($controller) instanceof WebTVControllerInterface) {

@@ -21,7 +21,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
-        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+        [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
@@ -29,7 +29,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        list($mmobjs, $total) = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
+        [$mmobjs, $total] = $viewsService->getMmobjsMostViewedByRange($criteria, $options);
 
         $views = [
             'limit' => $limit,
@@ -55,7 +55,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
-        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+        [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
@@ -63,7 +63,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['page'] = $page;
         $options['sort'] = $sort;
 
-        list($series, $total) = $viewsService->getSeriesMostViewedByRange($criteria, $options);
+        [$series, $total] = $viewsService->getSeriesMostViewedByRange($criteria, $options);
 
         $views = [
             'limit' => $limit,
@@ -89,7 +89,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $serializer = $this->get('jms_serializer');
         $viewsService = $this->get('pumukit_stats.stats');
 
-        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+        [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
@@ -106,7 +106,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['criteria_mmobj'] = $criteria_mmobj;
         $options['criteria_series'] = $criteria_series;
 
-        list($views, $total) = $viewsService->getTotalViewedGrouped($options);
+        [$views, $total] = $viewsService->getTotalViewedGrouped($options);
 
         $views = [
             'limit' => $limit,
@@ -138,7 +138,7 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $mmobjId = $request->get('mmobj');
 
-        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+        [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
@@ -149,7 +149,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $options);
+        [$views, $total] = $viewsService->getTotalViewedGroupedByMmobj(new \MongoId($mmobjId), $options);
 
         $views = [
             'limit' => $limit,
@@ -178,7 +178,7 @@ class APIController extends Controller implements NewAdminControllerInterface
 
         $seriesId = $request->get('series');
 
-        list($criteria, $sort, $fromDate, $toDate, $limit, $page) = $this->processRequestData($request);
+        [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
         $groupBy = $request->get('group_by') ?: 'month';
 
@@ -189,7 +189,7 @@ class APIController extends Controller implements NewAdminControllerInterface
         $options['sort'] = $sort;
         $options['group_by'] = $groupBy;
 
-        list($views, $total) = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $options);
+        [$views, $total] = $viewsService->getTotalViewedGroupedBySeries(new \MongoId($seriesId), $options);
 
         $views = [
             'limit' => $limit,

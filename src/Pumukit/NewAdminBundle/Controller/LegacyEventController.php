@@ -29,7 +29,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     public function indexAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
-        list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
+        [$events, $month, $year, $calendar] = $this->getResources($request, $criteria);
 
         $update_session = true;
         foreach ($events as $event) {
@@ -97,7 +97,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     public function listAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
-        list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
+        [$events, $month, $year, $calendar] = $this->getResources($request, $criteria);
 
         $repo = $this
               ->get('doctrine_mongodb.odm.document_manager')
@@ -338,7 +338,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $resources->setCurrentPage($page);
 
-        list($m, $y, $calendar) = $this->getCalendar($request);
+        [$m, $y, $calendar] = $this->getCalendar($request);
 
         return [$resources, $m, $y, $calendar];
     }

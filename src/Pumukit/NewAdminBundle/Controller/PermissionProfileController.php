@@ -29,7 +29,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $criteria = $this->getCriteria($request->get('criteria', []));
         $permissionProfiles = $this->getResources($request, $criteria);
 
-        list($permissions, $dependencies) = $this->getPermissions();
+        [$permissions, $dependencies] = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
         return [
@@ -63,7 +63,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         }
         $permissionProfiles->setCurrentPage($page);
 
-        list($permissions, $dependencies) = $this->getPermissions();
+        [$permissions, $dependencies] = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
         return [

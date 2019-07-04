@@ -134,7 +134,7 @@ EOT
 
         try {
             $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
-            list($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type) = $inputs;
+            [$this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type] = $inputs;
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }

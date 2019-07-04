@@ -95,7 +95,7 @@ EOT
         }
 
         $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
-        list($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type) = $inputs;
+        [$this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type] = $inputs;
 
         $pics = $this->picService->findPicsByOptions($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
 

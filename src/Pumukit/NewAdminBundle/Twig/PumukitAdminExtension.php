@@ -262,7 +262,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesIcon($series)
     {
-        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
+        [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
         $iconClass = 'mdi-alert-warning';
 
@@ -300,7 +300,7 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSeriesText($series)
     {
-        list($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked) = $this->countMmobjsByStatus($series);
+        [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
         $iconText = sprintf(
             "%s: \n %s: %d,\n%s: %d,\n%s: %d\n",
