@@ -172,12 +172,12 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         if ($request->get('page', null)) {
             $this->get('session')->set('admin/playlistpic/page', $request->get('page', 1));
         }
-        $page = intval($this->get('session')->get('admin/playlistpic/page', 1));
+        $page = (int) ($this->get('session')->get('admin/playlistpic/page', 1));
         $limit = 12;
 
         $urlPics = $picService->getRecommendedPics($playlist);
 
-        $total = intval(ceil(count($urlPics) / $limit));
+        $total = (int) (ceil(count($urlPics) / $limit));
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 

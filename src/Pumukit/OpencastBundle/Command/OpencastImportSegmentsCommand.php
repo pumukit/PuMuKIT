@@ -252,7 +252,7 @@ EOT
         $embeddedSegment->setTime($segment['time']);
         $embeddedSegment->setDuration($segment['duration']);
         $embeddedSegment->setRelevance($segment['relevance']);
-        $embeddedSegment->setHit(boolval($segment['hit']));
+        $embeddedSegment->setHit((bool) ($segment['hit']));
         $embeddedSegment->setText($segment['text']);
 
         $image = $segment['previews']['preview']['$'] ?? '';

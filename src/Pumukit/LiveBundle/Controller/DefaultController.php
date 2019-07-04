@@ -50,14 +50,14 @@ class DefaultController extends Controller
         if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', [
                 'live' => $live,
-                'invalid_password' => boolval($request->get('broadcast_password')),
+                'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
         }
         $userAgent = $request->headers->get('user-agent');
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isIE = $mobileDetectorService->version('IE');
-        $versionIE = $isIE ? floatval($isIE) : 11.0;
+        $versionIE = $isIE ? (float) $isIE : 11.0;
 
         return [
             'live' => $live,
@@ -134,7 +134,7 @@ class DefaultController extends Controller
         if (embeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', [
                 'live' => $multimediaObject->getEmbeddedEvent(),
-                'invalid_password' => boolval($request->get('broadcast_password')),
+                'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
         }
 
@@ -142,7 +142,7 @@ class DefaultController extends Controller
         $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
         $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
         $isIE = $mobileDetectorService->version('IE');
-        $versionIE = $isIE ? floatval($isIE) : 11.0;
+        $versionIE = $isIE ? (float) $isIE : 11.0;
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
