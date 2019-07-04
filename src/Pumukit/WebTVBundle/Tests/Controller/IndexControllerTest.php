@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class IndexControllerTest.
+ *
+ * @internal
+ * @coversNothing
  */
 class IndexControllerTest extends WebTestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Security;
 
-use Symfony\Component\Security\Core\Role\RoleHierarchy as SymfonyRoleHierarchy;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Services\PermissionService;
+use Symfony\Component\Security\Core\Role\RoleHierarchy as SymfonyRoleHierarchy;
 
 class RoleHierarchy extends SymfonyRoleHierarchy
 {

@@ -30,9 +30,9 @@ class SearchService
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function getSearchTags()
     {
@@ -43,9 +43,9 @@ class SearchService
     }
 
     /**
-     * @return object|Tag|null
-     *
      * @throws \Exception
+     *
+     * @return null|object|Tag
      */
     public function getParentTag()
     {
@@ -63,7 +63,7 @@ class SearchService
     }
 
     /**
-     * @return object|Tag|null
+     * @return null|object|Tag
      */
     public function getOptionalParentTag()
     {
@@ -78,9 +78,9 @@ class SearchService
     /**
      * @param int $type
      *
-     * @return array
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function getYears($type = self::MULTIMEDIA_OBJECT)
     {
@@ -114,13 +114,12 @@ class SearchService
      */
     public function getLanguages()
     {
-        $searchLanguages = $this->documentManager->getRepository(MultimediaObject::class)
-                                ->createStandardQueryBuilder()
-                                ->distinct('tracks.language')
-                                ->getQuery()
-                                ->execute();
-
-        return $searchLanguages;
+        return $this->documentManager->getRepository(MultimediaObject::class)
+            ->createStandardQueryBuilder()
+            ->distinct('tracks.language')
+            ->getQuery()
+            ->execute()
+        ;
     }
 
     /**
@@ -174,9 +173,9 @@ class SearchService
      * @param string  $locale
      * @param string  $searchFound
      *
-     * @return Builder
-     *
      * @throws \MongoException
+     *
+     * @return Builder
      */
     public function addSearchQueryBuilder(Builder $queryBuilder, $locale, $searchFound)
     {
@@ -184,7 +183,7 @@ class SearchService
 
         if ((false !== strpos($searchFound, '*')) && (false === strpos($searchFound, ' '))) {
             $searchFound = str_replace('*', '.*', $searchFound);
-            $mRegex = new \MongoRegex("/$searchFound/i");
+            $mRegex = new \MongoRegex("/{$searchFound}/i");
             $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
             $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
         } elseif ('' != $searchFound) {
@@ -245,13 +244,13 @@ class SearchService
 
     /**
      * @param Builder    $queryBuilder
-     * @param array|null $tagsFound
-     * @param Tag|null   $blockedTag
+     * @param null|array $tagsFound
+     * @param null|Tag   $blockedTag
      * @param bool       $useTagAsGeneral
      *
-     * @return Builder
-     *
      * @throws \MongoException
+     *
+     * @return Builder
      */
     public function addTagsQueryBuilder(Builder $queryBuilder, array $tagsFound = null, Tag $blockedTag = null, $useTagAsGeneral = false)
     {
@@ -281,14 +280,13 @@ class SearchService
     public function addValidSeriesQueryBuilder(Builder $queryBuilder)
     {
         $validSeries = $this->documentManager->getRepository(MultimediaObject::class)
-                            ->createStandardQueryBuilder()
-                            ->distinct('series')
-                            ->getQuery()
-                            ->execute()
-                            ->toArray();
+            ->createStandardQueryBuilder()
+            ->distinct('series')
+            ->getQuery()
+            ->execute()
+            ->toArray()
+        ;
 
-        $queryBuilder = $queryBuilder->field('_id')->in($validSeries);
-
-        return $queryBuilder;
+        return $queryBuilder->field('_id')->in($validSeries);
     }
 }

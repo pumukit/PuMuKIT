@@ -2,23 +2,22 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\Routing\RequestContext;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\Routing\RequestContext;
 
 class PicService
 {
+    /**
+     * @var RequestContext
+     */
+    protected $context;
     private $defaultSeriesPic;
     private $defaultVideoPic;
     private $defaultAudioHDPic;
     private $defaultAudioSDPic;
     private $webDir;
     private $defaultPlaylistPic;
-
-    /**
-     * @var RequestContext
-     */
-    protected $context;
 
     public function __construct(RequestContext $context, $webDir = '', $defaultSeriesPic = '', $defaultPlaylistPic = '', $defaultVideoPic = '', $defaultAudioHDPic = '', $defaultAudioSDPic = '')
     {
@@ -40,7 +39,7 @@ class PicService
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
+     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
      * @param bool                    $absolute Returns absolute path
      * @param bool                    $hd       Returns pic in HD
      *
@@ -52,12 +51,12 @@ class PicService
         $picUrl = null;
         if (0 === count($pics)) {
             return $this->getDefaultUrlPicForObject($object, $absolute, $hd);
-        } else {
-            foreach ($pics as $pic) {
-                if (($pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster')) {
-                    $picUrl = $pic->getUrl();
-                    break;
-                }
+        }
+        foreach ($pics as $pic) {
+            if (($pic->getUrl()) && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster')) {
+                $picUrl = $pic->getUrl();
+
+                break;
             }
         }
 
@@ -80,7 +79,7 @@ class PicService
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object   Object to get the url (using $object->getPics())
+     * @param MultimediaObject|Series $object   Object to get the url (using $object->getPics())
      * @param bool                    $absolute Returns absolute path
      * @param bool                    $hd       Returns pic in HD
      *
@@ -94,7 +93,8 @@ class PicService
             }
 
             return $this->getDefaultSeriesUrlPic($absolute);
-        } elseif ($object instanceof MultimediaObject) {
+        }
+        if ($object instanceof MultimediaObject) {
             return $this->getDefaultMultimediaObjectUrlPic($absolute, $object->isOnlyAudio(), $hd);
         }
 
@@ -172,33 +172,6 @@ class PicService
     }
 
     /**
-     * Get absolute path of a given pic url.
-     *
-     * @param string $picUrl
-     *
-     * @return string
-     */
-    protected function getAbsoluteUrlPic($picUrl = '')
-    {
-        if ($picUrl) {
-            if ('/' == $picUrl[0]) {
-                $scheme = $this->context->getScheme();
-                $host = $this->context->getHost();
-                $port = '';
-                if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
-                    $port = ':'.$this->context->getHttpPort();
-                } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
-                    $port = ':'.$this->context->getHttpsPort();
-                }
-
-                return $scheme.'://'.$host.$port.$picUrl;
-            }
-        }
-
-        return $picUrl;
-    }
-
-    /**
      * Get first path pic.
      *
      * Get the first path pic of a document,
@@ -207,7 +180,7 @@ class PicService
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object Object to get the path (using $object->getPics())
+     * @param MultimediaObject|Series $object Object to get the path (using $object->getPics())
      * @param bool                    $hd     Returns pic in HD
      *
      * @return string
@@ -218,11 +191,10 @@ class PicService
         $picPath = null;
         if (0 === count($pics)) {
             return $this->getDefaultPathPicForObject($object, $hd);
-        } else {
-            foreach ($pics as $pic) {
-                if (($picPath = $pic->getPath()) && !$pic->getHide() && !$pic->containsTag('banner')) {
-                    break;
-                }
+        }
+        foreach ($pics as $pic) {
+            if (($picPath = $pic->getPath()) && !$pic->getHide() && !$pic->containsTag('banner')) {
+                break;
             }
         }
 
@@ -241,7 +213,7 @@ class PicService
      * it is Series, MultimediaObject of type
      * video or audio
      *
-     * @param Series|MultimediaObject $object Object to get the path (using $object->getPics())
+     * @param MultimediaObject|Series $object Object to get the path (using $object->getPics())
      * @param bool                    $hd     Returns pic in HD
      *
      * @return string
@@ -250,7 +222,8 @@ class PicService
     {
         if ($object instanceof Series) {
             return $this->getDefaultSeriesPathPic();
-        } elseif ($object instanceof MultimediaObject) {
+        }
+        if ($object instanceof MultimediaObject) {
             return $this->getDefaultMultimediaObjectPathPic($object->isOnlyAudio(), $hd);
         }
 
@@ -298,7 +271,7 @@ class PicService
      * @param bool $absolute
      * @param bool $hd
      *
-     * @return string|null
+     * @return null|string
      */
     public function getPosterUrl($object, $absolute = false, $hd = true)
     {
@@ -311,12 +284,40 @@ class PicService
         foreach ($pics as $pic) {
             if ($pic->getUrl() && $pic->containsTag('poster')) {
                 $picUrl = $pic->getUrl();
+
                 break;
             }
         }
 
         if ($absolute) {
             return $this->getAbsoluteUrlPic($picUrl);
+        }
+
+        return $picUrl;
+    }
+
+    /**
+     * Get absolute path of a given pic url.
+     *
+     * @param string $picUrl
+     *
+     * @return string
+     */
+    protected function getAbsoluteUrlPic($picUrl = '')
+    {
+        if ($picUrl) {
+            if ('/' == $picUrl[0]) {
+                $scheme = $this->context->getScheme();
+                $host = $this->context->getHost();
+                $port = '';
+                if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
+                    $port = ':'.$this->context->getHttpPort();
+                } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
+                    $port = ':'.$this->context->getHttpsPort();
+                }
+
+                return $scheme.'://'.$host.$port.$picUrl;
+            }
         }
 
         return $picUrl;
@@ -334,9 +335,9 @@ class PicService
         if ($picPath) {
             if ('/' == $picPath[0]) {
                 return $this->webDir.$picPath;
-            } else {
-                return $this->webDir.'/'.$picPath;
             }
+
+            return $this->webDir.'/'.$picPath;
         }
 
         return $picPath;

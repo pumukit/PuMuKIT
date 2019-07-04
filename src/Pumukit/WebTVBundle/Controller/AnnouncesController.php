@@ -2,12 +2,12 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class AnnouncesController.
@@ -35,14 +35,6 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
     }
 
     /**
-     * @return string
-     */
-    protected function getLatestUploadsPagerTemplate()
-    {
-        return 'PumukitWebTVBundle:Announces:template_pager.html.twig';
-    }
-
-    /**
      * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
      *
      * @param Request $request
@@ -56,7 +48,7 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
         $announcesService = $this->get('pumukitschema.announce');
 
         $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
-        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
+        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
         if (!$date) {
             throw $this->createNotFoundException();
         }
@@ -76,7 +68,8 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
                         'show_info' => false,
                         'show_more' => false,
                     ]
-                ), 200
+                ),
+                200
             );
             $dateHeader = $date->format('m/Y');
             $response->headers->set('X-Date-Month', $date->format('m'));
@@ -86,6 +79,14 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
         $response->headers->set('X-Date', $dateHeader);
 
         return $response;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLatestUploadsPagerTemplate()
+    {
+        return 'PumukitWebTVBundle:Announces:template_pager.html.twig';
     }
 
     /**

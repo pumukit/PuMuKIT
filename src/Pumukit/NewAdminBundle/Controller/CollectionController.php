@@ -4,11 +4,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Security\Permission;
-use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Security\Permission;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class CollectionController extends Controller implements NewAdminControllerInterface
 {
@@ -30,7 +30,8 @@ class CollectionController extends Controller implements NewAdminControllerInter
                 return false;
             }
             $mmobjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                       ->getRepository(MultimediaObject::class);
+                ->getRepository(MultimediaObject::class)
+            ;
             $allMmobjs = $mmobjRepo->createStandardQueryBuilder()->field('series')->equals($series->getId())->getQuery()->execute();
             foreach ($allMmobjs as $resource) {
                 if (!$resource->containsPersonWithRole($person, $role) ||
@@ -52,13 +53,15 @@ class CollectionController extends Controller implements NewAdminControllerInter
     {
         $factoryService = $this->get('pumukitschema.factory');
         $seriesRepo = $this->get('doctrine_mongodb.odm.document_manager')
-                    ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
         foreach ($ids as $id) {
             $collection = $seriesRepo->find($id);
             if (!$collection || !$this->isUserAllowedToDelete($collection)) {
                 //Once isUserAllowedToDelete is passed to a service, this function can also be passed.
                 continue;
             }
+
             try {
                 $factoryService->deleteSeries($collection);
             } catch (\Exception $e) {

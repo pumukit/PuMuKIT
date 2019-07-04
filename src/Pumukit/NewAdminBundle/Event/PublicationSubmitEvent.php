@@ -2,8 +2,8 @@
 
 namespace Pumukit\NewAdminBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 class PublicationSubmitEvent extends Event

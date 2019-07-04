@@ -3,9 +3,9 @@
 namespace Pumukit\WebTVBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
-use Pumukit\LiveBundle\Document\Live;
 use Pumukit\LiveBundle\Document\Event;
+use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 
 /**
  * Class MenuService.
@@ -37,9 +37,9 @@ class MenuService
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function getMenuEventsElement()
     {
@@ -53,9 +53,9 @@ class MenuService
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     private function getAdvanceEvents()
     {

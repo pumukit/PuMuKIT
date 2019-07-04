@@ -2,11 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\PermissionService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PermissionServiceTest extends WebTestCase
 {
     private $permissionService;
@@ -20,7 +24,8 @@ class PermissionServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
 
         $this->permissionService = static::$kernel->getContainer()
-          ->get('pumukitschema.permission');
+            ->get('pumukitschema.permission')
+        ;
     }
 
     public function tearDown()

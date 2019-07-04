@@ -2,11 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
-use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SeriesEventDispatcherService
 {

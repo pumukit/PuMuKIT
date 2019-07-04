@@ -3,13 +3,13 @@
 namespace Pumukit\CoreBundle\Command;
 
 use Assetic\Exception\Exception;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 
 class CreateMMOCommand extends ContainerAwareCommand
 {
@@ -35,7 +35,8 @@ class CreateMMOCommand extends ContainerAwareCommand
             ->addArgument('file', InputArgument::REQUIRED, 'multimedia file path')
             ->addArgument('inotify_event', InputArgument::OPTIONAL, 'inotify event, only works with IN_CLOSE_WRITE', 'IN_CLOSE_WRITE')
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')', null)
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 This command create a multimedia object from a multimedia file path
 
 Basic example:
@@ -48,7 +49,8 @@ Complete example with hidden status:
 <info>php app/console import:inbox /var/www/html/pumukit2/web/storage/tmp/test.mp4 IN_CLOSE_WRITE --status=hidden</info>
 
 EOT
-            );
+            )
+        ;
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

@@ -115,6 +115,16 @@ class EmbeddedTag
     }
 
     /**
+     * to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -128,7 +138,7 @@ class EmbeddedTag
      * Set title.
      *
      * @param string      $title
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setTitle($title, $locale = null)
     {
@@ -141,7 +151,7 @@ class EmbeddedTag
     /**
      * Get title.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -181,7 +191,7 @@ class EmbeddedTag
      * Set description.
      *
      * @param string      $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -194,7 +204,7 @@ class EmbeddedTag
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -383,16 +393,6 @@ class EmbeddedTag
     }
 
     /**
-     * to string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Get level.
      */
     public function getLevel()
@@ -459,6 +459,7 @@ class EmbeddedTag
      * Returns true if given node cod is descendant of tag.
      *
      * @param EmbeddedTag|Tag $tag
+     * @param mixed           $tagCod
      *
      * @return bool
      */
@@ -477,6 +478,7 @@ class EmbeddedTag
     /**
      * @param ArrayCollection $embeddedTags
      * @param EmbeddedTag|Tag $tag
+     * @param mixed           $embedTags
      *
      * @return EmbeddedTag
      */
@@ -484,7 +486,8 @@ class EmbeddedTag
     {
         if ($tag instanceof self) {
             return $tag;
-        } elseif ($tag instanceof Tag) {
+        }
+        if ($tag instanceof Tag) {
             return new self($tag);
         }
 

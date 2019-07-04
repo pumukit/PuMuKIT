@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EmbedRelationsTest extends WebTestCase
 {
     private $dm;
@@ -23,22 +27,29 @@ class EmbedRelationsTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->repoMmobjs = $this->dm
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->repoTags = $this->dm
-            ->getRepository(Tag::class);
+            ->getRepository(Tag::class)
+        ;
 
         //DELETE DATABASE
         // pimo has to be deleted before mmobj
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Person::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

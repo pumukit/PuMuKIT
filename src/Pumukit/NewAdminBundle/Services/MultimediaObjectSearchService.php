@@ -83,6 +83,7 @@ class MultimediaObjectSearchService
 
         if ($bPerson && $bRole && $personName && $roleCode) {
             $isMongoId = true;
+
             try {
                 new \MongoId($personName);
             } catch (\Exception $exception) {
@@ -99,6 +100,7 @@ class MultimediaObjectSearchService
             }
         } elseif ($bPerson && !$bRole && $personName) {
             $isMongoId = true;
+
             try {
                 new \MongoId($personName);
             } catch (\Exception $exception) {
@@ -118,6 +120,28 @@ class MultimediaObjectSearchService
         }
 
         return $new_criteria;
+    }
+
+    /**
+     * @param $text
+     * @param $queryBuilder
+     * @param $locale
+     */
+    public function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
+    {
+        $text = trim($text);
+        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
+            $text = str_replace('*', '.*', $text);
+            $text = SearchUtils::scapeTildes($text);
+            $mRegex = new \MongoRegex("/{$text}/i");
+            $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
+            $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
+        } else {
+            $queryBuilder->field('$text')->equals([
+                '$search' => TextIndexUtils::cleanTextIndex($text),
+                '$language' => TextIndexUtils::getCloseLanguage($locale),
+            ]);
+        }
     }
 
     /**
@@ -162,7 +186,7 @@ class MultimediaObjectSearchService
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
-            $mRegex = new \MongoRegex("/$text/i");
+            $mRegex = new \MongoRegex("/{$text}/i");
             $base[] = [('title.'.$locale) => $mRegex];
             $base[] = ['people.people.name' => $mRegex];
         } else {
@@ -173,27 +197,5 @@ class MultimediaObjectSearchService
         }
 
         return $base;
-    }
-
-    /**
-     * @param $text
-     * @param $queryBuilder
-     * @param $locale
-     */
-    public function completeSearchQueryBuilder($text, $queryBuilder, $locale = 'en')
-    {
-        $text = trim($text);
-        if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
-            $text = str_replace('*', '.*', $text);
-            $text = SearchUtils::scapeTildes($text);
-            $mRegex = new \MongoRegex("/$text/i");
-            $queryBuilder->addOr($queryBuilder->expr()->field('title.'.$locale)->equals($mRegex));
-            $queryBuilder->addOr($queryBuilder->expr()->field('people.people.name')->equals($mRegex));
-        } else {
-            $queryBuilder->field('$text')->equals([
-                '$search' => TextIndexUtils::cleanTextIndex($text),
-                '$language' => TextIndexUtils::getCloseLanguage($locale),
-            ]);
-        }
     }
 }

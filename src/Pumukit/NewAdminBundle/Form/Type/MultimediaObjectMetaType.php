@@ -2,19 +2,19 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\LicenseType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
-use Pumukit\NewAdminBundle\Form\Type\Base\LicenseType;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultimediaObjectMetaType extends AbstractType
 {
@@ -139,7 +139,8 @@ class MultimediaObjectMetaType extends AbstractType
                     'attr' => ['groupclass' => 'hidden-naked', 'aria-label' => $this->translator->trans('Subseries', [], null, $this->locale)],
                     'label' => $this->translator->trans('Subseries', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,

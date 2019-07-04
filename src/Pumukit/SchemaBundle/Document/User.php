@@ -2,10 +2,10 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Model\GroupInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Pumukit\SchemaBundle\Document\User.
@@ -24,16 +24,6 @@ class User extends BaseUser
      * @MongoDB\Id(strategy="auto")
      */
     protected $id;
-
-    /**
-     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true, cascade={"persist"})
-     */
-    private $permissionProfile;
-
-    /**
-     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true, cascade={"persist"})
-     */
-    private $person;
 
     /**
      * @var string
@@ -55,6 +45,16 @@ class User extends BaseUser
      * @MongoDB\ReferenceMany(targetDocument="Group", simple=true, sort={"key":1}, strategy="setArray")
      */
     protected $groups;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="PermissionProfile", simple=true, cascade={"persist"})
+     */
+    private $permissionProfile;
+
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="Person", inversedBy="user", simple=true, cascade={"persist"})
+     */
+    private $person;
 
     /**
      * Constructor.

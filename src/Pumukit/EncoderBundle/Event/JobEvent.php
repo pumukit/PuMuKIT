@@ -2,10 +2,10 @@
 
 namespace Pumukit\EncoderBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Symfony\Component\EventDispatcher\Event;
 
 class JobEvent extends Event
 {

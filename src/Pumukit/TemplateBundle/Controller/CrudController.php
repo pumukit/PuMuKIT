@@ -2,12 +2,12 @@
 
 namespace Pumukit\TemplateBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\TemplateBundle\Document\Template as PumukitTemplate;
 use Pumukit\TemplateBundle\Form\TemplateType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class CrudController extends Controller
 {
@@ -22,10 +22,12 @@ class CrudController extends Controller
 
         $active = null;
         if ($activeName = $request->get('active')) {
-            $actives = array_filter($templates,
-                                   function ($t) use ($activeName) {
-                                       return $t->getName() == $activeName;
-                                   });
+            $actives = array_filter(
+                $templates,
+                function ($t) use ($activeName) {
+                    return $t->getName() == $activeName;
+                }
+            );
             $active = current($actives);
         }
 

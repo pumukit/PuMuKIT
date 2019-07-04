@@ -2,13 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\Person;
 
 class UserService
 {
@@ -68,38 +68,6 @@ class UserService
     }
 
     /**
-     * Add owner user to object.
-     *
-     * Add user id of the creator of the
-     * Multimedia Object or Series as property
-     *
-     * @param MultimediaObject|Series $object
-     * @param User                    $user
-     * @param bool                    $executeFlush
-     *
-     * @return MultimediaObject
-     */
-    private function addOwnerUserToObject($object, User $user, $executeFlush = true)
-    {
-        if (null !== $object) {
-            $owners = $object->getProperty('owners');
-            if (null === $owners) {
-                $owners = [];
-            }
-            if (!in_array($user->getId(), $owners)) {
-                $owners[] = $user->getId();
-                $object->setProperty('owners', $owners);
-                $this->dm->persist($object);
-            }
-            if ($executeFlush) {
-                $this->dm->flush();
-            }
-        }
-
-        return $object;
-    }
-
-    /**
      * Remove owner user from MultimediaObject.
      *
      * Remove user id of the
@@ -118,53 +86,6 @@ class UserService
         $this->removeOwnerUserFromObject($multimediaObject->getSeries(), $user, $executeFlush);
 
         return $multimediaObject;
-    }
-
-    private function removeOwnerUserFromObject($object, User $user, $executeFlush = true)
-    {
-        if (null !== $object) {
-            $owners = $object->getProperty('owners');
-            if (in_array($user->getId(), $owners)) {
-                if ($object->isCollection()) {
-                    // NOTE: Check all MultimediaObjects from the Series, even the prototype
-                    $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
-                    $multimediaObjects = $mmObjRepo->createQueryBuilder()
-                      ->field('series')->equals($object);
-                    $deleteOwnerInSeries = true;
-                    foreach ($multimediaObjects as $multimediaObject) {
-                        if (null !== $owners = $multimediaObject->getProperty('owners')) {
-                            if (in_array($user->getId(), $owners)) {
-                                $deleteOwnerInSeries = false;
-                            }
-                        }
-                    }
-                    if ($deleteOwnerInSeries) {
-                        $object = $this->removeUserFromOwnerProperty($object, $user, $executeFlush);
-                    }
-                } else {
-                    $object = $this->removeUserFromOwnerProperty($object, $user, $executeFlush);
-                }
-            }
-        }
-
-        return $object;
-    }
-
-    private function removeUserFromOwnerProperty($object, User $user, $executeFlush = true)
-    {
-        if (null !== $object) {
-            $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
-                return $ownerId !== $user->getId();
-            });
-            $object->setProperty('owners', $owners);
-
-            $this->dm->persist($object);
-            if ($executeFlush) {
-                $this->dm->flush();
-            }
-        }
-
-        return $object;
     }
 
     /**
@@ -196,9 +117,9 @@ class UserService
      * @param bool $checkOrigin
      * @param bool $execute_dispatch
      *
-     * @return User
-     *
      * @throws \Exception
+     *
+     * @return User
      */
     public function update(User $user, $executeFlush = true, $checkOrigin = true, $execute_dispatch = true)
     {
@@ -211,7 +132,7 @@ class UserService
                 throw new \Exception('The User "'.$user->getUsername().'" has no Permission Profile assigned.');
             }
             /** NOTE: User roles have:
-             - permission profile scope
+             * - permission profile scope.
              */
             $userScope = $this->getUserScope($user->getRoles());
             if ($userScope !== $permissionProfile->getScope()) {
@@ -312,7 +233,8 @@ class UserService
             ->field('permissionProfile')->references($permissionProfile)
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -320,16 +242,17 @@ class UserService
      *
      * @param PermissionProfile $permissionProfile
      *
-     * @return mixed
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
      */
     public function getUsersWithPermissionProfile(PermissionProfile $permissionProfile)
     {
         return $this->repo->createQueryBuilder()
             ->field('permissionProfile')->references($permissionProfile)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -365,9 +288,8 @@ class UserService
         if ($user->hasRole($oldScope)) {
             $user->removeRole($oldScope);
         }
-        $user = $this->addUserScope($user, $newScope);
 
-        return $user;
+        return $this->addUserScope($user, $newScope);
     }
 
     /**
@@ -415,9 +337,9 @@ class UserService
      * @param string $email
      * @param bool   $enabled
      *
-     * @return User
-     *
      * @throws \Exception
+     *
+     * @return User
      */
     public function instantiate($userName = '', $email = '', $enabled = true)
     {
@@ -574,7 +496,8 @@ class UserService
         return $this->repo->createQueryBuilder()
             ->field('groups')->in([new \MongoId($group->getId())])
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     /**
@@ -597,15 +520,15 @@ class UserService
      * Is User last relation.
      *
      * @param User        $loggedInUser
-     * @param string|null $mmId
-     * @param string|null $personId
+     * @param null|string $mmId
+     * @param null|string $personId
      * @param array       $owners
      * @param array       $addGroups
      *
-     * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     *
+     * @return bool TRUE if the user is no longer related to multimedia object, FALSE otherwise
      */
     public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = [], $addGroups = [])
     {
@@ -629,10 +552,10 @@ class UserService
      * @param User $loggedInUser
      * @param      $personId
      *
-     * @return bool TRUE if person to remove from owner is logged in, FALSE otherwise
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     *
+     * @return bool TRUE if person to remove from owner is logged in, FALSE otherwise
      */
     public function isLoggedPersonToRemoveFromOwner(User $loggedInUser, $personId)
     {
@@ -641,11 +564,14 @@ class UserService
             $userToRemove = $personToRemove->getUser();
             if (!$userToRemove) {
                 return false;
-            } elseif ($this->hasGlobalScope($userToRemove)) {
+            }
+            if ($this->hasGlobalScope($userToRemove)) {
                 return false;
-            } elseif ($userToRemove->hasRole('ROLE_SUPER_ADMIN')) {
+            }
+            if ($userToRemove->hasRole('ROLE_SUPER_ADMIN')) {
                 return false;
-            } elseif ($loggedInUser === $userToRemove) {
+            }
+            if ($loggedInUser === $userToRemove) {
                 return true;
             }
         }
@@ -659,10 +585,10 @@ class UserService
      * @param User  $loggedInUser
      * @param array $owners
      *
-     * @return bool TRUE if user is in owners array, FALSE otherwise
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     *
+     * @return bool TRUE if user is in owners array, FALSE otherwise
      */
     public function isUserInOwners(User $loggedInUser, $owners = [])
     {
@@ -674,6 +600,7 @@ class UserService
             if ($person) {
                 if ($loggedInUser === $person->getUser()) {
                     $userInOwners = true;
+
                     break;
                 }
             }
@@ -686,14 +613,14 @@ class UserService
      * User has group in common with given groups array.
      *
      * @param User        $loggedInUser
-     * @param string|null $mmId
-     * @param string|null $personId
+     * @param null|string $mmId
+     * @param null|string $personId
      * @param array       $groups
-     *
-     * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
      *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     *
+     * @return bool TRUE if user has a group in common with the given groups array, FALSE otherwise
      */
     public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = [])
     {
@@ -705,6 +632,7 @@ class UserService
                 foreach ($multimediaObject->getGroups() as $mmGroup) {
                     if (in_array($mmGroup, $userGroups)) {
                         $userInAddGroups = true;
+
                         break;
                     }
                 }
@@ -717,6 +645,7 @@ class UserService
                 if ($group) {
                     if (in_array($group, $userGroups)) {
                         $userInAddGroups = true;
+
                         break;
                     }
                 }
@@ -724,5 +653,84 @@ class UserService
         }
 
         return $userInAddGroups;
+    }
+
+    /**
+     * Add owner user to object.
+     *
+     * Add user id of the creator of the
+     * Multimedia Object or Series as property
+     *
+     * @param MultimediaObject|Series $object
+     * @param User                    $user
+     * @param bool                    $executeFlush
+     *
+     * @return MultimediaObject
+     */
+    private function addOwnerUserToObject($object, User $user, $executeFlush = true)
+    {
+        if (null !== $object) {
+            $owners = $object->getProperty('owners');
+            if (null === $owners) {
+                $owners = [];
+            }
+            if (!in_array($user->getId(), $owners)) {
+                $owners[] = $user->getId();
+                $object->setProperty('owners', $owners);
+                $this->dm->persist($object);
+            }
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+        }
+
+        return $object;
+    }
+
+    private function removeOwnerUserFromObject($object, User $user, $executeFlush = true)
+    {
+        if (null !== $object) {
+            $owners = $object->getProperty('owners');
+            if (in_array($user->getId(), $owners)) {
+                if ($object->isCollection()) {
+                    // NOTE: Check all MultimediaObjects from the Series, even the prototype
+                    $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
+                    $multimediaObjects = $mmObjRepo->createQueryBuilder()
+                        ->field('series')->equals($object);
+                    $deleteOwnerInSeries = true;
+                    foreach ($multimediaObjects as $multimediaObject) {
+                        if (null !== $owners = $multimediaObject->getProperty('owners')) {
+                            if (in_array($user->getId(), $owners)) {
+                                $deleteOwnerInSeries = false;
+                            }
+                        }
+                    }
+                    if ($deleteOwnerInSeries) {
+                        $object = $this->removeUserFromOwnerProperty($object, $user, $executeFlush);
+                    }
+                } else {
+                    $object = $this->removeUserFromOwnerProperty($object, $user, $executeFlush);
+                }
+            }
+        }
+
+        return $object;
+    }
+
+    private function removeUserFromOwnerProperty($object, User $user, $executeFlush = true)
+    {
+        if (null !== $object) {
+            $owners = array_filter($object->getProperty('owners'), function ($ownerId) use ($user) {
+                return $ownerId !== $user->getId();
+            });
+            $object->setProperty('owners', $owners);
+
+            $this->dm->persist($object);
+            if ($executeFlush) {
+                $this->dm->flush();
+            }
+        }
+
+        return $object;
     }
 }

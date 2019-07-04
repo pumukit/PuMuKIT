@@ -2,21 +2,24 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ModulesController.
  */
 class ModulesController extends Controller implements WebTVControllerInterface
 {
+    public static $menuResponse = null;
+    private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
+
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
      *
@@ -57,9 +60,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
      *
      * @Template("PumukitWebTVBundle:Modules:widget_media.html.twig")
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function highlightAction()
     {
@@ -228,7 +231,8 @@ class ModulesController extends Controller implements WebTVControllerInterface
                 ->field('display')->equals(true)
                 ->sort('title.'.$request->getLocale(), 1)
                 ->getQuery()
-                ->execute();
+                ->execute()
+            ;
         } else {
             $tag = $dm->getRepository(Tag::class)->findOneBy([
                 'cod' => $categories,
@@ -296,17 +300,14 @@ class ModulesController extends Controller implements WebTVControllerInterface
         return [];
     }
 
-    public static $menuResponse = null;
-    private $menuTemplate = 'PumukitWebTVBundle:Modules:widget_menu.html.twig';
-
     /**
      * This module represents old menu block of PuMuKIT ( vertical menu ). This design is just bootstrap panel example.
      *
      * @Template("PumukitWebTVBundle:Modules:widget_menu.html.twig")
      *
-     * @return Response|null
-     *
      * @throws \Exception
+     *
+     * @return null|Response
      */
     public function legacyMenuAction()
     {
@@ -317,35 +318,6 @@ class ModulesController extends Controller implements WebTVControllerInterface
         self::$menuResponse = $this->render($this->menuTemplate, $params);
 
         return self::$menuResponse;
-    }
-
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getLegacyMenuElements()
-    {
-        $menuService = $this->get('pumukit_web_tv.menu_service');
-        [$events, $channels, $liveEventTypeSession] = $menuService->getMenuEventsElement();
-        $selected = $this->get('request_stack')->getMasterRequest()->get('_route');
-        $homeTitle = $this->container->getParameter('menu.home_title');
-        $announcesTitle = $this->container->getParameter('menu.announces_title');
-        $searchTitle = $this->container->getParameter('menu.search_title');
-        $catalogueTitle = $this->container->getParameter('menu.mediateca_title');
-        $categoriesTitle = $this->container->getParameter('menu.categories_title');
-
-        return [
-            'events' => $events,
-            'channels' => $channels,
-            'type' => $liveEventTypeSession,
-            'menu_selected' => $selected,
-            'home_title' => $homeTitle,
-            'announces_title' => $announcesTitle,
-            'search_title' => $searchTitle,
-            'catalogue_title' => $catalogueTitle,
-            'categories_title' => $categoriesTitle,
-        ];
     }
 
     /**
@@ -375,9 +347,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_wall.html.twig")
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function wallBlockAction()
     {
@@ -399,12 +371,41 @@ class ModulesController extends Controller implements WebTVControllerInterface
     /**
      * @Template("PumukitWebTVBundle:Modules:widget_search.html.twig")
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function searchBlockAction()
     {
         return [];
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return array
+     */
+    private function getLegacyMenuElements()
+    {
+        $menuService = $this->get('pumukit_web_tv.menu_service');
+        [$events, $channels, $liveEventTypeSession] = $menuService->getMenuEventsElement();
+        $selected = $this->get('request_stack')->getMasterRequest()->get('_route');
+        $homeTitle = $this->container->getParameter('menu.home_title');
+        $announcesTitle = $this->container->getParameter('menu.announces_title');
+        $searchTitle = $this->container->getParameter('menu.search_title');
+        $catalogueTitle = $this->container->getParameter('menu.mediateca_title');
+        $categoriesTitle = $this->container->getParameter('menu.categories_title');
+
+        return [
+            'events' => $events,
+            'channels' => $channels,
+            'type' => $liveEventTypeSession,
+            'menu_selected' => $selected,
+            'home_title' => $homeTitle,
+            'announces_title' => $announcesTitle,
+            'search_title' => $searchTitle,
+            'catalogue_title' => $catalogueTitle,
+            'categories_title' => $categoriesTitle,
+        ];
     }
 }

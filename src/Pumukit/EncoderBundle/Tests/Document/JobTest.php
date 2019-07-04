@@ -2,9 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Tests\Document;
 
-use Pumukit\EncoderBundle\Document\Job;
 use PHPUnit\Framework\TestCase;
+use Pumukit\EncoderBundle\Document\Job;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class JobTest extends TestCase
 {
     public function testDefaults()

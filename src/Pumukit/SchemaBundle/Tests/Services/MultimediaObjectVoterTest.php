@@ -2,16 +2,20 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectVoterTest extends WebTestCase
 {
     private $voter;
@@ -23,10 +27,12 @@ class MultimediaObjectVoterTest extends WebTestCase
         static::bootKernel($options);
 
         $this->voter = static::$kernel->getContainer()
-          ->get('pumukitschema.multimedia_object_voter');
+            ->get('pumukitschema.multimedia_object_voter')
+        ;
 
         $this->userService = static::$kernel->getContainer()
-          ->get('pumukitschema.user');
+            ->get('pumukitschema.user')
+        ;
     }
 
     public function tearDown()

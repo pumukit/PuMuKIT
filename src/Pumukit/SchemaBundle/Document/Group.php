@@ -3,8 +3,8 @@
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\GroupInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Group.
@@ -77,6 +77,16 @@ class Group implements GroupInterface
         $this->key = $key;
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return null === $this->key ? '' : $this->key;
     }
 
     /**
@@ -267,15 +277,5 @@ class Group implements GroupInterface
     public function setRoles(array $roles)
     {
         return $this;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return null === $this->key ? '' : $this->key;
     }
 }

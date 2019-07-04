@@ -3,12 +3,12 @@
 namespace Pumukit\CasBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
@@ -69,9 +69,9 @@ class CASUserService
     /**
      * @param $userName
      *
-     * @return User
-     *
      * @throws \Exception
+     *
+     * @return User
      */
     public function createDefaultUser($userName)
     {
@@ -136,9 +136,8 @@ class CASUserService
     protected function getCASAttributes()
     {
         $this->casService->forceAuthentication();
-        $attributes = $this->casService->getAttributes();
 
-        return $attributes;
+        return $this->casService->getAttributes();
     }
 
     /**
@@ -181,9 +180,9 @@ class CASUserService
     }
 
     /**
-     * @return \Pumukit\SchemaBundle\Document\PermissionProfile
-     *
      * @throws \Exception
+     *
+     * @return \Pumukit\SchemaBundle\Document\PermissionProfile
      */
     protected function getPermissionProfile()
     {
@@ -217,9 +216,9 @@ class CASUserService
     /**
      * @param $key
      *
-     * @return Group
-     *
      * @throws \Exception
+     *
+     * @return Group
      */
     protected function getGroup($key)
     {

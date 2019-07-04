@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -64,6 +64,31 @@ class EmbeddedBroadcast
     public function __construct()
     {
         $this->groups = new ArrayCollection();
+    }
+
+    /**
+     * to String.
+     *
+     * Only in English.
+     * For other languages:
+     * use getI18nDescription
+     * in EmbeddedBroadcastService
+     */
+    public function __toString()
+    {
+        $groups = $this->getGroups();
+        $groupsDescription = '';
+        if ((self::TYPE_GROUPS === $this->getType()) && ($groups)) {
+            $groupsDescription = ': ';
+            foreach ($groups as $group) {
+                $groupsDescription .= $group->getName();
+                if ($group != $groups->last()) {
+                    $groupsDescription .= ', ';
+                }
+            }
+        }
+
+        return $this->getName().$groupsDescription;
     }
 
     /**
@@ -176,31 +201,6 @@ class EmbeddedBroadcast
     public function getGroups()
     {
         return $this->groups;
-    }
-
-    /**
-     * to String.
-     *
-     * Only in English.
-     * For other languages:
-     * use getI18nDescription
-     * in EmbeddedBroadcastService
-     */
-    public function __toString()
-    {
-        $groups = $this->getGroups();
-        $groupsDescription = '';
-        if ((self::TYPE_GROUPS === $this->getType()) && ($groups)) {
-            $groupsDescription = ': ';
-            foreach ($groups as $group) {
-                $groupsDescription .= $group->getName();
-                if ($group != $groups->last()) {
-                    $groupsDescription .= ', ';
-                }
-            }
-        }
-
-        return $this->getName().$groupsDescription;
     }
 
     /**

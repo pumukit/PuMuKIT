@@ -2,6 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\LiveBundle\Document\Live;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -9,9 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\LiveBundle\Document\Live;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 /**
  * Class LiveType.
@@ -104,7 +104,8 @@ class LiveType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Enable chat on this channel\'s page', [], null, $this->locale)],
                     'label' => $this->translator->trans('Enable chat on this channel\'s page', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

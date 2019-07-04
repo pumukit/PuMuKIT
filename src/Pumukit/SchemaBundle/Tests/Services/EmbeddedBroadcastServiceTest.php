@@ -2,16 +2,20 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EmbeddedBroadcastServiceTest extends WebTestCase
 {
     private $dm;
@@ -31,19 +35,26 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
         $this->dm = static::$kernel->getContainer()
             ->get('doctrine_mongodb')->getManager();
         $this->mmRepo = $this->dm
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->embeddedBroadcastService = static::$kernel->getContainer()
-            ->get('pumukitschema.embeddedbroadcast');
+            ->get('pumukitschema.embeddedbroadcast')
+        ;
         $this->mmsService = static::$kernel->getContainer()
-            ->get('pumukitschema.multimedia_object');
+            ->get('pumukitschema.multimedia_object')
+        ;
         $this->dispatcher = static::$kernel->getContainer()
-            ->get('pumukitschema.multimediaobject_dispatcher');
+            ->get('pumukitschema.multimediaobject_dispatcher')
+        ;
         $this->authorizationChecker = static::$kernel->getContainer()
-            ->get('security.authorization_checker');
+            ->get('security.authorization_checker')
+        ;
         $this->templating = static::$kernel->getContainer()
-            ->get('templating');
+            ->get('templating')
+        ;
         $this->router = static::$kernel->getContainer()
-            ->get('router');
+            ->get('router')
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Group::class)->remove([]);
@@ -156,19 +167,19 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
     {
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, false);
         $broadcasts = [
-                            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                            EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
-                            EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
-                            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
-                            ];
+            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+            EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
+            EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
+            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
+        ];
         $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router, true);
         $broadcasts = [
-                            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                            EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
-                            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
-                            ];
+            EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
+            EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
+            EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
+        ];
         $this->assertEquals($broadcasts, $embeddedBroadcastService->getAllTypes());
     }
 
@@ -502,18 +513,22 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $authorizationChecker->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnValue(false));
+            ->will($this->returnValue(false))
+        ;
 
         $content = 'test';
         $templating = $this->getMockBuilder('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $templating->expects($this->any())
             ->method('render')
-            ->will($this->returnValue($content));
+            ->will($this->returnValue($content))
+        ;
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
 
@@ -529,10 +544,12 @@ class EmbeddedBroadcastServiceTest extends WebTestCase
 
         $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $authorizationChecker->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnValue(true));
+            ->will($this->returnValue(true))
+        ;
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router, false);
 

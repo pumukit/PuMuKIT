@@ -2,13 +2,15 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-/*
- * @deprecated in version 2.3
- */
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Broadcast;
+// @deprecated in version 2.3
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class BroadcastTest extends TestCase
 {
     public function testSetterAndGetter()

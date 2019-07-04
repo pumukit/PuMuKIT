@@ -2,9 +2,13 @@
 
 namespace Pumukit\EncoderBundle\Tests\Executor;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Executor\RemoteHTTPExecutor;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RemoteHTTPExecutorTest extends WebTestCase
 {
     public function setUp()
@@ -25,6 +29,6 @@ class RemoteHTTPExecutorTest extends WebTestCase
 
         $executor = new RemoteHTTPExecutor();
         $out = $executor->execute('sleep 1 && echo a', $cpu);
-        $this->assertEquals("a\n", "$out");
+        $this->assertEquals("a\n", "{$out}");
     }
 }

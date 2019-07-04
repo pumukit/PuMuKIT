@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Material;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Material;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MaterialTest extends TestCase
 {
     public function testGetterAndSetter()

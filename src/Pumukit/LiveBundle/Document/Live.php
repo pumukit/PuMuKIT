@@ -18,6 +18,11 @@ class Live
     const LIVE_TYPE_WMS = 'WMS'; //Kept for backwards compatibility
 
     /**
+     * Constructor.
+     */
+    protected static $instances = [];
+
+    /**
      * @var int
      * @MongoDB\Id
      */
@@ -115,11 +120,6 @@ class Live
      * @var string
      */
     private $locale = 'en';
-
-    /**
-     * Constructor.
-     */
-    protected static $instances = [];
 
     public function __toString()
     {
@@ -389,7 +389,7 @@ class Live
      * Set name.
      *
      * @param             $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -402,7 +402,7 @@ class Live
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -442,7 +442,7 @@ class Live
      * Set description.
      *
      * @param string      $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -455,7 +455,7 @@ class Live
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -541,6 +541,7 @@ class Live
      * Set Resolution.
      *
      * @param array
+     * @param mixed $resolution
      */
     public function setResolution($resolution)
     {

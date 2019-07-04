@@ -7,6 +7,7 @@ use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\InspectionBundle\Services\InspectionServiceInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
@@ -14,7 +15,6 @@ use Pumukit\SchemaBundle\Services\TagService;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * Class WizardService.
@@ -109,9 +109,9 @@ class WizardService
      * @param       $seriesData
      * @param array $options
      *
-     * @return mixed|object|Series|null
-     *
      * @throws \Exception
+     *
+     * @return null|mixed|object|Series
      */
     public function uploadMultipleFiles($user, $files, $seriesData, $options = [])
     {
@@ -142,9 +142,9 @@ class WizardService
     /**
      * @param array $seriesData
      *
-     * @return mixed|object|Series|null
-     *
      * @throws \Exception
+     *
+     * @return null|mixed|object|Series
      */
     public function getSeries(array $seriesData = [])
     {
@@ -163,9 +163,9 @@ class WizardService
     /**
      * @param array $seriesData
      *
-     * @return mixed|Series|null
-     *
      * @throws \Exception
+     *
+     * @return null|mixed|Series
      */
     public function createSeries(array $seriesData = [])
     {
@@ -178,9 +178,8 @@ class WizardService
             }
 
             $keys = ['i18n_title', 'i18n_subtitle', 'i18n_description'];
-            $series = $this->setData($series, $seriesData, $keys);
 
-            return $series;
+            return $this->setData($series, $seriesData, $keys);
         }
 
         return null;
@@ -236,7 +235,7 @@ class WizardService
             if ($value) {
                 $upperField = $this->getUpperFieldName($key);
                 $setField = 'set'.$upperField;
-                $resource->$setField($value);
+                $resource->{$setField}($value);
             }
         }
 
@@ -281,9 +280,9 @@ class WizardService
      * @param                  $tagCode
      * @param User             $user
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function addTagToMultimediaObjectByCode(MultimediaObject $multimediaObject, $tagCode, User $user)
     {
@@ -306,9 +305,9 @@ class WizardService
      * @param $series
      * @param $user
      *
-     * @return mixed|MultimediaObject|null
-     *
      * @throws \Exception
+     *
+     * @return null|mixed|MultimediaObject
      */
     public function createMultimediaObject($mmData, $series, $user)
     {
@@ -351,7 +350,7 @@ class WizardService
 
         $command = $process->getCommandLine();
 
-        shell_exec("nohup $command 1> /dev/null 2> /dev/null & echo $!");
+        shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
     }
 
     /**

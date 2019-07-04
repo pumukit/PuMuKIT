@@ -51,15 +51,13 @@ class ListService
             return [];
         }
 
-        $objects = $this->embeddedEventSessionService->findCurrentSessions([], $limit);
-
-        return $objects;
+        return $this->embeddedEventSessionService->findCurrentSessions([], $limit);
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function getWallVideos()
     {
@@ -67,9 +65,7 @@ class ListService
             'tags.cod' => $this->wallTag,
         ];
 
-        $objects = $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy($criteria);
-
-        return $objects;
+        return $this->documentManager->getRepository(MultimediaObject::class)->findStandardBy($criteria);
     }
 
     /**
@@ -78,9 +74,9 @@ class ListService
      * @param string $locale
      * @param null   $parentTag
      *
-     * @return array
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function getMediaLibrary(array $criteria = [], $sort = 'date', $locale = 'en', $parentTag = null)
     {
@@ -104,6 +100,7 @@ class ListService
                     }
                     $result[$key][] = $serie;
                 }
+
                 break;
             case 'date':
                 $sortField = 'public_date';
@@ -174,6 +171,7 @@ class ListService
                         $result[$key][] = $serie;
                     }
                 }
+
                 break;
         }
 
@@ -187,9 +185,9 @@ class ListService
      * @param Builder   $qb
      * @param \DateTime $date
      *
-     * @return array
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function getNextElementsByQueryBuilder(Builder $qb, \DateTime $date)
     {
@@ -214,9 +212,9 @@ class ListService
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
      *
-     * @return mixed
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
      */
     private function getNextElementsByDates(Builder $qb, \DateTime $dateStart, \DateTime $dateEnd)
     {

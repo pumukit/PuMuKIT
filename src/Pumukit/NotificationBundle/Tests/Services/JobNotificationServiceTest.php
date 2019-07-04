@@ -2,12 +2,16 @@
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Track;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class JobNotificationServiceTest extends WebTestCase
 {
     private $dm;
@@ -29,7 +33,8 @@ class JobNotificationServiceTest extends WebTestCase
         $this->repo = $this->dm->getRepository(Job::class);
 
         $this->jobNotificationService = $this->container
-          ->get('pumukit_notification.listener');
+            ->get('pumukit_notification.listener')
+        ;
 
         $this->dm->getDocumentCollection(Job::class)->remove([]);
         $this->dm->flush();

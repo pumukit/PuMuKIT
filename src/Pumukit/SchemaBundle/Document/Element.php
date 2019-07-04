@@ -23,7 +23,7 @@ class Element
     /**
      * @MongoDB\OneToOne(targetDocument="Element")
      * @MongoDB\JoinColumn(name="ref_id", referencedColumnName="id")
-     **/
+     */
     //private $ref = null;
 
     /**
@@ -86,6 +86,21 @@ class Element
     public function __construct()
     {
         $this->tags = [];
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
+    /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
     }
 
     /**
@@ -320,7 +335,7 @@ class Element
      * Set description.
      *
      * @param string      $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -333,7 +348,7 @@ class Element
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -387,20 +402,5 @@ class Element
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getUrl();
     }
 }

@@ -25,7 +25,7 @@ class GroupType extends AbstractType
                 [
                     'attr' => [
                         'aria-label' => $this->translator->trans('Key', [], null, $this->locale),
-                        'pattern' => "^\w*$",
+                        'pattern' => '^\\w*$',
                         'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
                     ],
@@ -48,7 +48,8 @@ class GroupType extends AbstractType
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                     'required' => false,
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

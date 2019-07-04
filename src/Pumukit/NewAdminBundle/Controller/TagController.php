@@ -2,14 +2,14 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pumukit\NewAdminBundle\Form\Type\TagType;
+use Pumukit\SchemaBundle\Document\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\NewAdminBundle\Form\Type\TagType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_TAGS')")
@@ -34,7 +34,7 @@ class TagController extends Controller implements NewAdminControllerInterface
         }
 
         return ['root' => $root,
-                     'children' => $children, ];
+            'children' => $children, ];
     }
 
     /**
@@ -44,7 +44,7 @@ class TagController extends Controller implements NewAdminControllerInterface
     public function childrenAction(Tag $tag, Request $request)
     {
         return ['tag' => $tag,
-                     'children' => $tag->getChildren(), ];
+            'children' => $tag->getChildren(), ];
     }
 
     /**
@@ -55,9 +55,11 @@ class TagController extends Controller implements NewAdminControllerInterface
         try {
             $this->get('pumukitschema.tag')->deleteTag($tag);
         } catch (\Exception $e) {
-            $msg = sprintf('Tag with children (%d) and multimedia objects (%d)',
-                           count($tag->getChildren()),
-                           $tag->getNumberMultimediaObjects());
+            $msg = sprintf(
+                'Tag with children (%d) and multimedia objects (%d)',
+                count($tag->getChildren()),
+                $tag->getNumberMultimediaObjects()
+            );
 
             return new JsonResponse(['status' => $msg], JsonResponse::HTTP_CONFLICT);
         }
@@ -174,12 +176,11 @@ class TagController extends Controller implements NewAdminControllerInterface
             }
 
             return new JsonResponse(['status' => $message], JsonResponse::HTTP_CONFLICT);
-        } else {
-            foreach ($tags as $tag) {
-                $dm->remove($tag);
-            }
-            $dm->flush();
         }
+        foreach ($tags as $tag) {
+            $dm->remove($tag);
+        }
+        $dm->flush();
 
         $this->addFlash('success', 'delete');
 

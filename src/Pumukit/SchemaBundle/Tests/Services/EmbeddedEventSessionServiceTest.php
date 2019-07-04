@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EmbeddedEventSessionServiceTest extends WebTestCase
 {
     private $dm;
@@ -20,17 +24,21 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
 
         $this->service = static::$kernel->getContainer()
-          ->get('pumukitschema.eventsession');
+            ->get('pumukitschema.eventsession')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

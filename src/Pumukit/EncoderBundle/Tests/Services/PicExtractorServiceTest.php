@@ -2,15 +2,19 @@
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
-use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Filesystem\Filesystem;
-use Pumukit\SchemaBundle\Document\Track;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PicExtractorServiceTest extends WebTestCase
 {
     private $dm;
@@ -110,6 +114,7 @@ class PicExtractorServiceTest extends WebTestCase
         foreach ($multimediaObjects as $multimediaObject) {
             if (!$multimediaObject->isPrototype()) {
                 $selectedMultimediaObject = $multimediaObject;
+
                 break;
             }
         }

@@ -2,15 +2,15 @@
 
 namespace Pumukit\PodcastBundle\Command;
 
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\Tag;
 
 class PodcastInitTagsCommand extends ContainerAwareCommand
 {
-    private $dm = null;
+    private $dm;
     private $tagRepo;
 
     protected function configure()
@@ -19,13 +19,15 @@ class PodcastInitTagsCommand extends ContainerAwareCommand
             ->setName('podcast:init:tags')
             ->setDescription('Load podcast tag data fixture to your database')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 Command to load a controlled Podcast tags data into a database. Useful for init Podcast environment.
 
 The --force parameter has to be used to actually drop the database.
 
 EOT
-          );
+          )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -2,13 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Symfony\Component\Filesystem\Filesystem;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultimediaObjectPicService
 {
@@ -61,9 +61,9 @@ class MultimediaObjectPicService
      *
      * @param $series
      *
-     * @return mixed
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
      */
     public function getRecommendedPics($series)
     {
@@ -106,9 +106,9 @@ class MultimediaObjectPicService
      * @param UploadedFile     $picFile
      * @param bool             $isEventPoster
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function addPicFile(MultimediaObject $multimediaObject, UploadedFile $picFile, $isEventPoster = false)
     {
@@ -186,9 +186,9 @@ class MultimediaObjectPicService
      * @param MultimediaObject $multimediaObject
      * @param                  $picId
      *
-     * @return MultimediaObject
-     *
      * @throws \Exception
+     *
+     * @return MultimediaObject
      */
     public function removePicFromMultimediaObject(MultimediaObject $multimediaObject, $picId)
     {
@@ -220,6 +220,7 @@ class MultimediaObjectPicService
     private function deleteFileOnDisk($path, $multimediaObject)
     {
         $dirname = pathinfo($path, PATHINFO_DIRNAME);
+
         try {
             $deleted = unlink($path);
             if (!$deleted) {

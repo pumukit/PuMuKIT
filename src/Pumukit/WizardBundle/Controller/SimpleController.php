@@ -2,15 +2,15 @@
 
 namespace Pumukit\WizardBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Pumukit\EncoderBundle\Services\JobService;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_WIZARD_UPLOAD')")
@@ -44,9 +44,9 @@ class SimpleController extends Controller
      * @param Series  $series
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function uploadAction(Series $series, Request $request)
     {
@@ -86,8 +86,15 @@ class SimpleController extends Controller
             $multimediaObject->setDuration($duration);
 
             $jobService->createTrackFromLocalHardDrive(
-                $multimediaObject, $file, $profile, $priority, $language, $description,
-                [], $duration, JobService::ADD_JOB_NOT_CHECKS
+                $multimediaObject,
+                $file,
+                $profile,
+                $priority,
+                $language,
+                $description,
+                [],
+                $duration,
+                JobService::ADD_JOB_NOT_CHECKS
             );
         } catch (\Exception $e) {
             throw $e;
@@ -144,9 +151,9 @@ class SimpleController extends Controller
     /**
      * @param Request $request
      *
-     * @return JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse
      */
     public function embeduploadAction(Request $request)
     {
@@ -209,8 +216,15 @@ class SimpleController extends Controller
             $multimediaObject = $this->setExternalProperties($multimediaObject, $externalData);
 
             $jobService->createTrackFromLocalHardDrive(
-                $multimediaObject, $file, $profile, $priority, $language, $description,
-                [], $duration, JobService::ADD_JOB_NOT_CHECKS
+                $multimediaObject,
+                $file,
+                $profile,
+                $priority,
+                $language,
+                $description,
+                [],
+                $duration,
+                JobService::ADD_JOB_NOT_CHECKS
             );
 
             $formDispatcher = $this->get('pumukit_wizard.form_dispatcher');
@@ -289,7 +303,7 @@ class SimpleController extends Controller
      *
      * @param $externalData
      *
-     * @return object|null
+     * @return null|object
      */
     private function getSeriesByExternalData($externalData)
     {
@@ -356,7 +370,7 @@ class SimpleController extends Controller
     }
 
     /**
-     * @return mixed|null
+     * @return null|mixed
      */
     private function getDefaultMasterProfile()
     {

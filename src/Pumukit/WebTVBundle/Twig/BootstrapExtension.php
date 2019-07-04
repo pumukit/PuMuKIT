@@ -2,8 +2,8 @@
 
 namespace Pumukit\WebTVBundle\Twig;
 
-use Symfony\Component\Routing\RequestContext;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * Class BootstrapExtension.

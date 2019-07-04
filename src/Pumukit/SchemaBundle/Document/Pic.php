@@ -26,6 +26,16 @@ class Pic extends Element
     private $height;
 
     /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
+
+    /**
      * Set width.
      *
      * @param int $width
@@ -81,15 +91,5 @@ class Pic extends Element
         }
 
         return $time;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getUrl();
     }
 }

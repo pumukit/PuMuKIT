@@ -2,13 +2,17 @@
 
 namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Track;
+use Pumukit\WorkflowBundle\EventListener\PicExtractorListener;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PicExtractorListenerTest extends WebTestCase
 {
     private $dm;
@@ -35,21 +39,27 @@ class PicExtractorListenerTest extends WebTestCase
         $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $mmsPicService->expects($this->any())
             ->method('addPicFile')
-            ->will($this->returnValue('multimedia object'));
+            ->will($this->returnValue('multimedia object'))
+        ;
         $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $picExtractorService->expects($this->any())
             ->method('extractPic')
-            ->will($this->returnValue('success'));
+            ->will($this->returnValue('success'))
+        ;
         $this->picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
     }
 
@@ -139,16 +149,20 @@ class PicExtractorListenerTest extends WebTestCase
     {
         $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $mmsPicService->expects($this->any())
             ->method('addPicFile')
-            ->will($this->returnValue('multimedia object'));
+            ->will($this->returnValue('multimedia object'))
+        ;
         $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $picExtractorService->expects($this->any())
             ->method('extractPic')
-            ->will($this->returnValue('Error'));
+            ->will($this->returnValue('Error'))
+        ;
         $picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
 
         $series = $this->factoryService->createSeries();
@@ -177,16 +191,20 @@ class PicExtractorListenerTest extends WebTestCase
 
         $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $mmsPicService->expects($this->any())
             ->method('addPicFile')
-            ->will($this->returnValue(null));
+            ->will($this->returnValue(null))
+        ;
         $picExtractorService = $this->getMockBuilder('Pumukit\EncoderBundle\Services\PicExtractorService')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
         $picExtractorService->expects($this->any())
             ->method('extractPic')
-            ->will($this->returnValue('success'));
+            ->will($this->returnValue('success'))
+        ;
         $picExtractorListener = new PicExtractorListener($this->dm, $mmsPicService, $picExtractorService, $this->logger, $this->autoExtractPic);
 
         $series = $this->factoryService->createSeries();

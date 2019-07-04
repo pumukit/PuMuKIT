@@ -5,14 +5,14 @@ namespace Pumukit\NewAdminBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\EmbeddedPerson;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Utils\Search\SearchUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Role;
 
 /**
  * Class TagCatalogueService.
@@ -37,7 +37,7 @@ class TagCatalogueService
     private $baseTagCod = 'UNESCO';
     private $configuredTag;
 
-    private $allDefaultFields = null;
+    private $allDefaultFields;
 
     private $locales;
 
@@ -60,9 +60,9 @@ class TagCatalogueService
     }
 
     /**
-     * @return object|Tag
-     *
      * @throws \Exception
+     *
+     * @return object|Tag
      */
     public function getConfiguredTag()
     {
@@ -214,39 +214,6 @@ class TagCatalogueService
         $session->set('UNESCO/form', $criteria);
         $session->set('UNESCO/criteria', $newCriteria);
         $session->set('UNESCO/formbasic', $formBasic);
-
-        return;
-    }
-
-    /**
-     * @param Request          $request
-     * @param SessionInterface $session
-     */
-    private function checkAndSortCriteria(Request $request, SessionInterface $session)
-    {
-        $mappingSort = [
-            'year' => 'record_date',
-            'tracks.name' => 'tracks.originalName',
-            'embeddedBroadcast' => 'embeddedBroadcast.name',
-            'series.id' => 'series',
-        ];
-
-        $sort_type = $request->request->get('sort_type');
-        if (in_array($sort_type, ['title', 'subtitle', 'seriesTitle', 'description', 'keywords'])) {
-            $sort_type = implode('.', [$sort_type, $request->getLocale()]);
-        } elseif (array_key_exists($sort_type, $mappingSort)) {
-            $sort_type = $mappingSort[$sort_type];
-        }
-
-        $session->set('admin/unesco/element_sort', $sort_type);
-
-        if ($session->get('admin/unesco/text', false) && !$request->request->get('sort')) {
-            $sort_utype = 'score';
-        } else {
-            $sort_utype = $request->request->get('sort');
-        }
-
-        $session->set('admin/unesco/type', $sort_utype);
     }
 
     /**
@@ -270,9 +237,9 @@ class TagCatalogueService
      * @param SessionInterface $session
      * @param                  $field
      *
-     * @return string
-     *
      * @throws \Exception
+     *
+     * @return string
      */
     public function renderField(MultimediaObject $object, SessionInterface $session, $field)
     {
@@ -285,6 +252,7 @@ class TagCatalogueService
         switch ($key) {
             case 'text':
                 return $this->textRenderField($object, $field);
+
                 break;
             case 'criteria':
                 return $this->criteriaRenderField($object, $session);
@@ -295,205 +263,6 @@ class TagCatalogueService
         }
 
         return $data;
-    }
-
-    /**
-     * @param MultimediaObject $object
-     * @param                  $field
-     *
-     * @return string
-     */
-    private function textRenderField(MultimediaObject $object, $field)
-    {
-        switch ($field) {
-            case 'id':
-                $text = $object->getId();
-                break;
-            case 'series.id':
-                $text = $object->getSeries()->getId();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $text]);
-                $text = "<a href='".$route."'>".(string) $text.'</a>';
-                break;
-            case 'title':
-                $text = $object->getTitle();
-                break;
-            case 'seriesTitle':
-                $text = $object->getSeries()->getTitle();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
-                $text = "<a href='".$route."'>".$text.'</a>';
-                break;
-            case 'subtitle':
-                $text = $object->getSubtitle();
-                break;
-            case 'description':
-                $text = $object->getDescription();
-                break;
-            case 'comments':
-                $text = $object->getComments();
-                break;
-            case 'keywords':
-                $text = $object->getKeyword();
-                break;
-            case 'copyright':
-                $text = $object->getCopyright();
-                break;
-            case 'license':
-                $text = $object->getLicense();
-                break;
-            case 'record_date':
-                $text = $object->getRecordDate()->format('Y-m-d');
-                break;
-            case 'public_date':
-                $text = $object->getPublicDate()->format('Y-m-d');
-                break;
-            case 'tracks.name':
-                $text = $this->getTracksName($object);
-                break;
-            case 'numerical_id':
-                $text = $object->getNumericalID();
-                break;
-            case 'series.numerical_id':
-                $text = $object->getSeries()->getNumericalID();
-                break;
-            case 'type':
-                $type = $object->getType();
-                $text = $this->translator->trans($object->getStringType($type));
-                break;
-            case 'duration':
-                $text = $object->getDurationString();
-                break;
-            case 'numview':
-                $text = $object->getNumview();
-                break;
-            case 'year':
-                $text = $object->getRecordDate();
-                $text = $text->format('Y');
-                break;
-            case 'embeddedBroadcast':
-                $text = $this->translator->trans($object->getEmbeddedBroadcast()->getName());
-                break;
-            case 'status':
-                $text = $this->translator->trans($object->getStringStatus($object->getStatus()));
-                break;
-            case 'groups':
-                $text = implode(',', $object->getGroups()->toArray());
-                break;
-            default:
-                $text = 'No data';
-        }
-
-        return $text;
-    }
-
-    /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     *
-     * @return string
-     */
-    private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
-    {
-        if (!$session->has('UNESCO/criteria') || 0 === count($session->get('UNESCO/criteria'))) {
-            return $this->translator->trans('Without criteria');
-        }
-
-        if (count($session->get('UNESCO/criteria')) > 1) {
-            return $this->translator->trans('Multiple criteria');
-        }
-
-        $criteria = $session->get('UNESCO/criteria');
-        $key = array_keys($criteria);
-
-        $text = '';
-        if (isset($key[0])) {
-            $text = $this->getTextFromCriteria($object, $session, $key[0]);
-        }
-
-        return $text;
-    }
-
-    /**
-     * @param MultimediaObject $object
-     * @param SessionInterface $session
-     * @param                  $key
-     *
-     * @return string
-     */
-    private function getTextFromCriteria(MultimediaObject $object, SessionInterface $session, $key)
-    {
-        foreach ($this->locales as $locale) {
-            if (false !== stripos($key, '.'.$locale)) {
-                $key = str_replace('.'.$locale, '', $key);
-            }
-        }
-
-        $mappingFields = [
-            '_id' => 'id',
-            'tracks.originalName' => 'tracks.name',
-            'tracks.duration' => 'duration',
-            'embeddedBroadcasType' => 'embeddedBroadcast',
-        ];
-
-        if (array_key_exists($key, $mappingFields)) {
-            $key = $mappingFields[$key];
-        } elseif ('roles' === $key) {
-            $criteria = $session->get('UNESCO/criteria');
-            $roles = $criteria['roles'];
-            $kRoles = array_keys($roles);
-            $key = 'role.'.$kRoles[0];
-        } elseif ('series' === $key) {
-            $criteria = $session->get('UNESCO/criteria');
-            $series = $criteria['series'];
-            if (is_int($series)) {
-                $key = 'series.numerical_id';
-            } else {
-                $key = 'series.id';
-            }
-        }
-
-        $text = $this->textRenderField($object, $key);
-
-        return $text;
-    }
-
-    /**
-     * @param MultimediaObject $object
-     * @param                  $field
-     *
-     * @return string
-     */
-    private function roleRenderField(MultimediaObject $object, $field)
-    {
-        $role = explode('.', $field);
-        $roleCod = $role[1] ?? $role;
-
-        $people = $object->getPeopleByRoleCod($roleCod, true);
-
-        $text = '';
-        foreach ($people as $person) {
-            if ($person instanceof EmbeddedPerson) {
-                $text .= $person->getName()."\n";
-            }
-        }
-
-        return $text;
-    }
-
-    /**
-     * @param MultimediaObject $object
-     *
-     * @return mixed
-     */
-    private function getTracksName(MultimediaObject $object)
-    {
-        $tracks = $object->getTracks();
-        foreach ($tracks as $track) {
-            if ($track->getOriginalName()) {
-                return $track->getOriginalName();
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -714,5 +483,255 @@ class TagCatalogueService
         $this->allDefaultFields = $allFields;
 
         return $allFields;
+    }
+
+    /**
+     * @param Request          $request
+     * @param SessionInterface $session
+     */
+    private function checkAndSortCriteria(Request $request, SessionInterface $session)
+    {
+        $mappingSort = [
+            'year' => 'record_date',
+            'tracks.name' => 'tracks.originalName',
+            'embeddedBroadcast' => 'embeddedBroadcast.name',
+            'series.id' => 'series',
+        ];
+
+        $sort_type = $request->request->get('sort_type');
+        if (in_array($sort_type, ['title', 'subtitle', 'seriesTitle', 'description', 'keywords'])) {
+            $sort_type = implode('.', [$sort_type, $request->getLocale()]);
+        } elseif (array_key_exists($sort_type, $mappingSort)) {
+            $sort_type = $mappingSort[$sort_type];
+        }
+
+        $session->set('admin/unesco/element_sort', $sort_type);
+
+        if ($session->get('admin/unesco/text', false) && !$request->request->get('sort')) {
+            $sort_utype = 'score';
+        } else {
+            $sort_utype = $request->request->get('sort');
+        }
+
+        $session->set('admin/unesco/type', $sort_utype);
+    }
+
+    /**
+     * @param MultimediaObject $object
+     * @param                  $field
+     *
+     * @return string
+     */
+    private function textRenderField(MultimediaObject $object, $field)
+    {
+        switch ($field) {
+            case 'id':
+                $text = $object->getId();
+
+                break;
+            case 'series.id':
+                $text = $object->getSeries()->getId();
+                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $text]);
+                $text = "<a href='".$route."'>".(string) $text.'</a>';
+
+                break;
+            case 'title':
+                $text = $object->getTitle();
+
+                break;
+            case 'seriesTitle':
+                $text = $object->getSeries()->getTitle();
+                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
+                $text = "<a href='".$route."'>".$text.'</a>';
+
+                break;
+            case 'subtitle':
+                $text = $object->getSubtitle();
+
+                break;
+            case 'description':
+                $text = $object->getDescription();
+
+                break;
+            case 'comments':
+                $text = $object->getComments();
+
+                break;
+            case 'keywords':
+                $text = $object->getKeyword();
+
+                break;
+            case 'copyright':
+                $text = $object->getCopyright();
+
+                break;
+            case 'license':
+                $text = $object->getLicense();
+
+                break;
+            case 'record_date':
+                $text = $object->getRecordDate()->format('Y-m-d');
+
+                break;
+            case 'public_date':
+                $text = $object->getPublicDate()->format('Y-m-d');
+
+                break;
+            case 'tracks.name':
+                $text = $this->getTracksName($object);
+
+                break;
+            case 'numerical_id':
+                $text = $object->getNumericalID();
+
+                break;
+            case 'series.numerical_id':
+                $text = $object->getSeries()->getNumericalID();
+
+                break;
+            case 'type':
+                $type = $object->getType();
+                $text = $this->translator->trans($object->getStringType($type));
+
+                break;
+            case 'duration':
+                $text = $object->getDurationString();
+
+                break;
+            case 'numview':
+                $text = $object->getNumview();
+
+                break;
+            case 'year':
+                $text = $object->getRecordDate();
+                $text = $text->format('Y');
+
+                break;
+            case 'embeddedBroadcast':
+                $text = $this->translator->trans($object->getEmbeddedBroadcast()->getName());
+
+                break;
+            case 'status':
+                $text = $this->translator->trans($object->getStringStatus($object->getStatus()));
+
+                break;
+            case 'groups':
+                $text = implode(',', $object->getGroups()->toArray());
+
+                break;
+            default:
+                $text = 'No data';
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param MultimediaObject $object
+     * @param SessionInterface $session
+     *
+     * @return string
+     */
+    private function criteriaRenderField(MultimediaObject $object, SessionInterface $session)
+    {
+        if (!$session->has('UNESCO/criteria') || 0 === count($session->get('UNESCO/criteria'))) {
+            return $this->translator->trans('Without criteria');
+        }
+
+        if (count($session->get('UNESCO/criteria')) > 1) {
+            return $this->translator->trans('Multiple criteria');
+        }
+
+        $criteria = $session->get('UNESCO/criteria');
+        $key = array_keys($criteria);
+
+        $text = '';
+        if (isset($key[0])) {
+            $text = $this->getTextFromCriteria($object, $session, $key[0]);
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param MultimediaObject $object
+     * @param SessionInterface $session
+     * @param                  $key
+     *
+     * @return string
+     */
+    private function getTextFromCriteria(MultimediaObject $object, SessionInterface $session, $key)
+    {
+        foreach ($this->locales as $locale) {
+            if (false !== stripos($key, '.'.$locale)) {
+                $key = str_replace('.'.$locale, '', $key);
+            }
+        }
+
+        $mappingFields = [
+            '_id' => 'id',
+            'tracks.originalName' => 'tracks.name',
+            'tracks.duration' => 'duration',
+            'embeddedBroadcasType' => 'embeddedBroadcast',
+        ];
+
+        if (array_key_exists($key, $mappingFields)) {
+            $key = $mappingFields[$key];
+        } elseif ('roles' === $key) {
+            $criteria = $session->get('UNESCO/criteria');
+            $roles = $criteria['roles'];
+            $kRoles = array_keys($roles);
+            $key = 'role.'.$kRoles[0];
+        } elseif ('series' === $key) {
+            $criteria = $session->get('UNESCO/criteria');
+            $series = $criteria['series'];
+            if (is_int($series)) {
+                $key = 'series.numerical_id';
+            } else {
+                $key = 'series.id';
+            }
+        }
+
+        return $this->textRenderField($object, $key);
+    }
+
+    /**
+     * @param MultimediaObject $object
+     * @param                  $field
+     *
+     * @return string
+     */
+    private function roleRenderField(MultimediaObject $object, $field)
+    {
+        $role = explode('.', $field);
+        $roleCod = $role[1] ?? $role;
+
+        $people = $object->getPeopleByRoleCod($roleCod, true);
+
+        $text = '';
+        foreach ($people as $person) {
+            if ($person instanceof EmbeddedPerson) {
+                $text .= $person->getName()."\n";
+            }
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param MultimediaObject $object
+     *
+     * @return mixed
+     */
+    private function getTracksName(MultimediaObject $object)
+    {
+        $tracks = $object->getTracks();
+        foreach ($tracks as $track) {
+            if ($track->getOriginalName()) {
+                return $track->getOriginalName();
+            }
+        }
+
+        return '';
     }
 }

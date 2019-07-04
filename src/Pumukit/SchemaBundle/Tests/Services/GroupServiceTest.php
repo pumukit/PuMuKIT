@@ -2,15 +2,19 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
+use Pumukit\SchemaBundle\Services\GroupService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Pumukit\SchemaBundle\Services\GroupService;
-use Pumukit\SchemaBundle\Services\GroupEventDispatcherService;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class GroupServiceTest extends WebTestCase
 {
     private $dm;
@@ -24,12 +28,14 @@ class GroupServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $translator = static::$kernel->getContainer()->get('translator');
         $this->repo = $this->dm
-          ->getRepository(Group::class);
+            ->getRepository(Group::class)
+        ;
         $this->userRepo = $this->dm
-          ->getRepository(User::class);
+            ->getRepository(User::class)
+        ;
 
         $dispatcher = new EventDispatcher();
         $groupDispatcher = new GroupEventDispatcherService($dispatcher);

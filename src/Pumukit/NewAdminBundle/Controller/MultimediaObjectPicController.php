@@ -2,15 +2,15 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -74,6 +74,7 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
+
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
@@ -112,7 +113,8 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -131,7 +133,8 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -154,7 +157,8 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $picId = $request->get('id');
 
         $repo = $this->get('doctrine_mongodb')
-              ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         if (!$multimediaObject = $repo->findByPicId($picId)) {
             throw new NotFoundHttpException('Requested multimedia object does not exist');
@@ -221,20 +225,19 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
             $picService->addPicMem($multimediaObject, $data, $format);
 
             return new JsonResponse('done');
-        } else {
-            $track = $request->query->has('track_id') ?
+        }
+        $track = $request->query->has('track_id') ?
                    $multimediaObject->getTrackById($request->query->get('track_id')) :
                    $multimediaObject->getDisplayTrack();
 
-            if (!$track || $track->isOnlyAudio()) {
-                throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");
-            }
-
-            return [
-                'mm' => $multimediaObject,
-                'track' => $track,
-            ];
+        if (!$track || $track->isOnlyAudio()) {
+            throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");
         }
+
+        return [
+            'mm' => $multimediaObject,
+            'track' => $track,
+        ];
     }
 
     /**
@@ -254,7 +257,8 @@ class MultimediaObjectPicController extends Controller implements NewAdminContro
         $pics
             ->setMaxPerPage($limit)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page);
+            ->setCurrentPage($page)
+        ;
 
         return $pics;
     }

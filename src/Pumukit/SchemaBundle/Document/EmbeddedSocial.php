@@ -36,6 +36,14 @@ class EmbeddedSocial
     private $email;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTwitterHashtag();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -69,6 +77,7 @@ class EmbeddedSocial
      * Set twitter hashtag.
      *
      * @param string $twitter
+     * @param mixed  $twitterHashtag
      */
     public function setTwitterHashtag($twitterHashtag)
     {
@@ -103,13 +112,5 @@ class EmbeddedSocial
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTwitterHashtag();
     }
 }

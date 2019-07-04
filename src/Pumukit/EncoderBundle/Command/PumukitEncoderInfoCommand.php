@@ -2,12 +2,12 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Pumukit\EncoderBundle\Document\Job;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Pumukit\EncoderBundle\Document\Job;
 
 class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
 {
@@ -20,9 +20,11 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
                 new InputArgument('id', InputArgument::OPTIONAL, 'Job identifier to execute'),
                 new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states'),
             ])
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 EOT
-          );
+          )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -93,7 +95,7 @@ EOT
         $output->writeln('<info>JOBS:</info>');
         $table = new Table($output);
         $table->setHeaders(['Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
-                                 'Timeini', 'Timestart', 'Timeend', ]);
+            'Timeini', 'Timestart', 'Timeend', ]);
 
         foreach ($jobs as $name => $job) {
             $table->addRow([
@@ -117,11 +119,11 @@ EOT
         $jobService = $this->getContainer()->get('pumukitencoder.job');
 
         if (null === ($job = $dm->find(Job::class, $id))) {
-            throw new \RuntimeException("Not job found with id $id.");
+            throw new \RuntimeException("Not job found with id {$id}.");
         }
 
         if (null === ($job = $dm->find(Job::class, $id))) {
-            throw new \RuntimeException("Not job found with id $id.");
+            throw new \RuntimeException("Not job found with id {$id}.");
         }
 
         //$description[] = sprintf('<comment>Scope</comment>            %s', $definition->getScope());

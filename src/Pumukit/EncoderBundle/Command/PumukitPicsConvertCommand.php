@@ -2,10 +2,10 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitPicsConvertCommand extends ContainerAwareCommand
 {
@@ -45,7 +45,8 @@ class PumukitPicsConvertCommand extends ContainerAwareCommand
             ->addOption('convert_max_width', null, InputOption::VALUE_OPTIONAL, 'Set max width of the new image')
             ->addOption('convert_max_height', null, InputOption::VALUE_OPTIONAL, 'Set max height of the new image')
             ->addOption('no_replace', null, InputOption::VALUE_NONE, 'Replace original image or not')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
         
 Command to get all pics like selected filters and create new images with low size. The predefined filter is that the pics must have "path" attribute.
 
@@ -85,7 +86,8 @@ php app/console pumukit:pics:convert --path="/var/www/html/pumukit2/web/uploads/
 
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -118,9 +120,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return bool|int|null
-     *
      * @throws \Exception
+     *
+     * @return null|bool|int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

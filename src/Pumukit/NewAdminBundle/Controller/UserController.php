@@ -2,15 +2,15 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\User;
-use Pumukit\NewAdminBundle\Form\Type\UserUpdateType;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\Group;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
@@ -49,9 +49,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     *
      * @throws \Exception
+     *
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -87,9 +87,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     *
      * @throws \Exception
+     *
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -138,7 +138,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
      *
      * @param Request $request
      *
-     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -157,10 +157,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
      *
      * @param Request $request
      *
-     * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse|Response
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     *
+     * @return bool|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function batchDeleteAction(Request $request)
     {
@@ -207,11 +207,11 @@ class UserController extends AdminController implements NewAdminControllerInterf
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateGroupsAction(Request $request)
     {
@@ -273,121 +273,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
                 'userOrigin' => $user->getOrigin(),
             ]
         );
-    }
-
-    /**
-     * Modify User Groups.
-     *
-     * @param User  $user
-     * @param array $addGroups
-     * @param array $deleteGroups
-     *
-     * @throws \Doctrine\ODM\MongoDB\LockException
-     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
-     * @throws \Exception
-     */
-    private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $groupRepo = $dm->getRepository(Group::class);
-        $userService = $this->get('pumukitschema.user');
-
-        foreach ($addGroups as $addGroup) {
-            $groupsIds = explode('_', $addGroup);
-            $groupId = $groupsIds[2];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $userService->addGroup($group, $user, false);
-            }
-        }
-
-        foreach ($deleteGroups as $deleteGroup) {
-            $groupsIds = explode('_', $deleteGroup);
-            $groupId = $groupsIds[2];
-            $group = $groupRepo->find($groupId);
-            if ($group) {
-                $userService->deleteGroup($group, $user, false);
-            }
-        }
-
-        $dm->flush();
-    }
-
-    private function isAllowedToBeDeleted(User $userToDelete)
-    {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
-
-        $loggedInUser = $this->getUser();
-
-        if ($loggedInUser === $userToDelete) {
-            return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
-        }
-        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
-            return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
-        }
-
-        $numberAdminUsers = $this->getNumberAdminUsers();
-
-        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())) {
-            return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
-        }
-
-        if (null !== $person = $userToDelete->getPerson()) {
-            try {
-                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
-            } catch (\Exception $e) {
-                return new Response(
-                    "Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(), 409
-                );
-            }
-        }
-
-        if (User::ORIGIN_LOCAL !== $userToDelete->getOrigin()) {
-            if ($loggedInUser->isSuperAdmin()) {
-                return true;
-            }
-
-            return new Response("Can not delete the external user '".$userToDelete->getUsername()."'. ", 409);
-        }
-
-        return true;
-    }
-
-    private function isAllowedToBeUpdated(User $userToUpdate)
-    {
-        $numberAdminUsers = $this->getNumberAdminUsers();
-
-        if ((1 === $numberAdminUsers)) {
-            if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
-                return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
-            }
-        }
-        if (!$userToUpdate->isLocal()) {
-            return new Response(
-                "Not allowed to update this not local user '".$userToUpdate->getUsername()."'",
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
-        return true;
-    }
-
-    private function getNumberAdminUsers()
-    {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
-
-        return $repo->createQueryBuilder()->where(
-            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
-        )->count()->getQuery()->execute();
-    }
-
-    private function getUniqueAdminUser()
-    {
-        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
-
-        return $repo->createQueryBuilder()->where(
-            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
-        )->getQuery()->getSingleResult();
     }
 
     /**
@@ -458,5 +343,121 @@ class UserController extends AdminController implements NewAdminControllerInterf
         }
 
         return new JsonResponse(['ok']);
+    }
+
+    /**
+     * Modify User Groups.
+     *
+     * @param User  $user
+     * @param array $addGroups
+     * @param array $deleteGroups
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
+     * @throws \Exception
+     */
+    private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $groupRepo = $dm->getRepository(Group::class);
+        $userService = $this->get('pumukitschema.user');
+
+        foreach ($addGroups as $addGroup) {
+            $groupsIds = explode('_', $addGroup);
+            $groupId = $groupsIds[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->addGroup($group, $user, false);
+            }
+        }
+
+        foreach ($deleteGroups as $deleteGroup) {
+            $groupsIds = explode('_', $deleteGroup);
+            $groupId = $groupsIds[2];
+            $group = $groupRepo->find($groupId);
+            if ($group) {
+                $userService->deleteGroup($group, $user, false);
+            }
+        }
+
+        $dm->flush();
+    }
+
+    private function isAllowedToBeDeleted(User $userToDelete)
+    {
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+
+        $loggedInUser = $this->getUser();
+
+        if ($loggedInUser === $userToDelete) {
+            return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);
+        }
+        if (1 === $repo->createQueryBuilder()->getQuery()->execute()->count()) {
+            return new Response("Can not delete this unique user '".$userToDelete->getUsername()."'", 409);
+        }
+
+        $numberAdminUsers = $this->getNumberAdminUsers();
+
+        if ((1 === $numberAdminUsers) && ($userToDelete->isSuperAdmin())) {
+            return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
+        }
+
+        if (null !== $person = $userToDelete->getPerson()) {
+            try {
+                $this->get('pumukitschema.person')->removeUserFromPerson($userToDelete, $person, true);
+            } catch (\Exception $e) {
+                return new Response(
+                    "Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(),
+                    409
+                );
+            }
+        }
+
+        if (User::ORIGIN_LOCAL !== $userToDelete->getOrigin()) {
+            if ($loggedInUser->isSuperAdmin()) {
+                return true;
+            }
+
+            return new Response("Can not delete the external user '".$userToDelete->getUsername()."'. ", 409);
+        }
+
+        return true;
+    }
+
+    private function isAllowedToBeUpdated(User $userToUpdate)
+    {
+        $numberAdminUsers = $this->getNumberAdminUsers();
+
+        if ((1 === $numberAdminUsers)) {
+            if (($userToUpdate === $this->getUniqueAdminUser()) && (!$userToUpdate->isSuperAdmin())) {
+                return new Response("Can not update this unique admin user '".$userToUpdate->getUsername()."'", 409);
+            }
+        }
+        if (!$userToUpdate->isLocal()) {
+            return new Response(
+                "Not allowed to update this not local user '".$userToUpdate->getUsername()."'",
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return true;
+    }
+
+    private function getNumberAdminUsers()
+    {
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+
+        return $repo->createQueryBuilder()->where(
+            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
+        )->count()->getQuery()->execute();
+    }
+
+    private function getUniqueAdminUser()
+    {
+        $repo = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(User::class);
+
+        return $repo->createQueryBuilder()->where(
+            "function(){for ( var k in this.roles ) { if ( this.roles[k] == 'ROLE_SUPER_ADMIN' ) return true;}}"
+        )->getQuery()->getSingleResult();
     }
 }

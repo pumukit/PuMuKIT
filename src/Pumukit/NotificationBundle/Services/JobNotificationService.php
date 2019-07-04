@@ -3,18 +3,19 @@
 namespace Pumukit\NotificationBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Security\Permission;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class JobNotificationService
 {
+    const PERSONAL_SCOPE_ROLE_CODE = 'owner';
     protected $dm;
     protected $senderService;
     protected $jobService;
@@ -27,8 +28,6 @@ class JobNotificationService
     protected $subjectFails;
     protected $subjectSuccessTrans;
     protected $subjectFailsTrans;
-
-    const PERSONAL_SCOPE_ROLE_CODE = 'owner';
 
     public function __construct(DocumentManager $documentManager, SenderService $senderService, JobService $jobService, TranslatorInterface $translator, RouterInterface $router, $enable, $environment, $template, $subjectSuccess, $subjectFails, $subjectSuccessTrans, $subjectFailsTrans)
     {
@@ -147,9 +146,8 @@ class JobNotificationService
     protected function getSubjectEmailInParameters(Job $job, $error = false)
     {
         $message = $this->getMessage($job, $error);
-        $subject = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
 
-        return $subject;
+        return ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
     }
 
     /**
@@ -179,9 +177,7 @@ class JobNotificationService
             }
         }
 
-        $subjectEmail = ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
-
-        return $subjectEmail;
+        return ($this->senderService->getPlatformName() ? $this->senderService->getPlatformName().': ' : '').$message;
     }
 
     /**
@@ -215,7 +211,7 @@ class JobNotificationService
      * @param Job              $job
      * @param MultimediaObject $multimediaObject
      *
-     * @return string|array
+     * @return array|string
      */
     protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {

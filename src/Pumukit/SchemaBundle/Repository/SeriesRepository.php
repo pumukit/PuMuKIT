@@ -6,10 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Pumukit\SchemaBundle\Document\EmbeddedTag;
-use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * SeriesRepository.
@@ -22,7 +22,7 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series by tag id.
      *
-     * @param Tag|EmbeddedTag $tag
+     * @param EmbeddedTag|Tag $tag
      * @param array           $sort
      * @param int             $limit
      * @param int             $page
@@ -52,17 +52,15 @@ class SeriesRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
-        $qb = $this->addSortToQueryBuilder($qb, $sort);
-
-        return $qb;
+        return $this->addSortToQueryBuilder($qb, $sort);
     }
 
     /**
      * Find one series with tag.
      *
-     * @param Tag|EmbeddedTag $tag
+     * @param EmbeddedTag|Tag $tag
      *
-     * @return array|object|null
+     * @return null|array|object
      */
     public function findOneWithTag($tag)
     {
@@ -130,7 +128,7 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find series without tag.
      *
-     * @param Tag|EmbeddedTag $tag
+     * @param EmbeddedTag|Tag $tag
      * @param array           $sort
      * @param int             $limit
      * @param int             $page
@@ -151,9 +149,9 @@ class SeriesRepository extends DocumentRepository
     /**
      * Find one series without tag.
      *
-     * @param Tag|EmbeddedTag $tag
+     * @param EmbeddedTag|Tag $tag
      *
-     * @return array|object|null
+     * @return null|array|object
      */
     public function findOneWithoutTag($tag)
     {
@@ -167,6 +165,9 @@ class SeriesRepository extends DocumentRepository
      *
      * @param array tags
      * @param array $sort
+     * @param mixed $tags
+     * @param mixed $limit
+     * @param mixed $page
      *
      * @return mixed
      */
@@ -186,7 +187,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @param string $picId
      *
-     * @return array|object|null
+     * @return null|array|object
      */
     public function findByPicId($picId)
     {
@@ -283,9 +284,7 @@ class SeriesRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-
-        return $qb;
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
     /**
@@ -331,9 +330,9 @@ class SeriesRepository extends DocumentRepository
      *
      * @param SeriesType $series_type
      *
-     * @return mixed
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
      */
     public function findBySeriesType(SeriesType $series_type)
     {
@@ -395,9 +394,7 @@ class SeriesRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray())->field('series_type')->references($seriesType);
 
-        $qb = $this->addSortToQueryBuilder($qb, $sort);
-
-        return $qb;
+        return $this->addSortToQueryBuilder($qb, $sort);
     }
 
     /**
@@ -406,7 +403,7 @@ class SeriesRepository extends DocumentRepository
      * @param $propertyName
      * @param $propertyValue
      *
-     * @return array|object|null
+     * @return null|array|object
      */
     public function findOneBySeriesProperty($propertyName, $propertyValue)
     {
@@ -430,9 +427,7 @@ class SeriesRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-
-        return $qb;
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
     /**
@@ -487,9 +482,7 @@ class SeriesRepository extends DocumentRepository
 
         $qb = $this->createQueryBuilder()->field('_id')->in($referencedSeries->toArray());
 
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-
-        return $qb;
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
     /**
@@ -543,9 +536,7 @@ class SeriesRepository extends DocumentRepository
     {
         $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new \MongoRegex(sprintf('/%s/i', $title)));
 
-        $qb = $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
-
-        return $qb;
+        return $this->addSortAndLimitToQueryBuilder($qb, $sort, $limit, $page);
     }
 
     /**
@@ -582,6 +573,102 @@ class SeriesRepository extends DocumentRepository
         $query = $this->findByTitleWithLocaleQuery($title, $locale, $sort, $limit, $page);
 
         return $query->execute();
+    }
+
+    /**
+     * @param $user
+     * @param bool $onlyAdminSeries
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
+     */
+    public function findUserSeries($user, $onlyAdminSeries = false)
+    {
+        $dm = $this->getDocumentManager();
+
+        // Find user series (properties.owners)
+        $seriesCollection = $dm->getDocumentCollection(Series::class);
+
+        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
+            $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
+            $command = [['$group' => $group]];
+
+            return $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
+        }
+
+        $match = [];
+        $match['properties.owners'] = ['$in' => [$user->getId()]];
+        $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
+
+        $command = [['$match' => $match], ['$group' => $group]];
+        $aSeries = $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
+
+        // Find mmo user groups
+        $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);
+
+        $groups = [];
+        foreach ($user->getGroups() as $group) {
+            $groups[] = new \MongoId($group->getId());
+        }
+
+        $match = [];
+        $unwind = ['$unwind' => '$groups'];
+        $match['groups'] = ['$in' => $groups];
+        $group = ['_id' => ['id' => '$series', 'title' => '$seriesTitle']];
+
+        $command = [$unwind, ['$match' => $match], ['$group' => $group]];
+        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []])->toArray();
+
+        $aSeries = array_merge($aSeries, $aMMO);
+        usort($aSeries, function ($a, $b) {
+            return ($a['_id']['title'] <= $b['_id']['title']) ? -1 : 1;
+        });
+
+        return $aSeries;
+    }
+
+    /**
+     * Count number of multimedia objects by series.
+     *
+     * @deprecated Use MultimediaObjectRepository::countMmobjsBySeries
+     *
+     * @param array $seriesList A key/value hash where the key is the series id (string) and the value is the count
+     *
+     * @return mixed
+     */
+    public function countMmobjsBySeries($seriesList = [])
+    {
+        return $this->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->countMmobjsBySeries($seriesList)
+        ;
+    }
+
+    /**
+     * @param Series $series
+     *
+     * @return mixed
+     */
+    public function getMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->findWithoutPrototype($series)
+        ;
+    }
+
+    /**
+     * @param Series $series
+     *
+     * @return mixed
+     */
+    public function countMultimediaObjects(Series $series)
+    {
+        return $this->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->countWithoutPrototype($series)
+        ;
     }
 
     /**
@@ -632,101 +719,7 @@ class SeriesRepository extends DocumentRepository
     private function addSortAndLimitToQueryBuilder($qb, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->addSortToQueryBuilder($qb, $sort);
-        $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
 
-        return $qb;
-    }
-
-    /**
-     * @param $user
-     * @param bool $onlyAdminSeries
-     *
-     * @return array
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function findUserSeries($user, $onlyAdminSeries = false)
-    {
-        $dm = $this->getDocumentManager();
-
-        /* Find user series (properties.owners) */
-        $seriesCollection = $dm->getDocumentCollection(Series::class);
-
-        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
-            $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
-            $command = [['$group' => $group]];
-
-            return $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
-        }
-
-        $match = [];
-        $match['properties.owners'] = ['$in' => [$user->getId()]];
-        $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
-
-        $command = [['$match' => $match], ['$group' => $group]];
-        $aSeries = $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
-
-        /* Find mmo user groups */
-        $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);
-
-        $groups = [];
-        foreach ($user->getGroups() as $group) {
-            $groups[] = new \MongoId($group->getId());
-        }
-
-        $match = [];
-        $unwind = ['$unwind' => '$groups'];
-        $match['groups'] = ['$in' => $groups];
-        $group = ['_id' => ['id' => '$series', 'title' => '$seriesTitle']];
-
-        $command = [$unwind, ['$match' => $match], ['$group' => $group]];
-        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []])->toArray();
-
-        $aSeries = array_merge($aSeries, $aMMO);
-        usort($aSeries, function ($a, $b) {
-            return ($a['_id']['title'] <= $b['_id']['title']) ? -1 : 1;
-        });
-
-        return $aSeries;
-    }
-
-    /**
-     * Count number of multimedia objects by series.
-     *
-     * @deprecated Use MultimediaObjectRepository::countMmobjsBySeries
-     *
-     * @param array $seriesList A key/value hash where the key is the series id (string) and the value is the count
-     *
-     * @return mixed
-     */
-    public function countMmobjsBySeries($seriesList = [])
-    {
-        return $this->getDocumentManager()
-            ->getRepository(MultimediaObject::class)
-            ->countMmobjsBySeries($seriesList);
-    }
-
-    /**
-     * @param Series $series
-     *
-     * @return mixed
-     */
-    public function getMultimediaObjects(Series $series)
-    {
-        return $this->getDocumentManager()
-            ->getRepository(MultimediaObject::class)
-            ->findWithoutPrototype($series);
-    }
-
-    /**
-     * @param Series $series
-     *
-     * @return mixed
-     */
-    public function countMultimediaObjects(Series $series)
-    {
-        return $this->getDocumentManager()
-            ->getRepository(MultimediaObject::class)
-            ->countWithoutPrototype($series);
+        return $this->addLimitToQueryBuilder($qb, $limit, $page);
     }
 }

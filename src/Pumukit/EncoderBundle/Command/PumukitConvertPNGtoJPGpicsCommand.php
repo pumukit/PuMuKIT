@@ -2,11 +2,11 @@
 
 namespace Pumukit\EncoderBundle\Command;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
 {
@@ -24,7 +24,8 @@ class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
             ->setName('pumukit:regenerate:pics')
             ->setDescription('Pumukit regenerate pics png to jpg')
             ->addArgument('delete', InputArgument::OPTIONAL, 'Delete png files ( true or false')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
                 ***** Command options ***** 
                 
                 php app/console pumukit:regenerate:pics false 
@@ -36,7 +37,8 @@ class PumukitConvertPNGtoJPGpicsCommand extends ContainerAwareCommand
                 ** Use before command to delete pics
 
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -58,9 +60,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return bool|int|null
-     *
      * @throws \Exception
+     *
+     * @return null|bool|int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

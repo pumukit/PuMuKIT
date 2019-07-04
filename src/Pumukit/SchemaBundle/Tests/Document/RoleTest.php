@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Role;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Role;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RoleTest extends TestCase
 {
     public function testDefaults()

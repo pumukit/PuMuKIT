@@ -2,14 +2,18 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectServiceTest extends WebTestCase
 {
     private $dm;
@@ -25,17 +29,22 @@ class MultimediaObjectServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->tagRepo = $this->dm
-          ->getRepository(Tag::class);
+            ->getRepository(Tag::class)
+        ;
         $this->factory = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->mmsService = static::$kernel->getContainer()
-          ->get('pumukitschema.multimedia_object');
+            ->get('pumukitschema.multimedia_object')
+        ;
         $this->tagService = static::$kernel->getContainer()
-          ->get('pumukitschema.tag');
+            ->get('pumukitschema.tag')
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->getDocumentCollection(Series::class)->remove([]);
@@ -214,38 +223,6 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->mmsService->incNumView($mm);
         $this->assertEquals(1, $mm->getNumView());
-    }
-
-    private function createTags()
-    {
-        $rootTag = new Tag();
-        $rootTag->setCod('ROOT');
-        $rootTag->setTitle('ROOT');
-        $rootTag->setDisplay(false);
-        $rootTag->setMetatag(true);
-
-        $this->dm->persist($rootTag);
-        $this->dm->flush();
-
-        $pubChannelTag = new Tag();
-        $pubChannelTag->setCod('PUBLICATIONCHANNELS');
-        $pubChannelTag->setTitle('Publication Channels');
-        $pubChannelTag->setDisplay(true);
-        $pubChannelTag->setMetatag(true);
-        $pubChannelTag->setParent($rootTag);
-
-        $this->dm->persist($pubChannelTag);
-        $this->dm->flush();
-
-        $webTVTag = new Tag();
-        $webTVTag->setCod('PUCHWEBTV');
-        $webTVTag->setTitle('WebTV Publication Channel');
-        $webTVTag->setDisplay(true);
-        $webTVTag->setMetatag(false);
-        $webTVTag->setParent($pubChannelTag);
-
-        $this->dm->persist($webTVTag);
-        $this->dm->flush();
     }
 
     public function testAddGroup()
@@ -455,5 +432,37 @@ class MultimediaObjectServiceTest extends WebTestCase
 
         $this->mmsService->deleteAllFromGroup($group);
         $this->assertEquals(0, count($this->repo->findWithGroup($group)->toArray()));
+    }
+
+    private function createTags()
+    {
+        $rootTag = new Tag();
+        $rootTag->setCod('ROOT');
+        $rootTag->setTitle('ROOT');
+        $rootTag->setDisplay(false);
+        $rootTag->setMetatag(true);
+
+        $this->dm->persist($rootTag);
+        $this->dm->flush();
+
+        $pubChannelTag = new Tag();
+        $pubChannelTag->setCod('PUBLICATIONCHANNELS');
+        $pubChannelTag->setTitle('Publication Channels');
+        $pubChannelTag->setDisplay(true);
+        $pubChannelTag->setMetatag(true);
+        $pubChannelTag->setParent($rootTag);
+
+        $this->dm->persist($pubChannelTag);
+        $this->dm->flush();
+
+        $webTVTag = new Tag();
+        $webTVTag->setCod('PUCHWEBTV');
+        $webTVTag->setTitle('WebTV Publication Channel');
+        $webTVTag->setDisplay(true);
+        $webTVTag->setMetatag(false);
+        $webTVTag->setParent($pubChannelTag);
+
+        $this->dm->persist($webTVTag);
+        $this->dm->flush();
     }
 }

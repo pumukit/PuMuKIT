@@ -2,13 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
+use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType;
 
 class MultimediaObjectTemplateMetaType extends AbstractType
 {
@@ -78,7 +78,8 @@ class MultimediaObjectTemplateMetaType extends AbstractType
                     ],
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

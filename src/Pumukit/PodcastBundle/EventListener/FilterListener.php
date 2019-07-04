@@ -34,9 +34,7 @@ class FilterListener
         $isPodCastBundle = false !== strpos($req->attributes->get('_controller'), 'PodcastBundle');
         $isDefinedFilter = !isset($routeParams['filter']) || $routeParams['filter'];
 
-        $activateFilter = $isMasterRequest && $isPodCastBundle && $isDefinedFilter;
-
-        return $activateFilter;
+        return $isMasterRequest && $isPodCastBundle && $isDefinedFilter;
     }
 
     private function settingParametersFilter()

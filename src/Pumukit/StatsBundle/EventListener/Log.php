@@ -2,11 +2,11 @@
 
 namespace Pumukit\StatsBundle\EventListener;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\StatsBundle\Document\ViewsLog;
-use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 
 class Log
 {

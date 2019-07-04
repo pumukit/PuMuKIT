@@ -2,12 +2,12 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\Tag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class MediaLibraryController.
@@ -21,9 +21,9 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
      * @param Request $request
      * @param string  $sort
      *
-     * @return array
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function indexAction(Request $request, $sort)
     {

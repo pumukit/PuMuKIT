@@ -13,6 +13,7 @@ class UserAgentParserService
      * This function is used in PuMuKIT ONLY for the player opencast template (to show a warning if it's 'old'. This can be better solved using a script to check for feature support).
      *
      * @param string
+     * @param mixed $userAgent
      *
      * @return bool
      */
@@ -34,6 +35,7 @@ class UserAgentParserService
      * Only works for MSIE, Opera, Firefox, Safari and Chrome. Add more strings if needed.
      *
      * @param string
+     * @param mixed $userAgent
      *
      * @return string
      */
@@ -65,6 +67,8 @@ class UserAgentParserService
      *
      * @param string
      * @param string
+     * @param mixed $userAgent
+     * @param mixed $webExplorer
      *
      * @return string
      */

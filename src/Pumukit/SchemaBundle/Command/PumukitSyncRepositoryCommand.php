@@ -2,14 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\Broadcast;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Broadcast;
-use Pumukit\SchemaBundle\Document\Role;
 
 class PumukitSyncRepositoryCommand extends ContainerAwareCommand
 {
@@ -21,13 +21,15 @@ class PumukitSyncRepositoryCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:sync:repository')
             ->setDescription('Sync denormalized repository')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 Denormalize the database is necessary to increase the performance of the app. This command syncs denormalized repository, for instance:
 
  * Sync number of multimedia object in tags (tags.number_multimedia_objects).
 
 EOT
-          );
+          )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -92,9 +94,11 @@ EOT
         switch ($type) {
         case 'pending':
             $statuses = [Job::STATUS_PAUSED, Job::STATUS_WAITING];
+
             break;
         case 'executing':
             $statuses = [Job::STATUS_EXECUTING];
+
             break;
         default:
             throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
@@ -104,12 +108,13 @@ EOT
         $mmObjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $pendingJobsId = $jobRepo->createQueryBuilder()
-                       ->hydrate(false)
-                       ->select('_id')
-                       ->field('status')->in($statuses)
-                       ->getQuery()
-                       ->execute()
-                       ->toArray();
+            ->hydrate(false)
+            ->select('_id')
+            ->field('status')->in($statuses)
+            ->getQuery()
+            ->execute()
+            ->toArray()
+        ;
 
         $qb = $mmObjRepo->createStandardQueryBuilder()
             ->field('properties.'.$type.'_jobs')->exists(true);
@@ -119,7 +124,8 @@ EOT
         }
 
         $mms = $qb->getQuery()
-             ->execute();
+            ->execute()
+        ;
 
         foreach ($mms as $multimediaObject) {
             $output->writeln('Fixing '.$type.'_jobs of multimedia object '.$multimediaObject->getId());

@@ -29,9 +29,9 @@ class PaginationService
      * @param string  $page
      * @param int     $limit
      *
-     * @return mixed|Pagerfanta
-     *
      * @throws \Exception
+     *
+     * @return mixed|Pagerfanta
      */
     public function createDoctrineODMMongoDBAdapter(Builder $objects, $page, $limit = 0)
     {
@@ -43,9 +43,8 @@ class PaginationService
             }
         }
         $adapter = new DoctrineODMMongoDBAdapter($objects);
-        $pager = $this->generatePager($adapter, $page, $limit);
 
-        return $pager;
+        return $this->generatePager($adapter, $page, $limit);
     }
 
     /**
@@ -58,9 +57,8 @@ class PaginationService
     public function createArrayAdapter(array $objects, $page, $limit = 0)
     {
         $adapter = new ArrayAdapter($objects);
-        $pager = $this->generatePager($adapter, $page, $limit);
 
-        return $pager;
+        return $this->generatePager($adapter, $page, $limit);
     }
 
     /**

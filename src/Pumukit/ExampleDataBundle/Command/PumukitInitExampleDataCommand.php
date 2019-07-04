@@ -2,18 +2,18 @@
 
 namespace Pumukit\ExampleDataBundle\Command;
 
+use Pumukit\EncoderBundle\Document\Job;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\SchemaBundle\Document\Tag;
 
 class PumukitInitExampleDataCommand extends ContainerAwareCommand
 {
@@ -33,7 +33,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             ->addOption('noviewlogs', null, InputOption::VALUE_NONE, 'Does not add viewlog dummy views')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Add examples without deleting')
             ->addOption('reusezip', null, InputOption::VALUE_NONE, 'Set this parameter to not delete zip file with videos to reuse in the future')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 
             Command to load a data set of data into a database. Useful for init a demo Pumukit environment.
 
@@ -44,7 +45,8 @@ class PumukitInitExampleDataCommand extends ContainerAwareCommand
             The --reusezip parameter has to be used to undelete files.
 
 EOT
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -75,7 +77,7 @@ EOT
 
         if (!$input->getOption('reusezip')) {
             if (!$this->download(self::PATH_VIDEO, $newFile, $output)) {
-                echo "Failed to copy $newFile...\n";
+                echo "Failed to copy {$newFile}...\n";
             }
 
             $zip = new ZipArchive();
@@ -453,14 +455,14 @@ EOT
 
         $allMmobjs = $mmobjRepo->findStandardBy([]);
         $useragents = ['Mozilla/5.0 PuMuKIT/2.2 (UserAgent Example Data.) Gecko/20100101 Firefox/40.1',
-                             'Mozilla/5.0 PuMuKIT/2.2 (This is not the user agent you are looking for...) Gecko/20100101 Firefox/40.1',
-                             'Mozilla/5.0 PuMuKIT/2.2 (The answer to everything: 42) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
-                             'Mozilla/5.0 PuMuKIT/2.2 (Internet Explorer didn\'t survive) (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko',
+            'Mozilla/5.0 PuMuKIT/2.2 (This is not the user agent you are looking for...) Gecko/20100101 Firefox/40.1',
+            'Mozilla/5.0 PuMuKIT/2.2 (The answer to everything: 42) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+            'Mozilla/5.0 PuMuKIT/2.2 (Internet Explorer didn\'t survive) (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko',
         ];
         $clientips = ['123.213.231.132',
-                            '0.0.0.1',
-                            '12.12.12.21',
-                            '74.125.224.72',
+            '0.0.0.1',
+            '12.12.12.21',
+            '74.125.224.72',
         ];
 
         $initTime = (new \DateTime('2 years ago'))->getTimestamp();
@@ -480,12 +482,12 @@ EOT
             for ($i = rand(1, 1000); $i > 0; --$i) {
                 $randTimestamp = rand($initTime, $endTime);
                 $logs[] = ['date' => new \MongoDate($randTimestamp),
-                                'url' => 'http://localhost:8080/video/'.$mmobj->getId(),
-                                'ip' => $clientip,
-                                'userAgent' => $useragent,
-                                'referer' => 'http://localhost:8080/series/'.$mmobj->getSeries()->getId(),
-                                'multimediaObject' => new \MongoId($mmobj->getId()),
-                                'series' => new \MongoId($mmobj->getSeries()->getId()), ];
+                    'url' => 'http://localhost:8080/video/'.$mmobj->getId(),
+                    'ip' => $clientip,
+                    'userAgent' => $useragent,
+                    'referer' => 'http://localhost:8080/series/'.$mmobj->getSeries()->getId(),
+                    'multimediaObject' => new \MongoId($mmobj->getId()),
+                    'series' => new \MongoId($mmobj->getSeries()->getId()), ];
                 $mmobj->incNumview();
                 $this->dm->persist($mmobj);
             }
@@ -535,8 +537,8 @@ EOT
         $exist = $this->seriesRepo->findOneBySeriesProperty('dataexample', $seriesTitle);
         if (null !== $exist) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

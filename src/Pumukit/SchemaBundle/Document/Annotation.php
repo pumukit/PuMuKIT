@@ -89,6 +89,19 @@ class Annotation
      */
     private $is_private;
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+
     /**
      * Get id.
      *
@@ -337,18 +350,5 @@ class Annotation
     public function getIsPrivate()
     {
         return $this->is_private;
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getValue();
     }
 }

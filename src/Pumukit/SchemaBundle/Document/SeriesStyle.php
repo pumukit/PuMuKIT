@@ -33,6 +33,16 @@ class SeriesStyle
     private $text;
 
     /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Get id.
      *
      * @return string $id
@@ -72,15 +82,5 @@ class SeriesStyle
     public function setText($text)
     {
         $this->text = $text;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

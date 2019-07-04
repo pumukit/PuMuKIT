@@ -2,13 +2,13 @@
 
 namespace Pumukit\JWPlayerBundle\Controller;
 
+use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\HttpFoundation\Request;
-use Pumukit\BasePlayerBundle\Controller\BasePlaylistController;
 
 class PlaylistController extends BasePlaylistController
 {

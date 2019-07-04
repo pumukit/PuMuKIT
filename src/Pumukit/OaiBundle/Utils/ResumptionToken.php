@@ -46,7 +46,7 @@ class ResumptionToken
     /**
      * Get the from.
      *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getFrom()
     {
@@ -56,7 +56,7 @@ class ResumptionToken
     /**
      * Get the until.
      *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getUntil()
     {
@@ -66,7 +66,7 @@ class ResumptionToken
     /**
      * Get the metadata prefix.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getMetadataPrefix()
     {
@@ -76,7 +76,7 @@ class ResumptionToken
     /**
      * Get the set.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getSet()
     {
@@ -123,6 +123,7 @@ class ResumptionToken
      * Factory method to create a new ResumptionToken from a token.
      *
      * @param token string
+     * @param mixed $token
      *
      * @return ResumptionToken
      */

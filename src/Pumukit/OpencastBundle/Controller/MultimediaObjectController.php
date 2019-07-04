@@ -2,14 +2,14 @@
 
 namespace Pumukit\OpencastBundle\Controller;
 
+use Pumukit\OpencastBundle\Form\Type\MultimediaObjectType;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\OpencastBundle\Form\Type\MultimediaObjectType;
 
 /**
  * @Route("/admin/opencast/mm")

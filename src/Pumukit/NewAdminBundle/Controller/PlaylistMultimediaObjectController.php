@@ -2,16 +2,16 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
 use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PlaylistMultimediaObjectController extends Controller
 {
@@ -42,6 +42,7 @@ class PlaylistMultimediaObjectController extends Controller
         foreach ($mms as $mm) {
             if ($mm->getId() == $this->get('session')->get('admin/playlistmms/id')) {
                 $update_session = false;
+
                 break;
             }
         }
@@ -121,30 +122,6 @@ class PlaylistMultimediaObjectController extends Controller
         ];
     }
 
-    protected function getPlaylistMmobjs(Series $series, $request)
-    {
-        $mmsList = $series->getPlaylist()->getMultimediaObjects();
-        $adapter = new DoctrineCollectionAdapter($mmsList);
-        $pagerfanta = new Pagerfanta($adapter);
-
-        $session = $this->get('session');
-        if ($request->get('page', null)) {
-            $session->set('admin/playlistmms/page', $request->get('page', 1));
-        }
-
-        if ($request->get('paginate', null)) {
-            $session->set('admin/playlistmms/paginate', $request->get('paginate', 10));
-        }
-
-        $page = $session->get('admin/playlistmms/page', 1);
-        $maxPerPage = $session->get('admin/playlistmms/paginate', 10);
-
-        $pagerfanta->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
-        $pagerfanta->setCurrentPage($page);
-
-        return $pagerfanta;
-    }
-
     /**
      * Returns a modal window where to add mmobjs to a playlist.
      *
@@ -186,7 +163,8 @@ class PlaylistMultimediaObjectController extends Controller
         $mmobjs = new Pagerfanta($adapter);
         $mmobjs
             ->setMaxPerPage($limit)
-            ->setNormalizeOutOfRangePages(true);
+            ->setNormalizeOutOfRangePages(true)
+        ;
 
         $mmobjs->setCurrentPage($page);
 
@@ -316,26 +294,12 @@ class PlaylistMultimediaObjectController extends Controller
         $mmobjId = $request->query->get('mm_id');
         $mm = $mmobjRepo->find($mmobjId);
         if (!$mm) {
-            throw new \Exception("The id: $mmobjId , does not belong to any Multimedia Object");
+            throw new \Exception("The id: {$mmobjId} , does not belong to any Multimedia Object");
         }
 
         $playlistEmbed->addMultimediaObject($mm);
         $dm->persist($playlistEmbed);
         $dm->flush();
-    }
-
-    /**
-     * Moves the mmobj in $initPos to $endPos.
-     */
-    protected function moveAction(Series $playlist, $initPos, $endPos)
-    {
-        $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
-        $dm->persist($playlist);
-        $dm->flush();
-
-        return $actionResponse;
     }
 
     public function upAction(Series $playlist, Request $request)
@@ -372,41 +336,6 @@ class PlaylistMultimediaObjectController extends Controller
         return $this->moveAction($playlist, $initPos, $lastPos);
     }
 
-    //Workaround function to check if the VideoEditorBundle is installed.
-    protected function checkHasEditor()
-    {
-        $router = $this->get('router');
-        $routes = $router->getRouteCollection()->all();
-        $activeEditor = array_key_exists('pumukit_videoeditor_index', $routes);
-
-        return $activeEditor;
-    }
-
-    //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
-    protected function enableFilter()
-    {
-        $dm = $this->get('doctrine_mongodb.odm.document_manager');
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
-            return;
-        }
-        $dm->getFilterCollection()->disable('backoffice');
-        $filter = $dm->getFilterCollection()->enable('personal');
-        $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
-        $people = [];
-        if ((null !== $person) && (null !== ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
-            $people['$elemMatch'] = [];
-            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
-            $people['$elemMatch']['cod'] = $roleCode;
-        }
-        $groups = [];
-        $groups['$in'] = $user->getGroupsIds();
-        $filter->setParameter('people', $people);
-        $filter->setParameter('groups', $groups);
-        $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
-        $filter->setParameter('display_track_tag', 'display');
-    }
-
     /**
      * Show modal to add one or more mmobjs to a playlist.
      *
@@ -415,15 +344,18 @@ class PlaylistMultimediaObjectController extends Controller
     public function addModalAction(Request $request)
     {
         $repoSeries = $this->getDoctrine()
-                    ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
         $repoMms = $this->getDoctrine()
-                 ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         $series = $repoSeries->createQueryBuilder()
-                ->field('type')->equals(Series::TYPE_PLAYLIST)
-                ->sort('public_date', -1)
-                ->getQuery()
-                ->execute();
+            ->field('type')->equals(Series::TYPE_PLAYLIST)
+            ->sort('public_date', -1)
+            ->getQuery()
+            ->execute()
+        ;
 
         $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
 
@@ -473,6 +405,81 @@ class PlaylistMultimediaObjectController extends Controller
         return new JsonResponse([]);
     }
 
+    protected function getPlaylistMmobjs(Series $series, $request)
+    {
+        $mmsList = $series->getPlaylist()->getMultimediaObjects();
+        $adapter = new DoctrineCollectionAdapter($mmsList);
+        $pagerfanta = new Pagerfanta($adapter);
+
+        $session = $this->get('session');
+        if ($request->get('page', null)) {
+            $session->set('admin/playlistmms/page', $request->get('page', 1));
+        }
+
+        if ($request->get('paginate', null)) {
+            $session->set('admin/playlistmms/paginate', $request->get('paginate', 10));
+        }
+
+        $page = $session->get('admin/playlistmms/page', 1);
+        $maxPerPage = $session->get('admin/playlistmms/paginate', 10);
+
+        $pagerfanta->setMaxPerPage($maxPerPage)->setNormalizeOutOfRangePages(true);
+        $pagerfanta->setCurrentPage($page);
+
+        return $pagerfanta;
+    }
+
+    /**
+     * Moves the mmobj in $initPos to $endPos.
+     *
+     * @param mixed $initPos
+     * @param mixed $endPos
+     */
+    protected function moveAction(Series $playlist, $initPos, $endPos)
+    {
+        $actionResponse = $this->redirect($this->generateUrl('pumukitnewadmin_playlistmms_index', ['id' => $playlist->getId()]));
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $playlist->getPlaylist()->moveMultimediaObject($initPos, $endPos);
+        $dm->persist($playlist);
+        $dm->flush();
+
+        return $actionResponse;
+    }
+
+    //Workaround function to check if the VideoEditorBundle is installed.
+    protected function checkHasEditor()
+    {
+        $router = $this->get('router');
+        $routes = $router->getRouteCollection()->all();
+
+        return array_key_exists('pumukit_videoeditor_index', $routes);
+    }
+
+    //Disables the standard backoffice filter and enables the 'personal' filter. (Check own videos or public videos)
+    protected function enableFilter()
+    {
+        $dm = $this->get('doctrine_mongodb.odm.document_manager');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+            return;
+        }
+        $dm->getFilterCollection()->disable('backoffice');
+        $filter = $dm->getFilterCollection()->enable('personal');
+        $person = $this->get('pumukitschema.person')->getPersonFromLoggedInUser($user);
+        $people = [];
+        if ((null !== $person) && (null !== ($roleCode = $this->get('pumukitschema.person')->getPersonalScopeRoleCode()))) {
+            $people['$elemMatch'] = [];
+            $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
+            $people['$elemMatch']['cod'] = $roleCode;
+        }
+        $groups = [];
+        $groups['$in'] = $user->getGroupsIds();
+        $filter->setParameter('people', $people);
+        $filter->setParameter('groups', $groups);
+        $filter->setParameter('status', MultimediaObject::STATUS_PUBLISHED);
+        $filter->setParameter('display_track_tag', 'display');
+    }
+
     /**
      * @param Request $request
      * @param string  $idsKey
@@ -485,10 +492,11 @@ class PlaylistMultimediaObjectController extends Controller
             $ids = $request->request->get($idsKey);
             if ('string' === gettype($ids)) {
                 return json_decode($ids, true);
-            } else {
-                return $ids;
             }
+
+            return $ids;
         }
+
         throw $this->createNotFoundException();
     }
 }

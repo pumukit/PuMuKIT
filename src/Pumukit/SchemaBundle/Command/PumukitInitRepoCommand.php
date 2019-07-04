@@ -2,20 +2,20 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class PumukitInitRepoCommand extends ContainerAwareCommand
 {
-    private $dm = null;
-    private $tagsRepo = null;
+    private $dm;
+    private $tagsRepo;
     private $pmk2_allLocales;
 
     private $tagsPath = '../Resources/data/tags/';
@@ -33,14 +33,16 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
             ->addArgument('repo', InputArgument::REQUIRED, 'Select the repo to init: tag, role, permissionprofile, all')
             ->addArgument('file', InputArgument::OPTIONAL, 'Input CSV path')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter to execute this action')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 
 Command to load a controlled set of data into a database. Useful for init Pumukit environment.
 
 The --force parameter has to be used to actually drop the database.
 
 EOT
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -67,24 +69,28 @@ EOT
                 if (-1 === $errorExecuting) {
                     return -1;
                 }
+
                 break;
             case 'tag':
                 $errorExecuting = $this->executeTags($input, $output);
                 if (-1 === $errorExecuting) {
                     return -1;
                 }
+
                 break;
             case 'role':
                 $errorExecuting = $this->executeRoles($input, $output);
                 if (-1 === $errorExecuting) {
                     return -1;
                 }
+
                 break;
             case 'permissionprofile':
                 $errorExecuting = $this->executePermissionProfiles($input, $output);
                 if (-1 === $errorExecuting) {
                     return -1;
                 }
+
                 break;
             }
         } elseif ('tag' == $repoName) {
@@ -202,7 +208,7 @@ EOT
 
     protected function createFromFile($file_route, $root, OutputInterface $output, $repoName, $verbose = false)
     {
-        /* NECCESSARY CHECKS*/
+        // NECCESSARY CHECKS
         $csvTagHeaders = false;
         if (!file_exists($file_route)) {
             $output->writeln('<error>'.$repoName.': Error stating '.$file_route.": File doesn't exist</error>");
@@ -232,7 +238,7 @@ EOT
                 return -1;
             }
         }
-        /* END CHECKS */
+        // END CHECKS
 
         $fileExtension = pathinfo($file_route, PATHINFO_EXTENSION);
         $ending = substr($fileExtension, -1);
@@ -276,6 +282,7 @@ EOT
                         if (!isset($parent)) {
                             $parent = $root;
                         }
+
                         try {
                             $tag = $this->createTagFromCsvArray($csvTagsArray, $parent);
                             $importedTags[$tag->getCod()] = $tag;
@@ -283,17 +290,21 @@ EOT
                             if ($verbose) {
                                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
                             }
+
                             continue;
                         }
                         $output->writeln('<info>Tag persisted - new id: '.$tag->getId().' cod: '.$tag->getCod().'</info>');
+
                         break;
                     case 'role':
                         $role = $this->createRoleFromCsvArray($currentRow);
                         $output->writeln('Role persisted - new id: '.$role->getId().' code: '.$role->getCod());
+
                         break;
                     case 'permissionprofile':
                         $permissionProfile = $this->createPermissionProfileFromCsvArray($currentRow);
                         $output->writeln('PermissionProfile persisted - new id: '.$permissionProfile->getId().' name: '.$permissionProfile->getName());
+
                         break;
                     }
                 } catch (\Exception $e) {
@@ -301,7 +312,7 @@ EOT
                 }
             } else {
                 $output->writeln($repoName.': Last valid row = ...');
-                $output->writeln("Error: line $row has $number elements");
+                $output->writeln("Error: line {$row} has {$number} elements");
             }
 
             if ($verbose && 0 == $row % 100) {
@@ -351,6 +362,8 @@ EOT
 
     /**
      * Create Role from CSV array.
+     *
+     * @param mixed $csv_array
      */
     private function createRoleFromCsvArray($csv_array)
     {
@@ -385,6 +398,8 @@ EOT
 
     /**
      * Create PermissionProfile from CSV array.
+     *
+     * @param mixed $csv_array
      */
     private function createPermissionProfileFromCsvArray($csv_array)
     {
@@ -401,10 +416,13 @@ EOT
         foreach (array_filter(preg_split('/[,\s]+/', $csv_array[5])) as $permission) {
             if ('none' === $permission) {
                 break;
-            } elseif ('all' === $permission) {
+            }
+            if ('all' === $permission) {
                 $permissionProfile = $this->addAllPermissions($permissionProfile);
+
                 break;
-            } elseif (array_key_exists($permission, $this->allPermissions)) {
+            }
+            if (array_key_exists($permission, $this->allPermissions)) {
                 $permissionProfile->addPermission($permission);
             }
         }

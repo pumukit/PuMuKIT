@@ -2,10 +2,14 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TagServiceTest extends WebTestCase
 {
     private $dm;
@@ -20,18 +24,22 @@ class TagServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->tagRepo = $this->dm
-          ->getRepository(Tag::class);
+            ->getRepository(Tag::class)
+        ;
         $this->mmobjRepo = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Tag::class)
-          ->remove([]);
+            ->remove([])
+        ;
     }
 
     public function tearDown()

@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\UserEvent;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_NAME = 'EMTPY_NAME';
@@ -23,7 +27,8 @@ class UserEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb.odm.document_manager');
+            ->get('doctrine_mongodb.odm.document_manager')
+        ;
         $this->dispatcher = new EventDispatcher();
 
         $this->dm->getDocumentCollection(User::class)->remove([]);

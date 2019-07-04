@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -90,6 +90,14 @@ class Broadcast
     }
 
     /**
+     * to String.
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -147,6 +155,8 @@ class Broadcast
 
     /**
      * Set number_multimedia_objects.
+     *
+     * @param mixed $count
      */
     public function setNumberMultimediaObjects($count)
     {
@@ -216,7 +226,8 @@ class Broadcast
     /**
      * Set default_sel.
      *
-     * @param bool $defatul_sel
+     * @param bool  $defatul_sel
+     * @param mixed $default_sel
      */
     public function setDefaultSel($default_sel)
     {
@@ -237,7 +248,7 @@ class Broadcast
      * Set description.
      *
      * @param string      $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -250,7 +261,7 @@ class Broadcast
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -317,14 +328,6 @@ class Broadcast
         $aux->id = null;
 
         return $aux;
-    }
-
-    /**
-     * to String.
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 
     /**

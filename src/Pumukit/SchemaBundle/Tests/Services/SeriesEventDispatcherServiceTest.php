@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Event\SeriesEvent;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SeriesEventDispatcherServiceTest extends WebTestCase
 {
     const EMPTY_TITLE = 'EMPTY_TITLE';
@@ -23,7 +27,8 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb.odm.document_manager');
+            ->get('doctrine_mongodb.odm.document_manager')
+        ;
         $this->dispatcher = new EventDispatcher();
 
         $this->dm->getDocumentCollection(Series::class)->remove([]);

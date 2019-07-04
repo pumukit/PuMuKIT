@@ -4,15 +4,15 @@ namespace Pumukit\CoreBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Component\Console\Input\InputOption;
-use UnexpectedValueException;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\ProcessBuilder;
+use UnexpectedValueException;
 
 /**
  * Class PumukitRefactorFileSystemCommand.
@@ -41,7 +41,7 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
             ->addOption('id', null, InputOption::VALUE_NONE, 'Filter by id')
             ->addOption('force', null, InputOption::VALUE_NONE, 'Use this to execute command')
             ->setHelp(
-            <<<'EOT'
+                <<<'EOT'
 
                 Command to refactor path of pics and materials on pumukit. The command will change element path from old versions
                 to the new element path on pumukit new versions.
@@ -72,7 +72,8 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
                     php app/console pumukit:files:refactor:path --pics --materials --force
 
 EOT
-        );
+        )
+        ;
     }
 
     /**
@@ -97,9 +98,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int|void|null
-     *
      * @throws \Exception
+     *
+     * @return null|int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -120,6 +121,7 @@ EOT
 
         if ($this->materials) {
             $output->writeln('Trying to refactor materials paths ...');
+
             try {
                 $this->refactorMaterialsPath($output, $this->dm);
             } catch (\Exception $exception) {
@@ -166,9 +168,9 @@ EOT
      * @param DocumentManager $documentManager
      * @param string          $type
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function repairMongoDB(DocumentManager $documentManager, $type)
     {
@@ -240,9 +242,9 @@ EOT
                     $elem->setPath($path);
                     $haveChanges = true;
                 } elseif (!$checkFile) {
-                    $message = "$type (".$elem->getId().') - URL <comment>('.$elem->getUrl().'</comment>) doesnt exists on filesystem.';
+                    $message = "{$type} (".$elem->getId().') - URL <comment>('.$elem->getUrl().'</comment>) doesnt exists on filesystem.';
                 } else {
-                    $message = "<info>$type (".$elem->getId().') - URL ('.$elem->getUrl().') </info>';
+                    $message = "<info>{$type} (".$elem->getId().') - URL ('.$elem->getUrl().') </info>';
                 }
                 $this->showMessage($this->output, $message);
             }
@@ -277,6 +279,7 @@ EOT
 
                     if (!$seriesID) {
                         $this->showMessage($output, "<error>There aren't series ID for multimediaObject ".$multimediaObjectId.'</error>');
+
                         continue;
                     }
 
@@ -291,6 +294,7 @@ EOT
                             $this->moveElement($pic['path'], $newPath);
                         } catch (\Exception $exception) {
                             $this->showMessage($output, '<warning> Pic ('.$pic['id'].') not exists '.$pic['path']);
+
                             continue;
                         }
                     }
@@ -299,6 +303,7 @@ EOT
                         $this->updateMultimediaObjectPic($documentManager, $multimediaObjectId, $pic['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
                         $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the pic '.$pic['path']);
+
                         continue;
                     }
 
@@ -336,6 +341,7 @@ EOT
 
                     if (!$seriesID) {
                         $this->showMessage($output, "<error>There aren't series ID for multimediaObject ".$multimediaObjectId.'</error>');
+
                         continue;
                     }
 
@@ -350,6 +356,7 @@ EOT
                             $this->moveElement($material['path'], $newPath);
                         } catch (\Exception $exception) {
                             $this->showMessage($output, '<warning> Material ('.$material['id'].') not exists '.$material['path']);
+
                             continue;
                         }
                     }
@@ -358,6 +365,7 @@ EOT
                         $this->updateMultimediaObjectMaterial($documentManager, $multimediaObjectId, $material['path'], $newPath, $newUrl);
                     } catch (\Exception $exception) {
                         $this->showMessage($output, 'Cant update mmobj '.$multimediaObjectId.' with the new path of the material '.$material['path']);
+
                         continue;
                     }
 
@@ -380,14 +388,12 @@ EOT
      */
     private function findPicsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
+        return $documentManager->getRepository(MultimediaObject::class)->findBy(
             [
                 'pics.url' => new \MongoRegex('/uploads/pic/'),
                 'pics.path' => ['$exists' => false],
             ]
         );
-
-        return $multimediaObjects;
     }
 
     /**
@@ -399,22 +405,20 @@ EOT
      */
     private function findMaterialsWithoutPaths(DocumentManager $documentManager)
     {
-        $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
+        return $documentManager->getRepository(MultimediaObject::class)->findBy(
             [
                 'materials.url' => new \MongoRegex('/uploads/material/'),
                 'materials.path' => ['$exists' => false],
             ]
         );
-
-        return $multimediaObjects;
     }
 
     /**
      * @param DocumentManager $documentManager
      *
-     * @return \Doctrine\MongoDB\Iterator
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return \Doctrine\MongoDB\Iterator
      */
     private function findWrongPathPics(DocumentManager $documentManager)
     {
@@ -438,17 +442,16 @@ EOT
         ];
 
         array_push($pipeline, $group);
-        $pics = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        return $pics;
+        return $collection->aggregate($pipeline, ['cursor' => []]);
     }
 
     /**
      * @param DocumentManager $documentManager
      *
-     * @return \Doctrine\MongoDB\Iterator
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return \Doctrine\MongoDB\Iterator
      */
     private function findWrongPathMaterials(DocumentManager $documentManager)
     {
@@ -473,9 +476,8 @@ EOT
         ];
 
         array_push($pipeline, $group);
-        $materials = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        return $materials;
+        return $collection->aggregate($pipeline, ['cursor' => []]);
     }
 
     /**
@@ -533,6 +535,7 @@ EOT
 
         $builder->setTimeout(3600);
         $process = $builder->getProcess();
+
         try {
             $process->mustRun();
             if (!$process->isSuccessful()) {
@@ -600,7 +603,7 @@ EOT
     /**
      * @param OutputInterface $output
      * @param bool            $haveChanges
-     * @param string|null     $oldDirName
+     * @param null|string     $oldDirName
      *
      * @return bool
      */

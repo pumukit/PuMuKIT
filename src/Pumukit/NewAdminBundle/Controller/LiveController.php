@@ -2,12 +2,12 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\LiveBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_LIVE_CHANNELS')")
@@ -38,12 +38,14 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             return new JsonResponse(['liveId' => $resource->getId()]);
         }
 
-        return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
+        return $this->render(
+            'PumukitNewAdminBundle:Live:create.html.twig',
             [
                 'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -71,16 +73,20 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
             [
                 'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
-            ]);
+            ]
+        );
     }
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param mixed $criteria
      */
     public function getResources(Request $request, $criteria)
     {
@@ -103,7 +109,8 @@ class LiveController extends AdminController implements NewAdminControllerInterf
 
         $resources
             ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
-            ->setNormalizeOutOfRangePages(true);
+            ->setNormalizeOutOfRangePages(true)
+        ;
 
         if ($newLiveId && (($resources->getNbResults() / $resources->getMaxPerPage()) > $page)) {
             $page = $resources->getNbPages();
@@ -174,6 +181,11 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
     }
 
+    public function createNew()
+    {
+        return new Live();
+    }
+
     private function checkEmptyChannels($ids)
     {
         $emptyChannels = true;
@@ -185,15 +197,11 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             if ($liveEvents) {
                 $emptyChannels = false;
                 $channelId = $id;
+
                 break;
             }
         }
 
         return ['emptyChannels' => $emptyChannels, 'channelId' => $channelId];
-    }
-
-    public function createNew()
-    {
-        return new Live();
     }
 }

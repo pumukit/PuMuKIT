@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Link;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Component\EventDispatcher\Event;
 
 class LinkEvent extends Event
 {

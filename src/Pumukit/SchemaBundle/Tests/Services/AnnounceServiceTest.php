@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AnnounceServiceTest extends WebTestCase
 {
     private $dm;
@@ -23,29 +27,39 @@ class AnnounceServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->seriesRepo = $this->dm
-          ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
         $this->mmobjRepo = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         $this->announceService = static::$kernel->getContainer()
-          ->get('pumukitschema.announce');
+            ->get('pumukitschema.announce')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->tagService = static::$kernel->getContainer()
-          ->get('pumukitschema.tag');
+            ->get('pumukitschema.tag')
+        ;
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Role::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Tag::class)
-          ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

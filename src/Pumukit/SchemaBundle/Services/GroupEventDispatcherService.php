@@ -2,11 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
+use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Event\GroupEvent;
+use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Pumukit\SchemaBundle\Event\SchemaEvents;
-use Pumukit\SchemaBundle\Event\GroupEvent;
-use Pumukit\SchemaBundle\Document\Group;
 
 class GroupEventDispatcherService
 {

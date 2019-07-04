@@ -2,9 +2,13 @@
 
 namespace Pumukit\WizardBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\WizardBundle\Services\LicenseService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LicenseServiceTest extends WebTestCase
 {
     private $translator;

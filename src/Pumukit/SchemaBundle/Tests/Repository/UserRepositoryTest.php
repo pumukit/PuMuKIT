@@ -2,12 +2,16 @@
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Person;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserRepositoryTest extends WebTestCase
 {
     private $dm;
@@ -27,13 +31,17 @@ class UserRepositoryTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(Person::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(User::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Group::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->flush();
     }
 

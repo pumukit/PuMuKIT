@@ -2,14 +2,14 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 
 /**
  * Class MultimediaObjectController.
@@ -23,9 +23,9 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
      * @param MultimediaObject $multimediaObject
      * @param Request          $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \MongoException
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -85,9 +85,9 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
      * @param MultimediaObject $multimediaObject
      * @param Request          $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse|Response
-     *
      * @throws \MongoException
+     *
+     * @return array|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function magicIndexAction(MultimediaObject $multimediaObject, Request $request)
     {
@@ -96,7 +96,8 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
             if ($mmobjService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
                 return $this->redirect($this->generateUrl('pumukit_webtv_multimediaobject_index', ['id' => $multimediaObject->getId()]));
             }
-        } elseif ((MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
+        } elseif ((
+            MultimediaObject::STATUS_PUBLISHED != $multimediaObject->getStatus()
                 && MultimediaObject::STATUS_HIDDEN != $multimediaObject->getStatus()
             )
             || !$multimediaObject->containsTagWithCod('PUCHWEBTV')) {
@@ -170,7 +171,8 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
 
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         $limit = $this->container->getParameter('limit_objs_player_series');
 
@@ -215,7 +217,8 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
     {
         $mmobjRepo = $this
             ->get('doctrine_mongodb.odm.document_manager')
-            ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $relatedMms = $mmobjRepo->findRelatedMultimediaObjects($multimediaObject);
 
         return ['multimediaObjects' => $relatedMms];
@@ -228,9 +231,9 @@ class MultimediaObjectController extends Controller implements WebTVControllerIn
      * @param MultimediaObject $multimediaObject
      * @param Request          $request
      *
-     * @return array
-     *
      * @throws \MongoException
+     *
+     * @return array
      */
     public function multimediaInfoAction(MultimediaObject $multimediaObject, Request $request)
     {

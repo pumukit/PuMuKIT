@@ -3,11 +3,11 @@
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 
 class MultimediaObjectService
 {
@@ -28,6 +28,8 @@ class MultimediaObjectService
      * Returns true if the $mm is published. ( Keep updated with SchemaFilter->getCriteria() ).
      *
      * @param MultimediaObject
+     * @param mixed $mm
+     * @param mixed $pubChannelCod
      *
      * @return bool
      */
@@ -44,6 +46,8 @@ class MultimediaObjectService
      *
      * @param MultimediaObject
      * @param Publication channel code
+     * @param mixed $mm
+     * @param mixed $pubChannelCod
      *
      * @return bool
      */
@@ -59,6 +63,7 @@ class MultimediaObjectService
      * Returns true if the $mm has a playable resource. ( Keep updated with SchemaFilter->getCriteria() ).
      *
      * @param MultimediaObject
+     * @param mixed $mm
      *
      * @return bool
      */
@@ -74,6 +79,8 @@ class MultimediaObjectService
      *
      * @param MultimediaObject
      * @param string
+     * @param mixed $mm
+     * @param mixed $pubChannelCod
      *
      * @return bool
      */
@@ -86,6 +93,7 @@ class MultimediaObjectService
      * Resets the magic url for a given multimedia object. Returns the secret id.
      *
      * @param MultimediaObject
+     * @param mixed $mm
      *
      * @return string
      */

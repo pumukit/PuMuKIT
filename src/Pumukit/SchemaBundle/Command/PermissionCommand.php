@@ -2,12 +2,12 @@
 
 namespace Pumukit\SchemaBundle\Command;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class PermissionCommand extends ContainerAwareCommand
 {
@@ -24,13 +24,15 @@ class PermissionCommand extends ContainerAwareCommand
                 new InputArgument('permission', InputArgument::REQUIRED, 'The permission'),
                 new InputOption('delete', null, InputOption::VALUE_NONE, 'User to delete a permission of a profile, add by default'),
             ])
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>pumukit:permission:update</info> command adds/deletes a permission from a permission profile.
 
   <info>php app/console pumukit:permission:update admin ROLE_CUSTOM</info>
   <info>php app/console pumukit:permission:update --delete auto-ingest ROLE_CUSTOM</info>
 EOT
-            );
+            )
+        ;
     }
 
     /**

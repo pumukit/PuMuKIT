@@ -2,11 +2,15 @@
 
 namespace Pumukit\InspectionBundle\Tests\Services;
 
+use PHPUnit\Framework\TestCase;
 use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\Track;
-use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class InspectionFfprobeServiceTest extends TestCase
 {
     private $resources_dir;

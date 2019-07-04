@@ -25,24 +25,25 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
 
         $rootNode
-          ->children()
+            ->children()
             ->scalarNode('server')
-              ->isRequired()
-              ->info('LDAP Server DNS address')
+            ->isRequired()
+            ->info('LDAP Server DNS address')
             ->end()
             ->scalarNode('bind_rdn')
-              ->defaultNull()
-              ->info('LDAP Server DN Search Engine. If not specified, anonymous bind is attempted.')
+            ->defaultNull()
+            ->info('LDAP Server DN Search Engine. If not specified, anonymous bind is attempted.')
             ->end()
             ->scalarNode('bind_password')
-              ->defaultNull()
-              ->info('LDAP Server password. If not specified, anonymous bind is attempted.')
+            ->defaultNull()
+            ->info('LDAP Server password. If not specified, anonymous bind is attempted.')
             ->end()
             ->scalarNode('base_dn')
-              ->isRequired()
-              ->info('LDAP Server DN User')
+            ->isRequired()
+            ->info('LDAP Server DN User')
             ->end()
-          ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

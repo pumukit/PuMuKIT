@@ -2,9 +2,13 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\Link;
 use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Link;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LinkTest extends TestCase
 {
     public function testGetterAndSetter()

@@ -2,19 +2,19 @@
 
 namespace Pumukit\CasBundle\Handler;
 
+use Pumukit\CasBundle\Services\CASService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-use Pumukit\CasBundle\Services\CASService;
 
 /**
  * Class LogoutSuccessHandler.
  */
 class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
+    protected $casService;
     private $options;
     private $router;
-    protected $casService;
 
     /**
      * LogoutSuccessHandler constructor.
@@ -40,7 +40,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
         $url = $this->router->generate('pumukit_webtv_index_index', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->casService->logoutWithRedirectService($url);
 
-        /* Call CAS API to do authentication */
+        // Call CAS API to do authentication
         /*
         \phpCAS::client($this->options['cas_protocol'], $this->options['cas_server'], $this->options['cas_port'], $this->options['cas_path'], false);
         if (!isset($this->options['cas_logout']) || empty($this->options['cas_logout'])) {

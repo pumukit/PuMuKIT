@@ -4,12 +4,12 @@ namespace Pumukit\WorkflowBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\EncoderBundle\Services\ProfileService;
-use Pumukit\EncoderBundle\Event\JobEvent;
-use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 
 class JobGeneratorListener
 {
@@ -78,9 +78,9 @@ class JobGeneratorListener
      * @param MultimediaObject $multimediaObject
      * @param                  $pubChannelCod
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
@@ -88,9 +88,12 @@ class JobGeneratorListener
         $default_profiles = $this->profileService->getDefaultProfiles();
 
         if ($this->containsTrackWithProfileWithTargetTag($multimediaObject, $pubChannelCod)) {
-            $this->logger->info(sprintf("JobGeneratorListener can't create a new job for multimedia object %s,".
+            $this->logger->info(sprintf(
+                "JobGeneratorListener can't create a new job for multimedia object %s,".
                                         'because it already contains a track with a profile with this target (%s)',
-                                        $multimediaObject->getId(), $pubChannelCod));
+                $multimediaObject->getId(),
+                $pubChannelCod
+            ));
 
             return $jobs;
         }
@@ -100,9 +103,13 @@ class JobGeneratorListener
 
             $track = $multimediaObject->getTrackWithTag('profile:'.$targetProfile);
             if ($track) {
-                $this->logger->info(sprintf("JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
+                $this->logger->info(sprintf(
+                    "JobGeneratorListener doesn't create a new job (%s) for multimedia object %s ".
                                             'because it already contains a track created with this profile',
-                                            $targetProfile, $multimediaObject->getId()));
+                    $targetProfile,
+                    $multimediaObject->getId()
+                ));
+
                 continue;
             }
 
@@ -124,9 +131,14 @@ class JobGeneratorListener
                     $profileAspectRatio = $profile['resolution_hor'] / $profile['resolution_ver'];
                     $multimediaObjectAspectRatio = $multimediaObject->getTrackWithTag('master')->getAspectRatio();
                     if ((1.5 > $profileAspectRatio) !== (1.5 > $multimediaObjectAspectRatio)) {
-                        $this->logger->info(sprintf("JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
+                        $this->logger->info(sprintf(
+                            "JobGeneratorListener can't create a new job (%s) for multimedia object %s using standard target, ".
                                                     'because a video profile aspect ratio(%f) is diferent to video aspect ratio (%f)',
-                                                    $targetProfile, $multimediaObject->getId(), $profileAspectRatio, $multimediaObjectAspectRatio));
+                            $targetProfile,
+                            $multimediaObject->getId(),
+                            $profileAspectRatio,
+                            $multimediaObjectAspectRatio
+                        ));
 
                         continue;
                     }
@@ -156,6 +168,8 @@ class JobGeneratorListener
     /**
      * Process the target string (See test)
      * "TAGA* TAGB, TAGC*, TAGD" => array('standard' => array('TAGB', 'TAGD'), 'force' => array('TAGA', 'TAGC')).
+     *
+     * @param mixed $targets
      *
      * @return array
      */

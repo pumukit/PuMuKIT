@@ -2,10 +2,10 @@
 
 namespace Pumukit\OpencastBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class OpencastStopWorkflowCommand extends ContainerAwareCommand
 {
@@ -15,13 +15,15 @@ class OpencastStopWorkflowCommand extends ContainerAwareCommand
             ->setName('pumukit:opencast:workflow:stop')
             ->setDescription('Stop given workflow or all finished workflows')
             ->addOption('mediaPackageId', null, InputOption::VALUE_REQUIRED, 'Set this parameter to stop workflow with given mediaPackageId')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 Command to stop workflows in Opencast Server.
 
 Given mediaPackageId, will stop that workflow, all finished otherwise.
 
 EOT
-                      );
+                      )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -52,45 +54,44 @@ EOT
             }
 
             return 1;
-        } else {
-            if ($mediaPackageId = $input->getOption('mediaPackageId')) {
-                $opencastClientService->removeEvent($mediaPackageId);
-                $output->writeln('<info>Removed event with id'.$mediaPackageId.'</info>');
-
-                return 1;
-            }
-            $statistics = $opencastClientService->getWorkflowStatistics();
-            $total = 0;
-            if (isset($statistics['statistics']['total'])) {
-                $total = $statistics['statistics']['total'];
-            }
-
-            if (0 == $total) {
-                return null;
-            }
-            $workflowName = 'retract';
-            $decode = $opencastClientService->getCountedWorkflowInstances('', $total, $workflowName);
-            if (!isset($decode['workflows']['workflow'])) {
-                $output->writeln('<error>Error on getCountedWorkflowInstances</error>');
-                $logger->error('['.__CLASS__.']('.__FUNCTION__.') Error on getCountedWorkflowInstances');
-
-                return 0;
-            }
-
-            // Bugfix: When there is only one mediapackage, worflows => workflow is NOT an array. So we make it into one.
-            if (isset($decode['workflows']['workflow']['mediapackage'])) {
-                $decode['workflows']['workflow'] = [$decode['workflows']['workflow']];
-            }
-
-            foreach ($decode['workflows']['workflow'] as $workflow) {
-                if (!isset($workflow['mediapackage']['id'])) {
-                    //Error?
-                    continue;
-                }
-                $opencastClientService->removeEvent($workflow['mediapackage']['id']);
-            }
+        }
+        if ($mediaPackageId = $input->getOption('mediaPackageId')) {
+            $opencastClientService->removeEvent($mediaPackageId);
+            $output->writeln('<info>Removed event with id'.$mediaPackageId.'</info>');
 
             return 1;
         }
+        $statistics = $opencastClientService->getWorkflowStatistics();
+        $total = 0;
+        if (isset($statistics['statistics']['total'])) {
+            $total = $statistics['statistics']['total'];
+        }
+
+        if (0 == $total) {
+            return null;
+        }
+        $workflowName = 'retract';
+        $decode = $opencastClientService->getCountedWorkflowInstances('', $total, $workflowName);
+        if (!isset($decode['workflows']['workflow'])) {
+            $output->writeln('<error>Error on getCountedWorkflowInstances</error>');
+            $logger->error('['.__CLASS__.']('.__FUNCTION__.') Error on getCountedWorkflowInstances');
+
+            return 0;
+        }
+
+        // Bugfix: When there is only one mediapackage, worflows => workflow is NOT an array. So we make it into one.
+        if (isset($decode['workflows']['workflow']['mediapackage'])) {
+            $decode['workflows']['workflow'] = [$decode['workflows']['workflow']];
+        }
+
+        foreach ($decode['workflows']['workflow'] as $workflow) {
+            if (!isset($workflow['mediapackage']['id'])) {
+                //Error?
+                continue;
+            }
+            $opencastClientService->removeEvent($workflow['mediapackage']['id']);
+        }
+
+        return 1;
     }
 }

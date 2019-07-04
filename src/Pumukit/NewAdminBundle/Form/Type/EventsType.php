@@ -122,7 +122,8 @@ class EventsType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Enable Chat', [], null, $this->locale)],
                     'label' => $this->translator->trans('Enable Chat', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

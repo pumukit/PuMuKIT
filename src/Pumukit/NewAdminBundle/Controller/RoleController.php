@@ -2,13 +2,13 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\NewAdminBundle\Form\Type\RoleType;
 use Pumukit\SchemaBundle\Document\Role;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_ROLES')")
@@ -42,15 +42,14 @@ class RoleController extends SortableAdminController implements NewAdminControll
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
-            } else {
-                $errors = $this->get('validator')->validate($role);
-                $textStatus = '';
-                foreach ($errors as $error) {
-                    $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
-                }
-
-                return new Response($textStatus, 409);
             }
+            $errors = $this->get('validator')->validate($role);
+            $textStatus = '';
+            foreach ($errors as $error) {
+                $textStatus .= $error->getPropertyPath().' value '.$error->getInvalidValue().': '.$error->getMessage().'. ';
+            }
+
+            return new Response($textStatus, 409);
         }
 
         return [
@@ -61,6 +60,8 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param mixed $criteria
      */
     public function getResources(Request $request, $criteria)
     {
@@ -82,7 +83,8 @@ class RoleController extends SortableAdminController implements NewAdminControll
         $resources
             ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($session_namespace.'/page', 1));
+            ->setCurrentPage($session->get($session_namespace.'/page', 1))
+        ;
 
         return $resources;
     }

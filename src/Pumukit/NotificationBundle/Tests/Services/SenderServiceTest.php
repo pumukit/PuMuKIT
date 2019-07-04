@@ -2,9 +2,13 @@
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SenderServiceTest extends WebTestCase
 {
     private $dm;

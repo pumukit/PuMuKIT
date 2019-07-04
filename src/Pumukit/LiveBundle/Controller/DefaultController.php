@@ -2,16 +2,16 @@
 
 namespace Pumukit\LiveBundle\Controller;
 
-use Pumukit\WebTVBundle\Form\Type\ContactType;
+use Pumukit\LiveBundle\Document\Live;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\WebTVBundle\Form\Type\ContactType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Pumukit\LiveBundle\Document\Live;
 
 class DefaultController extends Controller
 {
@@ -43,28 +43,6 @@ class DefaultController extends Controller
     public function iframeAction(Live $live, Request $request)
     {
         return $this->doLive($live, $request, true);
-    }
-
-    protected function doLive(Live $live, Request $request, $iframe = true)
-    {
-        if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
-            return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', [
-                'live' => $live,
-                'invalid_password' => (bool) ($request->get('broadcast_password')),
-            ]);
-        }
-        $userAgent = $request->headers->get('user-agent');
-        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
-        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
-        $isIE = $mobileDetectorService->version('IE');
-        $versionIE = $isIE ? (float) $isIE : 11.0;
-
-        return [
-            'live' => $live,
-            'mobile_device' => $mobileDevice,
-            'isIE' => $isIE,
-            'versionIE' => $versionIE,
-        ];
     }
 
     /**
@@ -110,9 +88,9 @@ class DefaultController extends Controller
         } elseif (count($multimediaObjects) > 1) {
             if (!$series->isHide()) {
                 return $this->redirectToRoute('pumukit_webtv_series_index', ['id' => $series->getId()]);
-            } else {
-                return $this->iframeEventAction($multimediaObject, $request, false);
             }
+
+            return $this->iframeEventAction($multimediaObject, $request, false);
         }
 
         return $this->iframeEventAction($multimediaObject, $request, false);
@@ -170,6 +148,7 @@ class DefaultController extends Controller
         foreach ($nowSessions as $session) {
             $firstNowSessionEnds = ($session['data'][0]['session']['start']->sec + $session['data'][0]['session']['duration']) * 1000;
             $firstNowSessionRemainingDuration = $firstNowSessionEnds - ($now->getTimeStamp() * 1000);
+
             break;
         }
 
@@ -179,9 +158,12 @@ class DefaultController extends Controller
         foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession() as $session) {
             if ($session->getStart() < $date && $session->getEnds() > $date) {
                 $firstNextSession = $session->getStart()->getTimestamp() * 1000;
+
                 break;
-            } elseif ($session->getStart() > $date) {
+            }
+            if ($session->getStart() > $date) {
                 $firstNextSession = $session->getStart()->getTimestamp() * 1000;
+
                 break;
             }
         }
@@ -226,23 +208,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param $seriesId
-     *
-     * @return mixed
-     */
-    private function getMultimediaObjects($seriesId)
-    {
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $qb = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
-            ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
-            ->field('tags.cod')->equals('PUCHWEBTV')
-            ->field('series')->equals(new \MongoId($seriesId));
-        $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
-
-        return $qb;
-    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -262,12 +227,6 @@ class DefaultController extends Controller
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live', ['id' => $live->getId()]);
 
         return $this->doLive($live, $request, false);
-    }
-
-    protected function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
-    {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->addList($title, $routeName, $routeParameters);
     }
 
     /**
@@ -316,7 +275,8 @@ class DefaultController extends Controller
             $bodyMail = sprintf(" * URL: %s\n * ".$translator->trans('Email').": %s\n * ".$translator->trans('Name').": %s\n * ".$translator->trans('Content').": %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
             $pumukitInfo = $this->container->getParameter('pumukit.info');
-            $subject = sprintf('%s - %s: %s',
+            $subject = sprintf(
+                '%s - %s: %s',
                 $pumukitInfo['title'],
                 $translator->trans('New contact from live event'),
                 $multimediaObject->getEmbeddedEvent()->getName()
@@ -334,12 +294,57 @@ class DefaultController extends Controller
                 'success' => true,
                 'message' => $translator->trans('email send'),
             ]);
-        } else {
-            return new JsonResponse([
-                'success' => false,
-                'message' => $translator->trans('please verify form data'),
+        }
+
+        return new JsonResponse([
+            'success' => false,
+            'message' => $translator->trans('please verify form data'),
+        ]);
+    }
+
+    protected function doLive(Live $live, Request $request, $iframe = true)
+    {
+        if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
+            return $this->render($iframe ? 'PumukitLiveBundle:Default:iframepassword.html.twig' : 'PumukitLiveBundle:Default:indexpassword.html.twig', [
+                'live' => $live,
+                'invalid_password' => (bool) ($request->get('broadcast_password')),
             ]);
         }
+        $userAgent = $request->headers->get('user-agent');
+        $mobileDetectorService = $this->get('mobile_detect.mobile_detector');
+        $mobileDevice = ($mobileDetectorService->isMobile($userAgent) || $mobileDetectorService->isTablet($userAgent));
+        $isIE = $mobileDetectorService->version('IE');
+        $versionIE = $isIE ? (float) $isIE : 11.0;
+
+        return [
+            'live' => $live,
+            'mobile_device' => $mobileDevice,
+            'isIE' => $isIE,
+            'versionIE' => $versionIE,
+        ];
+    }
+
+    protected function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
+    {
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs->addList($title, $routeName, $routeParameters);
+    }
+
+    /**
+     * @param $seriesId
+     *
+     * @return mixed
+     */
+    private function getMultimediaObjects($seriesId)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $qb = $dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()
+            ->field('status')->equals(MultimediaObject::STATUS_PUBLISHED)
+            ->field('tags.cod')->equals('PUCHWEBTV')
+            ->field('series')->equals(new \MongoId($seriesId));
+        $qb->field('tracks')->elemMatch($qb->expr()->field('tags')->equals('display')->field('hide')->equals(false));
+
+        return $qb;
     }
 
     /**
@@ -383,8 +388,6 @@ class DefaultController extends Controller
         curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
 
-        $response = curl_exec($verify);
-
-        return $response;
+        return curl_exec($verify);
     }
 }

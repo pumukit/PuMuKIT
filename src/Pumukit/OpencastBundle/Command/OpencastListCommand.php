@@ -3,10 +3,10 @@
 namespace Pumukit\OpencastBundle\Command;
 
 use Pumukit\OpencastBundle\Services\ClientService;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * Class OpencastListCommand.
@@ -25,14 +25,16 @@ class OpencastListCommand extends ContainerAwareCommand
         $this
             ->setName('pumukit:opencast:list')
             ->setDescription('List imported or not mediapackages on PuMuKIT')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
             
             Show not imported mediaPackages on PuMuKIT
             
             Example:
             php app/console pumukit:opencast:list
 EOT
-            );
+            )
+        ;
     }
 
     /**
@@ -49,9 +51,9 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int|void|null
-     *
      * @throws \Exception
+     *
+     * @return null|int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

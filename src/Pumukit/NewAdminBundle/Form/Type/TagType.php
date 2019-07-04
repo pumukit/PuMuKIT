@@ -2,15 +2,15 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class TagType extends AbstractType
 {
@@ -51,7 +51,7 @@ class TagType extends AbstractType
                 [
                     'attr' => [
                         'aria-label' => $this->translator->trans('Cod', [], null, $this->locale),
-                        'pattern' => "^\w*$",
+                        'pattern' => '^\\w*$',
                         'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
                     ],
@@ -79,7 +79,8 @@ class TagType extends AbstractType
                     ],
                     'label' => $this->translator->trans('Description', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,

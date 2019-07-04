@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use FOS\UserBundle\Util\PasswordUpdaterInterface;
 use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Util\PasswordUpdaterInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 

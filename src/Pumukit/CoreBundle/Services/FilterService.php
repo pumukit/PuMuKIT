@@ -144,7 +144,7 @@ class FilterService
 
     /**
      * @param BsonFilter $filter
-     * @param User|null  $user
+     * @param null|User  $user
      *
      * @throws \MongoException
      */
@@ -206,7 +206,7 @@ class FilterService
     }
 
     /**
-     * @return User|null
+     * @return null|User
      */
     public function checkUserActivateFilter()
     {
@@ -223,23 +223,6 @@ class FilterService
     }
 
     /**
-     * Get logged in user.
-     *
-     * @return User|null
-     */
-    private function getLoggedInUser()
-    {
-        if (null !== $token = $this->securityContext->getToken()) {
-            $user = $token->getUser();
-            if ($user instanceof User) {
-                return $user;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Get people mongo query.
      *
      * Match the MultimediaObjects
@@ -248,11 +231,11 @@ class FilterService
      * Query in MongoDB:
      * {"people":{"$elemMatch":{"people._id":{"$id":"___MongoID_of_Person___"},"cod":"___Role_cod___"}}}
      *
-     * @param Person|null $person
-     *
-     * @return array
+     * @param null|Person $person
      *
      * @throws \MongoException
+     *
+     * @return array
      */
     public function getPeopleMongoQuery(Person $person = null)
     {
@@ -286,5 +269,22 @@ class FilterService
         $groups['$in'] = $user->getGroupsIds();
 
         return $groups;
+    }
+
+    /**
+     * Get logged in user.
+     *
+     * @return null|User
+     */
+    private function getLoggedInUser()
+    {
+        if (null !== $token = $this->securityContext->getToken()) {
+            $user = $token->getUser();
+            if ($user instanceof User) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 }

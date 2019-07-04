@@ -2,9 +2,13 @@
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
-use Pumukit\BasePlayerBundle\Services\IntroService;
 use PHPUnit\Framework\TestCase;
+use Pumukit\BasePlayerBundle\Services\IntroService;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class IntroServiceTest extends TestCase
 {
     public static $testIntro = 'https://videos.net/video.mp4';

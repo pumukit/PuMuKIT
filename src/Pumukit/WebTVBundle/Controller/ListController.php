@@ -2,17 +2,17 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Pagerfanta\Pagerfanta;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -28,9 +28,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param Tag     $tag
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function multimediaObjectsByTagAction(Tag $tag, Request $request)
     {
@@ -78,9 +78,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param Tag     $tag
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function seriesByTagAction(Tag $tag, Request $request)
     {
@@ -120,9 +120,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param User    $user
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function multimediaObjectsByUserAction(User $user, Request $request)
     {
@@ -161,9 +161,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param User    $user
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function seriesByUserAction(User $user, Request $request)
     {
@@ -200,9 +200,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param User    $user
      * @param Request $request
      *
-     * @return Response
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return Response
      */
     public function userObjectsPagerAction(Request $request, User $user)
     {
@@ -211,7 +211,7 @@ class ListController extends Controller implements WebTVControllerInterface
         $type = $request->get('type');
 
         $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
-        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
+        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
 
         if (!$date) {
             throw $this->createNotFoundException();
@@ -225,7 +225,7 @@ class ListController extends Controller implements WebTVControllerInterface
             $method = 'createBuilderByPersonIdAndRoleCod';
         }
 
-        $qb = $this->get('doctrine_mongodb.odm.document_manager')->getRepository($class)->$method(
+        $qb = $this->get('doctrine_mongodb.odm.document_manager')->getRepository($class)->{$method}(
             $person->getId(),
             $roleCode,
             ['public_date' => -1]
@@ -249,7 +249,8 @@ class ListController extends Controller implements WebTVControllerInterface
                     'show_info' => true,
                     'show_description' => false,
                 ]
-            ), 200
+            ),
+            200
         );
         $response->headers->set('X-Date', $dateHeader);
         $response->headers->set('X-Date-Month', $date->format('m'));
@@ -265,9 +266,9 @@ class ListController extends Controller implements WebTVControllerInterface
      * @param Request $request
      * @param Tag     $tag
      *
-     * @return Response
-     *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return Response
      */
     public function byTagObjectsPagerAction(Request $request, Tag $tag)
     {
@@ -276,7 +277,7 @@ class ListController extends Controller implements WebTVControllerInterface
         $type = $request->get('type');
 
         $dateRequest = $request->query->get('date', 0); //Use to queries for month and year to reduce formatting and unformatting.
-        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/$dateRequest 00:00:00");
+        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
 
         if (!$date) {
             throw $this->createNotFoundException();
@@ -307,7 +308,8 @@ class ListController extends Controller implements WebTVControllerInterface
                     'show_info' => true,
                     'show_description' => false,
                 ]
-            ), 200
+            ),
+            200
         );
         $response->headers->set('X-Date', $dateHeader);
         $response->headers->set('X-Date-Month', $date->format('m'));
@@ -322,33 +324,6 @@ class ListController extends Controller implements WebTVControllerInterface
     protected function getPagerTemplate()
     {
         return 'PumukitWebTVBundle:List:template_pager.html.twig';
-    }
-
-    /**
-     * @param       $title
-     * @param       $routeName
-     * @param array $routeParameters
-     */
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
-    {
-        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
-        $breadcrumbs->add($title, $routeName, $routeParameters);
-    }
-
-    /**
-     * @param     $objects
-     * @param     $page
-     * @param int $limit
-     *
-     * @return mixed|Pagerfanta
-     *
-     * @throws \Exception
-     */
-    private function createPager($objects, $page, $limit = 10)
-    {
-        $pager = $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
-
-        return $pager;
     }
 
     /**
@@ -371,5 +346,30 @@ class ListController extends Controller implements WebTVControllerInterface
             $this->container->getParameter('columns_objs_bytag'),
             $this->container->getParameter('limit_objs_bytag'),
         ];
+    }
+
+    /**
+     * @param       $title
+     * @param       $routeName
+     * @param array $routeParameters
+     */
+    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
+    {
+        $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
+        $breadcrumbs->add($title, $routeName, $routeParameters);
+    }
+
+    /**
+     * @param     $objects
+     * @param     $page
+     * @param int $limit
+     *
+     * @throws \Exception
+     *
+     * @return mixed|Pagerfanta
+     */
+    private function createPager($objects, $page, $limit = 10)
+    {
+        return $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }

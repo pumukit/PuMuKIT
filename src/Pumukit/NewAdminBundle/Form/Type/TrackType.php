@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
+use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType;
-use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
 
 class TrackType extends AbstractType
 {
@@ -36,7 +36,8 @@ class TrackType extends AbstractType
                     'attr' => ['aria-label' => $this->translator->trans('Video/Audio language', [], null, $this->locale)],
                     'label' => $this->translator->trans('Video/Audio language', [], null, $this->locale),
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

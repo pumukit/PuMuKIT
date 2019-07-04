@@ -2,14 +2,14 @@
 
 namespace Pumukit\WebTVBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Pagerfanta\Pagerfanta;
+use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pagerfanta\Pagerfanta;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SeriesController.
@@ -23,9 +23,9 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param Series  $series
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function indexAction(Series $series, Request $request)
     {
@@ -50,9 +50,9 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param Series  $series
      * @param Request $request
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function magicIndexAction(Series $series, Request $request)
     {
@@ -86,15 +86,14 @@ class SeriesController extends Controller implements WebTVControllerInterface
      * @param $objects
      * @param $page
      *
-     * @return mixed|Pagerfanta
-     *
      * @throws \Exception
+     *
+     * @return mixed|Pagerfanta
      */
     private function createPager($objects, $page)
     {
         $limit = $this->container->getParameter('limit_objs_series');
-        $pager = $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
 
-        return $pager;
+        return $this->get('pumukit_web_tv.pagination_service')->createDoctrineODMMongoDBAdapter($objects, $page, $limit);
     }
 }

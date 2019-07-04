@@ -2,15 +2,15 @@
 
 namespace Pumukit\StatsBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class PumukitCleanLogCommand extends ContainerAwareCommand
 {
-    private $dm = null;
-    private $from = null;
+    private $dm;
+    private $from;
 
     protected function configure()
     {
@@ -18,7 +18,8 @@ class PumukitCleanLogCommand extends ContainerAwareCommand
             ->setName('pumukit:stats:clean')
             ->setDescription('Clean bots from ViewsLog collections')
             ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'Define period to clean the stats. Use a PHP Date Format')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 Clean bots, crawlers, spiders and validators from ViewsLog collections.
 
 Examples:
@@ -27,7 +28,8 @@ Examples:
 <info>php app/console pumukit:stats:clean --from 'monday this week - 1 week'</info>
 
 EOT
-          );
+          )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -70,6 +72,7 @@ EOT
         }
 
         $qb->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 }

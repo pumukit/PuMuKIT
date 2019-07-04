@@ -3,14 +3,14 @@
 namespace Pumukit\PodcastBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/podcast")
@@ -28,7 +28,8 @@ class FeedController extends Controller
     {
         $router = $this->get('router');
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
 
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
@@ -135,7 +136,8 @@ class FeedController extends Controller
     private function getPodcastMultimediaObjectsBySeries(Series $series)
     {
         $mmObjRepo = $this->get('doctrine_mongodb.odm.document_manager')
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $qb = $mmObjRepo->createStandardQueryBuilder();
         $qb->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         $qb->field('series')->references($series);
@@ -188,7 +190,8 @@ class FeedController extends Controller
 
     private function getXMLElement($multimediaObjects, $values, $trackType = 'video')
     {
-        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'
+        $xml = new \SimpleXMLElement(
+            '<?xml version="1.0" encoding="UTF-8"?>'
                                      .'<rss xmlns:itunes="'.self::ITUNES_DTD_URL
                                      .'" xmlns:itunesu="'.self::ITUNESU_FEED_URL
                                      .'" xmlns:atom="'.self::ATOM_URL
@@ -309,11 +312,12 @@ class FeedController extends Controller
         $video_not_all_tags = ['audio'];
 
         return $multimediaObject->getFilteredTrackWithTags(
-                                                           [],
-                                                           $video_all_tags,
-                                                           [],
-                                                           $video_not_all_tags,
-                                                           false);
+            [],
+            $video_all_tags,
+            [],
+            $video_not_all_tags,
+            false
+        );
     }
 
     private function getAudioTrack(MultimediaObject $multimediaObject)
@@ -322,11 +326,12 @@ class FeedController extends Controller
         $audio_not_all_tags = [];
 
         return $multimediaObject->getFilteredTrackWithTags(
-                                                           [],
-                                                           $audio_all_tags,
-                                                           [],
-                                                           $audio_not_all_tags,
-                                                           false);
+            [],
+            $audio_all_tags,
+            [],
+            $audio_not_all_tags,
+            false
+        );
     }
 
     private function getDurationString(MultimediaObject $multimediaObject)

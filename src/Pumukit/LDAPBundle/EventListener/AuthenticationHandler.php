@@ -2,15 +2,15 @@
 
 namespace Pumukit\LDAPBundle\EventListener;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Pumukit\LDAPBundle\Services\LDAPService;
 use Pumukit\LDAPBundle\Services\LDAPUserService;
-use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\HttpUtils;
 
 class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 {
@@ -52,10 +52,11 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
     {
         if (null !== $this->session->get('_security.main.target_path')) {
             return $this->session->get('_security.main.target_path');
-        } elseif (null !== $this->session->get('target_path')) {
-            return $this->session->get('target_path');
-        } else {
-            return 'homepage';
         }
+        if (null !== $this->session->get('target_path')) {
+            return $this->session->get('target_path');
+        }
+
+        return 'homepage';
     }
 }

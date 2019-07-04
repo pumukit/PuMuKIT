@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class UserAgentParserServiceTest.
+ *
+ * @internal
+ * @coversNothing
  */
 class UserAgentParserServiceTest extends WebTestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -17,9 +17,9 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Exception
+     *
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function updatemetaAction(Request $request)
     {
@@ -60,7 +60,8 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
             return new JsonResponse(['mmtemplate' => 'updatemeta']);
         }
 
-        return $this->render('PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
+        return $this->render(
+            'PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
             [
                 'mm' => $mmTemplate,
                 'form_meta' => $formMeta->createView(),

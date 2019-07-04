@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Symfony\Component\EventDispatcher\Event;
 
 class PermissionProfileEvent extends Event
 {

@@ -5,13 +5,13 @@ namespace Pumukit\CasBundle\Authentication\Provider;
 use Pumukit\CasBundle\Services\CASUserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Class PumukitProvider.
@@ -39,9 +39,9 @@ class PumukitProvider implements AuthenticationProviderInterface
     /**
      * @param TokenInterface $token
      *
-     * @return mixed
-     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function authenticate(TokenInterface $token)
     {
@@ -64,6 +64,7 @@ class PumukitProvider implements AuthenticationProviderInterface
         } catch (\Exception $repositoryProblem) {
             $ex = new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
             $ex->setToken($token);
+
             throw $ex;
         }
 

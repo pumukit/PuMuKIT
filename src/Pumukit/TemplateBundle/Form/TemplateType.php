@@ -2,10 +2,10 @@
 
 namespace Pumukit\TemplateBundle\Form;
 
+use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType;
 
 class TemplateType extends AbstractType
 {
@@ -30,7 +30,8 @@ class TemplateType extends AbstractType
                     'attr' => ['style' => 'height: 200px;'],
                     'label' => 'Text',
                 ]
-            );
+            )
+        ;
     }
 
     /**

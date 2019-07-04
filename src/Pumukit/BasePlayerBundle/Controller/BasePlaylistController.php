@@ -3,8 +3,8 @@
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Pumukit\SchemaBundle\Document\Series;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -2,14 +2,18 @@
 
 namespace Pumukit\EncoderBundle\Tests\Funcional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Monolog\Handler\StreamHandler;
+use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bridge\Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Pumukit\EncoderBundle\Document\Job;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class FuncionalTest extends WebTestCase
 {
     private $dm;
@@ -48,13 +52,22 @@ class FuncionalTest extends WebTestCase
         $this->dm->flush();
 
         $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-                    ->getMock();
+            ->getMock()
+        ;
         $logger = new Logger('job_service_test_logger');
         $logger->pushHandler(new StreamHandler(realpath(__DIR__.'/../Resources').'/encoder_test.log', Logger::WARNING));
-        $this->jobService = new JobService($this->dm, $this->profileService, $this->cpuService,
-                                           $this->inspectionService, $dispatcher, $logger,
-                                           $this->trackService, $this->tokenStorage, $this->propService,
-                                           'test');
+        $this->jobService = new JobService(
+            $this->dm,
+            $this->profileService,
+            $this->cpuService,
+            $this->inspectionService,
+            $dispatcher,
+            $logger,
+            $this->trackService,
+            $this->tokenStorage,
+            $this->propService,
+            'test'
+        );
     }
 
     public function testSimpleEncoding()

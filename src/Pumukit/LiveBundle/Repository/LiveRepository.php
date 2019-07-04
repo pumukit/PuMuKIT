@@ -22,6 +22,7 @@ class LiveRepository extends DocumentRepository
     public function createAbcSortQueryBuilder($locale = 'en')
     {
         return $this->createQueryBuilder()
-            ->sort('name.'.$locale, 1);
+            ->sort('name.'.$locale, 1)
+        ;
     }
 }

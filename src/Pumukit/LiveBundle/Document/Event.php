@@ -148,7 +148,8 @@ class Event
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string     $description
+     * @param null|mixed $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -160,6 +161,8 @@ class Event
 
     /**
      * Get description.
+     *
+     * @param null|mixed $locale
      *
      * @return string
      */
@@ -323,13 +326,14 @@ class Event
     public function getSchedule()
     {
         return ['date' => $this->date,
-                     'duration' => $this->duration, ];
+            'duration' => $this->duration, ];
     }
 
     /**
      * Get Schedule.
      *
      * @param array
+     * @param mixed $schedule
      */
     public function setSchedule($schedule)
     {

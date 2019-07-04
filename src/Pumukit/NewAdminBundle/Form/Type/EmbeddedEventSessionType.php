@@ -2,9 +2,9 @@
 
 namespace Pumukit\NewAdminBundle\Form\Type;
 
+use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Pumukit\NewAdminBundle\Form\Type\Other\Html5dateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -46,7 +46,8 @@ class EmbeddedEventSessionType extends AbstractType
                     'required' => false,
                     'attr' => ['class' => 'form-control'],
                 ]
-            );
+            )
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

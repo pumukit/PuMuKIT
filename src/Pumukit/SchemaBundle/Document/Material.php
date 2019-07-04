@@ -24,10 +24,20 @@ class Material extends Element
     private $language;
 
     /**
+     * To string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
+
+    /**
      * Set name.
      *
      * @param string      $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -40,7 +50,7 @@ class Material extends Element
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -94,15 +104,5 @@ class Material extends Element
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getUrl();
     }
 }

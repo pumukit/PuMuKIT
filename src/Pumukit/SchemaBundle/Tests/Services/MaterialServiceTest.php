@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\SchemaBundle\Services\MaterialService;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\MaterialService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MaterialServiceTest extends WebTestCase
 {
     private $dm;
@@ -25,15 +29,19 @@ class MaterialServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repoMmobj = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->materialService = static::$kernel->getContainer()
-          ->get('pumukitschema.material');
+            ->get('pumukitschema.material')
+        ;
         $this->materialDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.material_dispatcher');
+            ->get('pumukitschema.material_dispatcher')
+        ;
         $this->factoryService = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
 
         $this->originalFilePath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'file.pdf';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/material');

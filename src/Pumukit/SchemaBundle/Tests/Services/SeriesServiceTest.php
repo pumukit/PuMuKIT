@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SeriesServiceTest extends WebTestCase
 {
     private $dm;
@@ -22,13 +26,16 @@ class SeriesServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository(Series::class);
+            ->getRepository(Series::class)
+        ;
         $this->seriesService = static::$kernel->getContainer()
-          ->get('pumukitschema.series');
+            ->get('pumukitschema.series')
+        ;
         $this->seriesDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.series_dispatcher');
+            ->get('pumukitschema.series_dispatcher')
+        ;
 
         $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();

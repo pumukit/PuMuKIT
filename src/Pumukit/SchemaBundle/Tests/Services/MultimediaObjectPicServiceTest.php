@@ -2,13 +2,17 @@
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Pic;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectPicServiceTest extends WebTestCase
 {
     private $dm;
@@ -25,15 +29,19 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
-          ->get('doctrine_mongodb')->getManager();
+            ->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm
-          ->getRepository(MultimediaObject::class);
+            ->getRepository(MultimediaObject::class)
+        ;
         $this->factoryService = static::$kernel->getContainer()
-          ->get('pumukitschema.factory');
+            ->get('pumukitschema.factory')
+        ;
         $this->mmsPicService = static::$kernel->getContainer()
-          ->get('pumukitschema.mmspic');
+            ->get('pumukitschema.mmspic')
+        ;
         $this->picDispatcher = static::$kernel->getContainer()
-          ->get('pumukitschema.pic_dispatcher');
+            ->get('pumukitschema.pic_dispatcher')
+        ;
 
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');

@@ -2,10 +2,14 @@
 
 namespace Pumukit\PodcastBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class DefaultControllerTest extends WebTestCase
 {
     private $dm;
@@ -30,9 +34,11 @@ class DefaultControllerTest extends WebTestCase
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove([]);
+            ->remove([])
+        ;
         $this->dm->getDocumentCollection(Series::class)
-            ->remove([]);
+            ->remove([])
+        ;
     }
 
     public function tearDown()

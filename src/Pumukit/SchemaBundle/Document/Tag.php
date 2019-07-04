@@ -2,9 +2,9 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pumukit\SchemaBundle\Document\Tag.
@@ -153,6 +153,16 @@ class Tag
     }
 
     /**
+     * to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -166,7 +176,7 @@ class Tag
      * Set title.
      *
      * @param string      $title
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setTitle($title, $locale = null)
     {
@@ -179,7 +189,7 @@ class Tag
     /**
      * Get title.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -199,7 +209,7 @@ class Tag
      * Set label.
      *
      * @param string      $label
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setLabel($label, $locale = null)
     {
@@ -212,7 +222,7 @@ class Tag
     /**
      * Get label.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -252,7 +262,7 @@ class Tag
      * Set description.
      *
      * @param string      $description
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setDescription($description, $locale = null)
     {
@@ -265,7 +275,7 @@ class Tag
     /**
      * Get description.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -446,16 +456,6 @@ class Tag
     }
 
     /**
-     * to string.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Increase number_multimedia_objects.
      */
     public function increaseNumberMultimediaObjects()
@@ -481,6 +481,8 @@ class Tag
 
     /**
      * Set number_multimedia_objects.
+     *
+     * @param mixed $count
      */
     public function setNumberMultimediaObjects($count)
     {
@@ -501,13 +503,6 @@ class Tag
     public function getChildren()
     {
         return $this->children;
-    }
-
-    private function addChild(Tag $tag)
-    {
-        ++$this->number_children;
-
-        return $this->children[] = $tag;
     }
 
     public function getNumberOfChildren()
@@ -586,6 +581,7 @@ class Tag
      * Returns true if given node cod is descendant of tag.
      *
      * @param EmbeddedTag|Tag $tag
+     * @param mixed           $tagCod
      *
      * @return bool
      */
@@ -607,5 +603,12 @@ class Tag
     public function isPubTag()
     {
         return $this->isDescendantOfByCod('PUBCHANNELS') || $this->isDescendantOfByCod('PUBDECISIONS');
+    }
+
+    private function addChild(Tag $tag)
+    {
+        ++$this->number_children;
+
+        return $this->children[] = $tag;
     }
 }

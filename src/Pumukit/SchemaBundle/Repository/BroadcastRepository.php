@@ -24,7 +24,8 @@ class BroadcastRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->field('default_sel')->equals(true)
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleResult()
+        ;
     }
 
     /**
@@ -37,7 +38,8 @@ class BroadcastRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->field('broadcast_type_id')->equals('public')
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleResult()
+        ;
     }
 
     /**
@@ -53,6 +55,7 @@ class BroadcastRepository extends DocumentRepository
             ->field('broadcast_type_id')->equals($broadcastTypeId)
             ->distinct('_id')
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 }

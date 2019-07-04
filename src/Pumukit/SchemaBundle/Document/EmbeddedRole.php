@@ -2,8 +2,8 @@
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * Pumukit\SchemaBundle\Document\EmbeddedRole.
@@ -67,6 +67,30 @@ class EmbeddedRole
      * @var string
      */
     private $locale = 'en';
+
+    /**
+     * Constructor.
+     */
+    public function __construct(Role $role)
+    {
+        if (null !== $role) {
+            $this->id = $role->getId();
+            $this->cod = $role->getCod();
+            $this->xml = $role->getXml();
+            $this->display = $role->getDisplay();
+            $this->setI18nName($role->getI18nName());
+            $this->setI18nText($role->getI18nText());
+        }
+        $this->people = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getCod();
+    }
 
     /**
      * Get id.
@@ -142,7 +166,7 @@ class EmbeddedRole
      * Set name.
      *
      * @param string      $name
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setName($name, $locale = null)
     {
@@ -155,7 +179,7 @@ class EmbeddedRole
     /**
      * Get name.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -195,7 +219,7 @@ class EmbeddedRole
      * Set text.
      *
      * @param string      $text
-     * @param string|null $locale
+     * @param null|string $locale
      */
     public function setText($text, $locale = null)
     {
@@ -208,7 +232,7 @@ class EmbeddedRole
     /**
      * Get text.
      *
-     * @param string|null $locale
+     * @param null|string $locale
      *
      * @return string
      */
@@ -265,22 +289,6 @@ class EmbeddedRole
     }
 
     /**
-     * Constructor.
-     */
-    public function __construct(Role $role)
-    {
-        if (null !== $role) {
-            $this->id = $role->getId();
-            $this->cod = $role->getCod();
-            $this->xml = $role->getXml();
-            $this->display = $role->getDisplay();
-            $this->setI18nName($role->getI18nName());
-            $this->setI18nText($role->getI18nText());
-        }
-        $this->people = new ArrayCollection();
-    }
-
-    /**
      * Get people.
      */
     public function getPeople()
@@ -291,7 +299,7 @@ class EmbeddedRole
     /**
      * Add person.
      *
-     * @param Person|EmbeddedPerson $person
+     * @param EmbeddedPerson|Person $person
      */
     public function addPerson($person)
     {
@@ -303,7 +311,7 @@ class EmbeddedRole
     /**
      * Remove person.
      *
-     * @param Person|EmbeddedPerson $person
+     * @param EmbeddedPerson|Person $person
      *
      * @return bool TRUE if this embedded person contained the specified person, FLASE otherwise
      */
@@ -325,9 +333,9 @@ class EmbeddedRole
     /**
      * Contains person.
      *
-     * @param Person|EmbeddedPerson $person
+     * @param EmbeddedPerson|Person $person
      *
-     * @return EmbeddedPerson|bool EmbeddedPerson if found, FALSE otherwise
+     * @return bool|EmbeddedPerson EmbeddedPerson if found, FALSE otherwise
      */
     public function containsPerson($person)
     {
@@ -387,10 +395,9 @@ class EmbeddedRole
     {
         if ($person instanceof EmbeddedPerson) {
             return $person;
-        } elseif ($person instanceof Person) {
-            $embedPerson = new EmbeddedPerson($person);
-
-            return $embedPerson;
+        }
+        if ($person instanceof Person) {
+            return new EmbeddedPerson($person);
         }
 
         throw new \InvalidArgumentException('Only Person or EmbeddedPerson are allowed.');
@@ -399,9 +406,9 @@ class EmbeddedRole
     /**
      * Contained embed person.
      *
-     * @param Person|EmbeddedPerson $person
+     * @param EmbeddedPerson|Person $person
      *
-     * @return EmbeddedPerson|bool EmbeddedPerson if found, FALSE otherwise:
+     * @return bool|EmbeddedPerson EmbeddedPerson if found, FALSE otherwise:
      */
     public function getEmbeddedPerson($person)
     {
@@ -412,13 +419,5 @@ class EmbeddedRole
         }
 
         return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getCod();
     }
 }

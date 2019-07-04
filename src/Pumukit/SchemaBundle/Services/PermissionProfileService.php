@@ -203,6 +203,8 @@ class PermissionProfileService
      *
      * @param PermissionProfile $permissionProfile
      * @param bool              $dispatchCreate
+     * @param mixed             $permissionsList
+     * @param mixed             $executeFlush
      */
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
@@ -233,6 +235,8 @@ class PermissionProfileService
 
     /**
      * Get by name.
+     *
+     * @param mixed $name
      *
      * @return PermissionProfile
      */

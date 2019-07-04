@@ -2,11 +2,11 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\Role;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Pumukit\SchemaBundle\Document\Role;
-use Pumukit\SchemaBundle\Document\PermissionProfile;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
@@ -21,8 +21,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $pluralName = $this->getPluralResourceName();
         $resourceName = $this->getResourceName();
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':index.html.twig',
-                             [$pluralName => $resources]
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':index.html.twig',
+            [$pluralName => $resources]
         );
     }
 
@@ -33,7 +34,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -58,11 +59,13 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
-                             [
-                                 $resourceName => $resource,
-                                 'form' => $form->createView(),
-                             ]);
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
+            [
+                $resourceName => $resource,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -72,7 +75,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return JsonResponse|Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -94,11 +97,13 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
-                             [
-                                 $resourceName => $resource,
-                                 'form' => $form->createView(),
-                             ]);
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
+            [
+                $resourceName => $resource,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -126,8 +131,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $data = $this->findOr404($request);
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':show.html.twig',
-                             [$this->getResourceName() => $data]
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':show.html.twig',
+            [$this->getResourceName() => $data]
         );
     }
 
@@ -159,13 +165,16 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $criteria = $this->getCriteria($request->get('criteria', []));
         $resources = $this->getResources($request, $criteria);
 
-        return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
-                             [$pluralName => $resources]
+        return $this->render(
+            'PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
+            [$pluralName => $resources]
         );
     }
 
     /**
      * Overwrite to update the session.
+     *
+     * @param mixed $resource
      */
     public function delete($resource)
     {
@@ -190,6 +199,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $factory = $this->get('pumukitschema.factory');
         foreach ($ids as $id) {
             $resource = $this->find($id);
+
             try {
                 $factory->deleteResource($resource);
             } catch (\Exception $e) {
@@ -214,6 +224,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
     /**
      * Gets the criteria values.
+     *
+     * @param mixed $criteria
      */
     public function getCriteria($criteria)
     {
@@ -237,6 +249,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
     /**
      * Gets the list of resources according to a criteria.
+     *
+     * @param mixed $criteria
      */
     public function getResources(Request $request, $criteria)
     {
@@ -258,7 +272,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resources
             ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($session_namespace.'/page', 1));
+            ->setCurrentPage($session->get($session_namespace.'/page', 1))
+        ;
 
         return $resources;
     }
@@ -266,7 +281,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /**
      * Overwrite to get form with translations.
      *
-     * @param string|null $resource
+     * @param null|string $resource
      * @param string      $locale
      *
      * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
@@ -278,9 +293,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $translator = $this->get('translator');
 
-        $form = $this->createForm($formType, $resource, ['translator' => $translator, 'locale' => $locale]);
-
-        return $form;
+        return $this->createForm($formType, $resource, ['translator' => $translator, 'locale' => $locale]);
     }
 
     /**

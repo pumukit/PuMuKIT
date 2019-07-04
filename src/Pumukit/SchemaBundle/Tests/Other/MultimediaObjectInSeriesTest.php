@@ -9,10 +9,14 @@
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectInSeriesTest extends WebTestCase
 {
     private $dm;

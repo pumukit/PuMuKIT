@@ -6,13 +6,13 @@ use Pumukit\OaiBundle\Utils\Iso639Convert;
 use Pumukit\OaiBundle\Utils\ResumptionToken;
 use Pumukit\OaiBundle\Utils\ResumptionTokenException;
 use Pumukit\OaiBundle\Utils\SimpleXMLExtended;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 
 /*
  * Open Archives Initiative Controller for PuMuKIT.
@@ -43,9 +43,7 @@ class OaiController extends Controller
         }
     }
 
-    /*
-     * Genera la salida de GetRecord
-     */
+    // Genera la salida de GetRecord
     public function getRecord($request)
     {
         if ('oai_dc' !== $request->query->get('metadataPrefix')) {
@@ -73,25 +71,6 @@ class OaiController extends Controller
         $this->genObjectMetadata($XMLrecord, $object);
 
         return $this->genResponse($XMLrequest, $XMLgetRecord);
-    }
-
-    private function identify()
-    {
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
-        $XMLrequest = new SimpleXMLExtended($request);
-        $XMLrequest->addAttribute('verb', 'Identify');
-
-        $XMLidentify = new SimpleXMLExtended('<Identify></Identify>');
-        $info = $this->container->getParameter('pumukit.info');
-        $XMLidentify->addChild('repositoryName', $info['description']);
-        $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL));
-        $XMLidentify->addChild('protocolVersion', '2.0');
-        $XMLidentify->addChild('adminEmail', $info['email']);
-        $XMLidentify->addChild('earliestDatestamp', '1990-02-01T12:00:00Z');
-        $XMLidentify->addChild('deletedRecord', 'no');
-        $XMLidentify->addChild('granularity', 'YYYY-MM-DDThh:mm:ssZ');
-
-        return $this->genResponse($XMLrequest, $XMLidentify);
     }
 
     public function listIdentifiers($request)
@@ -159,6 +138,69 @@ class OaiController extends Controller
         return $this->genResponse($XMLrequest, $XMLlist);
     }
 
+    // Genera el XML de error
+    protected function error($cod, $msg = '')
+    {
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
+        $XMLrequest = new SimpleXMLExtended($request);
+
+        $error = '<error>'.$msg.'</error>';
+        $XMLerror = new SimpleXMLExtended($error);
+        $XMLerror->addAttribute('code', $cod);
+
+        return $this->genResponse($XMLrequest, $XMLerror);
+    }
+
+    // Modifica el objeto criteria de entrada añadiendo filtros de fechas (until & from) y de set si están definidos en la URI
+    protected function filter($limit, $offset, \DateTime $from = null, \DateTime $until = null, $set = null)
+    {
+        $multimediaObjectRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
+        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
+
+        $queryBuilder = $multimediaObjectRepo
+            ->createStandardQueryBuilder()
+            ->limit($limit)
+            ->skip($limit * $offset)
+        ;
+
+        if ($from) {
+            $queryBuilder->field('public_date')->gte($from);
+        }
+
+        if ($until) {
+            $queryBuilder->field('public_date')->lte($until);
+        }
+
+        if ($set && '_all_' !== $set) {
+            $series = $seriesRepo->find(['id' => $set]);
+            if (!$series) {
+                return [];
+            }
+            $queryBuilder->field('series')->references($series);
+        }
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    private function identify()
+    {
+        $request = '<request>'.$this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
+        $XMLrequest = new SimpleXMLExtended($request);
+        $XMLrequest->addAttribute('verb', 'Identify');
+
+        $XMLidentify = new SimpleXMLExtended('<Identify></Identify>');
+        $info = $this->container->getParameter('pumukit.info');
+        $XMLidentify->addChild('repositoryName', $info['description']);
+        $XMLidentify->addChild('baseURL', $this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        $XMLidentify->addChild('protocolVersion', '2.0');
+        $XMLidentify->addChild('adminEmail', $info['email']);
+        $XMLidentify->addChild('earliestDatestamp', '1990-02-01T12:00:00Z');
+        $XMLidentify->addChild('deletedRecord', 'no');
+        $XMLidentify->addChild('granularity', 'YYYY-MM-DDThh:mm:ssZ');
+
+        return $this->genResponse($XMLrequest, $XMLidentify);
+    }
+
     private function listMetadataFormats($request)
     {
         $identifier = $request->query->get('identifier');
@@ -204,7 +246,8 @@ class OaiController extends Controller
             ->limit($limit)
             ->skip($limit * $token->getOffset())
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
 
         $request = '<request>'.$this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
         $XMLrequest = new SimpleXMLExtended($request);
@@ -231,53 +274,6 @@ class OaiController extends Controller
         }
 
         return $this->genResponse($XMLrequest, $XMLlistSets);
-    }
-
-    /*
-     * Genera el XML de error
-     */
-    protected function error($cod, $msg = '')
-    {
-        $request = '<request>'.$this->generateUrl('pumukit_oai_index', [], UrlGeneratorInterface::ABSOLUTE_URL).'</request>';
-        $XMLrequest = new SimpleXMLExtended($request);
-
-        $error = '<error>'.$msg.'</error>';
-        $XMLerror = new SimpleXMLExtended($error);
-        $XMLerror->addAttribute('code', $cod);
-
-        return $this->genResponse($XMLrequest, $XMLerror);
-    }
-
-    /*
-     * Modifica el objeto criteria de entrada añadiendo filtros de fechas (until & from) y de set si están definidos en la URI
-     */
-    protected function filter($limit, $offset, \DateTime $from = null, \DateTime $until = null, $set = null)
-    {
-        $multimediaObjectRepo = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
-        $seriesRepo = $this->get('doctrine_mongodb')->getRepository(Series::class);
-
-        $queryBuilder = $multimediaObjectRepo
-            ->createStandardQueryBuilder()
-            ->limit($limit)
-            ->skip($limit * $offset);
-
-        if ($from) {
-            $queryBuilder->field('public_date')->gte($from);
-        }
-
-        if ($until) {
-            $queryBuilder->field('public_date')->lte($until);
-        }
-
-        if ($set && '_all_' !== $set) {
-            $series = $seriesRepo->find(['id' => $set]);
-            if (!$series) {
-                return [];
-            }
-            $queryBuilder->field('series')->references($series);
-        }
-
-        return $queryBuilder->getQuery()->execute();
     }
 
     private function genObjectHeader($XMLlist, $object)
@@ -313,6 +309,7 @@ class OaiController extends Controller
                     $url = $this->generateTrackFileUrl($track);
                     $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
+
                 break;
             case 'portal_and_track':
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', ['id' => $object->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -321,20 +318,24 @@ class OaiController extends Controller
                     $url = $this->generateTrackFileUrl($track);
                     $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
+
                 break;
             case 'track':
                 foreach ($object->getFilteredTracksWithTags(['display']) as $track) {
                     $url = $this->generateTrackFileUrl($track);
                     $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
                 }
+
                 break;
             case 'iframe':
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_iframe', ['id' => $object->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+
                 break;
             default: //portal
                 $url = $this->generateUrl('pumukit_webtv_multimediaobject_index', ['id' => $object->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
                 $XMLoai_dc->addChild('dc:identifier', $url, 'http://purl.org/dc/elements/1.1/');
+
                 break;
         }
 
@@ -363,25 +364,32 @@ class OaiController extends Controller
                         switch ($tag->getLevel()) {
                         case 3:
                             $cod = substr($tag->getCod(), 1, 2);
+
                             break;
                         case 4:
                             $cod = substr($tag->getCod(), 1, 4);
+
                             break;
                         case 5:
                             $cod = sprintf('%s.%s', substr($tag->getCod(), 1, 4), substr($tag->getCod(), 5, 2));
+
                             break;
                         }
                     }
                     $subject = sprintf('%s %s', $cod, $tag->getTitle());
+
                     break;
                 case 'all':
                     $subject = sprintf('%s - %s', $tag->getCod(), $tag->getTitle());
+
                     break;
                 case 'code':
                     $subject = $tag->getCod();
+
                     break;
                 default: //title
                     $subject = $tag->getTitle();
+
                     break;
             }
             $XMLsubject->addCDATA($subject);
@@ -426,7 +434,7 @@ class OaiController extends Controller
         $XML = new SimpleXMLExtended('<OAI-PMH></OAI-PMH>');
         $XML->addAttribute('xmlns', 'http://www.openarchives.org/OAI/2.0/');
         $XML->addAttribute('xsi:schemaLocation', 'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd', 'http://www.w3.org/2001/XMLSchema-instance');
-        $XML->addChild('responseDate', date("Y-m-d\TH:i:s\Z"));
+        $XML->addChild('responseDate', date('Y-m-d\\TH:i:s\\Z'));
 
         $toDom = dom_import_simplexml($XML);
         $fromDom = dom_import_simplexml($responseXml);

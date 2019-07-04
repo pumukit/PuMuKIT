@@ -2,11 +2,11 @@
 
 namespace Pumukit\SchemaBundle\Services;
 
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 
 class SeriesService
 {
@@ -27,6 +27,7 @@ class SeriesService
      * Resets the magic url for a given series. Returns the secret id.
      *
      * @param Series
+     * @param mixed $series
      *
      * @return string
      */
@@ -56,6 +57,7 @@ class SeriesService
         $all = $this->mmRepo->findBySeries($series);
         foreach ($all as $multimediaObject) {
             $firstFound = $multimediaObject;
+
             break;
         }
         if (null === $firstFound) {

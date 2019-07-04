@@ -2,18 +2,22 @@
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
-use Pumukit\SchemaBundle\Document\Track;
-use Pumukit\SchemaBundle\Document\Pic;
-use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\Tag;
+use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Broadcast;
 use Pumukit\SchemaBundle\Document\Link;
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Pic;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\Tag;
 //use Pumukit\SchemaBundle\Document\PersonInMultimediaObject;
 
-use PHPUnit\Framework\TestCase;
+use Pumukit\SchemaBundle\Document\Track;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MultimediaObjectTest extends TestCase
 {
     public function testGetterAndSetter()
