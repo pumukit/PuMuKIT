@@ -38,14 +38,14 @@ class ProfileService
      */
     public function getProfiles($display = null, $wizard = null, $master = null)
     {
-        if (is_null($display) && is_null($wizard) && is_null($master)) {
+        if (null === $display && null === $wizard && null === $master) {
             return $this->profiles;
         }
 
         return array_filter($this->profiles, function ($profile) use ($display, $wizard, $master) {
-            return (is_null($display) || $profile['display'] === $display) &&
-                    (is_null($wizard) || $profile['wizard'] === $wizard) &&
-                    (is_null($master) || $profile['master'] === $master);
+            return (null === $display || $profile['display'] === $display) &&
+                    (null === $wizard || $profile['wizard'] === $wizard) &&
+                    (null === $master || $profile['master'] === $master);
         });
     }
 
@@ -164,7 +164,7 @@ class ProfileService
      */
     public function getDefaultProfiles()
     {
-        if (is_null($this->default_profiles)) {
+        if (null === $this->default_profiles) {
             throw new \InvalidArgumentException('No target default profiles.');
         } else {
             return $this->default_profiles;
