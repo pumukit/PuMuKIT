@@ -232,7 +232,6 @@ class FactoryService
     {
         $mm = $this->doCreateMultimediaObject($series, $flush, $loggedInUser);
 
-        //$this->seriesDispatcher->dispatchUpdate($series);
         $this->mmsDispatcher->dispatchCreate($mm);
 
         return $mm;

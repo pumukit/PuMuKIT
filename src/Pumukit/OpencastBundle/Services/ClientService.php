@@ -842,7 +842,7 @@ class ClientService
             throw new \Exception('Method "'.$method.'" not allowed.');
         }
 
-        // curl_setopt($request, CURLOPT_VERBOSE, true);
+        // NOTE: use - curl_setopt($request, CURLOPT_VERBOSE, true); to debug
 
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($request, CURLOPT_FOLLOWLOCATION, false);

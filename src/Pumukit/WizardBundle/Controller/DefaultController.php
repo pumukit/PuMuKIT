@@ -389,11 +389,6 @@ class DefaultController extends Controller
                 $status = $formData['multimediaobject']['status'];
             }
 
-            //$showSeries = false;
-            // if (('null' === $seriesId) || (null === $seriesId)) {
-            // $showSeries = true;
-            // }
-
             $option = $this->getKeyData('option', $typeData);
 
             try {

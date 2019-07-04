@@ -90,7 +90,7 @@ class MultimediaObjectSearchService
                 $isMongoId = false;
             }
             // Only in Mongo 1.5.0
-            //$isMongoId = \MongoId::isValid($personName);
+            // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new \MongoId($personName);
                 $new_criteria['people'] = ['$elemMatch' => ['cod' => $roleCode, 'people._id' => $peopleCriteria]];
@@ -107,7 +107,7 @@ class MultimediaObjectSearchService
                 $isMongoId = false;
             }
             // Only in Mongo 1.5.0
-            // $isMongoId = \MongoId::isValid($personName);
+            // NOTE: $isMongoId = \MongoId::isValid($personName);
             if ($isMongoId) {
                 $peopleCriteria = new \MongoId($personName);
                 $new_criteria += ['people.people._id' => $peopleCriteria];

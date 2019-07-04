@@ -126,7 +126,6 @@ EOT
             throw new \RuntimeException("Not job found with id {$id}.");
         }
 
-        //$description[] = sprintf('<comment>Scope</comment>            %s', $definition->getScope());
         $output->writeln('<comment>Id</comment>                '.$job->getId());
         $output->writeln('<comment>Status</comment>            '.$this->formatStatus($job->getStatus()));
         $output->writeln('<comment>Mm</comment>                '.$job->getMmId());

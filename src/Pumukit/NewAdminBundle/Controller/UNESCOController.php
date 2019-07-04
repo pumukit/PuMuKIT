@@ -311,7 +311,6 @@ class UNESCOController extends Controller implements NewAdminControllerInterface
 
         $parentTags = $factoryService->getParentTags();
 
-        //$multimediaObject = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $formMeta = $this->createForm(MultimediaObjectMetaType::class, $multimediaObject, ['translator' => $translator, 'locale' => $locale]);

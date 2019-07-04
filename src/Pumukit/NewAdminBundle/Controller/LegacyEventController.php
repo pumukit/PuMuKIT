@@ -284,9 +284,6 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     private function getCalendar($request)
     {
-        /*if (!$this->getUser()->hasAttribute('page', 'tv_admin/event'))
-          $this->getUser()->setAttribute('page', 1, 'tv_admin/event');*/
-
         if (!$this->get('session')->get('admin/event/month')) {
             $this->get('session')->set('admin/event/month', date('m'));
         }

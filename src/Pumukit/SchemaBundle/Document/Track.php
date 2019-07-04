@@ -494,7 +494,6 @@ class Track extends Element
         $minutes = floor($this->getDuration() / 60);
 
         $seconds = $this->getDuration() % 60;
-        //if ($seconds < 10 ) $minutes = '0' . $seconds;
 
         return ['minutes' => $minutes, 'seconds' => $seconds];
     }
