@@ -51,7 +51,7 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
      */
     public function latestUploadsPagerAction(Request $request)
     {
-        list($numberCols, $showPudenew, $useRecordDate) = $this->getParameters();
+        [$numberCols, $showPudenew, $useRecordDate] = $this->getParameters();
 
         $announcesService = $this->get('pumukitschema.announce');
 
@@ -60,7 +60,7 @@ class AnnouncesController extends Controller implements WebTVControllerInterface
         if (!$date) {
             throw $this->createNotFoundException();
         }
-        list($date, $last) = $announcesService->getNextLatestUploads($date, $showPudenew, $useRecordDate);
+        [$date, $last] = $announcesService->getNextLatestUploads($date, $showPudenew, $useRecordDate);
 
         $response = new Response();
         $dateHeader = '---';

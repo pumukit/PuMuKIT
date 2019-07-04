@@ -34,7 +34,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function multimediaObjectsByTagAction(Tag $tag, Request $request)
     {
-        list($scrollList, $numberCols, $limit) = $this->getParametersByTag();
+        [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
         $multimediaObjectRepository = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
 
@@ -84,7 +84,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function seriesByTagAction(Tag $tag, Request $request)
     {
-        list($scrollList, $numberCols, $limit) = $this->getParametersByTag();
+        [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
 
         $seriesRepository = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class);
         $series = $seriesRepository->createBuilderWithTag($tag, ['public_date' => -1]);
@@ -126,7 +126,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function multimediaObjectsByUserAction(User $user, Request $request)
     {
-        list($scrollList, $numberCols, $limit, $roleCode) = $this->getParametersByUser();
+        [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
         $person = $user->getPerson();
 
         $multimediaObjectRepository = $this->get('doctrine_mongodb')->getRepository(MultimediaObject::class);
@@ -167,7 +167,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function seriesByUserAction(User $user, Request $request)
     {
-        list($scrollList, $numberCols, $limit, $roleCode) = $this->getParametersByUser();
+        [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
 
         $seriesRepository = $this->get('doctrine_mongodb')->getRepository(Series::class);
         $person = $user->getPerson();
@@ -206,7 +206,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function userObjectsPagerAction(Request $request, User $user)
     {
-        list($scroll_list, $numberCols, $limit, $roleCode) = $this->getParametersByUser();
+        [$scroll_list, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
 
         $type = $request->get('type');
 
@@ -231,7 +231,7 @@ class ListController extends Controller implements WebTVControllerInterface
             ['public_date' => -1]
         );
 
-        list($date, $last) = $this->get('pumukit_web_tv.list_service')->getNextElementsByQueryBuilder($qb, $date);
+        [$date, $last] = $this->get('pumukit_web_tv.list_service')->getNextElementsByQueryBuilder($qb, $date);
 
         if (empty($last)) {
             $dateHeader = '---';
@@ -271,7 +271,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function byTagObjectsPagerAction(Request $request, Tag $tag)
     {
-        list($scroll_list, $numberCols, $limit) = $this->getParametersByTag();
+        [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();
 
         $type = $request->get('type');
 
@@ -289,7 +289,7 @@ class ListController extends Controller implements WebTVControllerInterface
 
         $qb = $this->get('doctrine_mongodb.odm.document_manager')->getRepository($class)->createBuilderWithTag($tag, ['public_date' => -1]);
 
-        list($date, $last) = $this->get('pumukit_web_tv.list_service')->getNextElementsByQueryBuilder($qb, $date);
+        [$date, $last] = $this->get('pumukit_web_tv.list_service')->getNextElementsByQueryBuilder($qb, $date);
 
         if (empty($last)) {
             $dateHeader = '---';

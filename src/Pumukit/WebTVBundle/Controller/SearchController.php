@@ -63,7 +63,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         // --- END Create QueryBuilder ---
 
         // --- Execute QueryBuilder and get paged results ---
-        list($pager, $totalObjects) = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
         // --- RETURN ---
         return [
@@ -100,7 +100,7 @@ class SearchController extends Controller implements WebTVControllerInterface
         $this->get('pumukit_web_tv.breadcrumbs')->addList($blockedTag ? $blockedTag->getTitle() : $templateTitle, 'pumukit_webtv_search_multimediaobjects');
 
         // Get selecting data form
-        list($parentTag, $parentTagOptional) = $this->get('pumukit_web_tv.search_service')->getSearchTags();
+        [$parentTag, $parentTagOptional] = $this->get('pumukit_web_tv.search_service')->getSearchTags();
         $searchLanguages = $this->get('pumukit_web_tv.search_service')->getLanguages();
         $searchYears = $this->get('pumukit_web_tv.search_service')->getYears(SearchService::MULTIMEDIA_OBJECT);
         $numberCols = $this->container->getParameter('columns_objs_search');
@@ -133,7 +133,7 @@ class SearchController extends Controller implements WebTVControllerInterface
             $queryBuilder->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         }
 
-        list($pager, $totalObjects) = $this->createPager($queryBuilder, $request->query->get('page', 1));
+        [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
 
         return [
             'type' => 'multimediaObject',

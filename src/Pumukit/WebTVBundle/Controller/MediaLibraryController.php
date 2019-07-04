@@ -38,7 +38,7 @@ class MediaLibraryController extends Controller implements WebTVControllerInterf
 
         $hasCatalogueThumbnails = $this->container->getParameter('catalogue_thumbnails');
 
-        list($objects, $aggregatedNumMmobjs) = $this->get('pumukit_web_tv.list_service')->getMediaLibrary([], $sort, $request->getLocale(), $request->query->get('p_tag'));
+        [$objects, $aggregatedNumMmobjs] = $this->get('pumukit_web_tv.list_service')->getMediaLibrary([], $sort, $request->getLocale(), $request->query->get('p_tag'));
 
         return [
             'objects' => $objects,

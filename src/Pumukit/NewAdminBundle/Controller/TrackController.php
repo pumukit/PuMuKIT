@@ -55,7 +55,7 @@ class TrackController extends Controller implements NewAdminControllerInterface
         $profile = $request->get('profile');
         $priority = $request->get('priority', 2);
         $formData = $request->get('pumukitnewadmin_track', []);
-        list($language, $description) = $this->getArrayData($formData);
+        [$language, $description] = $this->getArrayData($formData);
 
         $jobService = $this->get('pumukitencoder.job');
 

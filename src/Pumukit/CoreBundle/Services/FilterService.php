@@ -72,7 +72,7 @@ class FilterService
      */
     public function checkFilterActivation(FilterControllerEvent $event)
     {
-        list($controller, $routeParams) = $this->getEventData($event);
+        [$controller, $routeParams] = $this->getEventData($event);
 
         if (!is_array($controller)) {
             return false;

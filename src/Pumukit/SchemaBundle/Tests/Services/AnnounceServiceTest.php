@@ -123,12 +123,12 @@ class AnnounceServiceTest extends WebTestCase
         $date = \DateTime::createFromFormat('d/m/Y', '01/08/1999');
 
         //We check the response is correct (returns objects within the same month)
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date);
+        [$dateEnd, $last] = $this->announceService->getNextLatestUploads($date);
         $this->assertEquals('05/1999', $dateEnd->format('m/Y'));
         $this->assertEquals([$series2, $mm11], $last);
 
         //We check the response is correct (returns objects within the same month and doesn't return series) with not 'tagPudenew'
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($date, false);
+        [$dateEnd, $last] = $this->announceService->getNextLatestUploads($date, false);
         $this->assertEquals([$mm33->getId() => $mm33, $mm11->getId() => $mm11], $last);
 
         //We reuse the series and change the date
@@ -140,12 +140,12 @@ class AnnounceServiceTest extends WebTestCase
         //Now we take the returned date and decrease it by one month (as in the AJAX request)
         $dateEnd->modify('first day of last month');
         //We check again for a correct answer (the series shouldn't be here at all)
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
+        [$dateEnd, $last] = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals([$mm22], $last);
 
         //Finally, we check the answer is empty after searching for 24 months. (calling it two times)
         $dateEnd->modify('first day of last month');
-        list($dateEnd, $last) = $this->announceService->getNextLatestUploads($dateEnd);
+        [$dateEnd, $last] = $this->announceService->getNextLatestUploads($dateEnd);
         $this->assertEquals([], $last);
         $this->assertEquals(null, $dateEnd);
     }

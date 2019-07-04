@@ -327,7 +327,7 @@ class ModulesController extends Controller implements WebTVControllerInterface
     private function getLegacyMenuElements()
     {
         $menuService = $this->get('pumukit_web_tv.menu_service');
-        list($events, $channels, $liveEventTypeSession) = $menuService->getMenuEventsElement();
+        [$events, $channels, $liveEventTypeSession] = $menuService->getMenuEventsElement();
         $selected = $this->get('request_stack')->getMasterRequest()->get('_route');
         $homeTitle = $this->container->getParameter('menu.home_title');
         $announcesTitle = $this->container->getParameter('menu.announces_title');

@@ -55,7 +55,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        list($total, $mediaPackages) = $this->clientService->getMediaPackages([], 0, 0);
+        [$total, $mediaPackages] = $this->clientService->getMediaPackages([], 0, 0);
 
         $output->writeln('Total - '.$total);
 

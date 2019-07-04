@@ -36,7 +36,7 @@ class TrackFileController extends Controller
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
-        list($mmobj, $track) = $this->getMmobjAndTrack($id);
+        [$mmobj, $track] = $this->getMmobjAndTrack($id);
 
         if ($this->shouldIncreaseViews($track, $request)) {
             $this->dispatchViewEvent($mmobj, $track);
@@ -85,7 +85,7 @@ class TrackFileController extends Controller
             return new JsonResponse(['status' => 'error']);
         }
 
-        list($mmobj, $track) = $this->getMmobjAndTrack($id);
+        [$mmobj, $track] = $this->getMmobjAndTrack($id);
 
         if ('on_play' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
             return new JsonResponse(['status' => 'error']);
