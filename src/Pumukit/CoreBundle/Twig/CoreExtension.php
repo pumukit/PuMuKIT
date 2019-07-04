@@ -21,9 +21,9 @@ class CoreExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('bundle_enabled', array($this, 'isBundleEnabled')),
-        );
+        return [
+            new \Twig_SimpleFunction('bundle_enabled', [$this, 'isBundleEnabled']),
+        ];
     }
 
     /**

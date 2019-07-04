@@ -25,13 +25,13 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = new Material();
-        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
 
-        return array(
+        return [
             'material' => $material,
             'form' => $form->createView(),
             'mm' => $multimediaObject,
-        );
+        ];
     }
 
     /**
@@ -42,7 +42,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
-        $form = $this->createForm(MaterialType::class, $material, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(MaterialType::class, $material, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
@@ -52,15 +52,15 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
                 $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
         }
 
         return $this->render('PumukitNewAdminBundle:Material:update.html.twig',
-                             array(
+                             [
                                  'material' => $material,
                                  'form' => $form->createView(),
                                  'mmId' => $multimediaObject->getId(),
-                             ));
+                             ]);
     }
 
     /**
@@ -69,7 +69,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $formData = $request->get('pumukitnewadmin_material', array());
+        $formData = $request->get('pumukitnewadmin_material', []);
 
         $materialService = $this->get('pumukitschema.material');
         try {
@@ -82,18 +82,18 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
                 $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);
             }
         } catch (\Exception $e) {
-            return array(
+            return [
                 'mm' => $multimediaObject,
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
-            );
+            ];
         }
 
-        return array(
+        return [
             'mm' => $multimediaObject,
             'uploaded' => 'success',
             'message' => 'New Material added.',
-        );
+        ];
     }
 
     /**
@@ -103,7 +103,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
     {
         $multimediaObject = $this->get('pumukitschema.material')->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
     }
 
     /**
@@ -115,7 +115,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
 
         $this->addFlash('success', 'up');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
     }
 
     /**
@@ -127,7 +127,7 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
 
         $this->addFlash('success', 'down');
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', array('id' => $multimediaObject->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]));
     }
 
     /**
@@ -135,9 +135,9 @@ class MaterialController extends Controller implements NewAdminControllerInterfa
      */
     public function listAction(MultimediaObject $multimediaObject)
     {
-        return array(
+        return [
             'mmId' => $multimediaObject->getId(),
             'materials' => $multimediaObject->getMaterials(),
-        );
+        ];
     }
 }

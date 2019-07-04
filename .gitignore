@@ -25,7 +25,6 @@
 /bin/
 /composer.phar
 *~
-.idea/
-.idea_modules/
 \#*\#
 TAGS
+.php_cs.cache

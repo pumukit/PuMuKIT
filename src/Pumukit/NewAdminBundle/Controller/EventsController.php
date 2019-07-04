@@ -50,26 +50,26 @@ class EventsController extends Controller implements NewAdminControllerInterface
         }
 
         $aRoles = $dm->getRepository(Role::class)->findAll();
-        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PUBCHANNELS'));
+        $aPubChannel = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PUBCHANNELS']);
         $aChannels = $dm->getRepository(Tag::class)->findBy(
-            array('parent.$id' => new \MongoId($aPubChannel->getId()))
+            ['parent.$id' => new \MongoId($aPubChannel->getId())]
         );
 
-        $statusPub = array(
+        $statusPub = [
             MultimediaObject::STATUS_PUBLISHED => 'Published',
             MultimediaObject::STATUS_BLOCKED => 'Blocked',
             MultimediaObject::STATUS_HIDDEN => 'Hidden',
-        );
+        ];
 
-        $object = array();
+        $object = [];
 
-        return array(
+        return [
             'object' => $object,
             'disable_pudenew' => !$this->container->getParameter('show_latest_with_pudenew'),
             'roles' => $aRoles,
             'statusPub' => $statusPub,
             'pubChannels' => $aChannels,
-        );
+        ];
     }
 
     /**
@@ -97,7 +97,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $createSeries = true;
         } else {
             $series = $dm->getRepository(Series::class)->findOneBy(
-                array('_id' => new \MongoId($series))
+                ['_id' => new \MongoId($series)]
             );
         }
 
@@ -162,21 +162,21 @@ class EventsController extends Controller implements NewAdminControllerInterface
         if ($type) {
             $date = new \MongoDate();
             if ('now' === $type) {
-                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
-                    'start' => array('$lte' => $date),
-                    'ends' => array('$gte' => $date),
-                ));
+                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
+                    'start' => ['$lte' => $date],
+                    'ends' => ['$gte' => $date],
+                ]];
             } elseif ('today' === $type) {
                 $dateStart = new \DateTime(date('Y-m-d'));
                 $dateEnds = new \DateTime(date('Y-m-d 23:59:59'));
                 $dateStart = new \MongoDate($dateStart->getTimestamp());
                 $dateEnds = new \MongoDate($dateEnds->getTimestamp());
-                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
-                    'start' => array('$gte' => $dateStart),
-                    'ends' => array('$lte' => $dateEnds),
-                ));
+                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
+                    'start' => ['$gte' => $dateStart],
+                    'ends' => ['$lte' => $dateEnds],
+                ]];
             } else {
-                $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gt' => $date);
+                $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
         } elseif ($request->query->has('criteria')) {
             $data = $request->query->get('criteria');
@@ -192,21 +192,21 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $start = strtotime($data['date']['from']);
                 $ends = strtotime($data['date']['to'].'23:59:59');
 
-                $criteria['embeddedEvent.embeddedEventSession'] = array('$elemMatch' => array(
-                    'start' => array(
+                $criteria['embeddedEvent.embeddedEventSession'] = ['$elemMatch' => [
+                    'start' => [
                         '$gte' => new \MongoDate($start),
-                    ),
-                    'ends' => array(
+                    ],
+                    'ends' => [
                         '$lte' => new \MongoDate($ends),
-                    ), ));
+                    ], ]];
             } else {
                 if ($data['date']['from']) {
                     $date = strtotime($data['date']['from']);
-                    $criteria['embeddedEvent.embeddedEventSession.start'] = array('$gte' => new \MongoDate($date));
+                    $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gte' => new \MongoDate($date)];
                 }
                 if ($data['date']['to']) {
                     $date = strtotime($data['date']['to']);
-                    $criteria['embeddedEvent.embeddedEventSession.ends'] = array('$lte' => new \MongoDate($date));
+                    $criteria['embeddedEvent.embeddedEventSession.ends'] = ['$lte' => new \MongoDate($date)];
                 }
             }
         } elseif ($session->has('admin/live/event/criteria')) {
@@ -224,7 +224,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         } else {
             $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(
                 $criteria,
-                array($sortField => $sortType)
+                [$sortField => $sortType]
             );
         }
 
@@ -256,7 +256,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $session->remove('admin/live/event/id');
         }
 
-        return array('multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault);
+        return ['multimediaObjects' => $mms, 'default_event_pic' => $eventPicDefault];
     }
 
     /**
@@ -283,10 +283,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
             $session->set('admin/live/event/sort/field', $field);
 
-            return new JsonResponse(array('success'));
+            return new JsonResponse(['success']);
         }
 
-        return new JsonResponse(array('error'));
+        return new JsonResponse(['error']);
     }
 
     /**
@@ -304,7 +304,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $session->remove('admin/live/event/id');
         $session->remove('admin/live/event/page');
 
-        return new JsonResponse(array('succcess'));
+        return new JsonResponse(['succcess']);
     }
 
     /**
@@ -341,10 +341,10 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 break;
             }
         } catch (\Exception $e) {
-            return new JsonResponse(array('status' => $e->getMessage()), 409);
+            return new JsonResponse(['status' => $e->getMessage()], 409);
         }
 
-        return new JsonResponse(array('status' => $translator->trans($message)));
+        return new JsonResponse(['status' => $translator->trans($message)]);
     }
 
     /**
@@ -362,12 +362,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $data = $request->request->get('events_checkbox');
         foreach ($data as $multimediaObjectId) {
             $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(
-                array('_id' => new \MongoId($multimediaObjectId))
+                ['_id' => new \MongoId($multimediaObjectId)]
             );
             $this->deleteEvent($multimediaObject);
         }
 
-        return new JsonResponse(array());
+        return new JsonResponse([]);
     }
 
     /**
@@ -447,19 +447,19 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $aggregate = $dm->getDocumentCollection(MultimediaObject::class);
         $user = $this->getUser();
-        $pipeline = array();
-        $pipeline[] = array('$match' => array('series' => new \MongoId($multimediaObject->getSeries()->getId())));
+        $pipeline = [];
+        $pipeline[] = ['$match' => ['series' => new \MongoId($multimediaObject->getSeries()->getId())]];
         $ownerKey = $this->container->getParameter('pumukitschema.personal_scope_role_code');
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $pipeline[] = array('$match' => array('people.people.email' => array('$ne' => $user->getEmail())));
-            $pipeline[] = array('$match' => array('people.cod' => $ownerKey));
+            $pipeline[] = ['$match' => ['people.people.email' => ['$ne' => $user->getEmail()]]];
+            $pipeline[] = ['$match' => ['people.cod' => $ownerKey]];
         }
-        $pipeline[] = array(
-            '$group' => array(
-                '_id' => array('id' => '$_id'),
-            ),
-        );
-        $mmObjsNotOwner = $aggregate->aggregate($pipeline, array('cursor' => array()))->toArray();
+        $pipeline[] = [
+            '$group' => [
+                '_id' => ['id' => '$_id'],
+            ],
+        ];
+        $mmObjsNotOwner = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
 
         $factoryService = $this->container->get('pumukitschema.factory');
         $translator = $this->container->get('translator');
@@ -498,7 +498,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $this->container->get('session')->set('admin/live/event/id', $multimediaObject->getId());
 
-        return array('multimediaObject' => $multimediaObject);
+        return ['multimediaObject' => $multimediaObject];
     }
 
     /**
@@ -523,9 +523,9 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(EventsType::class, $multimediaObject->getEmbeddedEvent(), ['translator' => $translator, 'locale' => $locale]);
 
-        $people = array();
+        $people = [];
         $people['author'] = $multimediaObject->getEmbeddedEvent()->getAuthor();
         $people['producer'] = $multimediaObject->getEmbeddedEvent()->getProducer();
 
@@ -557,12 +557,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
                 $event->setDuration($data['duration']);
                 $display = isset($data['display']) ? true : false;
                 $event->setDisplay($display);
-                $externalURL = isset($data['externalURL']) ? $data['externalURL'] : '';
+                $externalURL = $data['externalURL'] ?? '';
                 $event->setUrl($externalURL);
 
                 if (isset($data['live'])) {
                     $live = $dm->getRepository(Live::class)->findOneBy(
-                        array('_id' => new \MongoId($data['live']))
+                        ['_id' => new \MongoId($data['live'])]
                     );
                     $event->setLive($live);
                 }
@@ -616,13 +616,13 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
-            return new JsonResponse(array('event' => $multimediaObject->getEmbeddedEvent()));
+            return new JsonResponse(['event' => $multimediaObject->getEmbeddedEvent()]);
         }
 
-        return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm, 'autocomplete_series' => $autocompleteSeries);
+        return ['form' => $form->createView(), 'multimediaObject' => $multimediaObject, 'people' => $people, 'enableChat' => $enableChat, 'enableTwitter' => $enableTwitter, 'twitterAccountsLinkColor' => $twitterAccountsLinkColor, 'enableContactForm' => $enableContactForm, 'autocomplete_series' => $autocompleteSeries];
     }
 
     /**
@@ -641,15 +641,15 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $locale = $request->getLocale();
         $disablePudenew = !$this->container->getParameter('show_latest_with_pudenew');
 
-        $form = $this->createForm(SeriesType::class, $series, array('translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew));
+        $form = $this->createForm(SeriesType::class, $series, ['translator' => $translator, 'locale' => $locale, 'disable_PUDENEW' => $disablePudenew]);
 
-        $exclude_fields = array();
-        $show_later_fields = array(
+        $exclude_fields = [];
+        $show_later_fields = [
             'pumukitnewadmin_series_i18n_header',
             'pumukitnewadmin_series_i18n_footer',
             'pumukitnewadmin_series_i18n_line2',
             'pumukitnewadmin_series_template',
-        );
+        ];
         $showSeriesTypeTab = $this->container->hasParameter(
             'pumukit.use_series_channels'
         ) && $this->container->getParameter('pumukit.use_series_channels');
@@ -657,12 +657,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $exclude_fields[] = 'pumukitnewadmin_series_series_type';
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'series' => $series,
             'exclude_fields' => $exclude_fields,
             'show_later_fields' => $show_later_fields,
-        );
+        ];
     }
 
     /**
@@ -685,7 +685,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
@@ -721,15 +721,15 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
             return new JsonResponse(
-                array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession())
+                ['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]
             );
         }
 
-        return array('multimediaObject' => $multimediaObject, 'form' => $form->createView());
+        return ['multimediaObject' => $multimediaObject, 'form' => $form->createView()];
     }
 
     /**
@@ -746,7 +746,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(new \MongoId($id));
 
-        return array('multimediaObject' => $multimediaObject);
+        return ['multimediaObject' => $multimediaObject];
     }
 
     /**
@@ -773,7 +773,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $dm->flush();
 
-        return new JsonResponse(array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()));
+        return new JsonResponse(['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]);
     }
 
     /**
@@ -812,7 +812,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $dm->flush();
 
-        return new JsonResponse(array('sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()));
+        return new JsonResponse(['sessions' => $multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession()]);
     }
 
     /**
@@ -834,14 +834,14 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(EmbeddedEventSessionType::class, null, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(EmbeddedEventSessionType::class, null, ['translator' => $translator, 'locale' => $locale]);
 
         $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneById(
             new \MongoId($multimediaObject)
         );
 
         if (!$session_id) {
-            return array('form' => $form->createView(), 'multimediaObject' => $multimediaObject);
+            return ['form' => $form->createView(), 'multimediaObject' => $multimediaObject];
         }
 
         $sessionData = '';
@@ -860,11 +860,11 @@ class EventsController extends Controller implements NewAdminControllerInterface
             $form->get('notes')->setData($sessionData->getNotes());
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'multimediaObject' => $multimediaObject,
             'session_id' => $session_id,
-        );
+        ];
     }
 
     /**
@@ -880,35 +880,35 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $aggregate = $this->get('doctrine_mongodb')->getManager()->getDocumentCollection(Series::class);
 
         $user = $this->getUser();
-        $pipeline = array();
-        $pipeline[] = array('$match' => array('title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i')));
-        $pipeline[] = array('$match' => array('type' => Series::TYPE_SERIES));
+        $pipeline = [];
+        $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new \MongoRegex('/'.$value.'/i')]];
+        $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
 
         if ($user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $pipeline[] = array('$match' => array('properties.owners' => $user->getId()));
+            $pipeline[] = ['$match' => ['properties.owners' => $user->getId()]];
         }
 
-        $pipeline[] = array(
-            '$group' => array(
-                '_id' => array(
+        $pipeline[] = [
+            '$group' => [
+                '_id' => [
                     'id' => '$_id',
                     'title' => '$title',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $pipeline[] = array('$limit' => 100);
+        $pipeline[] = ['$limit' => 100];
 
-        $series = $aggregate->aggregate($pipeline, array('cursor' => array()))->toArray();
+        $series = $aggregate->aggregate($pipeline, ['cursor' => []])->toArray();
 
-        $result = array();
+        $result = [];
         foreach ($series as $key => $dataSeries) {
-            $result[] = array(
+            $result[] = [
                 'id' => (string) $dataSeries['_id']['id'],
                 'title' => $dataSeries['_id']['title'][$request->getLocale()],
                 'label' => $dataSeries['_id']['title'][$request->getLocale()],
                 'value' => $dataSeries['_id']['id'].' - '.$dataSeries['_id']['title'][$request->getLocale()],
-            );
+            ];
         }
 
         return new JsonResponse($result);
@@ -924,12 +924,12 @@ class EventsController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($multimediaObject)) {
-            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(array('_id' => new \MongoId($multimediaObject)));
+            $multimediaObject = $dm->getRepository(MultimediaObject::class)->findOneBy(['_id' => new \MongoId($multimediaObject)]);
 
-            return array('multimediaObject' => $multimediaObject);
+            return ['multimediaObject' => $multimediaObject];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -945,18 +945,18 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $series = $request->request->get('seriesSuggest');
         if ($series) {
             $dm = $this->container->get('doctrine_mongodb')->getManager();
-            $series = $dm->getRepository(Series::class)->findOneBy(array('_id' => new \MongoId($series)));
+            $series = $dm->getRepository(Series::class)->findOneBy(['_id' => new \MongoId($series)]);
             if ($series) {
                 $multimediaObject->setSeries($series);
                 $dm->flush();
 
-                return new JsonResponse(array('success'));
+                return new JsonResponse(['success']);
             }
 
-            return new JsonResponse(array('error'));
+            return new JsonResponse(['error']);
         }
 
-        return new JsonResponse(array('error'));
+        return new JsonResponse(['error']);
     }
 
     /**
@@ -970,7 +970,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
      */
     public function showAction(MultimediaObject $multimediaObject)
     {
-        return array('multimediaObject' => $multimediaObject);
+        return ['multimediaObject' => $multimediaObject];
     }
 
     /**
@@ -1039,7 +1039,7 @@ class EventsController extends Controller implements NewAdminControllerInterface
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         $translator = $this->get('translator');
 
-        $series = $dm->getRepository(Series::class)->findOneBy(array('_id' => $multimediaObject->getSeries()->getId()));
+        $series = $dm->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);
         if (!$series) {
             throw new \Exception($translator->trans('Series not found'));
         }
@@ -1054,6 +1054,6 @@ class EventsController extends Controller implements NewAdminControllerInterface
 
         $this->get('pumukitschema.series_dispatcher')->dispatchUpdate($series);
 
-        return new JsonResponse(array('success'));
+        return new JsonResponse(['success']);
     }
 }

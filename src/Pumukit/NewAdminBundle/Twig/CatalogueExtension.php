@@ -47,10 +47,10 @@ class CatalogueExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('all_custom_fields', array($this, 'getAllCustomFields')),
-            new \Twig_SimpleFunction('render_object_field', array($this, 'renderObjectField')),
-        );
+        return [
+            new \Twig_SimpleFunction('all_custom_fields', [$this, 'getAllCustomFields']),
+            new \Twig_SimpleFunction('render_object_field', [$this, 'renderObjectField']),
+        ];
     }
 
     /**

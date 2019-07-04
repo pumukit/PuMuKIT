@@ -22,11 +22,11 @@ class MultimediaObjectButtonsExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('get_extra_buttons', array($this, 'getMmobjExtraButtons')),
-            new \Twig_SimpleFunction('get_extra_menu_items', array($this, 'getMmobjExtraMenuItems')),
-            new \Twig_SimpleFunction('get_extra_series_menu_items', array($this, 'getSeriesExtraMenuItems')),
-        );
+        return [
+            new \Twig_SimpleFunction('get_extra_buttons', [$this, 'getMmobjExtraButtons']),
+            new \Twig_SimpleFunction('get_extra_menu_items', [$this, 'getMmobjExtraMenuItems']),
+            new \Twig_SimpleFunction('get_extra_series_menu_items', [$this, 'getSeriesExtraMenuItems']),
+        ];
     }
 
     public function getMmobjExtraButtons()

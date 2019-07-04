@@ -18,6 +18,6 @@ class WidgetController extends Controller
             return new Response('');
         }
 
-        return array('languages' => $array_locales);
+        return ['languages' => $array_locales];
     }
 }

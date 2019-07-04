@@ -86,7 +86,7 @@ EOT
             return -1;
         }
 
-        $idCodMapping = array();
+        $idCodMapping = [];
 
         $row = 1;
         if (false !== ($file = fopen($file, 'r'))) {
@@ -97,9 +97,8 @@ EOT
                     if ('id' == trim($currentRow[0])) {
                         continue;
                     }
-                    $parent = isset($idCodMapping[$currentRow[2]])
-                      ? $idCodMapping[$currentRow[2]]
-                      : $root;
+                    $parent = $idCodMapping[$currentRow[2]]
+                      ?? $root;
                     try {
                         $tag = $this->createTagFromCsvArray($currentRow, $parent);
                         $idCodMapping[$currentRow[0]] = $tag;

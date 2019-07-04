@@ -108,7 +108,7 @@ trait Link
         $snapshot = array_values($this->links->toArray());
         $this->links->clear();
 
-        $out = array();
+        $out = [];
         foreach ($snapshot as $key => $link) {
             if ($link->getId() === $linkId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $link;
@@ -162,7 +162,7 @@ trait Link
      */
     public function getLinksWithTag($tag)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->links as $link) {
             if ($link->containsTag($tag)) {
@@ -200,7 +200,7 @@ trait Link
      */
     public function getLinksWithAllTags(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->links as $link) {
             if ($link->containsAllTags($tags)) {
@@ -238,7 +238,7 @@ trait Link
      */
     public function getLinksWithAnyTag(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->links as $link) {
             if ($link->containsAnyTag($tags)) {
@@ -277,9 +277,9 @@ trait Link
      *
      * @return array
      */
-    public function getFilteredLinksWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array())
+    public function getFilteredLinksWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->links as $link) {
             if ($any_tags && !$link->containsAnyTag($any_tags)) {

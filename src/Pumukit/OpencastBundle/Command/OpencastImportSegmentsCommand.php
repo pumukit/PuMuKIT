@@ -153,12 +153,12 @@ EOT
      */
     private function getMultimediaObjects()
     {
-        $criteria = array(
+        $criteria = [
             'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
-        );
+        ];
 
         if ($this->force) {
-            $criteria['embeddedSegments'] = array('$exists' => false);
+            $criteria['embeddedSegments'] = ['$exists' => false];
         }
 
         if ($this->id) {
@@ -176,12 +176,12 @@ EOT
     private function importSegments($multimediaObjects)
     {
         $this->output->writeln(
-            array(
+            [
                 '',
                 '<info> **** Import segments on multimedia object **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
-            )
+            ]
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
@@ -190,11 +190,11 @@ EOT
             $segments = 0;
             if (isset($mediaPackage['segments']) && isset($mediaPackage['segments']['segment'])) {
                 if (!isset($mediaPackage['segments']['segment'][0])) {
-                    $segments = array($mediaPackage['segments']['segment']);
+                    $segments = [$mediaPackage['segments']['segment']];
                 } else {
                     $segments = $mediaPackage['segments']['segment'];
                 }
-                $embeddedSegments = array();
+                $embeddedSegments = [];
                 foreach ($segments as $segment) {
                     $embeddedSegments[] = $this->createNewSegment($segment);
                 }
@@ -215,12 +215,12 @@ EOT
     private function showMultimediaObjects($multimediaObjects)
     {
         $this->output->writeln(
-            array(
+            [
                 '',
                 '<info> **** Finding Multimedia Objects **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
-            )
+            ]
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
@@ -228,7 +228,7 @@ EOT
             $numSegments = 0;
             if (isset($mediaPackage['segments'])) {
                 if (!isset($mediaPackage['segments']['segment'][0])) {
-                    $segments = array($mediaPackage['segments']['segment']);
+                    $segments = [$mediaPackage['segments']['segment']];
                 } else {
                     $segments = $mediaPackage['segments']['segment'];
                 }

@@ -27,7 +27,7 @@ class SeriesPlaylistService
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
-    protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = array())
+    protected function createQueryPlaylistMmobjs($playlistMmobjIds, $criteria = [])
     {
         $qb = $this->mmobjRepo->createQueryBuilder()->field('id')->in($playlistMmobjIds);
         if ($criteria) {
@@ -45,7 +45,7 @@ class SeriesPlaylistService
      *
      * @return mixed
      */
-    protected function createSortedQuerySeriesMmobjs($series, $criteria = array())
+    protected function createSortedQuerySeriesMmobjs($series, $criteria = [])
     {
         $qb = $this->mmobjRepo->createStandardQueryBuilder()
                     ->field('series')->references($series);
@@ -68,12 +68,12 @@ class SeriesPlaylistService
      *
      * @return array
      */
-    protected function retrieveSortedPlaylistMmobjs(Series $series, $criteria = array())
+    protected function retrieveSortedPlaylistMmobjs(Series $series, $criteria = [])
     {
         $playlistMmobjs = $series->getPlaylist()->getMultimediaObjectsIdList();
         $playlistMmobjsFiltered = $this->createQueryPlaylistMmobjs($playlistMmobjs, $criteria)->getQuery()->execute();
 
-        $playlist = array();
+        $playlist = [];
         //This foreach orders the $playlistMmobjsFiltered results according to the order they appear in $playlistMmobjs.
         //Ideally, mongo should return them ordered already, but I couldn't find how to achieve that.
         foreach ($playlistMmobjs as $playMmobj) {
@@ -98,7 +98,7 @@ class SeriesPlaylistService
      *
      * @return CountableAppendIterator
      */
-    public function getPlaylistMmobjs(Series $series, $criteria = array())
+    public function getPlaylistMmobjs(Series $series, $criteria = [])
     {
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria);
         $seriesMmobjs = $qb->getQuery()->execute();
@@ -125,7 +125,7 @@ class SeriesPlaylistService
      *
      * @return MultimediaObject
      */
-    public function getPlaylistFirstMmobj(Series $series, $criteria = array())
+    public function getPlaylistFirstMmobj(Series $series, $criteria = [])
     {
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria);
         $mmobj = $qb->getQuery()->getSingleResult();
@@ -151,7 +151,7 @@ class SeriesPlaylistService
      *
      * @return MultimediaObject
      */
-    public function getMmobjFromIdAndPlaylist($mmobjId, Series $series, $criteria = array())
+    public function getMmobjFromIdAndPlaylist($mmobjId, Series $series, $criteria = [])
     {
         $qb = $this->createSortedQuerySeriesMmobjs($series, $criteria)
                    ->field('id')->equals(new \MongoId($mmobjId));

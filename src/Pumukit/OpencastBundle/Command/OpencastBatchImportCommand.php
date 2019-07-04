@@ -47,7 +47,7 @@ class OpencastBatchImportCommand extends ContainerAwareCommand
 
             foreach ($mediaPackages[1] as $mediaPackage) {
                 $output->writeln('Importing mediapackage: '.$mediaPackage['id']);
-                if ($repositoryMultimediaObjects->findOneBy(array('properties.opencast' => $mediaPackage['id']))) {
+                if ($repositoryMultimediaObjects->findOneBy(['properties.opencast' => $mediaPackage['id']])) {
                     $output->writeln('Mediapackage '.$mediaPackage['id'].' has already been imported, skipping to next mediapackage');
                 } else {
                     $opencastImportService->importRecording($mediaPackage['id'], $invert);

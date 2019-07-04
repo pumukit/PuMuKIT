@@ -440,10 +440,10 @@ class Track extends Element
      */
     public function getResolution()
     {
-        return array(
+        return [
             'width' => $this->width,
             'height' => $this->height,
-        );
+        ];
     }
 
     /**
@@ -481,7 +481,7 @@ class Track extends Element
         $seconds = $this->getDuration() % 60;
         //if ($seconds < 10 ) $minutes = '0' . $seconds;
 
-        return array('minutes' => $minutes, 'seconds' => $seconds);
+        return ['minutes' => $minutes, 'seconds' => $seconds];
     }
 
     /**

@@ -20,7 +20,7 @@ class GroupServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -37,8 +37,8 @@ class GroupServiceTest extends WebTestCase
 
         $this->groupService = new GroupService($this->dm, $groupDispatcher, $translator);
 
-        $this->dm->getDocumentCollection(User::class)->remove(array());
-        $this->dm->getDocumentCollection(Group::class)->remove(array());
+        $this->dm->getDocumentCollection(User::class)->remove([]);
+        $this->dm->getDocumentCollection(Group::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -160,14 +160,14 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($user3);
         $this->dm->flush();
 
-        $sort1 = array('username' => 1);
+        $sort1 = ['username' => 1];
         $users1Group1 = $this->groupService->findUsersInGroup($group1, $sort1)->toArray();
 
-        $sort_1 = array('username' => -1);
+        $sort_1 = ['username' => -1];
         $users_1Group1 = $this->groupService->findUsersInGroup($group1, $sort_1)->toArray();
 
-        $this->assertEquals(array($user1, $user2, $user3), array_values($users1Group1));
-        $this->assertEquals(array($user3, $user2, $user1), array_values($users_1Group1));
+        $this->assertEquals([$user1, $user2, $user3], array_values($users1Group1));
+        $this->assertEquals([$user3, $user2, $user1], array_values($users_1Group1));
     }
 
     public function testCreate()
@@ -463,7 +463,7 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($group3);
         $this->dm->flush();
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
         $groups = $this->groupService->findByIdNotIn($ids)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertTrue(in_array($group2, $groups));
@@ -494,32 +494,32 @@ class GroupServiceTest extends WebTestCase
         $this->dm->persist($group4);
         $this->dm->flush();
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
-        $total = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId()));
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertFalse(in_array($group3, $groups));
         $this->assertTrue(in_array($group4, $groups));
 
-        $ids = array();
-        $total = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId()));
+        $ids = [];
+        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertTrue(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertTrue(in_array($group3, $groups));
         $this->assertTrue(in_array($group4, $groups));
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
-        $total = array();
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $total = [];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertFalse(in_array($group3, $groups));
         $this->assertFalse(in_array($group4, $groups));
 
-        $ids = array();
-        $total = array();
+        $ids = [];
+        $total = [];
         $groups = $this->groupService->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));

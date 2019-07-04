@@ -50,7 +50,7 @@ class LicenseService
      *
      * @return bool Returns FALSE if not enabled and not accepted, TRUE otherwise
      */
-    public function isLicenseEnabledAndAccepted($formData = array(), $locale = null)
+    public function isLicenseEnabledAndAccepted($formData = [], $locale = null)
     {
         if ($this->isEnabled()) {
             if (isset($formData['license']['accept']) && $formData['license']['accept']) {

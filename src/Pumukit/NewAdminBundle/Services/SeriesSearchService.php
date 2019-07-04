@@ -30,7 +30,7 @@ class SeriesSearchService
      */
     public function processCriteria($reqCriteria, $searchInObjects = false, $locale = 'en')
     {
-        $new_criteria = array();
+        $new_criteria = [];
 
         foreach ($reqCriteria as $property => $value) {
             if (('search' === $property) && ('' !== $value)) {
@@ -45,13 +45,13 @@ class SeriesSearchService
 
                     $new_criteria['$or'] = $this->getSearchCriteria(
                         $value,
-                        array(array('_id' => array('$in' => $ids))),
+                        [['_id' => ['$in' => $ids]]],
                         $locale
                     );
                 } else {
-                    $base = array();
+                    $base = [];
                     if (preg_match('/^[0-9a-z]{24}$/', $value)) {
-                        $base[] = array('_id' => $value);
+                        $base[] = ['_id' => $value];
                     }
                     $new_criteria['$or'] = $this->getSearchCriteria(
                         $value,
@@ -74,7 +74,7 @@ class SeriesSearchService
             } elseif (('subtitle' === $property) && ('' !== $value)) {
                 $new_criteria['subtitle.'.$locale] = SearchUtils::generateRegexExpression($value);
             } elseif ('playlist.multimedia_objects' === $property && ('' !== $value)) {
-                $new_criteria['playlist.multimedia_objects'] = array('$size' => 0);
+                $new_criteria['playlist.multimedia_objects'] = ['$size' => 0];
             }
         }
 
@@ -88,7 +88,7 @@ class SeriesSearchService
      */
     private function processDates($value)
     {
-        $criteria = array();
+        $criteria = [];
         $date_from = null;
         $date_to = null;
 
@@ -100,11 +100,11 @@ class SeriesSearchService
         }
 
         if (('' !== $value['from']) && ('' !== $value['to'])) {
-            $criteria['public_date'] = array('$gte' => $date_from, '$lt' => $date_to);
+            $criteria['public_date'] = ['$gte' => $date_from, '$lt' => $date_to];
         } elseif ('' !== $value['from']) {
-            $criteria['public_date'] = array('$gte' => $date_from);
+            $criteria['public_date'] = ['$gte' => $date_from];
         } elseif ('' !== $value['to']) {
-            $criteria['public_date'] = array('$lt' => $date_to);
+            $criteria['public_date'] = ['$lt' => $date_to];
         }
 
         return $criteria;
@@ -117,20 +117,20 @@ class SeriesSearchService
      *
      * @return array
      */
-    private function getSearchCriteria($text, array $base = array(), $locale = 'en')
+    private function getSearchCriteria($text, array $base = [], $locale = 'en')
     {
         $text = trim($text);
         if ((false !== strpos($text, '*')) && (false === strpos($text, ' '))) {
             $text = str_replace('*', '.*', $text);
             $text = SearchUtils::scapeTildes($text);
             $mRegex = new \MongoRegex("/$text/i");
-            $base[] = array(('title.'.$locale) => $mRegex);
-            $base[] = array('people.people.name' => $mRegex);
+            $base[] = [('title.'.$locale) => $mRegex];
+            $base[] = ['people.people.name' => $mRegex];
         } else {
-            $base[] = array('$text' => array(
+            $base[] = ['$text' => [
                 '$search' => TextIndexUtils::cleanTextIndex($text),
                 '$language' => TextIndexUtils::getCloseLanguage($locale),
-            ));
+            ]];
         }
 
         return $base;

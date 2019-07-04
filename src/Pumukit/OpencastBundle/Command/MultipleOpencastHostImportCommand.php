@@ -171,9 +171,9 @@ EOT
      */
     private function getMultimediaObjects(DocumentManager $dm)
     {
-        $criteria = array(
+        $criteria = [
             'properties.opencasturl' => new \MongoRegex("/$this->host/i"),
-        );
+        ];
 
         if ($this->id) {
             $criteria['_id'] = new \MongoId($this->id);
@@ -195,12 +195,12 @@ EOT
     private function importBroadcastTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
     {
         $output->writeln(
-            array(
+            [
                 '',
                 '<info> **** Adding tracks to multimedia object **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
-            )
+            ]
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
@@ -229,12 +229,12 @@ EOT
     private function importMasterTracks(OutputInterface $output, ClientService $clientService, OpencastImportService $opencastImportService, $multimediaObjects)
     {
         $output->writeln(
-            array(
+            [
                 '',
                 '<info> **** Import master tracks to multimedia object **** </info>',
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
-            )
+            ]
         );
 
         foreach ($multimediaObjects as $multimediaObject) {
@@ -265,10 +265,10 @@ EOT
     {
         if ($master) {
             $mediaPackage = $clientService->getMasterMediaPackage($multimediaObject->getProperty('opencast'));
-            $trackTags = array('master');
+            $trackTags = ['master'];
         } else {
             $mediaPackage = $clientService->getMediaPackage($multimediaObject->getProperty('opencast'));
-            $trackTags = array('display');
+            $trackTags = ['display'];
         }
 
         try {
@@ -295,12 +295,12 @@ EOT
             $message = '<info> **** Finding Multimedia Objects (master)**** </info>';
         }
         $output->writeln(
-            array(
+            [
                 '',
                 $message,
                 '',
                 '<comment> ----- Total: </comment>'.count($multimediaObjects),
-            )
+            ]
         );
 
         foreach ($multimediaObjects as $multimediaObject) {

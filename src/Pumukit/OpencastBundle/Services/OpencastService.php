@@ -22,7 +22,7 @@ class OpencastService
     private $defaultVars;
     private $errorIfFileNotExist;
 
-    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = array(), array $urlMapping = array(), array $defaultVars = array(), $errorIfFileNotExist = true)
+    public function __construct(JobService $jobService, ProfileService $profileService, MultimediaObjectService $multimediaObjectService, array $sbsConfiguration = [], array $urlMapping = [], array $defaultVars = [], $errorIfFileNotExist = true)
     {
         $this->jobService = $jobService;
         $this->profileService = $profileService;
@@ -60,7 +60,7 @@ class OpencastService
      *
      * @return bool
      */
-    public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls = array())
+    public function genAutoSbs(MultimediaObject $multimediaObject, $opencastUrls = [])
     {
         if (!$this->generateSbs) {
             return false;
@@ -157,7 +157,7 @@ class OpencastService
      * @param array            $opencastUrls
      * @rettun boolean
      */
-    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls = array())
+    public function generateSbsTrack(MultimediaObject $multimediaObject, $opencastUrls = [])
     {
         if (!$this->generateSbs) {
             return false;
@@ -179,10 +179,10 @@ class OpencastService
 
         $vars = $this->defaultVars;
         if ($opencastUrls) {
-            $vars += array('ocurls' => $opencastUrls);
+            $vars += ['ocurls' => $opencastUrls];
         }
 
-        return $this->jobService->addJob($path, $this->sbsProfileName, 2, $multimediaObject, $language, array(), $vars);
+        return $this->jobService->addJob($path, $this->sbsProfileName, 2, $multimediaObject, $language, [], $vars);
     }
 
     private function useTrackAsSbs(MultimediaObject $multimediaObject, Track $track)
@@ -195,7 +195,7 @@ class OpencastService
 
         $track->addTag('profile:'.$this->sbsProfileName);
 
-        $tags = array('master', 'display');
+        $tags = ['master', 'display'];
         foreach ($tags as $tag) {
             if ($sbsProfile[$tag] && !$track->containsTag($tag)) {
                 $track->addTag($tag);
@@ -224,7 +224,7 @@ class OpencastService
 
         $attachments = $mediaPackage['attachments']['attachment'];
         if (isset($attachments['id'])) {
-            $attachments = array($attachments);
+            $attachments = [$attachments];
         }
 
         foreach ($attachments as $attachment) {
@@ -234,12 +234,12 @@ class OpencastService
 
             if (!in_array(
                 $attachment['type'],
-                array(
+                [
                     'presenter/search+preview',
                     'presentation/search+preview',
                     'presenter/player+preview',
                     'presentation/player+preview',
-                ))
+                ])
             ) {
                 continue;
             }

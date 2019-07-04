@@ -19,6 +19,6 @@ class ManualController extends Controller implements NewAdminControllerInterface
      */
     public function indexAction(Request $request)
     {
-        return array();
+        return [];
     }
 }

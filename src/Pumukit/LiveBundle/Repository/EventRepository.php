@@ -73,19 +73,19 @@ class EventRepository extends DocumentRepository
 
         $nowWithMarginBefore = new \MongoDate(strtotime(sprintf('%s minute', $marginBefore)));
         $nowWithMarginAfter = new \MongoDate(strtotime(sprintf('-%s minute', $marginAfter)));
-        $pipeline = array(
-            array('$match' => array('display' => true)),
-            array('$project' => array('date' => true, 'end' => array('$add' => array('$date', array('$multiply' => array('$duration', 60000)))))),
-            array('$match' => array('$and' => array(array('date' => array('$lte' => $nowWithMarginBefore)), array('end' => array('$gte' => $nowWithMarginAfter))))),
-        );
+        $pipeline = [
+            ['$match' => ['display' => true]],
+            ['$project' => ['date' => true, 'end' => ['$add' => ['$date', ['$multiply' => ['$duration', 60000]]]]]],
+            ['$match' => ['$and' => [['date' => ['$lte' => $nowWithMarginBefore]], ['end' => ['$gte' => $nowWithMarginAfter]]]]],
+        ];
 
         if ($limit) {
-            $pipeline[] = array('$limit' => $limit);
+            $pipeline[] = ['$limit' => $limit];
         }
-        $aggregation = $dmColl->aggregate($pipeline, array('cursor' => array()));
+        $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
 
         if (0 === $aggregation->count()) {
-            return array();
+            return [];
         }
 
         $ids = array_map(function ($e) {

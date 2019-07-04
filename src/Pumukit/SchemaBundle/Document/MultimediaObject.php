@@ -34,13 +34,13 @@ class MultimediaObject
     const STATUS_NEW = -1;
     const STATUS_PROTOTYPE = -2;
 
-    public static $statusTexts = array(
+    public static $statusTexts = [
         self::STATUS_PUBLISHED => 'Published',
         self::STATUS_BLOCKED => 'Blocked',
         self::STATUS_HIDDEN => 'Hidden',
         self::STATUS_NEW => 'New',
         self::STATUS_PROTOTYPE => 'Prototype',
-    );
+    ];
 
     const TYPE_UNKNOWN = 0;
     const TYPE_VIDEO = 1;
@@ -48,13 +48,13 @@ class MultimediaObject
     const TYPE_EXTERNAL = 3;
     const TYPE_LIVE = 4;
 
-    public static $typeTexts = array(
+    public static $typeTexts = [
         self::TYPE_UNKNOWN => '',
         self::TYPE_VIDEO => 'Video',
         self::TYPE_AUDIO => 'Audio',
         self::TYPE_EXTERNAL => 'External',
         self::TYPE_LIVE => 'Live',
-    );
+    ];
 
     /**
      * @var int
@@ -99,7 +99,7 @@ class MultimediaObject
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $seriesTitle = array('en' => '');
+    private $seriesTitle = ['en' => ''];
 
     /**
      * @var Broadcast
@@ -183,19 +183,19 @@ class MultimediaObject
      * @var array
      * @MongoDB\Field(type="raw")
      */
-    private $title = array('en' => '');
+    private $title = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $subtitle = array('en' => '');
+    private $subtitle = ['en' => ''];
 
     /**
      * @var array
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string
@@ -207,7 +207,7 @@ class MultimediaObject
      * @var array
      * @MongoDB\Field(type="raw")
      */
-    private $line2 = array('en' => '');
+    private $line2 = ['en' => ''];
 
     /**
      * @var string
@@ -244,13 +244,13 @@ class MultimediaObject
      * @var array
      * @MongoDB\Raw
      */
-    private $textindex = array();
+    private $textindex = [];
 
     /**
      * @var array
      * @MongoDB\Raw
      */
-    private $secondarytextindex = array();
+    private $secondarytextindex = [];
 
     /**
      * Used locale to override Translation listener`s locale
@@ -894,7 +894,7 @@ class MultimediaObject
         if (!$series->isHide()) {
             $this->seriesTitle = $series->getI18nTitle();
         } else {
-            $this->seriesTitle = array();
+            $this->seriesTitle = [];
         }
     }
 
@@ -1355,7 +1355,7 @@ class MultimediaObject
         $snapshot = array_values($this->tracks->toArray());
         $this->tracks->clear();
 
-        $out = array();
+        $out = [];
         foreach ($snapshot as $key => $track) {
             if ($track->getId() === $trackId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $track;
@@ -1419,7 +1419,7 @@ class MultimediaObject
      */
     public function getTracksWithTag($tag)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->tracks as $track) {
             if ($track->containsTag($tag)) {
@@ -1457,7 +1457,7 @@ class MultimediaObject
      */
     public function getTracksWithAllTags(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->tracks as $track) {
             if ($track->containsAllTags($tags)) {
@@ -1495,7 +1495,7 @@ class MultimediaObject
      */
     public function getTracksWithAnyTag(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->tracks as $track) {
             if ($track->containsAnyTag($tags)) {
@@ -1577,7 +1577,7 @@ class MultimediaObject
      */
     public function getDisplayTrack()
     {
-        return $this->isOnlyAudio() ? $this->getFilteredTrackWithTags(array('display')) : $this->getFilteredTrackWithTags(array('display'), array(), array('audio'));
+        return $this->isOnlyAudio() ? $this->getFilteredTrackWithTags(['display']) : $this->getFilteredTrackWithTags(['display'], [], ['audio']);
     }
 
     /**
@@ -1591,9 +1591,9 @@ class MultimediaObject
      *
      * @return array
      */
-    public function getFilteredTracksWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array(), $all = true)
+    public function getFilteredTracksWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->tracks as $track) {
             if ($track->getHide() && $all) {
@@ -1629,7 +1629,7 @@ class MultimediaObject
      *
      * @return Track|null
      */
-    public function getFilteredTrackWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array(), $all = true)
+    public function getFilteredTrackWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [], $all = true)
     {
         foreach ($this->tracks as $track) {
             if ($track->getHide() && $all) {
@@ -1665,7 +1665,7 @@ class MultimediaObject
      */
     public function getPeople()
     {
-        $aux = array();
+        $aux = [];
 
         foreach ($this->people as $role) {
             foreach ($role->getPeople() as $person) {
@@ -1687,7 +1687,7 @@ class MultimediaObject
      */
     public function getAllEmbeddedPeopleByPerson($person)
     {
-        $aux = array();
+        $aux = [];
 
         foreach ($this->people as $role) {
             foreach ($role->getPeople() as $embeddedPerson) {
@@ -1709,7 +1709,7 @@ class MultimediaObject
      */
     public function getAllEmbeddedRolesByPerson($person)
     {
-        $aux = array();
+        $aux = [];
 
         foreach ($this->people as $embeddedRole) {
             foreach ($embeddedRole->getPeople() as $embeddedPerson) {
@@ -1822,7 +1822,7 @@ class MultimediaObject
      */
     public function getPeopleByRoleCod($roleCod = null, $always = false)
     {
-        $aux = array();
+        $aux = [];
 
         if (null !== $roleCod) {
             foreach ($this->people as $embeddedRole) {
@@ -1945,7 +1945,7 @@ class MultimediaObject
         $people = array_values($this->getPeopleByRole($role, true));
         $this->getEmbeddedRole($role)->getPeople()->clear();
 
-        $out = array();
+        $out = [];
         foreach ($people as $key => $embeddedPerson) {
             if ($person->getId() == $embeddedPerson->getId()) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $embeddedPerson;
@@ -2109,10 +2109,10 @@ class MultimediaObject
 
         //if ($seconds < 10 ) $minutes = '0' . $seconds;
 
-        return array(
+        return [
             'minutes' => $minutes,
             'seconds' => $seconds,
-        );
+        ];
     }
 
     /**
@@ -2134,8 +2134,8 @@ class MultimediaObject
      */
     public function isMultistream()
     {
-        $presenterTracks = $this->getFilteredTracksWithTags(array('presenter/delivery'));
-        $presentationTracks = $this->getFilteredTracksWithTags(array('presentation/delivery'));
+        $presenterTracks = $this->getFilteredTracksWithTags(['presenter/delivery']);
+        $presentationTracks = $this->getFilteredTracksWithTags(['presentation/delivery']);
         if ($presenterTracks && $presentationTracks) {
             return true;
         } else {

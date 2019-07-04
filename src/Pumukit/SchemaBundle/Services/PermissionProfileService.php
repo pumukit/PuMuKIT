@@ -207,7 +207,7 @@ class PermissionProfileService
     public function batchUpdate(PermissionProfile $permissionProfile, $permissionsList, $executeFlush = true)
     {
         //Clears all permissions for this permissionProfile.
-        $permissionProfile->setPermissions(array());
+        $permissionProfile->setPermissions([]);
         foreach ($permissionsList as $permission) {
             $this->doAddPermission($permissionProfile, $permission, false);
         }
@@ -238,6 +238,6 @@ class PermissionProfileService
      */
     public function getByName($name)
     {
-        return $this->repo->findOneBy(array('name' => $name));
+        return $this->repo->findOneBy(['name' => $name]);
     }
 }

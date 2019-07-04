@@ -230,9 +230,9 @@ class ModulesController extends Controller implements WebTVControllerInterface
                 ->getQuery()
                 ->execute();
         } else {
-            $tag = $dm->getRepository(Tag::class)->findOneBy(array(
+            $tag = $dm->getRepository(Tag::class)->findOneBy([
                 'cod' => $categories,
-            ));
+            ]);
 
             if (!$tag) {
                 throw new NotFoundHttpException('Category not found');

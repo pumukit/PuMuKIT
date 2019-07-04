@@ -22,7 +22,7 @@ class SeriesPicServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -41,8 +41,8 @@ class SeriesPicServiceTest extends WebTestCase
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -219,7 +219,7 @@ class SeriesPicServiceTest extends WebTestCase
      */
     public function testInvalidTargetPath()
     {
-        $seriespicService = new SeriesPicService($this->dm, $this->seriesDispatcher, array('gl'), '/non/existing/path', '/uploads/pic', true);
+        $seriespicService = new SeriesPicService($this->dm, $this->seriesDispatcher, ['gl'], '/non/existing/path', '/uploads/pic', true);
     }
 
     private function deleteCreatedFiles()

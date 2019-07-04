@@ -38,21 +38,21 @@ class Tag
      *
      * @MongoDB\Field(type="raw")
      */
-    private $title = array('en' => '');
+    private $title = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    private $label = array('en' => '');
+    private $label = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string
@@ -117,7 +117,7 @@ class Tag
     /**
      * @MongoDB\ReferenceMany(targetDocument="Tag", mappedBy="parent", sort={"cod": 1})
      */
-    private $children = array();
+    private $children = [];
 
     /**
      * Number of children. Only for cache purposes.
@@ -149,7 +149,7 @@ class Tag
 
     public function __construct()
     {
-        $this->children = array();
+        $this->children = [];
     }
 
     /**

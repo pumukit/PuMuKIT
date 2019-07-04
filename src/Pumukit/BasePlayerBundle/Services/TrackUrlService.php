@@ -34,10 +34,10 @@ class TrackUrlService
             $ext = pathinfo($track->getPath(), PATHINFO_EXTENSION);
         }
 
-        $params = array(
+        $params = [
             'id' => $track->getId(),
             'ext' => $ext,
-        );
+        ];
         $url = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
 
         return $url;

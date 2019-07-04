@@ -30,7 +30,7 @@ class PicExtractorServiceTest extends WebTestCase
             $this->markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
         }
 
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -42,8 +42,8 @@ class PicExtractorServiceTest extends WebTestCase
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
 
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);
@@ -125,6 +125,6 @@ class PicExtractorServiceTest extends WebTestCase
         }
 
         $fs = new Filesystem();
-        $fs->remove(array($dirMmId, $dirVideo, $dirSeriesId, $dirSeries));
+        $fs->remove([$dirMmId, $dirVideo, $dirSeriesId, $dirSeries]);
     }
 }

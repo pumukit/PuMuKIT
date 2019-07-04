@@ -26,18 +26,18 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $permissionProfiles = $this->getResources($request, $criteria);
 
         list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
-        return array(
+        return [
             'permissionprofiles' => $permissionProfiles,
             'permissions' => $permissions,
             'scopes' => $scopes,
             'dependencies' => $dependencies,
-        );
+        ];
     }
 
     /**
@@ -51,7 +51,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $session = $this->get('session');
 
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $permissionProfiles = $this->getResources($request, $criteria);
 
         $page = $session->get('admin/permissionprofile/page', 1);
@@ -66,12 +66,12 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         list($permissions, $dependencies) = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
 
-        return array(
+        return [
             'permissionprofiles' => $permissionProfiles,
             'permissions' => $permissions,
             'scopes' => $scopes,
             'dependencies' => $dependencies,
-        );
+        ];
     }
 
     /**
@@ -91,19 +91,19 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             try {
                 $permissionProfile = $permissionProfileService->update($permissionProfile, true);
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
             if (null === $permissionProfile) {
                 return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
             }
 
-            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list', array('id' => $permissionProfile->getId())));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list', ['id' => $permissionProfile->getId()]));
         }
 
-        return array(
+        return [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -120,20 +120,20 @@ class PermissionProfileController extends AdminController implements NewAdminCon
         $permissionProfile = $this->findOr404($request);
         $form = $this->getForm($permissionProfile, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->handleRequest($request)->isValid()) {
             try {
                 $permissionProfileService->update($permissionProfile);
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_permissionprofile_list'));
         }
 
-        return array(
+        return [
             'permissionprofile' => $permissionProfile,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -148,7 +148,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
     {
         $translator = $this->get('translator');
 
-        $form = $this->createForm(PermissionProfileType::class, $permissionProfile, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PermissionProfileType::class, $permissionProfile, ['translator' => $translator, 'locale' => $locale]);
 
         return $form;
     }
@@ -241,7 +241,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
      */
     private function buildPermissionProfiles($checkedPermissions, $selectedScopes)
     {
-        $permissionProfiles = array();
+        $permissionProfiles = [];
         //Adds scope and checked permissions to permissions.
         foreach ($checkedPermissions as $permission) {
             $data = $this->separateAttributePermissionProfilesIds($permission);
@@ -252,10 +252,10 @@ class PermissionProfileController extends AdminController implements NewAdminCon
             if (isset($permissionProfiles[$data['profileId']])) {
                 $permissionProfiles[$data['profileId']]['scope'] = $data['attribute'];
             } else {
-                $permissionProfiles[$data['profileId']] = array(
-                    'permissions' => array(),
+                $permissionProfiles[$data['profileId']] = [
+                    'permissions' => [],
                     'scope' => $data['attribute'],
-                );
+                ];
             }
         }
 
@@ -264,7 +264,7 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
     private function separateAttributePermissionProfilesIds($pair = '')
     {
-        $data = array('attribute' => '', 'profileId' => '');
+        $data = ['attribute' => '', 'profileId' => ''];
         if ($pair) {
             $output = explode('__', $pair);
             if (array_key_exists(0, $output)) {
@@ -348,6 +348,6 @@ class PermissionProfileController extends AdminController implements NewAdminCon
 
         $dependencies = $permissionService->getAllDependencies();
 
-        return array($permissions, $dependencies);
+        return [$permissions, $dependencies];
     }
 }

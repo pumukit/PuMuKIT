@@ -38,7 +38,7 @@ class SpecialTranslationService
         }
 
         if ($locale) {
-            return $this->translator->trans($embeddedBroadcast->getName(), array(), null, $locale).$groupsDescription;
+            return $this->translator->trans($embeddedBroadcast->getName(), [], null, $locale).$groupsDescription;
         }
 
         return $this->translator->trans($embeddedBroadcast->getName()).$groupsDescription;

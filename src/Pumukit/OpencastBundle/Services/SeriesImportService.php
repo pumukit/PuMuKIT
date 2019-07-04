@@ -16,7 +16,7 @@ class SeriesImportService
     private $seriesDispatcher;
     private $otherLocales;
 
-    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, ClientService $opencastClient, SeriesEventDispatcherService $seriesDispatcher, array $otherLocales = array())
+    public function __construct(DocumentManager $documentManager, FactoryService $factoryService, ClientService $opencastClient, SeriesEventDispatcherService $seriesDispatcher, array $otherLocales = [])
     {
         $this->dm = $documentManager;
         $this->factoryService = $factoryService;
@@ -30,19 +30,19 @@ class SeriesImportService
         $seriesRepo = $this->dm->getRepository(Series::class);
         $seriesOpencastId = $this->getMediaPackageField($mediaPackage, 'series');
         if (isset($seriesOpencastId)) {
-            $series = $seriesRepo->findOneBy(array('properties.opencast' => $seriesOpencastId));
+            $series = $seriesRepo->findOneBy(['properties.opencast' => $seriesOpencastId]);
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesTitle, $seriesOpencastId, $loggedInUser);
             }
         } elseif (null !== ($seriesOpencastSpatial = $this->getSpatialField($mediaPackage))) {
-            $series = $seriesRepo->findOneBy(array('properties.opencastspatial' => $seriesOpencastSpatial));
+            $series = $seriesRepo->findOneBy(['properties.opencastspatial' => $seriesOpencastSpatial]);
             if (!isset($series)) {
                 $seriesTitle = $this->getMediaPackageField($mediaPackage, 'seriestitle');
                 $series = $this->createSeries($seriesOpencastSpatial, $seriesOpencastSpatial, $loggedInUser, true);
             }
         } else {
-            $series = $seriesRepo->findOneBy(array('properties.opencast' => 'default'));
+            $series = $seriesRepo->findOneBy(['properties.opencast' => 'default']);
             if (!isset($series)) {
                 $series = $this->createSeries('MediaPackages without series', 'default', $loggedInUser);
             }
@@ -71,7 +71,7 @@ class SeriesImportService
         return $series;
     }
 
-    private function getMediaPackageField($mediaFields = array(), $field = '')
+    private function getMediaPackageField($mediaFields = [], $field = '')
     {
         if ($mediaFields && $field) {
             if (isset($mediaFields[$field])) {

@@ -99,7 +99,7 @@ class SearchService
             $class = MultimediaObject::class;
         }
 
-        $yearResults = $this->documentManager->getDocumentCollection($class)->aggregate($pipeline, array('cursor' => array()));
+        $yearResults = $this->documentManager->getDocumentCollection($class)->aggregate($pipeline, ['cursor' => []]);
         $years = [];
 
         foreach ($yearResults as $year) {

@@ -33,7 +33,7 @@ class MenuPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds($serviceName.'item');
         foreach ($taggedServices as $id => $tags) {
             // add the transport service to the ItemsList service
-            $definition->addMethodCall('add', array(new Reference($id)));
+            $definition->addMethodCall('add', [new Reference($id)]);
         }
     }
 }

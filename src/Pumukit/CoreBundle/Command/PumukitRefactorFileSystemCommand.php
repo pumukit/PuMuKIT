@@ -29,7 +29,7 @@ class PumukitRefactorFileSystemCommand extends ContainerAwareCommand
     private $force;
     private $id;
     private $regex = '/^[0-9a-z]{24}$/';
-    private $allowedTypes = array('pics', 'materials');
+    private $allowedTypes = ['pics', 'materials'];
 
     protected function configure()
     {
@@ -381,10 +381,10 @@ EOT
     private function findPicsWithoutPaths(DocumentManager $documentManager)
     {
         $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
-            array(
+            [
                 'pics.url' => new \MongoRegex('/uploads/pic/'),
-                'pics.path' => array('$exists' => false),
-            )
+                'pics.path' => ['$exists' => false],
+            ]
         );
 
         return $multimediaObjects;
@@ -400,10 +400,10 @@ EOT
     private function findMaterialsWithoutPaths(DocumentManager $documentManager)
     {
         $multimediaObjects = $documentManager->getRepository(MultimediaObject::class)->findBy(
-            array(
+            [
                 'materials.url' => new \MongoRegex('/uploads/material/'),
-                'materials.path' => array('$exists' => false),
-            )
+                'materials.path' => ['$exists' => false],
+            ]
         );
 
         return $multimediaObjects;
@@ -420,25 +420,25 @@ EOT
     {
         $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline = array(
-            array(
-                '$match' => array(
-                    'pics.path' => array('$regex' => '/uploads/pic/', '$options' => 'i'),
-                ),
-            ),
-        );
-        array_push($pipeline, array('$unwind' => '$pics'));
+        $pipeline = [
+            [
+                '$match' => [
+                    'pics.path' => ['$regex' => '/uploads/pic/', '$options' => 'i'],
+                ],
+            ],
+        ];
+        array_push($pipeline, ['$unwind' => '$pics']);
 
-        $group = array(
-            '$group' => array(
+        $group = [
+            '$group' => [
                 '_id' => '$_id',
-                'series' => array('$addToSet' => '$series'),
-                'pics' => array('$addToSet' => '$pics'),
-            ),
-        );
+                'series' => ['$addToSet' => '$series'],
+                'pics' => ['$addToSet' => '$pics'],
+            ],
+        ];
 
         array_push($pipeline, $group);
-        $pics = $collection->aggregate($pipeline, array('cursor' => array()));
+        $pics = $collection->aggregate($pipeline, ['cursor' => []]);
 
         return $pics;
     }
@@ -454,26 +454,26 @@ EOT
     {
         $collection = $documentManager->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline = array(
-            array(
-                '$match' => array(
-                    'materials' => array('$exists' => true),
-                    'materials.path' => array('$regex' => 'uploads/material/', '$options' => 'i'),
-                ),
-            ),
-        );
-        array_push($pipeline, array('$unwind' => '$materials'));
+        $pipeline = [
+            [
+                '$match' => [
+                    'materials' => ['$exists' => true],
+                    'materials.path' => ['$regex' => 'uploads/material/', '$options' => 'i'],
+                ],
+            ],
+        ];
+        array_push($pipeline, ['$unwind' => '$materials']);
 
-        $group = array(
-            '$group' => array(
+        $group = [
+            '$group' => [
                 '_id' => '$_id',
-                'series' => array('$addToSet' => '$series'),
-                'materials' => array('$addToSet' => '$materials'),
-            ),
-        );
+                'series' => ['$addToSet' => '$series'],
+                'materials' => ['$addToSet' => '$materials'],
+            ],
+        ];
 
         array_push($pipeline, $group);
-        $materials = $collection->aggregate($pipeline, array('cursor' => array()));
+        $materials = $collection->aggregate($pipeline, ['cursor' => []]);
 
         return $materials;
     }
@@ -522,10 +522,10 @@ EOT
      */
     private function createProcessToMove($oldPath, $newPath)
     {
-        $parameters = array(
+        $parameters = [
             $oldPath,
             $newPath,
-        );
+        ];
 
         $builder = new ProcessBuilder();
         $builder->setPrefix('mv');
@@ -561,7 +561,7 @@ EOT
     private function updateMultimediaObjectPic(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
-            array('_id' => new \MongoId($multimediaObjectId))
+            ['_id' => new \MongoId($multimediaObjectId)]
         );
 
         foreach ($multimediaObject->getPics() as $pic) {
@@ -584,7 +584,7 @@ EOT
     private function updateMultimediaObjectMaterial(DocumentManager $documentManager, $multimediaObjectId, $oldPath, $newPath, $newUrl)
     {
         $multimediaObject = $documentManager->getRepository(MultimediaObject::class)->findOneBy(
-            array('_id' => new \MongoId($multimediaObjectId))
+            ['_id' => new \MongoId($multimediaObjectId)]
         );
 
         foreach ($multimediaObject->getMaterials() as $material) {

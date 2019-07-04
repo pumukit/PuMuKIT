@@ -237,7 +237,7 @@ class PersonService
      *
      * @return ArrayCollection
      */
-    public function autoCompletePeopleByName($name, array $exclude = array(), $checkAccents = false)
+    public function autoCompletePeopleByName($name, array $exclude = [], $checkAccents = false)
     {
         if ($checkAccents) {
             //Wating for Mongo 4 and https://docs.mongodb.com/manual/reference/collation/
@@ -490,8 +490,8 @@ class PersonService
      */
     public function getRoles()
     {
-        $criteria = array();
-        $sort = array('rank' => 1);
+        $criteria = [];
+        $sort = ['rank' => 1];
 
         return $this->repoRole->findBy($criteria, $sort);
     }

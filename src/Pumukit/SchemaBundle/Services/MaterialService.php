@@ -157,7 +157,7 @@ class MaterialService
 
         if ($this->forceDeleteOnDisk && $materialPath) {
             $mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
-            $otherMaterials = $mmobjRepo->findBy(array('materials.path' => $materialPath));
+            $otherMaterials = $mmobjRepo->findBy(['materials.path' => $materialPath]);
             if (0 == count($otherMaterials)) {
                 $this->deleteFileOnDisk($materialPath);
             }

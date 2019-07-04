@@ -11,13 +11,13 @@ class PermissionProfileTest extends TestCase
     public function testSetterAndGetter()
     {
         $name = 'User Test Permission';
-        $permissions = array(
+        $permissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
                             'ROLE_ACCESS_IMPORTER',
-                            );
+                            ];
         $system = true;
         $default = true;
         $scope = PermissionProfile::SCOPE_GLOBAL;
@@ -40,13 +40,13 @@ class PermissionProfileTest extends TestCase
     public function testPermissionsCollection()
     {
         $name = 'User Test Permission';
-        $permissions = array(
+        $permissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
                             'ROLE_ACCESS_IMPORTER',
-                            );
+                            ];
         $system = true;
         $default = true;
         $scope = PermissionProfile::SCOPE_GLOBAL;
@@ -66,21 +66,21 @@ class PermissionProfileTest extends TestCase
 
         $this->assertTrue($permissionProfile->containsAllPermissions($permissions));
 
-        $morePermissions = array(
+        $morePermissions = [
                                  Permission::ACCESS_DASHBOARD,
                                  Permission::ACCESS_MULTIMEDIA_SERIES,
                                  Permission::ACCESS_ADMIN_USERS,
-                                 );
+                                 ];
 
-        $fewerPermissions = array(
+        $fewerPermissions = [
                                  Permission::ACCESS_DASHBOARD,
                                  Permission::ACCESS_MULTIMEDIA_SERIES,
-                                 );
+                                 ];
 
-        $notPermissions = array(
+        $notPermissions = [
                                Permission::ACCESS_ADMIN_USERS,
                                Permission::ACCESS_ROLES,
-                               );
+                               ];
 
         $this->assertFalse($permissionProfile->containsAllPermissions($morePermissions));
         $this->assertTrue($permissionProfile->containsAllPermissions($fewerPermissions));
@@ -88,14 +88,14 @@ class PermissionProfileTest extends TestCase
         $this->assertTrue($permissionProfile->containsAnyPermission($morePermissions));
         $this->assertFalse($permissionProfile->containsAnyPermission($notPermissions));
 
-        $newPermissions = array(
+        $newPermissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
                             'ROLE_ACCESS_IMPORTER',
                             Permission::ACCESS_ADMIN_USERS,
-                            );
+                            ];
 
         $this->assertEquals($newPermissions, $permissionProfile->addPermission(Permission::ACCESS_ADMIN_USERS));
         $this->assertTrue($permissionProfile->containsPermission(Permission::ACCESS_ADMIN_USERS));
@@ -109,13 +109,13 @@ class PermissionProfileTest extends TestCase
     public function testIsScope()
     {
         $name = 'User Test Permission';
-        $permissions = array(
+        $permissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
                             Permission::ACCESS_LIVE_CHANNELS,
                             Permission::ACCESS_LIVE_EVENTS,
                             'ROLE_ACCESS_IMPORTER',
-                            );
+                            ];
         $system = true;
         $default = true;
         $scope = PermissionProfile::SCOPE_GLOBAL;

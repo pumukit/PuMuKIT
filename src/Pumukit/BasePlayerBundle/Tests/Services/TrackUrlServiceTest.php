@@ -17,7 +17,7 @@ class TrackUrlServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
 
         $this->client = static::createClient();
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -64,22 +64,22 @@ class TrackUrlServiceTest extends WebTestCase
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         $this->assertEquals(1, $mmobj->getNumview());
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=123-246'));
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=123-246']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         $this->assertEquals(1, $mmobj->getNumview());
         //Views should work if range = 0
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=0-1256'));
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_RANGE' => 'bytes=0-'));
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-1256']);
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         $this->assertEquals(3, $mmobj->getNumview());
         //Start should also work
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 0));
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0]);
         //xTreme case: If either 'start' or 'range' is valid, it adds a numView.
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=0-1256'));
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 0, 'HTTP_RANGE' => 'bytes=123-1256'));
-        $this->client->request('GET', $genUrl, array(), array(), array('HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=123-1256'));
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=0-1256']);
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0, 'HTTP_RANGE' => 'bytes=123-1256']);
+        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=123-1256']);
         $this->dm->clear();
         $mmobj = $this->mmobjRepo->find($mmobj->getId());
         $this->assertEquals(6, $mmobj->getNumview());

@@ -69,14 +69,14 @@ class Role
      *
      * @MongoDB\Field(type="raw")
      */
-    private $name = array('en' => '');
+    private $name = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    private $text = array('en' => '');
+    private $text = ['en' => ''];
 
     /**
      * @var string

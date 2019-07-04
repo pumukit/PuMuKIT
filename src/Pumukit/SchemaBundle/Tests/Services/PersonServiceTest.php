@@ -20,7 +20,7 @@ class PersonServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -36,11 +36,11 @@ class PersonServiceTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Person::class)->remove(array());
-        $this->dm->getDocumentCollection(Role::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
-        $this->dm->getDocumentCollection(User::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Person::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(User::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -352,7 +352,7 @@ class PersonServiceTest extends WebTestCase
         $this->assertTrue(in_array($series2, $seriesKate->toArray(), true));
 
         $seriesKate1 = $this->personService->findSeriesWithPerson($personKate, 1);
-        $this->assertEquals(array($series1), $seriesKate1->toArray());
+        $this->assertEquals([$series1], $seriesKate1->toArray());
     }
 
     public function testCreateRelationPerson()
@@ -413,7 +413,7 @@ class PersonServiceTest extends WebTestCase
 
         $peopleBob = array_values($this->personService->autoCompletePeopleByName('bob')->toArray());
         $this->assertEquals(2, count($peopleBob));
-        $this->assertEquals(array($personBob, $personBobby), $peopleBob);
+        $this->assertEquals([$personBob, $personBobby], $peopleBob);
 
         $peopleKat = array_values($this->personService->autoCompletePeopleByName('kat')->toArray());
         $this->assertEquals(1, count($peopleKat));
@@ -421,7 +421,7 @@ class PersonServiceTest extends WebTestCase
 
         $peopleSm = array_values($this->personService->autoCompletePeopleByName('sm')->toArray());
         $this->assertEquals(2, count($peopleSm));
-        $this->assertEquals(array($personJohn, $personBobby), $peopleSm);
+        $this->assertEquals([$personJohn, $personBobby], $peopleSm);
     }
 
     public function testDeleteRelation()

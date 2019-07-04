@@ -23,8 +23,8 @@ class EmbeddedEventTest extends TestCase
         $embeddedEventSession = new ArrayCollection();
         $live = new Live();
         $url = 'https://test.com';
-        $alreadyHeldMessage = array('en' => 'The event has been already held.');
-        $notYetHeldMessage = array('en' => 'The event has not yet been alread held.');
+        $alreadyHeldMessage = ['en' => 'The event has been already held.'];
+        $notYetHeldMessage = ['en' => 'The event has not yet been alread held.'];
         $locale = 'en';
 
         $embeddedEvent = new EmbeddedEvent();

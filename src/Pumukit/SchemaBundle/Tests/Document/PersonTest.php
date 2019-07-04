@@ -54,10 +54,10 @@ class PersonTest extends TestCase
         $postEs = 'Post de esta persona';
         $bioEs = 'Biografía de esta persona';
 
-        $i18nHonorific = array('en' => $honorific, 'es' => $honorificEs);
-        $i18nFirm = array('en' => $firm, 'es' => $firmEs);
-        $i18nPost = array('en' => $post, 'es' => $postEs);
-        $i18nBio = array('en' => $bio, 'es' => $bioEs);
+        $i18nHonorific = ['en' => $honorific, 'es' => $honorificEs];
+        $i18nFirm = ['en' => $firm, 'es' => $firmEs];
+        $i18nPost = ['en' => $post, 'es' => $postEs];
+        $i18nBio = ['en' => $bio, 'es' => $bioEs];
 
         $person->setI18nHonorific($i18nHonorific);
         $person->setI18nFirm($i18nFirm);

@@ -71,7 +71,7 @@ class SeriesService
         } elseif (EmbeddedBroadcast::TYPE_PASSWORD === $type) {
             $count = $this->mmRepo->countInSeriesWithEmbeddedBroadcastPassword($series, $type, $embeddedBroadcast->getPassword());
         } elseif (EmbeddedBroadcast::TYPE_GROUPS === $type) {
-            $groups = array();
+            $groups = [];
             foreach ($embeddedBroadcast->getGroups() as $group) {
                 $groups[] = new \MongoId($group->getId());
             }
@@ -100,12 +100,12 @@ class SeriesService
      *
      * @return array
      */
-    public function getSeriesOfUser(User $user, $onlyAdminSeries = false, $roleOwnerCode = '', $sort = array(), $limit = 0)
+    public function getSeriesOfUser(User $user, $onlyAdminSeries = false, $roleOwnerCode = '', $sort = [], $limit = 0)
     {
         if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
-            return $this->repo->findBy(array(), $sort, $limit);
+            return $this->repo->findBy([], $sort, $limit);
         }
-        $groups = array();
+        $groups = [];
         foreach ($user->getGroups() as $group) {
             $groups[] = $group->getId();
         }

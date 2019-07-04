@@ -73,7 +73,7 @@ class Element
      *
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * Used locale to override Translation listener`s locale
@@ -85,7 +85,7 @@ class Element
 
     public function __construct()
     {
-        $this->tags = array();
+        $this->tags = [];
     }
 
     /**

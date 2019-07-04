@@ -17,7 +17,7 @@ class UserRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -27,13 +27,13 @@ class UserRepositoryTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(Person::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(User::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Group::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 

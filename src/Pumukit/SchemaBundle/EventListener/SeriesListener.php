@@ -40,8 +40,8 @@ class SeriesListener
      */
     public function updateTextIndex($series)
     {
-        $textIndex = array();
-        $secondaryTextIndex = array();
+        $textIndex = [];
+        $secondaryTextIndex = [];
         $title = $series->getI18nTitle();
         foreach (array_keys($title) as $lang) {
             $text = '';
@@ -52,8 +52,8 @@ class SeriesListener
             $text .= ' | '.$series->getKeyword($lang);
             $secondaryText .= $series->getDescription($lang);
 
-            $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));
-            $secondaryTextIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
+            $textIndex[] = ['indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text)];
+            $secondaryTextIndex[] = ['indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText)];
         }
         $series->setTextIndex($textIndex);
         $series->setSecondaryTextIndex($secondaryTextIndex);

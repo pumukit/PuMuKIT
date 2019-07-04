@@ -120,20 +120,20 @@ class TrackUpdateType extends AbstractType
             function (FormEvent $event) {
                 $track = $event->getData();
 
-                $formOptions = array(
+                $formOptions = [
                     'mapped' => false,
                     'required' => false,
                     'disabled' => !$this->isSuperAdmin,
-                    'attr' => array(
+                    'attr' => [
                         'aria-label' => $this->translator->trans(
                             'Tags',
-                            array(),
+                            [],
                             null,
                             $this->locale
                         ),
-                    ),
+                    ],
                     'data' => implode(', ', $track->getTags()),
-                );
+                ];
 
                 $event->getForm()->add('tags', TextType::class, $formOptions);
             }

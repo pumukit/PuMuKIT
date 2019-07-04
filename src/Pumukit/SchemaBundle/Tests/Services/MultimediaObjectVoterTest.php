@@ -19,7 +19,7 @@ class MultimediaObjectVoterTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->voter = static::$kernel->getContainer()
@@ -46,24 +46,24 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertFalse($can);
 
         $tag = new Tag();
         $tag->setCod('PUCHWEBTV');
         $mmobj->addTag($tag);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_HIDDEN);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_BLOCKED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertFalse($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -71,18 +71,18 @@ class MultimediaObjectVoterTest extends WebTestCase
         $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
         $mmobj->setEmbeddedBroadcast($brodcast);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertFalse($can);
 
         $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, null));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, null]);
         $this->assertFalse($can);
     }
 
     public function testTrackAccessGlobalScope()
     {
         $user = new User();
-        $user->setRoles(array('ROLE_SUPER_ADMIN'));
+        $user->setRoles(['ROLE_SUPER_ADMIN']);
 
         $mmobj = new MultimediaObject();
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -91,24 +91,24 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $tag = new Tag();
         $tag->setCod('PUCHWEBTV');
         $mmobj->addTag($tag);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_HIDDEN);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_BLOCKED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -116,18 +116,18 @@ class MultimediaObjectVoterTest extends WebTestCase
         $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
         $mmobj->setEmbeddedBroadcast($brodcast);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
     }
 
     public function testTrackAccessPersonalScope()
     {
         $user = new User();
-        $user->setRoles(array(PermissionProfile::SCOPE_PERSONAL));
+        $user->setRoles([PermissionProfile::SCOPE_PERSONAL]);
 
         $mmobj = new MultimediaObject();
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -138,24 +138,24 @@ class MultimediaObjectVoterTest extends WebTestCase
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertFalse($can);
 
         $tag = new Tag();
         $tag->setCod('PUCHWEBTV');
         $mmobj->addTag($tag);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_HIDDEN);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_BLOCKED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertFalse($can);
 
         $mmobj->setStatus(MultimediaObject::STATUS_PUBLISHED);
@@ -163,35 +163,35 @@ class MultimediaObjectVoterTest extends WebTestCase
         $brodcast->setType(EmbeddedBroadcast::TYPE_LOGIN);
         $mmobj->setEmbeddedBroadcast($brodcast);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $brodcast->setType(EmbeddedBroadcast::TYPE_GROUPS);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertFalse($can);
 
         $group = new Group('key1');
         $brodcast->addGroup($group);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertFalse($can);
 
         $user->addGroup($group);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $this->userService->addOwnerUserToMultimediaObject($mmobj, $user, false);
 
         $mmobj->setStatus(MultimediaObject::STATUS_BLOCKED);
 
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
 
         $mmobj->removeTag($tag);
-        $can = $this->invokeMethod($this->voter, 'canPlay', array($mmobj, $user));
+        $can = $this->invokeMethod($this->voter, 'canPlay', [$mmobj, $user]);
         $this->assertTrue($can);
     }
 
-    private function invokeMethod(&$object, $methodName, array $parameters = array())
+    private function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

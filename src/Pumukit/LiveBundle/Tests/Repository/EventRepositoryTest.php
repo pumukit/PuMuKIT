@@ -13,14 +13,14 @@ class EventRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Event::class);
 
-        $this->dm->getDocumentCollection(Event::class)->remove(array());
-        $this->dm->getDocumentCollection(Live::class)->remove(array());
+        $this->dm->getDocumentCollection(Event::class)->remove([]);
+        $this->dm->getDocumentCollection(Live::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -119,22 +119,22 @@ class EventRepositoryTest extends WebTestCase
         $this->dm->persist($event4);
         $this->dm->flush();
 
-        $events = array($event4);
+        $events = [$event4];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(1, $date)->toArray()));
 
-        $events = array($event4, $event1);
+        $events = [$event4, $event1];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(2, $date)->toArray()));
 
-        $events = array($event4, $event1, $event3);
+        $events = [$event4, $event1, $event3];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(3, $date)->toArray()));
 
-        $events = array($event4, $event1, $event3, $event2);
+        $events = [$event4, $event1, $event3, $event2];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date)->toArray()));
 
-        $events = array($event1, $event2);
+        $events = [$event1, $event2];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date, $live1)->toArray()));
 
-        $events = array($event4, $event3);
+        $events = [$event4, $event3];
         $this->assertEquals($events, array_values($this->repo->findFutureAndNotFinished(4, $date, $live2)->toArray()));
     }
 

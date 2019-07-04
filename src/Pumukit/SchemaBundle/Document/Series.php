@@ -30,23 +30,23 @@ class Series
     const SORT_REC_ASC = 4;
     const SORT_ALPHAB = 5;
 
-    public static $sortCriteria = array(
-        self::SORT_MANUAL => array('rank' => 'asc'),
-        self::SORT_PUB_ASC => array('public_date' => 'asc'),
-        self::SORT_PUB_DES => array('public_date' => 'des'),
-        self::SORT_REC_DES => array('record_date' => 'des'),
-        self::SORT_REC_ASC => array('record_date' => 'asc'),
-        self::SORT_ALPHAB => array('title.es' => 'asc'),
-    );
+    public static $sortCriteria = [
+        self::SORT_MANUAL => ['rank' => 'asc'],
+        self::SORT_PUB_ASC => ['public_date' => 'asc'],
+        self::SORT_PUB_DES => ['public_date' => 'des'],
+        self::SORT_REC_DES => ['record_date' => 'des'],
+        self::SORT_REC_ASC => ['record_date' => 'asc'],
+        self::SORT_ALPHAB => ['title.es' => 'asc'],
+    ];
 
-    public static $sortText = array(
+    public static $sortText = [
         self::SORT_MANUAL => 'manual',
         self::SORT_PUB_ASC => 'publication date ascending',
         self::SORT_PUB_DES => 'publication date descending',
         self::SORT_REC_DES => 'recording date descending',
         self::SORT_REC_ASC => 'recording date ascending',
         self::SORT_ALPHAB => 'title',
-    );
+    ];
 
     /**
      * @MongoDB\Id
@@ -129,19 +129,19 @@ class Series
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $title = array('en' => '');
+    private $title = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $subtitle = array('en' => '');
+    private $subtitle = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string
@@ -153,31 +153,31 @@ class Series
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $header = array('en' => '');
+    private $header = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $footer = array('en' => '');
+    private $footer = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $line2 = array('en' => '');
+    private $line2 = ['en' => ''];
 
     /**
      * @var array
      * @MongoDB\Raw
      */
-    private $textindex = array();
+    private $textindex = [];
 
     /**
      * @var array
      * @MongoDB\Raw
      */
-    private $secondarytextindex = array();
+    private $secondarytextindex = [];
 
     /**
      * Used locale to override Translation listener`s locale

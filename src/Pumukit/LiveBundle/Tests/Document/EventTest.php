@@ -19,7 +19,7 @@ class EventTest extends TestCase
         $display = 0;
         $create_serial = 0;
         $locale = 'en';
-        $schedule = array('date' => $date, 'duration' => $duration);
+        $schedule = ['date' => $date, 'duration' => $duration];
 
         $pic = new Pic();
         $imagePath = '/path/to/image.jpg';

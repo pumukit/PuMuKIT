@@ -12,13 +12,13 @@ class LiveRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Live::class);
 
-        $this->dm->getDocumentCollection(Live::class)->remove(array());
+        $this->dm->getDocumentCollection(Live::class)->remove([]);
         $this->dm->flush();
     }
 

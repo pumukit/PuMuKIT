@@ -39,7 +39,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
                 $output->writeln('No multimedia object with id '.$mmObjId);
             }
         } else {
-            if ($mmobjRepo->findOneBy(array('properties.opencast' => $opencastId))) {
+            if ($mmobjRepo->findOneBy(['properties.opencast' => $opencastId])) {
                 $output->writeln('Mediapackage '.$opencastId.' has already been imported, skipping to next mediapackage');
             } else {
                 $opencastImportService->importRecording($opencastId, $input->getOption('invert'));
@@ -73,11 +73,11 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             // NOTE: Multiple tracks
             $limit = count($tracks);
             for ($i = 0; $i < $limit; ++$i) {
-                $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, array('display'), $language);
+                $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, $i, ['display'], $language);
             }
         } else {
             // NOTE: Single track
-            $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, array('display'), $language);
+            $opencastImportService->createTrackFromMediaPackage($mediaPackage, $multimediaObject, null, ['display'], $language);
         }
 
         $mmsService->updateMultimediaObject($multimediaObject);

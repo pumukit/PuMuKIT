@@ -21,11 +21,11 @@ class CreateMMOCommand extends ContainerAwareCommand
     private $tagService;
     private $pmk2AllLocales;
 
-    private $validStatuses = array(
+    private $validStatuses = [
         'published' => MultimediaObject::STATUS_PUBLISHED,
         'blocked' => MultimediaObject::STATUS_BLOCKED,
         'hidden' => MultimediaObject::STATUS_HIDDEN,
-    );
+    ];
 
     protected function configure()
     {
@@ -59,7 +59,7 @@ EOT
         $this->inspectionService = $this->getContainer()->get('pumukit.inspection');
         $this->factoryService = $this->getContainer()->get('pumukitschema.factory');
         $this->tagService = $this->getContainer()->get('pumukitschema.tag');
-        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), array('en')));
+        $this->pmk2AllLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -106,7 +106,7 @@ EOT
 
         $seriesTitle = basename(dirname($path));
 
-        if (in_array($seriesTitle, array('INBOX_MASTER_COPY', 'INBOX_MASTER_H264'))) {
+        if (in_array($seriesTitle, ['INBOX_MASTER_COPY', 'INBOX_MASTER_H264'])) {
             $seriesTitle = 'AUTOIMPORT';
         }
 
@@ -123,9 +123,9 @@ EOT
             throw new \Exception('The file ('.$path.') is not a valid video or audio file (duration is zero)');
         }
 
-        $series = $this->seriesRepo->findOneBy(array('title.'.$locale => $seriesTitle));
+        $series = $this->seriesRepo->findOneBy(['title.'.$locale => $seriesTitle]);
         if (!$series) {
-            $seriesTitleAllLocales = array($locale => $seriesTitle);
+            $seriesTitleAllLocales = [$locale => $seriesTitle];
             foreach ($this->pmk2AllLocales as $l) {
                 $seriesTitleAllLocales[$l] = $seriesTitle;
             }
@@ -141,7 +141,7 @@ EOT
         }
         $this->tagService->addTagByCodToMultimediaObject($multimediaObject, 'PUCHWEBTV');
 
-        $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, array());
+        $this->jobService->createTrackFromInboxOnServer($multimediaObject, $path, $profile, 2, $locale, []);
     }
 
     private function getDefaultMasterProfile()

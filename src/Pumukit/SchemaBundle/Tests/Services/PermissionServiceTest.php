@@ -14,7 +14,7 @@ class PermissionServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -45,10 +45,10 @@ class PermissionServiceTest extends WebTestCase
     public function testConstructorDuplicatedRoleException()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $externalPermissions[] = array(
+        $externalPermissions[] = [
             'role' => 'ROLE_FOUR',
             'description' => 'Access Four',
-        );
+        ];
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $permissionService->getAllPermissionValues();
     }
@@ -60,10 +60,10 @@ class PermissionServiceTest extends WebTestCase
     public function testConstructorRoleNameException()
     {
         $externalPermissions = $this->getExternalPermissions();
-        $externalPermissions[] = array(
+        $externalPermissions[] = [
             'role' => 'INVALID_NAME',
             'description' => 'Invalid Name',
-        );
+        ];
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $permissionService->getAllPermissionValues();
     }
@@ -100,22 +100,22 @@ class PermissionServiceTest extends WebTestCase
             return $a['dependencies'];
         }, Permission::$permissionDescription);
 
-        $allDependencies['ROLE_ONE'] = array(
-            PermissionProfile::SCOPE_GLOBAL => array('ROLE_TWO', 'ROLE_THREE'),
-            PermissionProfile::SCOPE_PERSONAL => array('ROLE_TWO'),
-        );
-        $allDependencies['ROLE_TWO'] = array(
-            PermissionProfile::SCOPE_GLOBAL => array('ROLE_THREE', 'ROLE_ONE'),
-            PermissionProfile::SCOPE_PERSONAL => array(),
-        );
-        $allDependencies['ROLE_THREE'] = array(
-            PermissionProfile::SCOPE_GLOBAL => array('ROLE_ONE', 'ROLE_TWO'),
-            PermissionProfile::SCOPE_PERSONAL => array(),
-        );
-        $allDependencies['ROLE_FOUR'] = array(
-            PermissionProfile::SCOPE_GLOBAL => array(),
-            PermissionProfile::SCOPE_PERSONAL => array(),
-        );
+        $allDependencies['ROLE_ONE'] = [
+            PermissionProfile::SCOPE_GLOBAL => ['ROLE_TWO', 'ROLE_THREE'],
+            PermissionProfile::SCOPE_PERSONAL => ['ROLE_TWO'],
+        ];
+        $allDependencies['ROLE_TWO'] = [
+            PermissionProfile::SCOPE_GLOBAL => ['ROLE_THREE', 'ROLE_ONE'],
+            PermissionProfile::SCOPE_PERSONAL => [],
+        ];
+        $allDependencies['ROLE_THREE'] = [
+            PermissionProfile::SCOPE_GLOBAL => ['ROLE_ONE', 'ROLE_TWO'],
+            PermissionProfile::SCOPE_PERSONAL => [],
+        ];
+        $allDependencies['ROLE_FOUR'] = [
+            PermissionProfile::SCOPE_GLOBAL => [],
+            PermissionProfile::SCOPE_PERSONAL => [],
+        ];
 
         $this->assertEquals($allDependencies, $permissionService->getAllDependencies());
     }
@@ -125,14 +125,14 @@ class PermissionServiceTest extends WebTestCase
         $externalPermissions = $this->getExternalPermissions();
         $permissionService = new PermissionService($this->dm, $externalPermissions);
 
-        $this->assertEquals(array('ROLE_TWO', 'ROLE_THREE'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array('ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array('ROLE_THREE', 'ROLE_ONE'), $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array('ROLE_ONE', 'ROLE_TWO'), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
-        $this->assertEquals(array(), $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(['ROLE_TWO', 'ROLE_THREE'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals(['ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[0]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(['ROLE_THREE', 'ROLE_ONE'], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[1]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals(['ROLE_ONE', 'ROLE_TWO'], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[2]['role'], PermissionProfile::SCOPE_PERSONAL));
+        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_GLOBAL));
+        $this->assertEquals([], $permissionService->getDependenciesByScope($externalPermissions[3]['role'], PermissionProfile::SCOPE_PERSONAL));
     }
 
     /**
@@ -163,14 +163,14 @@ class PermissionServiceTest extends WebTestCase
      */
     public function testGetDependenciesByScopeInvalidDependency()
     {
-        $erroringPermission = array(
+        $erroringPermission = [
             'role' => 'ROLE_BROKEN_DEPENDENCY',
             'description' => 'Access Three',
-            'dependencies' => array(
-                'global' => array('ROLE_ONE', 'ROLE_TWO'),
-                'personal' => array('ROLE_DEPENDENCY'),
-            ),
-        );
+            'dependencies' => [
+                'global' => ['ROLE_ONE', 'ROLE_TWO'],
+                'personal' => ['ROLE_DEPENDENCY'],
+            ],
+        ];
         $externalPermissions = $this->getExternalPermissions();
         $externalPermissions[] = $erroringPermission;
         $permissionService = new PermissionService($this->dm, $externalPermissions);
@@ -183,47 +183,47 @@ class PermissionServiceTest extends WebTestCase
      */
     public function testExceptionRole()
     {
-        $externalPermissions = array(
-            array(
+        $externalPermissions = [
+            [
                 'role' => 'NOT_VALID',
                 'description' => 'Not valid',
-            ),
-        );
+            ],
+        ];
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $permissionService->getAllPermissionValues();
     }
 
     private function getExternalPermissions()
     {
-        return array(
-            array(
+        return [
+            [
                 'role' => 'ROLE_ONE',
                 'description' => 'Access One',
-                'dependencies' => array(
-                    'global' => array('ROLE_TWO'),
-                    'personal' => array('ROLE_TWO'),
-                ),
-            ),
-            array(
+                'dependencies' => [
+                    'global' => ['ROLE_TWO'],
+                    'personal' => ['ROLE_TWO'],
+                ],
+            ],
+            [
                 'role' => 'ROLE_TWO',
                 'description' => 'Access Two',
-                'dependencies' => array(
-                    'global' => array('ROLE_THREE'),
-                    'personal' => array(),
-                ),
-            ),
-            array(
+                'dependencies' => [
+                    'global' => ['ROLE_THREE'],
+                    'personal' => [],
+                ],
+            ],
+            [
                 'role' => 'ROLE_THREE',
                 'description' => 'Access Three',
-                'dependencies' => array(
-                    'global' => array('ROLE_ONE', 'ROLE_TWO'),
-                    'personal' => array('ROLE_THREE'),
-                ),
-            ),
-            array(
+                'dependencies' => [
+                    'global' => ['ROLE_ONE', 'ROLE_TWO'],
+                    'personal' => ['ROLE_THREE'],
+                ],
+            ],
+            [
                 'role' => 'ROLE_FOUR',
                 'description' => 'Access Four',
-            ),
-        );
+            ],
+        ];
     }
 }

@@ -31,6 +31,6 @@ class ConsoleExceptionListener
             $command->getName()
         );
 
-        $this->logger->error($message, array('exception' => $exception));
+        $this->logger->error($message, ['exception' => $exception]);
     }
 }

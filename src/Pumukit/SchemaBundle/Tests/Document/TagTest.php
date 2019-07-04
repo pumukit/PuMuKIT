@@ -13,7 +13,7 @@ class TagTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -24,7 +24,7 @@ class TagTest extends WebTestCase
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
 
         $this->dm->getDocumentCollection(Tag::class)
-      ->remove(array());
+      ->remove([]);
     }
 
     public function tearDown()
@@ -48,7 +48,7 @@ class TagTest extends WebTestCase
         $updated = new \DateTime('now');
         $display = true;
         $youtubeProperty = 'w7dD-JJJytM&list=PLmXxqSJJq-yUfrjvKe5c5LX_1x7nGVF6c';
-        $properties = array('youtube' => $youtubeProperty);
+        $properties = ['youtube' => $youtubeProperty];
 
         $tag = new Tag();
 
@@ -81,9 +81,9 @@ class TagTest extends WebTestCase
         $this->assertEquals('', $tag->getDescription('fr'));
 
         $titleEs = 'título';
-        $titleArray = array('en' => $title, 'es' => $titleEs);
+        $titleArray = ['en' => $title, 'es' => $titleEs];
         $descriptionEs = 'descripción';
-        $descriptionArray = array('en' => $description, 'es' => $descriptionEs);
+        $descriptionArray = ['en' => $description, 'es' => $descriptionEs];
 
         $tag->setI18nTitle($titleArray);
         $tag->setI18nDescription($descriptionArray);

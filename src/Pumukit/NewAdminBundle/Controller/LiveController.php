@@ -31,19 +31,19 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             $resource = $this->update($resource);
 
             if (null === $resource) {
-                return new JsonResponse(array('liveId' => null));
+                return new JsonResponse(['liveId' => null]);
             }
             $this->get('session')->set('admin/live/id', $resource->getId());
 
-            return new JsonResponse(array('liveId' => $resource->getId()));
+            return new JsonResponse(['liveId' => $resource->getId()]);
         }
 
         return $this->render('PumukitNewAdminBundle:Live:create.html.twig',
-            array(
+            [
                 'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
-            ));
+            ]);
     }
 
     /**
@@ -65,18 +65,18 @@ class LiveController extends AdminController implements NewAdminControllerInterf
                 $dm->persist($resource);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
-            array(
+            [
                 'enableChat' => $this->container->getParameter('pumukit_live.chat.enable'),
                 'live' => $resource,
                 'form' => $form->createView(),
-            ));
+            ]);
     }
 
     /**
@@ -125,9 +125,9 @@ class LiveController extends AdminController implements NewAdminControllerInterf
 
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
-        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($resourceId)));
+        $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new \MongoId($resourceId)]);
         if ($liveEvents) {
-            return new JsonResponse(array('error'));
+            return new JsonResponse(['error']);
         }
 
         if ($resourceId === $this->get('session')->get('admin/'.$resourceName.'/id')) {
@@ -137,7 +137,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $dm->remove($resource);
         $dm->flush();
 
-        return new JsonResponse(array('success'));
+        return new JsonResponse(['success']);
     }
 
     public function batchDeleteAction(Request $request)
@@ -181,7 +181,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
         $dm = $this->container->get('doctrine_mongodb')->getManager();
 
         foreach ($ids as $id) {
-            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(array('embeddedEvent.live.$id' => new \MongoId($id)));
+            $liveEvents = $dm->getRepository(MultimediaObject::class)->findOneBy(['embeddedEvent.live.$id' => new \MongoId($id)]);
             if ($liveEvents) {
                 $emptyChannels = false;
                 $channelId = $id;
@@ -189,7 +189,7 @@ class LiveController extends AdminController implements NewAdminControllerInterf
             }
         }
 
-        return array('emptyChannels' => $emptyChannels, 'channelId' => $channelId);
+        return ['emptyChannels' => $emptyChannels, 'channelId' => $channelId];
     }
 
     public function createNew()

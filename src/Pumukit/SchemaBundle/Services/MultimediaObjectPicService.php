@@ -200,7 +200,7 @@ class MultimediaObjectPicService
         $this->dm->flush();
 
         if ($this->forceDeleteOnDisk && $picPath) {
-            $otherPics = $this->repo->findBy(array('pics.path' => $picPath));
+            $otherPics = $this->repo->findBy(['pics.path' => $picPath]);
             if (0 == count($otherPics)) {
                 $this->deleteFileOnDisk($picPath, $multimediaObject);
             }

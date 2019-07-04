@@ -142,13 +142,13 @@ EOT
         $pics = $this->picService->findPicsByOptions($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
 
         if ($this->convert) {
-            $params = array(
+            $params = [
                 'size' => $this->convert_size,
                 'ext' => $this->convert_ext,
                 'quality' => $this->convert_quality,
                 'max_width' => $this->convert_max_width,
                 'max_height' => $this->convert_max_height,
-            );
+            ];
             $data = $this->picService->convertImage($pics, $params, $this->no_replace);
             $this->showOutput($data);
         } else {
@@ -164,7 +164,7 @@ EOT
      */
     private function checkInputOptions()
     {
-        $isValidInput = array('success' => true);
+        $isValidInput = ['success' => true];
         if ($this->size && !is_string($this->size)) {
             $isValidInput['success'] = false;
             $isValidInput['message'] = 'Size must be string, then will be converted';
@@ -185,12 +185,12 @@ EOT
             $isValidInput['message'] = 'Tags must be string';
         }
 
-        if ($this->exists && !in_array(strtolower($this->exists), array('false', 'true', '1', '0'))) {
+        if ($this->exists && !in_array(strtolower($this->exists), ['false', 'true', '1', '0'])) {
             $isValidInput['success'] = false;
             $isValidInput['message'] = 'Exists must be boolean';
         }
 
-        if (!in_array($this->type, array('mm', 'series'))) {
+        if (!in_array($this->type, ['mm', 'series'])) {
             $isValidInput['success'] = false;
             $isValidInput['message'] = 'Type must be have the value series or mm';
         }

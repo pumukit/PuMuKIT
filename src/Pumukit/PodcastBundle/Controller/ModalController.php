@@ -16,6 +16,6 @@ class ModalController extends Controller
      */
     public function indexAction(Request $request, MultimediaObject $mm)
     {
-        return array('mm' => $mm);
+        return ['mm' => $mm];
     }
 }

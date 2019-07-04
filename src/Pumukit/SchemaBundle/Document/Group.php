@@ -242,7 +242,7 @@ class Group implements GroupInterface
      */
     public function getRoles()
     {
-        return array();
+        return [];
     }
 
     /**

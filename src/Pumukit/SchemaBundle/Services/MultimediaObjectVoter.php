@@ -28,7 +28,7 @@ class MultimediaObjectVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, array(self::EDIT, self::PLAY, self::VIEW_METADATA))) {
+        if (!in_array($attribute, [self::EDIT, self::PLAY, self::VIEW_METADATA])) {
             return false;
         }
 

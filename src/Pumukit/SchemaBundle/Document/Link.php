@@ -15,7 +15,7 @@ class Link extends Element
      * @var array
      * @MongoDB\Field(type="raw")
      */
-    private $name = array('en' => '');
+    private $name = ['en' => ''];
 
     /**
      * Set name.

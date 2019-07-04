@@ -50,11 +50,11 @@ EOT
         $jobsPending = 0;
         $jobsExecuting = 0;
 
-        $jobsByStatus = $jobColl->aggregate(array(
-            array('$group' => array('_id' => '$status', 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()));
+        $jobsByStatus = $jobColl->aggregate([
+            ['$group' => ['_id' => '$status', 'count' => ['$sum' => 1]]],
+        ], ['cursor' => []]);
         foreach ($jobsByStatus as $jg) {
-            if (in_array($jg['_id'], array(Job::STATUS_PAUSED, Job::STATUS_WAITING))) {
+            if (in_array($jg['_id'], [Job::STATUS_PAUSED, Job::STATUS_WAITING])) {
                 $jobsPending += $jg['count'];
             } elseif (Job::STATUS_EXECUTING == $jg['_id']) {
                 $jobsPending = $jg['count'];
@@ -62,19 +62,19 @@ EOT
         }
 
         $jobsPendingInMmObjResult = $mmObjColl->aggregate(
-            array(
-                array('$unwind' => '$properties.pending_jobs'),
-                array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-            ),
-            array('cursor' => array())
+            [
+                ['$unwind' => '$properties.pending_jobs'],
+                ['$group' => ['_id' => null, 'count' => ['$sum' => 1]]],
+            ],
+            ['cursor' => []]
         )->toArray();
 
         $jobsPendingInMmObj = $jobsPendingInMmObjResult[0]['count'] ?? 0;
 
-        $jobsExecutingInMmObjResult = $mmObjColl->aggregate(array(
-            array('$unwind' => '$properties.executing_jobs'),
-            array('$group' => array('_id' => null, 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()))->toArray();
+        $jobsExecutingInMmObjResult = $mmObjColl->aggregate([
+            ['$unwind' => '$properties.executing_jobs'],
+            ['$group' => ['_id' => null, 'count' => ['$sum' => 1]]],
+        ], ['cursor' => []])->toArray();
 
         $jobsExecutingInMmObj = $jobsExecutingInMmObjResult[0]['count'] ?? 0;
 
@@ -91,10 +91,10 @@ EOT
     {
         switch ($type) {
         case 'pending':
-            $statuses = array(Job::STATUS_PAUSED, Job::STATUS_WAITING);
+            $statuses = [Job::STATUS_PAUSED, Job::STATUS_WAITING];
             break;
         case 'executing':
-            $statuses = array(Job::STATUS_EXECUTING);
+            $statuses = [Job::STATUS_EXECUTING];
             break;
         default:
             throw new \InvalidArgumentException('type argument should be "pending" or "executing". Not'.$type);
@@ -135,27 +135,27 @@ EOT
         $tagColl = $this->dm->getDocumentCollection(Tag::class);
         $mmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
 
-        $tagsInMMAggResult = $mmColl->aggregate(array(
-            array('$match' => array(
+        $tagsInMMAggResult = $mmColl->aggregate([
+            ['$match' => [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
-                'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE,
-                ),
-            )),
-            array('$project' => array('_id' => '$tags.cod')),
-            array('$unwind' => '$_id'),
-            array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()));
+                'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE,
+                ],
+            ]],
+            ['$project' => ['_id' => '$tags.cod']],
+            ['$unwind' => '$_id'],
+            ['$group' => ['_id' => '$_id', 'count' => ['$sum' => 1]]],
+        ], ['cursor' => []]);
 
-        $tagsInMM = array();
+        $tagsInMM = [];
         foreach ($tagsInMMAggResult as $i) {
             $tagsInMM[$i['_id']] = $i['count'];
         }
 
-        $tagParentsAggResult = $tagColl->aggregate(array(
-            array('$group' => array('_id' => '$parent', 'count' => array('$sum' => 1))),
-        ), array('cursor' => array()));
+        $tagParentsAggResult = $tagColl->aggregate([
+            ['$group' => ['_id' => '$parent', 'count' => ['$sum' => 1]]],
+        ], ['cursor' => []]);
 
-        $tagParents = array();
+        $tagParents = [];
         foreach ($tagParentsAggResult as $i) {
             $key = (string) $i['_id']['$id'];
             $tagParents[$key] = $i['count'];

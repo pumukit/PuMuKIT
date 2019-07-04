@@ -13,7 +13,7 @@ class MultimediaObjectSyncService
 
     private $publishingDecisionCode = 'PUBDECISIONS';
 
-    private $syncFields = array(
+    private $syncFields = [
         'publishingdecisions' => 'Publishing Decisions',
         'description' => 'Description',
         'comments' => 'Comments',
@@ -26,9 +26,9 @@ class MultimediaObjectSyncService
         'subseries' => 'Subseries',
         'owners' => 'Owners',
         'groups' => 'Groups',
-    );
+    ];
 
-    private $syncMethods = array(
+    private $syncMethods = [
         'comments' => 'syncComments',
         'copyright' => 'syncCopyright',
         'description' => 'syncDescription',
@@ -41,12 +41,12 @@ class MultimediaObjectSyncService
         'publishingdecisions' => 'syncPublishingDecisions',
         'recorddate' => 'syncRecordDate',
         'subseries' => 'syncSubSeries',
-    );
+    ];
 
-    private $notCallUserFunc = array(
+    private $notCallUserFunc = [
         'tag' => 'syncTags',
         'role' => 'syncRoles',
-    );
+    ];
 
     /**
      * MultimediaObjectSyncService constructor.
@@ -74,12 +74,12 @@ class MultimediaObjectSyncService
     public function getMultimediaObjectsToSync(MultimediaObject $multimediaObject)
     {
         $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(
-            array(
-                'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE),
-                'type' => array('$ne' => MultimediaObject::TYPE_LIVE),
+            [
+                'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
+                'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
                 'series' => new \MongoId($multimediaObject->getSeries()->getId()),
-                '_id' => array('$ne' => new \MongoId($multimediaObject->getId())),
-            )
+                '_id' => ['$ne' => new \MongoId($multimediaObject->getId())],
+            ]
         );
 
         return $multimediaObjects;
@@ -94,7 +94,7 @@ class MultimediaObjectSyncService
      */
     public function syncMetadata(array $multimediaObjects, MultimediaObject $originData, array $syncFieldsSelected)
     {
-        $sync = array();
+        $sync = [];
         foreach ($multimediaObjects as $multimediaObject) {
             $sync[] = $this->doSyncMetadata($multimediaObject, $originData, $syncFieldsSelected);
         }
@@ -122,10 +122,10 @@ class MultimediaObjectSyncService
 
             if (array_key_exists($case[1], $this->syncMethods)) {
                 $method = $this->syncMethods[$case[1]];
-                call_user_func(array($this, $method), $multimediaObject, $originData);
+                call_user_func([$this, $method], $multimediaObject, $originData);
             } else {
                 $method = $this->notCallUserFunc[$case[1]];
-                call_user_func(array($this, $method), $multimediaObject, $originData, $case[2]);
+                call_user_func([$this, $method], $multimediaObject, $originData, $case[2]);
             }
         }
 
@@ -256,7 +256,7 @@ class MultimediaObjectSyncService
     public function syncOwners(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $roleOwner = $this->dm->getRepository(Role::class)->findOneBy(
-            array('cod' => 'owner')
+            ['cod' => 'owner']
         );
         $role = $originData->getEmbeddedRole($roleOwner);
 
@@ -281,7 +281,7 @@ class MultimediaObjectSyncService
     public function syncPublishingDecisions(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $pubDecisionTag = $this->dm->getRepository(Tag::class)->findOneBy(
-            array('cod' => $this->publishingDecisionCode)
+            ['cod' => $this->publishingDecisionCode]
         );
 
         if (!$pubDecisionTag) {
@@ -315,7 +315,7 @@ class MultimediaObjectSyncService
     public function syncTags(MultimediaObject $multimediaObject, MultimediaObject $originData, $tagId)
     {
         $tag = $this->dm->getRepository(Tag::class)->findOneBy(
-            array('_id' => new \MongoId($tagId))
+            ['_id' => new \MongoId($tagId)]
         );
 
         foreach ($multimediaObject->getTags() as $embeddedTag) {
@@ -343,7 +343,7 @@ class MultimediaObjectSyncService
     public function syncRoles(MultimediaObject $multimediaObject, MultimediaObject $originData, $roleId)
     {
         $role = $this->dm->getRepository(Role::class)->findOneBy(
-            array('_id' => new \MongoId($roleId))
+            ['_id' => new \MongoId($roleId)]
         );
 
         $embeddedRole = $multimediaObject->getEmbeddedRole($role);

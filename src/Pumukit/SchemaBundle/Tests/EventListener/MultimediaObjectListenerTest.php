@@ -27,7 +27,7 @@ class MultimediaObjectListenerTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -36,14 +36,14 @@ class MultimediaObjectListenerTest extends WebTestCase
         $dispatcher = new EventDispatcher();
         /* $mmDispatcher = new MultimediaObjectEventDispatcherService($dispatcher); */
         $this->listener = new MultimediaObjectListener($this->dm);
-        $dispatcher->addListener('multimediaobject.update', array($this->listener, 'postUpdate'));
+        $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.track_dispatcher');
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
         $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $profileService, null, true);
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
     }
 
@@ -120,8 +120,8 @@ class MultimediaObjectListenerTest extends WebTestCase
 
     private function getDemoProfiles()
     {
-        $profiles = array(
-            'MASTER_COPY' => array(
+        $profiles = [
+            'MASTER_COPY' => [
                 'display' => false,
                 'wizard' => true,
                 'master' => true,
@@ -131,18 +131,18 @@ class MultimediaObjectListenerTest extends WebTestCase
                 'channels' => 1,
                 'audio' => false,
                 'bat' => 'cp "{{input}}" "{{output}}"',
-                'streamserver' => array(
+                'streamserver' => [
                     'type' => ProfileService::STREAMSERVER_STORE,
                     'host' => '127.0.0.1',
                     'name' => 'Localmaster',
                     'description' => 'Local masters server',
                     'dir_out' => __DIR__.'/../Resources/dir_out',
-                ),
+                ],
                 'app' => 'cp',
                 'rel_duration_size' => 1,
                 'rel_duration_trans' => 1,
-            ),
-            'MASTER_VIDEO_H264' => array(
+            ],
+            'MASTER_VIDEO_H264' => [
                 'display' => false,
                 'wizard' => true,
                 'master' => true,
@@ -157,19 +157,19 @@ class MultimediaObjectListenerTest extends WebTestCase
                 'channels' => 1,
                 'audio' => false,
                 'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                'streamserver' => array(
+                'streamserver' => [
                     'type' => ProfileService::STREAMSERVER_STORE,
                     'host' => '192.168.5.125',
                     'name' => 'Download',
                     'description' => 'Download server',
                     'dir_out' => __DIR__.'/../Resources/dir_out',
                     'url_out' => 'http://localhost:8000/downloads/',
-                ),
+                ],
                 'app' => 'ffmpeg',
                 'rel_duration_size' => 1,
                 'rel_duration_trans' => 1,
-            ),
-        );
+            ],
+        ];
 
         return $profiles;
     }

@@ -19,10 +19,10 @@ class CpuStatus
      *
      * @var array
      */
-    public static $statusTexts = array(
+    public static $statusTexts = [
         self::STATUS_MAINTENANCE => 'In Maintenance',
         self::STATUS_WORKING => 'Working',
-    );
+    ];
 
     /**
      * @var int

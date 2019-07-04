@@ -48,26 +48,26 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('basename', array($this, 'getBasename')),
-            new \Twig_SimpleFilter('profile', array($this, 'getProfile')),
-            new \Twig_SimpleFilter('display', array($this, 'getDisplay')),
-            new \Twig_SimpleFilter('duration_string', array($this, 'getDurationString')),
-            new \Twig_SimpleFilter('language_name', array($this, 'getLanguageName')),
-            new \Twig_SimpleFilter('status_icon', array($this, 'getStatusIcon')),
-            new \Twig_SimpleFilter('status_text', array($this, 'getStatusText')),
-            new \Twig_SimpleFilter('series_icon', array($this, 'getSeriesIcon')),
-            new \Twig_SimpleFilter('series_text', array($this, 'getSeriesText')),
-            new \Twig_SimpleFilter('profile_width', array($this, 'getProfileWidth')),
-            new \Twig_SimpleFilter('profile_height', array($this, 'getProfileHeight')),
-            new \Twig_SimpleFilter('series_announce_icon', array($this, 'getSeriesAnnounceIcon')),
-            new \Twig_SimpleFilter('series_announce_text', array($this, 'getSeriesAnnounceText')),
-            new \Twig_SimpleFilter('mms_announce_icon', array($this, 'getMmsAnnounceIcon')),
-            new \Twig_SimpleFilter('mms_announce_text', array($this, 'getMmsAnnounceText')),
-            new \Twig_SimpleFilter('filter_profiles', array($this, 'filterProfiles')),
-            new \Twig_SimpleFilter('count_multimedia_objects', array($this, 'countMultimediaObjects')),
-            new \Twig_SimpleFilter('next_session_event', array($this, 'getNextEventSession')),
-        );
+        return [
+            new \Twig_SimpleFilter('basename', [$this, 'getBasename']),
+            new \Twig_SimpleFilter('profile', [$this, 'getProfile']),
+            new \Twig_SimpleFilter('display', [$this, 'getDisplay']),
+            new \Twig_SimpleFilter('duration_string', [$this, 'getDurationString']),
+            new \Twig_SimpleFilter('language_name', [$this, 'getLanguageName']),
+            new \Twig_SimpleFilter('status_icon', [$this, 'getStatusIcon']),
+            new \Twig_SimpleFilter('status_text', [$this, 'getStatusText']),
+            new \Twig_SimpleFilter('series_icon', [$this, 'getSeriesIcon']),
+            new \Twig_SimpleFilter('series_text', [$this, 'getSeriesText']),
+            new \Twig_SimpleFilter('profile_width', [$this, 'getProfileWidth']),
+            new \Twig_SimpleFilter('profile_height', [$this, 'getProfileHeight']),
+            new \Twig_SimpleFilter('series_announce_icon', [$this, 'getSeriesAnnounceIcon']),
+            new \Twig_SimpleFilter('series_announce_text', [$this, 'getSeriesAnnounceText']),
+            new \Twig_SimpleFilter('mms_announce_icon', [$this, 'getMmsAnnounceIcon']),
+            new \Twig_SimpleFilter('mms_announce_text', [$this, 'getMmsAnnounceText']),
+            new \Twig_SimpleFilter('filter_profiles', [$this, 'filterProfiles']),
+            new \Twig_SimpleFilter('count_multimedia_objects', [$this, 'countMultimediaObjects']),
+            new \Twig_SimpleFilter('next_session_event', [$this, 'getNextEventSession']),
+        ];
     }
 
     /**
@@ -75,18 +75,18 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('php_upload_max_filesize', array($this, 'getPhpUploadMaxFilesize')),
-            new \Twig_SimpleFunction('path_exists', array($this, 'existsRoute')),
-            new \Twig_SimpleFunction('is_playable_on_playlist', array($this, 'isPlayableOnPlaylist')),
-            new \Twig_SimpleFunction('is_mmobj_owner', array($this, 'isUserOwner')),
-            new \Twig_SimpleFunction('broadcast_description', array($this, 'getBroadcastDescription')),
-            new \Twig_SimpleFunction('is_naked', array($this, 'isNaked'), array('needs_environment' => true)),
-            new \Twig_SimpleFunction('trans_i18n_broadcast', array($this, 'getI18nEmbeddedBroadcast')),
-            new \Twig_SimpleFunction('date_from_mongo_id', array($this, 'getDateFromMongoId')),
-            new \Twig_SimpleFunction('default_poster', array($this, 'getDefaultPoster')),
-            new \Twig_SimpleFunction('sort_roles', array($this, 'getSortRoles')),
-        );
+        return [
+            new \Twig_SimpleFunction('php_upload_max_filesize', [$this, 'getPhpUploadMaxFilesize']),
+            new \Twig_SimpleFunction('path_exists', [$this, 'existsRoute']),
+            new \Twig_SimpleFunction('is_playable_on_playlist', [$this, 'isPlayableOnPlaylist']),
+            new \Twig_SimpleFunction('is_mmobj_owner', [$this, 'isUserOwner']),
+            new \Twig_SimpleFunction('broadcast_description', [$this, 'getBroadcastDescription']),
+            new \Twig_SimpleFunction('is_naked', [$this, 'isNaked'], ['needs_environment' => true]),
+            new \Twig_SimpleFunction('trans_i18n_broadcast', [$this, 'getI18nEmbeddedBroadcast']),
+            new \Twig_SimpleFunction('date_from_mongo_id', [$this, 'getDateFromMongoId']),
+            new \Twig_SimpleFunction('default_poster', [$this, 'getDefaultPoster']),
+            new \Twig_SimpleFunction('sort_roles', [$this, 'getSortRoles']),
+        ];
     }
 
     /**
@@ -534,12 +534,12 @@ class PumukitAdminExtension extends \Twig_Extension
         $mmobjsBlocked = 0;
 
         $seriesColl = $this->dm->getDocumentCollection(MultimediaObject::class);
-        $aggrPipe = array(
-            array('$match' => array('series' => new \MongoId($series->getId()))),
-            array('$group' => array('_id' => '$status',
-                                    'count' => array('$sum' => 1), )),
-        );
-        $mmobjCounts = $seriesColl->aggregate($aggrPipe, array('cursor' => array()))->toArray();
+        $aggrPipe = [
+            ['$match' => ['series' => new \MongoId($series->getId())]],
+            ['$group' => ['_id' => '$status',
+                                    'count' => ['$sum' => 1], ]],
+        ];
+        $mmobjCounts = $seriesColl->aggregate($aggrPipe, ['cursor' => []])->toArray();
 
         foreach ($mmobjCounts as $mmobjCount) {
             switch ($mmobjCount['_id']) {
@@ -555,7 +555,7 @@ class PumukitAdminExtension extends \Twig_Extension
             }
         }
 
-        $result = array($mmobjsPublished, $mmobjsHidden, $mmobjsBlocked);
+        $result = [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked];
 
         return $this->countMmobjsByStatus[$series->getId()] = $result;
     }
@@ -651,7 +651,7 @@ class PumukitAdminExtension extends \Twig_Extension
         if ($multimediaObject) {
             $now = new \DateTime();
             $now = $now->getTimestamp();
-            $aSessions = array();
+            $aSessions = [];
             $event = $multimediaObject->getEmbeddedEvent();
             foreach ($event->getEmbeddedEventSession() as $session) {
                 $sessionStart = clone $session->getStart();
@@ -690,16 +690,16 @@ class PumukitAdminExtension extends \Twig_Extension
      */
     public function getSortRoles($multimediaObject, $display = true)
     {
-        static $rolesCached = array();
+        static $rolesCached = [];
 
         if (isset($rolesCached[$display])) {
             $roles = $rolesCached[$display];
         } else {
-            $roles = $this->dm->getRepository(Role::class)->findBy(array('display' => $display), array('rank' => 1));
+            $roles = $this->dm->getRepository(Role::class)->findBy(['display' => $display], ['rank' => 1]);
             $rolesCached[$display] = $roles;
         }
 
-        $aRoles = array();
+        $aRoles = [];
         foreach ($roles as $role) {
             $embeddedRole = $multimediaObject->getEmbeddedRole($role);
             if ($embeddedRole && 0 != count($embeddedRole->getPeople())) {

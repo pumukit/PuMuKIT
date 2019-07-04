@@ -9,7 +9,7 @@ class ElementTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $tags = array('tag_a', 'tag_b');
+        $tags = ['tag_a', 'tag_b'];
         $locale = 'en';
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
@@ -41,7 +41,7 @@ class ElementTest extends TestCase
 
         $description = 'description';
         $descriptionEs = 'descripción';
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+        $descriptionI18n = [$locale => $description, $localeEs => $descriptionEs];
         $element->setI18nDescription($descriptionI18n);
         $this->assertEquals($descriptionI18n, $element->getI18nDescription());
     }
@@ -77,12 +77,12 @@ class ElementTest extends TestCase
         $element->addTag('t1');
         $element->addTag('t2');
         $element->addTag('t3');
-        $this->assertTrue($element->containsAnyTag(array('t0', 't2')));
-        $this->assertTrue($element->containsAnyTag(array('t2', 't3')));
-        $this->assertFalse($element->containsAnyTag(array('t0', 't4')));
-        $this->assertTrue($element->containsAllTags(array('t1', 't2')));
-        $this->assertTrue($element->containsAllTags(array('t1')));
-        $this->assertFalse($element->containsAllTags(array('t0', 't2')));
-        $this->assertFalse($element->containsAllTags(array('t0', 't1', 't2', 't3')));
+        $this->assertTrue($element->containsAnyTag(['t0', 't2']));
+        $this->assertTrue($element->containsAnyTag(['t2', 't3']));
+        $this->assertFalse($element->containsAnyTag(['t0', 't4']));
+        $this->assertTrue($element->containsAllTags(['t1', 't2']));
+        $this->assertTrue($element->containsAllTags(['t1']));
+        $this->assertFalse($element->containsAllTags(['t0', 't2']));
+        $this->assertFalse($element->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 }

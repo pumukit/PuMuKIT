@@ -26,7 +26,7 @@ class SenderServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'dev');
+        $options = ['environment' => 'dev'];
         static::bootKernel($options);
         $container = static::$kernel->getContainer();
 
@@ -39,9 +39,9 @@ class SenderServiceTest extends WebTestCase
         $this->senderEmail = 'sender@pumukit.org';
         $this->senderName = 'Sender Pumukit';
         $this->enableMultiLang = true;
-        $this->locales = array('en', 'es');
-        $this->subjectSuccessTrans = array(0 => array('locale' => 'en', 'subject' => 'Job Success'), 1 => array('locale' => 'es', 'subject' => 'Trabajo exitoso'));
-        $this->subjectFailsTrans = array(0 => array('locale' => 'en', 'subject' => 'Job Fails'), 1 => array('locale' => 'es', 'subject' => 'Trabajo fallido'));
+        $this->locales = ['en', 'es'];
+        $this->subjectSuccessTrans = [0 => ['locale' => 'en', 'subject' => 'Job Success'], 1 => ['locale' => 'es', 'subject' => 'Trabajo exitoso']];
+        $this->subjectFailsTrans = [0 => ['locale' => 'en', 'subject' => 'Job Fails'], 1 => ['locale' => 'es', 'subject' => 'Trabajo fallido']];
         $this->adminEmail = 'admin@pumukit.org';
         $this->notificateErrorsToAdmin = true;
         $this->platformName = 'Pumukit tv';
@@ -109,7 +109,7 @@ class SenderServiceTest extends WebTestCase
         $subject = 'Test sender service';
         $body = 'test send notification';
         $template = 'PumukitNotificationBundle:Email:notification.html.twig';
-        $parameters = array('subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit');
+        $parameters = ['subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit'];
         $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
         $this->assertEquals(1, $output);
     }

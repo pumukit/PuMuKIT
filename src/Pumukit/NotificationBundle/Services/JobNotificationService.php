@@ -197,7 +197,7 @@ class JobNotificationService
     {
         $multimediaObjectAdminLink = $this->getMultimediaObjectAdminLink($multimediaObject, $job->getMmId());
 
-        return array(
+        return [
             'subject' => $subject,
             'job_status' => Job::$statusTexts[$job->getStatus()],
             'job' => $job,
@@ -206,7 +206,7 @@ class JobNotificationService
             'platform_name' => $this->senderService->getPlatformName(),
             'multimedia_object_admin_link' => $multimediaObjectAdminLink,
             'multimedia_object' => $multimediaObject,
-        );
+        ];
     }
 
     /**
@@ -219,12 +219,12 @@ class JobNotificationService
      */
     protected function getEmails(Job $job, MultimediaObject $multimediaObject)
     {
-        $emailsTo = array();
+        $emailsTo = [];
 
         if (Job::STATUS_FINISHED === $job->getStatus()) {
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
             foreach ($aPeople as $people) {
-                $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $people->getEmail()));
+                $user = $this->dm->getRepository(User::class)->findOneBy(['email' => $people->getEmail()]);
                 if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_COMPLETE) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }
@@ -233,7 +233,7 @@ class JobNotificationService
             $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
 
             foreach ($aPeople as $people) {
-                $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $people->getEmail()));
+                $user = $this->dm->getRepository(User::class)->findOneBy(['email' => $people->getEmail()]);
                 if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_ERRORS) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
                     $emailsTo[] = $user->getEmail();
                 }
@@ -246,7 +246,7 @@ class JobNotificationService
     private function getMultimediaObjectAdminLink($multimediaObject, $id = '')
     {
         if (null !== $multimediaObject) {
-            return $this->router->generate('pumukitnewadmin_mms_shortener', array('id' => $multimediaObject->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
+            return $this->router->generate('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
         return 'No link found to Multimedia Object with id "'.$id.'".';

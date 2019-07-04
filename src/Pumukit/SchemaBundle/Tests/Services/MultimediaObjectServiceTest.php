@@ -21,7 +21,7 @@ class MultimediaObjectServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -37,11 +37,11 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->tagService = static::$kernel->getContainer()
           ->get('pumukitschema.tag');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
-        $this->dm->getDocumentCollection(Tag::class)->remove(array());
-        $this->dm->getDocumentCollection(Group::class)->remove(array());
-        $this->dm->getDocumentCollection(User::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->remove([]);
+        $this->dm->getDocumentCollection(Group::class)->remove([]);
+        $this->dm->getDocumentCollection(User::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -395,9 +395,9 @@ class MultimediaObjectServiceTest extends WebTestCase
         $this->dm->persist($user2);
         $this->dm->flush();
 
-        $owners1 = array();
-        $owners2 = array($user1->getId());
-        $owners3 = array($user1->getId(), $user2->getId());
+        $owners1 = [];
+        $owners2 = [$user1->getId()];
+        $owners3 = [$user1->getId(), $user2->getId()];
 
         $mm1 = new MultimediaObject();
         $mm1->setTitle('mm1');

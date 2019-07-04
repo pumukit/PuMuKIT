@@ -13,7 +13,7 @@ class SeriesTypeRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -24,7 +24,7 @@ class SeriesTypeRepositoryTest extends WebTestCase
             ->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 

@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('locales')
                     ->info('Languages of WebTV')
                     ->prototype('scalar')->end()
-                    ->defaultValue(array('en', 'es'))
+                    ->defaultValue(['en', 'es'])
                 ->end()
                 ->scalarNode('uploads_dir')
                     ->defaultValue('%kernel.root_dir%/../web/uploads')

@@ -52,7 +52,7 @@ class PicExtractorService
         $multimediaObject->setProperty('imagesonbatch', true);
 
         if (!$marks) {
-            $marks = array('0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%');
+            $marks = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%'];
         }
         foreach ($marks as $mark) {
             $this->extractPic($multimediaObject, $track, $mark);
@@ -125,12 +125,12 @@ class PicExtractorService
             $newWidth = $this->width;
         }
 
-        $vars = array(
+        $vars = [
             '{{ss}}' => $track->getTimeOfAFrame($frame),
             '{{size}}' => $newWidth.'x'.$newHeight,
             '{{input}}' => $track->getPath(),
             '{{output}}' => $absCurrentDir.'/'.$picFileName,
-        );
+        ];
 
         $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
         $process = new Process($commandLine);
@@ -145,7 +145,7 @@ class PicExtractorService
         if (file_exists($picPath)) {
             $multimediaObject = $this->mmsPicService->addPicUrl($multimediaObject, $picUrl);
             $pic = $this->getPicByUrl($multimediaObject, $picUrl);
-            $tags = array('auto', 'frame_'.$frame, 'time_'.$track->getTimeOfAFrame($frame));
+            $tags = ['auto', 'frame_'.$frame, 'time_'.$track->getTimeOfAFrame($frame)];
             $multimediaObject = $this->completePicMetadata($multimediaObject, $pic, $picPath, $newWidth, $newHeight, $tags);
         }
 
@@ -182,7 +182,7 @@ class PicExtractorService
      *
      * @return MultimediaObject $multimediaObject
      */
-    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath = '', $width = 0, $height = 0, array $tags = array())
+    private function completePicMetadata(MultimediaObject $multimediaObject, Pic $pic, $picPath = '', $width = 0, $height = 0, array $tags = [])
     {
         $pic->setPath($picPath);
         $pic->setWidth($width);

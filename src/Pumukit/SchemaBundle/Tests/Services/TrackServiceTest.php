@@ -25,7 +25,7 @@ class TrackServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->logger = static::$kernel->getContainer()
@@ -44,13 +44,13 @@ class TrackServiceTest extends WebTestCase
           ->get('security.token_storage');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Job::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
@@ -181,41 +181,41 @@ class TrackServiceTest extends WebTestCase
 
         $this->assertEquals(5, count($multimediaObject->getTracks()));
 
-        $arrayTracks = array($track1, $track2, $track3, $track4, $track5);
+        $arrayTracks = [$track1, $track2, $track3, $track4, $track5];
         $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
 
         $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $track3->getId());
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
 
-        $arrayTracks = array($track1, $track3, $track2, $track4, $track5);
+        $arrayTracks = [$track1, $track3, $track2, $track4, $track5];
         $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
 
         $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $track4->getId());
         $multimediaObject = $this->repoMmobj->find($multimediaObject->getId());
 
-        $arrayTracks = array($track1, $track3, $track2, $track5, $track4);
+        $arrayTracks = [$track1, $track3, $track2, $track5, $track4];
         $this->assertEquals($arrayTracks, $multimediaObject->getTracks()->toArray());
     }
 
     private function createFormData($number)
     {
-        $formData = array(
+        $formData = [
                           'profile' => 'MASTER_COPY',
                           'priority' => 2,
                           'language' => 'en',
-                          'i18n_description' => array(
+                          'i18n_description' => [
                                                       'en' => 'track description '.$number,
                                                       'es' => 'descripción del archivo '.$number,
-                                                      ),
-                          );
+                                                      ],
+                          ];
 
         return $formData;
     }
 
     private function getDemoCpus()
     {
-        $cpus = array(
-                      'CPU_LOCAL' => array(
+        $cpus = [
+                      'CPU_LOCAL' => [
                                            'id' => 1,
                                            'host' => '127.0.0.1',
                                            'max' => 1,
@@ -224,8 +224,8 @@ class TrackServiceTest extends WebTestCase
                                            'user' => 'transco1',
                                            'password' => 'PUMUKIT',
                                            'description' => 'Pumukit transcoder',
-                                           ),
-                      'CPU_REMOTE' => array(
+                                           ],
+                      'CPU_REMOTE' => [
                                             'id' => 2,
                                             'host' => '192.168.5.123',
                                             'max' => 2,
@@ -234,16 +234,16 @@ class TrackServiceTest extends WebTestCase
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder',
-                                            ),
-                      );
+                                            ],
+                      ];
 
         return $cpus;
     }
 
     private function getDemoProfiles()
     {
-        $profiles = array(
-                          'MASTER_COPY' => array(
+        $profiles = [
+                          'MASTER_COPY' => [
                                                  'display' => false,
                                                  'wizard' => true,
                                                  'master' => true,
@@ -253,17 +253,17 @@ class TrackServiceTest extends WebTestCase
                                                  'channels' => 1,
                                                  'audio' => false,
                                                  'bat' => 'cp "{{input}}" "{{output}}"',
-                                                 'streamserver' => array(
+                                                 'streamserver' => [
                                                                          'type' => ProfileService::STREAMSERVER_STORE,
                                                                          'host' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ),
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
                                                  'app' => 'cp',
                                                  'rel_duration_size' => 1,
                                                  'rel_duration_trans' => 1,
-                                                 ),
-                          'MASTER_VIDEO_H264' => array(
+                                                 ],
+                          'MASTER_VIDEO_H264' => [
                                                        'display' => false,
                                                        'wizard' => true,
                                                        'master' => true,
@@ -278,19 +278,19 @@ class TrackServiceTest extends WebTestCase
                                                        'channels' => 1,
                                                        'audio' => false,
                                                        'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                                                       'streamserver' => array(
+                                                       'streamserver' => [
                                                                                'type' => ProfileService::STREAMSERVER_STORE,
                                                                                'host' => '192.168.5.125',
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
                                                                                'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/',
-                                                                               ),
+                                                                               ],
                                                        'app' => 'ffmpeg',
                                                        'rel_duration_size' => 1,
                                                        'rel_duration_trans' => 1,
-                                                       ),
-                          );
+                                                       ],
+                          ];
 
         return $profiles;
     }

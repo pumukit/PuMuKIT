@@ -32,14 +32,14 @@ class UserController extends AdminController implements NewAdminControllerInterf
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $users = $this->getResources($request, $criteria);
         $repo = $dm->getRepository(PermissionProfile::class);
         $profiles = $repo->findAll();
 
         $origins = $dm->createQueryBuilder(User::class)->distinct('origin')->getQuery()->execute();
 
-        return array('users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray());
+        return ['users' => $users, 'profiles' => $profiles, 'origins' => $origins->toArray()];
     }
 
     /**
@@ -73,10 +73,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         return $this->render(
             'PumukitNewAdminBundle:User:create.html.twig',
-            array(
+            [
                 'user' => $user,
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -98,9 +98,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
         $user = $this->findOr404($request);
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(UserUpdateType::class, $user, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(UserUpdateType::class, $user, ['translator' => $translator, 'locale' => $locale]);
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH'))) {
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
@@ -126,10 +126,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
 
         return $this->render(
             'PumukitNewAdminBundle:User:update.html.twig',
-            array(
+            [
                 'user' => $user,
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -196,10 +196,10 @@ class UserController extends AdminController implements NewAdminControllerInterf
         $user = $this->findOr404($request);
         $groups = $this->get('pumukitschema.group')->findAll();
 
-        return array(
+        return [
             'user' => $user,
             'groups' => $groups,
-        );
+        ];
     }
 
     /**
@@ -218,11 +218,11 @@ class UserController extends AdminController implements NewAdminControllerInterf
         $user = $this->findOr404($request);
 
         if ('POST' === $request->getMethod()) {
-            $addGroups = $request->get('addGroups', array());
+            $addGroups = $request->get('addGroups', []);
             if ('string' === gettype($addGroups)) {
                 $addGroups = json_decode($addGroups, true);
             }
-            $deleteGroups = $request->get('deleteGroups', array());
+            $deleteGroups = $request->get('deleteGroups', []);
             if ('string' === gettype($deleteGroups)) {
                 $deleteGroups = json_decode($deleteGroups, true);
             }
@@ -244,34 +244,34 @@ class UserController extends AdminController implements NewAdminControllerInterf
     {
         $user = $this->findOr404($request);
         $groupService = $this->get('pumukitschema.group');
-        $addGroups = array();
-        $addGroupsIds = array();
-        $deleteGroups = array();
+        $addGroups = [];
+        $addGroupsIds = [];
+        $deleteGroups = [];
         if ('GET' === $request->getMethod()) {
             foreach ($user->getGroups() as $group) {
-                $addGroups[$group->getId()] = array(
+                $addGroups[$group->getId()] = [
                     'key' => $group->getKey(),
                     'name' => $group->getName(),
                     'origin' => $group->getOrigin(),
-                );
+                ];
                 $addGroupsIds[] = new \MongoId($group->getId());
             }
             $groupsToDelete = $groupService->findByIdNotIn($addGroupsIds);
             foreach ($groupsToDelete as $group) {
-                $deleteGroups[$group->getId()] = array(
+                $deleteGroups[$group->getId()] = [
                     'key' => $group->getKey(),
                     'name' => $group->getName(),
                     'origin' => $group->getOrigin(),
-                );
+                ];
             }
         }
 
         return new JsonResponse(
-            array(
+            [
                 'add' => $addGroups,
                 'delete' => $deleteGroups,
                 'userOrigin' => $user->getOrigin(),
-            )
+            ]
         );
     }
 
@@ -286,7 +286,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      * @throws \Exception
      */
-    private function modifyUserGroups(User $user, $addGroups = array(), $deleteGroups = array())
+    private function modifyUserGroups(User $user, $addGroups = [], $deleteGroups = [])
     {
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $groupRepo = $dm->getRepository(Group::class);
@@ -404,9 +404,9 @@ class UserController extends AdminController implements NewAdminControllerInterf
         } elseif ($criteria) {
             $this->get('session')->set('admin/user/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/user/criteria', array());
+        $criteria = $this->get('session')->get('admin/user/criteria', []);
 
-        $new_criteria = array();
+        $new_criteria = [];
         foreach ($criteria as $property => $value) {
             if ('permissionProfile' == $property) {
                 if ('all' != $value) {
@@ -444,7 +444,7 @@ class UserController extends AdminController implements NewAdminControllerInterf
             throw $this->createNotFoundException('Profile not found!');
         }
 
-        $users = $usersRepo->findBy(array('_id' => array('$in' => $ids)));
+        $users = $usersRepo->findBy(['_id' => ['$in' => $ids]]);
 
         try {
             foreach ($users as $user) {
@@ -457,6 +457,6 @@ class UserController extends AdminController implements NewAdminControllerInterf
             throw $this->createAccessDeniedException('Unable to promote user');
         }
 
-        return new JsonResponse(array('ok'));
+        return new JsonResponse(['ok']);
     }
 }

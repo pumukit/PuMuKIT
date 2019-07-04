@@ -136,31 +136,31 @@ class EmbeddedBroadcastService
     {
         if ($live) {
             if ($this->disabledBroadcast) {
-                return array(
+                return [
                     EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
-                );
+                ];
             }
 
-            return array(
+            return [
                 EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                 EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
-            );
+            ];
         }
 
         if ($this->disabledBroadcast) {
-            return array(
+            return [
                          EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                          EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
                          EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
-                         );
+                         ];
         }
 
-        return array(
+        return [
                      EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
                      EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
                      EmbeddedBroadcast::TYPE_LOGIN => EmbeddedBroadcast::NAME_LOGIN,
                      EmbeddedBroadcast::TYPE_GROUPS => EmbeddedBroadcast::NAME_GROUPS,
-                     );
+                     ];
     }
 
     /**
@@ -303,7 +303,7 @@ class EmbeddedBroadcastService
         if ($embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast()) {
             $playGroups = $embeddedBroadcast->getGroups()->toArray();
         } else {
-            $playGroups = array();
+            $playGroups = [];
         }
         $commonPlayGroups = array_intersect($playGroups, $userGroups);
         $userIsOwner = $this->mmsService->isUserOwner($user, $multimediaObject);
@@ -362,14 +362,14 @@ class EmbeddedBroadcastService
 
     private function renderErrorNotAuthenticated()
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', array('show_forceauth' => true));
+        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:403forbidden.html.twig', ['show_forceauth' => true]);
 
         return new Response($renderedView, Response::HTTP_FORBIDDEN);
     }
 
     private function renderErrorPassword($invalidPassword = false)
     {
-        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', array('show_forceauth' => true, 'invalid_password' => $invalidPassword));
+        $renderedView = $this->templating->render('PumukitWebTVBundle:Index:401unauthorized.html.twig', ['show_forceauth' => true, 'invalid_password' => $invalidPassword]);
 
         return new Response($renderedView, Response::HTTP_UNAUTHORIZED);
     }

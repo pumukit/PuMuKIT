@@ -16,7 +16,7 @@ class LinkServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -28,8 +28,8 @@ class LinkServiceTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()
           ->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -125,23 +125,23 @@ class LinkServiceTest extends WebTestCase
         $link3 = new Link();
         $mm = $this->linkService->addLinkToMultimediaObject($mm, $link3);
 
-        $links = array($link1, $link2, $link3);
+        $links = [$link1, $link2, $link3];
         $this->assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
 
         $this->linkService->upLinkInMultimediaObject($mm, $link2->getId());
-        $links = array($link2, $link1, $link3);
+        $links = [$link2, $link1, $link3];
         $this->assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
         $this->linkService->upLinkInMultimediaObject($mm, $link3->getId());
-        $links = array($link2, $link3, $link1);
+        $links = [$link2, $link3, $link1];
         $this->assertEquals($links, $mm->getLinks()->toArray());
 
         $mm = $this->repoMmobj->find($mm->getId());
         $this->linkService->downLinkInMultimediaObject($mm, $link2->getId());
-        $links = array($link3, $link2, $link1);
+        $links = [$link3, $link2, $link1];
         $this->assertEquals($links, $mm->getLinks()->toArray());
     }
 }

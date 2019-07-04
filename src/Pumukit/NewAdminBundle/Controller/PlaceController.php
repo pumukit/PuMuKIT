@@ -31,10 +31,10 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
-        $places = $dm->getRepository(Tag::class)->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
+        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
-        return array('places' => $places);
+        return ['places' => $places];
     }
 
     /**
@@ -49,10 +49,10 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $placeTag = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
-        $places = $dm->getRepository(Tag::class)->findBy(array('parent.$id' => new \MongoId($placeTag->getId())), array('title.'.$request->getLocale() => 1));
+        $placeTag = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $places = $dm->getRepository(Tag::class)->findBy(['parent.$id' => new \MongoId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
 
-        return array('places' => $places);
+        return ['places' => $places];
     }
 
     /**
@@ -68,7 +68,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $children = $tag->getChildren();
 
-        return array('children' => $children, 'parent' => $tag);
+        return ['children' => $children, 'parent' => $tag];
     }
 
     /**
@@ -84,14 +84,14 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(array('tags._id' => new \MongoId($tag->getId())));
+        $multimediaObjects = $dm->getRepository(MultimediaObject::class)->findBy(['tags._id' => new \MongoId($tag->getId())]);
 
-        $series = array();
+        $series = [];
         foreach ($multimediaObjects as $multimediaObject) {
             $series[$multimediaObject->getSeries()->getId()] = $multimediaObject->getSeries()->getTitle();
         }
 
-        return array('tag' => $tag, 'series' => $series);
+        return ['tag' => $tag, 'series' => $series];
     }
 
     /**
@@ -109,10 +109,10 @@ class PlaceController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
 
         if ($id) {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(array('_id' => new \MongoId($id)));
+            $parent = $dm->getRepository(Tag::class)->findOneBy(['_id' => new \MongoId($id)]);
             $isPrecinct = true;
         } else {
-            $parent = $dm->getRepository(Tag::class)->findOneBy(array('cod' => 'PLACES'));
+            $parent = $dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
             $isPrecinct = false;
         }
 
@@ -122,7 +122,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
         $tag->setCod($suggested_code);
         $tag->setParent($parent);
 
-        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $request->getLocale()));
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $request->getLocale()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -130,13 +130,13 @@ class PlaceController extends Controller implements NewAdminControllerInterface
                 $dm->persist($tag);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
+                return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return new JsonResponse(array('success'));
+            return new JsonResponse(['success']);
         }
 
-        return array('tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code, 'parent' => $parent);
+        return ['tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code, 'parent' => $parent];
     }
 
     /**
@@ -179,20 +179,20 @@ class PlaceController extends Controller implements NewAdminControllerInterface
     {
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(TagType::class, $tag, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(TagType::class, $tag, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->get('pumukitschema.tag')->updateTag($tag);
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), JsonResponse::HTTP_CONFLICT);
+                return new JsonResponse(['status' => $e->getMessage()], JsonResponse::HTTP_CONFLICT);
             }
 
-            return new JsonResponse(array('success'));
+            return new JsonResponse(['success']);
         }
 
-        return array('tag' => $tag, 'form' => $form->createView());
+        return ['tag' => $tag, 'form' => $form->createView()];
     }
 
     /**
@@ -203,7 +203,7 @@ class PlaceController extends Controller implements NewAdminControllerInterface
      */
     private function autogenerateCode(Tag $parent, $isPrecinct)
     {
-        $code = array();
+        $code = [];
         $delimiter = ($isPrecinct) ? 'PRECINCT' : 'PLACE';
 
         foreach ($parent->getChildren() as $child) {

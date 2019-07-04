@@ -23,7 +23,7 @@ class LiveTest extends TestCase
         $locale = 'en';
         $name = 'liveo 1';
         $description = 'liveo channel';
-        $resolution = array('width' => $width, 'height' => $height);
+        $resolution = ['width' => $width, 'height' => $height];
 
         $liveo = new Live();
 
@@ -65,12 +65,12 @@ class LiveTest extends TestCase
         $this->assertEquals($description, $liveo->getDescription($liveo->getLocale()));
 
         $nameEs = 'directo 1';
-        $i18nName = array('en' => $name, 'es' => $nameEs);
+        $i18nName = ['en' => $name, 'es' => $nameEs];
         $liveo->setI18nName($i18nName);
         $this->assertEquals($i18nName, $liveo->getI18nName());
 
         $descriptionEs = 'canal de directos';
-        $i18nDescription = array('en' => $description, 'es' => $descriptionEs);
+        $i18nDescription = ['en' => $description, 'es' => $descriptionEs];
         $liveo->setI18nDescription($i18nDescription);
         $this->assertEquals($i18nDescription, $liveo->getI18nDescription());
 

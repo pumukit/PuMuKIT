@@ -101,8 +101,8 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('name')->isRequired()->cannotBeEmpty()
                                         ->info('Name of the streamserver')->end()
                                     ->enumNode('type')
-                                        ->values(array(ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD,
-                                                       ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5, ))
+                                        ->values([ProfileService::STREAMSERVER_STORE, ProfileService::STREAMSERVER_DOWNLOAD,
+                                                       ProfileService::STREAMSERVER_WMV, ProfileService::STREAMSERVER_FMS, ProfileService::STREAMSERVER_RED5, ])
                                         ->isRequired()
                                         ->info('Streamserver type')->end()
                                     ->scalarNode('host')->isRequired()->cannotBeEmpty()
@@ -147,7 +147,7 @@ class Configuration implements ConfigurationInterface
                                 ->info('Deprecated since version 2, to be removed in 2.2.')->end()
                             ->integerNode('max')->min(0)->defaultValue(1)
                                 ->info('Top for the maximum number of concurrent encoding jobs')->end()
-                            ->enumNode('type')->values(array(CpuService::TYPE_LINUX, CpuService::TYPE_WINDOWS, CpuService::TYPE_GSTREAMER))
+                            ->enumNode('type')->values([CpuService::TYPE_LINUX, CpuService::TYPE_WINDOWS, CpuService::TYPE_GSTREAMER])
                                 ->defaultValue(CpuService::TYPE_LINUX)
                                 ->info('Type of the encoder host (linux, windows or gstreamer)')->end()
                             ->scalarNode('user')

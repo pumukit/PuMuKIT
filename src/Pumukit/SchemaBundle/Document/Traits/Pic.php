@@ -98,7 +98,7 @@ trait Pic
         $snapshot = array_values($this->pics->toArray());
         $this->pics->clear();
 
-        $out = array();
+        $out = [];
         foreach ($snapshot as $key => $pic) {
             if ($pic->getId() === $picId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $pic;
@@ -193,7 +193,7 @@ trait Pic
      */
     public function getPicsWithTag($tag)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->pics as $pic) {
             if ($pic->containsTag($tag)) {
@@ -231,7 +231,7 @@ trait Pic
      */
     public function getPicsWithAllTags(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->pics as $pic) {
             if ($pic->containsAllTags($tags)) {
@@ -269,7 +269,7 @@ trait Pic
      */
     public function getPicsWithAnyTag(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->pics as $pic) {
             if ($pic->containsAnyTag($tags)) {
@@ -308,9 +308,9 @@ trait Pic
      *
      * @return array
      */
-    public function getFilteredPicsWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array())
+    public function getFilteredPicsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->pics as $pic) {
             if ($any_tags && !$pic->containsAnyTag($any_tags)) {

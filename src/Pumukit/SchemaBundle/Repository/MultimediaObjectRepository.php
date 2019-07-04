@@ -180,7 +180,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    public function createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createQueryBuilder();
         $qb->field('people')->elemMatch($qb->expr()->field('people._id')->equals(new \MongoId($personId))->field('cod')->equals($roleCod));
@@ -205,7 +205,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function findByPersonIdWithRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    public function findByPersonIdWithRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderByPersonIdWithRoleCod($personId, $roleCod, $sort, $limit, $page);
 
@@ -244,21 +244,21 @@ class MultimediaObjectRepository extends DocumentRepository
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline = array(
-            array('$match' => array('people.cod' => "$roleCode")),
-            array(
-                '$project' => array(
+        $pipeline = [
+            ['$match' => ['people.cod' => "$roleCode"]],
+            [
+                '$project' => [
                     '_id' => 0,
                     'people.cod' => 1,
                     'people.people._id' => 1,
-                ),
-            ),
-            array('$unwind' => '$people'),
-        );
+                ],
+            ],
+            ['$unwind' => '$people'],
+        ];
 
-        $aggregation = $collection->aggregate($pipeline, array('cursor' => array()));
+        $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        $people = array();
+        $people = [];
 
         foreach ($aggregation as $element) {
             if (null !== $element['people']) {
@@ -292,27 +292,27 @@ class MultimediaObjectRepository extends DocumentRepository
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline = array(
-            array(
-                '$match' => array(
+        $pipeline = [
+            [
+                '$match' => [
                     'people.cod' => "$roleCode",
                     'people.people.email' => "$email",
-                ),
-            ),
-            array(
-                '$project' => array(
+                ],
+            ],
+            [
+                '$project' => [
                     '_id' => 0,
                     'people.cod' => 1,
                     'people.people.email' => 1,
                     'people.people._id' => 1,
-                ),
-            ),
-            array('$unwind' => '$people'),
-        );
+                ],
+            ],
+            ['$unwind' => '$people'],
+        ];
 
-        $aggregation = $collection->aggregate($pipeline, array('cursor' => array()));
+        $aggregation = $collection->aggregate($pipeline, ['cursor' => []]);
 
-        $persons = array();
+        $persons = [];
 
         foreach ($aggregation as $element) {
             if (null !== $element['people']) {
@@ -361,7 +361,7 @@ class MultimediaObjectRepository extends DocumentRepository
     public function searchSeriesField($text, $limit = 0, $page = 0)
     {
         $qb = $this->createQueryBuilder()
-            ->field('$text')->equals(array('$search' => $text))
+            ->field('$text')->equals(['$search' => $text])
             ->distinct('series');
 
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
@@ -390,10 +390,10 @@ class MultimediaObjectRepository extends DocumentRepository
             $qb->addOr($qb->expr()->field('title'.$locale)->equals($mRegex));
             $qb->addOr($qb->expr()->field('people.people.name')->equals($mRegex));
         } else {
-            $qb->addOr($qb->expr()->field('$text')->equals(array(
+            $qb->addOr($qb->expr()->field('$text')->equals([
                  '$search' => TextIndexUtils::cleanTextIndex($text),
                  '$language' => TextIndexUtils::getCloseLanguage($locale),
-              )));
+              ]));
             $qb->addOr($qb->expr()->field('_id')->equals($text));
         }
 
@@ -507,7 +507,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
@@ -526,7 +526,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithGeneralTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithGeneralTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGeneralTag($tag, $sort);
 
@@ -543,7 +543,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithTag(Tag $tag, $sort = array())
+    public function createBuilderWithTag(Tag $tag, $sort = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->equals(new \MongoId($tag->getId()));
 
@@ -560,7 +560,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function createBuilderWithSeries(Series $series, $sort = array())
+    public function createBuilderWithSeries(Series $series, $sort = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series);
 
@@ -578,7 +578,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithSeriesAndStatus(Series $series, $status = array(), $sort = array())
+    public function createBuilderWithSeriesAndStatus(Series $series, $status = [], $sort = [])
     {
         $qb = $this->createQueryBuilder()->field('series')->references($series)->field('status')->in($status);
 
@@ -595,9 +595,9 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithGeneralTag(Tag $tag, $sort = array())
+    public function createBuilderWithGeneralTag(Tag $tag, $sort = [])
     {
-        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in(array(new \MongoId($tag->getId())))->field('tags.path')->notIn(array(new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')));
+        $qb = $this->createStandardQueryBuilder()->field('tags._id')->in([new \MongoId($tag->getId())])->field('tags.path')->notIn([new \MongoRegex('/'.preg_quote($tag->getPath()).'.*\|/')]);
 
         $qb = $this->addSortToQueryBuilder($qb, $sort);
 
@@ -626,7 +626,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->in($mongoIds);
@@ -646,7 +646,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->all($mongoIds);
@@ -681,7 +681,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithoutTag(Tag $tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutTag(Tag $tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notEqual(new \MongoId($tag->getId()));
 
@@ -712,7 +712,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutAllTags($tags, $sort = [], $limit = 0, $page = 0)
     {
         $mongoIds = $this->getMongoIds($tags);
         $qb = $this->createStandardQueryBuilder()->field('tags._id')->notIn($mongoIds);
@@ -855,7 +855,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findBySeriesByTagCodAndStatus(Series $series, $tagCod, $status = array())
+    public function findBySeriesByTagCodAndStatus(Series $series, $tagCod, $status = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series)->field('tags.cod')->equals($tagCod);
 
@@ -938,7 +938,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function getQueryBuilderOrderedBy(Series $series, $sort = array())
+    public function getQueryBuilderOrderedBy(Series $series, $sort = [])
     {
         $qb = $this->createStandardQueryBuilder()->field('series')->references($series);
         $qb = $this->addSortToQueryBuilder($qb, $sort);
@@ -954,7 +954,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findOrderedBy(Series $series, $sort = array())
+    public function findOrderedBy(Series $series, $sort = [])
     {
         $qb = $this->getQueryBuilderOrderedBy($series, $sort);
 
@@ -970,7 +970,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     private function getMongoIds($documents)
     {
-        $mongoIds = array();
+        $mongoIds = [];
         foreach ($documents as $document) {
             $mongoIds[] = new \MongoId($document->getId());
         }
@@ -1041,7 +1041,7 @@ class MultimediaObjectRepository extends DocumentRepository
         // Includes PUCHWEBTV code
         $tagRepo = $this->dm->getRepository(Tag::class);
         $unescoTag = $tagRepo->findOneByCod($tagBase);
-        $codes = array();
+        $codes = [];
         foreach ($multimediaObject->getTags() as $tag) {
             if ($unescoTag) {
                 if ($tag->isDescendantOf($unescoTag)) {
@@ -1076,7 +1076,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function countDuration()
     {
-        $result = $this->createStandardQueryBuilder()->group(array(), array('count' => 0))->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
+        $result = $this->createStandardQueryBuilder()->group([], ['count' => 0])->reduce('function (obj, prev) { prev.count += obj.duration; }')->getQuery()->execute();
 
         $singleResult = $result->getSingleResult();
 
@@ -1115,7 +1115,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByTagCodQuery($tag, $sort = array())
+    public function findByTagCodQuery($tag, $sort = [])
     {
         $qb = $this->findByTagCodQueryBuilder($tag);
         $qb = $this->addSortToQueryBuilder($qb, $sort);
@@ -1131,7 +1131,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByTagCod($tag, $sort = array())
+    public function findByTagCod($tag, $sort = [])
     {
         return $this->findByTagCodQuery($tag, $sort)->execute();
     }
@@ -1156,7 +1156,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findAllByTagQuery($tag, $sort = array())
+    public function findAllByTagQuery($tag, $sort = [])
     {
         $qb = $this->findAllByTagQueryBuilder($tag);
         $qb = $this->addSortToQueryBuilder($qb, $sort);
@@ -1172,7 +1172,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findAllByTag($tag, $sort = array())
+    public function findAllByTag($tag, $sort = [])
     {
         return $this->findAllByTagQuery($tag, $sort)->execute();
     }
@@ -1209,9 +1209,9 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithGroup(Group $group, $sort = array())
+    public function createBuilderWithGroup(Group $group, $sort = [])
     {
-        $qb = $this->createQueryBuilder()->field('groups')->in(array(new \MongoId($group->getId())));
+        $qb = $this->createQueryBuilder()->field('groups')->in([new \MongoId($group->getId())]);
 
         $qb = $this->addSortToQueryBuilder($qb, $sort);
 
@@ -1228,7 +1228,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    public function findWithGroup(Group $group, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
@@ -1247,7 +1247,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function countWithGroup(Group $group, $sort = array(), $limit = 0, $page = 0)
+    public function countWithGroup(Group $group, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGroup($group, $sort);
 
@@ -1264,9 +1264,9 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = array())
+    public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = [])
     {
-        $qb = $this->createQueryBuilder()->field('embeddedBroadcast.groups')->in(array(new \MongoId($group->getId())));
+        $qb = $this->createQueryBuilder()->field('embeddedBroadcast.groups')->in([new \MongoId($group->getId())]);
 
         $qb = $this->addSortToQueryBuilder($qb, $sort);
 
@@ -1283,7 +1283,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    public function findWithGroupInEmbeddedBroadcast(Group $group, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
@@ -1302,7 +1302,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function countWithGroupInEmbeddedBroadcast(Group $group, $sort = array(), $limit = 0, $page = 0)
+    public function countWithGroupInEmbeddedBroadcast(Group $group, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithGroupInEmbeddedBroadcast($group, $sort);
 
@@ -1347,7 +1347,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function countInSeriesWithEmbeddedBroadcastGroups(Series $series, $type = '', $groups = array())
+    public function countInSeriesWithEmbeddedBroadcastGroups(Series $series, $type = '', $groups = [])
     {
         $groupsIds = $this->getGroupsIdsArray($groups);
 
@@ -1377,7 +1377,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type)->distinct('series');
 
@@ -1396,7 +1396,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findSeriesFieldByEmbeddedBroadcastTypeQuery($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeQuery($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
 
@@ -1413,7 +1413,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findSeriesFieldByEmbeddedBroadcastType($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastType($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findSeriesFieldByEmbeddedBroadcastTypeQuery($type, $sort, $limit, $page);
 
@@ -1431,7 +1431,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $groupsIds = $this->getGroupsIdsArray($groups);
 
@@ -1453,7 +1453,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
 
@@ -1471,7 +1471,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findSeriesFieldByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
 
@@ -1504,7 +1504,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    private function addSortToQueryBuilder($qb, $sort = array())
+    private function addSortToQueryBuilder($qb, $sort = [])
     {
         if (0 !== count($sort)) {
             $qb->sort($sort);
@@ -1523,7 +1523,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @return mixed
      */
-    private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
+    private function addSortAndLimitToQueryBuilder($qb, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->addSortToQueryBuilder($qb, $sort);
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
@@ -1538,7 +1538,7 @@ class MultimediaObjectRepository extends DocumentRepository
      */
     public function getGroupsIdsArray($groups)
     {
-        $groupsIds = array();
+        $groupsIds = [];
         if ($groups) {
             if ('array' !== gettype($groups)) {
                 $groups = $groups->toArray();
@@ -1585,61 +1585,61 @@ class MultimediaObjectRepository extends DocumentRepository
         $dm = $this->getDocumentManager();
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline[] = array(
-            '$match' => array(
+        $pipeline[] = [
+            '$match' => [
                 '_id' => new \MongoId($multimediaObjectId),
                 'type' => MultimediaObject::TYPE_LIVE,
-                'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-            ),
-        );
+                'embeddedEvent.embeddedEventSession' => ['$exists' => true],
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'multimediaObjectId' => '$_id',
                 'event' => '$embeddedEvent',
                 'sessions' => '$embeddedEvent.embeddedEventSession',
                 'pics' => '$pics',
-            ),
-        );
+            ],
+        ];
 
-        $pipeline[] = array('$unwind' => '$sessions');
+        $pipeline[] = ['$unwind' => '$sessions'];
 
-        $pipeline[] = array(
-            '$match' => array(
-                '$and' => array(
-                    array('sessions.start' => array('$exists' => true)),
-                    array('sessions.start' => array('$gt' => new \MongoDate())),
-                ),
-            ),
-        );
+        $pipeline[] = [
+            '$match' => [
+                '$and' => [
+                    ['sessions.start' => ['$exists' => true]],
+                    ['sessions.start' => ['$gt' => new \MongoDate()]],
+                ],
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'multimediaObjectId' => '$multimediaObjectId',
                 'event' => '$event',
                 'pics' => '$pics',
                 'session' => '$sessions',
-            ),
-        );
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$group' => array(
+        $pipeline[] = [
+            '$group' => [
                 '_id' => '$multimediaObjectId',
-                'data' => array(
-                    '$addToSet' => array(
+                'data' => [
+                    '$addToSet' => [
                         'event' => '$event',
                         'session' => '$session',
                         'multimediaObjectId' => '$multimediaObjectId',
                         'pics' => '$pics',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
-        $result = $collection->aggregate($pipeline, array('cursor' => array()))->toArray();
+        $result = $collection->aggregate($pipeline, ['cursor' => []])->toArray();
 
         foreach ($result as $key => $element) {
-            $orderSession = array();
+            $orderSession = [];
             foreach ($element['data'] as $eventData) {
                 $orderSession[$eventData['session']['start']->sec] = $eventData;
             }
@@ -1667,88 +1667,88 @@ class MultimediaObjectRepository extends DocumentRepository
         $collection = $dm->getDocumentCollection(MultimediaObject::class);
 
         if ($multimediaObjectId) {
-            $pipeline[] = array(
-                '$match' => array(
+            $pipeline[] = [
+                '$match' => [
                     '_id' => new \MongoId($multimediaObjectId),
                     'type' => MultimediaObject::TYPE_LIVE,
-                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-                ),
-            );
+                    'embeddedEvent.embeddedEventSession' => ['$exists' => true],
+                ],
+            ];
         } else {
-            $pipeline[] = array(
-                '$match' => array(
+            $pipeline[] = [
+                '$match' => [
                     'type' => MultimediaObject::TYPE_LIVE,
                     'embeddedEvent.display' => true,
-                    'embeddedEvent.embeddedEventSession' => array('$exists' => true),
-                ),
-            );
+                    'embeddedEvent.embeddedEventSession' => ['$exists' => true],
+                ],
+            ];
         }
 
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'multimediaObjectId' => '$_id',
                 'event' => '$embeddedEvent',
                 'sessions' => '$embeddedEvent.embeddedEventSession',
-            ),
-        );
+            ],
+        ];
 
-        $pipeline[] = array('$unwind' => '$sessions');
+        $pipeline[] = ['$unwind' => '$sessions'];
 
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'multimediaObjectId' => '$multimediaObjectId',
                 'event' => '$event',
                 'sessions' => '$sessions',
-                'sessionEnds' => array(
-                    '$add' => array(
+                'sessionEnds' => [
+                    '$add' => [
                         '$sessions.start',
-                        array(
-                            '$multiply' => array(
+                        [
+                            '$multiply' => [
                                 '$sessions.duration',
                                 1000,
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$match' => array(
-                'sessions.start' => array('$lt' => new \MongoDate()),
-                'sessionEnds' => array('$gt' => new \MongoDate()),
-            ),
-        );
+        $pipeline[] = [
+            '$match' => [
+                'sessions.start' => ['$lt' => new \MongoDate()],
+                'sessionEnds' => ['$gt' => new \MongoDate()],
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'multimediaObjectId' => '$multimediaObjectId',
                 'event' => '$event',
                 'sessions' => '$sessions',
                 'session' => '$sessions',
                 'sessionEnds' => '$sessionEnds',
-            ),
-        );
+            ],
+        ];
 
-        $pipeline[] = array(
-            '$group' => array(
+        $pipeline[] = [
+            '$group' => [
                 '_id' => '$multimediaObjectId',
-                'data' => array(
-                    '$addToSet' => array(
+                'data' => [
+                    '$addToSet' => [
                         'event' => '$event',
                         'session' => '$session',
                         'multimediaObjectId' => '$multimediaObjectId',
                         'sessionEnds' => '$sessionEnds',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         if ($limit > 0) {
-            $pipeline[] = array('$limit' => $limit);
+            $pipeline[] = ['$limit' => $limit];
         }
 
-        return $collection->aggregate($pipeline, array('cursor' => array()))->toArray();
+        return $collection->aggregate($pipeline, ['cursor' => []])->toArray();
     }
 
     /**
@@ -1762,7 +1762,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function countMmobjsBySeries($seriesList = array())
+    public function countMmobjsBySeries($seriesList = [])
     {
         $dm = $this->getDocumentManager();
 
@@ -1770,21 +1770,21 @@ class MultimediaObjectRepository extends DocumentRepository
 
         $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
         if ($seriesList) {
-            $seriesIds = array();
+            $seriesIds = [];
             foreach ($seriesList as $series) {
                 $seriesIds[] = new \MongoId($series->getId());
             }
 
-            $criteria['series'] = array('$in' => $seriesIds);
+            $criteria['series'] = ['$in' => $seriesIds];
         }
 
-        $pipeline = array(
-            array('$match' => $criteria),
-            array('$group' => array('_id' => '$series', 'count' => array('$sum' => 1))),
-        );
+        $pipeline = [
+            ['$match' => $criteria],
+            ['$group' => ['_id' => '$series', 'count' => ['$sum' => 1]]],
+        ];
 
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline, array('cursor' => array()));
-        $mmobjCount = array();
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline, ['cursor' => []]);
+        $mmobjCount = [];
 
         foreach ($aggregation as $a) {
             $mmobjCount[(string) $a['_id']] = $a['count'];
@@ -1804,31 +1804,31 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function countMmobjsByTagCods($tagCodsList = array())
+    public function countMmobjsByTagCods($tagCodsList = [])
     {
         $dm = $this->getDocumentManager();
 
         $multimediaObjectsColl = $dm->getDocumentCollection(MultimediaObject::class);
 
-        $pipeline = array(
-            array('$project' => array('_id' => '$tags.cod')),
-            array('$unwind' => '$_id'),
-            array('$group' => array('_id' => '$_id', 'count' => array('$sum' => 1))),
-        );
+        $pipeline = [
+            ['$project' => ['_id' => '$tags.cod']],
+            ['$unwind' => '$_id'],
+            ['$group' => ['_id' => '$_id', 'count' => ['$sum' => 1]]],
+        ];
 
         $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
         if ($criteria) {
-            $preCriteria = array('$match' => $criteria);
+            $preCriteria = ['$match' => $criteria];
             array_unshift($pipeline, $preCriteria);
         }
 
         if ($tagCodsList) {
-            $preCriteria = array('$match' => array('tags.cod' => array('$in' => $tagCodsList)));
+            $preCriteria = ['$match' => ['tags.cod' => ['$in' => $tagCodsList]]];
             array_unshift($pipeline, $preCriteria);
         }
 
-        $aggregation = $multimediaObjectsColl->aggregate($pipeline, array('cursor' => array()));
-        $mmobjCount = array();
+        $aggregation = $multimediaObjectsColl->aggregate($pipeline, ['cursor' => []]);
+        $mmobjCount = [];
 
         foreach ($aggregation as $a) {
             $mmobjCount[(string) $a['_id']] = $a['count'];

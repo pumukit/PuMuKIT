@@ -31,11 +31,11 @@ class PersonController extends Controller
         $ldapService = $this->get('pumukit_ldap.ldap');
         $ldapConnected = $ldapService->checkConnection();
 
-        return array(
+        return [
                      'ldap_connected' => $ldapConnected,
                      'mm' => $multimediaObject,
                      'role' => $role,
-                     );
+                     ];
     }
 
     /**
@@ -48,11 +48,11 @@ class PersonController extends Controller
     {
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-        return array(
+        return [
                      'mm' => $multimediaObject,
                      'role' => $role,
                      'template' => $template,
-                     );
+                     ];
     }
 
     /**
@@ -68,12 +68,12 @@ class PersonController extends Controller
         try {
             $people = $ldapService->getListUsers('*'.$login.'*', '*'.$login.'*');
             foreach ($people as $person) {
-                $out[] = array(
+                $out[] = [
                                'value' => $person['cn'],
                                'label' => $person['cn'],
                                'mail' => $person['mail'],
                                'cn' => $person['cn'],
-                               );
+                               ];
             }
         } catch (\Exception $e) {
             return new Response($e->getMessage(), 400);
@@ -107,13 +107,13 @@ class PersonController extends Controller
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
         return $this->render('PumukitNewAdminBundle:Person:listrelation.html.twig',
-                             array(
+                             [
                                    'people' => $multimediaObject->getPeopleByRole($role, true),
                                    'role' => $role,
                                    'personal_scope_role_code' => $personalScopeRoleCode,
                                    'mm' => $multimediaObject,
                                    'template' => $template,
-                                   ));
+                                   ]);
     }
 
     private function createPersonFromLDAP($cn = '', $mail = '')

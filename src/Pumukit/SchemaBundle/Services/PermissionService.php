@@ -18,7 +18,7 @@ class PermissionService
      *
      * @param array $externalPermissions
      */
-    public function __construct(DocumentManager $documentManager, array $externalPermissions = array())
+    public function __construct(DocumentManager $documentManager, array $externalPermissions = [])
     {
         $this->repo = $documentManager->getRepository(Tag::class);
         $this->externalPermissions = $externalPermissions;
@@ -45,33 +45,33 @@ class PermissionService
      */
     public function getPubTagsPermissions()
     {
-        $return = array();
+        $return = [];
         $tag = $this->repo->findOneByCod('PUBCHANNELS');
         if (!$tag) {
             return $return;
         }
 
         foreach ($tag->getChildren() as $pubchannel) {
-            $return[Permission::getRoleTagDisableForPubChannel($pubchannel->getCod())] = array(
+            $return[Permission::getRoleTagDisableForPubChannel($pubchannel->getCod())] = [
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" disabled',
-                'dependencies' => array(
-                    PermissionProfile::SCOPE_GLOBAL => array(),
-                    PermissionProfile::SCOPE_PERSONAL => array(),
-                ),
-            );
+                'dependencies' => [
+                    PermissionProfile::SCOPE_GLOBAL => [],
+                    PermissionProfile::SCOPE_PERSONAL => [],
+                ],
+            ];
 
             // No activated-by-default permission for publication channels with configuration.
             if ($pubchannel->getProperty('modal_path')) {
                 continue;
             }
 
-            $return[Permission::getRoleTagDefaultForPubChannel($pubchannel->getCod())] = array(
+            $return[Permission::getRoleTagDefaultForPubChannel($pubchannel->getCod())] = [
                 'description' => 'Publication channel "'.$pubchannel->getTitle().'" activated by default',
-                'dependencies' => array(
-                    PermissionProfile::SCOPE_GLOBAL => array(),
-                    PermissionProfile::SCOPE_PERSONAL => array(),
-                ),
-            );
+                'dependencies' => [
+                    PermissionProfile::SCOPE_GLOBAL => [],
+                    PermissionProfile::SCOPE_PERSONAL => [],
+                ],
+            ];
         }
 
         return $return;
@@ -111,7 +111,7 @@ class PermissionService
      */
     public function getPermissionsForSuperAdmin()
     {
-        $permissions = array();
+        $permissions = [];
         foreach ($this->externalPermissions as $perm) {
             $permissions[] = $perm['role'];
         }
@@ -147,10 +147,10 @@ class PermissionService
     private function buildAllPermissions()
     {
         //Empty 'dependencies' to add to a permission without them
-        $defaultDeps = array(
-            PermissionProfile::SCOPE_GLOBAL => array(),
-            PermissionProfile::SCOPE_PERSONAL => array(),
-        );
+        $defaultDeps = [
+            PermissionProfile::SCOPE_GLOBAL => [],
+            PermissionProfile::SCOPE_PERSONAL => [],
+        ];
         $allPermissions = $this->getLocalPermissions() + $this->getPubTagsPermissions();
         foreach ($this->externalPermissions as $externalPermission) {
             if (array_key_exists($externalPermission['role'], $allPermissions)) {
@@ -166,10 +166,10 @@ class PermissionService
                 $dependencies[PermissionProfile::SCOPE_PERSONAL] = $externalPermission['dependencies']['personal'];
             }
 
-            $allPermissions[$externalPermission['role']] = array(
+            $allPermissions[$externalPermission['role']] = [
                 'description' => $externalPermission['description'],
                 'dependencies' => $dependencies,
-            );
+            ];
         }
 
         return $allPermissions;
@@ -202,12 +202,12 @@ class PermissionService
         if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
-        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
+        if (!in_array($scope, [PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL])) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
         }
 
         $dependencies = $allPermissions[$permission]['dependencies'][$scope];
-        $dependencies = array_diff($dependencies, array($permission));
+        $dependencies = array_diff($dependencies, [$permission]);
 
         reset($dependencies);
         while (false !== ($elem = current($dependencies))) {
@@ -240,7 +240,7 @@ class PermissionService
         if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
-        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
+        if (!in_array($scope, [PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL])) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
         }
         $dependables = array_filter(
@@ -270,7 +270,7 @@ class PermissionService
         if (!array_key_exists($permission, $allPermissions)) {
             throw new \InvalidArgumentException("The permission with role '$permission' does not exist in the configuration");
         }
-        if (!in_array($scope, array(PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL))) {
+        if (!in_array($scope, [PermissionProfile::SCOPE_GLOBAL, PermissionProfile::SCOPE_PERSONAL])) {
             throw new \InvalidArgumentException("The scope '$scope' is not a valid scope (SCOPE_GLOBAL or SCOPE_PERSONAL)");
         }
 

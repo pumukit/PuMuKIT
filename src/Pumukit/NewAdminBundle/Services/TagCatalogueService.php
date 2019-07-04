@@ -224,16 +224,16 @@ class TagCatalogueService
      */
     private function checkAndSortCriteria(Request $request, SessionInterface $session)
     {
-        $mappingSort = array(
+        $mappingSort = [
             'year' => 'record_date',
             'tracks.name' => 'tracks.originalName',
             'embeddedBroadcast' => 'embeddedBroadcast.name',
             'series.id' => 'series',
-        );
+        ];
 
         $sort_type = $request->request->get('sort_type');
-        if (in_array($sort_type, array('title', 'subtitle', 'seriesTitle', 'description', 'keywords'))) {
-            $sort_type = implode('.', array($sort_type, $request->getLocale()));
+        if (in_array($sort_type, ['title', 'subtitle', 'seriesTitle', 'description', 'keywords'])) {
+            $sort_type = implode('.', [$sort_type, $request->getLocale()]);
         } elseif (array_key_exists($sort_type, $mappingSort)) {
             $sort_type = $mappingSort[$sort_type];
         }
@@ -311,7 +311,7 @@ class TagCatalogueService
                 break;
             case 'series.id':
                 $text = $object->getSeries()->getId();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', array('id' => $text));
+                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $text]);
                 $text = "<a href='".$route."'>".(string) $text.'</a>';
                 break;
             case 'title':
@@ -319,7 +319,7 @@ class TagCatalogueService
                 break;
             case 'seriesTitle':
                 $text = $object->getSeries()->getTitle();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', array('id' => $object->getSeries()->getId()));
+                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
                 $text = "<a href='".$route."'>".$text.'</a>';
                 break;
             case 'subtitle':
@@ -427,12 +427,12 @@ class TagCatalogueService
             }
         }
 
-        $mappingFields = array(
+        $mappingFields = [
             '_id' => 'id',
             'tracks.originalName' => 'tracks.name',
             'tracks.duration' => 'duration',
             'embeddedBroadcasType' => 'embeddedBroadcast',
-        );
+        ];
 
         if (array_key_exists($key, $mappingFields)) {
             $key = $mappingFields[$key];
@@ -465,7 +465,7 @@ class TagCatalogueService
     private function roleRenderField(MultimediaObject $object, $field)
     {
         $role = explode('.', $field);
-        $roleCod = isset($role[1]) ? $role[1] : $role;
+        $roleCod = $role[1] ?? $role;
 
         $people = $object->getPeopleByRoleCod($roleCod, true);
 
@@ -509,194 +509,194 @@ class TagCatalogueService
             'id' => [
                 'label' => $this->translator->trans('Video ID'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => true,
-                ),
+                ],
             ],
             'series.id' => [
                 'label' => $this->translator->trans('Series ID'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => true,
-                ),
+                ],
             ],
             'title' => [
                 'label' => $this->translator->trans('Title'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'seriesTitle' => [
                 'label' => $this->translator->trans('Series title'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'subtitle' => [
                 'label' => $this->translator->trans('Subtitle'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'description' => [
                 'label' => $this->translator->trans('Description'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'comments' => [
                 'label' => $this->translator->trans('Comments'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'keywords' => [
                 'label' => $this->translator->trans('Keywords'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => true,
-                ),
+                ],
             ],
             'copyright' => [
                 'label' => $this->translator->trans('Copyright'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'license' => [
                 'label' => $this->translator->trans('License'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'public_date' => [
                 'label' => $this->translator->trans('Publication date'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'record_date' => [
                 'label' => $this->translator->trans('Record Date'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'tracks.name' => [
                 'label' => $this->translator->trans('Track name'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => true,
-                ),
+                ],
             ],
             'numerical_id' => [
                 'label' => $this->translator->trans('Numerical video ID'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'series.numerical_id' => [
                 'label' => $this->translator->trans('Numerical series ID'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => false,
-                ),
+                ],
             ],
             'type' => [
                 'label' => $this->translator->trans('Type'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'duration' => [
                 'label' => $this->translator->trans('Duration'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'numview' => [
                 'label' => $this->translator->trans('Views'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'year' => [
                 'label' => $this->translator->trans('Year'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'embeddedBroadcast' => [
                 'label' => $this->translator->trans('Broadcast'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'status' => [
                 'label' => $this->translator->trans('Status'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => true,
                     'break-word' => false,
-                ),
+                ],
             ],
             'groups' => [
                 'label' => $this->translator->trans('Groups'),
                 'render' => 'text',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => false,
-                ),
+                ],
             ],
             'pics' => [
                 'label' => $this->translator->trans('Images'),
                 'render' => 'img',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => false,
-                ),
+                ],
             ],
             'criteria' => [
                 'label' => $this->translator->trans('Criteria'),
                 'render' => 'criteria',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
                     'break-word' => false,
-                ),
+                ],
             ],
         ];
 
@@ -705,9 +705,9 @@ class TagCatalogueService
             $allFields['role.'.$role->getCod()] = [
                 'label' => $role->getName(),
                 'render' => 'role',
-                'render_params' => array(
+                'render_params' => [
                     'sort' => false,
-                ),
+                ],
             ];
         }
 

@@ -12,13 +12,13 @@ class JobRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->dm->getDocumentCollection(Job::class)->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -86,13 +86,13 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->persist($finishedJob);
         $this->dm->flush();
 
-        $pausedJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED))->toArray();
-        $waitingJobs = $this->repo->findWithStatus(array(Job::STATUS_WAITING))->toArray();
-        $executingJobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING))->toArray();
-        $finishedJobs = $this->repo->findWithStatus(array(Job::STATUS_FINISHED))->toArray();
-        $errorJobs = $this->repo->findWithStatus(array(Job::STATUS_ERROR))->toArray();
-        $pausedAndWaitingJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_WAITING))->toArray();
-        $pausedFinishedAndErrorJobs = $this->repo->findWithStatus(array(Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR))->toArray();
+        $pausedJobs = $this->repo->findWithStatus([Job::STATUS_PAUSED])->toArray();
+        $waitingJobs = $this->repo->findWithStatus([Job::STATUS_WAITING])->toArray();
+        $executingJobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING])->toArray();
+        $finishedJobs = $this->repo->findWithStatus([Job::STATUS_FINISHED])->toArray();
+        $errorJobs = $this->repo->findWithStatus([Job::STATUS_ERROR])->toArray();
+        $pausedAndWaitingJobs = $this->repo->findWithStatus([Job::STATUS_PAUSED, Job::STATUS_WAITING])->toArray();
+        $pausedFinishedAndErrorJobs = $this->repo->findWithStatus([Job::STATUS_PAUSED, Job::STATUS_FINISHED, Job::STATUS_ERROR])->toArray();
 
         $this->assertCount(1, $pausedJobs);
         $this->assertCount(1, $waitingJobs);
@@ -192,7 +192,7 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->persist($job6);
         $this->dm->flush();
 
-        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
+        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
 
         $mm_id = '54ad3f5e6e4cd68a278b4578';
         $name = 'video7';
@@ -203,10 +203,10 @@ class JobRepositoryTest extends WebTestCase
         $this->dm->persist($job7);
         $this->dm->flush();
 
-        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
-        $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING)));
+        $this->assertEquals($job3, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
+        $this->assertNotEquals($job7, $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]));
 
-        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_PAUSED)));
+        $this->assertEquals($job0, $this->repo->findHigherPriorityWithStatus([Job::STATUS_PAUSED]));
     }
 
     public function testFindNotFinishedByMultimediaObjectId()

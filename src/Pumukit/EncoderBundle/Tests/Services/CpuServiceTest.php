@@ -14,13 +14,13 @@ class CpuServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->dm->getDocumentCollection(Job::class)->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove([]);
         $this->dm->flush();
 
         $this->cpuService = new CpuService($this->getDemoCpus(), $this->dm);
@@ -99,8 +99,8 @@ class CpuServiceTest extends WebTestCase
 
     private function getDemoCpus()
     {
-        $cpus = array(
-            'CPU_WEBM' => array(
+        $cpus = [
+            'CPU_WEBM' => [
                 'host' => '127.0.0.1',
                 'max' => 1,
                 'number' => 1,
@@ -109,8 +109,8 @@ class CpuServiceTest extends WebTestCase
                 'password' => 'PUMUKIT',
                 'description' => 'Pumukit transcoder',
                 'profiles' => ['master_webm', 'video_webm'],
-            ),
-                      'CPU_LOCAL' => array(
+            ],
+                      'CPU_LOCAL' => [
                                            'host' => '127.0.0.1',
                                            'max' => 1,
                                            'number' => 1,
@@ -118,8 +118,8 @@ class CpuServiceTest extends WebTestCase
                                            'user' => 'transco1',
                                            'password' => 'PUMUKIT',
                                            'description' => 'Pumukit transcoder',
-                                           ),
-                      'CPU_REMOTE' => array(
+                                           ],
+                      'CPU_REMOTE' => [
                                             'host' => '192.168.5.123',
                                             'max' => 2,
                                             'number' => 1,
@@ -127,8 +127,8 @@ class CpuServiceTest extends WebTestCase
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder',
-                                            ),
-                      'CPU_CLOUD' => array(
+                                            ],
+                      'CPU_CLOUD' => [
                                             'host' => '192.168.5.124',
                                             'max' => 1,
                                             'number' => 1,
@@ -136,8 +136,8 @@ class CpuServiceTest extends WebTestCase
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder',
-                                            ),
-        );
+                                            ],
+        ];
 
         return $cpus;
     }

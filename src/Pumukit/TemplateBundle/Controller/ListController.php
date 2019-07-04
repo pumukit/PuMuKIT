@@ -34,8 +34,8 @@ class ListController extends Controller
             $routeName = 'pumukit_webtv_index_index';
         }
 
-        $this->get('pumukit_web_tv.breadcrumbs')->addList($template->getName(), $routeName, array(), true);
+        $this->get('pumukit_web_tv.breadcrumbs')->addList($template->getName(), $routeName, [], true);
 
-        return array('template' => $template);
+        return ['template' => $template];
     }
 }

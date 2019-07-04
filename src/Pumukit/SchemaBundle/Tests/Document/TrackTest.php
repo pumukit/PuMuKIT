@@ -9,7 +9,7 @@ class TrackTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $tags = array('tag_a', 'tag_b');
+        $tags = ['tag_a', 'tag_b'];
         $language = 'portuñol';
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
@@ -26,7 +26,7 @@ class TrackTest extends TestCase
         $height = 1080;
         $hide = false;
         $numview = 3;
-        $resolution = array('width' => $width, 'height' => $height);
+        $resolution = ['width' => $width, 'height' => $height];
 
         $track = new Track();
         $track->setTags($tags);
@@ -99,13 +99,13 @@ class TrackTest extends TestCase
         $track->addTag('t1');
         $track->addTag('t2');
         $track->addTag('t3');
-        $this->assertTrue($track->containsAnyTag(array('t0', 't2')));
-        $this->assertTrue($track->containsAnyTag(array('t2', 't3')));
-        $this->assertFalse($track->containsAnyTag(array('t0', 't4')));
-        $this->assertTrue($track->containsAllTags(array('t1', 't2')));
-        $this->assertTrue($track->containsAllTags(array('t1')));
-        $this->assertFalse($track->containsAllTags(array('t0', 't2')));
-        $this->assertFalse($track->containsAllTags(array('t0', 't1', 't2', 't3')));
+        $this->assertTrue($track->containsAnyTag(['t0', 't2']));
+        $this->assertTrue($track->containsAnyTag(['t2', 't3']));
+        $this->assertFalse($track->containsAnyTag(['t0', 't4']));
+        $this->assertTrue($track->containsAllTags(['t1', 't2']));
+        $this->assertTrue($track->containsAllTags(['t1']));
+        $this->assertFalse($track->containsAllTags(['t0', 't2']));
+        $this->assertFalse($track->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 
     public function testIsOnlyAudio()
@@ -130,8 +130,8 @@ class TrackTest extends TestCase
     public function testDurationInMinutesAndSeconds()
     {
         $duration = 120;
-        $duration_in_minutes_and_seconds1 = array('minutes' => 2, 'seconds' => 0);
-        $duration_in_minutes_and_seconds2 = array('minutes' => 5, 'seconds' => 30);
+        $duration_in_minutes_and_seconds1 = ['minutes' => 2, 'seconds' => 0];
+        $duration_in_minutes_and_seconds2 = ['minutes' => 5, 'seconds' => 30];
 
         $t1 = new Track();
         $t1->setDuration($duration);

@@ -33,7 +33,7 @@ class LogController extends Controller implements AdminControllerInterface
         $pathFile = realpath($this->container->getParameter('kernel.root_dir').'/../app/logs/'.$sFile);
 
         if (false === $pathFile) {
-            return new JsonResponse(array('error' => 'Error reading log file'.$pathFile), 500);
+            return new JsonResponse(['error' => 'Error reading log file'.$pathFile], 500);
         }
 
         $response = new BinaryFileResponse($pathFile);

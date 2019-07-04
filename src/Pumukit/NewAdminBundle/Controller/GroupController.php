@@ -27,7 +27,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $groups = $this->getResources($request, $criteria);
 
         $dm = $this->get('doctrine_mongodb')->getManager();
@@ -37,7 +37,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
                  ->getQuery()
                  ->execute();
 
-        return array('groups' => $groups, 'origins' => $origins->toArray());
+        return ['groups' => $groups, 'origins' => $origins->toArray()];
     }
 
     /**
@@ -47,10 +47,10 @@ class GroupController extends AdminController implements NewAdminControllerInter
      */
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $groups = $this->getResources($request, $criteria);
 
-        return array('groups' => $groups);
+        return ['groups' => $groups];
     }
 
     /**
@@ -67,13 +67,13 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $group = $this->createNew();
         $form = $this->getForm($group, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT'))) {
+        if (in_array($request->getMethod(), ['POST', 'PUT'])) {
             $formHandleRequest = $form->handleRequest($request);
             if ($formHandleRequest->isValid()) {
                 try {
                     $group = $this->get('pumukitschema.group')->create($group);
                 } catch (\Exception $e) {
-                    return new JsonResponse(array($e->getMessage()), Response::HTTP_BAD_REQUEST);
+                    return new JsonResponse([$e->getMessage()], Response::HTTP_BAD_REQUEST);
                 }
 
                 if (null === $group) {
@@ -82,15 +82,15 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
             } else {
-                return new JsonResponse(array('Form not valid'), Response::HTTP_BAD_REQUEST);
+                return new JsonResponse(['Form not valid'], Response::HTTP_BAD_REQUEST);
             }
         }
 
         return $this->render('PumukitNewAdminBundle:Group:create.html.twig',
-                             array(
+                             [
                                  'group' => $group,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -112,21 +112,21 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
         $form = $this->getForm($group, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->handleRequest($request)->isValid()) {
             try {
                 $group = $this->get('pumukitschema.group')->update($group);
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
+                return new JsonResponse(['status' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_group_list'));
         }
 
         return $this->render('PumukitNewAdminBundle:Group:update.html.twig',
-                             array(
+                             [
                                  'group' => $group,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -161,7 +161,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
 
         $groupService = $this->get('pumukitschema.group');
         $translator = $this->get('translator');
-        $notDeleted = array();
+        $notDeleted = [];
         foreach ($ids as $id) {
             $group = $groupService->findById($id);
             try {
@@ -242,7 +242,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $value = $session->get('admin/group/type', 'asc');
         $key = $session->get('admin/group/sort', 'name');
 
-        return array($key => $value);
+        return [$key => $value];
     }
 
     /**
@@ -259,15 +259,15 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $group = $this->findOr404($request);
         $locale = $request->getLocale();
         $action = $request->get('action', false);
-        $usersSort = array('username' => 1);
+        $usersSort = ['username' => 1];
         $limit = 101;
         $users = $this->get('pumukitschema.group')->findUsersInGroup($group, $usersSort, $limit);
         $dm = $this->get('doctrine_mongodb.odm.document_manager');
         $mmobjRepo = $dm->getRepository(MultimediaObject::class);
         if ($locale) {
-            $sort = array('title.'.$locale => 1);
+            $sort = ['title.'.$locale => 1];
         } else {
-            $sort = array('title' => 1);
+            $sort = ['title' => 1];
         }
         $adminMultimediaObjects = $mmobjRepo->findWithGroup($group, $sort, $limit);
         $viewerMultimediaObjects = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group, $sort, $limit);
@@ -276,7 +276,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $canBeDeleted = $groupService->canBeDeleted($group);
         $deleteMessage = $groupService->getDeleteMessage($group, $locale);
 
-        return array(
+        return [
             'group' => $group,
             'action' => $action,
             'users' => $users,
@@ -285,7 +285,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
             'countResources' => $countResources,
             'can_delete' => $canBeDeleted,
             'delete_group_message' => $deleteMessage,
-        );
+        ];
     }
 
     /**
@@ -321,12 +321,12 @@ class GroupController extends AdminController implements NewAdminControllerInter
             throw new \Exception('Invalid resource name');
         }
 
-        return array(
+        return [
             'group' => $group,
             'action' => $action,
             'resources' => $resources,
             'resource_name' => $resourceName,
-        );
+        ];
     }
 
     /**
@@ -340,7 +340,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $group = $this->findOr404($request);
         $user = $this->get('pumukitschema.user')->deleteGroup($group, $user);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user', 'action' => $action)));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user', 'action' => $action]));
     }
 
     /**
@@ -354,7 +354,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $group = $this->findOr404($request);
         $multimediaobject = $this->get('pumukitschema.multimedia_object')->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action)));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action]));
     }
 
     /**
@@ -368,7 +368,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
         $group = $this->findOr404($request);
         $multimediaobject = $this->get('pumukitschema.embeddedbroadcast')->deleteGroup($group, $multimediaObject);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action)));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast', 'action' => $action]));
     }
 
     /**
@@ -388,14 +388,14 @@ class GroupController extends AdminController implements NewAdminControllerInter
             $locale = $request->getLocale();
             $deleteMessage = $groupService->getDeleteMessage($group, $locale);
         } catch (\Exception $e) {
-            return new JsonResponse(array('error' => $e->getMessage()), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'canbedeleted' => $value,
             'deleteMessage' => $deleteMessage,
             'groupName' => $group->getName(),
-        ));
+        ]);
     }
 
     /**
@@ -415,7 +415,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'user')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user']));
     }
 
     /**
@@ -435,7 +435,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'multimediaobject')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject']));
     }
 
     /**
@@ -455,7 +455,7 @@ class GroupController extends AdminController implements NewAdminControllerInter
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', array('id' => $group->getId(), 'resourceName' => 'embeddedbroadcast')));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'embeddedbroadcast']));
     }
 
     public function getCriteria($criteria)

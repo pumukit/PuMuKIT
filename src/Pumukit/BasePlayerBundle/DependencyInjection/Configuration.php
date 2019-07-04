@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
               ->info('The lifetime of a link passed in a request when secure_secret is defined. Default one hour (3600s)')
             ->end()
             ->enumNode('when_dispatch_view_event')
-              ->values(array('on_load', 'on_play'))
+              ->values(['on_load', 'on_play'])
               ->defaultValue('on_load')
               ->info('When dispatch a view event, on load the track file or on play the video (via AJAX request).')
             ->end()

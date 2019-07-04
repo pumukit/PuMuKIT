@@ -59,8 +59,8 @@ EOT
     private function generateNewNumericalID()
     {
         $this->output->writeln(
-            array('<info> ***** Executing pumukit:update:numerical:id *****</info>'),
-            array('Checking status...')
+            ['<info> ***** Executing pumukit:update:numerical:id *****</info>'],
+            ['Checking status...']
         );
 
         $status = $this->checkStatus();
@@ -71,17 +71,17 @@ EOT
         $lastNumericalIDSeries = $this->getLastNumericalID(true);
         $lastNumericalIDMultimediaObject = $this->getLastNumericalID(false);
 
-        $criteria = array(
-            'numerical_id' => array('$exists' => false),
-        );
+        $criteria = [
+            'numerical_id' => ['$exists' => false],
+        ];
 
         $multimediaObjects = $this->getMultimediaObjects($criteria, false);
 
         $this->output->writeln(
-            array(
+            [
                 '',
                 '<warning> ***** Updating multimedia objects *****</warning>',
-            )
+            ]
         );
 
         $this->generateNumericalID($multimediaObjects, $lastNumericalIDMultimediaObject);
@@ -89,28 +89,28 @@ EOT
         $series = $this->getSeries($criteria, false);
 
         $this->output->writeln(
-            array(
+            [
                 '',
                 '<warning> ***** Updating series *****</warning>',
-            )
+            ]
         );
         $this->generateNumericalID($series, $lastNumericalIDSeries);
     }
 
     private function checkStatus()
     {
-        $criteria = array(
-            'numerical_id' => array('$exists' => false),
-        );
+        $criteria = [
+            'numerical_id' => ['$exists' => false],
+        ];
 
         $multimediaObjects = $this->getMultimediaObjects($criteria, true);
         $series = $this->getSeries($criteria, true);
 
         if ($multimediaObjects || $series) {
             $this->output->writeln(
-                array(
+                [
                     '<error>'.sprintf('There are %s multimedia objects and %s series with pumukit1id and not numerical ID, please execute query first', count($multimediaObjects), count($series)).'</error>',
-                )
+                ]
             );
 
             return false;
@@ -140,8 +140,8 @@ EOT
     private function createCriteria($criteria, $withPumukit1Id)
     {
         $newCriteria = $criteria;
-        $newCriteria['status'] = array('$ne' => MultimediaObject::STATUS_PROTOTYPE);
-        $newCriteria['properties.pumukit1id'] = array('$exists' => $withPumukit1Id);
+        $newCriteria['status'] = ['$ne' => MultimediaObject::STATUS_PROTOTYPE];
+        $newCriteria['properties.pumukit1id'] = ['$exists' => $withPumukit1Id];
 
         return $newCriteria;
     }
@@ -151,7 +151,7 @@ EOT
         if ($series) {
             $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
                 ->field('numerical_id')->exists(true)
-                ->sort(array('numerical_id' => -1))
+                ->sort(['numerical_id' => -1])
                 ->getQuery()
                 ->getSingleResult();
 
@@ -159,7 +159,7 @@ EOT
         } else {
             $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
                 ->field('numerical_id')->exists(true)
-                ->sort(array('numerical_id' => -1))
+                ->sort(['numerical_id' => -1])
                 ->getQuery()
                 ->getSingleResult();
 

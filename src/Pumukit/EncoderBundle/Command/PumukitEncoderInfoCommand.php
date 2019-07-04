@@ -16,10 +16,10 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
         $this
             ->setName('pumukit:encoder:info')
             ->setDescription('Pumukit show job info')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('id', InputArgument::OPTIONAL, 'Job identifier to execute'),
                 new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 EOT
           );
@@ -51,10 +51,10 @@ EOT
 
         $output->writeln('<info>CPUS:</info>');
         $table = new Table($output);
-        $table->setHeaders(array('Name', 'Status', 'Type', 'Host', 'Number', 'Description'));
+        $table->setHeaders(['Name', 'Status', 'Type', 'Host', 'Number', 'Description']);
 
         foreach ($cpus as $name => $cpu) {
-            $table->addRow(array(
+            $table->addRow([
                 $name,
                 in_array($name, $deactivatedCpus) ?
                     '<error>In Maintenance</error>' :
@@ -63,7 +63,7 @@ EOT
                 $cpu['host'],
                 $cpu['number'].'/'.$cpu['max'],
                 $cpu['description'],
-            ));
+            ]);
         }
         $table->render();
     }
@@ -85,18 +85,18 @@ EOT
         if ($all) {
             $status = array_keys(Job::$statusTexts);
         } else {
-            $status = array(Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR);
+            $status = [Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR];
         }
-        $sort = array('timeini' => 'asc');
+        $sort = ['timeini' => 'asc'];
         $jobs = $jobRepo->findWithStatus($status, $sort);
 
         $output->writeln('<info>JOBS:</info>');
         $table = new Table($output);
-        $table->setHeaders(array('Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
-                                 'Timeini', 'Timestart', 'Timeend', ));
+        $table->setHeaders(['Id', 'Status', 'MM', 'Profile', 'Cpu', 'Priority',
+                                 'Timeini', 'Timestart', 'Timeend', ]);
 
         foreach ($jobs as $name => $job) {
-            $table->addRow(array(
+            $table->addRow([
                 $job->getId(),
                 $this->formatStatus($job->getStatus()),
                 $job->getMmId(),
@@ -106,7 +106,7 @@ EOT
                 $job->getTimeini('Y-m-d H:i:s'),
                 $job->getTimestart('Y-m-d H:i:s'),
                 $job->getTimeend('Y-m-d H:i:s'),
-            ));
+            ]);
         }
         $table->render();
     }
