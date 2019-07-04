@@ -329,13 +329,13 @@ class Annotation
     }
 
     /**
-     * Set isPrivate.
+     * Set private.
      *
      * @param bool $isPrivate
      *
      * @return self
      */
-    public function setIsPrivate($isPrivate)
+    public function setPrivate($isPrivate)
     {
         $this->is_private = $isPrivate;
 
@@ -347,7 +347,7 @@ class Annotation
      *
      * @return bool $isPrivate
      */
-    public function getIsPrivate()
+    public function getPrivate()
     {
         return $this->is_private;
     }

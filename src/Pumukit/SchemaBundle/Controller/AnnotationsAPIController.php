@@ -98,7 +98,7 @@ class AnnotationsAPIController extends Controller
                 'outpoint' => $annotation->getOutPoint(),
                 'length' => $annotation->getLength(),
                 'type' => $annotation->getType(),
-                'isPrivate' => $annotation->getIsPrivate(),
+                'isPrivate' => $annotation->getPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
             ],
@@ -132,7 +132,7 @@ class AnnotationsAPIController extends Controller
         $annotation->setValue($value);
         $annotation->setInPoint($inPoint);
         $annotation->setOutPoint($outPoint);
-        $annotation->setIsPrivate($isPrivate);
+        $annotation->setPrivate($isPrivate);
         $annotation->setLength(0); //This field is not very useful.
         $annotation->setCreated(new \DateTime());
         $userId = $this->getUser() ? $this->getUser()->getId() : 'anonymous';
@@ -154,7 +154,7 @@ class AnnotationsAPIController extends Controller
                 'outpoint' => $annotation->getOutPoint(),
                 'length' => $annotation->getLength(),
                 'type' => $annotation->getType(),
-                'isPrivate' => $annotation->getIsPrivate(),
+                'isPrivate' => $annotation->getPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
             ],
@@ -190,7 +190,7 @@ class AnnotationsAPIController extends Controller
                 'outpoint' => $annotation->getOutPoint(),
                 'length' => $annotation->getLength(),
                 'type' => $annotation->getType(),
-                'isPrivate' => $annotation->getIsPrivate(),
+                'isPrivate' => $annotation->getPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
             ],
