@@ -76,7 +76,7 @@ class Pic extends Element
 
         foreach ($this->getTags() as $tag) {
             if ('time_' == substr($tag, 0, 5)) {
-                return floatval(substr($tag, 5));
+                return (float) (substr($tag, 5));
             }
         }
 

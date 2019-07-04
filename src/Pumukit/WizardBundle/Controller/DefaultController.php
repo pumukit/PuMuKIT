@@ -482,7 +482,7 @@ class DefaultController extends Controller
                     }
 
                     if ($multimediaObject && isset($status)) {
-                        $multimediaObject->setStatus(intval($status));
+                        $multimediaObject->setStatus((int) $status);
                     }
 
                     if ($showTags) {

@@ -560,7 +560,7 @@ class SeriesController extends AdminController implements NewAdminControllerInte
             }
 
             $maxPerPage = $session->get($session_namespace.'/paginate', 10);
-            $page = intval(ceil($position / $maxPerPage));
+            $page = (int) (ceil($position / $maxPerPage));
             if (!$findSerie) {
                 $page = 1;
             }

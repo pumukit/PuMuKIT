@@ -123,7 +123,7 @@ class TagCatalogueService
                 } elseif (('seriesID' === $key) && !empty($value)) {
                     $newCriteria['series'] = $value;
                 } elseif (('series.numerical_id' === $key) && !empty($value)) {
-                    $series = $this->dm->getRepository(Series::class)->findOneBy(['numerical_id' => intval($value)]);
+                    $series = $this->dm->getRepository(Series::class)->findOneBy(['numerical_id' => (int) $value]);
                     if ($series) {
                         $newCriteria['series'] = new \MongoId($series->getId());
                     } else {
@@ -131,12 +131,12 @@ class TagCatalogueService
                         $newCriteria['series'] = new \MongoId();
                     }
                 } elseif (('mm.numerical_id' === $key) && !empty($value)) {
-                    $newCriteria['numerical_id'] = intval($value);
+                    $newCriteria['numerical_id'] = (int) $value;
                 } elseif ((false !== strpos($key, 'properties')) && !(empty($value))) {
                     $newCriteria[$key] = $value;
                 } elseif ('type' === $key && !empty($value)) {
                     if ('all' !== $value) {
-                        $newCriteria['type'] = intval($value);
+                        $newCriteria['type'] = (int) $value;
                     }
                 } elseif ('duration' === $key && !empty($value)) {
                     $newCriteria['tracks.duration'] = $value;
@@ -152,7 +152,7 @@ class TagCatalogueService
                     }
                 } elseif ('statusPub' === $key) {
                     if ('-1' !== $value) {
-                        $newCriteria['status'] = intval($value);
+                        $newCriteria['status'] = (int) $value;
                     }
                 } elseif ('announce' === $key && !empty($value)) {
                     $tag[] = 'PUDENEW';

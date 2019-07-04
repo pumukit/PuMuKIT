@@ -79,9 +79,9 @@ class PicExtractorService
         if ((is_null($numframe) || (0 == $num_frames))) {
             $num = 125 * (count($multimediaObject->getPics())) + 1;
         } elseif ('%' === substr($numframe, -1, 1)) {
-            $num = intval($numframe) * $num_frames / 100;
+            $num = (int) $numframe * $num_frames / 100;
         } else {
-            $num = intval($numframe);
+            $num = (int) $numframe;
         }
 
         $this->createPic($multimediaObject, $track, $num);
@@ -113,12 +113,12 @@ class PicExtractorService
 
         $aspectTrack = $this->getAspect($track);
         if (0 !== $aspectTrack) {
-            $newHeight = intval(1.0 * $this->width / $aspectTrack);
+            $newHeight = (int) (1.0 * $this->width / $aspectTrack);
             if ($newHeight <= $this->height) {
                 $newWidth = $this->width;
             } else {
                 $newHeight = $this->height;
-                $newWidth = intval(1.0 * $this->height * $aspectTrack);
+                $newWidth = (int) (1.0 * $this->height * $aspectTrack);
             }
         } else {
             $newHeight = $this->height;

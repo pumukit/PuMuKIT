@@ -697,7 +697,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
                 ++$position;
             }
             $maxPerPage = $session->get('admin/person/paginate', 10);
-            $page = intval(ceil($position / $maxPerPage));
+            $page = (int) (ceil($position / $maxPerPage));
         } else {
             $maxPerPage = $session->get('admin/person/paginate', 10);
             $page = $session->get('admin/person/page', 1);

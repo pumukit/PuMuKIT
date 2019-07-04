@@ -213,11 +213,11 @@ class APIController extends Controller implements NewAdminControllerInterface
         $MAX_LIMIT = 1000;
         //Request variables.
         $criteria = $request->get('criteria') ?: [];
-        $sort = intval($request->get('sort'));
+        $sort = (int) ($request->get('sort'));
         $fromDate = $request->get('from_date');
         $toDate = $request->get('to_date');
-        $limit = intval($request->get('limit'));
-        $page = intval($request->get('page')) ?: 0;
+        $limit = (int) ($request->get('limit'));
+        $page = (int) ($request->get('page')) ?: 0;
 
         //Processing variables.
         if (!$limit || $limit > $MAX_LIMIT) {

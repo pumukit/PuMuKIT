@@ -49,7 +49,7 @@ class EventController extends Controller implements WebTVControllerInterface
         $maxPerPage = $this->container->getParameter('columns_objs_event') * 3;
         $eventsFuture->setMaxPerPage($maxPerPage);
         $eventsFuture->setNormalizeOutOfRangePages(true);
-        $eventsFuture->setCurrentPage(intval($page));
+        $eventsFuture->setCurrentPage((int) $page);
 
         return [
             'eventsToday' => $eventsToday,

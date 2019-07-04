@@ -60,7 +60,7 @@ class OpencastSingleImportCommand extends ContainerAwareCommand
             $multimediaObject->setProperty('opencast', $properties);
             $multimediaObject->setProperty('opencasturl', $opencastClient->getPlayerUrl().'?id='.$properties);
         }
-        $multimediaObject->setProperty('opencastinvert', boolval($invert));
+        $multimediaObject->setProperty('opencastinvert', (bool) $invert);
 
         if ($language) {
             $parsedLocale = \Locale::parseLocale($language);

@@ -302,7 +302,7 @@ class EmbeddedEventSessionService
     {
         static $currentSessions = [];
 
-        $encryptCriteria = md5(json_encode($criteria).strval($limit).strval($all));
+        $encryptCriteria = md5(json_encode($criteria).(string) $limit.(string) $all);
 
         if (isset($currentSessions[$encryptCriteria])) {
             return $currentSessions[$encryptCriteria];
@@ -371,7 +371,7 @@ class EmbeddedEventSessionService
     {
         static $findNextSessions;
 
-        $encryptCriteria = md5(json_encode($criteria).strval($limit).strval($all));
+        $encryptCriteria = md5(json_encode($criteria).(string) $limit.(string) $all);
 
         if (isset($findNextSessions[$encryptCriteria])) {
             return $findNextSessions[$encryptCriteria];
