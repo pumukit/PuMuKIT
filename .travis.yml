@@ -38,7 +38,7 @@ script:
     - php bin/console lint:twig src
     - php bin/console lint:twig app
     - ./bin/travis_checks/check_var_dumps
-    - php bin/php-cs-fixer fix src --rules=@Symfony --dry-run -v
+    - php bin/php-cs-fixer fix --dry-run -v
     - php bin/phpstan analyse -l 1 src
     - php bin/phpstan analyse -l 5 src/Pumukit/CoreBundle/
     - php bin/phpunit -c app
