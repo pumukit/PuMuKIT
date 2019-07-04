@@ -10,7 +10,7 @@ class MaterialTest extends TestCase
     public function testGetterAndSetter()
     {
         $name = 'name';
-        $tags = array('tag_a', 'tag_b');
+        $tags = ['tag_a', 'tag_b'];
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'video/mpeg4';
@@ -71,13 +71,13 @@ class MaterialTest extends TestCase
         $material->addTag('t1');
         $material->addTag('t2');
         $material->addTag('t3');
-        $this->assertTrue($material->containsAnyTag(array('t0', 't2')));
-        $this->assertTrue($material->containsAnyTag(array('t2', 't3')));
-        $this->assertFalse($material->containsAnyTag(array('t0', 't4')));
-        $this->assertTrue($material->containsAllTags(array('t1', 't2')));
-        $this->assertTrue($material->containsAllTags(array('t1')));
-        $this->assertFalse($material->containsAllTags(array('t0', 't2')));
-        $this->assertFalse($material->containsAllTags(array('t0', 't1', 't2', 't3')));
+        $this->assertTrue($material->containsAnyTag(['t0', 't2']));
+        $this->assertTrue($material->containsAnyTag(['t2', 't3']));
+        $this->assertFalse($material->containsAnyTag(['t0', 't4']));
+        $this->assertTrue($material->containsAllTags(['t1', 't2']));
+        $this->assertTrue($material->containsAllTags(['t1']));
+        $this->assertFalse($material->containsAllTags(['t0', 't2']));
+        $this->assertFalse($material->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 
     /*public function testRef()

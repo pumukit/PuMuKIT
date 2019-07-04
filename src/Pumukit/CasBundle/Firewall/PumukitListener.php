@@ -25,7 +25,7 @@ class PumukitListener extends AbstractAuthenticationListener
     /**
      * {@inheritdoc}
      */
-    public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = array(), LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService = null)
+    public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager, SessionAuthenticationStrategyInterface $sessionStrategy, HttpUtils $httpUtils, $providerKey, AuthenticationSuccessHandlerInterface $successHandler, AuthenticationFailureHandlerInterface $failureHandler, array $options = [], LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null, CASService $casService = null)
     {
         parent::__construct($tokenStorage, $authenticationManager, $sessionStrategy, $httpUtils, $providerKey, $successHandler, $failureHandler, $options, $logger, $dispatcher);
 
@@ -41,7 +41,7 @@ class PumukitListener extends AbstractAuthenticationListener
         $this->casService->forceAuthentication();
         $username = $this->casService->getUser();
 
-        $token = new PreAuthenticatedToken($username, array('ROLE_USER'), $this->providerKey);
+        $token = new PreAuthenticatedToken($username, ['ROLE_USER'], $this->providerKey);
 
         return $this->authenticationManager->authenticate($token);
     }

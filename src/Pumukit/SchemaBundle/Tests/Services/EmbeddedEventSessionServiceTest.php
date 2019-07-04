@@ -16,7 +16,7 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -28,9 +28,9 @@ class EmbeddedEventSessionServiceTest extends WebTestCase
           ->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
     }
 

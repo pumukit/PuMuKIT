@@ -25,7 +25,7 @@ class AnnounceService
         } else {
             //Get recently added mmobjs
             $sortKey = $useRecordDate ? 'record_date' : 'public_date';
-            $return = $this->mmobjRepo->findStandardBy(array(), array($sortKey => -1), $limit, 0);
+            $return = $this->mmobjRepo->findStandardBy([], [$sortKey => -1], $limit, 0);
         }
 
         return $return;
@@ -36,23 +36,23 @@ class AnnounceService
      */
     protected function getLastMmobjsWithSeries($limit = 3, $useRecordDate = false)
     {
-        $mmobjCriteria = array('tags.cod' => 'PUDENEW');
-        $seriesCriteria = array('announce' => true);
+        $mmobjCriteria = ['tags.cod' => 'PUDENEW'];
+        $seriesCriteria = ['announce' => true];
 
         $sortKey = $useRecordDate ? 'record_date' : 'public_date';
-        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, array($sortKey => -1), $limit, 0);
-        $lastSeries = $this->seriesRepo->findBy($seriesCriteria, array('public_date' => -1), $limit, 0);
+        $lastMms = $this->mmobjRepo->findStandardBy($mmobjCriteria, [$sortKey => -1], $limit, 0);
+        $lastSeries = $this->seriesRepo->findBy($seriesCriteria, ['public_date' => -1], $limit, 0);
 
         $z = 0;
         foreach ($lastSeries as $series) {
-            $isValidSeries = $this->mmobjRepo->findStandardBy(array('series' => $series->getId()));
+            $isValidSeries = $this->mmobjRepo->findStandardBy(['series' => $series->getId()]);
             if (count($isValidSeries) <= 0) {
                 unset($lastSeries[$z]);
             }
             ++$z;
         }
 
-        $return = array();
+        $return = [];
         $i = 0;
         $iMms = 0;
         $iSeries = 0;
@@ -89,7 +89,7 @@ class AnnounceService
         $queryBuilderMms->field($sortKey)->range($dateStart, $dateEnd);
 
         if (!$withPudenewTag) {
-            return $queryBuilderMms->sort(array($sortKey => -1))->getQuery()->execute()->toArray();
+            return $queryBuilderMms->sort([$sortKey => -1])->getQuery()->execute()->toArray();
         }
 
         $queryBuilderSeries = $this->seriesRepo->createQueryBuilder();
@@ -101,10 +101,10 @@ class AnnounceService
         $lastMms = $queryBuilderMms->getQuery()->execute();
         $lastSeries = $queryBuilderSeries->getQuery()->execute();
 
-        $last = array();
+        $last = [];
 
         foreach ($lastSeries as $serie) {
-            $haveMmojb = $this->mmobjRepo->findBy(array('series' => new \MongoId($serie->getId())));
+            $haveMmojb = $this->mmobjRepo->findBy(['series' => new \MongoId($serie->getId())]);
             if (0 !== count($haveMmojb)) {
                 $last[] = $serie;
             }
@@ -152,7 +152,7 @@ class AnnounceService
 
         $lastMm = $queryBuilderMms->getQuery()->getSingleResult();
         if (!$lastMm) {
-            return array(null, array());
+            return [null, []];
         }
 
         $lastDate = $useRecordDate ? $lastMm->getRecordDate() : $lastMm->getPublicDate();
@@ -167,6 +167,6 @@ class AnnounceService
             $dateEnd = null;
         }
 
-        return array($dateEnd, $last);
+        return [$dateEnd, $last];
     }
 }

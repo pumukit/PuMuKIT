@@ -81,7 +81,7 @@ class JobService
      *
      * @throws \Exception
      */
-    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
+    public function createTrackFromLocalHardDrive(MultimediaObject $multimediaObject, UploadedFile $trackFile, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
     {
         if (!$trackFile->isValid()) {
             throw new \Exception($trackFile->getErrorMessage());
@@ -115,7 +115,7 @@ class JobService
      *
      * @throws \Exception
      */
-    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = array(), $duration = 0, $flags = 0)
+    public function createTrackFromInboxOnServer(MultimediaObject $multimediaObject, $trackUrl, $profile, $priority, $language, $description, $initVars = [], $duration = 0, $flags = 0)
     {
         if (!is_file($trackUrl)) {
             throw new FileNotFoundException($trackUrl);
@@ -140,7 +140,7 @@ class JobService
      * @throws \Exception
      * @deprecated: Use addJob with JobService::ADD_JOB_UNIQUE flag.
      */
-    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array())
+    public function addUniqueJob($pathFile, $profile, $priority, MultimediaObject $multimediaObject, $language = null, $description = [], $initVars = [])
     {
         $this->addJob($pathFile, $profile, $priority, $multimediaObject, $language, $description, $initVars, 0, self::ADD_JOB_UNIQUE);
     }
@@ -162,10 +162,10 @@ class JobService
      *
      * @throws \Exception
      */
-    public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = array(), $initVars = array(), $duration = 0, $flags = 0)
+    public function addJob($pathFile, $profileName, $priority, MultimediaObject $multimediaObject, $language = null, $description = [], $initVars = [], $duration = 0, $flags = 0)
     {
         if (self::ADD_JOB_UNIQUE & $flags) {
-            $job = $this->repo->findOneBy(array('profile' => $profileName, 'mm_id' => $multimediaObject->getId()));
+            $job = $this->repo->findOneBy(['profile' => $profileName, 'mm_id' => $multimediaObject->getId()]);
 
             if ($job) {
                 return $job;
@@ -366,13 +366,13 @@ class JobService
      */
     public function getAllJobsStatus()
     {
-        return array(
-            'paused' => count($this->repo->findWithStatus(array(Job::STATUS_PAUSED))),
-            'waiting' => count($this->repo->findWithStatus(array(Job::STATUS_WAITING))),
-            'executing' => count($this->repo->findWithStatus(array(Job::STATUS_EXECUTING))),
-            'finished' => count($this->repo->findWithStatus(array(Job::STATUS_FINISHED))),
-            'error' => count($this->repo->findWithStatus(array(Job::STATUS_ERROR))),
-        );
+        return [
+            'paused' => count($this->repo->findWithStatus([Job::STATUS_PAUSED])),
+            'waiting' => count($this->repo->findWithStatus([Job::STATUS_WAITING])),
+            'executing' => count($this->repo->findWithStatus([Job::STATUS_EXECUTING])),
+            'finished' => count($this->repo->findWithStatus([Job::STATUS_FINISHED])),
+            'error' => count($this->repo->findWithStatus([Job::STATUS_ERROR])),
+        ];
     }
 
     /**
@@ -382,13 +382,13 @@ class JobService
      */
     public function getAllJobsStatusWithOwner($owner)
     {
-        return array(
-            'paused' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_PAUSED), array(), $owner)),
-            'waiting' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_WAITING), array(), $owner)),
-            'executing' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_EXECUTING), array(), $owner)),
-            'finished' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_FINISHED), array(), $owner)),
-            'error' => count($this->repo->findWithStatusAndOwner(array(Job::STATUS_ERROR), array(), $owner)),
-        );
+        return [
+            'paused' => count($this->repo->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)),
+            'waiting' => count($this->repo->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)),
+            'executing' => count($this->repo->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)),
+            'finished' => count($this->repo->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)),
+            'error' => count($this->repo->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)),
+        ];
     }
 
     /**
@@ -400,7 +400,7 @@ class JobService
      */
     public function getNextJob()
     {
-        return $this->repo->findHigherPriorityWithStatus(array(Job::STATUS_WAITING));
+        return $this->repo->findHigherPriorityWithStatus([Job::STATUS_WAITING]);
     }
 
     /**
@@ -610,9 +610,9 @@ class JobService
 
         $vars = $job->getInitVars();
 
-        $vars['tracks'] = array();
-        $vars['tracks_audio'] = array();
-        $vars['tracks_video'] = array();
+        $vars['tracks'] = [];
+        $vars['tracks_audio'] = [];
+        $vars['tracks_video'] = [];
         foreach ($mmobj->getTracks() as $track) {
             foreach ($track->getTags() as $tag) {
                 $vars['tracks'][$tag] = $track->getPath();
@@ -633,7 +633,7 @@ class JobService
             $vars['tmpfile'.$identifier] = $this->tmpPath.'/'.rand();
         }
 
-        $loader = new \Twig_Loader_Array(array('bat' => $profile['bat']));
+        $loader = new \Twig_Loader_Array(['bat' => $profile['bat']]);
         $twig = new \Twig_Environment($loader);
 
         $commandLine = $twig->render('bat', $vars);
@@ -710,7 +710,7 @@ class JobService
      */
     private function getPathEnd(array $profile, $dir, $file, $extension)
     {
-        $finalExtension = isset($profile['extension']) ? $profile['extension'] : $extension;
+        $finalExtension = $profile['extension'] ?? $extension;
 
         $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
 
@@ -744,7 +744,7 @@ class JobService
      *
      * @throws \Exception
      */
-    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = array())
+    public function createTrackWithFile($pathFile, $profileName, MultimediaObject $multimediaObject, $language = null, $description = [])
     {
         $profile = $this->profileService->getProfile($profileName);
 
@@ -769,7 +769,7 @@ class JobService
      *
      * @return Track
      */
-    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = array(), $pathFile = null)
+    public function createTrack(MultimediaObject $multimediaObject, $pathEnd, $profileName, $language = null, $description = [], $pathFile = null)
     {
         $profile = $this->profileService->getProfile($profileName);
 
@@ -881,7 +881,7 @@ class JobService
      */
     private function getExecutor($cpu)
     {
-        $localhost = array('localhost', '127.0.0.1');
+        $localhost = ['localhost', '127.0.0.1'];
         $executor = (in_array($cpu['host'], $localhost)) ? new LocalExecutor() : new RemoteHTTPExecutor();
 
         return $executor;
@@ -950,7 +950,7 @@ class JobService
     private function checkService()
     {
         $existsJobsToUpdate = false;
-        $jobs = $this->repo->findWithStatus(array(Job::STATUS_EXECUTING));
+        $jobs = $this->repo->findWithStatus([Job::STATUS_EXECUTING]);
         $yesterday = new \DateTime('-1 day');
 
         foreach ($jobs as $job) {
@@ -987,7 +987,7 @@ class JobService
         }
 
         if ($job) {
-            $otherJob = $this->repo->findOneBy(array('mm_id' => $job->getMmId(), 'email' => array('$exists' => true)), array('timeini' => 1));
+            $otherJob = $this->repo->findOneBy(['mm_id' => $job->getMmId(), 'email' => ['$exists' => true]], ['timeini' => 1]);
             if ($otherJob && $otherJob->getEmail()) {
                 return $otherJob->getEmail();
             }

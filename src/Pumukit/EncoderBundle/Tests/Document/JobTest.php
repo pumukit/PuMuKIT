@@ -12,7 +12,7 @@ class JobTest extends TestCase
         $job = new Job();
 
         $this->assertEquals(Job::STATUS_WAITING, $job->getStatus());
-        $this->assertEquals(array('en' => ''), $job->getI18nName());
+        $this->assertEquals(['en' => ''], $job->getI18nName());
         $this->assertEquals(0, $job->getDuration());
         $this->assertEquals('0', $job->getSize());
         $this->assertEquals('en', $job->getLocale());
@@ -42,7 +42,7 @@ class JobTest extends TestCase
         $duration = 40;
         $size = '12000';
         $email = 'test@mail.com';
-        $initVars = array('ocurls' => array('presenter/master' => 'http://presentatermaster.com', 'presentation/master' => 'http://presentationmaster'));
+        $initVars = ['ocurls' => ['presenter/master' => 'http://presentatermaster.com', 'presentation/master' => 'http://presentationmaster']];
         $locale = 'en';
 
         $job->setLocale('en');
@@ -91,8 +91,8 @@ class JobTest extends TestCase
         $this->assertEquals($initVars, $job->getInitVars());
         $this->assertEquals($locale, $job->getLocale());
 
-        $descriptionI18n = array('en' => 'description', 'es' => 'descripción');
-        $nameI18n = array('en' => 'name', 'es' => 'nombre');
+        $descriptionI18n = ['en' => 'description', 'es' => 'descripción'];
+        $nameI18n = ['en' => 'name', 'es' => 'nombre'];
 
         $job->setI18nDescription($descriptionI18n);
         $job->setI18nName($nameI18n);

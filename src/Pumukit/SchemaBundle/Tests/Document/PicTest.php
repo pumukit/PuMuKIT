@@ -9,7 +9,7 @@ class PicTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $tags = array('tag_a', 'tag_b');
+        $tags = ['tag_a', 'tag_b'];
         $url = '/mnt/video/123/23435.mp4';
         $path = '/mnt/video/123/23435.mp4';
         $mime = 'image/jpg';
@@ -62,13 +62,13 @@ class PicTest extends TestCase
         $pic->addTag('t1');
         $pic->addTag('t2');
         $pic->addTag('t3');
-        $this->assertTrue($pic->containsAnyTag(array('t0', 't2')));
-        $this->assertTrue($pic->containsAnyTag(array('t2', 't3')));
-        $this->assertFalse($pic->containsAnyTag(array('t0', 't4')));
-        $this->assertTrue($pic->containsAllTags(array('t1', 't2')));
-        $this->assertTrue($pic->containsAllTags(array('t1')));
-        $this->assertFalse($pic->containsAllTags(array('t0', 't2')));
-        $this->assertFalse($pic->containsAllTags(array('t0', 't1', 't2', 't3')));
+        $this->assertTrue($pic->containsAnyTag(['t0', 't2']));
+        $this->assertTrue($pic->containsAnyTag(['t2', 't3']));
+        $this->assertFalse($pic->containsAnyTag(['t0', 't4']));
+        $this->assertTrue($pic->containsAllTags(['t1', 't2']));
+        $this->assertTrue($pic->containsAllTags(['t1']));
+        $this->assertFalse($pic->containsAllTags(['t0', 't2']));
+        $this->assertFalse($pic->containsAllTags(['t0', 't1', 't2', 't3']));
     }
 
     /*public function testRef()

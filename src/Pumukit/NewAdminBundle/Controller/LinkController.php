@@ -25,7 +25,7 @@ class LinkController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $link = new Link();
-        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
@@ -36,18 +36,18 @@ class LinkController extends Controller implements NewAdminControllerInterface
             }
 
             return $this->render('PumukitNewAdminBundle:Link:list.html.twig',
-                                 array(
+                                 [
                                      'links' => $multimediaObject->getLinks(),
                                      'mmId' => $multimediaObject->getId(),
-                                 )
+                                 ]
             );
         }
 
-        return array(
+        return [
             'link' => $link,
             'form' => $form->createView(),
             'mm' => $multimediaObject,
-        );
+        ];
     }
 
     /**
@@ -59,7 +59,7 @@ class LinkController extends Controller implements NewAdminControllerInterface
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
-        $form = $this->createForm(LinkType::class, $link, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(LinkType::class, $link, ['translator' => $translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
         if (($request->isMethod('PUT') || $request->isMethod('POST')) && $form->isValid()) {
@@ -70,18 +70,18 @@ class LinkController extends Controller implements NewAdminControllerInterface
             }
 
             return $this->render('PumukitNewAdminBundle:Link:list.html.twig',
-                                 array(
+                                 [
                                      'links' => $multimediaObject->getLinks(),
                                      'mmId' => $multimediaObject->getId(),
-                                 )
+                                 ]
             );
         }
 
-        return array(
+        return [
             'link' => $link,
             'form' => $form->createView(),
             'mm' => $multimediaObject,
-        );
+        ];
     }
 
     /**
@@ -94,10 +94,10 @@ class LinkController extends Controller implements NewAdminControllerInterface
 
         $this->addFlash('success', 'delete');
 
-        return array(
+        return [
             'links' => $multimediaObject->getLinks(),
             'mmId' => $multimediaObject->getId(),
-        );
+        ];
     }
 
     /**
@@ -110,10 +110,10 @@ class LinkController extends Controller implements NewAdminControllerInterface
 
         $this->addFlash('success', 'delete');
 
-        return array(
+        return [
             'mmId' => $multimediaObject->getId(),
             'links' => $multimediaObject->getLinks(),
-        );
+        ];
     }
 
     /**
@@ -126,9 +126,9 @@ class LinkController extends Controller implements NewAdminControllerInterface
 
         $this->addFlash('success', 'delete');
 
-        return array(
+        return [
             'mmId' => $multimediaObject->getId(),
             'links' => $multimediaObject->getLinks(),
-        );
+        ];
     }
 }

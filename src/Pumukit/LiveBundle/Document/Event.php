@@ -38,7 +38,7 @@ class Event
      *
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string
@@ -322,8 +322,8 @@ class Event
      */
     public function getSchedule()
     {
-        return array('date' => $this->date,
-                     'duration' => $this->duration, );
+        return ['date' => $this->date,
+                     'duration' => $this->duration, ];
     }
 
     /**

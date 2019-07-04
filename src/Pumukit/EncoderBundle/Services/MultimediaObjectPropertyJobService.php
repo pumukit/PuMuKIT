@@ -68,7 +68,7 @@ class MultimediaObjectPropertyJobService
              ->update()
              ->field('properties.'.$key)->unsetField()
              ->field('_id')->equals($multimediaObject->getId())
-             ->field('properties.'.$key)->equals(array($value))
+             ->field('properties.'.$key)->equals([$value])
              ->getQuery()
              ->execute();
 

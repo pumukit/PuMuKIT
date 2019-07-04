@@ -27,6 +27,6 @@ class MultimediaObjectCloneEvent extends Event
      */
     public function getMultimediaObjects()
     {
-        return array('origin' => $this->multimediaObject, 'clon' => $this->multimediaObjectCloned);
+        return ['origin' => $this->multimediaObject, 'clon' => $this->multimediaObjectCloned];
     }
 }

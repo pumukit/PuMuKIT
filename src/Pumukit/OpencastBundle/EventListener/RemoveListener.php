@@ -27,7 +27,7 @@ class RemoveListener
             try {
                 $multimediaObject = $event->getMultimediaObject();
                 if ($mediaPackageId = $multimediaObject->getProperty('opencast')) {
-                    $output = $this->clientService->applyWorkflowToMediaPackages(array($mediaPackageId));
+                    $output = $this->clientService->applyWorkflowToMediaPackages([$mediaPackageId]);
                     if (!$output) {
                         throw new \Exception('Error on deleting Opencast media package "'
                                              .$mediaPackageId.'" from archive '

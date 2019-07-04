@@ -98,7 +98,7 @@ trait Material
         $snapshot = array_values($this->materials->toArray());
         $this->materials->clear();
 
-        $out = array();
+        $out = [];
         foreach ($snapshot as $key => $material) {
             if ($material->getId() === $materialId) {
                 $out[($key * 10) + ($up ? -11 : 11)] = $material;
@@ -162,7 +162,7 @@ trait Material
      */
     public function getMaterialsWithTag($tag)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->materials as $material) {
             if ($material->containsTag($tag)) {
@@ -200,7 +200,7 @@ trait Material
      */
     public function getMaterialsWithAllTags(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->materials as $material) {
             if ($material->containsAllTags($tags)) {
@@ -238,7 +238,7 @@ trait Material
      */
     public function getMaterialsWithAnyTag(array $tags)
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->materials as $material) {
             if ($material->containsAnyTag($tags)) {
@@ -277,9 +277,9 @@ trait Material
      *
      * @return array
      */
-    public function getFilteredMaterialsWithTags(array $any_tags = array(), array $all_tags = array(), array $not_any_tags = array(), array $not_all_tags = array())
+    public function getFilteredMaterialsWithTags(array $any_tags = [], array $all_tags = [], array $not_any_tags = [], array $not_all_tags = [])
     {
-        $r = array();
+        $r = [];
 
         foreach ($this->materials as $material) {
             if ($any_tags && !$material->containsAnyTag($any_tags)) {

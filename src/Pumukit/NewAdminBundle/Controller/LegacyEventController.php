@@ -19,7 +19,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
     /**
      * @var array
      */
-    public static $daysInMonth = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    public static $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     /**
      * Overwrite to get the calendar.
@@ -28,7 +28,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
 
         $update_session = true;
@@ -48,13 +48,13 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $eventsMonth = $repo->findInMonth($month, $year);
 
-        return array(
+        return [
             'events' => $events,
             'calendar_all_events' => $eventsMonth,
             'm' => $month,
             'y' => $year,
             'calendar' => $calendar,
-        );
+        ];
     }
 
     /**
@@ -75,18 +75,18 @@ class LegacyEventController extends AdminController implements NewAdminControlle
             $resource = $this->update($resource);
 
             if (null === $resource) {
-                return new JsonResponse(array('eventId' => null));
+                return new JsonResponse(['eventId' => null]);
             }
             $this->get('session')->set('admin/event/id', $resource->getId());
 
-            return new JsonResponse(array('eventId' => $resource->getId()));
+            return new JsonResponse(['eventId' => $resource->getId()]);
         }
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:create.html.twig',
-                             array(
+                             [
                                  'event' => $resource,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -96,7 +96,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         list($events, $month, $year, $calendar) = $this->getResources($request, $criteria);
 
         $repo = $this
@@ -105,13 +105,13 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $eventsMonth = $repo->findInMonth($month, $year);
 
-        return array(
+        return [
             'events' => $events,
             'calendar_all_events' => $eventsMonth,
             'm' => $month,
             'y' => $year,
             'calendar' => $calendar,
-        );
+        ];
     }
 
     /**
@@ -129,7 +129,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
             $tabValue = 'Active tab: listTab';
         }
 
-        return new JsonResponse(array('tabValue' => $tabValue));
+        return new JsonResponse(['tabValue' => $tabValue]);
     }
 
     /**
@@ -140,7 +140,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $data = $this->findOr404($request);
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:show.html.twig',
-                             array($this->getResourceName() => $data)
+                             [$this->getResourceName() => $data]
         );
     }
 
@@ -162,14 +162,14 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH'))) {
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
                     $dm->persist($resource);
                     $dm->flush();
                 } catch (\Exception $e) {
-                    return new JsonResponse(array('status' => $e->getMessage()), 409);
+                    return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
@@ -177,10 +177,10 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         }
 
         return $this->render('PumukitNewAdminBundle:LegacyEvent:update.html.twig',
-                             array(
+                             [
                                  $resourceName => $resource,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -219,7 +219,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         $calendar = $this->generateArray($m, $y);
 
-        return array($m, $y, $calendar);
+        return [$m, $y, $calendar];
     }
 
     /**
@@ -253,7 +253,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     private static function generateArray($month, $year)
     {
-        $aux = array();
+        $aux = [];
 
         $dweek = date('N', mktime(0, 0, 0, $month, 1, $year)) - 1;
         foreach (range(1, self::getDaysInMonth($month, $year)) as $i) {
@@ -278,9 +278,9 @@ class LegacyEventController extends AdminController implements NewAdminControlle
         } elseif ($criteria) {
             $this->get('session')->set('admin/event/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/event/criteria', array());
+        $criteria = $this->get('session')->get('admin/event/criteria', []);
 
-        $new_criteria = array();
+        $new_criteria = [];
 
         $date_from = null;
         $date_to = null;
@@ -297,11 +297,11 @@ class LegacyEventController extends AdminController implements NewAdminControlle
                     $date_to = new \DateTime($value['to']);
                 }
                 if (('' !== $value['from']) && ('' !== $value['to'])) {
-                    $new_criteria[$property] = array('$gte' => $date_from, '$lt' => $date_to);
+                    $new_criteria[$property] = ['$gte' => $date_from, '$lt' => $date_to];
                 } elseif ('' !== $value['from']) {
-                    $new_criteria[$property] = array('$gte' => $date_from);
+                    $new_criteria[$property] = ['$gte' => $date_from];
                 } elseif ('' !== $value['to']) {
-                    $new_criteria[$property] = array('$lt' => $date_to);
+                    $new_criteria[$property] = ['$lt' => $date_to];
                 }
             }
         }
@@ -314,7 +314,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
      */
     public function getResources(Request $request, $criteria)
     {
-        $sorting = array('date' => -1);
+        $sorting = ['date' => -1];
         $session = $this->get('session');
         $session_namespace = 'admin/event';
 
@@ -340,7 +340,7 @@ class LegacyEventController extends AdminController implements NewAdminControlle
 
         list($m, $y, $calendar) = $this->getCalendar($request);
 
-        return array($resources, $m, $y, $calendar);
+        return [$resources, $m, $y, $calendar];
     }
 
     public function createNew()

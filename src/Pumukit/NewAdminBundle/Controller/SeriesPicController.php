@@ -25,10 +25,10 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
      */
     public function createAction(Series $series, Request $request)
     {
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
-        );
+        ];
     }
 
     /**
@@ -40,10 +40,10 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
      */
     public function listAction(Series $series)
     {
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
-        );
+        ];
     }
 
     /**
@@ -67,13 +67,13 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         }
 
         if ($isBanner) {
-            return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', array('id' => $series->getId())));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
         }
 
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
-        );
+        ];
     }
 
     /**
@@ -98,22 +98,22 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
                 $picService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
-            return array(
+            return [
                 'resource' => $series,
                 'resource_name' => 'series',
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
                 'isBanner' => $isBanner,
-            );
+            ];
         }
 
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
             'uploaded' => 'success',
             'message' => 'New Pic added.',
             'isBanner' => $isBanner,
-        );
+        ];
     }
 
     /**
@@ -136,7 +136,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
         $series = $this->get('pumukitschema.seriespic')->removePicFromSeries($series, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', array('id' => $series->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_series_update', ['id' => $series->getId()]));
     }
 
     /**
@@ -163,7 +163,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $dm->persist($series);
         $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
 
     /**
@@ -190,7 +190,7 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
         $dm->persist($series);
         $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', array('id' => $series->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]));
     }
 
     /**
@@ -217,13 +217,13 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
             'pics' => $pics,
             'page' => $page,
             'total' => $total,
-        );
+        ];
     }
 
     /**
@@ -236,10 +236,10 @@ class SeriesPicController extends Controller implements NewAdminControllerInterf
      */
     public function bannerAction(Series $series, Request $request)
     {
-        return array(
+        return [
             'resource' => $series,
             'resource_name' => 'series',
-        );
+        ];
     }
 
     /**

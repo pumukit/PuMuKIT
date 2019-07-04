@@ -19,7 +19,7 @@ class LogTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -32,11 +32,11 @@ class LogTest extends WebTestCase
           ->get('security.token_storage');
 
         $this->dm->getDocumentCollection('PumukitStatsBundle:ViewsLog')
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-            ->remove(array());
+            ->remove([]);
     }
 
     public function tearDown()

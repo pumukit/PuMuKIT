@@ -15,7 +15,7 @@ class SpecialTranslationServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -25,8 +25,8 @@ class SpecialTranslationServiceTest extends WebTestCase
         $this->specialTranslationService = static::$kernel->getContainer()
                                                           ->get('pumukitschema.special_translation');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Group::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Group::class)->remove([]);
         $this->dm->flush();
     }
 

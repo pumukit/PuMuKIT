@@ -26,7 +26,7 @@ class SeriesStylesController extends Controller
      */
     public function menuAction()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -43,7 +43,7 @@ class SeriesStylesController extends Controller
             return strtolower($a->getName()) > strtolower($b->getName());
         });
 
-        return array('styles' => $styles);
+        return ['styles' => $styles];
     }
 
     /**
@@ -66,7 +66,7 @@ class SeriesStylesController extends Controller
         $session = $this->get('session');
         $session->set('seriesstyle/id', $style->getId());
 
-        return new JsonResponse(array('success', 'id' => $style->getId()));
+        return new JsonResponse(['success', 'id' => $style->getId()]);
     }
 
     /**
@@ -83,10 +83,10 @@ class SeriesStylesController extends Controller
         $id = $request->request->get('id');
         if (isset($id)) {
             $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
-                array('_id' => new \MongoId($request->request->get('id')))
+                ['_id' => new \MongoId($request->request->get('id'))]
             );
         } else {
-            return new JsonResponse(array('error'));
+            return new JsonResponse(['error']);
         }
 
         $style->setText($request->request->get('style_text'));
@@ -95,7 +95,7 @@ class SeriesStylesController extends Controller
         $session = $this->get('session');
         $session->set('seriesstyle/id', $style->getId());
 
-        return new JsonResponse(array('success'));
+        return new JsonResponse(['success']);
     }
 
     /**
@@ -111,11 +111,11 @@ class SeriesStylesController extends Controller
         $translator = $this->get('translator');
         $session = $this->get('session');
 
-        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(array('_id' => new \MongoId($id)));
+        $style = $dm->getRepository(SeriesStyle::class)->findOneBy(['_id' => new \MongoId($id)]);
 
         if ($style) {
             $series = $dm->getRepository(Series::class)->findOneBy(
-                array('series_style' => new \MongoId($style->getId()))
+                ['series_style' => new \MongoId($style->getId())]
             );
 
             if (!$series) {
@@ -124,12 +124,12 @@ class SeriesStylesController extends Controller
 
                 $session->set('seriesstyle/id', '');
 
-                return new JsonResponse(array('success', 'msg' => $translator->trans('Successfully deleted series style')));
+                return new JsonResponse(['success', 'msg' => $translator->trans('Successfully deleted series style')]);
             } else {
-                return new JsonResponse(array('error', 'msg' => $translator->trans('There are series with this series style')));
+                return new JsonResponse(['error', 'msg' => $translator->trans('There are series with this series style')]);
             }
         } else {
-            return new JsonResponse(array('error', 'msg' => $translator->trans("Series style $style->getId() doesn't exists")));
+            return new JsonResponse(['error', 'msg' => $translator->trans("Series style $style->getId() doesn't exists")]);
         }
     }
 
@@ -146,12 +146,12 @@ class SeriesStylesController extends Controller
         $dm = $this->container->get('doctrine_mongodb')->getManager();
         if (isset($id)) {
             $style = $dm->getRepository(SeriesStyle::class)->findOneBy(
-                array('_id' => new \MongoId($id))
+                ['_id' => new \MongoId($id)]
             );
         } else {
             $style = '';
         }
 
-        return array('style' => $style);
+        return ['style' => $style];
     }
 }

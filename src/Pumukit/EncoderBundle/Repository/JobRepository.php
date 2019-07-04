@@ -16,7 +16,7 @@ class JobRepository extends DocumentRepository
     /**
      * Create query builder for all jobs with given status.
      */
-    public function createQueryWithStatus(array $status, $sort = array())
+    public function createQueryWithStatus(array $status, $sort = [])
     {
         $qb = $this->createQueryBuilder()
             ->field('status')->in($status);
@@ -31,7 +31,7 @@ class JobRepository extends DocumentRepository
     /**
      * Find all jobs with given status.
      */
-    public function findWithStatus(array $status, $sort = array())
+    public function findWithStatus(array $status, $sort = [])
     {
         return $this->createQueryWithStatus($status, $sort)
           ->getQuery()
@@ -41,7 +41,7 @@ class JobRepository extends DocumentRepository
     /**
      * Find all jobs with given status.
      */
-    public function findWithStatusAndOwner(array $status, $sort = array(), $owner = null)
+    public function findWithStatusAndOwner(array $status, $sort = [], $owner = null)
     {
         return $this->createQueryWithStatusAndOwner($status, $sort, $owner)
           ->getQuery()
@@ -51,7 +51,7 @@ class JobRepository extends DocumentRepository
     /**
      * Find all jobs with given status.
      */
-    public function createQueryWithStatusAndOwner(array $status, $sort = array(), $owner = null)
+    public function createQueryWithStatusAndOwner(array $status, $sort = [], $owner = null)
     {
         if (null === $owner) {
             throw new \Exception("Owner can't be null");

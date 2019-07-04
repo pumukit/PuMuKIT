@@ -14,14 +14,14 @@ trait Keywords
      *
      * @MongoDB\Field(type="raw")
      */
-    private $keyword = array('en' => '');
+    private $keyword = ['en' => ''];
 
     /**
      * @var array
      *
      * @MongoDB\Field(type="raw")
      */
-    private $keywords = array('en' => array());
+    private $keywords = ['en' => []];
 
     /**
      * Set keyword.
@@ -70,7 +70,7 @@ trait Keywords
      */
     public function setI18nKeyword(array $keyword)
     {
-        $keywords = array();
+        $keywords = [];
         foreach ($keyword as $lang => $value) {
             $keywords[$lang] = array_values(array_filter(array_map('trim', explode(',', $value))));
         }
@@ -86,7 +86,7 @@ trait Keywords
      */
     public function getI18nKeyword()
     {
-        $keywords = array();
+        $keywords = [];
         foreach ($this->keywords as $lang => $value) {
             $keywords[$lang] = implode(',', $value);
         }
@@ -126,7 +126,7 @@ trait Keywords
         }
 
         if (!isset($this->keyword[$locale])) {
-            return array($locale => $keyword);
+            return [$locale => $keyword];
         }
 
         $this->keyword[$locale] = $keyword;
@@ -190,7 +190,7 @@ trait Keywords
             $locale = $this->locale;
         }
         if (!isset($this->keyword[$locale])) {
-            return array();
+            return [];
         }
 
         return $this->keyword[$locale];

@@ -16,7 +16,7 @@ class MultimediaObjectMaxDirationTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -25,9 +25,9 @@ class MultimediaObjectMaxDirationTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 

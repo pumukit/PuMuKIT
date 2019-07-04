@@ -19,14 +19,14 @@ class SeriesEventDispatcherServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
         $this->dispatcher = new EventDispatcher();
 
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
 
         MockUpSeriesListener::$called = false;

@@ -63,7 +63,7 @@ class LDAPUserService
             throw new \InvalidArgumentException('Uid is not set ');
         }
 
-        $user = $this->dm->getRepository(User::class)->findOneBy(array('username' => $username));
+        $user = $this->dm->getRepository(User::class)->findOneBy(['username' => $username]);
         if (count($user) <= 0) {
             try {
                 $user = $this->newUser($info, $username);
@@ -93,7 +93,7 @@ class LDAPUserService
     {
         $email = $this->getEmail($info);
 
-        $user = $this->dm->getRepository(User::class)->findOneBy(array('email' => $email));
+        $user = $this->dm->getRepository(User::class)->findOneBy(['email' => $email]);
         if (count($user) <= 0) {
             $user = new User();
             $user->setEmail($email);
@@ -218,7 +218,7 @@ class LDAPUserService
      */
     protected function updateGroups($info, $user)
     {
-        $aGroups = array();
+        $aGroups = [];
         if (isset($info[self::EDU_PERSON_AFFILIATION][0])) {
             foreach ($info[self::EDU_PERSON_AFFILIATION] as $key => $value) {
                 if ('count' !== $key) {

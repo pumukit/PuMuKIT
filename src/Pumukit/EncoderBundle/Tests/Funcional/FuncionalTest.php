@@ -27,7 +27,7 @@ class FuncionalTest extends WebTestCase
     {
         $this->markTestSkipped('Functional tests not available. (A little better, but still broken)');
 
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -42,9 +42,9 @@ class FuncionalTest extends WebTestCase
 
         $this->videoInputPath = realpath(__DIR__.'/../Resources').'/CAMERA.mp4';
 
-        $this->dm->getDocumentCollection(Job::class)->remove(array());
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
 
         $dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')

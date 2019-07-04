@@ -7,39 +7,39 @@ namespace Pumukit\SchemaBundle\Utils\Search;
  */
 class SearchUtils
 {
-    private static $cleanTildes = array(
+    private static $cleanTildes = [
         'á',
         'é',
         'í',
         'ó',
         'ú',
         'ü',
-    );
+    ];
 
-    private static $cleanTildesReplace = array(
+    private static $cleanTildesReplace = [
         'a',
         'e',
         'i',
         'o',
         'u',
         'u',
-    );
+    ];
 
-    private static $mapping = array(
+    private static $mapping = [
         'a',
         'e',
         'i',
         'o',
         'u',
-    );
+    ];
 
-    private static $specialCharacter = array(
+    private static $specialCharacter = [
         '[aá]',
         '[eé]',
         '[ií]',
         '[oó]',
         '[uúü]',
-    );
+    ];
 
     private static $delimiter = ' ';
     private static $glue = '|';

@@ -26,20 +26,20 @@ class PersonController extends AdminController implements NewAdminControllerInte
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
+        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
-        $countMmPeople = array();
+        $countMmPeople = [];
         foreach ($resources as $person) {
             $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
         }
 
-        return array(
+        return [
             'people' => $resources,
             'countMmPeople' => $countMmPeople,
-        );
+        ];
     }
 
     /**
@@ -55,7 +55,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $translator = $this->get('translator');
         $locale = $request->getLocale();
         $person = new Person();
-        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PersonType::class, $person, ['translator' => $translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -78,10 +78,10 @@ class PersonController extends AdminController implements NewAdminControllerInte
             }
         }
 
-        return array(
+        return [
             'person' => $person,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -97,7 +97,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PersonType::class, $person, ['translator' => $translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -120,10 +120,10 @@ class PersonController extends AdminController implements NewAdminControllerInte
             }
         }
 
-        return array(
+        return [
             'person' => $person,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -139,10 +139,10 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $limit = 5;
         $series = $personService->findSeriesWithPerson($person, $limit);
 
-        return array(
+        return [
             'person' => $person,
             'series' => $series,
-        );
+        ];
     }
 
     /**
@@ -153,21 +153,21 @@ class PersonController extends AdminController implements NewAdminControllerInte
      */
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
+        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
 
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $personService = $this->get('pumukitschema.person');
-        $countMmPeople = array();
+        $countMmPeople = [];
         foreach ($resources as $person) {
             $countMmPeople[$person->getId()] = $personService->countMultimediaObjectsWithPerson($person);
         }
 
-        return array(
+        return [
             'people' => $resources,
             'countMmPeople' => $countMmPeople,
-        );
+        ];
     }
 
     /**
@@ -183,7 +183,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $criteria = $this->getCriteria($request->get('criteria', array()), $request->getLocale());
+        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
         $selectedPersonId = $request->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
@@ -198,7 +198,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
             return new Response($e, Response::HTTP_BAD_REQUEST);
         }
 
-        return array(
+        return [
             'people' => $resources,
             'mm' => $multimediaObject,
             'role' => $role,
@@ -206,7 +206,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
             'ldap_enabled' => $ldapEnabled,
             'owner' => $owner,
             'personal_scope_role_code' => $personalScopeRole->getCod(),
-        );
+        ];
     }
 
     /**
@@ -229,7 +229,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PersonType::class, $person, ['translator' => $translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $personService = $this->get('pumukitschema.person');
@@ -259,25 +259,25 @@ class PersonController extends AdminController implements NewAdminControllerInte
             }
 
             return $this->render($twigTemplate,
-                                 array(
+                                 [
                                      'people' => $multimediaObject->getPeopleByRole($role, true),
                                      'role' => $role,
                                      'personal_scope_role_code' => $personalScopeRoleCode,
                                      'mm' => $multimediaObject,
                                      'template' => $template,
-                                 ));
+                                 ]);
         }
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-        return array(
+        return [
             'person' => $person,
             'role' => $role,
             'mm' => $multimediaObject,
             'template' => $template,
             'form' => $form->createView(),
             'owner' => $owner,
-        );
+        ];
     }
 
     /**
@@ -301,7 +301,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $translator = $this->get('translator');
         $locale = $request->getLocale();
 
-        $form = $this->createForm(PersonType::class, $person, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PersonType::class, $person, ['translator' => $translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -321,13 +321,13 @@ class PersonController extends AdminController implements NewAdminControllerInte
                 }
 
                 return $this->render($twigTemplate,
-                                     array(
+                                     [
                                          'people' => $multimediaObject->getPeopleByRole($role, true),
                                          'role' => $role,
                                          'personal_scope_role_code' => $personalScopeRoleCode,
                                          'mm' => $multimediaObject,
                                          'template' => $template,
-                                     ));
+                                     ]);
             } else {
                 $errors = $this->get('validator')->validate($person);
                 $textStatus = '';
@@ -341,14 +341,14 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
 
-        return array(
+        return [
             'person' => $person,
             'role' => $role,
             'mm' => $multimediaObject,
             'template' => $template,
             'form' => $form->createView(),
             'owner' => $owner,
-        );
+        ];
     }
 
     /**
@@ -387,13 +387,13 @@ class PersonController extends AdminController implements NewAdminControllerInte
         }
 
         return $this->render($twigTemplate,
-                             array(
+                             [
                                  'people' => $multimediaObject->getPeopleByRole($role, true),
                                  'role' => $role,
                                  'personal_scope_role_code' => $personalScopeRoleCode,
                                  'mm' => $multimediaObject,
                                  'template' => $template,
-                             ));
+                             ]);
     }
 
     /**
@@ -408,7 +408,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $name = $request->get('term');
 
         $excludedPeople = $multimediaObject->getPeopleByRole($role, true);
-        $excludedPeopleIds = array();
+        $excludedPeopleIds = [];
         foreach ($excludedPeople as $person) {
             $excludedPeopleIds[] = new \MongoId($person->getId());
         }
@@ -416,12 +416,12 @@ class PersonController extends AdminController implements NewAdminControllerInte
 
         $out = [];
         foreach ($people as $p) {
-            $out[] = array(
+            $out[] = [
                 'id' => $p->getId(),
                 'label' => $p->getName(),
                 'desc' => $p->getPost().' '.$p->getFirm(),
                 'value' => $p->getName(),
-            );
+            ];
         }
 
         return new JsonResponse($out);
@@ -456,13 +456,13 @@ class PersonController extends AdminController implements NewAdminControllerInte
         }
 
         return $this->render($twigTemplate,
-                             array(
+                             [
                                  'people' => $multimediaObject->getPeopleByRole($role, true),
                                  'role' => $role,
                                  'personal_scope_role_code' => $personalScopeRoleCode,
                                  'mm' => $multimediaObject,
                                  'template' => $template,
-                             ));
+                             ]);
     }
 
     /**
@@ -494,13 +494,13 @@ class PersonController extends AdminController implements NewAdminControllerInte
         }
 
         return $this->render($twigTemplate,
-                             array(
+                             [
                                  'people' => $multimediaObject->getPeopleByRole($role, true),
                                  'role' => $role,
                                  'personal_scope_role_code' => $personalScopeRoleCode,
                                  'mm' => $multimediaObject,
                                  'template' => $template,
-                             ));
+                             ]);
     }
 
     /**
@@ -538,13 +538,13 @@ class PersonController extends AdminController implements NewAdminControllerInte
         }
 
         return $this->render($twigTemplate,
-                             array(
+                             [
                                  'people' => $multimediaObject->getPeopleByRole($role, true),
                                  'role' => $role,
                                  'personal_scope_role_code' => $personalScopeRoleCode,
                                  'mm' => $multimediaObject,
                                  'template' => $template,
-                             ));
+                             ]);
     }
 
     /**
@@ -622,9 +622,9 @@ class PersonController extends AdminController implements NewAdminControllerInte
         } elseif ($criteria) {
             $this->get('session')->set('admin/person/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/person/criteria', array());
+        $criteria = $this->get('session')->get('admin/person/criteria', []);
 
-        $new_criteria = array();
+        $new_criteria = [];
 
         if (array_key_exists('name', $criteria) && array_key_exists('letter', $criteria)) {
             if (('' !== $criteria['name']) && ('' !== $criteria['letter'])) {
@@ -669,7 +669,7 @@ class PersonController extends AdminController implements NewAdminControllerInte
         $value = $session->get('admin/person/type', 'asc');
         $key = $session->get('admin/person/sort', 'name');
 
-        return array($key => $value);
+        return [$key => $value];
     }
 
     /**

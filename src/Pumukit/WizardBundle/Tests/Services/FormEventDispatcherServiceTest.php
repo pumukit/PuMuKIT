@@ -20,7 +20,7 @@ class FormEventDispatcherServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
         $this->dm = static::$kernel->getContainer()
           ->get('doctrine_mongodb.odm.document_manager');
@@ -56,7 +56,7 @@ class FormEventDispatcherServiceTest extends WebTestCase
         $title = 'test title';
         $multimediaObject = new MultimediaObject();
         $multimediaObject->setTitle($title);
-        $form = array('title' => $title);
+        $form = ['title' => $title];
         $user = new User();
         $this->formDispatcher->dispatchSubmit($user, $multimediaObject, $form);
         $this->assertTrue(MockUpFormListener::$called);

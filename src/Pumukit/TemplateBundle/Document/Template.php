@@ -52,7 +52,7 @@ class Template
      *
      * @MongoDB\Field(type="raw")
      */
-    private $text = array('en' => '');
+    private $text = ['en' => ''];
 
     /**
      * Used locale to override Translation listener`s locale

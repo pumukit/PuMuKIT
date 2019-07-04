@@ -16,7 +16,7 @@ class TagServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -29,9 +29,9 @@ class TagServiceTest extends WebTestCase
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Tag::class)
-          ->remove(array());
+          ->remove([]);
     }
 
     public function tearDown()
@@ -233,7 +233,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(2, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(1, $tag3->getNumberMultimediaObjects());
 
-        $this->tagService->resetTags(array($mmobj1, $mmobj2, $mmobj3), $mmobj1->getTags()->toArray());
+        $this->tagService->resetTags([$mmobj1, $mmobj2, $mmobj3], $mmobj1->getTags()->toArray());
 
         $this->assertEquals(5, count($this->mmobjRepo->find($mmobj1->getId())->getTags()));
         $this->assertEquals(5, count($this->mmobjRepo->find($mmobj2->getId())->getTags()));
@@ -242,7 +242,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(3, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(3, $tag3->getNumberMultimediaObjects());
 
-        $this->tagService->resetTags(array($mmobj1, $mmobj2, $mmobj3), array());
+        $this->tagService->resetTags([$mmobj1, $mmobj2, $mmobj3], []);
 
         $this->assertEquals(0, count($this->mmobjRepo->find($mmobj1->getId())->getTags()));
         $this->assertEquals(0, count($this->mmobjRepo->find($mmobj2->getId())->getTags()));
@@ -281,9 +281,9 @@ class TagServiceTest extends WebTestCase
         $this->tagService->addTag($mmobj3, $tag32);
 
         $this->tagService->syncTagsForCollections(
-            array($mmobj1, $mmobj2, $mmobj3),
+            [$mmobj1, $mmobj2, $mmobj3],
             $mmobj1->getTags()->toArray(),
-            array($tag1, $tag2)
+            [$tag1, $tag2]
         );
 
         $this->assertEquals(3, $tag1->getNumberMultimediaObjects());
@@ -326,7 +326,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(1, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(0, $tag3->getNumberMultimediaObjects());
 
-        $this->tagService->resetTags(array($mmobj1, $mmobj2, $mmobj3), $mmobj1->getTags()->toArray());
+        $this->tagService->resetTags([$mmobj1, $mmobj2, $mmobj3], $mmobj1->getTags()->toArray());
 
         $this->assertEquals(5, count($this->mmobjRepo->find($mmobj1->getId())->getTags()));
         $this->assertEquals(5, count($this->mmobjRepo->find($mmobj2->getId())->getTags()));
@@ -335,7 +335,7 @@ class TagServiceTest extends WebTestCase
         $this->assertEquals(2, $tag2->getNumberMultimediaObjects());
         $this->assertEquals(2, $tag3->getNumberMultimediaObjects());
 
-        $this->tagService->resetTags(array($mmobj1, $mmobj2, $mmobj3), array());
+        $this->tagService->resetTags([$mmobj1, $mmobj2, $mmobj3], []);
 
         $this->assertEquals(0, count($this->mmobjRepo->find($mmobj1->getId())->getTags()));
         $this->assertEquals(0, count($this->mmobjRepo->find($mmobj2->getId())->getTags()));

@@ -33,9 +33,9 @@ class CpuService
      */
     public function getFreeCpu($profile = null)
     {
-        $executingJobs = $this->jobRepo->findWithStatus(array(Job::STATUS_EXECUTING));
+        $executingJobs = $this->jobRepo->findWithStatus([Job::STATUS_EXECUTING]);
 
-        $freeCpus = array();
+        $freeCpus = [];
         foreach ($this->cpus as $name => $cpu) {
             $jobs = $this->getRunningJobs($name, $executingJobs);
 
@@ -43,11 +43,11 @@ class CpuService
                 continue;
             }
 
-            $freeCpus[] = array(
+            $freeCpus[] = [
                 'name' => $name,
                 'jobs' => $jobs,
                 'max' => $cpu['max'],
-            );
+            ];
         }
 
         return $this->getOptimalCpuName($freeCpus);
@@ -85,7 +85,7 @@ class CpuService
         return true;
     }
 
-    private function getOptimalCpuName($freeCpus = array())
+    private function getOptimalCpuName($freeCpus = [])
     {
         $optimalCpu = null;
         foreach ($freeCpus as $cpu) {
@@ -108,7 +108,7 @@ class CpuService
 
     public function activateMaintenance($cpuName, $flush = true)
     {
-        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        $cpuStatus = $this->cpuRepo->findOneBy(['name' => $cpuName]);
         if (!$cpuStatus) {
             $cpuStatus = new CpuStatus();
             $cpuStatus->setName($cpuName);
@@ -124,7 +124,7 @@ class CpuService
 
     public function deactivateMaintenance($cpuName, $flush = true)
     {
-        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        $cpuStatus = $this->cpuRepo->findOneBy(['name' => $cpuName]);
         //So far, if it exists in the db, it IS in maintenance mode. This may change in the future. Change this logic accordingly.
         if ($cpuStatus) {
             $this->dm->remove($cpuStatus);
@@ -136,7 +136,7 @@ class CpuService
 
     public function isInMaintenance($cpuName)
     {
-        $cpuStatus = $this->cpuRepo->findOneBy(array('name' => $cpuName));
+        $cpuStatus = $this->cpuRepo->findOneBy(['name' => $cpuName]);
         if ($cpuStatus && CpuStatus::STATUS_MAINTENANCE == $cpuStatus->getStatus()) {
             return true;
         } else {
@@ -163,7 +163,7 @@ class CpuService
 
     public function getCpuNamesInMaintenanceMode()
     {
-        $cpus = $this->cpuRepo->findBy(array('status' => CpuStatus::STATUS_MAINTENANCE));
+        $cpus = $this->cpuRepo->findBy(['status' => CpuStatus::STATUS_MAINTENANCE]);
         $cpuNames = array_map(function ($a) {
             return $a->getName();
         }, $cpus);

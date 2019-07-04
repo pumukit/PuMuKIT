@@ -46,13 +46,13 @@ class MediaPackageController extends Controller
                 $limit,
                 ($page - 1) * $limit);
         } catch (\Exception $e) {
-            return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', array('admin_url' => $opencastClient->getUrl(), 'message' => $e->getMessage())), 503);
+            return new Response($this->renderView('PumukitOpencastBundle:MediaPackage:error.html.twig', ['admin_url' => $opencastClient->getUrl(), 'message' => $e->getMessage()]), 503);
         }
 
-        $currentPageOpencastIds = array();
+        $currentPageOpencastIds = [];
 
         $opencastService = $this->get('pumukit_opencast.job');
-        $pics = array();
+        $pics = [];
         foreach ($mediaPackages as $mediaPackage) {
             $currentPageOpencastIds[] = $mediaPackage['id'];
             $pics[$mediaPackage['id']] = $opencastService->getMediaPackageThumbnail($mediaPackage);
@@ -70,7 +70,7 @@ class MediaPackageController extends Controller
           ->getQuery()
           ->execute();
 
-        return array('mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl(), 'pics' => $pics);
+        return ['mediaPackages' => $pagerfanta, 'multimediaObjects' => $repo, 'player' => $opencastClient->getPlayerUrl(), 'pics' => $pics];
     }
 
     /**
@@ -97,16 +97,16 @@ class MediaPackageController extends Controller
      */
     public function getCriteria($request)
     {
-        $criteria = $request->get('criteria', array());
+        $criteria = $request->get('criteria', []);
 
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/opencast/criteria');
         } elseif ($criteria) {
             $this->get('session')->set('admin/opencast/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/opencast/criteria', array());
+        $criteria = $this->get('session')->get('admin/opencast/criteria', []);
 
-        $new_criteria = array();
+        $new_criteria = [];
 
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)

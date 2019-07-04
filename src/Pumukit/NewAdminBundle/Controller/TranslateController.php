@@ -18,6 +18,6 @@ class TranslateController implements NewAdminControllerInterface
      */
     public function indexAction(Request $request)
     {
-        return new JsonResponse(array('status' => 'Not Implemented'), 501);
+        return new JsonResponse(['status' => 'Not Implemented'], 501);
     }
 }

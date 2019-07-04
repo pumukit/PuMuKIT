@@ -21,7 +21,7 @@ class MultimediaObjectPicServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -38,8 +38,8 @@ class MultimediaObjectPicServiceTest extends WebTestCase
         $this->originalPicPath = realpath(__DIR__.'/../Resources').DIRECTORY_SEPARATOR.'logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
     }
 

@@ -19,7 +19,7 @@ class LocaleListener implements EventSubscriberInterface
     private $defaultLocale;
     private $pumukitLocales;
 
-    public function __construct(RequestStack $requestStack, $defaultLocale = 'en', $pumukitLocales = array())
+    public function __construct(RequestStack $requestStack, $defaultLocale = 'en', $pumukitLocales = [])
     {
         $this->requestStack = $requestStack;
         $this->defaultLocale = $defaultLocale;
@@ -74,10 +74,10 @@ class LocaleListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             // must be registered before the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
-        );
+            KernelEvents::REQUEST => [['onKernelRequest', 17]],
+        ];
     }
 
     /**

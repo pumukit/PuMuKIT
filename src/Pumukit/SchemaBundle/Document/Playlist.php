@@ -99,7 +99,7 @@ class Playlist
      */
     public function getPublishedMultimediaObjects()
     {
-        return $this->getMultimediaObjectsByStatus(array(MultimediaObject::STATUS_PUBLISHED));
+        return $this->getMultimediaObjectsByStatus([MultimediaObject::STATUS_PUBLISHED]);
     }
 
     /**
@@ -109,7 +109,7 @@ class Playlist
      */
     public function getPublishedAndHiddenMultimediaObjects()
     {
-        return $this->getMultimediaObjectsByStatus(array(MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED));
+        return $this->getMultimediaObjectsByStatus([MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED]);
     }
 
     /**
@@ -121,13 +121,13 @@ class Playlist
      *
      * @return array
      */
-    public function getMultimediaObjectsByStatus(array $status = array())
+    public function getMultimediaObjectsByStatus(array $status = [])
     {
         if (empty($status)) {
-            $status = array(MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED);
+            $status = [MultimediaObject::STATUS_HIDDEN, MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_BLOCKED];
         }
 
-        $multimediaObjects = array();
+        $multimediaObjects = [];
         foreach ($this->multimedia_objects as $multimediaObject) {
             try {
                 if (in_array(MultimediaObject::STATUS_PUBLISHED, $status) && $multimediaObject->isPublished()) {

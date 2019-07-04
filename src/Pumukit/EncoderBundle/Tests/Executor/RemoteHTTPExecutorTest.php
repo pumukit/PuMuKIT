@@ -9,7 +9,7 @@ class RemoteHTTPExecutorTest extends WebTestCase
 {
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
     }
 
@@ -17,11 +17,11 @@ class RemoteHTTPExecutorTest extends WebTestCase
     {
         $this->markTestSkipped('Remote cpu not available in test.');
 
-        $cpu = array(
+        $cpu = [
             'host' => '127.0.0.1:9000',
             'user' => 'pumukit',
             'password' => 'PUMUKIT',
-        );
+        ];
 
         $executor = new RemoteHTTPExecutor();
         $out = $executor->execute('sleep 1 && echo a', $cpu);

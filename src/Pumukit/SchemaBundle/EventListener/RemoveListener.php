@@ -41,10 +41,10 @@ class RemoveListener
             if (0 !== $executingJobs->count()) {
                 throw new \Exception(
                     $this->translator->trans('Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.',
-                        array(
+                        [
                             '%videoId%' => $document->getId(),
                             '%jobsCount%' => $executingJobs->count(),
-                        ))
+                        ])
                 );
             }
             $mmsService = $this->container->get('pumukitschema.multimedia_object');
@@ -89,7 +89,7 @@ class RemoveListener
                 $mmsService->deleteGroup($document, $multimediaObject, false);
             }
             $multimediaObjects = $mmobjRepo->createQueryBuilder()
-                ->field('embeddedBroadcast.groups')->in(array(new \MongoId($document->getId())))
+                ->field('embeddedBroadcast.groups')->in([new \MongoId($document->getId())])
                 ->getQuery()
                 ->execute();
             foreach ($multimediaObjects as $multimediaObject) {

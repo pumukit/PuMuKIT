@@ -31,17 +31,17 @@ class InboxController extends Controller implements NewAdminControllerInterface
 
         $finder = new Finder();
 
-        $res = array();
+        $res = [];
 
         if ('file' == $type) {
             $finder->depth('< 1')->followLinks()->in($dir);
             $finder->sortByName();
             foreach ($finder as $f) {
-                $res[] = array('path' => $f->getRealpath(),
+                $res[] = ['path' => $f->getRealpath(),
                                'relativepath' => $f->getRelativePathname(),
                                'is_file' => $f->isFile(),
                                'hash' => hash('md5', $f->getRealpath()),
-                               'content' => false, );
+                               'content' => false, ];
             }
         } else {
             $finder->depth('< 1')->directories()->followLinks()->in($dir);
@@ -53,11 +53,11 @@ class InboxController extends Controller implements NewAdminControllerInterface
                         $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());
-                    $res[] = array('path' => $f->getRealpath(),
+                    $res[] = ['path' => $f->getRealpath(),
                                    'relativepath' => $f->getRelativePathname(),
                                    'is_file' => $f->isFile(),
                                    'hash' => hash('md5', $f->getRealpath()),
-                                   'content' => $contentFinder->count(), );
+                                   'content' => $contentFinder->count(), ];
                 }
             }
         }
@@ -77,13 +77,13 @@ class InboxController extends Controller implements NewAdminControllerInterface
         $dir = realpath($this->container->getParameter('pumukit.inbox'));
 
         if (!file_exists($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', array('dir' => $dir));
+            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir]);
         }
 
         if (!is_readable($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', array('dir' => $dir));
+            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', ['dir' => $dir]);
         }
 
-        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', array('dir' => $dir, 'onlyDir' => $onlyDir));
+        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', ['dir' => $dir, 'onlyDir' => $onlyDir]);
     }
 }

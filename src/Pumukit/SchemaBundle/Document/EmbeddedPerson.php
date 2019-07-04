@@ -57,28 +57,28 @@ class EmbeddedPerson
      *
      * @MongoDB\Field(type="raw")
      */
-    protected $honorific = array('en' => '');
+    protected $honorific = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    protected $firm = array('en' => '');
+    protected $firm = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    protected $post = array('en' => '');
+    protected $post = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    protected $bio = array('en' => '');
+    protected $bio = ['en' => ''];
 
     /**
      * Locale.
@@ -449,8 +449,8 @@ class EmbeddedPerson
     public function getInfo($withBio = true)
     {
         $aux = $withBio ?
-             array($this->getPost(), $this->getFirm(), $this->getBio()) :
-             array($this->getPost(), $this->getFirm());
+             [$this->getPost(), $this->getFirm(), $this->getBio()] :
+             [$this->getPost(), $this->getFirm()];
         $aux = array_filter($aux, function ($a) {
             return !is_null($a) && ('' != $a);
         });

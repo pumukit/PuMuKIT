@@ -22,7 +22,7 @@ class RemoveListenerTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->logger = static::$kernel->getContainer()->get('logger');
@@ -37,11 +37,11 @@ class RemoveListenerTest extends WebTestCase
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Job::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
     }
 

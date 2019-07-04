@@ -16,7 +16,7 @@ class BroadcastRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -25,9 +25,9 @@ class BroadcastRepositoryTest extends WebTestCase
         ->getRepository(Broadcast::class);
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-        ->remove(array());
+        ->remove([]);
         $this->dm->getDocumentCollection(Broadcast::class)
-        ->remove(array());
+        ->remove([]);
         $this->dm->flush();
     }
 

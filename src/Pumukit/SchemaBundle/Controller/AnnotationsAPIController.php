@@ -37,7 +37,7 @@ class AnnotationsAPIController extends Controller
         $total = 10;
 
         //$resAnnotations = $opencastAnnotationService->getOpencastAnnotations();
-        $resAnnotations = array();
+        $resAnnotations = [];
         $annonRepo = $this->get('doctrine_mongodb')->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
 
@@ -62,19 +62,19 @@ class AnnotationsAPIController extends Controller
 
         $annonQB->limit($limit)->skip($offset);
         $resAnnotations = $annonQB->getQuery()->execute()->toArray();
-        $annotations = array();
+        $annotations = [];
         foreach ($resAnnotations as $ann) {
             $annotations[] = $ann;
         }
 
-        $data = array(
-            'annotations' => array(
+        $data = [
+            'annotations' => [
                 'limit' => $limit,
                 'offset' => $offset,
                 'total' => $total,
                 'annotation' => $annotations,
-            ),
-        );
+            ],
+        ];
 
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
@@ -88,8 +88,8 @@ class AnnotationsAPIController extends Controller
     public function getByIdAction(Annotation $annotation, Request $request)
     {
         $serializer = $this->get('jms_serializer');
-        $data = array(
-            'annotation' => array(
+        $data = [
+            'annotation' => [
                 'annotationId' => $annotation->getId(),
                 'mediapackageId' => $annotation->getMultimediaObject(),
                 'userId' => $annotation->getUserId(),
@@ -101,8 +101,8 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            ),
-        );
+            ],
+        ];
         $response = $serializer->serialize($data, $request->getRequestFormat());
 
         return new Response($response);
@@ -144,8 +144,8 @@ class AnnotationsAPIController extends Controller
         $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
 
-        $data = array(
-            'annotation' => array(
+        $data = [
+            'annotation' => [
                 'annotationId' => $annotation->getId(),
                 'mediapackageId' => $annotation->getMultimediaObject(),
                 'userId' => $annotation->getUserId(),
@@ -157,8 +157,8 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            ),
-        );
+            ],
+        ];
         $response = $serializer->serialize($data, 'json');
         $event = new AnnotationsUpdateEvent($episode);
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
@@ -180,8 +180,8 @@ class AnnotationsAPIController extends Controller
         $annotation->setValue($value);
         $this->get('doctrine_mongodb.odm.document_manager')->persist($annotation);
         $this->get('doctrine_mongodb.odm.document_manager')->flush();
-        $data = array(
-            'annotation' => array(
+        $data = [
+            'annotation' => [
                 'annotationId' => $annotation->getId(),
                 'mediapackageId' => $annotation->getMultimediaObject(),
                 'userId' => $annotation->getUserId(),
@@ -193,8 +193,8 @@ class AnnotationsAPIController extends Controller
                 'isPrivate' => $annotation->getIsPrivate(),
                 'value' => $annotation->getValue(),
                 'created' => $annotation->getCreated(),
-            ),
-        );
+            ],
+        ];
         $response = $serializer->serialize($data, 'xml');
         $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
         $this->get('event_dispatcher')->dispatch(AnnotationsEvents::UPDATE, $event);
@@ -233,7 +233,7 @@ class AnnotationsAPIController extends Controller
         $annonQB->field('multimedia_object')->equals(new \MongoId($multimediaobject->getId()));
         $annonQB->remove()->getQuery()->execute();
 
-        $response = $serializer->serialize(array('status' => 'ok'), 'xml');
+        $response = $serializer->serialize(['status' => 'ok'], 'xml');
 
         return new Response($response);
     }

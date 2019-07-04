@@ -23,7 +23,7 @@ class PumukitInitRepoCommand extends ContainerAwareCommand
     private $permissionProfilesPath = '../Resources/data/permissionprofiles/';
 
     private $allPermissions;
-    private $tagRequiredFields = array('cod', 'tree_parent_cod', 'metatag', 'display', 'name_en');
+    private $tagRequiredFields = ['cod', 'tree_parent_cod', 'metatag', 'display', 'name_en'];
 
     protected function configure()
     {
@@ -47,7 +47,7 @@ EOT
     {
         $this->dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
         $this->allPermissions = $this->getContainer()->get('pumukitschema.permission')->getAllPermissions();
-        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), array('en')));
+        $this->pmk2_allLocales = array_unique(array_merge($this->getContainer()->getParameter('pumukit.locales'), ['en']));
         $this->tagsRepo = $this->dm->getRepository(Tag::class);
 
         $repoName = $input->getArgument('repo');
@@ -175,24 +175,24 @@ EOT
 
     protected function removeTags()
     {
-        $this->dm->getDocumentCollection(Tag::class)->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove([]);
     }
 
     protected function removeRoles()
     {
-        $this->dm->getDocumentCollection(Role::class)->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove([]);
     }
 
     protected function removePermissionProfiles()
     {
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
     }
 
     protected function createRoot()
     {
         $root = $this->tagsRepo->findOneByCod('ROOT');
         if (!$root) {
-            $root = $this->createTagFromCsvArray(array('id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT'));
+            $root = $this->createTagFromCsvArray(['id' => null, 'cod' => 'ROOT', 'tree_parent_cod' => null, 'metatag' => 1, 'display' => 0, 'name_en' => 'ROOT']);
         }
         $this->dm->persist($root);
         $this->dm->flush();
@@ -246,7 +246,7 @@ EOT
         }
 
         $row = 1;
-        $importedTags = array();
+        $importedTags = [];
         while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
             $number = count($currentRow);
             if (('tag' === $repoName) ||
@@ -260,7 +260,7 @@ EOT
                 try {
                     switch ($repoName) {
                     case 'tag':
-                        $csvTagsArray = array();
+                        $csvTagsArray = [];
                         $limit = count($currentRow);
                         for ($i = 0; $i < $limit; ++$i) {
                             $key = $csvTagHeaders[$i]; // Here we turn the csv into an associative array (Doesn't a csv parsing library do this already?)

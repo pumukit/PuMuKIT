@@ -46,8 +46,7 @@ class CustomLanguageType extends AbstractType
             $choices = [];
             foreach ($customLanguages as $aux) {
                 $code = strtolower($aux);
-                $choices[$code] = isset($languageNames[$code]) ?
-                    $languageNames[$code] :
+                $choices[$code] = $languageNames[$code] ??
                     (isset(self::$addonLanguages[$code]) ? $translator->trans(self::$addonLanguages[$code]) : $code);
             }
         } else {

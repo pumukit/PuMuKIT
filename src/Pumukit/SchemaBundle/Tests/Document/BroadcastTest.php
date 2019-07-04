@@ -37,7 +37,7 @@ class BroadcastTest extends TestCase
         $this->assertEquals($descriptionEn, $broadcast->getDescription($locale));
 
         $descriptionEs = 'Difusión privada';
-        $i18nDescription = array('en' => $descriptionEn, 'es' => $descriptionEs);
+        $i18nDescription = ['en' => $descriptionEn, 'es' => $descriptionEs];
 
         $broadcast->setI18nDescription($i18nDescription);
 

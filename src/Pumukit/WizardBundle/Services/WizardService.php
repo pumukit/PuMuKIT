@@ -293,7 +293,7 @@ class WizardService
             return $addedTags;
         }
 
-        $tag = $this->dm->getRepository(Tag::class)->findOneBy(array('cod' => $tagCode));
+        $tag = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => $tagCode]);
         if ($tag) {
             $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
         }

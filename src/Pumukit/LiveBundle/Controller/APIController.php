@@ -27,8 +27,8 @@ class APIController extends Controller
             $limit = 100;
         }
 
-        $criteria = $request->get('criteria') ?: array();
-        $sort = $request->get('sort') ?: array();
+        $criteria = $request->get('criteria') ?: [];
+        $sort = $request->get('sort') ?: [];
 
         $qb = $eventRepo->createQueryBuilder();
 
@@ -45,11 +45,11 @@ class APIController extends Controller
         $total = $qb->count()->getQuery()->execute();
         $event = $qb_event->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total,
+        $counts = ['total' => $total,
                         'limit' => $limit,
                         'criteria' => $criteria,
                         'sort' => $sort,
-                        'event' => $event, );
+                        'event' => $event, ];
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 
@@ -69,8 +69,8 @@ class APIController extends Controller
             $limit = 100;
         }
 
-        $criteria = $request->get('criteria') ?: array();
-        $sort = $request->get('sort') ?: array();
+        $criteria = $request->get('criteria') ?: [];
+        $sort = $request->get('sort') ?: [];
 
         $qb = $liveRepo->createQueryBuilder();
 
@@ -87,11 +87,11 @@ class APIController extends Controller
         $total = $qb->count()->getQuery()->execute();
         $live = $qb_live->getQuery()->execute()->toArray();
 
-        $counts = array('total' => $total,
+        $counts = ['total' => $total,
                         'limit' => $limit,
                         'criteria' => $criteria,
                         'sort' => $sort,
-                        'live' => $live, );
+                        'live' => $live, ];
 
         $data = $serializer->serialize($counts, $request->getRequestFormat());
 

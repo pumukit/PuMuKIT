@@ -33,7 +33,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -51,23 +51,23 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Role::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Person::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Broadcast::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Group::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(User::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 
@@ -126,17 +126,17 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($broadcast, $mmobj->getBroadcast());
 
         $t1 = new Track();
-        $t1->setTags(array('master'));
+        $t1->setTags(['master']);
         $t2 = new Track();
-        $t2->setTags(array('mosca', 'master', 'old'));
+        $t2->setTags(['mosca', 'master', 'old']);
         $t3 = new Track();
-        $t3->setTags(array('master', 'mosca'));
+        $t3->setTags(['master', 'mosca']);
         $t4 = new Track();
-        $t4->setTags(array('flv', 'itunes', 'hide'));
+        $t4->setTags(['flv', 'itunes', 'hide']);
         $t5 = new Track();
-        $t5->setTags(array('flv', 'webtv'));
+        $t5->setTags(['flv', 'webtv']);
         $t6 = new Track();
-        $t6->setTags(array('track6'));
+        $t6->setTags(['track6']);
         $t6->setHide(true);
 
         $this->dm->persist($t1);
@@ -158,25 +158,25 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags()));
-        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array('master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('master'), array('mosca', 'old'))));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array('mosca', 'old'), array('master'))));
-        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv'))));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array(), array(), array('flv', 'master'))));
-        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags(array(), array(), array(), array('flv', 'master'))));
-        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(array('mosca', 'old'), array(), array(), array('old'))));
-        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(array('track6'))));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags(['master'])));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(['master'], ['mosca', 'old'])));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags([], ['mosca', 'old'], ['master'])));
+        $this->assertEquals(3, count($mmobj->getFilteredTracksWithTags([], [], ['flv'])));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags([], [], ['flv', 'master'])));
+        $this->assertEquals(5, count($mmobj->getFilteredTracksWithTags([], [], [], ['flv', 'master'])));
+        $this->assertEquals(1, count($mmobj->getFilteredTracksWithTags(['mosca', 'old'], [], [], ['old'])));
+        $this->assertEquals(0, count($mmobj->getFilteredTracksWithTags(['track6'])));
 
         $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags());
-        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array('master')));
-        $this->assertEquals($t2, $mmobj->getFilteredTrackWithTags(array('master'), array('mosca', 'old')));
-        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array(), array('mosca', 'old'), array('master')));
-        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array(), array(), array('flv')));
-        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array(), array(), array('flv', 'master')));
-        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array(), array(), array(), array('flv', 'master')));
-        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(array('mosca', 'old'), array(), array(), array('old')));
-        $this->assertEquals($t1, $mmobj->getFilteredTrackWithTags(array(), array(), array(), array('master', 'mosca')));
-        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(array('track6')));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(['master']));
+        $this->assertEquals($t2, $mmobj->getFilteredTrackWithTags(['master'], ['mosca', 'old']));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags([], ['mosca', 'old'], ['master']));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags([], [], ['flv']));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags([], [], ['flv', 'master']));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags([], [], [], ['flv', 'master']));
+        $this->assertEquals($t3, $mmobj->getFilteredTrackWithTags(['mosca', 'old'], [], [], ['old']));
+        $this->assertEquals($t1, $mmobj->getFilteredTrackWithTags([], [], [], ['master', 'mosca']));
+        $this->assertEquals(null, $mmobj->getFilteredTrackWithTags(['track6']));
     }
 
     public function testCreateMultimediaObjectAndFindByCriteria()
@@ -434,8 +434,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm4);
         $this->dm->flush();
 
-        $groups1 = array($group1->getId());
-        $groups2 = array($group2->getId());
+        $groups1 = [$group1->getId()];
+        $groups2 = [$group2->getId()];
 
         $mmobj_benjen_ranger_group1 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_ranger->getCod(), $groups1);
         $mmobj_benjen_ranger_group2 = $this->repo->findByPersonIdAndRoleCodOrGroups($person_benjen->getId(), $role_ranger->getCod(), $groups2);
@@ -496,8 +496,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertFalse($mm->containsPerson($personKate));
         $this->assertFalse($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertEquals(0, count($mm->getPeople()));
-        $this->assertFalse($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
-        $this->assertFalse($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
+        $this->assertFalse($mm->containsPersonWithAllRoles($personKate, [$roleActor, $rolePresenter, $roleDirector]));
+        $this->assertFalse($mm->containsPersonWithAnyRole($personKate, [$roleActor, $rolePresenter, $roleDirector]));
 
         $mm->addPersonWithRole($personKate, $roleActor);
         $this->dm->persist($mm);
@@ -548,8 +548,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleActor));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $rolePresenter));
         $this->assertTrue($mm->containsPersonWithRole($personKate, $roleDirector));
-        $this->assertTrue($mm->containsPersonWithAllRoles($personKate, array($roleActor, $rolePresenter, $roleDirector)));
-        $this->assertTrue($mm->containsPersonWithAnyRole($personKate, array($roleActor, $rolePresenter, $roleDirector)));
+        $this->assertTrue($mm->containsPersonWithAllRoles($personKate, [$roleActor, $rolePresenter, $roleDirector]));
+        $this->assertTrue($mm->containsPersonWithAnyRole($personKate, [$roleActor, $rolePresenter, $roleDirector]));
         $this->assertEquals(1, count($mm->getPeople()));
 
         $mm->addPersonWithRole($personLucy, $roleDirector);
@@ -576,32 +576,32 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
-                            array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
+        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
+                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
 
         $mm->downPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
-                            array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
+        $this->assertEquals([$personLucy->getId(), $personKate->getId()],
+                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
 
         $mm->upPersonWithRole($personKate, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
-                            array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
+        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
+                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
 
         $mm->upPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals(array($personLucy->getId(), $personKate->getId()),
-                            array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
+        $this->assertEquals([$personLucy->getId(), $personKate->getId()],
+                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
 
         $mm->downPersonWithRole($personLucy, $roleDirector);
         $this->dm->persist($mm);
         $peopleDirector = $mm->getPeopleByRole($roleDirector);
-        $this->assertEquals(array($personKate->getId(), $personLucy->getId()),
-                            array($peopleDirector[0]->getId(), $peopleDirector[1]->getId()));
+        $this->assertEquals([$personKate->getId(), $personLucy->getId()],
+                            [$peopleDirector[0]->getId(), $peopleDirector[1]->getId()]);
 
         $this->assertEquals(3, count($mm->getAllEmbeddedPeopleByPerson($personKate)));
         $this->assertEquals(1, count($mm->getAllEmbeddedPeopleByPerson($personLucy)));
@@ -698,7 +698,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $kateQueryRolesIds = array();
+        $kateQueryRolesIds = [];
         foreach ($mm->getAllEmbeddedRolesByPerson($personKate) as $embeddedRole) {
             $kateQueryRolesIds[] = $embeddedRole->getId();
         }
@@ -707,7 +707,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($rolePresenter->getId(), $kateQueryRolesIds));
         $this->assertFalse(in_array($roleDirector->getId(), $kateQueryRolesIds));
 
-        $lucyQueryRolesIds = array();
+        $lucyQueryRolesIds = [];
         foreach ($mm->getAllEmbeddedRolesByPerson($personLucy) as $embeddedRole) {
             $lucyQueryRolesIds[] = $embeddedRole->getId();
         }
@@ -716,7 +716,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertTrue(in_array($rolePresenter->getId(), $lucyQueryRolesIds));
         $this->assertTrue(in_array($roleDirector->getId(), $lucyQueryRolesIds));
 
-        $peteQueryRolesIds = array();
+        $peteQueryRolesIds = [];
         foreach ($mm->getAllEmbeddedRolesByPerson($personPete) as $embeddedRole) {
             $peteQueryRolesIds[] = $embeddedRole->getId();
         }
@@ -832,24 +832,24 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mmPublished);
         $this->dm->flush();
 
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDDEN))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOCKED))));
-        $this->assertEquals(1, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))));
-        $this->assertEquals(2, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW))));
-        $this->assertEquals(3, count($this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN))));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE])));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW])));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN])));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED])));
+        $this->assertEquals(1, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED])));
+        $this->assertEquals(2, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW])));
+        $this->assertEquals(3, count($this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN])));
 
-        $mmArray = array($mmNew->getId() => $mmNew);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_NEW))->toArray());
-        $mmArray = array($mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_HIDDEN))->toArray());
-        $mmArray = array($mmBloq->getId() => $mmBloq);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_BLOCKED))->toArray());
-        $mmArray = array($mmPublished->getId() => $mmPublished);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED))->toArray());
-        $mmArray = array($mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide);
-        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, array(MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN))->toArray());
+        $mmArray = [$mmNew->getId() => $mmNew];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_NEW])->toArray());
+        $mmArray = [$mmHide->getId() => $mmHide];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_HIDDEN])->toArray());
+        $mmArray = [$mmBloq->getId() => $mmBloq];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_BLOCKED])->toArray());
+        $mmArray = [$mmPublished->getId() => $mmPublished];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED])->toArray());
+        $mmArray = [$mmPublished->getId() => $mmPublished, $mmNew->getId() => $mmNew, $mmHide->getId() => $mmHide];
+        $this->assertEquals($mmArray, $this->repo->findWithStatus($series, [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_NEW, MultimediaObject::STATUS_HIDDEN])->toArray());
     }
 
     public function testFindPrototype()
@@ -917,12 +917,12 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         $this->assertEquals(4, count($this->repo->findWithoutPrototype($series)));
 
-        $mmArray = array(
+        $mmArray = [
              $mmNew->getId() => $mmNew,
              $mmHide->getId() => $mmHide,
              $mmBloq->getId() => $mmBloq,
              $mmPublished->getId() => $mmPublished,
-             );
+             ];
         $this->assertEquals($mmArray, $this->repo->findWithoutPrototype($series)->toArray());
     }
 
@@ -959,7 +959,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $picsArray = array($pic1, $pic3);
+        $picsArray = [$pic1, $pic3];
         $this->assertEquals(count($picsArray), count($this->repo->find($mm->getId())->getPics()));
         $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
 
@@ -967,14 +967,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $picsArray = array($pic3, $pic1);
+        $picsArray = [$pic3, $pic1];
         $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
 
         $mm->downPicById($pic3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $picsArray = array($pic1, $pic3);
+        $picsArray = [$pic1, $pic3];
         $this->assertEquals($picsArray, array_values($this->repo->find($mm->getId())->getPics()->toArray()));
     }
 
@@ -1006,7 +1006,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $materialsArray = array($material1, $material3);
+        $materialsArray = [$material1, $material3];
         $this->assertEquals(count($materialsArray), count($this->repo->find($mm->getId())->getMaterials()));
         $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
 
@@ -1014,14 +1014,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $materialsArray = array($material3, $material1);
+        $materialsArray = [$material3, $material1];
         $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
 
         $mm->downMaterialById($material3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $materialsArray = array($material1, $material3);
+        $materialsArray = [$material1, $material3];
         $this->assertEquals($materialsArray, array_values($this->repo->find($mm->getId())->getMaterials()->toArray()));
     }
 
@@ -1053,7 +1053,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $linksArray = array($link1, $link3);
+        $linksArray = [$link1, $link3];
         $this->assertEquals(count($linksArray), count($this->repo->find($mm->getId())->getLinks()));
         $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
 
@@ -1061,14 +1061,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $linksArray = array($link3, $link1);
+        $linksArray = [$link3, $link1];
         $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
 
         $mm->downLinkById($link3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $linksArray = array($link1, $link3);
+        $linksArray = [$link1, $link3];
         $this->assertEquals($linksArray, array_values($this->repo->find($mm->getId())->getLinks()->toArray()));
     }
 
@@ -1100,7 +1100,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $tracksArray = array($track1, $track3);
+        $tracksArray = [$track1, $track3];
         $this->assertEquals(count($tracksArray), count($this->repo->find($mm->getId())->getTracks()));
         $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
 
@@ -1108,14 +1108,14 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $tracksArray = array($track3, $track1);
+        $tracksArray = [$track3, $track1];
         $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
 
         $mm->downTrackById($track3->getId());
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $tracksArray = array($track1, $track3);
+        $tracksArray = [$track1, $track3];
         $this->assertEquals($tracksArray, array_values($this->repo->find($mm->getId())->getTracks()->toArray()));
     }
 
@@ -1203,9 +1203,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
 
         // SORT
-        $sort = array();
-        $sortAsc = array('public_date' => 1);
-        $sortDesc = array('public_date' => -1);
+        $sort = [];
+        $sortAsc = ['public_date' => 1];
+        $sortDesc = ['public_date' => -1];
 
         // FIND WITH TAG
         $this->assertEquals(7, count($this->repo->findWithTag($tag1)));
@@ -1222,9 +1222,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
 
         // FIND WITH TAG (SORT)
         $page = 1;
-        $arrayAsc = array($mm23, $mm31, $mm33);
+        $arrayAsc = [$mm23, $mm31, $mm33];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithTag($tag1, $sortAsc, $limit, $page)->toArray()));
-        $arrayDesc = array($mm23, $mm22, $mm12);
+        $arrayDesc = [$mm23, $mm22, $mm12];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithTag($tag1, $sortDesc, $limit, $page)->toArray()));
 
         $this->assertEquals(2, count($this->repo->findWithTag($tag2)));
@@ -1244,16 +1244,16 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, count($this->repo->findWithGeneralTag($tag2)));
         $this->assertEquals(0, count($this->repo->findWithGeneralTag($tag3)));
         //FIND WITH GENERAL TAG (SORT)
-        $arrayAsc = array($mm31, $mm33, $mm34);
+        $arrayAsc = [$mm31, $mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithGeneralTag($tag1, $sortAsc, $limit, $page)->toArray()));
-        $arrayDesc = array($mm23, $mm22, $mm12);
+        $arrayDesc = [$mm23, $mm22, $mm12];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithGeneralTag($tag1, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITH TAG
         $this->assertEquals($mm11, $this->repo->findOneWithTag($tag1));
 
         // FIND WITH ANY TAG
-        $arrayTags = array($tag1, $tag2, $tag3);
+        $arrayTags = [$tag1, $tag2, $tag3];
         $this->assertEquals(8, $this->repo->findWithAnyTag($arrayTags)->count(true));
         $limit = 3;
         $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags, $sort, $limit)->count(true));
@@ -1265,29 +1265,29 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(2, $this->repo->findWithAnyTag($arrayTags, $sort, $limit, $page)->count(true));
 
         // FIND WITH ANY TAG (SORT)
-        $arrayAsc = array($mm11, $mm12, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34);
+        $arrayAsc = [$mm11, $mm12, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc)->toArray()));
         $limit = 3;
-        $arrayAsc = array($mm11, $mm12, $mm21);
+        $arrayAsc = [$mm11, $mm12, $mm21];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit)->toArray()));
         $page = 0;
-        $arrayAsc = array($mm11, $mm12, $mm21);
+        $arrayAsc = [$mm11, $mm12, $mm21];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
         $page = 1;
-        $arrayAsc = array($mm22, $mm23, $mm31);
+        $arrayAsc = [$mm22, $mm23, $mm31];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
         $page = 2;
-        $arrayAsc = array($mm33, $mm34);
+        $arrayAsc = [$mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAnyTag($arrayTags, $sortAsc, $limit, $page)->toArray()));
 
-        $arrayDesc = array($mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11);
+        $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22, $mm21, $mm12, $mm11];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc)->toArray()));
         $limit = 5;
         $page = 0;
-        $arrayDesc = array($mm34, $mm33, $mm31, $mm23, $mm22);
+        $arrayDesc = [$mm34, $mm33, $mm31, $mm23, $mm22];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
         $page = 1;
-        $arrayDesc = array($mm21, $mm12, $mm11);
+        $arrayDesc = [$mm21, $mm12, $mm11];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAnyTag($arrayTags, $sortDesc, $limit, $page)->toArray()));
 
         // Add more tags
@@ -1296,7 +1296,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->flush();
         $this->assertEquals(9, $this->repo->findWithAnyTag($arrayTags)->count(true));
 
-        $arrayTags = array($tag2, $tag3);
+        $arrayTags = [$tag2, $tag3];
         $this->assertEquals(3, $this->repo->findWithAnyTag($arrayTags)->count(true));
 
         // FIND WITH ALL TAGS
@@ -1309,7 +1309,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm32);
         $this->dm->flush();
 
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals(2, $this->repo->findWithAllTags($arrayTags)->count(true));
 
         $mm12->addTag($tag2);
@@ -1326,29 +1326,29 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $page = 1;
         $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags, $sort, $limit, $page)->count(true));
 
-        $arrayTags = array($tag2, $tag3);
+        $arrayTags = [$tag2, $tag3];
         $this->assertEquals(1, $this->repo->findWithAllTags($arrayTags)->count(true));
 
         // FIND WITH ALL TAGS (SORT)
-        $arrayTags = array($tag1, $tag2);
-        $arrayAsc = array($mm11, $mm12, $mm13, $mm22);
+        $arrayTags = [$tag1, $tag2];
+        $arrayAsc = [$mm11, $mm12, $mm13, $mm22];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc)->toArray()));
-        $arrayDesc = array($mm22, $mm13, $mm12, $mm11);
+        $arrayDesc = [$mm22, $mm13, $mm12, $mm11];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc)->toArray()));
         $limit = 3;
-        $arrayAsc = array($mm11, $mm12, $mm13);
+        $arrayAsc = [$mm11, $mm12, $mm13];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit)->toArray()));
         $page = 1;
-        $arrayAsc = array($mm22);
+        $arrayAsc = [$mm22];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
 
         $limit = 2;
         $page = 1;
-        $arrayDesc = array($mm12, $mm11);
+        $arrayDesc = [$mm12, $mm11];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITH ALL TAGS
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals($mm11, $this->repo->findOneWithAllTags($arrayTags));
 
         // FIND WITHOUT TAG
@@ -1365,16 +1365,16 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(0, $this->repo->findWithoutTag($tag3, $sort, $limit, $page)->count(true));
 
         // FIND WITHOUT TAG (SORT)
-        $arrayAsc = array($mm11, $mm12, $mm13, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34);
+        $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23, $mm31, $mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc)->toArray()));
         $limit = 6;
-        $arrayAsc = array($mm11, $mm12, $mm13, $mm21, $mm22, $mm23);
+        $arrayAsc = [$mm11, $mm12, $mm13, $mm21, $mm22, $mm23];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit)->toArray()));
         $page = 1;
-        $arrayAsc = array($mm31, $mm33, $mm34);
+        $arrayAsc = [$mm31, $mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutTag($tag3, $sortAsc, $limit, $page)->toArray()));
 
-        $arrayDesc = array($mm13, $mm12, $mm11);
+        $arrayDesc = [$mm13, $mm12, $mm11];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutTag($tag3, $sortDesc, $limit, $page)->toArray()));
 
         // FIND ONE WITHOUT TAG
@@ -1383,7 +1383,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         // FIND WITH ALL TAGS
 
         // FIND WITHOUT ALL TAGS
-        $arrayTags = array($tag2, $tag3);
+        $arrayTags = [$tag2, $tag3];
         $this->assertEquals(4, $this->repo->findWithoutAllTags($arrayTags)->count(true));
         $limit = 3;
         $this->assertEquals(3, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit)->count(true));
@@ -1392,23 +1392,23 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $page = 1;
         $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags, $sort, $limit, $page)->count(true));
 
-        $arrayTags = array($tag1, $tag3);
+        $arrayTags = [$tag1, $tag3];
         $this->assertEquals(1, $this->repo->findWithoutAllTags($arrayTags)->count(true));
 
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals(0, $this->repo->findWithoutAllTags($arrayTags)->count(true));
 
         // FIND WITHOUT ALL TAGS (SORT)
-        $arrayTags = array($tag2, $tag3);
-        $arrayAsc = array($mm23, $mm31, $mm33, $mm34);
+        $arrayTags = [$tag2, $tag3];
+        $arrayAsc = [$mm23, $mm31, $mm33, $mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc)->toArray()));
         $limit = 3;
         $page = 1;
-        $arrayAsc = array($mm34);
+        $arrayAsc = [$mm34];
         $this->assertEquals($arrayAsc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortAsc, $limit, $page)->toArray()));
 
         $page = 0;
-        $arrayDesc = array($mm34, $mm33, $mm31);
+        $arrayDesc = [$mm34, $mm33, $mm31];
         $this->assertEquals($arrayDesc, array_values($this->repo->findWithoutAllTags($arrayTags, $sortDesc, $limit, $page)->toArray()));
     }
 
@@ -1488,24 +1488,24 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithTag($tag3));
 
         // FIND SERIES FIELD WITH ANY TAG
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals(3, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
 
-        $arrayTags = array($tag3);
+        $arrayTags = [$tag3];
         $this->assertEquals(1, $this->repo->findSeriesFieldWithAnyTag($arrayTags)->count(true));
 
         // FIND SERIES FIELD WITH ALL TAGS
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals(2, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
 
-        $arrayTags = array($tag2, $tag3);
+        $arrayTags = [$tag2, $tag3];
         $this->assertEquals(1, $this->repo->findSeriesFieldWithAllTags($arrayTags)->count(true));
 
         // FIND ONE SERIES FIELD WITH ALL TAGS
-        $arrayTags = array($tag1, $tag2);
+        $arrayTags = [$tag1, $tag2];
         $this->assertEquals($series1->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
 
-        $arrayTags = array($tag2, $tag3);
+        $arrayTags = [$tag2, $tag3];
         $this->assertEquals($series3->getId(), $this->repo->findOneSeriesFieldWithAllTags($arrayTags));
     }
 
@@ -1586,7 +1586,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $arrayPics = array($pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl());
+        $arrayPics = [$pic1->getUrl(), $pic2->getUrl(), $pic3->getUrl(), $pic5->getUrl()];
         //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
 
         $mm11->setPublicDate(new \DateTime('2015-01-13 15:05:16'));
@@ -1598,7 +1598,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm21);
         $this->dm->flush();
 
-        $arrayPics = array($pic5->getUrl(), $pic1->getUrl(), $pic3->getUrl(), $pic3->getUrl());
+        $arrayPics = [$pic5->getUrl(), $pic1->getUrl(), $pic3->getUrl(), $pic3->getUrl()];
         //$this->assertEquals($arrayPics, $this->repo->findDistinctUrlPics()->toArray());
     }
 
@@ -1627,11 +1627,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm3);
         $this->dm->flush();
 
-        $sort = array();
-        $sortPubDateAsc = array('public_date' => 'asc');
-        $sortPubDateDesc = array('public_date' => 'desc');
-        $sortRecDateAsc = array('record_date' => 'asc');
-        $sortRecDateDesc = array('record_date' => 'desc');
+        $sort = [];
+        $sortPubDateAsc = ['public_date' => 'asc'];
+        $sortPubDateDesc = ['public_date' => 'desc'];
+        $sortRecDateAsc = ['record_date' => 'asc'];
+        $sortRecDateDesc = ['record_date' => 'desc'];
 
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sort)->count(true));
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortPubDateAsc)->count(true));
@@ -1639,13 +1639,13 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortRecDateAsc)->count(true));
         $this->assertEquals(3, $this->repo->findOrderedBy($series, $sortRecDateDesc)->count(true));
 
-        $arrayMms = array($mm1, $mm2, $mm3);
+        $arrayMms = [$mm1, $mm2, $mm3];
         $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortPubDateAsc)->toArray()));
-        $arrayMms = array($mm3, $mm2, $mm1);
+        $arrayMms = [$mm3, $mm2, $mm1];
         $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortPubDateDesc)->toArray()));
-        $arrayMms = array($mm3, $mm1, $mm2);
+        $arrayMms = [$mm3, $mm1, $mm2];
         $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortRecDateAsc)->toArray()));
-        $arrayMms = array($mm2, $mm1, $mm3);
+        $arrayMms = [$mm2, $mm1, $mm3];
         $this->assertEquals($arrayMms, array_values($this->repo->findOrderedBy($series, $sortRecDateDesc)->toArray()));
     }
 
@@ -1951,10 +1951,10 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $postEs = 'publicacion';
         $bioEs = 'biografia';
 
-        $honorificI18n = array($locale => $honorific, $localeEs => $honorificEs);
-        $firmI18n = array($locale => $firm, $localeEs => $firmEs);
-        $postI18n = array($locale => $post, $localeEs => $postEs);
-        $bioI18n = array($locale => $bio, $localeEs => $bioEs);
+        $honorificI18n = [$locale => $honorific, $localeEs => $honorificEs];
+        $firmI18n = [$locale => $firm, $localeEs => $firmEs];
+        $postI18n = [$locale => $post, $localeEs => $postEs];
+        $bioI18n = [$locale => $bio, $localeEs => $bioEs];
 
         $embeddedPerson->setI18nHonorific($honorificI18n);
         $embeddedPerson->setI18nFirm($firmI18n);
@@ -2018,8 +2018,8 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $nameEs = 'RolEmbebido';
         $textEs = 'Blano y negro es todo lo que vi en mi infancia.';
 
-        $nameI18n = array($locale => $name, $localeEs => $nameEs);
-        $textI18n = array($locale => $text, $localeEs => $textEs);
+        $nameI18n = [$locale => $name, $localeEs => $nameEs];
+        $textI18n = [$locale => $text, $localeEs => $textEs];
 
         $embeddedRole->setI18nName($nameI18n);
         $embeddedRole->setI18nText($textI18n);
@@ -2056,9 +2056,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($embeddedRole);
         $this->dm->flush();
 
-        $people1 = array($person_ned, $person_benjen, $person_mark);
-        $people2 = array($person_ned, $person_benjen, $person_mark, $person_cris);
-        $people3 = array($person_cris);
+        $people1 = [$person_ned, $person_benjen, $person_mark];
+        $people2 = [$person_ned, $person_benjen, $person_mark, $person_cris];
+        $people3 = [$person_cris];
 
         $this->assertTrue($embeddedRole->containsAllPeople($people1));
         $this->assertFalse($embeddedRole->containsAllPeople($people2));
@@ -2104,7 +2104,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $series = $this->createSeries('Series');
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $sort = array('public_date' => -1);
+        $sort = ['public_date' => -1];
         $this->assertCount(0, $this->repo->findByTagCod($tag, $sort));
 
         $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
@@ -2124,7 +2124,7 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $series = $this->createSeries('Series');
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
 
-        $sort = array('public_date' => -1);
+        $sort = ['public_date' => -1];
         $this->assertCount(0, $this->repo->findAllByTag($tag, $sort));
 
         $addedTags = $this->tagService->addTagToMultimediaObject($multimediaObject, $tag->getId());
@@ -2918,9 +2918,9 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm1);
         $this->dm->flush();
 
-        $groups1 = array($group1->getId());
-        $groups2 = array($group2->getId());
-        $groups12 = array($group1->getId(), $group2->getId());
+        $groups1 = [$group1->getId()];
+        $groups2 = [$group2->getId()];
+        $groups12 = [$group1->getId(), $group2->getId()];
 
         $seriesGroups1 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups1);
         $seriesGroups2 = $this->repo->findSeriesFieldByEmbeddedBroadcastTypeAndGroups(EmbeddedBroadcast::TYPE_GROUPS, $groups2);
@@ -3121,11 +3121,11 @@ class MultimediaObjectRepositoryTest extends WebTestCase
         $this->dm->persist($mm24);
         $this->dm->flush();
 
-        $groups1 = array(new \MongoId($group1->getId()), new \MongoId($group2->getId()));
-        $groups2 = array(new \MongoId($group2->getId()), new \MongoId($group1->getId()));
-        $groups3 = array(new \MongoId($group2->getId()));
-        $groups4 = array(new \MongoId($group1->getId()));
-        $groups5 = array();
+        $groups1 = [new \MongoId($group1->getId()), new \MongoId($group2->getId())];
+        $groups2 = [new \MongoId($group2->getId()), new \MongoId($group1->getId())];
+        $groups3 = [new \MongoId($group2->getId())];
+        $groups4 = [new \MongoId($group1->getId())];
+        $groups5 = [];
 
         $this->assertEquals(1, $this->repo->countInSeriesWithEmbeddedBroadcastType($series1, $typePublic));
         $this->assertEquals(0, $this->repo->countInSeriesWithEmbeddedBroadcastType($series2, $typePublic));

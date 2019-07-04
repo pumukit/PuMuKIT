@@ -23,13 +23,13 @@ class Job
      *
      * @var array
      */
-    public static $statusTexts = array(
+    public static $statusTexts = [
         self::STATUS_ERROR => 'Error',
         self::STATUS_PAUSED => 'Paused',
         self::STATUS_WAITING => 'Waiting',
         self::STATUS_EXECUTING => 'Executing',
         self::STATUS_FINISHED => 'Finished',
-    );
+    ];
 
     /**
      * @var int
@@ -101,14 +101,14 @@ class Job
      *
      * @MongoDB\Field(type="raw")
      */
-    private $name = array('en' => '');
+    private $name = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var \DateTime
@@ -207,7 +207,7 @@ class Job
      *
      * @MongoDB\Field(type="raw")
      */
-    private $initVars = array();
+    private $initVars = [];
 
     /**
      * @var string

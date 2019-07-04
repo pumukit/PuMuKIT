@@ -13,7 +13,7 @@ class LicenseServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
         $this->translator = static::$kernel->getContainer()->get('translator');
         $this->resourcesDir = realpath(__DIR__.'/../Resources');
@@ -33,12 +33,12 @@ class LicenseServiceTest extends WebTestCase
     {
         $showLicense = false;
         $licenseDir = '';
-        $locales = array();
+        $locales = [];
         $licenseService = new LicenseService($showLicense, $licenseDir, $locales, $this->translator);
         $this->assertFalse($licenseService->isEnabled());
 
         $showLicense = true;
-        $locales = array('en');
+        $locales = ['en'];
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
         $this->assertTrue($licenseService->isEnabled());
     }
@@ -46,28 +46,28 @@ class LicenseServiceTest extends WebTestCase
     public function testIsLicenseEnabledAndAccepted()
     {
         $showLicense = false;
-        $locales = array('en');
+        $locales = ['en'];
         $locale = 'en';
         $content = 'test';
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
-        $formData = array();
+        $formData = [];
         $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
         $showLicense = true;
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
         $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
-        $formData = array('license' => array('accept' => true));
+        $formData = ['license' => ['accept' => true]];
         $this->assertTrue($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
 
-        $formData = array('license' => array('accept' => false));
+        $formData = ['license' => ['accept' => false]];
         $this->assertFalse($licenseService->isLicenseEnabledAndAccepted($formData, $locale));
     }
 
     public function testGetLicenseContent()
     {
         $showLicense = true;
-        $locales = array('en');
+        $locales = ['en'];
         $licenseService = new LicenseService($showLicense, $this->licenseDir, $locales, $this->translator);
 
         $licenseFile = realpath($this->licenseDir.'/en.txt');

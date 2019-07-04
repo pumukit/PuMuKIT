@@ -82,22 +82,22 @@ class TrackFileController extends Controller
     public function trackPlayedAction(Request $request, $id)
     {
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
-            return new JsonResponse(array('status' => 'error'));
+            return new JsonResponse(['status' => 'error']);
         }
 
         list($mmobj, $track) = $this->getMmobjAndTrack($id);
 
         if ('on_play' != $this->container->getParameter('pumukitplayer.when_dispatch_view_event')) {
-            return new JsonResponse(array('status' => 'error'));
+            return new JsonResponse(['status' => 'error']);
         }
 
         if (0 !== strpos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
-            return new JsonResponse(array('status' => 'error'));
+            return new JsonResponse(['status' => 'error']);
         }
 
         $this->dispatchViewEvent($mmobj, $track);
 
-        return new JsonResponse(array('status' => 'success'));
+        return new JsonResponse(['status' => 'success']);
     }
 
     /**
@@ -126,10 +126,10 @@ class TrackFileController extends Controller
             throw $this->createNotFoundException("Not mmobj found with the public track id: $id");
         }
 
-        return array(
+        return [
             $mmobj,
             $track,
-        );
+        ];
     }
 
     /**

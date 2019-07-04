@@ -25,7 +25,7 @@ class RemoveElementTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -49,11 +49,11 @@ class RemoveElementTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Group::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(User::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 

@@ -23,7 +23,7 @@ class PicExtractorListenerTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -35,9 +35,9 @@ class PicExtractorListenerTest extends WebTestCase
         $this->picExtractorService = static::$kernel->getContainer()->get('pumukitencoder.picextractor');
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-            ->remove(array());
+            ->remove([]);
         $mmsPicService = $this->getMockBuilder('Pumukit\SchemaBundle\Services\MultimediaObjectPicService')
             ->disableOriginalConstructor()
             ->getMock();
@@ -87,7 +87,7 @@ class PicExtractorListenerTest extends WebTestCase
 
         $this->assertTrue($mm->getPics()->isEmpty());
         $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
 
         $pic = new Pic();
         $mm->addPic($pic);
@@ -97,7 +97,7 @@ class PicExtractorListenerTest extends WebTestCase
 
         $this->assertFalse($mm->getPics()->isEmpty());
         $this->assertEquals(1, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
     public function testAddDefaultAudioPic()
@@ -122,7 +122,7 @@ class PicExtractorListenerTest extends WebTestCase
         $this->assertTrue($mm->getPics()->isEmpty());
         $this->assertEquals(0, count($mm->getPics()->toArray()));
 
-        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertTrue($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
 
         $pic = new Pic();
         $mm->addPic($pic);
@@ -132,7 +132,7 @@ class PicExtractorListenerTest extends WebTestCase
 
         $this->assertFalse($mm->getPics()->isEmpty());
         $this->assertEquals(1, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertFalse($this->invokeMethod($this->picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
     public function testPicExtractorVideoError()
@@ -168,7 +168,7 @@ class PicExtractorListenerTest extends WebTestCase
 
         $this->assertTrue($mm->getPics()->isEmpty());
         $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
     public function testPicExtractorAudioError()
@@ -206,10 +206,10 @@ class PicExtractorListenerTest extends WebTestCase
 
         $this->assertTrue($mm->getPics()->isEmpty());
         $this->assertEquals(0, count($mm->getPics()->toArray()));
-        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', array($mm, $track)));
+        $this->assertFalse($this->invokeMethod($picExtractorListener, 'generatePic', [$mm, $track]));
     }
 
-    private function invokeMethod(&$object, $methodName, array $parameters = array())
+    private function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

@@ -20,10 +20,10 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
      */
     public function createAction(Series $playlist, Request $request)
     {
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
-        );
+        ];
     }
 
     /**
@@ -31,10 +31,10 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
      */
     public function listAction(Series $playlist)
     {
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
-        );
+        ];
     }
 
     /**
@@ -53,13 +53,13 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         }
 
         if ($isBanner) {
-            return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', array('id' => $playlist->getId())));
+            return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
         }
 
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
-        );
+        ];
     }
 
     /**
@@ -79,22 +79,22 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
                 $picService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
-            return array(
+            return [
                 'resource' => $playlist,
                 'resource_name' => 'playlist',
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
                 'isBanner' => $isBanner,
-            );
+            ];
         }
 
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
             'uploaded' => 'success',
             'message' => 'New Pic added.',
             'isBanner' => $isBanner,
-        );
+        ];
     }
 
     /**
@@ -113,7 +113,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
 
         $playlist = $this->get('pumukitschema.seriespic')->removePicFromSeries($playlist, $picId);
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', array('id' => $playlist->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_update', ['id' => $playlist->getId()]));
     }
 
     /**
@@ -136,7 +136,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         $dm->persist($playlist);
         $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', array('id' => $playlist->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
 
     /**
@@ -159,7 +159,7 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
         $dm->persist($playlist);
         $dm->flush();
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', array('id' => $playlist->getId())));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]));
     }
 
     /**
@@ -181,13 +181,13 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
 
         $pics = $this->getPaginatedPics($urlPics, $limit, $page);
 
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
             'pics' => $pics,
             'page' => $page,
             'total' => $total,
-        );
+        ];
     }
 
     /**
@@ -195,10 +195,10 @@ class PlaylistPicController extends Controller implements NewAdminControllerInte
      */
     public function bannerAction(Series $playlist, Request $request)
     {
-        return array(
+        return [
             'resource' => $playlist,
             'resource_name' => 'playlist',
-        );
+        ];
     }
 
     /**

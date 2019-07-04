@@ -26,7 +26,7 @@ class JobServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -38,9 +38,9 @@ class JobServiceTest extends WebTestCase
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->propService = static::$kernel->getContainer()->get('pumukitencoder.mmpropertyjob');
 
-        $this->dm->getDocumentCollection(Job::class)->remove(array());
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
 
         $profileService = new ProfileService($this->getDemoProfiles(), $this->dm);
@@ -90,10 +90,10 @@ class JobServiceTest extends WebTestCase
             $profile = 'MASTER_COPY';
             $priority = 2;
             $language = 'en';
-            $description = array(
+            $description = [
                                  'en' => 'local track description',
                                  'es' => 'descripción del archivo local',
-                                 );
+                                 ];
 
             $multimediaObject = $this->jobService->createTrackFromLocalHardDrive($multimediaObject, $file, $profile, $priority, $language, $description);
 
@@ -119,10 +119,10 @@ class JobServiceTest extends WebTestCase
             $profile = 'MASTER_COPY';
             $priority = 2;
             $language = 'en';
-            $description = array(
+            $description = [
                                  'en' => 'track description inbox',
                                  'es' => 'descripción del archivo inbox',
-                                 );
+                                 ];
 
             $multimediaObject = $this->jobService->createTrackFromInboxOnServer($multimediaObject, $filePath, $profile, $priority, $language, $description);
 
@@ -143,7 +143,7 @@ class JobServiceTest extends WebTestCase
         $profile = 'MASTER_COPY';
         $priority = 2;
         $language = 'es';
-        $description = array('en' => 'test', 'es' => 'prueba');
+        $description = ['en' => 'test', 'es' => 'prueba'];
 
         $series = new Series();
         $multimediaObject = new MultimediaObject();
@@ -161,7 +161,7 @@ class JobServiceTest extends WebTestCase
         $profile2 = 'MASTER_VIDEO_H264';
         $priority2 = 3;
         $language2 = 'en';
-        $description2 = array('en' => 'test2', 'es' => 'prueba2');
+        $description2 = ['en' => 'test2', 'es' => 'prueba2'];
 
         $this->jobService->addJob($pathFile2, $profile2, $priority2, $multimediaObject, $language2, $description2);
 
@@ -191,14 +191,14 @@ class JobServiceTest extends WebTestCase
         $job = $this->createNewJob();
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals(array(), $this->repo->findAll());
+        $this->assertEquals([], $this->repo->findAll());
 
         $job = $this->createNewJob();
         $this->assertEquals(1, count($this->repo->findAll()));
         $this->jobService->pauseJob($job->getId());
         $this->jobService->resumeJob($job->getId());
         $this->jobService->cancelJob($job->getId());
-        $this->assertEquals(array(), $this->repo->findAll());
+        $this->assertEquals([], $this->repo->findAll());
 
         $job1 = $this->createNewJob();
         $job2 = $this->createNewJob();
@@ -285,7 +285,7 @@ class JobServiceTest extends WebTestCase
         $profile = 'non_existing';
         $priority = 2;
         $language = 'es';
-        $description = array('en' => 'test', 'es' => 'prueba');
+        $description = ['en' => 'test', 'es' => 'prueba'];
 
         $multimediaObject = new MultimediaObject();
         $this->dm->persist($multimediaObject);
@@ -362,8 +362,8 @@ class JobServiceTest extends WebTestCase
 
     private function getDemoCpus()
     {
-        $cpus = array(
-                      'CPU_LOCAL' => array(
+        $cpus = [
+                      'CPU_LOCAL' => [
                                            'id' => 1,
                                            'host' => '127.0.0.1',
                                            'max' => 1,
@@ -372,8 +372,8 @@ class JobServiceTest extends WebTestCase
                                            'user' => 'transco1',
                                            'password' => 'PUMUKIT',
                                            'description' => 'Pumukit transcoder',
-                                           ),
-                      'CPU_REMOTE' => array(
+                                           ],
+                      'CPU_REMOTE' => [
                                             'id' => 2,
                                             'host' => '192.168.5.123',
                                             'max' => 2,
@@ -382,16 +382,16 @@ class JobServiceTest extends WebTestCase
                                             'user' => 'transco2',
                                             'password' => 'PUMUKIT',
                                             'description' => 'Pumukit transcoder',
-                                            ),
-                      );
+                                            ],
+                      ];
 
         return $cpus;
     }
 
     private function getDemoProfiles()
     {
-        $profiles = array(
-                          'MASTER_COPY' => array(
+        $profiles = [
+                          'MASTER_COPY' => [
                                                  'display' => false,
                                                  'wizard' => true,
                                                  'master' => true,
@@ -401,17 +401,17 @@ class JobServiceTest extends WebTestCase
                                                  'channels' => 1,
                                                  'audio' => false,
                                                  'bat' => 'cp "{{input}}" "{{output}}"',
-                                                 'streamserver' => array(
+                                                 'streamserver' => [
                                                                          'type' => ProfileService::STREAMSERVER_STORE,
                                                                          'host' => '127.0.0.1',
                                                                          'name' => 'Localmaster',
                                                                          'description' => 'Local masters server',
-                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ),
+                                                                         'dir_out' => __DIR__.'/../Resources/dir_out',                                                         ],
                                                  'app' => 'cp',
                                                  'rel_duration_size' => 1,
                                                  'rel_duration_trans' => 1,
-                                                 ),
-                          'MASTER_VIDEO_H264' => array(
+                                                 ],
+                          'MASTER_VIDEO_H264' => [
                                                        'display' => false,
                                                        'wizard' => true,
                                                        'master' => true,
@@ -426,19 +426,19 @@ class JobServiceTest extends WebTestCase
                                                        'channels' => 1,
                                                        'audio' => false,
                                                        'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
-                                                       'streamserver' => array(
+                                                       'streamserver' => [
                                                                                'type' => ProfileService::STREAMSERVER_STORE,
                                                                                'host' => '192.168.5.125',
                                                                                'name' => 'Download',
                                                                                'description' => 'Download server',
                                                                                'dir_out' => __DIR__.'/../Resources/dir_out',
                                                                                'url_out' => 'http://localhost:8000/downloads/',
-                                                                               ),
+                                                                               ],
                                                        'app' => 'ffmpeg',
                                                        'rel_duration_size' => 1,
                                                        'rel_duration_trans' => 1,
-                                                       ),
-                          );
+                                                       ],
+                          ];
 
         return $profiles;
     }

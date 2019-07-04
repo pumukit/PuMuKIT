@@ -121,38 +121,38 @@ EOT
      */
     private function findInMongoDB(DocumentManager $documentManager, $filePath)
     {
-        $mmobjPic = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
-            'pics.path' => array(
+        $mmobjPic = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+            'pics.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
-            ),
-        ));
-        $mmobjMaterial = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
-            'materials.path' => array(
+            ],
+        ]);
+        $mmobjMaterial = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+            'materials.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
-            ),
-        ));
+            ],
+        ]);
 
-        $mmobjTracks = $documentManager->getRepository(MultimediaObject::class)->findOneBy(array(
-            'tracks.path' => array(
+        $mmobjTracks = $documentManager->getRepository(MultimediaObject::class)->findOneBy([
+            'tracks.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
-            ),
-        ));
+            ],
+        ]);
 
-        $seriesPic = $documentManager->getRepository(Series::class)->findOneBy(array(
-            'pic.path' => array(
+        $seriesPic = $documentManager->getRepository(Series::class)->findOneBy([
+            'pic.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
-            ),
-        ));
-        $seriesMaterial = $documentManager->getRepository(Series::class)->findOneBy(array(
-            'materials.path' => array(
+            ],
+        ]);
+        $seriesMaterial = $documentManager->getRepository(Series::class)->findOneBy([
+            'materials.path' => [
                 '$regex' => $filePath,
                 '$options' => 'i',
-            ),
-        ));
+            ],
+        ]);
 
         if (!$mmobjPic && !$mmobjMaterial && !$mmobjTracks && !$seriesPic && !$seriesMaterial) {
             return false;

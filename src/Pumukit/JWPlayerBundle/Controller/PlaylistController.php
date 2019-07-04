@@ -22,20 +22,20 @@ class PlaylistController extends BasePlaylistController
         $playlistService = $this->get('pumukit_baseplayer.seriesplaylist');
         $dm = $this->get('doctrine_mongodb')->getManager();
         if (!$series->isPlaylist()) {
-            $criteria = array(
+            $criteria = [
                 'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
                 'embeddedBroadcast.type' => EmbeddedBroadcast::TYPE_PUBLIC,
-                'tracks' => array('$elemMatch' => array('tags' => 'display', 'hide' => false)),
-            );
-            $mmobjs = $dm->getRepository(MultimediaObject::class)->findBy($criteria, array('rank' => 'asc'));
+                'tracks' => ['$elemMatch' => ['tags' => 'display', 'hide' => false]],
+            ];
+            $mmobjs = $dm->getRepository(MultimediaObject::class)->findBy($criteria, ['rank' => 'asc']);
         } else {
             $mmobjs = $playlistService->getPlaylistMmobjs($series);
         }
 
-        return array(
+        return [
             'playlist_mmobjs' => $mmobjs,
             'object' => $series,
             'responsive' => true,
-        );
+        ];
     }
 }

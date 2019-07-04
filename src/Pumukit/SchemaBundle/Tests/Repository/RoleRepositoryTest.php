@@ -12,7 +12,7 @@ class RoleRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -21,7 +21,7 @@ class RoleRepositoryTest extends WebTestCase
             ->getRepository(Role::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection(Role::class)->remove(array());
+        $this->dm->getDocumentCollection(Role::class)->remove([]);
         $this->dm->flush();
     }
 

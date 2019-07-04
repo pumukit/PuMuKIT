@@ -30,8 +30,8 @@ class SeriesTypeTest extends TestCase
         $descriptionEs = 'Ezequiel 25:17. El camino recto del hombre está por todos lados por las iniquidades de los egoístas y la tiranía de los malos hombres.';
         $localeEs = 'es';
 
-        $nameI18n = array($locale => $name, $localeEs => $nameEs);
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
+        $nameI18n = [$locale => $name, $localeEs => $nameEs];
+        $descriptionI18n = [$locale => $description, $localeEs => $descriptionEs];
 
         $series_type->setI18nName($nameI18n);
         $series_type->setI18nDescription($descriptionI18n);

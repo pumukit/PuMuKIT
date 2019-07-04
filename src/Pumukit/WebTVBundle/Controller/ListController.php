@@ -34,7 +34,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function multimediaObjectsByTagAction(Tag $tag, Request $request)
     {
-        [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
+        list($scrollList, $numberCols, $limit) = $this->getParametersByTag();
 
         $multimediaObjectRepository = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(MultimediaObject::class);
 
@@ -84,7 +84,7 @@ class ListController extends Controller implements WebTVControllerInterface
      */
     public function seriesByTagAction(Tag $tag, Request $request)
     {
-        [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
+        list($scrollList, $numberCols, $limit) = $this->getParametersByTag();
 
         $seriesRepository = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class);
         $series = $seriesRepository->createBuilderWithTag($tag, ['public_date' => -1]);

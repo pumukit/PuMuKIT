@@ -26,7 +26,7 @@ class PermissionProfileListenerTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -53,12 +53,12 @@ class PermissionProfileListenerTest extends WebTestCase
             ->get('logger');
 
         $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->logger);
-        $dispatcher->addListener('permissionprofile.update', array($this->listener, 'postUpdate'));
+        $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
 
         $this->dm->getDocumentCollection(PermissionProfile::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(User::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
     }
 

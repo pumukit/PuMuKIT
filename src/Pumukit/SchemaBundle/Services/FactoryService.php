@@ -34,7 +34,7 @@ class FactoryService
     private $defaultLicense;
     private $addUserAsPerson;
 
-    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = array(), $defaultCopyright = '', $defaultLicense = '')
+    public function __construct(DocumentManager $documentManager, TagService $tagService, PersonService $personService, UserService $userService, EmbeddedBroadcastService $embeddedBroadcastService, SeriesService $seriesService, MultimediaObjectEventDispatcherService $mmsDispatcher, SeriesEventDispatcherService $seriesDispatcher, TranslatorInterface $translator, $addUserAsPerson = true, array $locales = [], $defaultCopyright = '', $defaultLicense = '')
     {
         $this->dm = $documentManager;
         $this->tagService = $tagService;
@@ -113,7 +113,7 @@ class FactoryService
             $series->setI18nTitle($title);
         } else {
             foreach ($this->locales as $locale) {
-                $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, array(), null, $locale);
+                $title = $this->translator->trans(self::DEFAULT_SERIES_TITLE, [], null, $locale);
                 $series->setTitle($title, $locale);
             }
         }
@@ -173,7 +173,7 @@ class FactoryService
         $mm->setCopyright($this->defaultCopyright);
         $mm->setLicense($this->defaultLicense);
         foreach ($this->locales as $locale) {
-            $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+            $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, [], null, $locale);
             $mm->setTitle($title, $locale);
         }
 
@@ -204,7 +204,7 @@ class FactoryService
             $mm = new MultimediaObject();
             $mm->setLocale($this->locales[0]);
             foreach ($this->locales as $locale) {
-                $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, array(), null, $locale);
+                $title = $this->translator->trans(self::DEFAULT_MULTIMEDIAOBJECT_TITLE, [], null, $locale);
                 $mm->setTitle($title, $locale);
             }
             $mm = $this->embeddedBroadcastService->setByType($mm, EmbeddedBroadcast::TYPE_PUBLIC, false);
@@ -233,9 +233,9 @@ class FactoryService
         // Add other owners in case of exists
         foreach ($prototype->getRoles() as $embeddedRole) {
             if ($this->personService->getPersonalScopeRoleCode() === $embeddedRole->getCod()) {
-                $role = $this->dm->getRepository(Role::class)->findOneBy(array('cod' => $this->personService->getPersonalScopeRoleCode()));
+                $role = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
                 foreach ($embeddedRole->getPeople() as $embeddedPerson) {
-                    $person = $this->dm->getRepository(Person::class)->findOneBy(array('_id' => $embeddedPerson->getId()));
+                    $person = $this->dm->getRepository(Person::class)->findOneBy(['_id' => $embeddedPerson->getId()]);
                     $mm = $this->personService->createRelationPerson($person, $role, $mm);
                 }
             }
@@ -402,7 +402,7 @@ class FactoryService
             $this->seriesDispatcher->dispatchUpdate($series);
         }
         $annotRepo = $this->dm->getRepository(Annotation::class);
-        $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($multimediaObject->getId())));
+        $annotations = $annotRepo->findBy(['multimediaObject' => new \MongoId($multimediaObject->getId())]);
         foreach ($annotations as $annot) {
             $this->dm->remove($annot);
         }
@@ -486,9 +486,9 @@ class FactoryService
     public function cloneSeries(Series $series)
     {
         $newSeries = new Series();
-        $i18nTitles = array();
+        $i18nTitles = [];
         foreach ($series->getI18nTitle() as $key => $val) {
-            $string = $this->translator->trans('cloned', array(), null, $key);
+            $string = $this->translator->trans('cloned', [], null, $key);
             $i18nTitles[$key] = $val.' ('.$string.')';
         }
 
@@ -497,10 +497,10 @@ class FactoryService
         $this->dm->persist($newSeries);
         $this->dm->flush();
 
-        $multimediaObjectPrototype = $this->dm->getRepository(MultimediaObject::class)->findOneBy(array('status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()));
+        $multimediaObjectPrototype = $this->dm->getRepository(MultimediaObject::class)->findOneBy(['status' => MultimediaObject::STATUS_PROTOTYPE, 'series' => $series->getId()]);
         $this->cloneMultimediaObject($multimediaObjectPrototype, $newSeries);
 
-        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(array('series' => $series->getId()));
+        $multimediaObjects = $this->dm->getRepository(MultimediaObject::class)->findBy(['series' => $series->getId()]);
         foreach ($multimediaObjects as $multimediaObject) {
             if (!$multimediaObject->isLive()) {
                 $this->cloneMultimediaObject($multimediaObject, $newSeries);
@@ -559,9 +559,9 @@ class FactoryService
         }
         $new->setType($src->getType());
 
-        $i18nTitles = array();
+        $i18nTitles = [];
         foreach ($src->getI18nTitle() as $key => $val) {
-            $string = $this->translator->trans('cloned', array(), null, $key);
+            $string = $this->translator->trans('cloned', [], null, $key);
             $i18nTitles[$key] = $val.' ('.$string.')';
         }
         $new->setI18nTitle($i18nTitles);
@@ -618,7 +618,7 @@ class FactoryService
             $new->addLink($clonedLink);
         }
         $annotRepo = $this->dm->getRepository(Annotation::class);
-        $annotations = $annotRepo->findBy(array('multimediaObject' => new \MongoId($src->getId())));
+        $annotations = $annotRepo->findBy(['multimediaObject' => new \MongoId($src->getId())]);
         foreach ($annotations as $annot) {
             $clonedAnnot = clone $annot;
             $clonedAnnot->setMultimediaObject($new->getId());
@@ -658,7 +658,7 @@ class FactoryService
      */
     public function getDefaultMultimediaObjectI18nTitle()
     {
-        $i18nTitle = array();
+        $i18nTitle = [];
         foreach ($this->locales as $locale) {
             $i18nTitle[$locale] = self::DEFAULT_MULTIMEDIAOBJECT_TITLE;
         }
@@ -673,7 +673,7 @@ class FactoryService
      */
     public function getDefaultSeriesI18nTitle()
     {
-        $i18nTitle = array();
+        $i18nTitle = [];
         foreach ($this->locales as $locale) {
             $i18nTitle[$locale] = self::DEFAULT_SERIES_TITLE;
         }
@@ -713,7 +713,7 @@ class FactoryService
 
         $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
-            ->sort(array('numerical_id' => -1))
+            ->sort(['numerical_id' => -1])
             ->getQuery()
             ->getSingleResult();
 
@@ -747,7 +747,7 @@ class FactoryService
 
         $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
             ->field('numerical_id')->exists(true)
-            ->sort(array('numerical_id' => -1))
+            ->sort(['numerical_id' => -1])
             ->getQuery()
             ->getSingleResult();
 

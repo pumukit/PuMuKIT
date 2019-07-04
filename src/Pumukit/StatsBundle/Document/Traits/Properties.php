@@ -11,7 +11,7 @@ trait Properties
      *
      * @MongoDB\Field(type="raw")
      */
-    private $properties = array();
+    private $properties = [];
 
     /**
      * Get properties, null if none.

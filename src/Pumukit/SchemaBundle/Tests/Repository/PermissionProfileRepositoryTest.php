@@ -15,14 +15,14 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(PermissionProfile::class);
 
         $this->dm->getDocumentCollection(PermissionProfile::class)
-            ->remove(array());
+            ->remove([]);
     }
 
     public function tearDown()
@@ -100,28 +100,28 @@ class PermissionProfileRepositoryTest extends WebTestCase
 
     public function testFindDefaultCandidate()
     {
-        $externalPermissions = array(
-                                     array(
+        $externalPermissions = [
+                                     [
                                            'role' => 'ROLE_ONE',
                                            'description' => 'Access One',
-                                           ),
-                                     );
+                                           ],
+                                     ];
         $permissionService = new PermissionService($this->dm, $externalPermissions);
         $totalPermissions = count($permissionService->getAllPermissions());
 
         $this->assertNull($this->repo->findDefaultCandidate($totalPermissions));
 
-        $permissions1 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_LIVE_CHANNELS);
+        $permissions1 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_LIVE_CHANNELS];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
         $permissionProfile1->setPermissions($permissions1);
 
-        $permissions2 = array();
+        $permissions2 = [];
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('test2');
         $permissionProfile2->setPermissions($permissions2);
 
-        $permissions3 = array(Permission::ACCESS_DASHBOARD);
+        $permissions3 = [Permission::ACCESS_DASHBOARD];
         $permissionProfile3 = new PermissionProfile();
         $permissionProfile3->setName('test3');
         $permissionProfile3->setPermissions($permissions3);

@@ -47,19 +47,19 @@ class APIKeywordsController extends Controller
           ->getDocumentCollection($collName);
         $serializer = $this->get('jms_serializer');
 
-        $pipeline = array(
-            array('$project' => array('k' => '$keywords.'.$lang, '_id' => false)),
-            array('$match' => array('k' => array('$ne' => ''))),
-            array('$unwind' => '$k'),
-            array('$group' => array('_id' => '$k', 'count' => array('$sum' => 1))),
-            array('$sort' => array('count' => -1)),
-        );
+        $pipeline = [
+            ['$project' => ['k' => '$keywords.'.$lang, '_id' => false]],
+            ['$match' => ['k' => ['$ne' => '']]],
+            ['$unwind' => '$k'],
+            ['$group' => ['_id' => '$k', 'count' => ['$sum' => 1]]],
+            ['$sort' => ['count' => -1]],
+        ];
 
         if ($limit) {
-            $pipeline[] = array('$limit' => $limit);
+            $pipeline[] = ['$limit' => $limit];
         }
 
-        $kws = $coll->aggregate($pipeline, array('cursor' => array()));
+        $kws = $coll->aggregate($pipeline, ['cursor' => []]);
         $data = $serializer->serialize($kws->toArray(), $format);
 
         return new Response($data);

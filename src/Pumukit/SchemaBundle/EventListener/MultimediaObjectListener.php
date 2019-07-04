@@ -70,8 +70,8 @@ class MultimediaObjectListener
      */
     public function updateTextIndex($multimediaObject)
     {
-        $textIndex = array();
-        $secondaryTextIndex = array();
+        $textIndex = [];
+        $secondaryTextIndex = [];
         $title = $multimediaObject->getI18nTitle();
         foreach (array_keys($title) as $lang) {
             $text = '';
@@ -88,8 +88,8 @@ class MultimediaObjectListener
                 $secondaryText .= ' | '.$person->getName();
             }
 
-            $textIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text));
-            $secondaryTextIndex[] = array('indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText));
+            $textIndex[] = ['indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($text)];
+            $secondaryTextIndex[] = ['indexlanguage' => $mongoLang, 'text' => TextIndexUtils::cleanTextIndex($secondaryText)];
         }
         $multimediaObject->setTextIndex($textIndex);
         $multimediaObject->setSecondaryTextIndex($secondaryTextIndex);

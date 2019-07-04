@@ -14,7 +14,7 @@ class MultimediaObjectDurationServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -26,7 +26,7 @@ class MultimediaObjectDurationServiceTest extends WebTestCase
         $this->mmsService = static::$kernel->getContainer()
                                    ->get('pumukitschema.mmsduration');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
         $this->dm->flush();
     }
 

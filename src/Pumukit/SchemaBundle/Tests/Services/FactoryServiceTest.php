@@ -22,7 +22,7 @@ class FactoryServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -38,15 +38,15 @@ class FactoryServiceTest extends WebTestCase
         $this->locales = $this->factory->getLocales();
 
         $this->dm->getDocumentCollection(MultimediaObject::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Role::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->getDocumentCollection(Tag::class)
-          ->remove(array());
+          ->remove([]);
         $this->dm->flush();
     }
 
@@ -105,7 +105,7 @@ class FactoryServiceTest extends WebTestCase
 
         $mmobjTemplate = $this->mmobjRepo->findPrototype($series);
         foreach ($this->locales as $locale) {
-            $keyword = $this->translator->trans('keytest', array(), null, $locale);
+            $keyword = $this->translator->trans('keytest', [], null, $locale);
             $mmobjTemplate->setKeyword($keyword, $locale);
         }
         $this->dm->persist($mmobjTemplate);
@@ -327,7 +327,7 @@ class FactoryServiceTest extends WebTestCase
 
         $newTitles = $new->getI18nTitle();
         foreach ($src->getI18nTitle() as $key => $title) {
-            $string = $this->translator->trans('cloned', array(), null, $key);
+            $string = $this->translator->trans('cloned', [], null, $key);
             $title = $title.' ('.$string.')';
             $this->assertEquals($newTitles[$key], $title);
         }
@@ -354,7 +354,7 @@ class FactoryServiceTest extends WebTestCase
 
     public function testGetDefaultMultimediaObjectI18nTitle()
     {
-        $i18nTitle = array();
+        $i18nTitle = [];
         foreach ($this->factory->getLocales() as $locale) {
             $i18nTitle[$locale] = FactoryService::DEFAULT_MULTIMEDIAOBJECT_TITLE;
         }
@@ -364,7 +364,7 @@ class FactoryServiceTest extends WebTestCase
 
     public function testGetDefaultSeriesI18nTitle()
     {
-        $i18nTitle = array();
+        $i18nTitle = [];
         foreach ($this->factory->getLocales() as $locale) {
             $i18nTitle[$locale] = FactoryService::DEFAULT_SERIES_TITLE;
         }

@@ -17,7 +17,7 @@ class JobNotificationServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
         $this->container = static::$kernel->getContainer();
 
@@ -31,7 +31,7 @@ class JobNotificationServiceTest extends WebTestCase
         $this->jobNotificationService = $this->container
           ->get('pumukit_notification.listener');
 
-        $this->dm->getDocumentCollection(Job::class)->remove(array());
+        $this->dm->getDocumentCollection(Job::class)->remove([]);
         $this->dm->flush();
     }
 

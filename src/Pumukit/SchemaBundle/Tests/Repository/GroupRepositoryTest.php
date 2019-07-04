@@ -12,7 +12,7 @@ class GroupRepositoryTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -20,7 +20,7 @@ class GroupRepositoryTest extends WebTestCase
 
         //DELETE DATABASE
         $this->dm->getDocumentCollection(Group::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 
@@ -70,7 +70,7 @@ class GroupRepositoryTest extends WebTestCase
         $this->dm->persist($group3);
         $this->dm->flush();
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
         $groups = $this->repo->findByIdNotIn($ids)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertTrue(in_array($group2, $groups));
@@ -101,32 +101,32 @@ class GroupRepositoryTest extends WebTestCase
         $this->dm->persist($group4);
         $this->dm->flush();
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
-        $total = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId()));
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertFalse(in_array($group3, $groups));
         $this->assertTrue(in_array($group4, $groups));
 
-        $ids = array();
-        $total = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId()));
+        $ids = [];
+        $total = [new \MongoId($group1->getId()), new \MongoId($group3->getId()), new \MongoId($group4->getId())];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
         $this->assertTrue(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertTrue(in_array($group3, $groups));
         $this->assertTrue(in_array($group4, $groups));
 
-        $ids = array(new \MongoId($group1->getId()), new \MongoId($group3->getId()));
-        $total = array();
+        $ids = [new \MongoId($group1->getId()), new \MongoId($group3->getId())];
+        $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));
         $this->assertFalse(in_array($group3, $groups));
         $this->assertFalse(in_array($group4, $groups));
 
-        $ids = array();
-        $total = array();
+        $ids = [];
+        $total = [];
         $groups = $this->repo->findByIdNotInOf($ids, $total)->toArray();
         $this->assertFalse(in_array($group1, $groups));
         $this->assertFalse(in_array($group2, $groups));

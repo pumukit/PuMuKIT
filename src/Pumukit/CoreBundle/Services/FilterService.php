@@ -256,9 +256,9 @@ class FilterService
      */
     public function getPeopleMongoQuery(Person $person = null)
     {
-        $people = array();
+        $people = [];
         if ((null !== $person) && (null !== ($roleCode = $this->personService->getPersonalScopeRoleCode()))) {
-            $people['$elemMatch'] = array();
+            $people['$elemMatch'] = [];
             $people['$elemMatch']['people._id'] = new \MongoId($person->getId());
             $people['$elemMatch']['cod'] = $roleCode;
         }
@@ -282,7 +282,7 @@ class FilterService
      */
     public function getGroupsMongoQuery(User $user)
     {
-        $groups = array();
+        $groups = [];
         $groups['$in'] = $user->getGroupsIds();
 
         return $groups;

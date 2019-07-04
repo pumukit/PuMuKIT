@@ -22,7 +22,7 @@ class SeriesTest extends TestCase
         $keyword = 'keyword';
         $line2 = 'line2';
         $locale = 'en';
-        $properties = array('property1', 'property2');
+        $properties = ['property1', 'property2'];
 
         $series = new Series();
 
@@ -61,13 +61,13 @@ class SeriesTest extends TestCase
         $line2Es = 'línea 2';
         $localeEs = 'es';
 
-        $titleI18n = array($locale => $title, $localeEs => $titleEs);
-        $subtitleI18n = array($locale => $subtitle, $localeEs => $subtitleEs);
-        $descriptionI18n = array($locale => $description, $localeEs => $descriptionEs);
-        $headerI18n = array($locale => $header, $localeEs => $headerEs);
-        $footerI18n = array($locale => $footer, $localeEs => $footerEs);
-        $keywordI18n = array($locale => $keyword, $localeEs => $keywordEs);
-        $line2I18n = array($locale => $line2, $localeEs => $line2Es);
+        $titleI18n = [$locale => $title, $localeEs => $titleEs];
+        $subtitleI18n = [$locale => $subtitle, $localeEs => $subtitleEs];
+        $descriptionI18n = [$locale => $description, $localeEs => $descriptionEs];
+        $headerI18n = [$locale => $header, $localeEs => $headerEs];
+        $footerI18n = [$locale => $footer, $localeEs => $footerEs];
+        $keywordI18n = [$locale => $keyword, $localeEs => $keywordEs];
+        $line2I18n = [$locale => $line2, $localeEs => $line2Es];
 
         $series->setI18nTitle($titleI18n);
         $series->setI18nSubtitle($subtitleI18n);

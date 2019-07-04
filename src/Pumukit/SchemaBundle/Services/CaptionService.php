@@ -6,7 +6,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class CaptionService
 {
-    public static $mimeTypeCaptions = array('vtt', 'srt', 'dfxp');
+    public static $mimeTypeCaptions = ['vtt', 'srt', 'dfxp'];
 
     /**
      * Get VTT captions.

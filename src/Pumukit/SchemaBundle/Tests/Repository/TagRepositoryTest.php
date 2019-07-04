@@ -13,14 +13,14 @@ class TagRepositoryTest extends WebTestCase
     public function setUp()
     {
         //INIT TEST SUITE
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
         $this->repo = $this->dm->getRepository(Tag::class);
 
         //DELETE DATABASE
-        $this->dm->getDocumentCollection(Tag::class)->remove(array());
+        $this->dm->getDocumentCollection(Tag::class)->remove([]);
         $this->dm->flush();
     }
 

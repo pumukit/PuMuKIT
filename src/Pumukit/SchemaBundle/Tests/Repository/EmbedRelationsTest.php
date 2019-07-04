@@ -17,7 +17,7 @@ class EmbedRelationsTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -30,15 +30,15 @@ class EmbedRelationsTest extends WebTestCase
         //DELETE DATABASE
         // pimo has to be deleted before mmobj
         $this->dm->getDocumentCollection(Tag::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(MultimediaObject::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Person::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection(Series::class)
-            ->remove(array());
+            ->remove([]);
         $this->dm->getDocumentCollection('PumukitSchemaBundle:SeriesType')
-            ->remove(array());
+            ->remove([]);
         $this->dm->flush();
     }
 

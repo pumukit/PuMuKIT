@@ -30,17 +30,17 @@ class BasePlayerExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('track_url', array($this, 'generateTrackFileUrl')),
-            new \Twig_SimpleFunction('direct_track_url', array($this, 'generateDirectTrackFileUrl')),
-        );
+        return [
+            new \Twig_SimpleFunction('track_url', [$this, 'generateTrackFileUrl']),
+            new \Twig_SimpleFunction('direct_track_url', [$this, 'generateDirectTrackFileUrl']),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('first_public_track', array($this, 'getFirstPublicTrackFilter')),
-        );
+        return [
+            new \Twig_SimpleFilter('first_public_track', [$this, 'getFirstPublicTrackFilter']),
+        ];
     }
 
     /**

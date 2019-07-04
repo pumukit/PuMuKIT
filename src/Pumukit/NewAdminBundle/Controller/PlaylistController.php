@@ -23,7 +23,7 @@ class PlaylistController extends CollectionController
     {
         $this->get('session')->set('admin/playlist/id', $collection->getId());
 
-        return array('collection' => $collection);
+        return ['collection' => $collection];
     }
 
     /**
@@ -46,7 +46,7 @@ class PlaylistController extends CollectionController
             $this->get('session')->remove('admin/playlist/id');
         }
 
-        return array('series' => $resources);
+        return ['series' => $resources];
     }
 
     /**
@@ -58,7 +58,7 @@ class PlaylistController extends CollectionController
     {
         $resources = $this->getResources($request);
 
-        return array('series' => $resources);
+        return ['series' => $resources];
     }
 
     /**
@@ -70,7 +70,7 @@ class PlaylistController extends CollectionController
         $collection = $factory->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
         $this->get('session')->set('admin/playlist/id', $collection->getId());
 
-        return new JsonResponse(array('playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())));
+        return new JsonResponse(['playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())]);
     }
 
     /**
@@ -82,10 +82,10 @@ class PlaylistController extends CollectionController
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(PlaylistType::class, $series, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(PlaylistType::class, $series, ['translator' => $translator, 'locale' => $locale]);
 
         $method = $request->getMethod();
-        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
             $form->handleRequest($request)->isValid()) {
             $dm = $this->get('doctrine_mongodb.odm.document_manager');
             $dm->persist($series);
@@ -94,16 +94,16 @@ class PlaylistController extends CollectionController
             $resources = $this->getResources($request);
 
             return $this->render('PumukitNewAdminBundle:Playlist:list.html.twig',
-                                 array('series' => $resources)
+                                 ['series' => $resources]
             );
         }
 
         return $this->render('PumukitNewAdminBundle:Playlist:update.html.twig',
-                             array(
+                             [
                                  'series' => $series,
                                  'form' => $form->createView(),
                                  'template' => '_template',
-                             )
+                             ]
         );
     }
 
@@ -140,7 +140,7 @@ class PlaylistController extends CollectionController
             }
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', array()));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
     }
 
     /**
@@ -172,7 +172,7 @@ class PlaylistController extends CollectionController
             $this->get('session')->remove('admin/mms/id');
         }
 
-        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', array()));
+        return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_list', []));
     }
 
     /**
@@ -181,7 +181,7 @@ class PlaylistController extends CollectionController
     public function searchAction(Request $req)
     {
         $q = $req->get('q');
-        $this->get('session')->set('admin/playlist/criteria', array('search' => $q));
+        $this->get('session')->set('admin/playlist/criteria', ['search' => $q]);
 
         return $this->redirect($this->generateUrl('pumukitnewadmin_playlist_index'));
     }
@@ -193,7 +193,7 @@ class PlaylistController extends CollectionController
     {
         $sorting = $this->getSorting($request);
         $criteria = $this->getCriteria($request);
-        $criteria = array_merge($criteria, array('type' => Series::TYPE_PLAYLIST));
+        $criteria = array_merge($criteria, ['type' => Series::TYPE_PLAYLIST]);
         $queryBuilder = $this->get('doctrine_mongodb.odm.document_manager')->getRepository(Series::class)->createQueryBuilder();
         $queryBuilder->setQueryArray($criteria);
         //Sort playlist
@@ -208,14 +208,14 @@ class PlaylistController extends CollectionController
      */
     public function getCriteria(Request $request)
     {
-        $criteria = $request->get('criteria', array());
+        $criteria = $request->get('criteria', []);
 
         if (array_key_exists('reset', $criteria)) {
             $this->get('session')->remove('admin/playlist/criteria');
         } elseif ($criteria) {
             $this->get('session')->set('admin/playlist/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/playlist/criteria', array());
+        $criteria = $this->get('session')->get('admin/playlist/criteria', []);
 
         $new_criteria = $this->get('pumukitnewadmin.series_search')->processCriteria($criteria, true, $request->getLocale());
 
@@ -241,6 +241,6 @@ class PlaylistController extends CollectionController
             $key .= '.'.$request->getLocale();
         }
 
-        return  array($key => $value);
+        return  [$key => $value];
     }
 }

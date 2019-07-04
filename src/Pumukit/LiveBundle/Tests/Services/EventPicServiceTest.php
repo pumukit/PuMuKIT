@@ -18,7 +18,7 @@ class EventPicServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -28,8 +28,8 @@ class EventPicServiceTest extends WebTestCase
         $this->originalPicPath = realpath(__DIR__.'/../Resources').'/logo.png';
         $this->uploadsPath = realpath(__DIR__.'/../../../../../web/uploads/pic');
 
-        $this->dm->getDocumentCollection(Live::class)->remove(array());
-        $this->dm->getDocumentCollection(Event::class)->remove(array());
+        $this->dm->getDocumentCollection(Live::class)->remove([]);
+        $this->dm->getDocumentCollection(Event::class)->remove([]);
         $this->dm->flush();
     }
 

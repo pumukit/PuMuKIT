@@ -20,7 +20,7 @@ class LinkTest extends TestCase
         $nameEs = 'nombre';
         $localeEs = 'es';
 
-        $nameI18n = array($locale => $name, $localeEs => $nameEs);
+        $nameI18n = [$locale => $name, $localeEs => $nameEs];
 
         $link->setI18nName($nameI18n);
 

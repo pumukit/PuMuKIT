@@ -84,7 +84,7 @@ class UserService
         if (null !== $object) {
             $owners = $object->getProperty('owners');
             if (null === $owners) {
-                $owners = array();
+                $owners = [];
             }
             if (!in_array($user->getId(), $owners)) {
                 $owners[] = $user->getId();
@@ -260,7 +260,7 @@ class UserService
      *
      * @return User
      */
-    public function addRoles(User $user, $permissions = array(), $executeFlush = true)
+    public function addRoles(User $user, $permissions = [], $executeFlush = true)
     {
         foreach ($permissions as $permission) {
             if (!$user->hasRole($permission)) {
@@ -284,7 +284,7 @@ class UserService
      *
      * @return User
      */
-    public function removeRoles(User $user, $permissions = array(), $executeFlush = true)
+    public function removeRoles(User $user, $permissions = [], $executeFlush = true)
     {
         foreach ($permissions as $permission) {
             if ($user->hasRole($permission) && (in_array($permission, array_keys($this->permissionService->getAllPermissions())))) {
@@ -339,9 +339,9 @@ class UserService
      *
      * @return array $userPermissions
      */
-    public function getUserPermissions($userRoles = array())
+    public function getUserPermissions($userRoles = [])
     {
-        $userPermissions = array();
+        $userPermissions = [];
         foreach ($userRoles as $userRole) {
             if (in_array($userRole, array_keys($this->permissionService->getAllPermissions()))) {
                 $userPermissions[] = $userRole;
@@ -377,7 +377,7 @@ class UserService
      *
      * @return string $userScope
      */
-    public function getUserScope($userRoles = array())
+    public function getUserScope($userRoles = [])
     {
         foreach ($userRoles as $userRole) {
             if (in_array($userRole, array_keys(PermissionProfile::$scopeDescription))) {
@@ -572,7 +572,7 @@ class UserService
     public function findWithGroup(Group $group)
     {
         return $this->repo->createQueryBuilder()
-            ->field('groups')->in(array(new \MongoId($group->getId())))
+            ->field('groups')->in([new \MongoId($group->getId())])
             ->getQuery()
             ->execute();
     }
@@ -607,7 +607,7 @@ class UserService
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
-    public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = array(), $addGroups = array())
+    public function isUserLastRelation(User $loggedInUser, $mmId = null, $personId = null, $owners = [], $addGroups = [])
     {
         $personToRemoveIsLogged = $this->isLoggedPersonToRemoveFromOwner($loggedInUser, $personId);
         $userInOwners = $this->isUserInOwners($loggedInUser, $owners);
@@ -664,7 +664,7 @@ class UserService
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
-    public function isUserInOwners(User $loggedInUser, $owners = array())
+    public function isUserInOwners(User $loggedInUser, $owners = [])
     {
         $userInOwners = false;
         foreach ($owners as $owner) {
@@ -695,7 +695,7 @@ class UserService
      * @throws \Doctrine\ODM\MongoDB\LockException
      * @throws \Doctrine\ODM\MongoDB\Mapping\MappingException
      */
-    public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = array())
+    public function isUserInGroups(User $loggedInUser, $mmId = null, $personId = null, $groups = [])
     {
         $userInAddGroups = false;
         $userGroups = $loggedInUser->getGroups()->toArray();

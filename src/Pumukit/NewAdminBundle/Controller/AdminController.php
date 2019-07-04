@@ -15,14 +15,14 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $resources = $this->getResources($request, $criteria);
 
         $pluralName = $this->getPluralResourceName();
         $resourceName = $this->getResourceName();
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':index.html.twig',
-                             array($pluralName => $resources)
+                             [$pluralName => $resources]
         );
     }
 
@@ -48,7 +48,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
                 $dm->persist($resource);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
             if (null === $resource) {
@@ -59,10 +59,10 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         }
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':create.html.twig',
-                             array(
+                             [
                                  $resourceName => $resource,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -83,22 +83,22 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resource = $this->findOr404($request);
         $form = $this->getForm($resource, $request->getLocale());
 
-        if (in_array($request->getMethod(), array('POST', 'PUT', 'PATCH')) && $form->handleRequest($request)->isValid()) {
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH']) && $form->handleRequest($request)->isValid()) {
             try {
                 $dm->persist($resource);
                 $dm->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()), 409);
+                return new JsonResponse(['status' => $e->getMessage()], 409);
             }
 
             return $this->redirect($this->generateUrl('pumukitnewadmin_'.$resourceName.'_list'));
         }
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':update.html.twig',
-                             array(
+                             [
                                  $resourceName => $resource,
                                  'form' => $form->createView(),
-                             ));
+                             ]);
     }
 
     /**
@@ -127,7 +127,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $data = $this->findOr404($request);
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':show.html.twig',
-                             array($this->getResourceName() => $data)
+                             [$this->getResourceName() => $data]
         );
     }
 
@@ -156,11 +156,11 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $pluralName = $this->getPluralResourceName();
         $resourceName = $this->getResourceName();
 
-        $criteria = $this->getCriteria($request->get('criteria', array()));
+        $criteria = $this->getCriteria($request->get('criteria', []));
         $resources = $this->getResources($request, $criteria);
 
         return $this->render('PumukitNewAdminBundle:'.ucfirst($resourceName).':list.html.twig',
-                             array($pluralName => $resources)
+                             [$pluralName => $resources]
         );
     }
 
@@ -207,7 +207,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     {
         $repository = $this->getRepository();
 
-        $criteria = array('id' => $id);
+        $criteria = ['id' => $id];
 
         return $repository->findOneBy($criteria);
     }
@@ -222,9 +222,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         } elseif ($criteria) {
             $this->get('session')->set('admin/'.$this->getResourceName().'/criteria', $criteria);
         }
-        $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', array());
+        $criteria = $this->get('session')->get('admin/'.$this->getResourceName().'/criteria', []);
 
-        $new_criteria = array();
+        $new_criteria = [];
         foreach ($criteria as $property => $value) {
             //preg_match('/^\/.*?\/[imxlsu]*$/i', $e)
             if ('' !== $value) {
@@ -278,7 +278,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $translator = $this->get('translator');
 
-        $form = $this->createForm($formType, $resource, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm($formType, $resource, ['translator' => $translator, 'locale' => $locale]);
 
         return $form;
     }
@@ -310,7 +310,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     {
         $languages = $this->getParameter('pumukit.locales');
 
-        $csv = array('id', 'cod', 'xml', 'display');
+        $csv = ['id', 'cod', 'xml', 'display'];
         foreach ($languages as $language) {
             $csv[] = 'name_'.$language;
         }
@@ -331,7 +331,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $i = 1;
         foreach ($roles as $rol) {
-            $dataCSV = array();
+            $dataCSV = [];
             $dataCSV[] = $i;
             $dataCSV[] = $rol->getCod();
             $dataCSV[] = $rol->getXML();
@@ -350,7 +350,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             ++$i;
         }
 
-        return new Response($csv, Response::HTTP_OK, array('Content-Disposition' => 'attachment; filename="roles_i18n.csv"'));
+        return new Response($csv, Response::HTTP_OK, ['Content-Disposition' => 'attachment; filename="roles_i18n.csv"']);
     }
 
     /**
@@ -358,7 +358,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function exportPermissionProfilesAction()
     {
-        $csv = array('id', 'name', 'system', 'default', 'scope', 'permissions');
+        $csv = ['id', 'name', 'system', 'default', 'scope', 'permissions'];
         $csv = implode(';', $csv);
         $csv = $csv.PHP_EOL;
 
@@ -371,14 +371,14 @@ class AdminController extends ResourceController implements NewAdminControllerIn
 
         $i = 1;
         foreach ($permissionProfiles as $pProfile) {
-            $dataCSV = array();
+            $dataCSV = [];
             $dataCSV[] = $i;
             $dataCSV[] = $pProfile->getName();
             $dataCSV[] = (int) $pProfile->getSystem();
             $dataCSV[] = (int) $pProfile->getDefault();
             $dataCSV[] = $pProfile->getScope();
 
-            $permission = array();
+            $permission = [];
             foreach ($pProfile->getPermissions() as $permissionProfile) {
                 $permission[] = $permissionProfile;
             }
@@ -392,6 +392,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             ++$i;
         }
 
-        return new Response($csv, Response::HTTP_OK, array('Content-Disposition' => 'attachment; filename="permissionprofiles.csv"'));
+        return new Response($csv, Response::HTTP_OK, ['Content-Disposition' => 'attachment; filename="permissionprofiles.csv"']);
     }
 }

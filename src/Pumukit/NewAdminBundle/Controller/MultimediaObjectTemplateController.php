@@ -48,20 +48,20 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmTemplate, array('translator' => $translator, 'locale' => $locale));
+        $formMeta = $this->createForm(MultimediaObjectTemplateMetaType::class, $mmTemplate, ['translator' => $translator, 'locale' => $locale]);
 
         $pubDecisionsTags = $factoryService->getTagsByCod('PUBDECISIONS', true);
 
         $method = $request->getMethod();
-        if (in_array($method, array('POST', 'PUT', 'PATCH')) &&
+        if (in_array($method, ['POST', 'PUT', 'PATCH']) &&
             $formMeta->handleRequest($request)->isValid()) {
             $this->update($mmTemplate);
 
-            return new JsonResponse(array('mmtemplate' => 'updatemeta'));
+            return new JsonResponse(['mmtemplate' => 'updatemeta']);
         }
 
         return $this->render('PumukitNewAdminBundle:MultimediaObjectTemplate:edit.html.twig',
-            array(
+            [
                 'mm' => $mmTemplate,
                 'form_meta' => $formMeta->createView(),
                 'series' => $series,
@@ -70,7 +70,7 @@ class MultimediaObjectTemplateController extends MultimediaObjectController impl
                 'pub_decisions' => $pubDecisionsTags,
                 'parent_tags' => $parentTags,
                 'groups' => $allGroups,
-            )
+            ]
         );
     }
 }

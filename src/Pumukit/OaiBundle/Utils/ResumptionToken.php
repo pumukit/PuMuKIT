@@ -90,7 +90,7 @@ class ResumptionToken
      */
     public function encode()
     {
-        $params = array();
+        $params = [];
         $params['offset'] = $this->offset;
         $params['metadataPrefix'] = $this->metadataPrefix;
         $params['set'] = $this->set;

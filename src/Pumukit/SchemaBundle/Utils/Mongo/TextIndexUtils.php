@@ -10,11 +10,11 @@ class TextIndexUtils
     /**
      * Languages supported by the MongoDB text index.
      */
-    public static $supportedLanguage = array(
+    public static $supportedLanguage = [
         'da', 'nl', 'en', 'fi', 'fr', 'de', 'hu', 'it',
         'nb', 'pt', 'ro', 'ru', 'es', 'sv', 'tr', 'ara',
         'prs', 'pes', 'urd', 'zhs', 'zht',
-    );
+    ];
 
     public static function isSupportedLanguage($langCode)
     {
@@ -40,7 +40,7 @@ class TextIndexUtils
 
     public static function cleanTextIndex($textIndex)
     {
-        $unwanted_array = array(
+        $unwanted_array = [
           'Š' => 'S',
           'š' => 's',
           'Ž' => 'Z',
@@ -105,7 +105,7 @@ class TextIndexUtils
           'ý' => 'y',
           'þ' => 'b',
           'ÿ' => 'y',
-        );
+        ];
 
         return strtolower(strtr($textIndex, $unwanted_array));
     }

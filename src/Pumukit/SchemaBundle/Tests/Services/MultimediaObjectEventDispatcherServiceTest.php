@@ -17,7 +17,7 @@ class MultimediaObjectEventDispatcherServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dispatcher = static::$kernel->getContainer()

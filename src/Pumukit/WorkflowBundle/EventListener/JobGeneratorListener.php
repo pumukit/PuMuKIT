@@ -84,7 +84,7 @@ class JobGeneratorListener
      */
     private function generateJobs(MultimediaObject $multimediaObject, $pubChannelCod)
     {
-        $jobs = array();
+        $jobs = [];
         $default_profiles = $this->profileService->getDefaultProfiles();
 
         if ($this->containsTrackWithProfileWithTargetTag($multimediaObject, $pubChannelCod)) {
@@ -161,7 +161,7 @@ class JobGeneratorListener
      */
     private function getTargets($targets)
     {
-        $return = array('standard' => array(), 'force' => array());
+        $return = ['standard' => [], 'force' => []];
 
         foreach (array_filter(preg_split('/[,\s]+/', $targets)) as $target) {
             if ('*' == substr($target, -1)) {

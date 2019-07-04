@@ -29,7 +29,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithTag($tag, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTag($tag, $sort);
 
@@ -46,7 +46,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function createBuilderWithTag($tag, $sort = array())
+    public function createBuilderWithTag($tag, $sort = [])
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -81,7 +81,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithAnyTag($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithAnyTag($tags, $sort = [], $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAnyTag($tags);
 
@@ -102,7 +102,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithAllTags($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithAllTags($tags, $sort = [], $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
@@ -137,7 +137,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return ArrayCollection
      */
-    public function findWithoutTag($tag, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutTag($tag, $sort = [], $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -170,7 +170,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithoutAllTags($tags, $sort = array(), $limit = 0, $page = 0)
+    public function findWithoutAllTags($tags, $sort = [], $limit = 0, $page = 0)
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithAllTags($tags);
 
@@ -221,7 +221,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder
      */
-    public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    public function createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCod($personId, $roleCod);
@@ -240,7 +240,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByPersonIdAndRoleCod($personId, $roleCod, $sort = array(), $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCod($personId, $roleCod, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderByPersonIdAndRoleCod($personId, $roleCod, $sort, $limit, $page);
 
@@ -276,7 +276,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByPersonIdAndRoleCodOrGroups($personId, $roleCod, $groups);
@@ -300,7 +300,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findByPersonIdAndRoleCodOrGroupsSortedQueryBuilder($personId, $roleCod, $groups, $sort, $limit, $page);
 
@@ -319,7 +319,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = array(), $limit = 0, $page = 0)
+    public function findByPersonIdAndRoleCodOrGroupsSorted($personId, $roleCod, $groups, $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findByPersonIdAndRoleCodOrGroupsSortedQuery($personId, $roleCod, $groups, $sort, $limit, $page);
 
@@ -371,7 +371,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findWithTagAndSeriesType($tag, $seriesType, $sort = array(), $limit = 0, $page = 0)
+    public function findWithTagAndSeriesType($tag, $seriesType, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createBuilderWithTagAndSeriesType($tag, $seriesType, $sort);
 
@@ -389,7 +389,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = array())
+    public function createBuilderWithTagAndSeriesType($tag, $seriesType, $sort = [])
     {
         $referencedSeries = $this->getDocumentManager()->getRepository(MultimediaObject::class)->findSeriesFieldWithTag($tag);
 
@@ -423,7 +423,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeQueryBuilder($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastType($type);
@@ -445,7 +445,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findByEmbeddedBroadcastTypeQuery($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeQuery($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeQueryBuilder($type, $sort, $limit, $page);
 
@@ -462,7 +462,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByEmbeddedBroadcastType($type = '', $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastType($type = '', $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findByEmbeddedBroadcastTypeQuery($type, $sort, $limit, $page);
 
@@ -480,7 +480,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $repoMmobj = $this->getDocumentManager()->getRepository(MultimediaObject::class);
         $referencedSeries = $repoMmobj->findSeriesFieldByEmbeddedBroadcastTypeAndGroups($type, $groups);
@@ -503,7 +503,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroupsQuery($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findByEmbeddedBroadcastTypeAndGroupsQueryBuilder($type, $groups, $sort, $limit, $page);
 
@@ -521,7 +521,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByEmbeddedBroadcastTypeAndGroups($type = '', $groups = array(), $sort = array(), $limit = 0, $page = 0)
+    public function findByEmbeddedBroadcastTypeAndGroups($type = '', $groups = [], $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findByEmbeddedBroadcastTypeAndGroupsQuery($type, $groups, $sort, $limit, $page);
 
@@ -539,7 +539,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Builder|mixed
      */
-    public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    public function findByTitleWithLocaleQueryBuilder($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->createQueryBuilder()->field('title.'.$locale)->equals(new \MongoRegex(sprintf('/%s/i', $title)));
 
@@ -559,7 +559,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return \Doctrine\MongoDB\Query\Query
      */
-    public function findByTitleWithLocaleQuery($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    public function findByTitleWithLocaleQuery($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->findByTitleWithLocaleQueryBuilder($title, $locale, $sort, $limit, $page);
 
@@ -577,7 +577,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function findByTitleWithLocale($title = '', $locale = 'en', $sort = array(), $limit = 0, $page = 0)
+    public function findByTitleWithLocale($title = '', $locale = 'en', $sort = [], $limit = 0, $page = 0)
     {
         $query = $this->findByTitleWithLocaleQuery($title, $locale, $sort, $limit, $page);
 
@@ -610,7 +610,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    private function addSortToQueryBuilder($qb, $sort = array())
+    private function addSortToQueryBuilder($qb, $sort = [])
     {
         if (0 !== count($sort)) {
             $qb->sort($sort);
@@ -629,7 +629,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    private function addSortAndLimitToQueryBuilder($qb, $sort = array(), $limit = 0, $page = 0)
+    private function addSortAndLimitToQueryBuilder($qb, $sort = [], $limit = 0, $page = 0)
     {
         $qb = $this->addSortToQueryBuilder($qb, $sort);
         $qb = $this->addLimitToQueryBuilder($qb, $limit, $page);
@@ -653,18 +653,18 @@ class SeriesRepository extends DocumentRepository
         $seriesCollection = $dm->getDocumentCollection(Series::class);
 
         if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
-            $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
-            $command = array(array('$group' => $group));
+            $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
+            $command = [['$group' => $group]];
 
-            return $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
+            return $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
         }
 
         $match = [];
-        $match['properties.owners'] = array('$in' => array($user->getId()));
-        $group = array('_id' => array('id' => '$_id', 'title' => '$title'));
+        $match['properties.owners'] = ['$in' => [$user->getId()]];
+        $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
 
-        $command = array(array('$match' => $match), array('$group' => $group));
-        $aSeries = $seriesCollection->aggregate($command, array('cursor' => array()))->toArray();
+        $command = [['$match' => $match], ['$group' => $group]];
+        $aSeries = $seriesCollection->aggregate($command, ['cursor' => []])->toArray();
 
         /* Find mmo user groups */
         $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);
@@ -675,12 +675,12 @@ class SeriesRepository extends DocumentRepository
         }
 
         $match = [];
-        $unwind = array('$unwind' => '$groups');
-        $match['groups'] = array('$in' => $groups);
-        $group = array('_id' => array('id' => '$series', 'title' => '$seriesTitle'));
+        $unwind = ['$unwind' => '$groups'];
+        $match['groups'] = ['$in' => $groups];
+        $group = ['_id' => ['id' => '$series', 'title' => '$seriesTitle']];
 
-        $command = array($unwind, array('$match' => $match), array('$group' => $group));
-        $aMMO = $mmoCollection->aggregate($command, array('cursor' => array()))->toArray();
+        $command = [$unwind, ['$match' => $match], ['$group' => $group]];
+        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []])->toArray();
 
         $aSeries = array_merge($aSeries, $aMMO);
         usort($aSeries, function ($a, $b) {
@@ -699,7 +699,7 @@ class SeriesRepository extends DocumentRepository
      *
      * @return mixed
      */
-    public function countMmobjsBySeries($seriesList = array())
+    public function countMmobjsBySeries($seriesList = [])
     {
         return $this->getDocumentManager()
             ->getRepository(MultimediaObject::class)

@@ -27,16 +27,16 @@ class LiveTwigExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('generate_hls_url', array($this, 'genHlsUrl')),
-            new \Twig_SimpleFunction('future_and_not_finished_event', array($this, 'getFutureAndNotFinishedEvent')),
-            new \Twig_SimpleFunction('poster_pic', array($this, 'getPosterPic')),
-            new \Twig_SimpleFunction('poster_pic_text_color', array($this, 'getPosterPicTextColor')),
-            new \Twig_SimpleFunction('poster', array($this, 'getEventPoster')),
-            new \Twig_SimpleFunction('poster_text_color', array($this, 'getPosterTextColor')),
-            new \Twig_SimpleFunction('event_first_thumbnail', array($this, 'getEventThumbnail')),
-            new \Twig_SimpleFunction('event_default_pic', array($this, 'getEventDefaultPic')),
-        );
+        return [
+            new \Twig_SimpleFunction('generate_hls_url', [$this, 'genHlsUrl']),
+            new \Twig_SimpleFunction('future_and_not_finished_event', [$this, 'getFutureAndNotFinishedEvent']),
+            new \Twig_SimpleFunction('poster_pic', [$this, 'getPosterPic']),
+            new \Twig_SimpleFunction('poster_pic_text_color', [$this, 'getPosterPicTextColor']),
+            new \Twig_SimpleFunction('poster', [$this, 'getEventPoster']),
+            new \Twig_SimpleFunction('poster_text_color', [$this, 'getPosterTextColor']),
+            new \Twig_SimpleFunction('event_first_thumbnail', [$this, 'getEventThumbnail']),
+            new \Twig_SimpleFunction('event_default_pic', [$this, 'getEventDefaultPic']),
+        ];
     }
 
     /**

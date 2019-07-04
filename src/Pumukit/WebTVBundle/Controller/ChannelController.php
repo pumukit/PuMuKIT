@@ -43,7 +43,7 @@ class ChannelController extends Controller implements WebTVControllerInterface
         ];
     }
 
-    private function updateBreadcrumbs($title, $routeName, array $routeParameters = array())
+    private function updateBreadcrumbs($title, $routeName, array $routeParameters = [])
     {
         $breadcrumbs = $this->get('pumukit_web_tv.breadcrumbs');
         $breadcrumbs->add($title, $routeName, $routeParameters);

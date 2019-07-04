@@ -70,7 +70,7 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('pumukitschema.multimedia_object'))
               ->addArgument($config['sbs'])
               ->addArgument($config['url_mapping'])
-              ->addArgument(array('opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']))
+              ->addArgument(['opencast_host' => $config['host'], 'opencast_username' => $config['username'], 'opencast_password' => $config['password']])
               ->addArgument($config['error_if_file_not_exist']);
 
             $container
@@ -83,7 +83,7 @@ class PumukitOpencastExtension extends Extension
 
             $pumukitcustomlanguages = $container->hasParameter('pumukit.customlanguages') ?
                 new Parameter('pumukit.customlanguages') :
-                array();
+                [];
 
             $container
               ->register('pumukit_opencast.import', "Pumukit\OpencastBundle\Services\OpencastImportService")
@@ -125,16 +125,16 @@ class PumukitOpencastExtension extends Extension
               ->addArgument(new Reference('logger'))
               ->addArgument($config['delete_archive_mediapackage'])
               ->addArgument($config['deletion_workflow_name'])
-              ->addTag('kernel.event_listener', array('event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete'));
+              ->addTag('kernel.event_listener', ['event' => 'multimediaobject.delete', 'method' => 'onMultimediaObjectDelete']);
 
             $container
               ->register('pumukit_opencast.user_listener', "Pumukit\OpencastBundle\EventListener\UserListener")
               ->addArgument(new Reference('pumukit_opencast.client'))
               ->addArgument(new Reference('logger'))
               ->addArgument($config['manage_opencast_users'])
-              ->addTag('kernel.event_listener', array('event' => 'user.create', 'method' => 'onUserCreate'))
-              ->addTag('kernel.event_listener', array('event' => 'user.update', 'method' => 'onUserUpdate'))
-              ->addTag('kernel.event_listener', array('event' => 'user.delete', 'method' => 'onUserDelete'));
+              ->addTag('kernel.event_listener', ['event' => 'user.create', 'method' => 'onUserCreate'])
+              ->addTag('kernel.event_listener', ['event' => 'user.update', 'method' => 'onUserUpdate'])
+              ->addTag('kernel.event_listener', ['event' => 'user.delete', 'method' => 'onUserDelete']);
         }
 
         $container->setParameter('pumukit_opencast.scheduler_on_menu', $config['scheduler_on_menu']);
@@ -142,7 +142,7 @@ class PumukitOpencastExtension extends Extension
         $container->setParameter('pumukit_opencast.dashboard_on_menu', $config['dashboard_on_menu']);
         $container->setParameter('pumukit_opencast.default_tag_imported', $config['default_tag_imported']);
 
-        $permissions = array(array('role' => 'ROLE_ACCESS_IMPORTER', 'description' => 'Access Importer'));
+        $permissions = [['role' => 'ROLE_ACCESS_IMPORTER', 'description' => 'Access Importer']];
         $newPermissions = array_merge($container->getParameter('pumukitschema.external_permissions'), $permissions);
         $container->setParameter('pumukitschema.external_permissions', $newPermissions);
 

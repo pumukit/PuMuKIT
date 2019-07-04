@@ -24,64 +24,64 @@ class StatsService
 
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$record_date');
 
-        $pipeline = array();
-        $criteria = array(
+        $pipeline = [];
+        $criteria = [
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
-            'status' => array('$ne' => MultimediaObject::STATUS_PROTOTYPE),
-        );
-        $pipeline[] = array('$match' => $criteria);
+            'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
+        ];
+        $pipeline[] = ['$match' => $criteria];
 
         $this->dm->getFilterCollection()->enable('backoffice');
         $criteria = $this->dm->getFilterCollection()->getFilterCriteria($dmRepo->getClassMetadata());
         if ($criteria) {
-            $pipeline[] = array('$match' => $criteria);
+            $pipeline[] = ['$match' => $criteria];
         }
-        $pipeline[] = array(
-            '$project' => array(
+        $pipeline[] = [
+            '$project' => [
                 'date' => $mongoProjectDate,
                 'duration' => '$duration',
-                'size' => array('$sum' => '$tracks.size'),
-            ),
-        );
-        $pipeline[] = array(
-            '$group' => array(
+                'size' => ['$sum' => '$tracks.size'],
+            ],
+        ];
+        $pipeline[] = [
+            '$group' => [
                 '_id' => '$date',
-                'num' => array('$sum' => 1),
-                'duration' => array('$sum' => '$duration'),
-                'size' => array('$sum' => '$size'),
-            ),
-        );
-        $pipeline[] = array('$sort' => array('_id' => $sort));
+                'num' => ['$sum' => 1],
+                'duration' => ['$sum' => '$duration'],
+                'size' => ['$sum' => '$size'],
+            ],
+        ];
+        $pipeline[] = ['$sort' => ['_id' => $sort]];
 
         $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
 
         return $aggregation->toArray();
     }
 
-    public function getMmobjRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getMmobjRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
         $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
-        $mongoGroup = array('numMmobjs' => array('$sum' => 1));
+        $mongoGroup = ['numMmobjs' => ['$sum' => 1]];
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         return $aggregation->toArray();
     }
 
-    public function getSeriesRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getSeriesRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
         $dmColl = $this->dm->getDocumentCollection(Series::class);
-        $mongoGroup = array('numSeries' => array('$sum' => 1));
+        $mongoGroup = ['numSeries' => ['$sum' => 1]];
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'public_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         return $aggregation->toArray();
     }
 
-    public function getHoursRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
+    public function getHoursRecordedGroupedBy($fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
         $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
-        $mongoGroup = array('seconds' => array('$sum' => '$duration'));
+        $mongoGroup = ['seconds' => ['$sum' => '$duration']];
 
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
@@ -94,39 +94,39 @@ class StatsService
      */
     private function getMongoProjectDateArray($groupBy, $dateField = '$date')
     {
-        $mongoProjectDate = array();
+        $mongoProjectDate = [];
         switch ($groupBy) {
         case 'hour':
             $mongoProjectDate[] = 'H';
-            $mongoProjectDate[] = array('$substr' => array($dateField, 0, 2));
+            $mongoProjectDate[] = ['$substr' => [$dateField, 0, 2]];
             $mongoProjectDate[] = 'T';
             // no break
         case 'day':
-            $mongoProjectDate[] = array('$substr' => array($dateField, 8, 2));
+            $mongoProjectDate[] = ['$substr' => [$dateField, 8, 2]];
             $mongoProjectDate[] = '-';
             // no break
         default: //If it doesn't exists, it's 'month'
         case 'month':
-            $mongoProjectDate[] = array('$substr' => array($dateField, 5, 2));
+            $mongoProjectDate[] = ['$substr' => [$dateField, 5, 2]];
             $mongoProjectDate[] = '-';
             // no break
         case 'year':
-            $mongoProjectDate[] = array('$substr' => array($dateField, 0, 4));
+            $mongoProjectDate[] = ['$substr' => [$dateField, 0, 4]];
             break;
         }
 
-        return array('$concat' => array_reverse($mongoProjectDate));
+        return ['$concat' => array_reverse($mongoProjectDate)];
     }
 
     /**
      * Returns an aggregation of objects grouped by date.
      */
-    private function getAggrRecordedGroupedBy($dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = array(), $sort = -1, $groupBy = 'month')
+    private function getAggrRecordedGroupedBy($dmColl, $mongoGroup, $dateName = 'record_date', $fromDate = null, $toDate = null, $limit = 100, $page = 0, $criteria = [], $sort = -1, $groupBy = 'month')
     {
-        $matchExtra = array();
+        $matchExtra = [];
         if (!empty($criteria)) {
             $mmobjIds = $this->getIdsWithCriteria($criteria, $this->repoMmobj);
-            $matchExtra['_id'] = array('$in' => $mmobjIds);
+            $matchExtra['_id'] = ['$in' => $mmobjIds];
         }
         if (!$fromDate) {
             $fromDate = new \DateTime();
@@ -138,17 +138,17 @@ class StatsService
         $fromMongoDate = new \MongoDate($fromDate->format('U'), $fromDate->format('u'));
         $toMongoDate = new \MongoDate($toDate->format('U'), $toDate->format('u'));
 
-        $pipeline[] = array('$match' => array_merge(
+        $pipeline[] = ['$match' => array_merge(
             $matchExtra,
-            array($dateName => array('$gte' => $fromMongoDate, '$lte' => $toMongoDate))),
-        );
+            [$dateName => ['$gte' => $fromMongoDate, '$lte' => $toMongoDate]]),
+        ];
         $mongoProjectDate = $this->getMongoProjectDateArray($groupBy, '$'.$dateName);
-        $pipeline[] = array('$project' => array('date' => $mongoProjectDate, 'duration' => '$duration'));
-        $pipeline[] = array('$group' => array_merge(array('_id' => '$date'), $mongoGroup));
-        $pipeline[] = array('$sort' => array('_id' => $sort));
-        $pipeline[] = array('$skip' => $page * $limit);
-        $pipeline[] = array('$limit' => $limit);
-        $aggregation = $dmColl->aggregate($pipeline, array('cursor' => array()));
+        $pipeline[] = ['$project' => ['date' => $mongoProjectDate, 'duration' => '$duration']];
+        $pipeline[] = ['$group' => array_merge(['_id' => '$date'], $mongoGroup)];
+        $pipeline[] = ['$sort' => ['_id' => $sort]];
+        $pipeline[] = ['$skip' => $page * $limit];
+        $pipeline[] = ['$limit' => $limit];
+        $aggregation = $dmColl->aggregate($pipeline, ['cursor' => []]);
 
         return $aggregation;
     }

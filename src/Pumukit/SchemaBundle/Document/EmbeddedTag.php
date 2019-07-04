@@ -23,14 +23,14 @@ class EmbeddedTag
      *
      * @MongoDB\Field(type="raw")
      */
-    private $title = array('en' => '');
+    private $title = ['en' => ''];
 
     /**
      * @var string
      *
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string

@@ -24,8 +24,8 @@ class VersionController extends Controller implements AdminControllerInterface
 
         $composerLock = json_decode(file_get_contents($composerLockFile));
 
-        $pumukit = array();
-        $other = array();
+        $pumukit = [];
+        $other = [];
         foreach ($composerLock->packages as $package) {
             if ((false !== strpos($package->name, '/pmk2-')) || false !== strpos(strtolower($package->name), 'pumukit') || (isset($package->keywords) && in_array('pumukit', $package->keywords))) {
                 $pumukit[] = $package;
@@ -34,7 +34,7 @@ class VersionController extends Controller implements AdminControllerInterface
             }
         }
 
-        return array('pumukitPackages' => $pumukit, 'otherPackages' => $other);
+        return ['pumukitPackages' => $pumukit, 'otherPackages' => $other];
     }
 
     /**
@@ -50,9 +50,9 @@ class VersionController extends Controller implements AdminControllerInterface
         $composerLock = file_get_contents($composerLockFile);
 
         if (false === $composerLock) {
-            return new JsonResponse(array('error' => 'Error reading composer lock file'), 500);
+            return new JsonResponse(['error' => 'Error reading composer lock file'], 500);
         }
 
-        return new Response($composerLock, 200, array('Content-Type' => 'application/json'));
+        return new Response($composerLock, 200, ['Content-Type' => 'application/json']);
     }
 }

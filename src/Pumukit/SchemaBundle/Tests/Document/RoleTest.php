@@ -53,8 +53,8 @@ class RoleTest extends TestCase
         $nameEs = 'Presentador';
         $textEs = 'Rol de presentador 1';
 
-        $i18nName = array('en' => $name1, 'es' => $nameEs);
-        $i18nText = array('en' => $text1, 'es' => $textEs);
+        $i18nName = ['en' => $name1, 'es' => $nameEs];
+        $i18nText = ['en' => $text1, 'es' => $textEs];
 
         $role->setI18nName($i18nName);
         $role->setI18nText($i18nText);

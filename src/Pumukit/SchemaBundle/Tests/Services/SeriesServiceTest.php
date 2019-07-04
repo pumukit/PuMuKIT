@@ -18,7 +18,7 @@ class SeriesServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -30,7 +30,7 @@ class SeriesServiceTest extends WebTestCase
         $this->seriesDispatcher = static::$kernel->getContainer()
           ->get('pumukitschema.series_dispatcher');
 
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
         $this->dm->flush();
     }
 

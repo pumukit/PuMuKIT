@@ -22,7 +22,7 @@ class MultimediaObjectInSeriesTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $container = static::$kernel->getContainer();
@@ -31,8 +31,8 @@ class MultimediaObjectInSeriesTest extends WebTestCase
         $this->seriesRepo = $this->dm->getRepository(Series::class);
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
-        $this->dm->getDocumentCollection(Series::class)->remove(array());
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
+        $this->dm->getDocumentCollection(Series::class)->remove([]);
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
     }
 
     public function tearDown()

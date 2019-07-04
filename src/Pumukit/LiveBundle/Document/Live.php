@@ -103,13 +103,13 @@ class Live
      * @MongoDB\Field(type="raw")
      * @Assert\NotBlank()
      */
-    private $name = array('en' => '');
+    private $name = ['en' => ''];
 
     /**
      * @var string
      * @MongoDB\Field(type="raw")
      */
-    private $description = array('en' => '');
+    private $description = ['en' => ''];
 
     /**
      * @var string
@@ -119,7 +119,7 @@ class Live
     /**
      * Constructor.
      */
-    protected static $instances = array();
+    protected static $instances = [];
 
     public function __toString()
     {
@@ -201,12 +201,12 @@ class Live
      */
     public function isValidLiveType()
     {
-        return in_array($this->live_type, array(
+        return in_array($this->live_type, [
             self::LIVE_TYPE_WOWZA,
             self::LIVE_TYPE_AMS,
             self::LIVE_TYPE_WMS,
             self::LIVE_TYPE_FMS,
-        ));
+        ]);
     }
 
     /**
@@ -531,10 +531,10 @@ class Live
      */
     public function getResolution()
     {
-        return array(
+        return [
             'width' => $this->width,
             'height' => $this->height,
-        );
+        ];
     }
 
     /**

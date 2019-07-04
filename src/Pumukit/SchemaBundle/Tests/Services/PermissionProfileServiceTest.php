@@ -17,7 +17,7 @@ class PermissionProfileServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()
@@ -31,7 +31,7 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->permissionService = static::$kernel->getContainer()
           ->get('pumukitschema.permission');
 
-        $this->dm->getDocumentCollection(PermissionProfile::class)->remove(array());
+        $this->dm->getDocumentCollection(PermissionProfile::class)->remove([]);
         $this->dm->flush();
 
         $this->permissionProfileService = new PermissionProfileService($this->dm, $this->dispatcher, $this->permissionService);
@@ -89,10 +89,10 @@ class PermissionProfileServiceTest extends WebTestCase
 
     public function testAddPermission()
     {
-        $permissions = array(
+        $permissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
-                            );
+                            ];
 
         $permissionProfile = new PermissionProfile();
         $permissionProfile->setName('test');
@@ -108,17 +108,17 @@ class PermissionProfileServiceTest extends WebTestCase
 
         $this->permissionProfileService->addPermission($permissionProfile, Permission::ACCESS_ROLES);
 
-        $newPermissions = array(
+        $newPermissions = [
                                Permission::ACCESS_DASHBOARD,
                                Permission::ACCESS_MULTIMEDIA_SERIES,
                                Permission::ACCESS_ROLES,
-                               );
+                               ];
 
-        $falsePermissions = array(
+        $falsePermissions = [
                                  Permission::ACCESS_DASHBOARD,
                                  Permission::ACCESS_MULTIMEDIA_SERIES,
                                  Permission::ACCESS_LIVE_EVENTS,
-                                 );
+                                 ];
 
         $this->assertEquals($newPermissions, $permissionProfile->getPermissions());
         $this->assertNotEquals($falsePermissions, $permissionProfile->getPermissions());
@@ -126,10 +126,10 @@ class PermissionProfileServiceTest extends WebTestCase
 
     public function testRemovePermission()
     {
-        $permissions = array(
+        $permissions = [
                             Permission::ACCESS_DASHBOARD,
                             Permission::ACCESS_MULTIMEDIA_SERIES,
-                            );
+                            ];
 
         $permissionProfile = new PermissionProfile();
         $permissionProfile->setName('test');
@@ -145,7 +145,7 @@ class PermissionProfileServiceTest extends WebTestCase
 
         $this->permissionProfileService->removePermission($permissionProfile, Permission::ACCESS_MULTIMEDIA_SERIES);
 
-        $newPermissions = array(Permission::ACCESS_DASHBOARD);
+        $newPermissions = [Permission::ACCESS_DASHBOARD];
 
         $this->assertEquals($newPermissions, $permissionProfile->getPermissions());
         $this->assertNotEquals($permissions, $permissionProfile->getPermissions());
@@ -156,21 +156,21 @@ class PermissionProfileServiceTest extends WebTestCase
         $this->assertCount(0, $this->repo->findByDefault(true));
         $this->assertCount(0, $this->repo->findByDefault(false));
 
-        $permissions1 = array(Permission::ACCESS_DASHBOARD);
+        $permissions1 = [Permission::ACCESS_DASHBOARD];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
         $permissionProfile1->setSystem(true);
         $permissionProfile1->setDefault(true);
         $permissionProfile1->setPermissions($permissions1);
 
-        $permissions2 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ADVANCED_UPLOAD);
+        $permissions2 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ADVANCED_UPLOAD];
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('test2');
         $permissionProfile2->setSystem(true);
         $permissionProfile2->setDefault(false);
         $permissionProfile2->setPermissions($permissions2);
 
-        $permissions3 = array();
+        $permissions3 = [];
         $permissionProfile3 = new PermissionProfile();
         $permissionProfile3->setName('test3');
         $permissionProfile3->setSystem(true);
@@ -221,19 +221,19 @@ class PermissionProfileServiceTest extends WebTestCase
     {
         $this->assertFalse($this->permissionProfileService->setDefaultPermissionProfile());
 
-        $permissions1 = array(Permission::ACCESS_DASHBOARD);
+        $permissions1 = [Permission::ACCESS_DASHBOARD];
         $permissionProfile1 = new PermissionProfile();
         $permissionProfile1->setName('test1');
         $permissionProfile1->setDefault(false);
         $permissionProfile1->setPermissions($permissions1);
 
-        $permissions2 = array();
+        $permissions2 = [];
         $permissionProfile2 = new PermissionProfile();
         $permissionProfile2->setName('test2');
         $permissionProfile2->setDefault(false);
         $permissionProfile2->setPermissions($permissions2);
 
-        $permissions3 = array(Permission::ACCESS_DASHBOARD, Permission::ACCESS_ADVANCED_UPLOAD);
+        $permissions3 = [Permission::ACCESS_DASHBOARD, Permission::ACCESS_ADVANCED_UPLOAD];
         $permissionProfile3 = new PermissionProfile();
         $permissionProfile3->setName('test3');
         $permissionProfile3->setDefault(false);

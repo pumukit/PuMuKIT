@@ -33,17 +33,17 @@ class PumukitNewAdminExtension extends Extension
         $container->setParameter('pumukit_new_admin.advance_live_event_create_serie_pic', $config['advance_live_event_create_serie_pic']);
         $container->setParameter('pumukit_new_admin.show_naked_pub_tab', $config['show_naked_pub_tab']);
         $container->setParameter('pumukit_new_admin.base_catalogue_tag', $config['base_catalogue_tag']);
-        $container->setParameter('pumukit_new_admin.metadata_translators', array());
+        $container->setParameter('pumukit_new_admin.metadata_translators', []);
         $container->setParameter('liveevent_contact_and_share', $config['liveevent_contact_and_share']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
         if ($container->hasParameter('pumukit.naked_backoffice_domain')) {
-            $arguments = array(
+            $arguments = [
                 '%pumukit.naked_backoffice_domain%',
                 '%pumukit.naked_backoffice_background%',
-            );
+            ];
 
             if ($container->hasParameter('pumukit.naked_backoffice_color')) {
                 $arguments[] = '%pumukit.naked_backoffice_color%';
@@ -54,7 +54,7 @@ class PumukitNewAdminExtension extends Extension
             }
 
             $definition = new Definition('Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener', $arguments);
-            $definition->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
+            $definition->addTag('kernel.event_listener', ['event' => 'kernel.controller', 'method' => 'onKernelController']);
             $container->setDefinition('pumukitnewadmin.nakedbackoffice', $definition);
         }
     }

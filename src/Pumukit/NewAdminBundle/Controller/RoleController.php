@@ -30,7 +30,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
 
         $translator = $this->get('translator');
         $locale = $request->getLocale();
-        $form = $this->createForm(RoleType::class, $role, array('translator' => $translator, 'locale' => $locale));
+        $form = $this->createForm(RoleType::class, $role, ['translator' => $translator, 'locale' => $locale]);
 
         if (($request->isMethod('PUT') || $request->isMethod('POST'))) {
             $form->handleRequest($request);
@@ -38,7 +38,7 @@ class RoleController extends SortableAdminController implements NewAdminControll
                 try {
                     $personService->updateRole($role);
                 } catch (\Exception $e) {
-                    return new JsonResponse(array('status' => $e->getMessage()), 409);
+                    return new JsonResponse(['status' => $e->getMessage()], 409);
                 }
 
                 return $this->redirect($this->generateUrl('pumukitnewadmin_role_list'));
@@ -53,10 +53,10 @@ class RoleController extends SortableAdminController implements NewAdminControll
             }
         }
 
-        return array(
+        return [
             'role' => $role,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**

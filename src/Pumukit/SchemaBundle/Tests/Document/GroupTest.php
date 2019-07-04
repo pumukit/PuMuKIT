@@ -43,8 +43,8 @@ class GroupTest extends TestCase
 
         $this->assertEquals($group, $group->addRole('role_test'));
         $this->assertFalse($group->hasRole('role_test'));
-        $this->assertEquals(array(), $group->getRoles());
+        $this->assertEquals([], $group->getRoles());
         $this->assertEquals($group, $group->removeRole('role_test'));
-        $this->assertEquals($group, $group->setRoles(array()));
+        $this->assertEquals($group, $group->setRoles([]));
     }
 }

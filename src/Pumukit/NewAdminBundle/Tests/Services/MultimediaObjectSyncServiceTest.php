@@ -20,7 +20,7 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
 
     public function setUp()
     {
-        $options = array('environment' => 'test');
+        $options = ['environment' => 'test'];
         static::bootKernel($options);
 
         $this->dm = static::$kernel->getContainer()->get('doctrine_mongodb')->getManager();
@@ -31,9 +31,9 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
 
-        $this->dm->getDocumentCollection(MultimediaObject::class)->remove(array());
-        $this->dm->getDocumentCollection(Role::class)->remove(array());
-        $this->dm->getDocumentCollection(Tag::class)->remove(array());
+        $this->dm->getDocumentCollection(MultimediaObject::class)->remove([]);
+        $this->dm->getDocumentCollection(Role::class)->remove([]);
+        $this->dm->getDocumentCollection(Tag::class)->remove([]);
         $this->dm->flush();
     }
 
@@ -59,16 +59,16 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
         $multimediaObject = $this->factoryService->createMultimediaObject($series);
         $multimediaObject->setComments('Comments');
         $multimediaObject->setCopyright('Copyright');
-        $i18nDescription = array('es' => 'descripción', 'en' => 'description');
+        $i18nDescription = ['es' => 'descripción', 'en' => 'description'];
         $multimediaObject->setI18nDescription($i18nDescription);
-        $i18nLine2 = array('es' => 'line 2 es', 'en' => 'line 2 en');
+        $i18nLine2 = ['es' => 'line 2 es', 'en' => 'line 2 en'];
         $multimediaObject->setI18nLine2($i18nLine2);
-        $i18nKeywords = array('es' => array('a', 'b'), 'en' => array('c', 'd'));
+        $i18nKeywords = ['es' => ['a', 'b'], 'en' => ['c', 'd']];
         $multimediaObject->setI18nKeywords($i18nKeywords);
         $multimediaObject->setLicense('Licencia');
         $multimediaObject->setPublicDate($date);
         $multimediaObject->setRecordDate($date);
-        $i18nSubseries = array('es' => 'subserie', 'en' => 'subseries');
+        $i18nSubseries = ['es' => 'subserie', 'en' => 'subseries'];
         $multimediaObject->setProperty('subseriestitle', $i18nSubseries);
         $multimediaObject->setProperty('subseries', true);
 
@@ -150,7 +150,7 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
 
         $syncFieldTag = 'metadata_tag_'.$tag3->getId();
         $syncFieldRole = 'metadata_role_'.$roleAuthor->getId();
-        $syncFields = array(
+        $syncFields = [
               'metadata_comments_all' => 'on',
               'metadata_copyright_all' => 'on',
               'metadata_description_all' => 'on',
@@ -165,9 +165,9 @@ class MultimediaObjectSyncServiceTest extends WebTestCase
               'metadata_subseries_all' => 'on',
                 $syncFieldTag => 'on',
                 $syncFieldRole => 'on',
-        );
+        ];
 
-        $this->syncService->syncMetadata(array($multimediaObject2), $multimediaObject, $syncFields);
+        $this->syncService->syncMetadata([$multimediaObject2], $multimediaObject, $syncFields);
 
         $this->assertEquals($multimediaObject->getComments(), $multimediaObject2->getComments());
         $this->assertEquals($multimediaObject->getCopyright(), $multimediaObject2->getCopyright());
